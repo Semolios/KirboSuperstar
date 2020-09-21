@@ -113,16 +113,16 @@ protected:
 		sLevel += L"................................................................";
 
 		// Player sprites
-		animPlayer.mapStates["idle"].push_back(new olc::Sprite("kirbo00.png"));
-		animPlayer.mapStates["idle"].push_back(new olc::Sprite("kirbo01.png"));
-		animPlayer.mapStates["idle"].push_back(new olc::Sprite("kirbo02.png"));
-		animPlayer.mapStates["idle"].push_back(new olc::Sprite("kirbo03.png"));
-		animPlayer.mapStates["idle"].push_back(new olc::Sprite("kirbo04.png"));
-		animPlayer.mapStates["idle"].push_back(new olc::Sprite("kirbo05.png"));
-		animPlayer.mapStates["idle"].push_back(new olc::Sprite("kirbo04.png"));
-		animPlayer.mapStates["idle"].push_back(new olc::Sprite("kirbo03.png"));
-		animPlayer.mapStates["idle"].push_back(new olc::Sprite("kirbo02.png"));
-		animPlayer.mapStates["idle"].push_back(new olc::Sprite("kirbo01.png"));
+		animPlayer.mapStates["idle"].push_back(new olc::Sprite("assets/gfx/kirbo00.png"));
+		animPlayer.mapStates["idle"].push_back(new olc::Sprite("assets/gfx/kirbo01.png"));
+		animPlayer.mapStates["idle"].push_back(new olc::Sprite("assets/gfx/kirbo02.png"));
+		animPlayer.mapStates["idle"].push_back(new olc::Sprite("assets/gfx/kirbo03.png"));
+		animPlayer.mapStates["idle"].push_back(new olc::Sprite("assets/gfx/kirbo04.png"));
+		animPlayer.mapStates["idle"].push_back(new olc::Sprite("assets/gfx/kirbo05.png"));
+		animPlayer.mapStates["idle"].push_back(new olc::Sprite("assets/gfx/kirbo04.png"));
+		animPlayer.mapStates["idle"].push_back(new olc::Sprite("assets/gfx/kirbo03.png"));
+		animPlayer.mapStates["idle"].push_back(new olc::Sprite("assets/gfx/kirbo02.png"));
+		animPlayer.mapStates["idle"].push_back(new olc::Sprite("assets/gfx/kirbo01.png"));
 
 		animPlayer.mapStates["idle_fire"].push_back(new olc::Sprite("TODO"));
 		animPlayer.mapStates["idle_fire"].push_back(new olc::Sprite("TODO"));
@@ -137,10 +137,10 @@ protected:
 		animPlayer.mapStates["idle_fire"].push_back(new olc::Sprite("TODO"));
 		animPlayer.mapStates["idle_fire"].push_back(new olc::Sprite("TODO"));
 
-		animPlayer.mapStates["run"].push_back(new olc::Sprite("kirboRunning00.png"));
-		animPlayer.mapStates["run"].push_back(new olc::Sprite("kirboRunning01.png"));
-		animPlayer.mapStates["run"].push_back(new olc::Sprite("kirboRunning02.png"));
-		animPlayer.mapStates["run"].push_back(new olc::Sprite("kirboRunning03.png"));
+		animPlayer.mapStates["run"].push_back(new olc::Sprite("assets/gfx/kirboRunning00.png"));
+		animPlayer.mapStates["run"].push_back(new olc::Sprite("assets/gfx/kirboRunning01.png"));
+		animPlayer.mapStates["run"].push_back(new olc::Sprite("assets/gfx/kirboRunning02.png"));
+		animPlayer.mapStates["run"].push_back(new olc::Sprite("assets/gfx/kirboRunning03.png"));
 
 		animPlayer.mapStates["run_fire"].push_back(new olc::Sprite("TODO"));
 		animPlayer.mapStates["run_fire"].push_back(new olc::Sprite("TODO"));
@@ -155,9 +155,9 @@ protected:
 		animPlayer.mapStates["run_fire"].push_back(new olc::Sprite("TODO"));
 		animPlayer.mapStates["run_fire"].push_back(new olc::Sprite("TODO"));
 
-		animPlayer.mapStates["jump"].push_back(new olc::Sprite("kirboJump.png"));
+		animPlayer.mapStates["jump"].push_back(new olc::Sprite("assets/gfx/kirboJump.png"));
 
-		animPlayer.mapStates["fall"].push_back(new olc::Sprite("kirboFall.png"));
+		animPlayer.mapStates["fall"].push_back(new olc::Sprite("assets/gfx/kirboFall.png"));
 
 		animPlayer.mapStates["air_fire"].push_back(new olc::Sprite("TODO"));
 		animPlayer.mapStates["air_fire"].push_back(new olc::Sprite("TODO"));
@@ -167,7 +167,7 @@ protected:
 		animPlayer.mapStates["air_fire"].push_back(new olc::Sprite("TODO"));
 
 		// title screen
-		sprTitleScreen = new olc::Sprite("title screen.png");
+		sprTitleScreen = new olc::Sprite("assets/gfx/title screen.png");
 
 		nGameState = GS_TITLE;
 
@@ -186,7 +186,7 @@ protected:
 
 	virtual bool OnUserCreate()
 	{
-		spriteTiles = new olc::Sprite("tilemap.png");
+		spriteTiles = new olc::Sprite("assets/gfx/tilemap.png");
 		animPlayer.ChangeState("idle");
 
 		// Déplacer dans le gamestate GENERATING
@@ -253,8 +253,8 @@ protected:
 
 		if (bPlayerOnGround)
 		{
-			fPlayerVelX += -4.0f * fPlayerVelX * fElapsedTime;
-			if (fabs(fPlayerVelX) < 0.25f)
+			fPlayerVelX += -3.0f * fPlayerVelX * fElapsedTime;
+			if (fabs(fPlayerVelX) < 0.15f)
 			{
 				fPlayerVelX = 0.0f;
 				animPlayer.ChangeState("idle");
