@@ -104,7 +104,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 	// title screen
 	sprTitleScreen = new olc::Sprite("assets/gfx/title screen.png");
-	titleScreen = new cTitleScreen(sprTitleScreen);
+	titleScreen = new cTitleScreen(this, sprTitleScreen);
 
 	nGameState = GS_TITLE;
 
