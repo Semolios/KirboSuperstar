@@ -149,11 +149,13 @@
   <ItemGroup>
     <ClCompile Include="olcPixelGameEngine.cpp" />
     <ClCompile Include="Platformer.cpp" />
+    <ClCompile Include="Platformer_Animator.cpp" />
     <ClCompile Include="Platformer_Engine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="olcPGEX_Graphics2D.h" />
     <ClInclude Include="olcPixelGameEngine.h" />
+    <ClInclude Include="Platformer_Animator.h" />
     <ClInclude Include="Platformer_Engine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
