@@ -1,6 +1,7 @@
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
 #include "Platformer_Animator.h"
+#include "Platformer_TitleScreen.h"
 
 class OneLoneCoder_Platformer : public olc::PixelGameEngine
 {
@@ -26,6 +27,7 @@ private:
 
 	// Title screen
 	olc::Sprite* sprTitleScreen;
+	cTitleScreen* titleScreen;
 
 	// Sprites
 	int nTileWidth = 64;
