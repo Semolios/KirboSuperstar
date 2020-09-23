@@ -20,9 +20,31 @@ bool OneLoneCoder_Platformer::OnUserUpdate(float fElapsedTime)
 		case GS_LOADING: GameState_Loading(fElapsedTime); break;
 		case GS_TITLE: GameState_Title(fElapsedTime); break;
 		case GS_MAIN: GameState_Main(fElapsedTime); break;
+		case GS_TRANSITION: GameState_Transition(fElapsedTime); break;
 	}
 
 	return true;
+}
+
+bool OneLoneCoder_Platformer::GameState_Transition(float fElapsedTime)
+{
+	transition->Update(this, fElapsedTime);
+
+	switch (transitionAnim)
+	{
+		case 0:
+			animPlayer.ChangeState("idle");
+			break;
+
+		case 1:
+			animPlayer.ChangeState("run");
+			break;
+	}
+
+	if (GetKey(olc::Key::SPACE).bPressed)
+		nGameState = GS_MAIN;
+
+	return false;
 }
 
 bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
@@ -106,6 +128,9 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	sprTitleScreen = new olc::Sprite("assets/gfx/title screen.png");
 	titleScreen = new cTitleScreen(this, sprTitleScreen);
 
+	// Transition
+	cTransition::animPlayer = &animPlayer;
+
 	nGameState = GS_TITLE;
 
 	return true;
@@ -116,7 +141,10 @@ bool OneLoneCoder_Platformer::GameState_Title(float fElapsedTime)
 	titleScreen->Update(this, fElapsedTime);
 
 	if (GetKey(olc::Key::SPACE).bPressed)
-		nGameState = GS_MAIN;
+	{
+		transitionAnim = rand() % 2;
+		nGameState = GS_TRANSITION;
+	}
 
 	return true;
 }
@@ -155,12 +183,16 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 		if (GetKey(olc::Key::LEFT).bHeld)
 		{
+			if (fabs(fPlayerVelX) < 0.15f) fPlayerVelX -= 1.05f;
+
 			fPlayerVelX += (bPlayerOnGround ? -25.0f : -15.0f) * fElapsedTime;
 			fFaceDir = -1.0f;
 		}
 
 		if (GetKey(olc::Key::RIGHT).bHeld)
 		{
+			if (fabs(fPlayerVelX) < 0.15f) fPlayerVelX += 1.05f;
+
 			fPlayerVelX += (bPlayerOnGround ? 25.0f : 15.0f) * fElapsedTime;
 			fFaceDir = 1.0f;
 		}
@@ -180,7 +212,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	if (bPlayerOnGround)
 	{
 		fPlayerVelX += -3.0f * fPlayerVelX * fElapsedTime;
-		if (fabs(fPlayerVelX) < 0.15f)
+		if (fabs(fPlayerVelX) < 1.0f)
 		{
 			fPlayerVelX = 0.0f;
 			animPlayer.ChangeState("idle");

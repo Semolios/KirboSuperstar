@@ -2,6 +2,7 @@
 #include "olcPGEX_Graphics2D.h"
 #include "Platformer_Animator.h"
 #include "Platformer_TitleScreen.h"
+#include "Platformer_Transition.h"
 
 class OneLoneCoder_Platformer : public olc::PixelGameEngine
 {
@@ -29,6 +30,10 @@ private:
 	olc::Sprite* sprTitleScreen;
 	cTitleScreen* titleScreen;
 
+	// Transition Screen
+	cTransition* transition;
+	int transitionAnim = 0;
+
 	// Sprites
 	int nTileWidth = 64;
 	int nTileHeight = 64;
@@ -43,13 +48,14 @@ private:
 		GS_LOADING,
 		GS_TITLE,
 		GS_MAIN,
+		GS_TRANSITION,
 	} nGameState = GS_LOADING;
 
 protected:
-
 	bool OnUserCreate() override;
 	bool OnUserUpdate(float fElapsedTime) override;
 
+	bool GameState_Transition(float fElapsedTime);
 	bool GameState_Loading(float fElapsedTime);
 	bool GameState_Title(float fElapsedTime);
 	bool GameState_Main(float fElapsedTime);

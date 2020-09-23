@@ -26,4 +26,3 @@ public:
 	void DrawNewStar(olc::PixelGameEngine* gfx, float fMarker);
 	void DrawStar(olc::PixelGameEngine* gfx, olc::GFX2D::Transform2D& t);
 };
-
