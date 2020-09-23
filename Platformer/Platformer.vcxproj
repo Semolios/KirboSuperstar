@@ -151,6 +151,7 @@
     <ClCompile Include="Platformer.cpp" />
     <ClCompile Include="Platformer_Animator.cpp" />
     <ClCompile Include="Platformer_Engine.cpp" />
+    <ClCompile Include="Platformer_Level.cpp" />
     <ClCompile Include="Platformer_Transition.cpp" />
     <ClCompile Include="Platformer_Spline.cpp" />
     <ClCompile Include="Platformer_TitleScreen.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="olcPixelGameEngine.h" />
     <ClInclude Include="Platformer_Animator.h" />
     <ClInclude Include="Platformer_Engine.h" />
+    <ClInclude Include="Platformer_Level.h" />
     <ClInclude Include="Platformer_Transition.h" />
     <ClInclude Include="Platformer_Spline.h" />
     <ClInclude Include="Platformer_TitleScreen.h" />

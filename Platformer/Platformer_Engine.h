@@ -3,6 +3,7 @@
 #include "Platformer_Animator.h"
 #include "Platformer_TitleScreen.h"
 #include "Platformer_Transition.h"
+#include "Platformer_Level.h"
 
 class OneLoneCoder_Platformer : public olc::PixelGameEngine
 {
@@ -14,6 +15,10 @@ private:
 	std::wstring sLevel;
 	int nLevelWidth;
 	int nLevelHeight;
+
+	cLevel* currentLvl;
+	int nCurrentLevel = 0;
+	std::vector<std::string> levels;
 
 	// Player Properties
 	float fPlayerPosX = 0.0f;
