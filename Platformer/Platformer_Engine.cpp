@@ -113,7 +113,12 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	animPlayer.mapStates["run_fire"].push_back(new olc::Sprite("TODO"));
 	animPlayer.mapStates["run_fire"].push_back(new olc::Sprite("TODO"));
 
-	animPlayer.mapStates["jump"].push_back(new olc::Sprite("assets/gfx/kirboJump.png"));
+	animPlayer.mapStates["jump"].push_back(new olc::Sprite("assets/gfx/kirboJump00.png"));
+	animPlayer.mapStates["jump"].push_back(new olc::Sprite("assets/gfx/kirboJump01.png"));
+	animPlayer.mapStates["jump"].push_back(new olc::Sprite("assets/gfx/kirboJump02.png"));
+	animPlayer.mapStates["jump"].push_back(new olc::Sprite("assets/gfx/kirboJump03.png"));
+	animPlayer.mapStates["jump"].push_back(new olc::Sprite("assets/gfx/kirboJump04.png"));
+	animPlayer.mapStates["jump"].push_back(new olc::Sprite("assets/gfx/kirboJump05.png"));
 
 	animPlayer.mapStates["fall"].push_back(new olc::Sprite("assets/gfx/kirboFall.png"));
 
