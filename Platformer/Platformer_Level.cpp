@@ -7,6 +7,10 @@ cLevel::cLevel()
 
 bool cLevel::LoadLevel(std::string levelName)
 {
+	nLevelWidth = 0;
+	nLevelHeight = 0;
+	sLevel = L"";
+
 	std::wifstream file(levelName);
 
 	if (file)
@@ -32,6 +36,8 @@ bool cLevel::LoadLevel(std::string levelName)
 			}
 		}
 	}
+
+	return true;
 }
 
 std::wstring cLevel::GetLevel()

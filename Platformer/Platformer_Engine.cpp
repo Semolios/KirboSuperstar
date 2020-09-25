@@ -21,6 +21,7 @@ bool OneLoneCoder_Platformer::OnUserUpdate(float fElapsedTime)
 		case GS_TITLE: GameState_Title(fElapsedTime); break;
 		case GS_MAIN: GameState_Main(fElapsedTime); break;
 		case GS_TRANSITION: GameState_Transition(fElapsedTime); break;
+		case GS_LOADLEVEL: GameState_LoadLevel(fElapsedTime); break;
 	}
 
 	return true;
@@ -52,15 +53,9 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	fFaceDir = 1.0f;
 
 	levels.push_back("assets/lvls/lvl1.txt");
+	levels.push_back("assets/lvls/lvl2.txt");
 
 	currentLvl = new cLevel();
-
-	if (currentLvl->LoadLevel(levels[nCurrentLevel]))
-	{
-		nLevelWidth = currentLvl->GetWidth();
-		nLevelHeight = currentLvl->GetHeight();
-		sLevel = currentLvl->GetLevel();
-	}
 
 	// Player sprites
 	animPlayer.mapStates["idle"].push_back(new olc::Sprite("assets/gfx/kirbo00.png"));
@@ -133,6 +128,20 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	return true;
 }
 
+bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
+{
+	if (currentLvl->LoadLevel(levels[nCurrentLevel]))
+	{
+		nLevelWidth = currentLvl->GetWidth();
+		nLevelHeight = currentLvl->GetHeight();
+		sLevel = currentLvl->GetLevel();
+	}
+
+	nGameState = GS_TRANSITION;
+
+	return true;
+}
+
 bool OneLoneCoder_Platformer::GameState_Title(float fElapsedTime)
 {
 	titleScreen->Update(this, fElapsedTime);
@@ -140,7 +149,7 @@ bool OneLoneCoder_Platformer::GameState_Title(float fElapsedTime)
 	if (GetKey(olc::Key::SPACE).bPressed)
 	{
 		transitionAnim = rand() % 2;
-		nGameState = GS_TRANSITION;
+		nGameState = GS_LOADLEVEL;
 	}
 
 	return true;
@@ -344,6 +353,12 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 					FillRect(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, (x + 1) * nTileWidth - fTileOffsetX, (y + 1) * nTileHeight - fTileOffsetY, olc::CYAN);
 					DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 4 * nTileWidth, 0 * nTileHeight, nTileWidth, nTileHeight);
 					SetPixelMode(olc::Pixel::NORMAL);
+					break;
+				case L'w':
+					nCurrentLevel++;
+					nGameState = GS_LOADLEVEL;
+					fPlayerPosX = 1;
+					fPlayerPosY = 7;
 					break;
 			}
 		}

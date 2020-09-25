@@ -21,8 +21,8 @@ private:
 	std::vector<std::string> levels;
 
 	// Player Properties
-	float fPlayerPosX = 0.0f;
-	float fPlayerPosY = 0.0f;
+	float fPlayerPosX = 1.0f;
+	float fPlayerPosY = 7.0f;
 	float fPlayerVelX = 0.0f;
 	float fPlayerVelY = 0.0f;
 	bool bPlayerOnGround = false;
@@ -54,6 +54,7 @@ private:
 		GS_TITLE,
 		GS_MAIN,
 		GS_TRANSITION,
+		GS_LOADLEVEL,
 	} nGameState = GS_LOADING;
 
 protected:
@@ -62,6 +63,7 @@ protected:
 
 	bool GameState_Transition(float fElapsedTime);
 	bool GameState_Loading(float fElapsedTime);
+	bool GameState_LoadLevel(float fElapsedTime);
 	bool GameState_Title(float fElapsedTime);
 	bool GameState_Main(float fElapsedTime);
 };
