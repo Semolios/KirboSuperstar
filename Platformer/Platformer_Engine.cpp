@@ -137,6 +137,8 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 		sLevel = currentLvl->GetLevel();
 	}
 
+	transitionAnim = rand() % 2;
+
 	nGameState = GS_TRANSITION;
 
 	return true;
@@ -147,10 +149,7 @@ bool OneLoneCoder_Platformer::GameState_Title(float fElapsedTime)
 	titleScreen->Update(this, fElapsedTime);
 
 	if (GetKey(olc::Key::SPACE).bPressed)
-	{
-		transitionAnim = rand() % 2;
 		nGameState = GS_LOADLEVEL;
-	}
 
 	return true;
 }
@@ -355,6 +354,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 					SetPixelMode(olc::Pixel::NORMAL);
 					break;
 				case L'w':
+					// Ce n'est pas ici qu'il faut le mettre, sinon dès qu'il apparait à l'écran on change de niveau, c'est pas ce qu'on veut
 					nCurrentLevel++;
 					nGameState = GS_LOADLEVEL;
 					fPlayerPosX = 1;
