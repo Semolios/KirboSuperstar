@@ -180,6 +180,11 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	{
 		if (GetKey(olc::Key::UP).bHeld)
 		{
+			if (GetTile(fPlayerPosX + 0.5f, fPlayerPosY + 0.5f) == L'w' && bPlayerOnGround)
+			{
+				nCurrentLevel++;
+				nGameState = GS_LOADLEVEL;
+			}
 			fPlayerVelY = -cfPlayerVelY;
 		}
 
@@ -274,8 +279,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	// Collision
 	if (fPlayerVelX <= 0) // Moving Left
 	{
-		if ((GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.0f) != L'.' || GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.9f) != L'.') &&
-			(GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.0f) != L'o' || GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.9f) != L'o'))
+		if (IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.0f)) || IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.9f)))
 		{
 			fNewPlayerPosX = (int)fNewPlayerPosX + 1;
 			fPlayerVelX = 0;
@@ -283,8 +287,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	}
 	else // Moving Right
 	{
-		if ((GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.0f) != L'.' || GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.9f) != L'.') &&
-			(GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.0f) != L'o' || GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.9f) != L'o'))
+		if (IsSolidTile(GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.0f)) || IsSolidTile(GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.9f)))
 		{
 			fNewPlayerPosX = (int)fNewPlayerPosX;
 			fPlayerVelX = 0;
@@ -294,8 +297,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	bPlayerOnGround = false;
 	if (fPlayerVelY <= 0) // Moving Up
 	{
-		if ((GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY) != L'.' || GetTile(fNewPlayerPosX + 0.9f, fNewPlayerPosY) != L'.') &&
-			(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY) != L'o' || GetTile(fNewPlayerPosX + 0.9f, fNewPlayerPosY) != L'o'))
+		if (IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY)) || IsSolidTile(GetTile(fNewPlayerPosX + 0.9f, fNewPlayerPosY)))
 		{
 			fNewPlayerPosY = (int)fNewPlayerPosY + 1;
 			fPlayerVelY = 0;
@@ -303,8 +305,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	}
 	else // Moving Down
 	{
-		if ((GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f) != L'.' || GetTile(fNewPlayerPosX + 0.9f, fNewPlayerPosY + 1.0f) != L'.') &&
-			(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f) != L'o' || GetTile(fNewPlayerPosX + 0.9f, fNewPlayerPosY + 1.0f) != L'o'))
+		if (IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f)) || IsSolidTile(GetTile(fNewPlayerPosX + 0.9f, fNewPlayerPosY + 1.0f)))
 		{
 			fNewPlayerPosY = (int)fNewPlayerPosY;
 			fPlayerVelY = 0;
@@ -366,11 +367,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 					SetPixelMode(olc::Pixel::NORMAL);
 					break;
 				case L'w':
-					// Ce n'est pas ici qu'il faut le mettre, sinon dès qu'il apparait à l'écran on change de niveau, c'est pas ce qu'on veut
-					nCurrentLevel++;
-					nGameState = GS_LOADLEVEL;
-					fPlayerPosX = 1;
-					fPlayerPosY = 7;
+					// draw a door
+					DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 3 * nTileWidth, 0 * nTileHeight, nTileWidth, nTileHeight);
 					break;
 			}
 		}
@@ -388,4 +386,9 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	SetPixelMode(olc::Pixel::NORMAL);
 
 	return true;
+}
+
+bool OneLoneCoder_Platformer::IsSolidTile(wchar_t tile)
+{
+	return tile != '.' && tile != 'o' && tile != 'w';
 }

@@ -81,4 +81,6 @@ protected:
 	bool GameState_LoadLevel(float fElapsedTime);
 	bool GameState_Title(float fElapsedTime);
 	bool GameState_Main(float fElapsedTime);
+
+	bool IsSolidTile(wchar_t tile);
 };
