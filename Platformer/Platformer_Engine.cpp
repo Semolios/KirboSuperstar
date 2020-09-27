@@ -22,6 +22,7 @@ bool OneLoneCoder_Platformer::OnUserUpdate(float fElapsedTime)
 		case GS_MAIN: GameState_Main(fElapsedTime); break;
 		case GS_TRANSITION: GameState_Transition(fElapsedTime); break;
 		case GS_LOADLEVEL: GameState_LoadLevel(fElapsedTime); break;
+		case GS_WORLDMAP: GameState_WorldMap(fElapsedTime); break;
 	}
 
 	return true;
@@ -116,6 +117,11 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	sprTitleScreen = new olc::Sprite("assets/gfx/title screen.png");
 	titleScreen = new cTitleScreen(this, sprTitleScreen);
 
+	// World Map
+	sprWorldMap = new olc::Sprite("assets/gfx/WorldMap.png");
+	worldMap = new cWorldMap(this, sprWorldMap);
+	cWorldMap::animPlayer = &animPlayer;
+
 	// Transition
 	cTransition::animPlayer = &animPlayer;
 
@@ -151,7 +157,10 @@ bool OneLoneCoder_Platformer::GameState_Title(float fElapsedTime)
 	titleScreen->Update(this, fElapsedTime);
 
 	if (GetKey(olc::Key::SPACE).bPressed)
-		nGameState = GS_LOADLEVEL;
+	{
+		animPlayer.ChangeState("run");
+		nGameState = GS_WORLDMAP;
+	}
 
 	return true;
 }
@@ -194,7 +203,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			if (GetTile(fPlayerPosX + 0.5f, fPlayerPosY + 0.5f) == L'w' && bPlayerOnGround)
 			{
 				nCurrentLevel++;
-				nGameState = GS_LOADLEVEL;
+				animPlayer.ChangeState("run");
+				nGameState = GS_WORLDMAP;
 			}
 			fPlayerVelY = -cfPlayerVelY;
 		}
@@ -349,6 +359,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	float fTileOffsetX = (fOffsetX - (int)fOffsetX) * nTileWidth;
 	float fTileOffsetY = (fOffsetY - (int)fOffsetY) * nTileHeight;
 
+	// Draw Level background
 	Clear(olc::CYAN);
 
 	// Draw Visible tile map
@@ -397,6 +408,16 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	SetPixelMode(olc::Pixel::NORMAL);
 
 	return true;
+}
+
+bool OneLoneCoder_Platformer::GameState_WorldMap(float fElapsedTime)
+{
+	worldMap->Update(this, fElapsedTime);
+
+	if (GetKey(olc::Key::SPACE).bPressed)
+		nGameState = GS_LOADLEVEL;
+
+	return false;
 }
 
 bool OneLoneCoder_Platformer::IsSolidTile(wchar_t tile)

@@ -1,9 +1,11 @@
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
+
 #include "Platformer_Animator.h"
+#include "Platformer_Level.h"
 #include "Platformer_TitleScreen.h"
 #include "Platformer_Transition.h"
-#include "Platformer_Level.h"
+#include "Platformer_WorldMap.h"
 
 #include <cTime> 
 
@@ -50,6 +52,10 @@ private:
 	olc::Sprite* sprTitleScreen;
 	cTitleScreen* titleScreen;
 
+	// World Map
+	olc::Sprite* sprWorldMap;
+	cWorldMap* worldMap;
+
 	// Transition Screen
 	cTransition* transition;
 	int transitionAnim = 0;
@@ -72,6 +78,7 @@ private:
 		GS_MAIN,
 		GS_TRANSITION,
 		GS_LOADLEVEL,
+		GS_WORLDMAP,
 	} nGameState = GS_LOADING;
 
 protected:
@@ -83,6 +90,7 @@ protected:
 	bool GameState_LoadLevel(float fElapsedTime);
 	bool GameState_Title(float fElapsedTime);
 	bool GameState_Main(float fElapsedTime);
+	bool GameState_WorldMap(float fElapsedTime);
 
 	bool IsSolidTile(wchar_t tile);
 };

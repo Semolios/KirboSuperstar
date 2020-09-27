@@ -155,6 +155,7 @@
     <ClCompile Include="Platformer_Transition.cpp" />
     <ClCompile Include="Platformer_Spline.cpp" />
     <ClCompile Include="Platformer_TitleScreen.cpp" />
+    <ClCompile Include="Platformer_WorldMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="olcPGEX_Graphics2D.h" />
@@ -165,6 +166,7 @@
     <ClInclude Include="Platformer_Transition.h" />
     <ClInclude Include="Platformer_Spline.h" />
     <ClInclude Include="Platformer_TitleScreen.h" />
+    <ClInclude Include="Platformer_WorldMap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,8 +3,6 @@
 #include "olcPGEX_Graphics2D.h"
 #include "Platformer_Spline.h"
 
-class Platformer_Engine;
-
 class cTitleScreen
 {
 public:
@@ -18,7 +16,6 @@ public:
 	const float cfStarsRotSpeed = 8.0f;
 
 	olc::Sprite* sprBackGround;
-	static Platformer_Engine* g_engine;
 
 	cSpline path;
 	olc::Sprite* sprstars;
