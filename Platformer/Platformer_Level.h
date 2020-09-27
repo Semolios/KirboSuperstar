@@ -6,7 +6,6 @@ class cLevel
 {
 public:
 	std::wstring sLevel;
-	std::string sLevelName;
 	int nLevelWidth = 0;
 	int nLevelHeight = 0;
 	int nInitPlayerPosX = 0;
