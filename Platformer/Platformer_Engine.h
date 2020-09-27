@@ -63,6 +63,8 @@ private:
 	// Face direction
 	float fFaceDir = 1.0f;
 
+	bool bOnPause = false;
+
 	enum
 	{
 		GS_LOADING,

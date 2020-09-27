@@ -158,6 +158,17 @@ bool OneLoneCoder_Platformer::GameState_Title(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 {
+	//----------------------------------------------
+	// A VOIR AVEC LES ENNEMIS COMMENT CA REAGIT
+	if (IsFocused())
+	{
+		if (GetKey(olc::Key::P).bPressed)
+			bOnPause = !bOnPause;
+	}
+
+	if (bOnPause) return true;
+	//----------------------------------------------
+
 	animPlayer.Update(fElapsedTime);
 
 	// Utility Lambdas
