@@ -16,8 +16,6 @@ cTitleScreen::cTitleScreen(olc::PixelGameEngine* gfx, olc::Sprite* background)
 	path.points.push_back({ 0.3f * gfx->ScreenWidth(), 0.8f * gfx->ScreenHeight() });
 
 	sprstars = new olc::Sprite("assets/gfx/stars.png");
-	nTileWidth = 64;
-	nTileHeight = 64;
 }
 
 bool cTitleScreen::Update(olc::PixelGameEngine* gfx, float fElapsedTime)
@@ -36,17 +34,17 @@ bool cTitleScreen::Update(olc::PixelGameEngine* gfx, float fElapsedTime)
 	DrawNewStar(gfx, fMarker1);
 	DrawNewStar(gfx, fMarker2);
 
-	fMarker1 += 600.0f * fElapsedTime;
+	fMarker1 += cfStarsMovSpeed * fElapsedTime;
 
 	if (fMarker1 >= (float)path.fTotalSplineLength)
 		fMarker1 -= (float)path.fTotalSplineLength;
 
-	fMarker2 -= 600.0f * fElapsedTime;
+	fMarker2 -= cfStarsMovSpeed * fElapsedTime;
 
 	if (fMarker2 < 0.0f)
 		fMarker2 += (float)path.fTotalSplineLength;
 
-	fTheta += 8.0f * fElapsedTime;
+	fTheta += cfStarsRotSpeed * fElapsedTime;
 
 	return false;
 }
@@ -57,7 +55,7 @@ void cTitleScreen::DrawNewStar(olc::PixelGameEngine* gfx, float fMarker)
 	sPoint2D p1 = path.GetSplinePoint(fOffset1, true);
 
 	olc::GFX2D::Transform2D t1;
-	t1.Translate(-nTileWidth / 2, -nTileWidth / 2);
+	t1.Translate(-cnTileWidth / 2, -cnTileHeight / 2);
 	t1.Rotate(fTheta);
 	t1.Translate(p1.x, p1.y);
 

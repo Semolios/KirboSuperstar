@@ -11,6 +11,17 @@ public:
 	OneLoneCoder_Platformer();
 
 private:
+	// Constant values
+	const float cfPlayerVelY = 6.0f;		// Up and Down velocities
+	const float cfMinPlayerVelX = 1.0f;		// Minimum player horizontal velocity
+	const float cfMaxPlayerVelX = 10.0f;	// Maximum player horizontal velocity
+	const float cfMaxPlayerVelY = 100.0f;	// Maximum player vertical velocity
+	const float cfPlayerAccGrdX = 25.0f;	// Acceleration value when on ground
+	const float cfPlayerAccAirX = 15.0f;	// Acceleration value when in the air
+	const float cfPlayerJumpAcc = 12.0f;	// Jump acceleration
+	const float cfGravity = 20.0f;			// Gravity
+	const float cfDrag = -3.0f;				// Drag
+
 	// Level storage
 	std::wstring sLevel;
 	int nLevelWidth;
@@ -40,8 +51,8 @@ private:
 	int transitionAnim = 0;
 
 	// Sprites
-	int nTileWidth = 64;
-	int nTileHeight = 64;
+	const int nTileWidth = 64;
+	const int nTileHeight = 64;
 	olc::Sprite* spriteTiles = nullptr;
 	cAnimator animPlayer;
 

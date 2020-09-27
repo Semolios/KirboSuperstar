@@ -178,46 +178,46 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	{
 		if (GetKey(olc::Key::UP).bHeld)
 		{
-			fPlayerVelY = -6.0f;
+			fPlayerVelY = -cfPlayerVelY;
 		}
 
 		if (GetKey(olc::Key::DOWN).bHeld)
 		{
-			fPlayerVelY = 6.0f;
+			fPlayerVelY = cfPlayerVelY;
 		}
 
 		if (GetKey(olc::Key::LEFT).bHeld)
 		{
-			if (fabs(fPlayerVelX) < 0.15f) fPlayerVelX -= 1.05f;
+			if (fabs(fPlayerVelX) < cfMinPlayerVelX) fPlayerVelX -= (cfMinPlayerVelX + 0.05f);
 
-			fPlayerVelX += (bPlayerOnGround ? -25.0f : -15.0f) * fElapsedTime;
+			fPlayerVelX += (bPlayerOnGround ? -cfPlayerAccGrdX : -cfPlayerAccAirX) * fElapsedTime;
 			fFaceDir = -1.0f;
 		}
 
 		if (GetKey(olc::Key::RIGHT).bHeld)
 		{
-			if (fabs(fPlayerVelX) < 0.15f) fPlayerVelX += 1.05f;
+			if (fabs(fPlayerVelX) < cfMinPlayerVelX) fPlayerVelX += (cfMinPlayerVelX + 0.05f);
 
-			fPlayerVelX += (bPlayerOnGround ? 25.0f : 15.0f) * fElapsedTime;
+			fPlayerVelX += (bPlayerOnGround ? cfPlayerAccGrdX : cfPlayerAccAirX) * fElapsedTime;
 			fFaceDir = 1.0f;
 		}
 
 		if (GetKey(olc::Key::SPACE).bPressed)
 		{
-			if (fPlayerVelY == 0)
+			if (bPlayerOnGround)
 			{
-				fPlayerVelY = -12.0f;
+				fPlayerVelY = -cfPlayerJumpAcc;
 			}
 		}
 	}
 
 	// Gravity
-	fPlayerVelY += 20.0f * fElapsedTime;
+	fPlayerVelY += cfGravity * fElapsedTime;
 
 	if (bPlayerOnGround)
 	{
-		fPlayerVelX += -3.0f * fPlayerVelX * fElapsedTime;
-		if (fabs(fPlayerVelX) < 1.0f)
+		fPlayerVelX += cfDrag * fPlayerVelX * fElapsedTime;
+		if (fabs(fPlayerVelX) < cfMinPlayerVelX)
 		{
 			fPlayerVelX = 0.0f;
 			animPlayer.ChangeState("idle");
@@ -236,17 +236,17 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	}
 
 	// Clamp velocities
-	if (fPlayerVelX > 10.0f)
-		fPlayerVelX = 10.0f;
+	if (fPlayerVelX > cfMaxPlayerVelX)
+		fPlayerVelX = cfMaxPlayerVelX;
 
-	if (fPlayerVelX < -10.0f)
-		fPlayerVelX = -10.0f;
+	if (fPlayerVelX < -cfMaxPlayerVelX)
+		fPlayerVelX = -cfMaxPlayerVelX;
 
-	if (fPlayerVelY > 100.0f)
-		fPlayerVelY = 100.0f;
+	if (fPlayerVelY > cfMaxPlayerVelY)
+		fPlayerVelY = cfMaxPlayerVelY;
 
-	if (fPlayerVelY < -100.0f)
-		fPlayerVelY = -100.0f;
+	if (fPlayerVelY < -cfMaxPlayerVelY)
+		fPlayerVelY = -cfMaxPlayerVelY;
 
 	float fNewPlayerPosX = fPlayerPosX + fPlayerVelX * fElapsedTime;
 	float fNewPlayerPosY = fPlayerPosY + fPlayerVelY * fElapsedTime;
@@ -366,10 +366,10 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	// Draw Player
 	olc::GFX2D::Transform2D t;
-	t.Translate(-32.0f, -32.0f);
+	t.Translate((float)-nTileWidth / 2.0f, (float)-nTileWidth / 2.0f);
 	t.Scale(fFaceDir * 1.0f, 1.0f);
 
-	t.Translate((fPlayerPosX - fOffsetX) * nTileWidth + 32, (fPlayerPosY - fOffsetY) * nTileHeight + 32);
+	t.Translate((fPlayerPosX - fOffsetX) * nTileWidth + (nTileWidth / 2), (fPlayerPosY - fOffsetY) * nTileHeight + (nTileWidth / 2));
 
 	SetPixelMode(olc::Pixel::ALPHA);
 	animPlayer.DrawSelf(this, t);

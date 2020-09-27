@@ -11,6 +11,12 @@ public:
 	cTitleScreen(olc::PixelGameEngine* gfx, olc::Sprite* background);
 
 public:
+	// Constant values
+	const int cnTileWidth = 64;
+	const int cnTileHeight = 64;
+	const float cfStarsMovSpeed = 600.0f;
+	const float cfStarsRotSpeed = 8.0f;
+
 	olc::Sprite* sprBackGround;
 	static Platformer_Engine* g_engine;
 
@@ -19,8 +25,6 @@ public:
 	float fMarker1;
 	float fMarker2;
 	float fTheta;
-	int nTileWidth;
-	int nTileHeight;
 public:
 	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime);
 	void DrawNewStar(olc::PixelGameEngine* gfx, float fMarker);
