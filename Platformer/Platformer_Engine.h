@@ -5,6 +5,8 @@
 #include "Platformer_Transition.h"
 #include "Platformer_Level.h"
 
+#include <cTime> 
+
 class OneLoneCoder_Platformer : public olc::PixelGameEngine
 {
 public:

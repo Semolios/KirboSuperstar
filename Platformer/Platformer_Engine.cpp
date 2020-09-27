@@ -33,13 +33,9 @@ bool OneLoneCoder_Platformer::GameState_Transition(float fElapsedTime)
 
 	switch (transitionAnim)
 	{
-		case 0:
-			animPlayer.ChangeState("idle");
-			break;
-
-		case 1:
-			animPlayer.ChangeState("run");
-			break;
+		case 0: animPlayer.ChangeState("idle"); break;
+		case 1: animPlayer.ChangeState("run"); break;
+		case 2: animPlayer.ChangeState("jump"); break;
 	}
 
 	if (GetKey(olc::Key::SPACE).bPressed)
@@ -137,7 +133,8 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 		sLevel = currentLvl->GetLevel();
 	}
 
-	transitionAnim = rand() % 2;
+	srand(time(NULL));
+	transitionAnim = rand() % 3;
 
 	nGameState = GS_TRANSITION;
 
