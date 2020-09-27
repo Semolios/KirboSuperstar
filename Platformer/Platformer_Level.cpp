@@ -19,15 +19,25 @@ bool cLevel::LoadLevel(std::string levelName)
 
 		while (std::getline(file, line))
 		{
-			if (nLevelWidth == 0)
+			if (line[0] == 'w')
 			{
-				// First line is width
-				nLevelWidth = std::stoi(line);
+				// Width
+				nLevelWidth = std::stoi(line.substr(1, line.size() - 1));
 			}
-			else if (nLevelHeight == 0)
+			else if (line[0] == 'h')
 			{
-				// second line is height
-				nLevelHeight = std::stoi(line);
+				// Height
+				nLevelHeight = std::stoi(line.substr(1, line.size() - 1));
+			}
+			else if (line[0] == 'x')
+			{
+				// Init player pos X
+				nInitPlayerPosX = std::stoi(line.substr(1, line.size() - 1));
+			}
+			else if (line[0] == 'y')
+			{
+				// Init player pos Y
+				nInitPlayerPosY = std::stoi(line.substr(1, line.size() - 1));
 			}
 			else
 			{
@@ -53,4 +63,14 @@ int cLevel::GetWidth()
 int cLevel::GetHeight()
 {
 	return nLevelHeight;
+}
+
+int cLevel::GetInitPlayerPosX()
+{
+	return nInitPlayerPosX;
+}
+
+int cLevel::GetInitPlayerPoxY()
+{
+	return nInitPlayerPosY;
 }

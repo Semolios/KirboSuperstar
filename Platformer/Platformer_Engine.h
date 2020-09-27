@@ -34,8 +34,8 @@ private:
 	std::vector<std::string> levels;
 
 	// Player Properties
-	float fPlayerPosX = 1.0f;
-	float fPlayerPosY = 7.0f;
+	float fPlayerPosX = 0.0f;
+	float fPlayerPosY = 0.0f;
 	float fPlayerVelX = 0.0f;
 	float fPlayerVelY = 0.0f;
 	bool bPlayerOnGround = false;

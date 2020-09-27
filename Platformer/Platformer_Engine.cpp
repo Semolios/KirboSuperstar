@@ -130,8 +130,13 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 	{
 		nLevelWidth = currentLvl->GetWidth();
 		nLevelHeight = currentLvl->GetHeight();
+		fPlayerPosX = currentLvl->GetInitPlayerPosX();
+		fPlayerPosY = currentLvl->GetInitPlayerPoxY();
 		sLevel = currentLvl->GetLevel();
 	}
+
+	fPlayerVelX = 0.0f;
+	fPlayerVelY = 0.0f;
 
 	srand(time(NULL));
 	transitionAnim = rand() % 3;
