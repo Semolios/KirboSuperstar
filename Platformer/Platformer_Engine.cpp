@@ -210,6 +210,11 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			{
 				fPlayerVelY = -cfPlayerJumpAcc;
 			}
+			else if (bDoubleJump && fPlayerVelY > 0)
+			{
+				bDoubleJump = false;
+				fPlayerVelY = -cfPlayerDblJumpAcc;
+			}
 		}
 	}
 
@@ -269,7 +274,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	// Collision
 	if (fPlayerVelX <= 0) // Moving Left
 	{
-		if (GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.0f) != L'.' || GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.9f) != L'.')
+		if ((GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.0f) != L'.' || GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.9f) != L'.') &&
+			(GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.0f) != L'o' || GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.9f) != L'o'))
 		{
 			fNewPlayerPosX = (int)fNewPlayerPosX + 1;
 			fPlayerVelX = 0;
@@ -277,7 +283,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	}
 	else // Moving Right
 	{
-		if (GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.0f) != L'.' || GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.9f) != L'.')
+		if ((GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.0f) != L'.' || GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.9f) != L'.') &&
+			(GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.0f) != L'o' || GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.9f) != L'o'))
 		{
 			fNewPlayerPosX = (int)fNewPlayerPosX;
 			fPlayerVelX = 0;
@@ -287,7 +294,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	bPlayerOnGround = false;
 	if (fPlayerVelY <= 0) // Moving Up
 	{
-		if (GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY) != L'.' || GetTile(fNewPlayerPosX + 0.9f, fNewPlayerPosY) != L'.')
+		if ((GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY) != L'.' || GetTile(fNewPlayerPosX + 0.9f, fNewPlayerPosY) != L'.') &&
+			(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY) != L'o' || GetTile(fNewPlayerPosX + 0.9f, fNewPlayerPosY) != L'o'))
 		{
 			fNewPlayerPosY = (int)fNewPlayerPosY + 1;
 			fPlayerVelY = 0;
@@ -295,11 +303,13 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	}
 	else // Moving Down
 	{
-		if (GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f) != L'.' || GetTile(fNewPlayerPosX + 0.9f, fNewPlayerPosY + 1.0f) != L'.')
+		if ((GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f) != L'.' || GetTile(fNewPlayerPosX + 0.9f, fNewPlayerPosY + 1.0f) != L'.') &&
+			(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f) != L'o' || GetTile(fNewPlayerPosX + 0.9f, fNewPlayerPosY + 1.0f) != L'o'))
 		{
 			fNewPlayerPosY = (int)fNewPlayerPosY;
 			fPlayerVelY = 0;
 			bPlayerOnGround = true;
+			bDoubleJump = true;
 		}
 	}
 

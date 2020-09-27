@@ -21,6 +21,7 @@ private:
 	const float cfPlayerAccGrdX = 25.0f;	// Acceleration value when on ground
 	const float cfPlayerAccAirX = 15.0f;	// Acceleration value when in the air
 	const float cfPlayerJumpAcc = 12.0f;	// Jump acceleration
+	const float cfPlayerDblJumpAcc = 10.0f;	// Double jump acceleration
 	const float cfGravity = 20.0f;			// Gravity
 	const float cfDrag = -3.0f;				// Drag
 
@@ -39,6 +40,7 @@ private:
 	float fPlayerVelX = 0.0f;
 	float fPlayerVelY = 0.0f;
 	bool bPlayerOnGround = false;
+	bool bDoubleJump = false;
 
 	// Camera Properties
 	float fCameraPosX = 0.0f;
