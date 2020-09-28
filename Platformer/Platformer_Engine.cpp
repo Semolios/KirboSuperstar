@@ -208,6 +208,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 					nUnlockedLevel++;
 				animPlayer.ChangeState("riding_star");
 				nGameState = GS_WORLDMAP;
+
+				return true;
 			}
 			fPlayerVelY = -cfPlayerVelY;
 		}
