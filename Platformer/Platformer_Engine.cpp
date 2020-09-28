@@ -37,6 +37,7 @@ bool OneLoneCoder_Platformer::GameState_Transition(float fElapsedTime)
 		case 0: animPlayer.ChangeState("idle"); break;
 		case 1: animPlayer.ChangeState("run"); break;
 		case 2: animPlayer.ChangeState("jump"); break;
+		case 3: animPlayer.ChangeState("riding_star"); break;
 	}
 
 	if (GetKey(olc::Key::SPACE).bPressed)
@@ -51,6 +52,10 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 	levels.push_back("assets/lvls/lvl1.txt");
 	levels.push_back("assets/lvls/lvl2.txt");
+	levels.push_back("assets/lvls/lvl3.txt");
+	levels.push_back("assets/lvls/lvl4.txt");
+	levels.push_back("assets/lvls/lvl5.txt");
+	levels.push_back("assets/lvls/lvl6.txt");
 
 	currentLvl = new cLevel();
 
@@ -66,36 +71,32 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	animPlayer.mapStates["idle"].push_back(new olc::Sprite("assets/gfx/kirbo02.png"));
 	animPlayer.mapStates["idle"].push_back(new olc::Sprite("assets/gfx/kirbo01.png"));
 
-	animPlayer.mapStates["idle_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["idle_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["idle_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["idle_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["idle_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["idle_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["idle_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["idle_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["idle_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["idle_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["idle_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["idle_fire"].push_back(new olc::Sprite("TODO"));
+	animPlayer.mapStates["riding_star"].push_back(new olc::Sprite("assets/gfx/riding_star00.png"));
+	animPlayer.mapStates["riding_star"].push_back(new olc::Sprite("assets/gfx/riding_star01.png"));
+	animPlayer.mapStates["riding_star"].push_back(new olc::Sprite("assets/gfx/riding_star02.png"));
+	animPlayer.mapStates["riding_star"].push_back(new olc::Sprite("assets/gfx/riding_star03.png"));
+	animPlayer.mapStates["riding_star"].push_back(new olc::Sprite("assets/gfx/riding_star04.png"));
+	animPlayer.mapStates["riding_star"].push_back(new olc::Sprite("assets/gfx/riding_star05.png"));
+	animPlayer.mapStates["riding_star"].push_back(new olc::Sprite("assets/gfx/riding_star06.png"));
+	animPlayer.mapStates["riding_star"].push_back(new olc::Sprite("assets/gfx/riding_star07.png"));
 
 	animPlayer.mapStates["run"].push_back(new olc::Sprite("assets/gfx/kirboRunning00.png"));
 	animPlayer.mapStates["run"].push_back(new olc::Sprite("assets/gfx/kirboRunning01.png"));
 	animPlayer.mapStates["run"].push_back(new olc::Sprite("assets/gfx/kirboRunning02.png"));
 	animPlayer.mapStates["run"].push_back(new olc::Sprite("assets/gfx/kirboRunning03.png"));
 
-	animPlayer.mapStates["run_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["run_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["run_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["run_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["run_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["run_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["run_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["run_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["run_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["run_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["run_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["run_fire"].push_back(new olc::Sprite("TODO"));
+	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
+	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
+	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
+	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
+	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
+	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
+	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
+	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
+	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
+	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
+	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
+	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
 
 	animPlayer.mapStates["jump"].push_back(new olc::Sprite("assets/gfx/kirboJump00.png"));
 	animPlayer.mapStates["jump"].push_back(new olc::Sprite("assets/gfx/kirboJump01.png"));
@@ -106,12 +107,12 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 	animPlayer.mapStates["fall"].push_back(new olc::Sprite("assets/gfx/kirboFall.png"));
 
-	animPlayer.mapStates["air_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["air_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["air_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["air_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["air_fire"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["air_fire"].push_back(new olc::Sprite("TODO"));
+	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("TODO"));
+	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("TODO"));
+	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("TODO"));
+	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("TODO"));
+	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("TODO"));
+	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("TODO"));
 
 	// title screen
 	sprTitleScreen = new olc::Sprite("assets/gfx/title screen.png");
@@ -132,7 +133,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 {
-	if (currentLvl->LoadLevel(levels[nCurrentLevel]))
+	if (currentLvl->LoadLevel(levels[worldMap->GetSelectedLevel()]))
 	{
 		nLevelWidth = currentLvl->GetWidth();
 		nLevelHeight = currentLvl->GetHeight();
@@ -145,7 +146,7 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 	fPlayerVelY = 0.0f;
 
 	srand(time(NULL));
-	transitionAnim = rand() % 3;
+	transitionAnim = rand() % 4;
 
 	nGameState = GS_TRANSITION;
 
@@ -158,7 +159,7 @@ bool OneLoneCoder_Platformer::GameState_Title(float fElapsedTime)
 
 	if (GetKey(olc::Key::SPACE).bPressed)
 	{
-		animPlayer.ChangeState("run");
+		animPlayer.ChangeState("riding_star");
 		nGameState = GS_WORLDMAP;
 	}
 
@@ -202,8 +203,10 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		{
 			if (GetTile(fPlayerPosX + 0.5f, fPlayerPosY + 0.5f) == L'w' && bPlayerOnGround)
 			{
-				nCurrentLevel++;
-				animPlayer.ChangeState("run");
+				// If Player finishes the last level unlocked, another one is unlocked
+				if (nCurrentLevel + 1 == nUnlockedLevel)
+					nUnlockedLevel++;
+				animPlayer.ChangeState("riding_star");
 				nGameState = GS_WORLDMAP;
 			}
 			fPlayerVelY = -cfPlayerVelY;

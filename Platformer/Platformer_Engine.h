@@ -34,6 +34,7 @@ private:
 
 	cLevel* currentLvl;
 	int nCurrentLevel = 0;
+	int nUnlockedLevel = 1;
 	std::vector<std::string> levels;
 
 	// Player Properties
