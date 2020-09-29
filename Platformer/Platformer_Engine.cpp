@@ -23,6 +23,7 @@ bool OneLoneCoder_Platformer::OnUserUpdate(float fElapsedTime)
 		case GS_TRANSITION: GameState_Transition(fElapsedTime); break;
 		case GS_LOADLEVEL: GameState_LoadLevel(fElapsedTime); break;
 		case GS_WORLDMAP: GameState_WorldMap(fElapsedTime); break;
+		case GS_ENDSCREEN: GameState_EndScreen(fElapsedTime); break;
 	}
 
 	return true;
@@ -127,6 +128,10 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	// Transition
 	cTransition::animPlayer = &animPlayer;
 
+	// End Screen
+	sprEndScreen = new olc::Sprite("assets/gfx/endScreen.png");
+	endScreen = new cEndScreen(this, sprEndScreen);
+
 	nGameState = GS_TITLE;
 
 	return true;
@@ -208,7 +213,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 				if (nCurrentLevel + 1 == levels.size())
 				{
 					// If Player finishes the last level, the game is over
-					nGameState = GS_TITLE;
+					nGameState = GS_ENDSCREEN;
 
 					return true;
 				}
@@ -433,6 +438,16 @@ bool OneLoneCoder_Platformer::GameState_WorldMap(float fElapsedTime)
 
 	if (GetKey(olc::Key::SPACE).bPressed)
 		nGameState = GS_LOADLEVEL;
+
+	return false;
+}
+
+bool OneLoneCoder_Platformer::GameState_EndScreen(float fElapsedTime)
+{
+	endScreen->Update(this, fElapsedTime);
+
+	if (GetKey(olc::Key::SPACE).bPressed)
+		nGameState = GS_TITLE;
 
 	return false;
 }

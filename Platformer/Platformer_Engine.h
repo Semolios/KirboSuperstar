@@ -2,6 +2,7 @@
 #include "olcPGEX_Graphics2D.h"
 
 #include "Platformer_Animator.h"
+#include "Platformer_EndScreen.h"
 #include "Platformer_Level.h"
 #include "Platformer_TitleScreen.h"
 #include "Platformer_Transition.h"
@@ -61,6 +62,10 @@ private:
 	cTransition* transition;
 	int transitionAnim = 0;
 
+	// End Screen
+	olc::Sprite* sprEndScreen;
+	cEndScreen* endScreen;
+
 	// Sprites
 	const int nTileWidth = 64;
 	const int nTileHeight = 64;
@@ -80,6 +85,7 @@ private:
 		GS_TRANSITION,
 		GS_LOADLEVEL,
 		GS_WORLDMAP,
+		GS_ENDSCREEN,
 	} nGameState = GS_LOADING;
 
 protected:
@@ -92,6 +98,7 @@ protected:
 	bool GameState_Title(float fElapsedTime);
 	bool GameState_Main(float fElapsedTime);
 	bool GameState_WorldMap(float fElapsedTime);
+	bool GameState_EndScreen(float fElapsedTime);
 
 	bool IsSolidTile(wchar_t tile);
 };
