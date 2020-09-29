@@ -24,7 +24,7 @@ bool cWorldMap::Update(olc::PixelGameEngine* gfx, float fElapsedTime)
 	if (gfx->GetKey(olc::RIGHT).bReleased)
 	{
 		nSelectedLevel++;
-		if (nSelectedLevel >= path.points.size())
+		if (nSelectedLevel >= nUnlockedLevels)
 			nSelectedLevel = 0;
 	}
 
@@ -32,7 +32,7 @@ bool cWorldMap::Update(olc::PixelGameEngine* gfx, float fElapsedTime)
 	{
 		nSelectedLevel--;
 		if (nSelectedLevel < 0)
-			nSelectedLevel = path.points.size() - 1;
+			nSelectedLevel = nUnlockedLevels - 1;
 	}
 
 	// Draw Spline
@@ -45,7 +45,10 @@ bool cWorldMap::Update(olc::PixelGameEngine* gfx, float fElapsedTime)
 	// Draw Control Points
 	for (int i = 0; i < path.points.size(); i++)
 	{
-		gfx->FillRect(path.points[i].x - 3, path.points[i].y - 3, 6, 6, olc::RED);
+		//if (i <= nUnlockedLevels - 1)
+		gfx->FillRect(path.points[i].x - 3, path.points[i].y - 3, 6, 6, (i <= nUnlockedLevels - 1) ? olc::YELLOW : olc::RED);
+		//else
+			//gfx->FillRect(path.points[i].x - 3, path.points[i].y - 3, 6, 6, olc::RED);
 	}
 
 	olc::GFX2D::Transform2D t;
@@ -61,4 +64,9 @@ bool cWorldMap::Update(olc::PixelGameEngine* gfx, float fElapsedTime)
 int cWorldMap::GetSelectedLevel()
 {
 	return nSelectedLevel;
+}
+
+void cWorldMap::SetUnlockedLevel(int unlockedLevels)
+{
+	nUnlockedLevels = unlockedLevels;
 }

@@ -11,6 +11,7 @@ public:
 
 private:
 	int nSelectedLevel = 0;
+	int nUnlockedLevels = 0;
 
 public:
 	static cAnimator* animPlayer;
@@ -20,5 +21,6 @@ public:
 public:
 	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime);
 	int GetSelectedLevel();
+	void SetUnlockedLevel(int unlockedLevels);
 };
 

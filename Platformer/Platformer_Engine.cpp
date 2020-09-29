@@ -122,6 +122,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	sprWorldMap = new olc::Sprite("assets/gfx/WorldMap.png");
 	worldMap = new cWorldMap(this, sprWorldMap);
 	cWorldMap::animPlayer = &animPlayer;
+	worldMap->SetUnlockedLevel(nUnlockedLevel);
 
 	// Transition
 	cTransition::animPlayer = &animPlayer;
@@ -133,7 +134,8 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 {
-	if (currentLvl->LoadLevel(levels[worldMap->GetSelectedLevel()]))
+	nCurrentLevel = worldMap->GetSelectedLevel();
+	if (currentLvl->LoadLevel(levels[nCurrentLevel]))
 	{
 		nLevelWidth = currentLvl->GetWidth();
 		nLevelHeight = currentLvl->GetHeight();
@@ -203,9 +205,19 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		{
 			if (GetTile(fPlayerPosX + 0.5f, fPlayerPosY + 0.5f) == L'w' && bPlayerOnGround)
 			{
-				// If Player finishes the last level unlocked, another one is unlocked
-				if (nCurrentLevel + 1 == nUnlockedLevel)
+				if (nCurrentLevel + 1 == levels.size())
+				{
+					// If Player finishes the last level, the game is over
+					nGameState = GS_TITLE;
+
+					return true;
+				}
+				else if (nCurrentLevel + 1 == nUnlockedLevel)
+				{
+					// If Player finishes the last level unlocked, another one is unlocked
 					nUnlockedLevel++;
+					worldMap->SetUnlockedLevel(nUnlockedLevel);
+				}
 				animPlayer.ChangeState("riding_star");
 				nGameState = GS_WORLDMAP;
 
