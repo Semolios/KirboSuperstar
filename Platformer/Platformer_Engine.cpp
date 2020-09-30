@@ -49,6 +49,10 @@ bool OneLoneCoder_Platformer::GameState_Transition(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 {
+	// Assets
+	cAssets::get().LoadSprites();
+	cAssets::get().LoadItems();
+
 	fFaceDir = 1.0f;
 
 	levels.push_back("assets/lvls/lvl1.txt");
@@ -139,6 +143,9 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 {
+	// Destroy all dynamics
+	vecDynamics.clear();
+
 	nCurrentLevel = worldMap->GetSelectedLevel();
 	if (currentLvl->LoadLevel(levels[nCurrentLevel]))
 	{
@@ -147,6 +154,9 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 		fPlayerPosX = currentLvl->GetInitPlayerPosX();
 		fPlayerPosY = currentLvl->GetInitPlayerPoxY();
 		sLevel = currentLvl->GetLevel();
+
+		// TODO utiliser le même système que LoadLevel, stocker les emplacements des ennemis dans un fichier et charger avec levelsEnnemies[nCurrentLevel]
+		currentLvl->PopulateDynamics(vecDynamics);
 	}
 
 	fPlayerVelX = 0.0f;
@@ -303,6 +313,10 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	if (fPlayerVelY < -cfMaxPlayerVelY)
 		fPlayerVelY = -cfMaxPlayerVelY;
 
+	// TODO pendant que kirby vole
+	//if (fPlayerVelY > cfMaxPlayerVelY / 20)
+	//	fPlayerVelY = cfMaxPlayerVelY / 20;
+
 	float fNewPlayerPosX = fPlayerPosX + fPlayerVelX * fElapsedTime;
 	float fNewPlayerPosY = fPlayerPosY + fPlayerVelY * fElapsedTime;
 
@@ -418,12 +432,125 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		}
 	}
 
+	// Ennemies
+	for (auto& object : vecDynamics)
+	{
+		float fNewObjectPosX = object->px + object->vx * fElapsedTime;
+		float fNewObjectPosY = object->py + object->vy * fElapsedTime;
+
+		// Collision
+		float fBorder = 0.1f;
+		bool bCollisionWithMap = false;
+
+		// Gravity
+		object->vy += cfGravity * fElapsedTime;
+
+		if (object->vy > cfMaxPlayerVelY)
+			object->vy = cfMaxPlayerVelY;
+
+		if (object->vx <= 0) // Moving Left
+		{
+			if (IsSolidTile(GetTile(fNewObjectPosX + fBorder, object->py + 0.0f)) || IsSolidTile(GetTile(fNewObjectPosX + fBorder, object->py + 0.9f)))
+			{
+				fNewObjectPosX = (int)fNewObjectPosX + 1;
+				object->vx = 0;
+				bCollisionWithMap = true;
+			}
+		}
+		else // Moving Right
+		{
+			if (IsSolidTile(GetTile(fNewObjectPosX + (1.0f - fBorder), object->py + 0.0f)) || IsSolidTile(GetTile(fNewObjectPosX + (1.0f - fBorder), object->py + 0.9f)))
+			{
+				fNewObjectPosX = (int)fNewObjectPosX;
+				object->vx = 0;
+				bCollisionWithMap = true;
+			}
+		}
+
+		if (object->vy <= 0) // Moving Up
+		{
+			if (IsSolidTile(GetTile(fNewObjectPosX + fBorder + 0.0f, fNewObjectPosY)) || IsSolidTile(GetTile(fNewObjectPosX + (1.0f - fBorder), fNewObjectPosY)))
+			{
+				fNewObjectPosY = (int)fNewObjectPosY + 1;
+				object->vy = 0;
+				bCollisionWithMap = true;
+			}
+		}
+		else // Moving Down
+		{
+			if (IsSolidTile(GetTile(fNewObjectPosX + fBorder + 0.0f, fNewObjectPosY + 1.0f)) || IsSolidTile(GetTile(fNewObjectPosX + (1.0f - fBorder), fNewObjectPosY + 1.0f)))
+			{
+				fNewObjectPosY = (int)fNewObjectPosY;
+				object->vy = 0;
+				bCollisionWithMap = true;
+			}
+		}
+
+		float fDynamicObjectPosX = fNewObjectPosX;
+		float fDynamicObjectPosY = fNewObjectPosY;
+
+		// Object vs Object collisions
+		for (auto& dyn : vecDynamics)
+		{
+			if (dyn != object)
+			{
+				// If the objects are solid then they must not overlap
+				if (dyn->bSolidVsDyn && object->bSolidVsDyn)
+				{
+					// Check if bounding rectangles overlap
+					if (fDynamicObjectPosX < (dyn->px + 1.0f) && (fDynamicObjectPosX + 1.0f) > dyn->px &&
+						object->py < (dyn->py + 1.0f) && (object->py + 1.0f) > dyn->py)
+					{
+						// First Check Horizontally - Check Left
+						if (object->vx <= 0)
+							fDynamicObjectPosX = dyn->px + 1.0f;
+						else
+							fDynamicObjectPosX = dyn->px - 1.0f;
+					}
+
+					if (fDynamicObjectPosX < (dyn->px + 1.0f) && (fDynamicObjectPosX + 1.0f) > dyn->px &&
+						fDynamicObjectPosY < (dyn->py + 1.0f) && (fDynamicObjectPosY + 1.0f) > dyn->py)
+					{
+
+						// First Check Vertically - Check Left
+						if (object->vy <= 0)
+							fDynamicObjectPosY = dyn->py + 1.0f;
+						else
+							fDynamicObjectPosY = dyn->py - 1.0f;
+					}
+				}
+			}
+		}
+
+		object->px = fDynamicObjectPosX;
+		object->py = fDynamicObjectPosY;
+	}
+
+	for (auto& object : vecDynamics)
+	{
+		object->Update(fElapsedTime, fPlayerPosX, fPlayerPosY);
+	}
+
+	// Remove dead ennemies
+	auto i = std::remove_if(vecDynamics.begin(), vecDynamics.end(), [](const cDynamic* d)
+	{
+		return d->bDead;
+	});
+	if (i != vecDynamics.end())
+		vecDynamics.erase(i);
+
+	// Draw Ennemies
+	for (auto& object : vecDynamics)
+	{
+		object->DrawSelf(this, fOffsetX, fOffsetY);
+	}
+
 	// Draw Player
 	olc::GFX2D::Transform2D t;
 	t.Translate((float)-nTileWidth / 2.0f, (float)-nTileWidth / 2.0f);
 	t.Scale(fFaceDir * 1.0f, 1.0f);
 
-	t.Translate((fPlayerPosX - fOffsetX) * nTileWidth + (nTileWidth / 2), (fPlayerPosY - fOffsetY) * nTileHeight + (nTileWidth / 2));
+	t.Translate((fPlayerPosX - fOffsetX) * nTileWidth + (nTileWidth / 2), (fPlayerPosY - fOffsetY) * nTileHeight + (nTileHeight / 2));
 
 	SetPixelMode(olc::Pixel::ALPHA);
 	animPlayer.DrawSelf(this, t);

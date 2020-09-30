@@ -2,6 +2,10 @@
 #include "olcPGEX_Graphics2D.h"
 
 #include "Platformer_Animator.h"
+#include "Platformer_Assets.h"
+#include "Platformer_Dynamic.h"
+#include "Platformer_DynamicCreature.h"
+#include "Platformer_DynamicCreatureWaddleDee.h"
 #include "Platformer_EndScreen.h"
 #include "Platformer_Level.h"
 #include "Platformer_TitleScreen.h"
@@ -71,6 +75,9 @@ private:
 	const int nTileHeight = 64;
 	olc::Sprite* spriteTiles = nullptr;
 	cAnimator animPlayer;
+
+	// Ennemies
+	std::vector<cDynamic*> vecDynamics;
 
 	// Face direction
 	float fFaceDir = 1.0f;

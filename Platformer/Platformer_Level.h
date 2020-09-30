@@ -1,6 +1,9 @@
 #pragma once
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
+#include "Platformer_Dynamic.h"
+#include "Platformer_DynamicCreature.h"
+#include "Platformer_DynamicCreatureWaddleDee.h"
 
 class cLevel
 {
@@ -21,5 +24,6 @@ public:
 	int GetHeight();
 	int GetInitPlayerPosX();
 	int GetInitPlayerPoxY();
+	bool PopulateDynamics(std::vector<cDynamic*>& vecDyns);
 };
 
