@@ -1,6 +1,8 @@
 #pragma once
 #include "Platformer_Dynamic.h"
 
+class cLevel;
+
 class cDynamicCreature : public cDynamic
 {
 public:
@@ -26,6 +28,7 @@ protected:
 	} nGraphicState;
 
 public:
+	cLevel* level = nullptr; // The Dynamic must be aware of the level to interact with (i.e. turn when encounter a wall or a hole)
 	int nHealth;
 	int nHealthMax;
 	bool bDead = false;

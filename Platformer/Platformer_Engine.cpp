@@ -90,18 +90,10 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	animPlayer.mapStates["run"].push_back(new olc::Sprite("assets/gfx/kirboRunning02.png"));
 	animPlayer.mapStates["run"].push_back(new olc::Sprite("assets/gfx/kirboRunning03.png"));
 
-	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["slap"].push_back(new olc::Sprite("TODO"));
+	animPlayer.mapStates["slap"].push_back(new olc::Sprite("assets/gfx/slap00.png"));
+	animPlayer.mapStates["slap"].push_back(new olc::Sprite("assets/gfx/slap01.png"));
+	animPlayer.mapStates["slap"].push_back(new olc::Sprite("assets/gfx/slap02.png"));
+	animPlayer.mapStates["slap"].push_back(new olc::Sprite("assets/gfx/slap03.png"));
 
 	animPlayer.mapStates["jump"].push_back(new olc::Sprite("assets/gfx/kirboJump00.png"));
 	animPlayer.mapStates["jump"].push_back(new olc::Sprite("assets/gfx/kirboJump01.png"));
@@ -274,30 +266,75 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 				fPlayerVelY = -cfPlayerDblJumpAcc;
 			}
 		}
+
+		if (!bAttacking)
+		{
+			if (GetKey(olc::Key::F).bPressed)
+			{
+				animPlayer.ChangeState("slap");
+				bAttacking = true;
+				fAnimationTimer = 0.0f;
+			}
+		}
 	}
 
 	// Gravity
 	fPlayerVelY += cfGravity * fElapsedTime;
 
-	if (bPlayerOnGround)
+	if (!bAttacking)
 	{
-		fPlayerVelX += cfDrag * fPlayerVelX * fElapsedTime;
-		if (fabs(fPlayerVelX) < cfMinPlayerVelX)
+		if (bPlayerOnGround)
 		{
-			fPlayerVelX = 0.0f;
-			animPlayer.ChangeState("idle");
+			fPlayerVelX += cfDrag * fPlayerVelX * fElapsedTime;
+			if (fabs(fPlayerVelX) < cfMinPlayerVelX)
+			{
+				fPlayerVelX = 0.0f;
+				animPlayer.ChangeState("idle");
+			}
+			else
+			{
+				animPlayer.ChangeState("run");
+			}
 		}
 		else
 		{
-			animPlayer.ChangeState("run");
+			if (fPlayerVelY < 0)
+				animPlayer.ChangeState("jump");
+			else
+				animPlayer.ChangeState("fall");
 		}
 	}
 	else
 	{
-		if (fPlayerVelY < 0)
-			animPlayer.ChangeState("jump");
-		else
-			animPlayer.ChangeState("fall");
+		fPlayerVelX = 0.0f;
+		fPlayerVelY = 0.0f;
+	}
+
+	// Draw Player
+	olc::GFX2D::Transform2D t;
+	t.Translate((float)-nTileWidth / 2.0f, (float)-nTileWidth / 2.0f);
+	t.Scale(fFaceDir * 1.0f, 1.0f);
+
+	// run one full animation of attack
+	if (bAttacking)
+	{
+		// calculate elapsed time during attack
+		fAnimationTimer += fElapsedTime;
+
+		// offset sprite so kirbo is centered
+		t.Translate(0.0f, (float)-nTileWidth);
+
+		// Hit frame
+		if (fAnimationTimer >= 0.1f && fAnimationTimer <= 0.2f)
+		{
+			// TODO Attack Ennemy
+		}
+
+		if (fAnimationTimer >= animPlayer.mapStates["slap"].size() * animPlayer.fTimeBetweenFrames)
+		{
+			fAnimationTimer = 0.0f;
+			bAttacking = false;
+		}
 	}
 
 	// Clamp velocities
@@ -544,11 +581,6 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	{
 		object->DrawSelf(this, fOffsetX, fOffsetY);
 	}
-
-	// Draw Player
-	olc::GFX2D::Transform2D t;
-	t.Translate((float)-nTileWidth / 2.0f, (float)-nTileWidth / 2.0f);
-	t.Scale(fFaceDir * 1.0f, 1.0f);
 
 	t.Translate((fPlayerPosX - fOffsetX) * nTileWidth + (nTileWidth / 2), (fPlayerPosY - fOffsetY) * nTileHeight + (nTileHeight / 2));
 

@@ -47,8 +47,10 @@ private:
 	float fPlayerPosY = 0.0f;
 	float fPlayerVelX = 0.0f;
 	float fPlayerVelY = 0.0f;
+	float fAnimationTimer = 0.0f;
 	bool bPlayerOnGround = false;
 	bool bDoubleJump = false;
+	bool bAttacking = false;
 
 	// Camera Properties
 	float fCameraPosX = 0.0f;

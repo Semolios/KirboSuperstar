@@ -6,8 +6,9 @@
 class cDynamicCreatureWaddleDee : public cDynamicCreature
 {
 public:
-	cDynamicCreatureWaddleDee();
+	cDynamicCreatureWaddleDee(cLevel* l);
 
 	void Behaviour(float fElapsedTime, float playerX, float playerY);
+	bool IsSolidTile(wchar_t tile);
 };
 
