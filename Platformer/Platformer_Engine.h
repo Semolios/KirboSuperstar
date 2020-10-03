@@ -8,6 +8,7 @@
 #include "Platformer_DynamicCreatureWaddleDee.h"
 #include "Platformer_EndScreen.h"
 #include "Platformer_Level.h"
+#include "Platformer_PauseMenu.h"
 #include "Platformer_TitleScreen.h"
 #include "Platformer_Transition.h"
 #include "Platformer_WorldMap.h"
@@ -87,6 +88,10 @@ private:
 	olc::Sprite* sprEndScreen;
 	cEndScreen* endScreen;
 
+	// Pause Screen
+	olc::Sprite* sprPauseMenu;
+	cPauseMenu* pauseMenu;
+
 	// Sprites
 	const int nTileWidth = 64;
 	const int nTileHeight = 64;
@@ -95,9 +100,6 @@ private:
 
 	// Ennemies
 	std::vector<cDynamicCreature*> vecEnnemies;
-	//std::vector<cDynamic*> vecDynamics;
-
-	bool bOnPause = false;
 
 	enum
 	{
@@ -108,6 +110,7 @@ private:
 		GS_LOADLEVEL,
 		GS_WORLDMAP,
 		GS_ENDSCREEN,
+		GS_PAUSE,
 	} nGameState = GS_LOADING;
 
 protected:
@@ -121,6 +124,7 @@ protected:
 	bool GameState_Main(float fElapsedTime);
 	bool GameState_WorldMap(float fElapsedTime);
 	bool GameState_EndScreen(float fElapsedTime);
+	bool GameState_PauseMenu(float fElapsedTime);
 
 	bool IsSolidTile(wchar_t tile);
 	void SlapAttack(cDynamicCreature* victim);

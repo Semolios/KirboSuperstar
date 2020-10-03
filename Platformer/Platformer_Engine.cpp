@@ -24,6 +24,7 @@ bool OneLoneCoder_Platformer::OnUserUpdate(float fElapsedTime)
 		case GS_LOADLEVEL: GameState_LoadLevel(fElapsedTime); break;
 		case GS_WORLDMAP: GameState_WorldMap(fElapsedTime); break;
 		case GS_ENDSCREEN: GameState_EndScreen(fElapsedTime); break;
+		case GS_PAUSE: GameState_PauseMenu(fElapsedTime); break;
 	}
 
 	return true;
@@ -144,6 +145,10 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	sprEndScreen = new olc::Sprite("assets/gfx/endScreen.png");
 	endScreen = new cEndScreen(this, sprEndScreen);
 
+	// Pause Menu
+	sprPauseMenu = new olc::Sprite("assets/gfx/PauseMenu.png");
+	pauseMenu = new cPauseMenu(this, sprPauseMenu);
+
 	nGameState = GS_TITLE;
 
 	return true;
@@ -198,10 +203,11 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	if (IsFocused())
 	{
 		if (GetKey(olc::Key::P).bPressed)
-			bOnPause = !bOnPause;
+		{
+			nGameState = GS_PAUSE;
+			return true;
+		}
 	}
-
-	if (bOnPause) return true;
 
 	animPlayer.Update(fElapsedTime);
 
@@ -252,7 +258,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 		if (GetKey(olc::Key::DOWN).bHeld)
 		{
-			fPlayerVelY = cfPlayerVelY;
+			if (bFlying)
+				fPlayerVelY = cfPlayerVelY;
 		}
 
 		if (GetKey(olc::Key::LEFT).bHeld)
@@ -751,6 +758,18 @@ bool OneLoneCoder_Platformer::GameState_EndScreen(float fElapsedTime)
 		nGameState = GS_TITLE;
 
 	return false;
+}
+
+bool OneLoneCoder_Platformer::GameState_PauseMenu(float fElapsedTime)
+{
+	pauseMenu->Update(this, fElapsedTime);
+
+	if (GetKey(olc::Key::P).bPressed)
+	{
+		nGameState = GS_MAIN;
+	}
+
+	return true;
 }
 
 bool OneLoneCoder_Platformer::IsSolidTile(wchar_t tile)
