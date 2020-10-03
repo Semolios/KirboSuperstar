@@ -113,6 +113,13 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	animPlayer.mapStates["damaged"].push_back(new olc::Sprite("assets/gfx/kirboDamaged06.png"));
 	animPlayer.mapStates["damaged"].push_back(new olc::Sprite("assets/gfx/kirboDamaged07.png"));
 
+	animPlayer.mapStates["flying"].push_back(new olc::Sprite("assets/gfx/kirboFlying00.png"));
+	animPlayer.mapStates["flying"].push_back(new olc::Sprite("assets/gfx/kirboFlying01.png"));
+	animPlayer.mapStates["flying"].push_back(new olc::Sprite("assets/gfx/kirboFlying02.png"));
+	animPlayer.mapStates["flying"].push_back(new olc::Sprite("assets/gfx/kirboFlying03.png"));
+	animPlayer.mapStates["flying"].push_back(new olc::Sprite("assets/gfx/kirboFlying02.png"));
+	animPlayer.mapStates["flying"].push_back(new olc::Sprite("assets/gfx/kirboFlying01.png"));
+
 	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("TODO"));
 	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("TODO"));
 	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("TODO"));
@@ -239,6 +246,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 				return true;
 			}
 			fPlayerVelY = -cfPlayerVelY;
+			bFlying = true;
+			animPlayer.ChangeState("flying");
 		}
 
 		if (GetKey(olc::Key::DOWN).bHeld)
@@ -264,7 +273,11 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 		if (GetKey(olc::Key::SPACE).bPressed)
 		{
-			if (bPlayerOnGround)
+			if (bFlying)
+			{
+				bFlying = false;
+			}
+			else if (bPlayerOnGround)
 			{
 				fPlayerVelY = -cfPlayerJumpAcc;
 			}
@@ -275,9 +288,9 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			}
 		}
 
-		if (!bAttacking && !bPlayerDamaged)
+		if (GetKey(olc::Key::F).bPressed)
 		{
-			if (GetKey(olc::Key::F).bPressed)
+			if (!bAttacking && !bPlayerDamaged && !bFlying)
 			{
 				animPlayer.ChangeState("slap");
 				bAttacking = true;
@@ -298,6 +311,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	{
 		if (bPlayerOnGround)
 		{
+			bFlying = false;
+
 			fPlayerVelX += cfDrag * fPlayerVelX * fElapsedTime;
 			if (fabs(fPlayerVelX) < cfMinPlayerVelX)
 			{
@@ -311,10 +326,13 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		}
 		else
 		{
-			if (fPlayerVelY < 0)
-				animPlayer.ChangeState("jump");
-			else
-				animPlayer.ChangeState("fall");
+			if (!bFlying)
+			{
+				if (fPlayerVelY < 0)
+					animPlayer.ChangeState("jump");
+				else
+					animPlayer.ChangeState("fall");
+			}
 		}
 	}
 
@@ -373,6 +391,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	{
 		// calculate elapsed time after damage
 		fAnimationTimer += fElapsedTime;
+		bFlying = false;
 
 		if (fAnimationTimer >= animPlayer.mapStates["damaged"].size() * animPlayer.fTimeBetweenFrames)
 		{
@@ -405,9 +424,17 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	if (fPlayerVelY < -cfMaxPlayerVelY)
 		fPlayerVelY = -cfMaxPlayerVelY;
 
-	// TODO pendant que kirby vole
-	//if (fPlayerVelY > cfMaxPlayerVelY / 20)
-	//	fPlayerVelY = cfMaxPlayerVelY / 20;
+	if (bFlying)
+	{
+		if (fPlayerVelX > cfMaxPlayerFlyingVelX)
+			fPlayerVelX = cfMaxPlayerFlyingVelX;
+
+		if (fPlayerVelX < -cfMaxPlayerFlyingVelX)
+			fPlayerVelX = -cfMaxPlayerFlyingVelX;
+
+		if (fPlayerVelY > cfMaxPlayerFlyingVelY)
+			fPlayerVelY = cfMaxPlayerFlyingVelY;
+	}
 
 	float fNewPlayerPosX = fPlayerPosX + fPlayerVelX * fElapsedTime;
 	float fNewPlayerPosY = fPlayerPosY + fPlayerVelY * fElapsedTime;

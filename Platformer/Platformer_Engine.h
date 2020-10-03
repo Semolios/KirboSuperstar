@@ -21,10 +21,12 @@ public:
 
 private:
 	// Constant values
-	const float cfPlayerVelY = 6.0f;			// Up and Down velocities
+	const float cfPlayerVelY = 5.0f;			// Up and Down velocities
 	const float cfMinPlayerVelX = 1.0f;			// Minimum player horizontal velocity
 	const float cfMaxPlayerVelX = 10.0f;		// Maximum player horizontal velocity
 	const float cfMaxPlayerVelY = 100.0f;		// Maximum player vertical velocity
+	const float cfMaxPlayerFlyingVelX = 5.0f;	// Maximum player horizontal velocity while flying
+	const float cfMaxPlayerFlyingVelY = 5.0f;	// Maximum player vertical velocity while flying
 	const float cfPlayerAccGrdX = 25.0f;		// Acceleration value when on ground
 	const float cfPlayerAccAirX = 15.0f;		// Acceleration value when in the air
 	const float cfPlayerJumpAcc = 12.0f;		// Jump acceleration
@@ -58,6 +60,7 @@ private:
 	bool bAttacking = false;
 	bool bPlayerDamaged = false;
 	bool bIsPlayerAttackable = true;
+	bool bFlying = false;
 
 	// Camera Properties
 	float fCameraPosX = 0.0f;
