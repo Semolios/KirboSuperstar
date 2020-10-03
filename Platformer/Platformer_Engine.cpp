@@ -104,6 +104,15 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 	animPlayer.mapStates["fall"].push_back(new olc::Sprite("assets/gfx/kirboFall.png"));
 
+	animPlayer.mapStates["damaged"].push_back(new olc::Sprite("assets/gfx/kirboDamaged00.png"));
+	animPlayer.mapStates["damaged"].push_back(new olc::Sprite("assets/gfx/kirboDamaged01.png"));
+	animPlayer.mapStates["damaged"].push_back(new olc::Sprite("assets/gfx/kirboDamaged02.png"));
+	animPlayer.mapStates["damaged"].push_back(new olc::Sprite("assets/gfx/kirboDamaged03.png"));
+	animPlayer.mapStates["damaged"].push_back(new olc::Sprite("assets/gfx/kirboDamaged04.png"));
+	animPlayer.mapStates["damaged"].push_back(new olc::Sprite("assets/gfx/kirboDamaged05.png"));
+	animPlayer.mapStates["damaged"].push_back(new olc::Sprite("assets/gfx/kirboDamaged06.png"));
+	animPlayer.mapStates["damaged"].push_back(new olc::Sprite("assets/gfx/kirboDamaged07.png"));
+
 	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("TODO"));
 	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("TODO"));
 	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("TODO"));
@@ -153,6 +162,7 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 
 	fPlayerVelX = 0.0f;
 	fPlayerVelY = 0.0f;
+	fHealth = cfMaxHealth;
 
 	srand(time(NULL));
 	transitionAnim = rand() % 4;
@@ -177,8 +187,7 @@ bool OneLoneCoder_Platformer::GameState_Title(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 {
-	//----------------------------------------------
-	// A VOIR AVEC LES ENNEMIS COMMENT CA REAGIT
+	// Pause Menu
 	if (IsFocused())
 	{
 		if (GetKey(olc::Key::P).bPressed)
@@ -186,7 +195,6 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	}
 
 	if (bOnPause) return true;
-	//----------------------------------------------
 
 	animPlayer.Update(fElapsedTime);
 
@@ -206,7 +214,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	};
 
 	// Handle input
-	if (IsFocused())
+	if (IsFocused() && !bPlayerDamaged)
 	{
 		if (GetKey(olc::Key::UP).bHeld)
 		{
@@ -267,7 +275,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			}
 		}
 
-		if (!bAttacking)
+		if (!bAttacking && !bPlayerDamaged)
 		{
 			if (GetKey(olc::Key::F).bPressed)
 			{
@@ -281,7 +289,12 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	// Gravity
 	fPlayerVelY += cfGravity * fElapsedTime;
 
-	if (!bAttacking)
+	if (bAttacking)
+	{
+		fPlayerVelX = 0.0f;
+		fPlayerVelY = 0.0f;
+	}
+	else if (!bPlayerDamaged)
 	{
 		if (bPlayerOnGround)
 		{
@@ -303,11 +316,6 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			else
 				animPlayer.ChangeState("fall");
 		}
-	}
-	else
-	{
-		fPlayerVelX = 0.0f;
-		fPlayerVelY = 0.0f;
 	}
 
 	// Draw Player
@@ -358,6 +366,27 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		{
 			fAnimationTimer = 0.0f;
 			bAttacking = false;
+		}
+	}
+
+	if (bPlayerDamaged)
+	{
+		// calculate elapsed time after damage
+		fAnimationTimer += fElapsedTime;
+
+		if (fAnimationTimer >= animPlayer.mapStates["damaged"].size() * animPlayer.fTimeBetweenFrames)
+		{
+			fAnimationTimer = 0.0f;
+			bPlayerDamaged = false;
+			bIsPlayerAttackable = true;
+
+			// If Player health = 0 return to the map
+			if (fHealth <= 0)
+			{
+				nGameState = GS_WORLDMAP;
+				animPlayer.ChangeState("riding_star");
+				return true;
+			}
 		}
 	}
 
@@ -550,8 +579,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			}
 		}
 
-		float fDynamicObjectPosX = fNewObjectPosX;
-		float fDynamicObjectPosY = fNewObjectPosY;
+		float fDynObjectPosX = fNewObjectPosX;
+		float fDynObjectPosY = fNewObjectPosY;
 
 		// Object vs Object collisions
 		for (auto& dyn : vecEnnemies)
@@ -562,32 +591,60 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 				if (dyn->bSolidVsDyn && object->bSolidVsDyn)
 				{
 					// Check if bounding rectangles overlap
-					if (fDynamicObjectPosX < (dyn->px + 1.0f) && (fDynamicObjectPosX + 1.0f) > dyn->px &&
+					if (fDynObjectPosX < (dyn->px + 1.0f) && (fDynObjectPosX + 1.0f) > dyn->px &&
 						object->py < (dyn->py + 1.0f) && (object->py + 1.0f) > dyn->py)
 					{
 						// First Check Horizontally - Check Left
 						if (object->vx <= 0)
-							fDynamicObjectPosX = dyn->px + 1.0f;
+							fDynObjectPosX = dyn->px + 1.0f;
 						else
-							fDynamicObjectPosX = dyn->px - 1.0f;
+							fDynObjectPosX = dyn->px - 1.0f;
 					}
 
-					if (fDynamicObjectPosX < (dyn->px + 1.0f) && (fDynamicObjectPosX + 1.0f) > dyn->px &&
-						fDynamicObjectPosY < (dyn->py + 1.0f) && (fDynamicObjectPosY + 1.0f) > dyn->py)
+					if (fDynObjectPosX < (dyn->px + 1.0f) && (fDynObjectPosX + 1.0f) > dyn->px &&
+						fDynObjectPosY < (dyn->py + 1.0f) && (fDynObjectPosY + 1.0f) > dyn->py)
 					{
 
 						// First Check Vertically - Check Left
 						if (object->vy <= 0)
-							fDynamicObjectPosY = dyn->py + 1.0f;
+							fDynObjectPosY = dyn->py + 1.0f;
 						else
-							fDynamicObjectPosY = dyn->py - 1.0f;
+							fDynObjectPosY = dyn->py - 1.0f;
 					}
 				}
 			}
 		}
 
-		object->px = fDynamicObjectPosX;
-		object->py = fDynamicObjectPosY;
+		// Check collision with player to damage him
+		if (bIsPlayerAttackable)
+		{
+			// Check for the four corners of the player
+			if ((fDynObjectPosX + 0.0f <= fPlayerPosX + 1.0f && fDynObjectPosX + 0.0f >= fPlayerPosX && fDynObjectPosY + 0.0f <= fPlayerPosY + 1.0f && fDynObjectPosY + 0.0f >= fPlayerPosY) ||
+				(fDynObjectPosX + 1.0f <= fPlayerPosX + 1.0f && fDynObjectPosX + 1.0f >= fPlayerPosX && fDynObjectPosY + 0.0f <= fPlayerPosY + 1.0f && fDynObjectPosY + 0.0f >= fPlayerPosY) ||
+				(fDynObjectPosX + 0.0f <= fPlayerPosX + 1.0f && fDynObjectPosX + 0.0f >= fPlayerPosX && fDynObjectPosY + 1.0f <= fPlayerPosY + 1.0f && fDynObjectPosY + 1.0f >= fPlayerPosY) ||
+				(fDynObjectPosX + 1.0f <= fPlayerPosX + 1.0f && fDynObjectPosX + 1.0f >= fPlayerPosX && fDynObjectPosY + 1.0f <= fPlayerPosY + 1.0f && fDynObjectPosY + 1.0f >= fPlayerPosY))
+			{
+				animPlayer.ChangeState("damaged");
+				bPlayerDamaged = true;
+				bIsPlayerAttackable = false;
+				fHealth -= 5;
+
+				// Knockback the player out of the ennemy
+				if (fDynObjectPosX < fPlayerPosX)
+				{
+					fPlayerVelX = cfDamageEjectionVelX;
+					fPlayerVelY = cfDamageEjectionVelY;
+				}
+				else
+				{
+					fPlayerVelX = -cfDamageEjectionVelX;
+					fPlayerVelY = -cfDamageEjectionVelY;
+				}
+			}
+		}
+
+		object->px = fDynObjectPosX;
+		object->py = fDynObjectPosY;
 	}
 
 	for (auto& object : vecEnnemies)
