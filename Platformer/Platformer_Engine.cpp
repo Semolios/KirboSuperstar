@@ -136,7 +136,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 {
 	// Destroy all dynamics
-	vecDynamics.clear();
+	vecEnnemies.clear();
 
 	nCurrentLevel = worldMap->GetSelectedLevel();
 	if (currentLvl->LoadLevel(levels[nCurrentLevel]))
@@ -148,7 +148,7 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 		sLevel = currentLvl->GetLevel();
 
 		// TODO utiliser le même système que LoadLevel, stocker les emplacements des ennemis dans un fichier et charger avec levelsEnnemies[nCurrentLevel]
-		currentLvl->PopulateDynamics(vecDynamics);
+		currentLvl->PopulateEnnemies(vecEnnemies);
 	}
 
 	fPlayerVelX = 0.0f;
@@ -344,12 +344,12 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			}
 
 			// Check if an ennemy take the attack
-			for (auto& dyn : vecDynamics)
+			for (auto& dyn : vecEnnemies)
 			{
 				if (dyn->px <= fTestX && (dyn->px + 1) >= fTestX && dyn->py <= fTestY && (dyn->py + 1) >= fTestY)
 				{
-					SlapAttack((cDynamicCreature*)dyn);
-					//dyn->bDead = true;
+					if (dyn->bIsAttackable)
+						SlapAttack((cDynamicCreature*)dyn);
 				}
 			}
 		}
@@ -497,7 +497,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	}
 
 	// Ennemies
-	for (auto& object : vecDynamics)
+	for (auto& object : vecEnnemies)
 	{
 		float fNewObjectPosX = object->px + object->vx * fElapsedTime;
 		float fNewObjectPosY = object->py + object->vy * fElapsedTime;
@@ -554,7 +554,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		float fDynamicObjectPosY = fNewObjectPosY;
 
 		// Object vs Object collisions
-		for (auto& dyn : vecDynamics)
+		for (auto& dyn : vecEnnemies)
 		{
 			if (dyn != object)
 			{
@@ -590,21 +590,21 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		object->py = fDynamicObjectPosY;
 	}
 
-	for (auto& object : vecDynamics)
+	for (auto& object : vecEnnemies)
 	{
 		object->Update(fElapsedTime, fPlayerPosX, fPlayerPosY);
 	}
 
 	// Remove dead ennemies
-	auto i = std::remove_if(vecDynamics.begin(), vecDynamics.end(), [](const cDynamic* d)
+	auto i = std::remove_if(vecEnnemies.begin(), vecEnnemies.end(), [](const cDynamicCreature* d)
 	{
 		return d->bDead;
 	});
-	if (i != vecDynamics.end())
-		vecDynamics.erase(i);
+	if (i != vecEnnemies.end())
+		vecEnnemies.erase(i);
 
 	// Draw Ennemies
-	for (auto& object : vecDynamics)
+	for (auto& object : vecEnnemies)
 	{
 		object->DrawSelf(this, fOffsetX, fOffsetY);
 	}
@@ -645,11 +645,10 @@ bool OneLoneCoder_Platformer::IsSolidTile(wchar_t tile)
 
 void OneLoneCoder_Platformer::SlapAttack(cDynamicCreature* victim)
 {
-	//victim->bDead = true;
 	if (victim != nullptr)
 	{
 		// Attack victim with damage
-		victim->nHealth -= 10;
+		victim->nHealth -= 5;
 
 		// Knock victim back
 		float tx = victim->px - fPlayerPosX;
@@ -657,7 +656,7 @@ void OneLoneCoder_Platformer::SlapAttack(cDynamicCreature* victim)
 		float d = sqrtf(tx * tx + ty * ty);
 		if (d < 1) d = 1.0f;
 
-		// After a hit, they object experiences knock back, where it is temporarily
+		// After a hit, the object experiences knock back, where it is temporarily
 		// under system control. This delivers two functions, the first being
 		// a visual indicator to the player that something has happened, and the second
 		// it stops the ability to spam attacks on a single creature

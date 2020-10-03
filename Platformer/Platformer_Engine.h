@@ -80,7 +80,8 @@ private:
 	cAnimator animPlayer;
 
 	// Ennemies
-	std::vector<cDynamic*> vecDynamics;
+	std::vector<cDynamicCreature*> vecEnnemies;
+	//std::vector<cDynamic*> vecDynamics;
 
 	bool bOnPause = false;
 

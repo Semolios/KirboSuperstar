@@ -75,9 +75,9 @@ int cLevel::GetInitPlayerPoxY()
 	return nInitPlayerPosY;
 }
 
-bool cLevel::PopulateDynamics(std::vector<cDynamic*>& vecDyns)
+bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns)
 {
-	cDynamic* g1 = new cDynamicCreatureWaddleDee(this);
+	cDynamicCreature* g1 = new cDynamicCreatureWaddleDee(this);
 	vecDyns.push_back(g1);
 	g1->px = 7.0f;
 	g1->py = 4.0f;

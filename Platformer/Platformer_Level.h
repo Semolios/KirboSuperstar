@@ -24,6 +24,6 @@ public:
 	int GetHeight();
 	int GetInitPlayerPosX();
 	int GetInitPlayerPoxY();
-	bool PopulateDynamics(std::vector<cDynamic*>& vecDyns);
+	bool PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns);
 };
 
