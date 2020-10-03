@@ -21,21 +21,23 @@ public:
 
 private:
 	// Constant values
-	const float cfPlayerVelY = 5.0f;			// Up and Down velocities
-	const float cfMinPlayerVelX = 1.0f;			// Minimum player horizontal velocity
-	const float cfMaxPlayerVelX = 10.0f;		// Maximum player horizontal velocity
-	const float cfMaxPlayerVelY = 100.0f;		// Maximum player vertical velocity
-	const float cfMaxPlayerFlyingVelX = 5.0f;	// Maximum player horizontal velocity while flying
-	const float cfMaxPlayerFlyingVelY = 5.0f;	// Maximum player vertical velocity while flying
-	const float cfPlayerAccGrdX = 25.0f;		// Acceleration value when on ground
-	const float cfPlayerAccAirX = 15.0f;		// Acceleration value when in the air
-	const float cfPlayerJumpAcc = 12.0f;		// Jump acceleration
-	const float cfPlayerDblJumpAcc = 10.0f;		// Double jump acceleration
-	const float cfGravity = 20.0f;				// Gravity
-	const float cfDrag = -3.0f;					// Drag
-	const float cfMaxHealth = 10.0f;			// Max Kirbo health
-	const float cfDamageEjectionVelX = 4.0f;	// horizontal velocity when hit by ennemy
-	const float cfDamageEjectionVelY = 4.0f;	// vertical velocity when hit by ennemy
+	const float cfPlayerVelY = 5.0f;					// Up and Down velocities
+	const float cfMinPlayerVelX = 1.0f;					// Minimum player horizontal velocity
+	const float cfMaxPlayerVelX = 10.0f;				// Maximum player horizontal velocity
+	const float cfMaxPlayerVelY = 100.0f;				// Maximum player vertical velocity
+	const float cfMaxPlayerFlyingVelX = 5.0f;			// Maximum player horizontal velocity while flying
+	const float cfMaxPlayerFlyingVelY = 5.0f;			// Maximum player vertical velocity while flying
+	const float cfPlayerAccGrdX = 25.0f;				// Acceleration value when on ground
+	const float cfPlayerAccAirX = 15.0f;				// Acceleration value when in the air
+	const float cfPlayerJumpAcc = 12.0f;				// Jump acceleration
+	const float cfPlayerDblJumpAcc = 10.0f;				// Double jump acceleration
+	const float cfGravity = 20.0f;						// Gravity
+	const float cfDrag = -3.0f;							// Drag
+	const float cfMaxHealth = 10.0f;					// Max Kirbo health
+	const float cfDamageEjectionVelX = 4.0f;			// horizontal velocity when hit by ennemy
+	const float cfDamageEjectionVelY = 4.0f;			// vertical velocity when hit by ennemy
+	const float cfInvulnerabilityFrame = 4.0f;			// Invulnerability frame after a hit
+	const float cfInvulnerabilityTickingSpeed = 0.2f;	// Ticking Speed when invulnerable
 
 	// Level storage
 	std::wstring sLevel;
@@ -53,14 +55,17 @@ private:
 	float fPlayerVelX = 0.0f;
 	float fPlayerVelY = 0.0f;
 	float fAnimationTimer = 0.0f;
+	float fInvulnerabilityTimer = 0.0f;
 	float fFaceDir = 1.0f;
 	float fHealth = 10.0f;
+	float fInvulnerabilityTickingTimer = 0.0f;
 	bool bPlayerOnGround = false;
 	bool bDoubleJump = false;
 	bool bAttacking = false;
 	bool bPlayerDamaged = false;
 	bool bIsPlayerAttackable = true;
 	bool bFlying = false;
+	bool bShowKirby = true;
 
 	// Camera Properties
 	float fCameraPosX = 0.0f;

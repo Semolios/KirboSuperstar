@@ -307,7 +307,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		fPlayerVelX = 0.0f;
 		fPlayerVelY = 0.0f;
 	}
-	else if (!bPlayerDamaged)
+	else
 	{
 		if (bPlayerOnGround)
 		{
@@ -317,21 +317,27 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			if (fabs(fPlayerVelX) < cfMinPlayerVelX)
 			{
 				fPlayerVelX = 0.0f;
-				animPlayer.ChangeState("idle");
+
+				if (!bPlayerDamaged)
+					animPlayer.ChangeState("idle");
 			}
 			else
 			{
-				animPlayer.ChangeState("run");
+				if (!bPlayerDamaged)
+					animPlayer.ChangeState("run");
 			}
 		}
 		else
 		{
-			if (!bFlying)
+			if (!bPlayerDamaged)
 			{
-				if (fPlayerVelY < 0)
-					animPlayer.ChangeState("jump");
-				else
-					animPlayer.ChangeState("fall");
+				if (!bFlying)
+				{
+					if (fPlayerVelY < 0)
+						animPlayer.ChangeState("jump");
+					else
+						animPlayer.ChangeState("fall");
+				}
 			}
 		}
 	}
@@ -397,13 +403,13 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		{
 			fAnimationTimer = 0.0f;
 			bPlayerDamaged = false;
-			bIsPlayerAttackable = true;
 
 			// If Player health = 0 return to the map
 			if (fHealth <= 0)
 			{
 				nGameState = GS_WORLDMAP;
 				animPlayer.ChangeState("riding_star");
+				fInvulnerabilityTimer = 0.0f;
 				return true;
 			}
 		}
@@ -652,6 +658,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 				(fDynObjectPosX + 1.0f <= fPlayerPosX + 1.0f && fDynObjectPosX + 1.0f >= fPlayerPosX && fDynObjectPosY + 1.0f <= fPlayerPosY + 1.0f && fDynObjectPosY + 1.0f >= fPlayerPosY))
 			{
 				animPlayer.ChangeState("damaged");
+				fInvulnerabilityTimer = cfInvulnerabilityFrame;
 				bPlayerDamaged = true;
 				bIsPlayerAttackable = false;
 				fHealth -= 5;
@@ -693,11 +700,35 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		object->DrawSelf(this, fOffsetX, fOffsetY);
 	}
 
+	// Check invulnerability frame
+	fInvulnerabilityTimer -= fElapsedTime;
+	if (fInvulnerabilityTimer <= 0.0f)
+	{
+		fInvulnerabilityTimer = 0.0f;
+		bShowKirby = true;
+		bIsPlayerAttackable = true;
+	}
+	else
+	{
+		fInvulnerabilityTickingTimer += fElapsedTime;
+		if (fInvulnerabilityTickingTimer >= cfInvulnerabilityTickingSpeed)
+		{
+			fInvulnerabilityTickingTimer -= cfInvulnerabilityTickingSpeed;
+
+			// Start ticking only after damage animation
+			if (!bPlayerDamaged)
+				bShowKirby = !bShowKirby;
+		}
+	}
+
 	t.Translate((fPlayerPosX - fOffsetX) * nTileWidth + (nTileWidth / 2), (fPlayerPosY - fOffsetY) * nTileHeight + (nTileHeight / 2));
 
-	SetPixelMode(olc::Pixel::ALPHA);
-	animPlayer.DrawSelf(this, t);
-	SetPixelMode(olc::Pixel::NORMAL);
+	if (bShowKirby)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		animPlayer.DrawSelf(this, t);
+		SetPixelMode(olc::Pixel::NORMAL);
+	}
 
 	return true;
 }
