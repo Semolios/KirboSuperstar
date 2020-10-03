@@ -494,7 +494,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	}
 	else // Moving Down
 	{
-		if (IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f)) || IsSolidTile(GetTile(fNewPlayerPosX + 0.9f, fNewPlayerPosY + 1.0f)))
+		if (IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f)) || IsSolidTile(GetTile(fNewPlayerPosX + 0.9f, fNewPlayerPosY + 1.0f)) ||
+			IsSemiSolidTile(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f)) || IsSemiSolidTile(GetTile(fNewPlayerPosX + 0.9f, fNewPlayerPosY + 1.0f)))
 		{
 			fNewPlayerPosY = (int)fNewPlayerPosY;
 			fPlayerVelY = 0;
@@ -611,7 +612,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		}
 		else // Moving Down
 		{
-			if (IsSolidTile(GetTile(fNewObjectPosX + fBorder + 0.0f, fNewObjectPosY + 1.0f)) || IsSolidTile(GetTile(fNewObjectPosX + (1.0f - fBorder), fNewObjectPosY + 1.0f)))
+			if (IsSolidTile(GetTile(fNewObjectPosX + fBorder + 0.0f, fNewObjectPosY + 1.0f)) || IsSolidTile(GetTile(fNewObjectPosX + (1.0f - fBorder), fNewObjectPosY + 1.0f)) ||
+				IsSemiSolidTile(GetTile(fNewObjectPosX + fBorder + 0.0f, fNewObjectPosY + 1.0f)) || IsSemiSolidTile(GetTile(fNewObjectPosX + (1.0f - fBorder), fNewObjectPosY + 1.0f)))
 			{
 				fNewObjectPosY = (int)fNewObjectPosY;
 				object->vy = 0;
@@ -774,7 +776,14 @@ bool OneLoneCoder_Platformer::GameState_PauseMenu(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::IsSolidTile(wchar_t tile)
 {
-	return tile != '.' && tile != 'o' && tile != 'w';
+	// List Here all the tiles that are not solid (because there are less non solid tile than solid ones)
+	return tile != '.' && tile != 'o' && tile != 'w' && tile != '?';
+}
+
+bool OneLoneCoder_Platformer::IsSemiSolidTile(wchar_t tile)
+{
+	// List Here all the tiles that are semi solid
+	return tile == '?';
 }
 
 void OneLoneCoder_Platformer::SlapAttack(cDynamicCreature* victim)

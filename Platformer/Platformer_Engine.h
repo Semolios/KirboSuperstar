@@ -127,5 +127,6 @@ protected:
 	bool GameState_PauseMenu(float fElapsedTime);
 
 	bool IsSolidTile(wchar_t tile);
+	bool IsSemiSolidTile(wchar_t tile);
 	void SlapAttack(cDynamicCreature* victim);
 };
