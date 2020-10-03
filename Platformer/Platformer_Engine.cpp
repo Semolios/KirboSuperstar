@@ -149,6 +149,10 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	sprPauseMenu = new olc::Sprite("assets/gfx/PauseMenu.png");
 	pauseMenu = new cPauseMenu(this, sprPauseMenu);
 
+	// HUD
+	sprHealthBar = new olc::Sprite("assets/gfx/emptyHealthBar.png");
+	sprHealthPoint = new olc::Sprite("assets/gfx/healthPoint.png");
+
 	nGameState = GS_TITLE;
 
 	return true;
@@ -738,6 +742,23 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		animPlayer.DrawSelf(this, t);
 		SetPixelMode(olc::Pixel::NORMAL);
 	}
+
+#pragma region HUD
+
+	// Health bar
+	SetPixelMode(olc::Pixel::ALPHA);
+	DrawSprite(0, 0, sprHealthBar);
+	SetPixelMode(olc::Pixel::NORMAL);
+
+	// Health points
+	for (int i = 0; i < fHealth; i++)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawSprite(13 + i * 10, 14, sprHealthPoint);
+		SetPixelMode(olc::Pixel::NORMAL);
+	}
+
+#pragma endregion
 
 	return true;
 }

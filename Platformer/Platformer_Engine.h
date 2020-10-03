@@ -101,6 +101,10 @@ private:
 	// Ennemies
 	std::vector<cDynamicCreature*> vecEnnemies;
 
+	// HUD
+	olc::Sprite* sprHealthBar;
+	olc::Sprite* sprHealthPoint;
+
 	enum
 	{
 		GS_LOADING,
