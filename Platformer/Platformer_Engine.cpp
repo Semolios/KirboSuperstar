@@ -315,7 +315,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	t.Translate((float)-nTileWidth / 2.0f, (float)-nTileWidth / 2.0f);
 	t.Scale(fFaceDir * 1.0f, 1.0f);
 
-	// run one full animation of attack
+#pragma region ONE CYCLE ANIMATIONS
+
 	if (bAttacking)
 	{
 		// calculate elapsed time during attack
@@ -327,7 +328,30 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// Hit frame
 		if (fAnimationTimer >= 0.1f && fAnimationTimer <= 0.2f)
 		{
-			// TODO Attack Ennemy
+			// Grab a point from the direction the player is facing and check for interactions
+			float fTestX, fTestY;
+
+			if (fFaceDir == -1) // West
+			{
+				fTestX = fPlayerPosX - 0.5f;
+				fTestY = fPlayerPosY + 0.5f;
+			}
+
+			if (fFaceDir == 1) // East
+			{
+				fTestX = fPlayerPosX + 1.5f;
+				fTestY = fPlayerPosY + 0.5f;
+			}
+
+			// Check if an ennemy take the attack
+			for (auto& dyn : vecDynamics)
+			{
+				if (dyn->px <= fTestX && (dyn->px + 1) >= fTestX && dyn->py <= fTestY && (dyn->py + 1) >= fTestY)
+				{
+					SlapAttack((cDynamicCreature*)dyn);
+					//dyn->bDead = true;
+				}
+			}
 		}
 
 		if (fAnimationTimer >= animPlayer.mapStates["slap"].size() * animPlayer.fTimeBetweenFrames)
@@ -336,6 +360,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			bAttacking = false;
 		}
 	}
+
+#pragma endregion
 
 	// Clamp velocities
 	if (fPlayerVelX > cfMaxPlayerVelX)
@@ -457,13 +483,14 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 					break;
 				case L'o': // Coin
 					SetPixelMode(olc::Pixel::ALPHA);
-					FillRect(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, (x + 1) * nTileWidth - fTileOffsetX, (y + 1) * nTileHeight - fTileOffsetY, olc::CYAN);
+					FillRect(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, nTileWidth, nTileHeight, olc::CYAN);
 					DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 4 * nTileWidth, 0 * nTileHeight, nTileWidth, nTileHeight);
 					SetPixelMode(olc::Pixel::NORMAL);
 					break;
-				case L'w':
-					// draw a door
-					DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 3 * nTileWidth, 0 * nTileHeight, nTileWidth, nTileHeight);
+				case L'w': // Door
+					SetPixelMode(olc::Pixel::ALPHA);
+					DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 0 * nTileWidth, 1 * nTileHeight, nTileWidth, nTileHeight);
+					SetPixelMode(olc::Pixel::NORMAL);
 					break;
 			}
 		}
@@ -614,4 +641,26 @@ bool OneLoneCoder_Platformer::GameState_EndScreen(float fElapsedTime)
 bool OneLoneCoder_Platformer::IsSolidTile(wchar_t tile)
 {
 	return tile != '.' && tile != 'o' && tile != 'w';
+}
+
+void OneLoneCoder_Platformer::SlapAttack(cDynamicCreature* victim)
+{
+	//victim->bDead = true;
+	if (victim != nullptr)
+	{
+		// Attack victim with damage
+		victim->nHealth -= 10;
+
+		// Knock victim back
+		float tx = victim->px - fPlayerPosX;
+		float ty = victim->py - fPlayerPosY;
+		float d = sqrtf(tx * tx + ty * ty);
+		if (d < 1) d = 1.0f;
+
+		// After a hit, they object experiences knock back, where it is temporarily
+		// under system control. This delivers two functions, the first being
+		// a visual indicator to the player that something has happened, and the second
+		// it stops the ability to spam attacks on a single creature
+		victim->KnockBack(tx / d, ty / d, 0.2f);
+	}
 }

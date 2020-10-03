@@ -24,7 +24,7 @@ protected:
 	{
 		STANDING,
 		WALKING,
-		DEAD
+		DAMAGED
 	} nGraphicState;
 
 public:
@@ -32,6 +32,7 @@ public:
 	int nHealth;
 	int nHealthMax;
 	bool bDead = false;
+	float fInitSpeed;
 
 public:
 	void DrawSelf(olc::PixelGameEngine* gfx, float ox, float oy) override;

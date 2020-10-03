@@ -48,6 +48,7 @@ private:
 	float fPlayerVelX = 0.0f;
 	float fPlayerVelY = 0.0f;
 	float fAnimationTimer = 0.0f;
+	float fFaceDir = 1.0f;
 	bool bPlayerOnGround = false;
 	bool bDoubleJump = false;
 	bool bAttacking = false;
@@ -81,9 +82,6 @@ private:
 	// Ennemies
 	std::vector<cDynamic*> vecDynamics;
 
-	// Face direction
-	float fFaceDir = 1.0f;
-
 	bool bOnPause = false;
 
 	enum
@@ -110,4 +108,5 @@ protected:
 	bool GameState_EndScreen(float fElapsedTime);
 
 	bool IsSolidTile(wchar_t tile);
+	void SlapAttack(cDynamicCreature* victim);
 };
