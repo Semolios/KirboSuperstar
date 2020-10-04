@@ -75,12 +75,34 @@ int cLevel::GetInitPlayerPoxY()
 	return nInitPlayerPosY;
 }
 
-bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns)
+bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::string levelName)
 {
-	cDynamicCreature* g1 = new cDynamicCreatureWaddleDee(this);
-	vecDyns.push_back(g1);
-	g1->px = 7.0f;
-	g1->py = 4.0f;
+	std::wifstream file(levelName);
+
+	if (file)
+	{
+		std::wstring line;
+
+		while (std::getline(file, line))
+		{
+			if (line[0] == 'w') // waddle dee
+			{
+				cDynamicCreature* mob = new cDynamicCreatureWaddleDee(this);
+				vecDyns.push_back(mob);
+
+				// get position
+				std::wstring str = line.substr(1, line.size() - 1), temp;
+				std::vector<std::wstring> parts;
+				std::wstringstream wss(str);
+				while (std::getline(wss, temp, L','))
+					parts.push_back(temp);
+
+				mob->px = std::stoi(parts[0]);
+				mob->py = std::stoi(parts[1]);
+			}
+		}
+	}
+
 
 	return true;
 }

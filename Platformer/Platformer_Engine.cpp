@@ -179,8 +179,7 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 		fPlayerPosY = currentLvl->GetInitPlayerPoxY();
 		sLevel = currentLvl->GetLevel();
 
-		// TODO utiliser le même système que LoadLevel, stocker les emplacements des ennemis dans un fichier et charger avec levelsEnnemies[nCurrentLevel]
-		currentLvl->PopulateEnnemies(vecEnnemies);
+		currentLvl->PopulateEnnemies(vecEnnemies, levelsEnnemies[nCurrentLevel]);
 	}
 
 	// Reset variables when level is loading
