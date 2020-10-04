@@ -179,6 +179,7 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 	fPlayerVelX = 0.0f;
 	fPlayerVelY = 0.0f;
 	fHealth = cfMaxHealth;
+	fInvulnerabilityTimer = 0.0f;
 
 	srand(time(NULL));
 	transitionAnim = rand() % 4;
@@ -203,16 +204,6 @@ bool OneLoneCoder_Platformer::GameState_Title(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 {
-	// Pause Menu
-	if (IsFocused())
-	{
-		if (GetKey(olc::Key::P).bPressed)
-		{
-			nGameState = GS_PAUSE;
-			return true;
-		}
-	}
-
 	animPlayer.Update(fElapsedTime);
 
 	// Utility Lambdas
@@ -233,6 +224,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	// Handle input
 	if (IsFocused() && !bPlayerDamaged)
 	{
+		// Fly, enter a door
 		if (GetKey(olc::Key::UP).bHeld)
 		{
 			if (GetTile(fPlayerPosX + 0.5f, fPlayerPosY + 0.5f) == L'w' && bPlayerOnGround)
@@ -260,28 +252,34 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			animPlayer.ChangeState("flying");
 		}
 
+		// Go down when flying
 		if (GetKey(olc::Key::DOWN).bHeld)
 		{
 			if (bFlying)
 				fPlayerVelY = cfPlayerVelY;
 		}
 
+		// Go left
 		if (GetKey(olc::Key::LEFT).bHeld)
 		{
+			// Init speed by cfDrag + 0.05 or the player won't move when on ground
 			if (fabs(fPlayerVelX) < cfMinPlayerVelX) fPlayerVelX -= (cfMinPlayerVelX + 0.05f);
 
 			fPlayerVelX += (bPlayerOnGround ? -cfPlayerAccGrdX : -cfPlayerAccAirX) * fElapsedTime;
 			fFaceDir = -1.0f;
 		}
 
+		// Go right
 		if (GetKey(olc::Key::RIGHT).bHeld)
 		{
+			// Init speed by cfDrag + 0.05 or the player won't move when on ground
 			if (fabs(fPlayerVelX) < cfMinPlayerVelX) fPlayerVelX += (cfMinPlayerVelX + 0.05f);
 
 			fPlayerVelX += (bPlayerOnGround ? cfPlayerAccGrdX : cfPlayerAccAirX) * fElapsedTime;
 			fFaceDir = 1.0f;
 		}
 
+		// Jump, double jump, stop flying
 		if (GetKey(olc::Key::SPACE).bPressed)
 		{
 			if (bFlying)
@@ -299,14 +297,25 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			}
 		}
 
+		// Slap attack
 		if (GetKey(olc::Key::F).bPressed)
 		{
+			// Can't spam slap, can't slap when player is damaged or when he's flying
 			if (!bAttacking && !bPlayerDamaged && !bFlying)
 			{
 				animPlayer.ChangeState("slap");
 				bAttacking = true;
 				fAnimationTimer = 0.0f;
 			}
+		}
+
+		// Pause
+		if (GetKey(olc::Key::P).bPressed)
+		{
+			// You can't use pause when you are hit.
+			// like you can't pause when you jump in mario sunshine so you can't leave the level when you are falling
+			nGameState = GS_PAUSE;
+			return true;
 		}
 	}
 
