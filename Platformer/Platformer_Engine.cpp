@@ -63,6 +63,13 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	levels.push_back("assets/lvls/lvl5.txt");
 	levels.push_back("assets/lvls/lvl6.txt");
 
+	levelsEnnemies.push_back("assets/lvls/ennemiesLvl1.txt");
+	levelsEnnemies.push_back("assets/lvls/ennemiesLvl2.txt");
+	levelsEnnemies.push_back("assets/lvls/ennemiesLvl3.txt");
+	levelsEnnemies.push_back("assets/lvls/ennemiesLvl4.txt");
+	levelsEnnemies.push_back("assets/lvls/ennemiesLvl5.txt");
+	levelsEnnemies.push_back("assets/lvls/ennemiesLvl6.txt");
+
 	currentLvl = new cLevel();
 
 	// Player sprites
@@ -381,25 +388,53 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// Hit frame
 		if (fAnimationTimer >= 0.1f && fAnimationTimer <= 0.2f)
 		{
-			// Grab a point from the direction the player is facing and check for interactions
-			float fTestX, fTestY;
+			// Create an AOE where the player is facing and check for ennemies and AOE overlap
+			polygon sAOE;
+			sAOE.angle = 0.0f;
 
 			if (fFaceDir == -1) // West
-			{
-				fTestX = fPlayerPosX - 0.5f;
-				fTestY = fPlayerPosY + 0.5f;
-			}
+				sAOE.pos = { (fPlayerPosX - 0.5f) * nTileWidth , (fPlayerPosY + 0.5f) * nTileHeight };
 
 			if (fFaceDir == 1) // East
+				sAOE.pos = { (fPlayerPosX + 1.5f) * nTileWidth , (fPlayerPosY + 0.5f) * nTileHeight };
+
+			sAOE.o.push_back({ -(float)nTileWidth / 2.0f, -3.0f * (float)nTileHeight / 2.0f });
+			sAOE.o.push_back({ -(float)nTileWidth / 2.0f, +3.0f * (float)nTileHeight / 2.0f });
+			sAOE.o.push_back({ +(float)nTileWidth / 2.0f, +3.0f * (float)nTileHeight / 2.0f });
+			sAOE.o.push_back({ +(float)nTileWidth / 2.0f, -3.0f * (float)nTileHeight / 2.0f });
+			sAOE.p.resize(4);
+
+			for (int i = 0; i < sAOE.o.size(); i++)
 			{
-				fTestX = fPlayerPosX + 1.5f;
-				fTestY = fPlayerPosY + 0.5f;
+				sAOE.p[i] =
+				{	// 2D Rotation Transform + 2D Translation (angle is always 0 here, no rotation allowed)
+					(sAOE.o[i].x * cosf(sAOE.angle)) - (sAOE.o[i].y * sinf(sAOE.angle)) + sAOE.pos.x,
+					(sAOE.o[i].x * sinf(sAOE.angle)) + (sAOE.o[i].y * cosf(sAOE.angle)) + sAOE.pos.y,
+				};
 			}
 
 			// Check if an ennemy take the attack
 			for (auto& dyn : vecEnnemies)
 			{
-				if (dyn->px <= fTestX && (dyn->px + 1) >= fTestX && dyn->py <= fTestY && (dyn->py + 1) >= fTestY)
+				polygon sEnnemy;
+				sEnnemy.pos = { (float)dyn->px * nTileWidth + (float)nTileWidth / 2.0f, (float)dyn->py * nTileHeight + (float)nTileHeight / 2.0f }; // Center of the ennemy
+				sEnnemy.angle = 0.0f;
+				sEnnemy.o.push_back({ -(float)nTileWidth / 2.0f, -(float)nTileHeight / 2.0f });
+				sEnnemy.o.push_back({ -(float)nTileWidth / 2.0f, +(float)nTileHeight / 2.0f });
+				sEnnemy.o.push_back({ +(float)nTileWidth / 2.0f, +(float)nTileHeight / 2.0f });
+				sEnnemy.o.push_back({ +(float)nTileWidth / 2.0f, -(float)nTileHeight / 2.0f });
+				sEnnemy.p.resize(4);
+
+				for (int i = 0; i < sEnnemy.o.size(); i++)
+				{
+					sEnnemy.p[i] =
+					{	// 2D Rotation Transform + 2D Translation (angle is always 0 here, no rotation allowed)
+						(sEnnemy.o[i].x * cosf(sEnnemy.angle)) - (sEnnemy.o[i].y * sinf(sEnnemy.angle)) + sEnnemy.pos.x,
+						(sEnnemy.o[i].x * sinf(sEnnemy.angle)) + (sEnnemy.o[i].y * cosf(sEnnemy.angle)) + sEnnemy.pos.y,
+					};
+				}
+
+				if (ShapeOverlap_DIAG(sAOE, sEnnemy))
 				{
 					if (dyn->bIsAttackable)
 						SlapAttack((cDynamicCreature*)dyn);
@@ -815,6 +850,47 @@ bool OneLoneCoder_Platformer::IsSemiSolidTile(wchar_t tile)
 {
 	// List Here all the tiles that are semi solid
 	return tile == '?';
+}
+
+bool OneLoneCoder_Platformer::ShapeOverlap_DIAG(polygon& r1, polygon& r2)
+{
+	polygon* poly1 = &r1;
+	polygon* poly2 = &r2;
+
+	for (int shape = 0; shape < 2; shape++)
+	{
+		if (shape == 1)
+		{
+			poly1 = &r2;
+			poly2 = &r1;
+		}
+
+		// Check diagonals of polygon...
+		for (int p = 0; p < poly1->p.size(); p++)
+		{
+			vec2d line_r1s = poly1->pos;
+			vec2d line_r1e = poly1->p[p];
+
+			// ...against edges of the other
+			for (int q = 0; q < poly2->p.size(); q++)
+			{
+				vec2d line_r2s = poly2->p[q];
+				vec2d line_r2e = poly2->p[(q + 1) % poly2->p.size()];
+
+				// Standard "off the shelf" line segment intersection
+				float h = (line_r2e.x - line_r2s.x) * (line_r1s.y - line_r1e.y) - (line_r1s.x - line_r1e.x) * (line_r2e.y - line_r2s.y);
+				float t1 = ((line_r2s.y - line_r2e.y) * (line_r1s.x - line_r2s.x) + (line_r2e.x - line_r2s.x) * (line_r1s.y - line_r2s.y)) / h;
+				float t2 = ((line_r1s.y - line_r1e.y) * (line_r1s.x - line_r2s.x) + (line_r1e.x - line_r1s.x) * (line_r1s.y - line_r2s.y)) / h;
+
+				if (t1 >= 0.0f && t1 < 1.0f && t2 >= 0.0f && t2 < 1.0f)
+				{
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
 }
 
 void OneLoneCoder_Platformer::SlapAttack(cDynamicCreature* victim)

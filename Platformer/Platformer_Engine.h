@@ -40,15 +40,30 @@ private:
 	const float cfInvulnerabilityFrame = 4.0f;			// Invulnerability frame after a hit
 	const float cfInvulnerabilityTickingSpeed = 0.2f;	// Ticking Speed when invulnerable
 
+	struct vec2d
+	{
+		float x;
+		float y;
+	};
+
+	struct polygon
+	{
+		std::vector<vec2d> p;	// Transformed Points
+		vec2d pos;				// Position of shape
+		float angle;			// Direction of shape
+		std::vector<vec2d> o;	// "Model" of shape							
+		bool overlap = false;	// Flag to indicate if overlap has occurred
+	};
+
 	// Level storage
 	std::wstring sLevel;
 	int nLevelWidth;
 	int nLevelHeight;
-
 	cLevel* currentLvl;
 	int nCurrentLevel = 0;
 	int nUnlockedLevel = 1;
 	std::vector<std::string> levels;
+	std::vector<std::string> levelsEnnemies;
 
 	// Player Properties
 	float fPlayerPosX = 0.0f;
@@ -132,5 +147,6 @@ protected:
 
 	bool IsSolidTile(wchar_t tile);
 	bool IsSemiSolidTile(wchar_t tile);
+	bool ShapeOverlap_DIAG(polygon& r1, polygon& r2);
 	void SlapAttack(cDynamicCreature* victim);
 };
