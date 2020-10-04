@@ -176,6 +176,7 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 		currentLvl->PopulateEnnemies(vecEnnemies);
 	}
 
+	// Reset variables when level is loading
 	fPlayerVelX = 0.0f;
 	fPlayerVelY = 0.0f;
 	fHealth = cfMaxHealth;
