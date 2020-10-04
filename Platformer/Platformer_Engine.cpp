@@ -692,17 +692,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 							fDynObjectPosX = dyn->px + 1.0f;
 						else
 							fDynObjectPosX = dyn->px - 1.0f;
-					}
 
-					if (fDynObjectPosX < (dyn->px + 1.0f) && (fDynObjectPosX + 1.0f) > dyn->px &&
-						fDynObjectPosY < (dyn->py + 1.0f) && (fDynObjectPosY + 1.0f) > dyn->py)
-					{
-
-						// First Check Vertically - Check Left
-						if (object->vy <= 0)
-							fDynObjectPosY = dyn->py + 1.0f;
-						else
-							fDynObjectPosY = dyn->py - 1.0f;
+						object->TurnAround();
 					}
 				}
 			}
@@ -712,10 +703,10 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		if (bIsPlayerAttackable)
 		{
 			// Check for the four corners of the player
-			if ((fDynObjectPosX + 0.0f <= fPlayerPosX + 1.0f && fDynObjectPosX + 0.0f >= fPlayerPosX && fDynObjectPosY + 0.0f <= fPlayerPosY + 1.0f && fDynObjectPosY + 0.0f >= fPlayerPosY) ||
-				(fDynObjectPosX + 1.0f <= fPlayerPosX + 1.0f && fDynObjectPosX + 1.0f >= fPlayerPosX && fDynObjectPosY + 0.0f <= fPlayerPosY + 1.0f && fDynObjectPosY + 0.0f >= fPlayerPosY) ||
-				(fDynObjectPosX + 0.0f <= fPlayerPosX + 1.0f && fDynObjectPosX + 0.0f >= fPlayerPosX && fDynObjectPosY + 1.0f <= fPlayerPosY + 1.0f && fDynObjectPosY + 1.0f >= fPlayerPosY) ||
-				(fDynObjectPosX + 1.0f <= fPlayerPosX + 1.0f && fDynObjectPosX + 1.0f >= fPlayerPosX && fDynObjectPosY + 1.0f <= fPlayerPosY + 1.0f && fDynObjectPosY + 1.0f >= fPlayerPosY))
+			if ((fDynObjectPosX + 0.1f <= fPlayerPosX + 0.9f && fDynObjectPosX + 0.1f >= fPlayerPosX && fDynObjectPosY + 0.1f <= fPlayerPosY + 0.9f && fDynObjectPosY + 0.1f >= fPlayerPosY) ||
+				(fDynObjectPosX + 0.9f <= fPlayerPosX + 0.9f && fDynObjectPosX + 0.9f >= fPlayerPosX && fDynObjectPosY + 0.1f <= fPlayerPosY + 0.9f && fDynObjectPosY + 0.1f >= fPlayerPosY) ||
+				(fDynObjectPosX + 0.1f <= fPlayerPosX + 0.9f && fDynObjectPosX + 0.1f >= fPlayerPosX && fDynObjectPosY + 0.9f <= fPlayerPosY + 0.9f && fDynObjectPosY + 0.9f >= fPlayerPosY) ||
+				(fDynObjectPosX + 0.9f <= fPlayerPosX + 0.9f && fDynObjectPosX + 0.9f >= fPlayerPosX && fDynObjectPosY + 0.9f <= fPlayerPosY + 0.9f && fDynObjectPosY + 0.9f >= fPlayerPosY))
 			{
 				animPlayer.ChangeState("damaged");
 				fInvulnerabilityTimer = cfInvulnerabilityFrame;
@@ -844,7 +835,7 @@ bool OneLoneCoder_Platformer::GameState_PauseMenu(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::IsSolidTile(wchar_t tile)
 {
-	// List Here all the tiles that are not solid (because there are less non solid tile than solid ones)
+	// List Here all the tiles that are not solid (if there are less non solid tile than solid ones)
 	return tile != '.' && tile != 'o' && tile != 'w' && tile != '?';
 }
 

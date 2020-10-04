@@ -29,7 +29,7 @@ void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, flo
 			// Check left wall or hole
 			if (IsSolidTile(GetTile(px, py)) || (!IsSolidTile(GetTile(px, py)) && !IsSolidTile(GetTile(px, py + 1)) && !IsSemiSolidTile(GetTile(px, py + 1))))
 			{
-				vx = -vx;
+				TurnAround();
 			}
 		}
 		else
@@ -37,7 +37,7 @@ void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, flo
 			// Check right wall or hole
 			if (IsSolidTile(GetTile(px + 1, py)) || (!IsSolidTile(GetTile(px + 1, py)) && !IsSolidTile(GetTile(px + 1, py + 1)) && !IsSemiSolidTile(GetTile(px + 1, py + 1))))
 			{
-				vx = -vx;
+				TurnAround();
 			}
 		}
 	}
@@ -45,6 +45,7 @@ void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, flo
 
 bool cDynamicCreatureWaddleDee::IsSolidTile(wchar_t tile)
 {
+	// List Here all the tiles that are not solid (if there are less non solid tile than solid ones)
 	return tile != '.' && tile != 'o' && tile != 'w' && tile != '?';
 }
 

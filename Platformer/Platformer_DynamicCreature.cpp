@@ -77,6 +77,11 @@ void cDynamicCreature::KnockBack(float dx, float dy, float dist)
 	bIsAttackable = false;
 }
 
+void cDynamicCreature::TurnAround()
+{
+	vx = -vx;
+}
+
 void cDynamicCreature::Behaviour(float fElapsedTime, float playerX, float playerY)
 {
 	// No default behaviour
