@@ -10,5 +10,6 @@ public:
 
 	void Behaviour(float fElapsedTime, float playerX, float playerY);
 	bool IsSolidTile(wchar_t tile);
+	bool IsSemiSolidTile(wchar_t tile);
 };
 
