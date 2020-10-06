@@ -7,7 +7,6 @@ OneLoneCoder_Platformer::OneLoneCoder_Platformer()
 
 bool OneLoneCoder_Platformer::OnUserCreate()
 {
-	spriteTiles = new olc::Sprite("assets/gfx/tilemap.png");
 	animPlayer.ChangeState("idle");
 
 	return true;
@@ -69,6 +68,13 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	levelsEnnemies.push_back("assets/lvls/ennemiesLvl4.txt");
 	levelsEnnemies.push_back("assets/lvls/ennemiesLvl5.txt");
 	levelsEnnemies.push_back("assets/lvls/ennemiesLvl6.txt");
+
+	levelsTiles.push_back("assets/gfx/tilemap00.png");
+	levelsTiles.push_back("assets/gfx/tilemap01.png");
+	levelsTiles.push_back("assets/gfx/tilemap02.png");
+	levelsTiles.push_back("assets/gfx/tilemap03.png");
+	levelsTiles.push_back("assets/gfx/tilemap04.png");
+	levelsTiles.push_back("assets/gfx/tilemap05.png");
 
 	currentLvl = new cLevel();
 
@@ -180,6 +186,8 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 		sLevel = currentLvl->GetLevel();
 
 		currentLvl->PopulateEnnemies(vecEnnemies, levelsEnnemies[nCurrentLevel]);
+
+		spriteTiles = new olc::Sprite(levelsTiles[nCurrentLevel]);
 	}
 
 	// Reset variables when level is loading

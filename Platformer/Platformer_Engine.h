@@ -64,6 +64,7 @@ private:
 	int nUnlockedLevel = 1;
 	std::vector<std::string> levels;
 	std::vector<std::string> levelsEnnemies;
+	std::vector<std::string> levelsTiles;
 
 	// Player Properties
 	float fPlayerPosX = 0.0f;
