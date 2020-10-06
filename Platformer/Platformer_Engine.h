@@ -99,6 +99,7 @@ private:
 	cWorldMap* worldMap;
 
 	// Transition Screen
+	olc::Sprite* sprTransition;
 	cTransition* transition;
 	int transitionAnim = 0;
 

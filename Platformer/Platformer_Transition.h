@@ -6,7 +6,11 @@
 class cTransition
 {
 public:
+	cTransition(olc::PixelGameEngine* gfx, olc::Sprite* background);
+
+public:
 	static cAnimator* animPlayer;
+	olc::Sprite* sprBackGround;
 
 public:
 	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime);

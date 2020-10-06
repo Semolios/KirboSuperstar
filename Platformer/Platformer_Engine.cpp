@@ -159,6 +159,8 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	worldMap->SetUnlockedLevel(nUnlockedLevel);
 
 	// Transition
+	sprTransition = new olc::Sprite("assets/gfx/transitionScreen.png");
+	transition = new cTransition(this, sprTransition);
 	cTransition::animPlayer = &animPlayer;
 
 	// End Screen
