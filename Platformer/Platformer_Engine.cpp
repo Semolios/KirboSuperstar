@@ -76,6 +76,13 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	levelsTiles.push_back("assets/gfx/tilemap04.png");
 	levelsTiles.push_back("assets/gfx/tilemap05.png");
 
+	levelsBackgrounds.push_back("assets/gfx/testBckGrd00.png");
+	levelsBackgrounds.push_back("assets/gfx/testBckGrd01.png");
+	levelsBackgrounds.push_back("assets/gfx/testBckGrd02.png");
+	levelsBackgrounds.push_back("assets/gfx/testBckGrd03.png");
+	levelsBackgrounds.push_back("assets/gfx/testBckGrd04.png");
+	levelsBackgrounds.push_back("assets/gfx/testBckGrd05.png");
+
 	currentLvl = new cLevel();
 
 	// Player sprites
@@ -188,6 +195,7 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 		currentLvl->PopulateEnnemies(vecEnnemies, levelsEnnemies[nCurrentLevel]);
 
 		spriteTiles = new olc::Sprite(levelsTiles[nCurrentLevel]);
+		sprBackground = new olc::Sprite(levelsBackgrounds[nCurrentLevel]);
 	}
 
 	// Reset variables when level is loading
@@ -524,6 +532,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	// Collision
 	if (fPlayerVelX <= 0) // Moving Left
 	{
+		if (fNewPlayerPosX <= 0) fNewPlayerPosX = 0; // Prevent from being brutally moved to 0 only when reaching -1
+
 		if (IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.0f)) || IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.9f)))
 		{
 			fNewPlayerPosX = (int)fNewPlayerPosX + 1;
@@ -542,6 +552,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	bPlayerOnGround = false;
 	if (fPlayerVelY <= 0) // Moving Up
 	{
+		if (fNewPlayerPosY <= 0) fNewPlayerPosY = 0; // Prevent from being brutally moved to 0 only when reaching -1
+
 		if (IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY)) || IsSolidTile(GetTile(fNewPlayerPosX + 0.9f, fNewPlayerPosY)))
 		{
 			fNewPlayerPosY = (int)fNewPlayerPosY + 1;
@@ -588,7 +600,9 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	float fTileOffsetY = (fOffsetY - (int)fOffsetY) * nTileHeight;
 
 	// Draw Level background
-	Clear(olc::CYAN);
+	float fBackgroundOffsetX = fOffsetX * (float)nTileWidth * ((float)(sprBackground->width - ScreenWidth()) / (float)(nLevelWidth * nTileWidth - ScreenWidth()));
+	float fBackgroundOffsetY = fOffsetY * (float)nTileHeight * ((float)(sprBackground->height - ScreenHeight()) / (float)(nLevelHeight * nTileHeight - ScreenHeight()));
+	DrawPartialSprite(0, 0, sprBackground, fBackgroundOffsetX, fBackgroundOffsetY, ScreenWidth(), ScreenHeight());
 
 	// Draw Visible tile map
 	for (int x = -2; x < nVisibleTilesX + 2; x++)

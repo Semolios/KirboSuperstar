@@ -62,9 +62,11 @@ private:
 	cLevel* currentLvl;
 	int nCurrentLevel = 0;
 	int nUnlockedLevel = 1;
+	olc::Sprite* sprBackground;
 	std::vector<std::string> levels;
 	std::vector<std::string> levelsEnnemies;
 	std::vector<std::string> levelsTiles;
+	std::vector<std::string> levelsBackgrounds;
 
 	// Player Properties
 	float fPlayerPosX = 0.0f;
