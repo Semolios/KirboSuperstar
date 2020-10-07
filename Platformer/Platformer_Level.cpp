@@ -85,27 +85,26 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 
 		while (std::getline(file, line))
 		{
+			std::wstring temp;
+			std::vector<std::wstring> parts;
+			std::wstringstream wss(line);
+			while (std::getline(wss, temp, L','))
+			{
+				parts.push_back(temp);
+			}
+
 			// Populate a waddle dee
-			if (line[0] == 'w')
+			if (parts[0] == L"waddleDee")
 			{
 				cDynamicCreature* mob = new cDynamicCreatureWaddleDee(this);
 				vecDyns.push_back(mob);
 
 				// get position
-				std::wstring str = line.substr(1, line.size() - 1), temp;
-				std::vector<std::wstring> parts;
-				std::wstringstream wss(str);
-				while (std::getline(wss, temp, L','))
-				{
-					parts.push_back(temp);
-				}
-
-				mob->px = std::stoi(parts[0]);
-				mob->py = std::stoi(parts[1]);
+				mob->px = std::stoi(parts[1]);
+				mob->py = std::stoi(parts[2]);
 			}
 		}
 	}
-
 
 	return true;
 }

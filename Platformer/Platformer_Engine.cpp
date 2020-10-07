@@ -282,6 +282,10 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		{
 			if (bFlying)
 				fPlayerVelY = cfPlayerVelY;
+
+			// If player is on semi solid platform, pass through the platform. cheat a little bit, modify the position of the player to cross it
+			if ((IsSemiSolidTile(GetTile(fPlayerPosX + 0.0f, fPlayerPosY + 1.0f)) || IsSemiSolidTile(GetTile(fPlayerPosX + 0.9f, fPlayerPosY + 1.0f))) && bPlayerOnGround)
+				fPlayerPosY += 0.15;
 		}
 
 		// Go left
