@@ -256,7 +256,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			{
 				if (nCurrentLevel + 1 == levels.size())
 				{
-					// If Player finishes the last level, the game is over
+					// If Player finishes the last level of the game, the game is over
 					nGameState = GS_ENDSCREEN;
 
 					return true;
@@ -486,7 +486,6 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			{
 				nGameState = GS_WORLDMAP;
 				animPlayer.ChangeState("riding_star");
-				fInvulnerabilityTimer = 0.0f;
 				return true;
 			}
 		}
