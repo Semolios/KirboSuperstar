@@ -17,6 +17,7 @@ void cAssets::LoadSprites()
 	};
 
 	load("waddleDee", "assets/gfx/waddleDee.png");
+	load("brontoBurt", "assets/gfx/brontoBurt.png");
 }
 
 void cAssets::LoadItems()

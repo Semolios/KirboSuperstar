@@ -30,7 +30,7 @@ public:
 	virtual void DrawSelf(olc::PixelGameEngine* gfx, float ox, float oy)
 	{
 	}
-	virtual void Update(float fElapsedTime, float playerX, float playerY)
+	virtual void Update(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 	{
 	}
 	virtual void OnInteract(cDynamic* player = nullptr)

@@ -22,7 +22,7 @@ void cDynamicCreature::DrawSelf(olc::PixelGameEngine* gfx, float ox, float oy)
 	gfx->SetPixelMode(olc::Pixel::NORMAL);
 }
 
-void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY)
+void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 {
 	if (fKnockBackTimer > 0.0f)
 	{
@@ -64,7 +64,7 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY)
 		if (vx < -0.1f) nFaceDir = 0;
 		if (vx > 0.1f) nFaceDir = 1;
 
-		Behaviour(fElapsedTime, playerX, playerY);
+		Behaviour(fElapsedTime, playerX, playerY, gfx);
 	}
 }
 
@@ -82,7 +82,7 @@ void cDynamicCreature::TurnAround()
 	vx = -vx;
 }
 
-void cDynamicCreature::Behaviour(float fElapsedTime, float playerX, float playerY)
+void cDynamicCreature::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 {
 	// No default behaviour
 }

@@ -103,6 +103,17 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 				mob->px = std::stoi(parts[1]);
 				mob->py = std::stoi(parts[2]);
 			}
+
+			// Populate a Bronto Burt
+			if (parts[0] == L"brontoBurt")
+			{
+				cDynamicCreature* mob = new cDynamicCreatureBrontoBurt(this, std::stof(parts[1]));
+				vecDyns.push_back(mob);
+
+				// get position
+				mob->px = std::stoi(parts[2]);
+				mob->py = std::stoi(parts[3]);
+			}
 		}
 	}
 

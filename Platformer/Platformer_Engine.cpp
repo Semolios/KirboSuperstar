@@ -660,42 +660,45 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		if (object->vy > cfMaxPlayerVelY)
 			object->vy = cfMaxPlayerVelY;
 
-		if (object->vx <= 0) // Moving Left
+		if (object->bSolidVsMap)
 		{
-			if (IsSolidTile(GetTile(fNewObjectPosX + fBorder, object->py + 0.0f)) || IsSolidTile(GetTile(fNewObjectPosX + fBorder, object->py + 0.9f)))
+			if (object->vx <= 0) // Moving Left
 			{
-				fNewObjectPosX = (int)fNewObjectPosX + 1;
-				object->vx = 0;
-				bCollisionWithMap = true;
+				if (IsSolidTile(GetTile(fNewObjectPosX + fBorder, object->py + 0.0f)) || IsSolidTile(GetTile(fNewObjectPosX + fBorder, object->py + 0.9f)))
+				{
+					fNewObjectPosX = (int)fNewObjectPosX + 1;
+					object->vx = 0;
+					bCollisionWithMap = true;
+				}
 			}
-		}
-		else // Moving Right
-		{
-			if (IsSolidTile(GetTile(fNewObjectPosX + (1.0f - fBorder), object->py + 0.0f)) || IsSolidTile(GetTile(fNewObjectPosX + (1.0f - fBorder), object->py + 0.9f)))
+			else // Moving Right
 			{
-				fNewObjectPosX = (int)fNewObjectPosX;
-				object->vx = 0;
-				bCollisionWithMap = true;
+				if (IsSolidTile(GetTile(fNewObjectPosX + (1.0f - fBorder), object->py + 0.0f)) || IsSolidTile(GetTile(fNewObjectPosX + (1.0f - fBorder), object->py + 0.9f)))
+				{
+					fNewObjectPosX = (int)fNewObjectPosX;
+					object->vx = 0;
+					bCollisionWithMap = true;
+				}
 			}
-		}
 
-		if (object->vy <= 0) // Moving Up
-		{
-			if (IsSolidTile(GetTile(fNewObjectPosX + fBorder + 0.0f, fNewObjectPosY)) || IsSolidTile(GetTile(fNewObjectPosX + (1.0f - fBorder), fNewObjectPosY)))
+			if (object->vy <= 0) // Moving Up
 			{
-				fNewObjectPosY = (int)fNewObjectPosY + 1;
-				object->vy = 0;
-				bCollisionWithMap = true;
+				if (IsSolidTile(GetTile(fNewObjectPosX + fBorder + 0.0f, fNewObjectPosY)) || IsSolidTile(GetTile(fNewObjectPosX + (1.0f - fBorder), fNewObjectPosY)))
+				{
+					fNewObjectPosY = (int)fNewObjectPosY + 1;
+					object->vy = 0;
+					bCollisionWithMap = true;
+				}
 			}
-		}
-		else // Moving Down
-		{
-			if (IsSolidTile(GetTile(fNewObjectPosX + fBorder + 0.0f, fNewObjectPosY + 1.0f)) || IsSolidTile(GetTile(fNewObjectPosX + (1.0f - fBorder), fNewObjectPosY + 1.0f)) ||
-				IsSemiSolidTile(GetTile(fNewObjectPosX + fBorder + 0.0f, fNewObjectPosY + 1.0f)) || IsSemiSolidTile(GetTile(fNewObjectPosX + (1.0f - fBorder), fNewObjectPosY + 1.0f)))
+			else // Moving Down
 			{
-				fNewObjectPosY = (int)fNewObjectPosY;
-				object->vy = 0;
-				bCollisionWithMap = true;
+				if (IsSolidTile(GetTile(fNewObjectPosX + fBorder + 0.0f, fNewObjectPosY + 1.0f)) || IsSolidTile(GetTile(fNewObjectPosX + (1.0f - fBorder), fNewObjectPosY + 1.0f)) ||
+					IsSemiSolidTile(GetTile(fNewObjectPosX + fBorder + 0.0f, fNewObjectPosY + 1.0f)) || IsSemiSolidTile(GetTile(fNewObjectPosX + (1.0f - fBorder), fNewObjectPosY + 1.0f)))
+				{
+					fNewObjectPosY = (int)fNewObjectPosY;
+					object->vy = 0;
+					bCollisionWithMap = true;
+				}
 			}
 		}
 
@@ -761,7 +764,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	for (auto& object : vecEnnemies)
 	{
-		object->Update(fElapsedTime, fPlayerPosX, fPlayerPosY);
+		object->Update(fElapsedTime, fPlayerPosX, fPlayerPosY, this);
 	}
 
 	// Remove dead ennemies

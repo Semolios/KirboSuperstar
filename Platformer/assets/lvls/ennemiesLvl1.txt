@@ -1,3 +1,4 @@
 waddleDee,7,4
 waddleDee,20,2
 waddleDee,30,7
+brontoBurt,5.0,17,3

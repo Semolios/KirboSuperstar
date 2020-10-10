@@ -8,7 +8,7 @@ class cDynamicCreatureWaddleDee : public cDynamicCreature
 public:
 	cDynamicCreatureWaddleDee(cLevel* l);
 
-	void Behaviour(float fElapsedTime, float playerX, float playerY);
+	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
 	bool IsSolidTile(wchar_t tile);
 	bool IsSemiSolidTile(wchar_t tile);
 };

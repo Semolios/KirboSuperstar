@@ -9,9 +9,10 @@ cDynamicCreatureWaddleDee::cDynamicCreatureWaddleDee(cLevel* l) : cDynamicCreatu
 	level = l;
 	vx = -1;	// initialize the speed so the waddle dee goes left first
 	fInitSpeed = -1;
+	bSolidVsMap = true;
 }
 
-void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, float playerY)
+void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 {
 	// lambda fonction to check if there is a hole or a wall to change direction
 	auto GetTile = [&](int x, int y)
