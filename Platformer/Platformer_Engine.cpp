@@ -655,7 +655,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		bool bCollisionWithMap = false;
 
 		// Gravity
-		object->vy += cfGravity * fElapsedTime;
+		if (object->bAffectedByGravity)
+			object->vy += cfGravity * fElapsedTime;
 
 		if (object->vy > cfMaxPlayerVelY)
 			object->vy = cfMaxPlayerVelY;

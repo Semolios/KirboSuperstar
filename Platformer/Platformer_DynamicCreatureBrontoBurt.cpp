@@ -10,6 +10,7 @@ cDynamicCreatureBrontoBurt::cDynamicCreatureBrontoBurt(cLevel* l, float oscillat
 	fInitSpeed = -1;
 	fTheta = 0.0f;
 	bSolidVsMap = false;
+	bAffectedByGravity = false;
 	fOscillationAmplitude = oscillationAmplitude;
 }
 

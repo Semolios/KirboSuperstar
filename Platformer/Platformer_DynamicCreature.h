@@ -32,6 +32,7 @@ public:
 	int nHealth;
 	int nHealthMax;
 	bool bDead = false;
+	bool bAffectedByGravity = false;
 	float fInitSpeed;
 
 public:

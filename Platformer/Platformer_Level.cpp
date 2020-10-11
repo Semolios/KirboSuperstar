@@ -114,6 +114,17 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 				mob->px = std::stoi(parts[2]);
 				mob->py = std::stoi(parts[3]);
 			}
+
+			// Populate a scarfy
+			if (parts[0] == L"scarfy")
+			{
+				cDynamicCreature* mob = new cDynamicCreatureScarfy(this);
+				vecDyns.push_back(mob);
+
+				// get position
+				mob->px = std::stoi(parts[1]);
+				mob->py = std::stoi(parts[2]);
+			}
 		}
 	}
 

@@ -4,6 +4,7 @@
 #include "Platformer_Dynamic.h"
 #include "Platformer_DynamicCreature.h"
 #include "Platformer_DynamicCreatureBrontoBurt.h"
+#include "Platformer_DynamicCreatureScarfy.h"
 #include "Platformer_DynamicCreatureWaddleDee.h"
 
 class cLevel
