@@ -726,6 +726,16 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 						object->TurnAround();
 					}
+
+					if (fDynObjectPosX < (dyn->px + 1.0f) && (fDynObjectPosX + 1.0f) > dyn->px &&
+						fDynObjectPosY < (dyn->py + 1.0f) && (fDynObjectPosY + 1.0f) > dyn->py)
+					{
+						// First Check Vertically - Check Top
+						if (object->vy <= 0)
+							fDynObjectPosY = dyn->py + 1.0f;
+						else
+							fDynObjectPosY = dyn->py - 1.0f;
+					}
 				}
 			}
 		}
@@ -934,6 +944,6 @@ void OneLoneCoder_Platformer::SlapAttack(cDynamicCreature* victim)
 		// under system control. This delivers two functions, the first being
 		// a visual indicator to the player that something has happened, and the second
 		// it stops the ability to spam attacks on a single creature
-		victim->KnockBack(tx / d, ty / d, 0.2f);
+		victim->KnockBack(tx / d, ty / d, 0.3f);
 	}
 }

@@ -17,10 +17,10 @@ cDynamicCreatureBrontoBurt::cDynamicCreatureBrontoBurt(cLevel* l, float oscillat
 void cDynamicCreatureBrontoBurt::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 {
 	// Bronto Burt moves when kirby is near (when bronto burt appears on the screen)
-	if (abs(px - playerX) < gfx->ScreenWidth() / 2 + nTileSize && abs(py - playerY) < gfx->ScreenHeight() / 2 + 2 * fOscillationAmplitude)
+	if (abs((px - playerX) * nTileSize) < gfx->ScreenWidth() / 2 + nTileSize && abs((py - playerY) * nTileSize) < gfx->ScreenHeight() / 2 + 2 * fOscillationAmplitude * nTileSize)
 	{
 		fTheta += cfOscillationSpeed * fElapsedTime;
-		vx = cfHorizontalSpeed;
+		vx = fInitSpeed * nFaceDir ? 1.0f : -1.0f;
 		vy = sinf(fTheta) * fOscillationAmplitude;
 	}
 	else

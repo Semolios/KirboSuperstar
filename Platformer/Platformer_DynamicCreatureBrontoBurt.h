@@ -10,7 +10,6 @@ public:
 
 public:
 	const float cfOscillationSpeed = 5.0f; // Bronto burt oscillation speed
-	const float cfHorizontalSpeed = -1.0f; // Bronto burt speed
 
 	float fTheta;
 	float fOscillationAmplitude;
