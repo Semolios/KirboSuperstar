@@ -35,13 +35,17 @@ void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, flo
 				TurnAround();
 			}
 		}
-		else
+		else if (vx > 0)
 		{
 			// Check right wall or hole
 			if (IsSolidTile(GetTile(px + 1, py)) || (!IsSolidTile(GetTile(px + 1, py)) && !IsSolidTile(GetTile(px + 1, py + 1)) && !IsSemiSolidTile(GetTile(px + 1, py + 1))))
 			{
 				TurnAround();
 			}
+		}
+		else
+		{
+			vx = 1.0f;
 		}
 	}
 }
