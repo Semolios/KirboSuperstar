@@ -46,7 +46,7 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY, 
 	}
 	else
 	{
-		bSolidVsDyn = true;
+		bSolidVsDyn = bSolidVsDynInitValue;
 		fTimer += fElapsedTime;
 		if (fTimer >= 1.0f / (float)nFramesPerSecond)
 		{

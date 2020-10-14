@@ -17,6 +17,7 @@ public:
 	float vx, vy;
 	bool bSolidVsMap;
 	bool bSolidVsDyn;
+	bool bSolidVsDynInitValue;
 	bool bFriendly;
 	bool bRedundant;
 	bool bIsProjectile;
