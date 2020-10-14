@@ -8,6 +8,7 @@ cDynamicCreatureScarfy::cDynamicCreatureScarfy(cLevel* l) : cDynamicCreature("sc
 	level = l;
 	vx = 0;	// initialize the speed so the scarfy waits for kirby
 	bSolidVsMap = true;
+	bSolidVsDynInitValue = true;
 	bAffectedByGravity = false;
 }
 

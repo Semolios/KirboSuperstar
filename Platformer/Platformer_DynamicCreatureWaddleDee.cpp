@@ -10,6 +10,7 @@ cDynamicCreatureWaddleDee::cDynamicCreatureWaddleDee(cLevel* l) : cDynamicCreatu
 	vx = -1;	// initialize the speed so the waddle dee goes left first
 	fInitSpeed = -1;
 	bSolidVsMap = true;
+	bSolidVsDynInitValue = true;
 	bAffectedByGravity = true;
 }
 
