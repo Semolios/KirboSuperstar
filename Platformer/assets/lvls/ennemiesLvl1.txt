@@ -1,4 +1,4 @@
 waddleDee,10,4
-//scarfy,10,2
-waddleDee,10,3
+scarfy,15,2
+rocky,10,3
 brontoBurt,5.0,17,3

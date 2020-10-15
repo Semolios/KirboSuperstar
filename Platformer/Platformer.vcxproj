@@ -154,6 +154,7 @@
     <ClCompile Include="Platformer_Dynamic.cpp" />
     <ClCompile Include="Platformer_DynamicCreature.cpp" />
     <ClCompile Include="Platformer_DynamicCreatureBrontoBurt.cpp" />
+    <ClCompile Include="Platformer_DynamicCreatureRocky.cpp" />
     <ClCompile Include="Platformer_DynamicCreatureScarfy.cpp" />
     <ClCompile Include="Platformer_DynamicCreatureWaddleDee.cpp" />
     <ClCompile Include="Platformer_EndScreen.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="Platformer_Dynamic.h" />
     <ClInclude Include="Platformer_DynamicCreature.h" />
     <ClInclude Include="Platformer_DynamicCreatureBrontoBurt.h" />
+    <ClInclude Include="Platformer_DynamicCreatureRocky.h" />
     <ClInclude Include="Platformer_DynamicCreatureScarfy.h" />
     <ClInclude Include="Platformer_DynamicCreatureWaddleDee.h" />
     <ClInclude Include="Platformer_EndScreen.h" />
