@@ -1,5 +1,8 @@
 #include "Platformer_DynamicCreatureWaddleDee.h"
 #include "Platformer_Level.h"
+#include "Platformer_Engine.h"
+
+OneLoneCoder_Platformer* cDynamicCreatureWaddleDee::engine = nullptr;
 
 cDynamicCreatureWaddleDee::cDynamicCreatureWaddleDee(cLevel* l) : cDynamicCreature("waddleDee", cAssets::get().GetSprite("waddleDee"), 4)
 {
@@ -30,7 +33,7 @@ void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, flo
 		if (vx < 0)
 		{
 			// Check left wall or hole
-			if (IsSolidTile(GetTile(px, py)) || (!IsSolidTile(GetTile(px, py)) && !IsSolidTile(GetTile(px, py + 1)) && !IsSemiSolidTile(GetTile(px, py + 1))))
+			if (engine->IsSolidTile(GetTile(px, py)) || (!engine->IsSolidTile(GetTile(px, py)) && !engine->IsSolidTile(GetTile(px, py + 1)) && !engine->IsSemiSolidTile(GetTile(px, py + 1))))
 			{
 				TurnAround();
 			}
@@ -38,7 +41,7 @@ void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, flo
 		else if (vx > 0)
 		{
 			// Check right wall or hole
-			if (IsSolidTile(GetTile(px + 1, py)) || (!IsSolidTile(GetTile(px + 1, py)) && !IsSolidTile(GetTile(px + 1, py + 1)) && !IsSemiSolidTile(GetTile(px + 1, py + 1))))
+			if (engine->IsSolidTile(GetTile(px + 1, py)) || (!engine->IsSolidTile(GetTile(px + 1, py)) && !engine->IsSolidTile(GetTile(px + 1, py + 1)) && !engine->IsSemiSolidTile(GetTile(px + 1, py + 1))))
 			{
 				TurnAround();
 			}
@@ -48,16 +51,4 @@ void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, flo
 			vx = 1.0f;
 		}
 	}
-}
-
-bool cDynamicCreatureWaddleDee::IsSolidTile(wchar_t tile)
-{
-	// List Here all the tiles that are not solid (if there are less non solid tile than solid ones)
-	return tile != '.' && tile != 'o' && tile != 'w' && tile != '?';
-}
-
-bool cDynamicCreatureWaddleDee::IsSemiSolidTile(wchar_t tile)
-{
-	// List Here all the tiles that are semi solid
-	return tile == '?';
 }

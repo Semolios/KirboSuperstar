@@ -1,5 +1,8 @@
 #include "Platformer_DynamicCreatureRocky.h"
 #include "Platformer_Level.h"
+#include "Platformer_Engine.h"
+
+OneLoneCoder_Platformer* cDynamicCreatureRocky::engine = nullptr;
 
 cDynamicCreatureRocky::cDynamicCreatureRocky(cLevel* l) : cDynamicCreature("rocky", cAssets::get().GetSprite("rocky"), 16)
 {
@@ -42,7 +45,7 @@ void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float p
 			bAffectedByGravity = true;
 			nGraphicState = WALKING;
 
-			if (IsSolidTile(GetTile(px, py + 1)))
+			if (engine->IsSolidTile(GetTile(px, py + 1)))
 				nAINextState = AI_LANDING;
 		}
 		break;
@@ -65,7 +68,7 @@ void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float p
 			// Clamping going back up speed
 			if (vy < -2) vy = -2;
 
-			if (IsSolidTile(GetTile(px, py - 0.01f)) || py < 0)
+			if (engine->IsSolidTile(GetTile(px, py - 0.01f)) || py < 0)
 			{
 				vy = 0;
 				nAINextState = AI_WAITING;
@@ -76,16 +79,3 @@ void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float p
 
 	nAIState = nAINextState;
 }
-
-bool cDynamicCreatureRocky::IsSolidTile(wchar_t tile)
-{
-	// List Here all the tiles that are not solid (if there are less non solid tile than solid ones)
-	return tile != '.' && tile != 'o' && tile != 'w' && tile != '?';
-}
-
-bool cDynamicCreatureRocky::IsSemiSolidTile(wchar_t tile)
-{
-	// List Here all the tiles that are semi solid
-	return tile == '?';
-}
-

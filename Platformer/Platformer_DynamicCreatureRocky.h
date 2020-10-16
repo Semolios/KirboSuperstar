@@ -3,6 +3,8 @@
 #include "Platformer_DynamicCreature.h"
 #include "Platformer_Assets.h"
 
+class OneLoneCoder_Platformer;
+
 class cDynamicCreatureRocky : public cDynamicCreature
 {
 public:
@@ -20,9 +22,9 @@ public:
 	float fLandingTime = 1.0f;
 	float fTimer = 0.0f;
 
+	static OneLoneCoder_Platformer* engine;
+
 public:
 	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
-	bool IsSolidTile(wchar_t tile);
-	bool IsSemiSolidTile(wchar_t tile);
 };
 

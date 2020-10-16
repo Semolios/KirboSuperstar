@@ -877,7 +877,11 @@ bool OneLoneCoder_Platformer::GameState_PauseMenu(float fElapsedTime)
 bool OneLoneCoder_Platformer::IsSolidTile(wchar_t tile)
 {
 	// List Here all the tiles that are not solid (if there are less non solid tile than solid ones)
-	return tile != '.' && tile != 'o' && tile != 'w' && tile != '?';
+	return
+		tile != '.' &&
+		tile != 'o' &&
+		tile != 'w' &&
+		tile != '?';
 }
 
 bool OneLoneCoder_Platformer::IsSemiSolidTile(wchar_t tile)

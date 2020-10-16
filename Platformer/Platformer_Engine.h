@@ -151,8 +151,10 @@ protected:
 	bool GameState_EndScreen(float fElapsedTime);
 	bool GameState_PauseMenu(float fElapsedTime);
 
-	bool IsSolidTile(wchar_t tile);
-	bool IsSemiSolidTile(wchar_t tile);
 	bool ShapeOverlap_DIAG(polygon& r1, polygon& r2);
 	void SlapAttack(cDynamicCreature* victim);
+
+public:
+	bool IsSolidTile(wchar_t tile);
+	bool IsSemiSolidTile(wchar_t tile);
 };
