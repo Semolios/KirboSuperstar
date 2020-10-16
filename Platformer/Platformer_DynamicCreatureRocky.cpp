@@ -65,7 +65,7 @@ void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float p
 			// Clamping going back up speed
 			if (vy < -2) vy = -2;
 
-			if (IsSolidTile(GetTile(px, py - 0.01f)) || py == 1)
+			if (IsSolidTile(GetTile(px, py - 0.01f)) || py < 0)
 			{
 				vy = 0;
 				nAINextState = AI_WAITING;
