@@ -35,6 +35,7 @@ void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float p
 		case AI_WAITING:
 		{
 			bAffectedByGravity = false;
+			vy = 0;
 
 			if (abs(playerX - px) < 0.5f && playerY > py)
 				nAINextState = AI_FALLING;
