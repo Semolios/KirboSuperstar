@@ -8,6 +8,7 @@
 #include "Platformer_DynamicCreatureBrontoBurt.h"
 #include "Platformer_DynamicCreatureScarfy.h"
 #include "Platformer_DynamicCreatureWaddleDee.h"
+#include "Platformer_DynamicProjectile.h"
 #include "Platformer_EndScreen.h"
 #include "Platformer_Level.h"
 #include "Platformer_PauseMenu.h"
@@ -122,6 +123,10 @@ private:
 	// Ennemies
 	std::vector<cDynamicCreature*> vecEnnemies;
 
+	// Projectiles
+	std::vector<cDynamicProjectile*> vecProjectiles;
+	std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles;
+
 	// HUD
 	olc::Sprite* sprHealthBar;
 	olc::Sprite* sprHealthPoint;
@@ -147,14 +152,18 @@ protected:
 	bool GameState_LoadLevel(float fElapsedTime);
 	bool GameState_Title(float fElapsedTime);
 	bool GameState_Main(float fElapsedTime);
+	void CheckIfPlayerIsDamaged(cDynamic* object, float angle);
 	bool GameState_WorldMap(float fElapsedTime);
 	bool GameState_EndScreen(float fElapsedTime);
 	bool GameState_PauseMenu(float fElapsedTime);
 
 	bool ShapeOverlap_DIAG(polygon& r1, polygon& r2);
-	void SlapAttack(cDynamicCreature* victim);
+	void Attack(cDynamicCreature* victim, int damage);
 
 public:
 	bool IsSolidTile(wchar_t tile);
 	bool IsSemiSolidTile(wchar_t tile);
+	void AddProjectile(cDynamicProjectile* proj);
+	float GetTileWidth();
+	float GetTileHeight();
 };

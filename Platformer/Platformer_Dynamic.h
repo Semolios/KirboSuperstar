@@ -11,10 +11,12 @@ public:
 	~cDynamic();
 
 public:
-	const float nTileSize = 64.0f;
+	float fDynWidth;
+	float fDynHeight;
 
 	float px, py;
 	float vx, vy;
+	int nDamage;
 	bool bSolidVsMap;
 	bool bSolidVsDyn;
 	bool bSolidVsDynInitValue;

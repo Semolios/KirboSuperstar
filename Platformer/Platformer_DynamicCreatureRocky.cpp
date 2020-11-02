@@ -6,6 +6,8 @@ OneLoneCoder_Platformer* cDynamicCreatureRocky::engine = nullptr;
 
 cDynamicCreatureRocky::cDynamicCreatureRocky(cLevel* l) : cDynamicCreature("rocky", cAssets::get().GetSprite("rocky"), 16)
 {
+	fDynWidth = 64.0f;
+	fDynHeight = 64.0f;
 	bFriendly = false;
 	nHealth = 10;
 	nHealthMax = 10;
@@ -15,6 +17,7 @@ cDynamicCreatureRocky::cDynamicCreatureRocky(cLevel* l) : cDynamicCreature("rock
 	bSolidVsMap = true;
 	bSolidVsDynInitValue = true;
 	bAffectedByGravity = false;
+	nDamage = 4;
 }
 
 void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
@@ -46,7 +49,7 @@ void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float p
 			bAffectedByGravity = true;
 			nGraphicState = WALKING;
 
-			if (engine->IsSolidTile(GetTile(px, py + 1)))
+			if (engine->IsSolidTile(GetTile(px, py + 1)) || engine->IsSolidTile(GetTile(px + 1, py + 1)))
 				nAINextState = AI_LANDING;
 		}
 		break;

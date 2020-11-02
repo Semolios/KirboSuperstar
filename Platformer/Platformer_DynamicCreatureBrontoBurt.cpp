@@ -3,6 +3,8 @@
 
 cDynamicCreatureBrontoBurt::cDynamicCreatureBrontoBurt(cLevel* l, float oscillationAmplitude) : cDynamicCreature("brontoBurt", cAssets::get().GetSprite("brontoBurt"), 4)
 {
+	fDynWidth = 64.0f;
+	fDynHeight = 64.0f;
 	bFriendly = false;
 	nHealth = 10;
 	nHealthMax = 10;
@@ -13,12 +15,13 @@ cDynamicCreatureBrontoBurt::cDynamicCreatureBrontoBurt(cLevel* l, float oscillat
 	bSolidVsDynInitValue = false;
 	bAffectedByGravity = false;
 	fOscillationAmplitude = oscillationAmplitude;
+	nDamage = 2;
 }
 
 void cDynamicCreatureBrontoBurt::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 {
 	// Bronto Burt moves when kirby is near (when bronto burt appears on the screen)
-	if (abs((px - playerX) * nTileSize) < gfx->ScreenWidth() / 2 + nTileSize && abs((py - playerY) * nTileSize) < gfx->ScreenHeight() / 2 + 2 * fOscillationAmplitude * nTileSize)
+	if (abs((px - playerX) * fDynWidth) < gfx->ScreenWidth() / 2 + fDynWidth && abs((py - playerY) * fDynHeight) < gfx->ScreenHeight() / 2 + 2 * fOscillationAmplitude * fDynHeight)
 	{
 		fTheta += cfOscillationSpeed * fElapsedTime;
 		vx = fInitSpeed * nFaceDir ? 1.0f : -1.0f;

@@ -2,6 +2,8 @@
 
 cDynamicCreatureScarfy::cDynamicCreatureScarfy(cLevel* l) : cDynamicCreature("scarfy", cAssets::get().GetSprite("scarfy"), 16)
 {
+	fDynWidth = 64.0f;
+	fDynHeight = 64.0f;
 	bFriendly = false;
 	nHealth = 10;
 	nHealthMax = 10;
@@ -10,6 +12,7 @@ cDynamicCreatureScarfy::cDynamicCreatureScarfy(cLevel* l) : cDynamicCreature("sc
 	bSolidVsMap = true;
 	bSolidVsDynInitValue = true;
 	bAffectedByGravity = false;
+	nDamage = 4;
 }
 
 void cDynamicCreatureScarfy::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)

@@ -6,6 +6,8 @@ OneLoneCoder_Platformer* cDynamicCreatureWaddleDee::engine = nullptr;
 
 cDynamicCreatureWaddleDee::cDynamicCreatureWaddleDee(cLevel* l) : cDynamicCreature("waddleDee", cAssets::get().GetSprite("waddleDee"), 4)
 {
+	fDynWidth = 64.0f;
+	fDynHeight = 64.0f;
 	bFriendly = false;
 	nHealth = 10;
 	nHealthMax = 10;
@@ -15,6 +17,7 @@ cDynamicCreatureWaddleDee::cDynamicCreatureWaddleDee(cLevel* l) : cDynamicCreatu
 	bSolidVsMap = true;
 	bSolidVsDynInitValue = true;
 	bAffectedByGravity = true;
+	nDamage = 2;
 }
 
 void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)

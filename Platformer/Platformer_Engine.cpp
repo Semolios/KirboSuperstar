@@ -148,6 +148,9 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("TODO"));
 	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("TODO"));
 
+	// Projectiles Sprites
+	mapProjectiles["arrow"].push_back(new olc::Sprite("assets/gfx/arrow.png"));
+
 	// title screen
 	sprTitleScreen = new olc::Sprite("assets/gfx/title screen.png");
 	titleScreen = new cTitleScreen(this, sprTitleScreen);
@@ -184,6 +187,7 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 {
 	// Destroy all dynamics
 	vecEnnemies.clear();
+	vecProjectiles.clear();
 
 	nCurrentLevel = worldMap->GetSelectedLevel();
 	if (currentLvl->LoadLevel(levels[nCurrentLevel]))
@@ -330,7 +334,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		if (GetKey(olc::Key::F).bPressed)
 		{
 			// Can't spam slap, can't slap when player is damaged or when he's flying
-			if (!bAttacking && !bPlayerDamaged && !bFlying)
+			if (!bAttacking && !bFlying)
 			{
 				animPlayer.ChangeState("slap");
 				bAttacking = true;
@@ -345,6 +349,14 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			// like you can't pause when you jump in mario sunshine so you can't leave the level when you are falling
 			nGameState = GS_PAUSE;
 			return true;
+		}
+
+		// Test projectile
+		if (GetKey(olc::Key::O).bPressed)
+		{
+			cDynamicProjectile* p = new cDynamicProjectile((fPlayerPosX + fFaceDir), fPlayerPosY - 1.0f, true, 10.0f * fFaceDir, -10.0f, 10.0f, mapProjectiles["arrow"], 64.0f, 64.0f, true, 5);
+			p->bOneHit = true;
+			AddProjectile(p);
 		}
 	}
 
@@ -438,12 +450,12 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			for (auto& dyn : vecEnnemies)
 			{
 				polygon sEnnemy;
-				sEnnemy.pos = { (float)dyn->px * nTileWidth + (float)nTileWidth / 2.0f, (float)dyn->py * nTileHeight + (float)nTileHeight / 2.0f }; // Center of the ennemy
+				sEnnemy.pos = { (float)dyn->px * nTileWidth + (float)dyn->fDynWidth / 2.0f, (float)dyn->py * nTileHeight + (float)dyn->fDynHeight / 2.0f }; // Center of the ennemy
 				sEnnemy.angle = 0.0f;
-				sEnnemy.o.push_back({ -(float)nTileWidth / 2.0f, -(float)nTileHeight / 2.0f });
-				sEnnemy.o.push_back({ -(float)nTileWidth / 2.0f, +(float)nTileHeight / 2.0f });
-				sEnnemy.o.push_back({ +(float)nTileWidth / 2.0f, +(float)nTileHeight / 2.0f });
-				sEnnemy.o.push_back({ +(float)nTileWidth / 2.0f, -(float)nTileHeight / 2.0f });
+				sEnnemy.o.push_back({ -dyn->fDynWidth / 2.0f, -dyn->fDynHeight / 2.0f });
+				sEnnemy.o.push_back({ -dyn->fDynWidth / 2.0f, +dyn->fDynHeight / 2.0f });
+				sEnnemy.o.push_back({ +dyn->fDynWidth / 2.0f, +dyn->fDynHeight / 2.0f });
+				sEnnemy.o.push_back({ +dyn->fDynWidth / 2.0f, -dyn->fDynHeight / 2.0f });
 				sEnnemy.p.resize(4);
 
 				for (int i = 0; i < sEnnemy.o.size(); i++)
@@ -458,7 +470,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 				if (ShapeOverlap_DIAG(sAOE, sEnnemy))
 				{
 					if (dyn->bIsAttackable)
-						SlapAttack((cDynamicCreature*)dyn);
+						Attack((cDynamicCreature*)dyn, 5);
 				}
 			}
 		}
@@ -640,6 +652,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 					DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 0 * nTileWidth, 1 * nTileHeight, nTileWidth, nTileHeight);
 					SetPixelMode(olc::Pixel::NORMAL);
 					break;
+					// TODO
+					/*ADD HERE THE NEW TILES*/
 			}
 		}
 	}
@@ -652,7 +666,6 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 		// Collision
 		float fBorder = 0.1f;
-		bool bCollisionWithMap = false;
 
 		// Gravity
 		if (object->bAffectedByGravity)
@@ -665,40 +678,36 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		{
 			if (object->vx <= 0) // Moving Left
 			{
-				if (IsSolidTile(GetTile(fNewObjectPosX + fBorder, object->py + 0.0f)) || IsSolidTile(GetTile(fNewObjectPosX + fBorder, object->py + 0.9f)))
+				if (IsSolidTile(GetTile(fNewObjectPosX + fBorder, object->py + fBorder)) || IsSolidTile(GetTile(fNewObjectPosX + fBorder, object->py + (object->fDynHeight / (float)nTileHeight) - fBorder)))
 				{
 					fNewObjectPosX = (int)fNewObjectPosX + 1;
 					object->vx = 0;
-					bCollisionWithMap = true;
 				}
 			}
 			else // Moving Right
 			{
-				if (IsSolidTile(GetTile(fNewObjectPosX + (1.0f - fBorder), object->py + 0.0f)) || IsSolidTile(GetTile(fNewObjectPosX + (1.0f - fBorder), object->py + 0.9f)))
+				if (IsSolidTile(GetTile(fNewObjectPosX + ((object->fDynWidth / (float)nTileWidth) - fBorder), object->py + fBorder)) || IsSolidTile(GetTile(fNewObjectPosX + ((object->fDynWidth / (float)nTileWidth) - fBorder), object->py + (object->fDynHeight / (float)nTileHeight) - fBorder)))
 				{
 					fNewObjectPosX = (int)fNewObjectPosX;
 					object->vx = 0;
-					bCollisionWithMap = true;
 				}
 			}
 
 			if (object->vy <= 0) // Moving Up
 			{
-				if (IsSolidTile(GetTile(fNewObjectPosX + fBorder + 0.0f, fNewObjectPosY)) || IsSolidTile(GetTile(fNewObjectPosX + (1.0f - fBorder), fNewObjectPosY)))
+				if (IsSolidTile(GetTile(fNewObjectPosX + fBorder, fNewObjectPosY)) || IsSolidTile(GetTile(fNewObjectPosX + ((object->fDynWidth / (float)nTileWidth) - fBorder), fNewObjectPosY)))
 				{
 					fNewObjectPosY = (int)fNewObjectPosY + 1;
 					object->vy = 0;
-					bCollisionWithMap = true;
 				}
 			}
 			else // Moving Down
 			{
-				if (IsSolidTile(GetTile(fNewObjectPosX + fBorder + 0.0f, fNewObjectPosY + 1.0f)) || IsSolidTile(GetTile(fNewObjectPosX + (1.0f - fBorder), fNewObjectPosY + 1.0f)) ||
-					IsSemiSolidTile(GetTile(fNewObjectPosX + fBorder + 0.0f, fNewObjectPosY + 1.0f)) || IsSemiSolidTile(GetTile(fNewObjectPosX + (1.0f - fBorder), fNewObjectPosY + 1.0f)))
+				if (IsSolidTile(GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (object->fDynHeight / (float)nTileHeight))) || IsSolidTile(GetTile(fNewObjectPosX + ((object->fDynWidth / (float)nTileWidth) - fBorder), fNewObjectPosY + (object->fDynHeight / (float)nTileHeight))) ||
+					IsSemiSolidTile(GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (object->fDynHeight / (float)nTileHeight))) || IsSemiSolidTile(GetTile(fNewObjectPosX + ((object->fDynWidth / (float)nTileWidth) - fBorder), fNewObjectPosY + (object->fDynHeight / (float)nTileHeight))))
 				{
 					fNewObjectPosY = (int)fNewObjectPosY;
 					object->vy = 0;
-					bCollisionWithMap = true;
 				}
 			}
 		}
@@ -715,26 +724,30 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 				if (dyn->bSolidVsDyn && object->bSolidVsDyn)
 				{
 					// Check if bounding rectangles overlap
-					if (fDynObjectPosX < (dyn->px + 1.0f) && (fDynObjectPosX + 1.0f) > dyn->px &&
-						object->py < (dyn->py + 1.0f) && (object->py + 1.0f) > dyn->py)
+					if (fDynObjectPosX < (dyn->px + (dyn->fDynWidth / (float)nTileWidth)) &&
+						(fDynObjectPosX + (object->fDynWidth / (float)nTileWidth)) > dyn->px &&
+						object->py < (dyn->py + (dyn->fDynHeight / (float)nTileHeight)) &&
+						(object->py + (object->fDynHeight / (float)nTileHeight)) > dyn->py)
 					{
 						// First Check Horizontally - Check Left
 						if (object->vx <= 0)
-							fDynObjectPosX = dyn->px + 1.0f;
+							fDynObjectPosX = dyn->px + (dyn->fDynWidth / (float)nTileWidth);
 						else
-							fDynObjectPosX = dyn->px - 1.0f;
+							fDynObjectPosX = dyn->px - (object->fDynWidth / (float)nTileWidth);
 
 						object->TurnAround();
 					}
 
-					if (fDynObjectPosX < (dyn->px + 1.0f) && (fDynObjectPosX + 1.0f) > dyn->px &&
-						fDynObjectPosY < (dyn->py + 1.0f) && (fDynObjectPosY + 1.0f) > dyn->py)
+					if (fDynObjectPosX < (dyn->px + (dyn->fDynWidth / (float)nTileWidth)) &&
+						(fDynObjectPosX + (object->fDynWidth / (float)nTileWidth)) > dyn->px &&
+						fDynObjectPosY < (dyn->py + (dyn->fDynHeight / (float)nTileHeight)) &&
+						(fDynObjectPosY + (object->fDynHeight / (float)nTileHeight)) > dyn->py)
 					{
 						// First Check Vertically - Check Top
 						if (object->vy <= 0)
-							fDynObjectPosY = dyn->py + 1.0f;
+							fDynObjectPosY = dyn->py + (dyn->fDynHeight / (float)nTileHeight);
 						else
-							fDynObjectPosY = dyn->py - 1.0f;
+							fDynObjectPosY = dyn->py - (object->fDynHeight / (float)nTileHeight);
 					}
 				}
 			}
@@ -743,28 +756,128 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// Check collision with player to damage him
 		if (bIsPlayerAttackable)
 		{
-			// Check for the four corners of the player
-			if ((fDynObjectPosX + 0.1f <= fPlayerPosX + 0.9f && fDynObjectPosX + 0.1f >= fPlayerPosX && fDynObjectPosY + 0.1f <= fPlayerPosY + 0.9f && fDynObjectPosY + 0.1f >= fPlayerPosY) ||
-				(fDynObjectPosX + 0.9f <= fPlayerPosX + 0.9f && fDynObjectPosX + 0.9f >= fPlayerPosX && fDynObjectPosY + 0.1f <= fPlayerPosY + 0.9f && fDynObjectPosY + 0.1f >= fPlayerPosY) ||
-				(fDynObjectPosX + 0.1f <= fPlayerPosX + 0.9f && fDynObjectPosX + 0.1f >= fPlayerPosX && fDynObjectPosY + 0.9f <= fPlayerPosY + 0.9f && fDynObjectPosY + 0.9f >= fPlayerPosY) ||
-				(fDynObjectPosX + 0.9f <= fPlayerPosX + 0.9f && fDynObjectPosX + 0.9f >= fPlayerPosX && fDynObjectPosY + 0.9f <= fPlayerPosY + 0.9f && fDynObjectPosY + 0.9f >= fPlayerPosY))
-			{
-				animPlayer.ChangeState("damaged");
-				fInvulnerabilityTimer = cfInvulnerabilityFrame;
-				bPlayerDamaged = true;
-				bIsPlayerAttackable = false;
-				fHealth -= 5;
+			CheckIfPlayerIsDamaged(object, 0.0f);
+		}
 
-				// Knockback the player out of the ennemy
-				if (fDynObjectPosX < fPlayerPosX)
+		object->px = fDynObjectPosX;
+		object->py = fDynObjectPosY;
+	}
+
+	// Projectiles
+	for (auto& object : vecProjectiles)
+	{
+		float fNewObjectPosX = object->px + object->vx * fElapsedTime;
+		float fNewObjectPosY = object->py + object->vy * fElapsedTime;
+
+		// Collision
+		float fBorder = 0.1f;
+
+		// Gravity
+		if (object->bAffectedByGravity)
+			object->vy += cfGravity * fElapsedTime;
+
+		if (object->vy > cfMaxPlayerVelY)
+			object->vy = cfMaxPlayerVelY;
+
+		if (object->bSolidVsMap)
+		{
+			if (object->vx <= 0) // Moving Left
+			{
+				if (IsSolidTile(GetTile(fNewObjectPosX + fBorder, object->py + fBorder)) || IsSolidTile(GetTile(fNewObjectPosX + fBorder, object->py + (object->fDynHeight / (float)nTileHeight) - fBorder)))
 				{
-					fPlayerVelX = cfDamageEjectionVelX;
-					fPlayerVelY = cfDamageEjectionVelY;
+					object->bRedundant = true;
 				}
-				else
+			}
+			else // Moving Right
+			{
+				if (IsSolidTile(GetTile(fNewObjectPosX + ((object->fDynWidth / (float)nTileWidth) - fBorder), object->py + fBorder)) || IsSolidTile(GetTile(fNewObjectPosX + ((object->fDynWidth / (float)nTileWidth) - fBorder), object->py + (object->fDynHeight / (float)nTileHeight) - fBorder)))
 				{
-					fPlayerVelX = -cfDamageEjectionVelX;
-					fPlayerVelY = -cfDamageEjectionVelY;
+					object->bRedundant = true;
+				}
+			}
+
+			if (object->vy <= 0) // Moving Up
+			{
+				if (IsSolidTile(GetTile(fNewObjectPosX + fBorder, fNewObjectPosY)) || IsSolidTile(GetTile(fNewObjectPosX + ((object->fDynWidth / (float)nTileWidth) - fBorder), fNewObjectPosY)))
+				{
+					object->bRedundant = true;
+				}
+			}
+			else // Moving Down
+			{
+				if (IsSolidTile(GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (object->fDynHeight / (float)nTileHeight))) || IsSolidTile(GetTile(fNewObjectPosX + ((object->fDynWidth / (float)nTileWidth) - fBorder), fNewObjectPosY + (object->fDynHeight / (float)nTileHeight))) ||
+					IsSemiSolidTile(GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (object->fDynHeight / (float)nTileHeight))) || IsSemiSolidTile(GetTile(fNewObjectPosX + ((object->fDynWidth / (float)nTileWidth) - fBorder), fNewObjectPosY + (object->fDynHeight / (float)nTileHeight))))
+				{
+					object->bRedundant = true;
+				}
+			}
+		}
+
+		float fDynObjectPosX = fNewObjectPosX;
+		float fDynObjectPosY = fNewObjectPosY;
+
+		// check if a Projectile hits a creature
+		if (!object->bRedundant)
+		{
+			if (object->bFriendly)
+			{
+				// Create an AOE on the projectile and check for ennemies and AOE overlap
+				polygon sAOE;
+				sAOE.angle = atan2f(object->vy, object->vx);
+				sAOE.pos = { (object->px) * nTileWidth + (object->fDynWidth / 2.0f), (object->py) * nTileHeight + (object->fDynHeight / 2.0f) };
+
+				sAOE.o.push_back({ -object->fDynWidth / 2.0f, -object->fDynHeight / 2.0f });
+				sAOE.o.push_back({ -object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
+				sAOE.o.push_back({ +object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
+				sAOE.o.push_back({ +object->fDynWidth / 2.0f, -object->fDynHeight / 2.0f });
+				sAOE.p.resize(4);
+
+				for (int i = 0; i < sAOE.o.size(); i++)
+				{
+					sAOE.p[i] =
+					{	// 2D Rotation Transform + 2D Translation
+						(sAOE.o[i].x * cosf(sAOE.angle)) - (sAOE.o[i].y * sinf(sAOE.angle)) + sAOE.pos.x,
+						(sAOE.o[i].x * sinf(sAOE.angle)) + (sAOE.o[i].y * cosf(sAOE.angle)) + sAOE.pos.y,
+					};
+				}
+
+				// Check if an ennemy take the attack
+				for (auto& dyn : vecEnnemies)
+				{
+					polygon sEnnemy;
+					sEnnemy.pos = { (float)dyn->px * dyn->fDynWidth + (float)dyn->fDynWidth / 2.0f, (float)dyn->py * dyn->fDynHeight + (float)dyn->fDynHeight / 2.0f }; // Center of the ennemy
+					sEnnemy.angle = 0.0f;
+					sEnnemy.o.push_back({ -dyn->fDynWidth / 2.0f, -dyn->fDynHeight / 2.0f });
+					sEnnemy.o.push_back({ -dyn->fDynWidth / 2.0f, +dyn->fDynHeight / 2.0f });
+					sEnnemy.o.push_back({ +dyn->fDynWidth / 2.0f, +dyn->fDynHeight / 2.0f });
+					sEnnemy.o.push_back({ +dyn->fDynWidth / 2.0f, -dyn->fDynHeight / 2.0f });
+					sEnnemy.p.resize(4);
+
+					for (int i = 0; i < sEnnemy.o.size(); i++)
+					{
+						sEnnemy.p[i] =
+						{	// 2D Rotation Transform + 2D Translation (angle is always 0 here, no rotation allowed)
+							(sEnnemy.o[i].x * cosf(sEnnemy.angle)) - (sEnnemy.o[i].y * sinf(sEnnemy.angle)) + sEnnemy.pos.x,
+							(sEnnemy.o[i].x * sinf(sEnnemy.angle)) + (sEnnemy.o[i].y * cosf(sEnnemy.angle)) + sEnnemy.pos.y,
+						};
+					}
+
+					if (ShapeOverlap_DIAG(sAOE, sEnnemy))
+					{
+						if (dyn->bIsAttackable)
+						{
+							Attack((cDynamicCreature*)dyn, object->nDamage);
+							if (object->bOneHit)
+								object->bRedundant = true;
+						}
+					}
+				}
+			}
+			else
+			{
+				if (bIsPlayerAttackable)
+				{
+					CheckIfPlayerIsDamaged(object, atan2f(object->vx, object->vy));
 				}
 			}
 		}
@@ -778,6 +891,11 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		object->Update(fElapsedTime, fPlayerPosX, fPlayerPosY, this);
 	}
 
+	for (auto& object : vecProjectiles)
+	{
+		object->Update(fElapsedTime, fPlayerPosX, fPlayerPosY, this);
+	}
+
 	// Remove dead ennemies
 	auto i = std::remove_if(vecEnnemies.begin(), vecEnnemies.end(), [](const cDynamicCreature* d)
 	{
@@ -786,8 +904,20 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	if (i != vecEnnemies.end())
 		vecEnnemies.erase(i);
 
+	// Erase and delete redundant projectiles
+	vecProjectiles.erase(remove_if(vecProjectiles.begin(), vecProjectiles.end(), [](const cDynamic* d)
+	{
+		return ((cDynamicProjectile*)d)->bRedundant;
+	}), vecProjectiles.end());
+
 	// Draw Ennemies
 	for (auto& object : vecEnnemies)
+	{
+		object->DrawSelf(this, fOffsetX, fOffsetY);
+	}
+
+	// Draw Projectiles
+	for (auto& object : vecProjectiles)
 	{
 		object->DrawSelf(this, fOffsetX, fOffsetY);
 	}
@@ -842,6 +972,79 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	return true;
 }
 
+void OneLoneCoder_Platformer::CheckIfPlayerIsDamaged(cDynamic* object, float angle)
+{
+	polygon sAOE;
+	sAOE.pos = { (object->px) * nTileWidth + (object->fDynWidth / 2.0f), (object->py) * nTileHeight + (object->fDynHeight / 2.0f) };
+	sAOE.angle = angle;
+	sAOE.o.push_back({ -object->fDynWidth / 2.0f, -object->fDynHeight / 2.0f });
+	sAOE.o.push_back({ -object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
+	sAOE.o.push_back({ +object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
+	sAOE.o.push_back({ +object->fDynWidth / 2.0f, -object->fDynHeight / 2.0f });
+	sAOE.p.resize(4);
+
+	for (int i = 0; i < sAOE.o.size(); i++)
+	{
+		sAOE.p[i] =
+		{	// 2D Rotation Transform + 2D Translation
+			(sAOE.o[i].x * cosf(sAOE.angle)) - (sAOE.o[i].y * sinf(sAOE.angle)) + sAOE.pos.x,
+			(sAOE.o[i].x * sinf(sAOE.angle)) + (sAOE.o[i].y * cosf(sAOE.angle)) + sAOE.pos.y,
+		};
+	}
+
+	// Debug aoe
+	//DrawLine(sAOE.p[0].x, sAOE.p[0].y, sAOE.p[1].x, sAOE.p[1].y, olc::RED);
+	//DrawLine(sAOE.p[1].x, sAOE.p[1].y, sAOE.p[2].x, sAOE.p[2].y, olc::RED);
+	//DrawLine(sAOE.p[2].x, sAOE.p[2].y, sAOE.p[3].x, sAOE.p[3].y, olc::RED);
+	//DrawLine(sAOE.p[3].x, sAOE.p[3].y, sAOE.p[0].x, sAOE.p[0].y, olc::RED);
+
+	polygon sPlayer;
+	sPlayer.pos = { fPlayerPosX * (float)nTileWidth + ((float)nTileWidth / 2.0f), fPlayerPosY * (float)nTileHeight + ((float)nTileHeight / 2.0f) }; // Center of the ennemy
+	sPlayer.angle = 0.0f;
+	sPlayer.o.push_back({ -(float)nTileWidth / 2.0f, -(float)nTileHeight / 2.0f });
+	sPlayer.o.push_back({ -(float)nTileWidth / 2.0f, +(float)nTileHeight / 2.0f });
+	sPlayer.o.push_back({ +(float)nTileWidth / 2.0f, +(float)nTileHeight / 2.0f });
+	sPlayer.o.push_back({ +(float)nTileWidth / 2.0f, -(float)nTileHeight / 2.0f });
+	sPlayer.p.resize(4);
+
+	for (int i = 0; i < sPlayer.o.size(); i++)
+	{
+		sPlayer.p[i] =
+		{	// 2D Rotation Transform + 2D Translation (angle is always 0 here, no rotation allowed)
+			(sPlayer.o[i].x * cosf(sPlayer.angle)) - (sPlayer.o[i].y * sinf(sPlayer.angle)) + sPlayer.pos.x,
+			(sPlayer.o[i].x * sinf(sPlayer.angle)) + (sPlayer.o[i].y * cosf(sPlayer.angle)) + sPlayer.pos.y,
+		};
+	}
+
+	// Debug AOE
+	//DrawLine(sPlayer.p[0].x, sPlayer.p[0].y, sPlayer.p[1].x, sPlayer.p[1].y, olc::BLUE);
+	//DrawLine(sPlayer.p[1].x, sPlayer.p[1].y, sPlayer.p[2].x, sPlayer.p[2].y, olc::BLUE);
+	//DrawLine(sPlayer.p[2].x, sPlayer.p[2].y, sPlayer.p[3].x, sPlayer.p[3].y, olc::BLUE);
+	//DrawLine(sPlayer.p[3].x, sPlayer.p[3].y, sPlayer.p[0].x, sPlayer.p[0].y, olc::BLUE);
+
+	if (ShapeOverlap_DIAG(sAOE, sPlayer))
+	{
+		// Player is damaged
+		animPlayer.ChangeState("damaged");
+		fInvulnerabilityTimer = cfInvulnerabilityFrame;
+		bPlayerDamaged = true;
+		bIsPlayerAttackable = false;
+		fHealth -= object->nDamage;
+
+		// Knockback the player out of the ennemy
+		if (object->px < fPlayerPosX)
+		{
+			fPlayerVelX = cfDamageEjectionVelX;
+			fPlayerVelY = -cfDamageEjectionVelY;
+		}
+		else
+		{
+			fPlayerVelX = -cfDamageEjectionVelX;
+			fPlayerVelY = -cfDamageEjectionVelY;
+		}
+	}
+}
+
 bool OneLoneCoder_Platformer::GameState_WorldMap(float fElapsedTime)
 {
 	worldMap->Update(this, fElapsedTime);
@@ -890,6 +1093,21 @@ bool OneLoneCoder_Platformer::IsSemiSolidTile(wchar_t tile)
 	return tile == '?';
 }
 
+void OneLoneCoder_Platformer::AddProjectile(cDynamicProjectile* proj)
+{
+	vecProjectiles.push_back(proj);
+}
+
+float OneLoneCoder_Platformer::GetTileWidth()
+{
+	return (float)nTileWidth;
+}
+
+float OneLoneCoder_Platformer::GetTileHeight()
+{
+	return (float)nTileHeight;
+}
+
 bool OneLoneCoder_Platformer::ShapeOverlap_DIAG(polygon& r1, polygon& r2)
 {
 	polygon* poly1 = &r1;
@@ -931,12 +1149,12 @@ bool OneLoneCoder_Platformer::ShapeOverlap_DIAG(polygon& r1, polygon& r2)
 	return false;
 }
 
-void OneLoneCoder_Platformer::SlapAttack(cDynamicCreature* victim)
+void OneLoneCoder_Platformer::Attack(cDynamicCreature* victim, int damage)
 {
 	if (victim != nullptr)
 	{
 		// Attack victim with damage
-		victim->nHealth -= 5;
+		victim->nHealth -= damage;
 
 		// Knock victim back
 		float tx = victim->px - fPlayerPosX;

@@ -16,6 +16,7 @@ void cAssets::LoadSprites()
 		m_mapSprites[sName] = s;
 	};
 
+	// Ennemies
 	load("waddleDee", "assets/gfx/waddleDee.png");
 	load("brontoBurt", "assets/gfx/brontoBurt.png");
 	load("scarfy", "assets/gfx/scarfy.png");
