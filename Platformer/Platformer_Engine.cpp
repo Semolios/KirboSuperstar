@@ -845,7 +845,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 				for (auto& dyn : vecEnnemies)
 				{
 					polygon sEnnemy;
-					sEnnemy.pos = { (float)dyn->px * dyn->fDynWidth + (float)dyn->fDynWidth / 2.0f, (float)dyn->py * dyn->fDynHeight + (float)dyn->fDynHeight / 2.0f }; // Center of the ennemy
+					sEnnemy.pos = { (float)dyn->px * nTileWidth + (float)dyn->fDynWidth / 2.0f, (float)dyn->py * nTileHeight + (float)dyn->fDynHeight / 2.0f }; // Center of the ennemy
 					sEnnemy.angle = 0.0f;
 					sEnnemy.o.push_back({ -dyn->fDynWidth / 2.0f, -dyn->fDynHeight / 2.0f });
 					sEnnemy.o.push_back({ -dyn->fDynWidth / 2.0f, +dyn->fDynHeight / 2.0f });
