@@ -152,7 +152,7 @@ protected:
 	bool GameState_LoadLevel(float fElapsedTime);
 	bool GameState_Title(float fElapsedTime);
 	bool GameState_Main(float fElapsedTime);
-	void CheckIfPlayerIsDamaged(cDynamic* object, float angle);
+	void CheckIfPlayerIsDamaged(cDynamic* object, float angle, float fOffsetX, float fOffsetY);
 	bool GameState_WorldMap(float fElapsedTime);
 	bool GameState_EndScreen(float fElapsedTime);
 	bool GameState_PauseMenu(float fElapsedTime);

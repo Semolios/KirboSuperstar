@@ -756,7 +756,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// Check collision with player to damage him
 		if (bIsPlayerAttackable)
 		{
-			CheckIfPlayerIsDamaged(object, 0.0f);
+			CheckIfPlayerIsDamaged(object, 0.0f, fOffsetX, fOffsetY);
 		}
 
 		object->px = fDynObjectPosX;
@@ -876,7 +876,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			{
 				if (bIsPlayerAttackable)
 				{
-					CheckIfPlayerIsDamaged(object, atan2f(object->vx, object->vy));
+					CheckIfPlayerIsDamaged(object, atan2f(object->vx, object->vy), fOffsetX, fOffsetY);
 				}
 			}
 		}
@@ -971,10 +971,10 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	return true;
 }
 
-void OneLoneCoder_Platformer::CheckIfPlayerIsDamaged(cDynamic* object, float angle)
+void OneLoneCoder_Platformer::CheckIfPlayerIsDamaged(cDynamic* object, float angle, float fOffsetX, float fOffsetY)
 {
 	polygon sAOE;
-	sAOE.pos = { (object->px) * nTileWidth + (object->fDynWidth / 2.0f), (object->py) * nTileHeight + (object->fDynHeight / 2.0f) };
+	sAOE.pos = { (object->px - fOffsetX) * nTileWidth + (object->fDynWidth / 2.0f), (object->py - fOffsetY) * nTileHeight + (object->fDynHeight / 2.0f) };
 	sAOE.angle = angle;
 	sAOE.o.push_back({ -object->fDynWidth / 2.0f, -object->fDynHeight / 2.0f });
 	sAOE.o.push_back({ -object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
@@ -998,7 +998,7 @@ void OneLoneCoder_Platformer::CheckIfPlayerIsDamaged(cDynamic* object, float ang
 	//DrawLine(sAOE.p[3].x, sAOE.p[3].y, sAOE.p[0].x, sAOE.p[0].y, olc::RED);
 
 	polygon sPlayer;
-	sPlayer.pos = { (fPlayerPosX + 0.5f) * (float)nTileWidth , (fPlayerPosY + 0.5f) * (float)nTileHeight }; // Center of the player
+	sPlayer.pos = { (fPlayerPosX + 0.5f - fOffsetX) * (float)nTileWidth , (fPlayerPosY + 0.5f - fOffsetY) * (float)nTileHeight }; // Center of the player
 	sPlayer.angle = 0.0f;
 	sPlayer.o.push_back({ -(float)nTileWidth / 2.0f, -(float)nTileHeight / 2.0f });
 	sPlayer.o.push_back({ -(float)nTileWidth / 2.0f, +(float)nTileHeight / 2.0f });
