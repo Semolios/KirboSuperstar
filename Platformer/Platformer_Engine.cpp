@@ -823,9 +823,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			{
 				// Create an AOE on the projectile and check for ennemies and AOE overlap
 				polygon sAOE;
-				sAOE.angle = atan2f(object->vy, object->vx);
 				sAOE.pos = { (object->px) * nTileWidth + (object->fDynWidth / 2.0f), (object->py) * nTileHeight + (object->fDynHeight / 2.0f) };
-
+				sAOE.angle = atan2f(object->vy, object->vx);
 				sAOE.o.push_back({ -object->fDynWidth / 2.0f, -object->fDynHeight / 2.0f });
 				sAOE.o.push_back({ -object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
 				sAOE.o.push_back({ +object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
@@ -999,7 +998,7 @@ void OneLoneCoder_Platformer::CheckIfPlayerIsDamaged(cDynamic* object, float ang
 	//DrawLine(sAOE.p[3].x, sAOE.p[3].y, sAOE.p[0].x, sAOE.p[0].y, olc::RED);
 
 	polygon sPlayer;
-	sPlayer.pos = { fPlayerPosX * (float)nTileWidth + ((float)nTileWidth / 2.0f), fPlayerPosY * (float)nTileHeight + ((float)nTileHeight / 2.0f) }; // Center of the ennemy
+	sPlayer.pos = { (fPlayerPosX + 0.5f) * (float)nTileWidth , (fPlayerPosY + 0.5f) * (float)nTileHeight }; // Center of the player
 	sPlayer.angle = 0.0f;
 	sPlayer.o.push_back({ -(float)nTileWidth / 2.0f, -(float)nTileHeight / 2.0f });
 	sPlayer.o.push_back({ -(float)nTileWidth / 2.0f, +(float)nTileHeight / 2.0f });
