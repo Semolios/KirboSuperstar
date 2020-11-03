@@ -823,7 +823,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			{
 				// Create an AOE on the projectile and check for ennemies and AOE overlap
 				polygon sAOE;
-				sAOE.pos = { (object->px) * nTileWidth + (object->fDynWidth / 2.0f), (object->py) * nTileHeight + (object->fDynHeight / 2.0f) };
+				sAOE.pos = { (object->px - fOffsetX) * nTileWidth + (object->fDynWidth / 2.0f), (object->py - fOffsetY) * nTileHeight + (object->fDynHeight / 2.0f) };
 				sAOE.angle = atan2f(object->vy, object->vx);
 				sAOE.o.push_back({ -object->fDynWidth / 2.0f, -object->fDynHeight / 2.0f });
 				sAOE.o.push_back({ -object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
@@ -840,11 +840,17 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 					};
 				}
 
+				// Debug aoe
+				//DrawLine(sAOE.p[0].x, sAOE.p[0].y, sAOE.p[1].x, sAOE.p[1].y, olc::RED);
+				//DrawLine(sAOE.p[1].x, sAOE.p[1].y, sAOE.p[2].x, sAOE.p[2].y, olc::RED);
+				//DrawLine(sAOE.p[2].x, sAOE.p[2].y, sAOE.p[3].x, sAOE.p[3].y, olc::RED);
+				//DrawLine(sAOE.p[3].x, sAOE.p[3].y, sAOE.p[0].x, sAOE.p[0].y, olc::RED);
+
 				// Check if an ennemy take the attack
 				for (auto& dyn : vecEnnemies)
 				{
 					polygon sEnnemy;
-					sEnnemy.pos = { (float)dyn->px * nTileWidth + (float)dyn->fDynWidth / 2.0f, (float)dyn->py * nTileHeight + (float)dyn->fDynHeight / 2.0f }; // Center of the ennemy
+					sEnnemy.pos = { ((float)dyn->px - fOffsetX) * nTileWidth + (float)dyn->fDynWidth / 2.0f, ((float)dyn->py - fOffsetY) * nTileHeight + (float)dyn->fDynHeight / 2.0f }; // Center of the ennemy
 					sEnnemy.angle = 0.0f;
 					sEnnemy.o.push_back({ -dyn->fDynWidth / 2.0f, -dyn->fDynHeight / 2.0f });
 					sEnnemy.o.push_back({ -dyn->fDynWidth / 2.0f, +dyn->fDynHeight / 2.0f });
@@ -860,6 +866,12 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 							(sEnnemy.o[i].x * sinf(sEnnemy.angle)) + (sEnnemy.o[i].y * cosf(sEnnemy.angle)) + sEnnemy.pos.y,
 						};
 					}
+
+					// Debug AOE
+					//DrawLine(sEnnemy.p[0].x, sEnnemy.p[0].y, sEnnemy.p[1].x, sEnnemy.p[1].y, olc::BLUE);
+					//DrawLine(sEnnemy.p[1].x, sEnnemy.p[1].y, sEnnemy.p[2].x, sEnnemy.p[2].y, olc::BLUE);
+					//DrawLine(sEnnemy.p[2].x, sEnnemy.p[2].y, sEnnemy.p[3].x, sEnnemy.p[3].y, olc::BLUE);
+					//DrawLine(sEnnemy.p[3].x, sEnnemy.p[3].y, sEnnemy.p[0].x, sEnnemy.p[0].y, olc::BLUE);
 
 					if (ShapeOverlap_DIAG(sAOE, sEnnemy))
 					{
