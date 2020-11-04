@@ -1,5 +1,8 @@
 #include "Platformer_Level.h"
 #include <strstream>
+#include "Platformer_Engine.h"
+
+OneLoneCoder_Platformer* cLevel::engine = nullptr;
 
 cLevel::cLevel()
 {
@@ -98,6 +101,7 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 			{
 				cDynamicCreature* mob = new cDynamicCreatureBomber(this);
 				vecDyns.push_back(mob);
+				cDynamicCreatureBomber::engine = engine;
 
 				// get position
 				mob->px = std::stoi(parts[1]);

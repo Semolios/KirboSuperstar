@@ -84,6 +84,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	levelsBackgrounds.push_back("assets/gfx/testBckGrd05.png");
 
 	currentLvl = new cLevel();
+	cLevel::engine = this;
 
 	// Player sprites
 	animPlayer.mapStates["idle"].push_back(new olc::Sprite("assets/gfx/kirbo00.png"));

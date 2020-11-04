@@ -9,6 +9,8 @@
 #include "Platformer_DynamicCreatureScarfy.h"
 #include "Platformer_DynamicCreatureWaddleDee.h"
 
+class OneLoneCoder_Platformer;
+
 class cLevel
 {
 public:
@@ -17,6 +19,8 @@ public:
 	int nLevelHeight = 0;
 	int nInitPlayerPosX = 0;
 	int nInitPlayerPosY = 0;
+
+	static OneLoneCoder_Platformer* engine;
 
 public:
 	cLevel();
