@@ -17,10 +17,11 @@ void cAssets::LoadSprites()
 	};
 
 	// Ennemies
-	load("waddleDee", "assets/gfx/waddleDee.png");
+	load("bomber", "assets/gfx/bomber.png");
 	load("brontoBurt", "assets/gfx/brontoBurt.png");
-	load("scarfy", "assets/gfx/scarfy.png");
+	load("waddleDee", "assets/gfx/waddleDee.png");
 	load("rocky", "assets/gfx/rocky.png");
+	load("scarfy", "assets/gfx/scarfy.png");
 }
 
 void cAssets::LoadItems()

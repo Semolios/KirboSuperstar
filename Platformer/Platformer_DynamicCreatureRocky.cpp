@@ -49,7 +49,7 @@ void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float p
 			bAffectedByGravity = true;
 			nGraphicState = WALKING;
 
-			if (engine->IsSolidTile(GetTile(px, py + 1)) || engine->IsSolidTile(GetTile(px + 1, py + 1)))
+			if (engine->IsSolidTile(GetTile(px + 0.1f, py + 1)) || engine->IsSolidTile(GetTile(px + 0.9f, py + 1)))
 				nAINextState = AI_LANDING;
 		}
 		break;

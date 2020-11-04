@@ -33,6 +33,8 @@ public:
 	int nHealthMax;
 	bool bDead = false;
 	bool bAffectedByGravity = false;
+	bool bIsKnockable = true;
+	bool bCanBehaveWhileAttacked = false;
 	float fInitSpeed;
 
 public:

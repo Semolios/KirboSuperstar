@@ -93,10 +93,10 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 				parts.push_back(temp);
 			}
 
-			// Populate a waddle dee
-			if (parts[0] == L"waddleDee")
+			// Populate a bomber
+			if (parts[0] == L"bomber")
 			{
-				cDynamicCreature* mob = new cDynamicCreatureWaddleDee(this);
+				cDynamicCreature* mob = new cDynamicCreatureBomber(this);
 				vecDyns.push_back(mob);
 
 				// get position
@@ -115,6 +115,17 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 				mob->py = std::stoi(parts[3]);
 			}
 
+			// Populate a rocky
+			if (parts[0] == L"rocky")
+			{
+				cDynamicCreature* mob = new cDynamicCreatureRocky(this);
+				vecDyns.push_back(mob);
+
+				// get position
+				mob->px = std::stoi(parts[1]);
+				mob->py = std::stoi(parts[2]);
+			}
+
 			// Populate a scarfy
 			if (parts[0] == L"scarfy")
 			{
@@ -126,10 +137,10 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 				mob->py = std::stoi(parts[2]);
 			}
 
-			// Populate a rocky
-			if (parts[0] == L"rocky")
+			// Populate a waddle dee
+			if (parts[0] == L"waddleDee")
 			{
-				cDynamicCreature* mob = new cDynamicCreatureRocky(this);
+				cDynamicCreature* mob = new cDynamicCreatureWaddleDee(this);
 				vecDyns.push_back(mob);
 
 				// get position

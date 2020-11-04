@@ -1177,6 +1177,9 @@ void OneLoneCoder_Platformer::Attack(cDynamicCreature* victim, int damage)
 		// under system control. This delivers two functions, the first being
 		// a visual indicator to the player that something has happened, and the second
 		// it stops the ability to spam attacks on a single creature
-		victim->KnockBack(tx / d, ty / d, 0.3f);
+		if (victim->bIsKnockable)
+			victim->KnockBack(tx / d, ty / d, 0.3f);
+		else
+			victim->KnockBack(0.0f, 0.0f, 0.3f);
 	}
 }

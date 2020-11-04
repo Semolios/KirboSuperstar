@@ -43,6 +43,9 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY, 
 				bDead = true;
 			}
 		}
+
+		if (bCanBehaveWhileAttacked)
+			Behaviour(fElapsedTime, playerX, playerY, gfx);
 	}
 	else
 	{
