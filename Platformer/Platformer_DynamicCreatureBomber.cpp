@@ -20,12 +20,6 @@ cDynamicCreatureBomber::cDynamicCreatureBomber(cLevel* l) : cDynamicCreature("bo
 	nDamage = 1;
 	bIsKnockable = false;
 	bCanBehaveWhileAttacked = true;
-
-	explosionSprite.push_back(new olc::Sprite("assets/gfx/explosion00.png"));
-	explosionSprite.push_back(new olc::Sprite("assets/gfx/explosion01.png"));
-	explosionSprite.push_back(new olc::Sprite("assets/gfx/explosion02.png"));
-	explosionSprite.push_back(new olc::Sprite("assets/gfx/explosion03.png"));
-	explosionSprite.push_back(new olc::Sprite("assets/gfx/explosion04.png"));
 }
 
 void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
@@ -75,7 +69,7 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 			float fTargetY = playerY - py;
 			float fDistance = sqrtf(fTargetX * fTargetX + fTargetY * fTargetY);
 
-			if (fDistance < 1.0f)
+			if (fDistance < 2.0f)
 				nAINextState = AI_CHARGING;
 		}
 		break;
@@ -97,35 +91,35 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 		{
 			if (!bHasExploded)
 			{
-				cDynamicProjectile* p1 = new cDynamicProjectile(px, py, false, -1.5f, -1.5f, 0.3f, explosionSprite, 64.0f, 64.0f, false, 5);
+				cDynamicProjectile* p1 = new cDynamicProjectile(px, py, false, -1.5f, -1.5f, 0.3f, engine->GetProjectileSprites("explosion"), 64.0f, 64.0f, false, 5);
 				p1->bSolidVsMap = false;
 				engine->AddProjectile(p1);
 
-				cDynamicProjectile* p2 = new cDynamicProjectile(px, py, false, +0.0f, -1.5f, 0.3f, explosionSprite, 64.0f, 64.0f, false, 5);
+				cDynamicProjectile* p2 = new cDynamicProjectile(px, py, false, +0.0f, -1.5f, 0.3f, engine->GetProjectileSprites("explosion"), 64.0f, 64.0f, false, 5);
 				p2->bSolidVsMap = false;
 				engine->AddProjectile(p2);
 
-				cDynamicProjectile* p3 = new cDynamicProjectile(px, py, false, +1.5f, -1.5f, 0.3f, explosionSprite, 64.0f, 64.0f, false, 5);
+				cDynamicProjectile* p3 = new cDynamicProjectile(px, py, false, +1.5f, -1.5f, 0.3f, engine->GetProjectileSprites("explosion"), 64.0f, 64.0f, false, 5);
 				p3->bSolidVsMap = false;
 				engine->AddProjectile(p3);
 
-				cDynamicProjectile* p4 = new cDynamicProjectile(px, py, false, +1.5f, +0.0f, 0.3f, explosionSprite, 64.0f, 64.0f, false, 5);
+				cDynamicProjectile* p4 = new cDynamicProjectile(px, py, false, +1.5f, +0.0f, 0.3f, engine->GetProjectileSprites("explosion"), 64.0f, 64.0f, false, 5);
 				p4->bSolidVsMap = false;
 				engine->AddProjectile(p4);
 
-				cDynamicProjectile* p5 = new cDynamicProjectile(px, py, false, +1.5f, +1.5f, 0.3f, explosionSprite, 64.0f, 64.0f, false, 5);
+				cDynamicProjectile* p5 = new cDynamicProjectile(px, py, false, +1.5f, +1.5f, 0.3f, engine->GetProjectileSprites("explosion"), 64.0f, 64.0f, false, 5);
 				p5->bSolidVsMap = false;
 				engine->AddProjectile(p5);
 
-				cDynamicProjectile* p6 = new cDynamicProjectile(px, py, false, +0.0f, +1.5f, 0.3f, explosionSprite, 64.0f, 64.0f, false, 5);
+				cDynamicProjectile* p6 = new cDynamicProjectile(px, py, false, +0.0f, +1.5f, 0.3f, engine->GetProjectileSprites("explosion"), 64.0f, 64.0f, false, 5);
 				p6->bSolidVsMap = false;
 				engine->AddProjectile(p6);
 
-				cDynamicProjectile* p7 = new cDynamicProjectile(px, py, false, -1.5f, +1.5f, 0.3f, explosionSprite, 64.0f, 64.0f, false, 5);
+				cDynamicProjectile* p7 = new cDynamicProjectile(px, py, false, -1.5f, +1.5f, 0.3f, engine->GetProjectileSprites("explosion"), 64.0f, 64.0f, false, 5);
 				p7->bSolidVsMap = false;
 				engine->AddProjectile(p7);
 
-				cDynamicProjectile* p8 = new cDynamicProjectile(px, py, false, -1.5f, +0.0f, 0.3f, explosionSprite, 64.0f, 64.0f, false, 5);
+				cDynamicProjectile* p8 = new cDynamicProjectile(px, py, false, -1.5f, +0.0f, 0.3f, engine->GetProjectileSprites("explosion"), 64.0f, 64.0f, false, 5);
 				p8->bSolidVsMap = false;
 				engine->AddProjectile(p8);
 

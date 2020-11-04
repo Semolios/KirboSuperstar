@@ -152,6 +152,12 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	// Projectiles Sprites
 	mapProjectiles["arrow"].push_back(new olc::Sprite("assets/gfx/arrow.png"));
 
+	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion00.png"));
+	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion01.png"));
+	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion02.png"));
+	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion03.png"));
+	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion04.png"));
+
 	// title screen
 	sprTitleScreen = new olc::Sprite("assets/gfx/title screen.png");
 	titleScreen = new cTitleScreen(this, sprTitleScreen);
@@ -1118,6 +1124,11 @@ float OneLoneCoder_Platformer::GetTileWidth()
 float OneLoneCoder_Platformer::GetTileHeight()
 {
 	return (float)nTileHeight;
+}
+
+std::vector<olc::Sprite*> OneLoneCoder_Platformer::GetProjectileSprites(std::string projectile)
+{
+	return mapProjectiles[projectile];
 }
 
 bool OneLoneCoder_Platformer::ShapeOverlap_DIAG(polygon& r1, polygon& r2)

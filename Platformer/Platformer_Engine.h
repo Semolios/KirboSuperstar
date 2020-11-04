@@ -167,4 +167,5 @@ public:
 	void AddProjectile(cDynamicProjectile* proj);
 	float GetTileWidth();
 	float GetTileHeight();
+	std::vector<olc::Sprite*> GetProjectileSprites(std::string projectile);
 };

@@ -23,8 +23,6 @@ public:
 
 	bool bHasExploded = false;
 
-	std::vector<olc::Sprite*> explosionSprite;
-
 	static OneLoneCoder_Platformer* engine;
 
 public:
