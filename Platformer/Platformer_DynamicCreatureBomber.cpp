@@ -34,7 +34,7 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 	};
 
 	// if hit by a player, instantly explodes
-	if (nHealth == 0) nAIState = AI_EXPLODING;
+	if (nHealth <= 0) nAIState = AI_EXPLODING;
 
 	switch (nAIState)
 	{
