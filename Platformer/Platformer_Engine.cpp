@@ -135,6 +135,8 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	animPlayer.mapStates["damaged"].push_back(new olc::Sprite("assets/gfx/kirboDamaged06.png"));
 	animPlayer.mapStates["damaged"].push_back(new olc::Sprite("assets/gfx/kirboDamaged07.png"));
 
+	animPlayer.mapStates["dead"].push_back(new olc::Sprite("assets/gfx/kirboDead.png"));
+
 	animPlayer.mapStates["flying"].push_back(new olc::Sprite("assets/gfx/kirboFlying00.png"));
 	animPlayer.mapStates["flying"].push_back(new olc::Sprite("assets/gfx/kirboFlying01.png"));
 	animPlayer.mapStates["flying"].push_back(new olc::Sprite("assets/gfx/kirboFlying02.png"));
@@ -216,6 +218,9 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 	fPlayerVelY = 0.0f;
 	fHealth = cfMaxHealth;
 	fInvulnerabilityTimer = 0.0f;
+	fStopTimebeforeDeadAnim = 0.0f;
+	bDead = false;
+	bPlayerDamaged = false;
 
 	srand(time(NULL));
 	transitionAnim = rand() % 4;
@@ -240,6 +245,17 @@ bool OneLoneCoder_Platformer::GameState_Title(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 {
+	// Stop time a while before dead animation
+	if (bDead)
+	{
+		fStopTimebeforeDeadAnim += fElapsedTime;
+
+		// (fStopTimebeforeDeadAnim != fElapsedTime) => don't stop the first frame.
+		// So if dying while attacking, the sprite is not awkwardly offset.
+		if (fStopTimebeforeDeadAnim != fElapsedTime && fStopTimebeforeDeadAnim < cfStopTimebeforeDeadAnim)
+			return true;
+	}
+
 	animPlayer.Update(fElapsedTime);
 
 	// Utility Lambdas
@@ -258,7 +274,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	};
 
 	// Handle input
-	if (IsFocused() && !bPlayerDamaged)
+	if (IsFocused() && !bPlayerDamaged && !bDead)
 	{
 		// Fly, enter a door
 		if (GetKey(olc::Key::UP).bHeld)
@@ -386,18 +402,18 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			{
 				fPlayerVelX = 0.0f;
 
-				if (!bPlayerDamaged)
+				if (!bPlayerDamaged && !bDead)
 					animPlayer.ChangeState("idle");
 			}
 			else
 			{
-				if (!bPlayerDamaged)
+				if (!bPlayerDamaged && !bDead)
 					animPlayer.ChangeState("run");
 			}
 		}
 		else
 		{
-			if (!bPlayerDamaged)
+			if (!bPlayerDamaged && !bDead)
 			{
 				if (!bFlying)
 				{
@@ -417,7 +433,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 #pragma region ONE CYCLE ANIMATIONS
 
-	if (bAttacking)
+	if (bAttacking && !bDead)
 	{
 		// calculate elapsed time during attack
 		fAnimationTimer += fElapsedTime;
@@ -489,24 +505,40 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		}
 	}
 
-	if (bPlayerDamaged)
+	if (bPlayerDamaged && !bDead)
 	{
 		// calculate elapsed time after damage
 		fAnimationTimer += fElapsedTime;
 		bFlying = false;
+		bAttacking = false;
 
 		if (fAnimationTimer >= animPlayer.mapStates["damaged"].size() * animPlayer.fTimeBetweenFrames)
 		{
 			fAnimationTimer = 0.0f;
 			bPlayerDamaged = false;
+		}
+	}
 
-			// If Player health = 0 return to the map
-			if (fHealth <= 0)
-			{
-				nGameState = GS_WORLDMAP;
-				animPlayer.ChangeState("riding_star");
-				return true;
-			}
+	if (bDead)
+	{
+		fPlayerVelX = 0.0f; fPlayerVelY = 0.0f;
+		bAttacking = false;
+
+		fDeadAnimation += fElapsedTime;
+		if (fDeadAnimation != fElapsedTime)
+		{
+			t.Rotate(fDeadAnimation * 15.0f);
+			// animation based on a 2nd degree polynome
+			t.Translate(0.0f, (4.0f * fDeadAnimation - 2.0f) * 64.0f * (4.0f * fDeadAnimation - 2.0f) - 4 * 64.0f);
+		}
+
+		// Return to the map after dead animation
+		if (fDeadAnimation >= cfDeadAnimation)
+		{
+			fDeadAnimation = 0.0f;
+			nGameState = GS_WORLDMAP;
+			animPlayer.ChangeState("riding_star");
+			return true;
 		}
 	}
 
@@ -1049,16 +1081,25 @@ void OneLoneCoder_Platformer::CheckIfPlayerIsDamaged(cDynamic* object, float ang
 		bIsPlayerAttackable = false;
 		fHealth -= object->nDamage;
 
-		// Knockback the player out of the ennemy
-		if (object->px < fPlayerPosX)
+		if (fHealth <= 0.0f)
 		{
-			fPlayerVelX = cfDamageEjectionVelX;
-			fPlayerVelY = -cfDamageEjectionVelY;
+			bDead = true;
+			animPlayer.ChangeState("dead");
 		}
-		else
+
+		if (!bDead)
 		{
-			fPlayerVelX = -cfDamageEjectionVelX;
-			fPlayerVelY = -cfDamageEjectionVelY;
+			// Knockback the player out of the ennemy
+			if (object->px < fPlayerPosX)
+			{
+				fPlayerVelX = cfDamageEjectionVelX;
+				fPlayerVelY = -cfDamageEjectionVelY;
+			}
+			else
+			{
+				fPlayerVelX = -cfDamageEjectionVelX;
+				fPlayerVelY = -cfDamageEjectionVelY;
+			}
 		}
 	}
 }

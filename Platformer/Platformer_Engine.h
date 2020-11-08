@@ -43,6 +43,8 @@ private:
 	const float cfDamageEjectionVelY = 4.0f;			// vertical velocity when hit by ennemy
 	const float cfInvulnerabilityFrame = 4.0f;			// Invulnerability frame after a hit
 	const float cfInvulnerabilityTickingSpeed = 0.2f;	// Ticking Speed when invulnerable
+	const float cfStopTimebeforeDeadAnim = 1.5f;		// Stop time before death animation
+	const float cfDeadAnimation = 4.0f;					// Duration of the dead animation
 
 	struct vec2d
 	{
@@ -82,6 +84,8 @@ private:
 	float fFaceDir = 1.0f;
 	float fHealth = 10.0f;
 	float fInvulnerabilityTickingTimer = 0.0f;
+	float fStopTimebeforeDeadAnim = 0.0f;
+	float fDeadAnimation = 0.0f;
 	bool bPlayerOnGround = false;
 	bool bDoubleJump = false;
 	bool bAttacking = false;
@@ -89,6 +93,7 @@ private:
 	bool bIsPlayerAttackable = true;
 	bool bFlying = false;
 	bool bShowKirby = true;
+	bool bDead = false;
 
 	// Camera Properties
 	float fCameraPosX = 0.0f;
