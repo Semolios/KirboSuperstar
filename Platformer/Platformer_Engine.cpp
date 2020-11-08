@@ -304,7 +304,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			animPlayer.ChangeState("flying");
 		}
 
-		// Go down when flying
+		// Go down when flying, cross semi solid platform and control camera when onground
 		if (GetKey(olc::Key::DOWN).bHeld)
 		{
 			if (bFlying)
@@ -313,6 +313,13 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			// If player is on semi solid platform, pass through the platform. cheat a little bit, modify the position of the player to cross it
 			if ((IsSemiSolidTile(GetTile(fPlayerPosX + 0.0f, fPlayerPosY + 1.0f)) || IsSemiSolidTile(GetTile(fPlayerPosX + 0.9f, fPlayerPosY + 1.0f))) && bPlayerOnGround)
 				fPlayerPosY += 0.15;
+
+			if ((IsSolidTile(GetTile(fPlayerPosX + 0.0f, fPlayerPosY + 1.0f)) || IsSolidTile(GetTile(fPlayerPosX + 0.9f, fPlayerPosY + 1.0f))) && bPlayerOnGround)
+				fCameraLookingDown -= 0.02f;
+		}
+		else
+		{
+			fCameraLookingDown += 0.02f;
 		}
 
 		// Go left
@@ -383,10 +390,14 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		}
 	}
 
+	// Clamp camera offset
+	if (fCameraLookingDown <= cfCameraLowerPos) fCameraLookingDown = cfCameraLowerPos;
+	if (fCameraLookingDown >= cfCameraUpperPos) fCameraLookingDown = cfCameraUpperPos;
+
 	// Gravity
 	fPlayerVelY += cfGravity * fElapsedTime;
 
-	if (bAttacking)
+	if (bAttacking && !bPlayerDamaged && !bDead)
 	{
 		fPlayerVelX = 0.0f;
 		fPlayerVelY = 0.0f;
@@ -643,7 +654,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	// Calculate Top-Left most visible tile
 	float fOffsetX = fCameraPosX - (float)nVisibleTilesX / 2.0f;
-	float fOffsetY = fCameraPosY - (float)nVisibleTilesY / 2.0f;
+	float fOffsetY = fCameraPosY - (float)nVisibleTilesY * fCameraLookingDown;
 
 	// Clamp camera to game boundaries
 	if (fOffsetX < 0) fOffsetX = 0;

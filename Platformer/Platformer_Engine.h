@@ -41,6 +41,8 @@ private:
 	const float cfMaxHealth = 10.0f;					// Max Kirbo health
 	const float cfDamageEjectionVelX = 4.0f;			// horizontal velocity when hit by ennemy
 	const float cfDamageEjectionVelY = 4.0f;			// vertical velocity when hit by ennemy
+	const float cfCameraLowerPos = 1.0f / 4.0f;			// Lower position for the camera (when the player is not pushing down)
+	const float cfCameraUpperPos = 2.0f / 3.0f;			// Upper position for the camera (when the player holds down when on ground)
 	const float cfInvulnerabilityFrame = 4.0f;			// Invulnerability frame after a hit
 	const float cfInvulnerabilityTickingSpeed = 0.2f;	// Ticking Speed when invulnerable
 	const float cfStopTimebeforeDeadAnim = 1.5f;		// Stop time before death animation
@@ -83,6 +85,7 @@ private:
 	float fInvulnerabilityTimer = 0.0f;
 	float fFaceDir = 1.0f;
 	float fHealth = 10.0f;
+	float fCameraLookingDown = 2.0f / 3.0f;
 	float fInvulnerabilityTickingTimer = 0.0f;
 	float fStopTimebeforeDeadAnim = 0.0f;
 	float fDeadAnimation = 0.0f;
