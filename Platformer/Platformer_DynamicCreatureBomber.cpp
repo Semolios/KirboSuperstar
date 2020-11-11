@@ -91,37 +91,14 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 		{
 			if (!bHasExploded)
 			{
-				cDynamicProjectile* p1 = new cDynamicProjectile(px - 1, py - 1, false, -1.5f, -1.5f, 0.5f, engine->GetProjectileSprites("explosion"), 64.0f, 64.0f, false, 5);
-				p1->bSolidVsMap = false;
-				engine->AddProjectile(p1);
-
-				cDynamicProjectile* p2 = new cDynamicProjectile(px + 0, py - 1, false, +0.0f, -1.5f, 0.5f, engine->GetProjectileSprites("explosion"), 64.0f, 64.0f, false, 5);
-				p2->bSolidVsMap = false;
-				engine->AddProjectile(p2);
-
-				cDynamicProjectile* p3 = new cDynamicProjectile(px + 1, py - 1, false, +1.5f, -1.5f, 0.5f, engine->GetProjectileSprites("explosion"), 64.0f, 64.0f, false, 5);
-				p3->bSolidVsMap = false;
-				engine->AddProjectile(p3);
-
-				cDynamicProjectile* p4 = new cDynamicProjectile(px + 1, py + 0, false, +1.5f, +0.0f, 0.5f, engine->GetProjectileSprites("explosion"), 64.0f, 64.0f, false, 5);
-				p4->bSolidVsMap = false;
-				engine->AddProjectile(p4);
-
-				cDynamicProjectile* p5 = new cDynamicProjectile(px + 1, py + 1, false, +1.5f, +1.5f, 0.5f, engine->GetProjectileSprites("explosion"), 64.0f, 64.0f, false, 5);
-				p5->bSolidVsMap = false;
-				engine->AddProjectile(p5);
-
-				cDynamicProjectile* p6 = new cDynamicProjectile(px + 0, py + 1, false, +0.0f, +1.5f, 0.5f, engine->GetProjectileSprites("explosion"), 64.0f, 64.0f, false, 5);
-				p6->bSolidVsMap = false;
-				engine->AddProjectile(p6);
-
-				cDynamicProjectile* p7 = new cDynamicProjectile(px - 1, py + 1, false, -1.5f, +1.5f, 0.5f, engine->GetProjectileSprites("explosion"), 64.0f, 64.0f, false, 5);
-				p7->bSolidVsMap = false;
-				engine->AddProjectile(p7);
-
-				cDynamicProjectile* p8 = new cDynamicProjectile(px - 1, py + 0, false, -1.5f, +0.0f, 0.5f, engine->GetProjectileSprites("explosion"), 64.0f, 64.0f, false, 5);
-				p8->bSolidVsMap = false;
-				engine->AddProjectile(p8);
+				engine->AddProjectile(engine->CreateProjectile(px - 1, py - 1, false, -1.5f, -1.5f, 0.5f, "explosion", 64.0f, 64.0f, false, 5, false));
+				engine->AddProjectile(engine->CreateProjectile(px + 0, py - 1, false, +0.0f, -1.5f, 0.5f, "explosion", 64.0f, 64.0f, false, 5, false));
+				engine->AddProjectile(engine->CreateProjectile(px + 1, py - 1, false, +1.5f, -1.5f, 0.5f, "explosion", 64.0f, 64.0f, false, 5, false));
+				engine->AddProjectile(engine->CreateProjectile(px + 1, py + 0, false, +1.5f, +0.0f, 0.5f, "explosion", 64.0f, 64.0f, false, 5, false));
+				engine->AddProjectile(engine->CreateProjectile(px + 1, py + 1, false, +1.5f, +1.5f, 0.5f, "explosion", 64.0f, 64.0f, false, 5, false));
+				engine->AddProjectile(engine->CreateProjectile(px + 0, py + 1, false, +0.0f, +1.5f, 0.5f, "explosion", 64.0f, 64.0f, false, 5, false));
+				engine->AddProjectile(engine->CreateProjectile(px - 1, py + 1, false, -1.5f, +1.5f, 0.5f, "explosion", 64.0f, 64.0f, false, 5, false));
+				engine->AddProjectile(engine->CreateProjectile(px - 1, py + 0, false, -1.5f, +0.0f, 0.5f, "explosion", 64.0f, 64.0f, false, 5, false));
 
 				nHealth = 0;
 				KnockBack(0.0f, 0.0f, 0.3f);

@@ -1,6 +1,6 @@
 #include "Platformer_DynamicProjectile.h"
 
-cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, float spriteWidth, float spriteHeight, bool affectedByGravity, int damage) : cDynamic("projectile")
+cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, float spriteWidth, float spriteHeight, bool affectedByGravity, int damage, bool solidVSMap) : cDynamic("projectile")
 {
 	fDynWidth = spriteWidth;
 	fDynHeight = spriteHeight;
@@ -17,6 +17,7 @@ cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float v
 	bFriendly = bFriend;
 	mapStates = map;
 	nDamage = damage;
+	bSolidVsMap = solidVSMap;
 }
 
 void cDynamicProjectile::DrawSelf(olc::PixelGameEngine* gfx, float ox, float oy)

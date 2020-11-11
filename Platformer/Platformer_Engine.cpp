@@ -384,7 +384,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// Test projectile
 		if (GetKey(olc::Key::O).bPressed)
 		{
-			cDynamicProjectile* p = new cDynamicProjectile((fPlayerPosX + fFaceDir), fPlayerPosY - 1.0f, true, 10.0f * fFaceDir, -10.0f, 10.0f, mapProjectiles["arrow"], 64.0f, 64.0f, true, 5);
+			cDynamicProjectile* p = new cDynamicProjectile((fPlayerPosX + fFaceDir), fPlayerPosY - 1.0f, true, 10.0f * fFaceDir, -10.0f, 10.0f, mapProjectiles["arrow"], 64.0f, 64.0f, true, 5, true);
 			p->bOneHit = true;
 			AddProjectile(p);
 		}
@@ -1163,6 +1163,12 @@ bool OneLoneCoder_Platformer::IsSemiSolidTile(wchar_t tile)
 	return tile == '?';
 }
 
+cDynamicProjectile* OneLoneCoder_Platformer::CreateProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, float spriteWidth, float spriteHeight, bool affectedByGravity, int damage, bool solidVSMap)
+{
+	cDynamicProjectile* p = new cDynamicProjectile(ox, oy, bFriend, velx, vely, duration, mapProjectiles[sprite], spriteWidth, spriteHeight, affectedByGravity, damage, solidVSMap);
+	return p;
+}
+
 void OneLoneCoder_Platformer::AddProjectile(cDynamicProjectile* proj)
 {
 	vecProjectiles.push_back(proj);
@@ -1176,11 +1182,6 @@ float OneLoneCoder_Platformer::GetTileWidth()
 float OneLoneCoder_Platformer::GetTileHeight()
 {
 	return (float)nTileHeight;
-}
-
-std::vector<olc::Sprite*> OneLoneCoder_Platformer::GetProjectileSprites(std::string projectile)
-{
-	return mapProjectiles[projectile];
 }
 
 bool OneLoneCoder_Platformer::ShapeOverlap_DIAG(polygon& r1, polygon& r2)
