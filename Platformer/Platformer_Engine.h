@@ -94,7 +94,7 @@ private:
 	bool bAttacking = false;
 	bool bSlapping = false;
 	bool bLaunchingJesusCross = false;
-	bool bCanLaunchAJesusCross = false;
+	bool bCanSpawnProjectile = false;
 	bool bPlayerDamaged = false;
 	bool bIsPlayerAttackable = true;
 	bool bFlying = false;

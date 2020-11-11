@@ -120,8 +120,8 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 	animPlayer.mapStates["slap"].push_back(new olc::Sprite("assets/gfx/slap00.png"));
 	animPlayer.mapStates["slap"].push_back(new olc::Sprite("assets/gfx/slap01.png"));
-	animPlayer.mapStates["slap"].push_back(new olc::Sprite("assets/gfx/slap02.png"));
-	animPlayer.mapStates["slap"].push_back(new olc::Sprite("assets/gfx/slap02.png"));
+	animPlayer.mapStates["slap"].push_back(new olc::Sprite("assets/gfx/slap01.png"));
+	animPlayer.mapStates["slap"].push_back(new olc::Sprite("assets/gfx/slap01.png"));
 
 	animPlayer.mapStates["jump"].push_back(new olc::Sprite("assets/gfx/kirboJump00.png"));
 	animPlayer.mapStates["jump"].push_back(new olc::Sprite("assets/gfx/kirboJump01.png"));
@@ -171,6 +171,8 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion02.png"));
 	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion03.png"));
 	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion04.png"));
+
+	mapProjectiles["slapAOE"].push_back(new olc::Sprite("assets/gfx/slapAOE.png"));
 
 #pragma endregion
 
@@ -404,6 +406,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 				animPlayer.ChangeState("slap");
 				bAttacking = true;
 				bSlapping = true;
+				bCanSpawnProjectile = true;
 				fAnimationTimer = 0.0f;
 			}
 		}
@@ -426,7 +429,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 				animPlayer.ChangeState("jesus_christ");
 				bAttacking = true;
 				bLaunchingJesusCross = true;
-				bCanLaunchAJesusCross = true;
+				bCanSpawnProjectile = true;
 				fAnimationTimer = 0.0f;
 			}
 		}
@@ -497,60 +500,16 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			// offset sprite so kirbo is centered
 			t.Translate(0.0f, (float)-nTileWidth);
 
-			// Hit frame
-			if (fAnimationTimer >= 0.1f && fAnimationTimer <= 0.2f)
+			if (fAnimationTimer >= 0.1f)
 			{
-				// Create an AOE where the player is facing and check for ennemies and AOE overlap
-				polygon sAOE;
-				sAOE.angle = 0.0f;
-
-				if (fFaceDir == -1) // West
-					sAOE.pos = { (fPlayerPosX - 0.5f) * nTileWidth , (fPlayerPosY + 0.5f) * nTileHeight };
-
-				if (fFaceDir == 1) // East
-					sAOE.pos = { (fPlayerPosX + 1.5f) * nTileWidth , (fPlayerPosY + 0.5f) * nTileHeight };
-
-				sAOE.o.push_back({ -(float)nTileWidth / 2.0f, -3.0f * (float)nTileHeight / 2.0f });
-				sAOE.o.push_back({ -(float)nTileWidth / 2.0f, +3.0f * (float)nTileHeight / 2.0f });
-				sAOE.o.push_back({ +(float)nTileWidth / 2.0f, +3.0f * (float)nTileHeight / 2.0f });
-				sAOE.o.push_back({ +(float)nTileWidth / 2.0f, -3.0f * (float)nTileHeight / 2.0f });
-				sAOE.p.resize(4);
-
-				for (int i = 0; i < sAOE.o.size(); i++)
+				if (bCanSpawnProjectile)
 				{
-					sAOE.p[i] =
-					{	// 2D Rotation Transform + 2D Translation (angle is always 0 here, no rotation allowed)
-						(sAOE.o[i].x * cosf(sAOE.angle)) - (sAOE.o[i].y * sinf(sAOE.angle)) + sAOE.pos.x,
-						(sAOE.o[i].x * sinf(sAOE.angle)) + (sAOE.o[i].y * cosf(sAOE.angle)) + sAOE.pos.y,
-					};
-				}
-
-				// Check if an ennemy take the attack
-				for (auto& dyn : vecEnnemies)
-				{
-					polygon sEnnemy;
-					sEnnemy.pos = { (float)dyn->px * nTileWidth + (float)dyn->fDynWidth / 2.0f, (float)dyn->py * nTileHeight + (float)dyn->fDynHeight / 2.0f }; // Center of the ennemy
-					sEnnemy.angle = 0.0f;
-					sEnnemy.o.push_back({ -dyn->fDynWidth / 2.0f, -dyn->fDynHeight / 2.0f });
-					sEnnemy.o.push_back({ -dyn->fDynWidth / 2.0f, +dyn->fDynHeight / 2.0f });
-					sEnnemy.o.push_back({ +dyn->fDynWidth / 2.0f, +dyn->fDynHeight / 2.0f });
-					sEnnemy.o.push_back({ +dyn->fDynWidth / 2.0f, -dyn->fDynHeight / 2.0f });
-					sEnnemy.p.resize(4);
-
-					for (int i = 0; i < sEnnemy.o.size(); i++)
-					{
-						sEnnemy.p[i] =
-						{	// 2D Rotation Transform + 2D Translation (angle is always 0 here, no rotation allowed)
-							(sEnnemy.o[i].x * cosf(sEnnemy.angle)) - (sEnnemy.o[i].y * sinf(sEnnemy.angle)) + sEnnemy.pos.x,
-							(sEnnemy.o[i].x * sinf(sEnnemy.angle)) + (sEnnemy.o[i].y * cosf(sEnnemy.angle)) + sEnnemy.pos.y,
-						};
-					}
-
-					if (ShapeOverlap_DIAG(sAOE, sEnnemy))
-					{
-						if (dyn->bIsAttackable)
-							Attack((cDynamicCreature*)dyn, 5);
-					}
+					// must offset the projectile on left side si it goes from kirbo's hand
+					float fProjectilePosX = fPlayerPosX + (fFaceDir > 0.0f ? 1.0f : -(51.0f / 64.0f));
+					cDynamicProjectile* p = CreateProjectile(fProjectilePosX, fPlayerPosY - ((179.0f - 64.0f) / 128.0f), true, 1.0f * fFaceDir, 0.0f, 0.1f, "slapAOE", 51.0f, 179.0f, false, 5, false);
+					p->bOneHit = false;
+					AddProjectile(p);
+					bCanSpawnProjectile = false;
 				}
 			}
 		}
@@ -560,12 +519,12 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		{
 			if (fAnimationTimer >= 0.7f)
 			{
-				if (bCanLaunchAJesusCross)
+				if (bCanSpawnProjectile)
 				{
-					cDynamicProjectile* p = CreateProjectile((fPlayerPosX + fFaceDir), fPlayerPosY - 1.0f, true, 10.0f * fFaceDir, -10.0f, 10.0f, "jesuscross", 32.0f, 32.0f, true, 5, true);
+					cDynamicProjectile* p = CreateProjectile((fPlayerPosX + fFaceDir), fPlayerPosY - 1.0f, true, 10.0f * fFaceDir, -10.0f, 10.0f, "jesuscross", 50.0f, 39.0f, true, 5, true);
 					p->bOneHit = true;
 					AddProjectile(p);
-					bCanLaunchAJesusCross = false;
+					bCanSpawnProjectile = false;
 				}
 			}
 		}
@@ -1000,7 +959,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			{
 				if (bIsPlayerAttackable)
 				{
-					CheckIfPlayerIsDamaged(object, atan2f(object->vx, object->vy), fOffsetX, fOffsetY);
+					CheckIfPlayerIsDamaged(object, atan2f(object->vy, object->vx), fOffsetX, fOffsetY);
 				}
 			}
 		}

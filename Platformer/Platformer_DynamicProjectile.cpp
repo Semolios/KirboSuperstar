@@ -25,7 +25,7 @@ void cDynamicProjectile::DrawSelf(olc::PixelGameEngine* gfx, float ox, float oy)
 	gfx->SetPixelMode(olc::Pixel::ALPHA);
 	olc::GFX2D::Transform2D t;
 	t.Translate(-fDynWidth / 2.0f, -fDynHeight / 2.0f);
-	t.Rotate(atan2f(vx, vy));
+	t.Rotate(atan2f(-vy, vx));
 	t.Translate((px - ox + ((fDynWidth / 64.0f) / 2.0f)) * 64.0f, (py - oy + ((fDynHeight / 64.0f) / 2.0f)) * 64.0f);
 	olc::GFX2D::DrawSprite(mapStates[nCurrentFrame], t);
 	gfx->SetPixelMode(olc::Pixel::NORMAL);
