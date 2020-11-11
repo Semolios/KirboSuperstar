@@ -121,7 +121,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	animPlayer.mapStates["slap"].push_back(new olc::Sprite("assets/gfx/slap00.png"));
 	animPlayer.mapStates["slap"].push_back(new olc::Sprite("assets/gfx/slap01.png"));
 	animPlayer.mapStates["slap"].push_back(new olc::Sprite("assets/gfx/slap02.png"));
-	animPlayer.mapStates["slap"].push_back(new olc::Sprite("assets/gfx/slap03.png"));
+	animPlayer.mapStates["slap"].push_back(new olc::Sprite("assets/gfx/slap02.png"));
 
 	animPlayer.mapStates["jump"].push_back(new olc::Sprite("assets/gfx/kirboJump00.png"));
 	animPlayer.mapStates["jump"].push_back(new olc::Sprite("assets/gfx/kirboJump01.png"));
@@ -150,18 +150,21 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	animPlayer.mapStates["flying"].push_back(new olc::Sprite("assets/gfx/kirboFlying02.png"));
 	animPlayer.mapStates["flying"].push_back(new olc::Sprite("assets/gfx/kirboFlying01.png"));
 
-	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("TODO"));
-	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("TODO"));
+	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("assets/gfx/kirbolaunchingcross00.png"));
+	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("assets/gfx/kirbolaunchingcross01.png"));
+	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("assets/gfx/kirbolaunchingcross00.png"));
+	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("assets/gfx/kirbolaunchingcross01.png"));
+	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("assets/gfx/kirbolaunchingcross02.png"));
+	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("assets/gfx/kirbolaunchingcross02.png"));
+	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("assets/gfx/kirbolaunchingcross03.png"));
+	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("assets/gfx/kirbolaunchingcross04.png"));
+	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("assets/gfx/kirbolaunchingcross04.png"));
 
 #pragma endregion
 
 #pragma region Projectiles sprites
 
-	mapProjectiles["arrow"].push_back(new olc::Sprite("assets/gfx/arrow.png"));
+	mapProjectiles["jesuscross"].push_back(new olc::Sprite("assets/gfx/jesuscross.png"));
 
 	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion00.png"));
 	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion01.png"));
@@ -308,29 +311,32 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// Fly, enter a door
 		if (GetKey(olc::Key::UP).bHeld)
 		{
-			if (GetTile(fPlayerPosX + 0.5f, fPlayerPosY + 0.5f) == L'w' && bPlayerOnGround)
+			if (!bAttacking)
 			{
-				if (nCurrentLevel + 1 == levels.size())
+				if (GetTile(fPlayerPosX + 0.5f, fPlayerPosY + 0.5f) == L'w' && bPlayerOnGround)
 				{
-					// If Player finishes the last level of the game, the game is over
-					nGameState = GS_ENDSCREEN;
+					if (nCurrentLevel + 1 == levels.size())
+					{
+						// If Player finishes the last level of the game, the game is over
+						nGameState = GS_ENDSCREEN;
+
+						return true;
+					}
+					else if (nCurrentLevel + 1 == nUnlockedLevel)
+					{
+						// If Player finishes the last level unlocked, another one is unlocked
+						nUnlockedLevel++;
+						worldMap->SetUnlockedLevel(nUnlockedLevel);
+					}
+					animPlayer.ChangeState("riding_star");
+					nGameState = GS_WORLDMAP;
 
 					return true;
 				}
-				else if (nCurrentLevel + 1 == nUnlockedLevel)
-				{
-					// If Player finishes the last level unlocked, another one is unlocked
-					nUnlockedLevel++;
-					worldMap->SetUnlockedLevel(nUnlockedLevel);
-				}
-				animPlayer.ChangeState("riding_star");
-				nGameState = GS_WORLDMAP;
-
-				return true;
+				fPlayerVelY = -cfPlayerVelY;
+				bFlying = true;
+				animPlayer.ChangeState("flying");
 			}
-			fPlayerVelY = -cfPlayerVelY;
-			bFlying = true;
-			animPlayer.ChangeState("flying");
 		}
 
 		// Go down when flying, cross semi solid platform and control camera when onground
@@ -397,6 +403,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			{
 				animPlayer.ChangeState("slap");
 				bAttacking = true;
+				bSlapping = true;
 				fAnimationTimer = 0.0f;
 			}
 		}
@@ -410,12 +417,18 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			return true;
 		}
 
-		// Test projectile
-		if (GetKey(olc::Key::O).bPressed)
+		// Launch a Jesus Cross
+		if (GetKey(olc::Key::R).bPressed)
 		{
-			cDynamicProjectile* p = new cDynamicProjectile((fPlayerPosX + fFaceDir), fPlayerPosY - 1.0f, true, 10.0f * fFaceDir, -10.0f, 10.0f, mapProjectiles["arrow"], 64.0f, 64.0f, true, 5, true);
-			p->bOneHit = true;
-			AddProjectile(p);
+			// Can't spam Launching cross, can't launch when player is damaged or when he's flying
+			if (!bAttacking && !bFlying)
+			{
+				animPlayer.ChangeState("jesus_christ");
+				bAttacking = true;
+				bLaunchingJesusCross = true;
+				bCanLaunchAJesusCross = true;
+				fAnimationTimer = 0.0f;
+			}
 		}
 	}
 
@@ -478,70 +491,90 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// calculate elapsed time during attack
 		fAnimationTimer += fElapsedTime;
 
-		// offset sprite so kirbo is centered
-		t.Translate(0.0f, (float)-nTileWidth);
-
-		// Hit frame
-		if (fAnimationTimer >= 0.1f && fAnimationTimer <= 0.2f)
+		// Slap Attack
+		if (bSlapping)
 		{
-			// Create an AOE where the player is facing and check for ennemies and AOE overlap
-			polygon sAOE;
-			sAOE.angle = 0.0f;
+			// offset sprite so kirbo is centered
+			t.Translate(0.0f, (float)-nTileWidth);
 
-			if (fFaceDir == -1) // West
-				sAOE.pos = { (fPlayerPosX - 0.5f) * nTileWidth , (fPlayerPosY + 0.5f) * nTileHeight };
-
-			if (fFaceDir == 1) // East
-				sAOE.pos = { (fPlayerPosX + 1.5f) * nTileWidth , (fPlayerPosY + 0.5f) * nTileHeight };
-
-			sAOE.o.push_back({ -(float)nTileWidth / 2.0f, -3.0f * (float)nTileHeight / 2.0f });
-			sAOE.o.push_back({ -(float)nTileWidth / 2.0f, +3.0f * (float)nTileHeight / 2.0f });
-			sAOE.o.push_back({ +(float)nTileWidth / 2.0f, +3.0f * (float)nTileHeight / 2.0f });
-			sAOE.o.push_back({ +(float)nTileWidth / 2.0f, -3.0f * (float)nTileHeight / 2.0f });
-			sAOE.p.resize(4);
-
-			for (int i = 0; i < sAOE.o.size(); i++)
+			// Hit frame
+			if (fAnimationTimer >= 0.1f && fAnimationTimer <= 0.2f)
 			{
-				sAOE.p[i] =
-				{	// 2D Rotation Transform + 2D Translation (angle is always 0 here, no rotation allowed)
-					(sAOE.o[i].x * cosf(sAOE.angle)) - (sAOE.o[i].y * sinf(sAOE.angle)) + sAOE.pos.x,
-					(sAOE.o[i].x * sinf(sAOE.angle)) + (sAOE.o[i].y * cosf(sAOE.angle)) + sAOE.pos.y,
-				};
-			}
+				// Create an AOE where the player is facing and check for ennemies and AOE overlap
+				polygon sAOE;
+				sAOE.angle = 0.0f;
 
-			// Check if an ennemy take the attack
-			for (auto& dyn : vecEnnemies)
-			{
-				polygon sEnnemy;
-				sEnnemy.pos = { (float)dyn->px * nTileWidth + (float)dyn->fDynWidth / 2.0f, (float)dyn->py * nTileHeight + (float)dyn->fDynHeight / 2.0f }; // Center of the ennemy
-				sEnnemy.angle = 0.0f;
-				sEnnemy.o.push_back({ -dyn->fDynWidth / 2.0f, -dyn->fDynHeight / 2.0f });
-				sEnnemy.o.push_back({ -dyn->fDynWidth / 2.0f, +dyn->fDynHeight / 2.0f });
-				sEnnemy.o.push_back({ +dyn->fDynWidth / 2.0f, +dyn->fDynHeight / 2.0f });
-				sEnnemy.o.push_back({ +dyn->fDynWidth / 2.0f, -dyn->fDynHeight / 2.0f });
-				sEnnemy.p.resize(4);
+				if (fFaceDir == -1) // West
+					sAOE.pos = { (fPlayerPosX - 0.5f) * nTileWidth , (fPlayerPosY + 0.5f) * nTileHeight };
 
-				for (int i = 0; i < sEnnemy.o.size(); i++)
+				if (fFaceDir == 1) // East
+					sAOE.pos = { (fPlayerPosX + 1.5f) * nTileWidth , (fPlayerPosY + 0.5f) * nTileHeight };
+
+				sAOE.o.push_back({ -(float)nTileWidth / 2.0f, -3.0f * (float)nTileHeight / 2.0f });
+				sAOE.o.push_back({ -(float)nTileWidth / 2.0f, +3.0f * (float)nTileHeight / 2.0f });
+				sAOE.o.push_back({ +(float)nTileWidth / 2.0f, +3.0f * (float)nTileHeight / 2.0f });
+				sAOE.o.push_back({ +(float)nTileWidth / 2.0f, -3.0f * (float)nTileHeight / 2.0f });
+				sAOE.p.resize(4);
+
+				for (int i = 0; i < sAOE.o.size(); i++)
 				{
-					sEnnemy.p[i] =
+					sAOE.p[i] =
 					{	// 2D Rotation Transform + 2D Translation (angle is always 0 here, no rotation allowed)
-						(sEnnemy.o[i].x * cosf(sEnnemy.angle)) - (sEnnemy.o[i].y * sinf(sEnnemy.angle)) + sEnnemy.pos.x,
-						(sEnnemy.o[i].x * sinf(sEnnemy.angle)) + (sEnnemy.o[i].y * cosf(sEnnemy.angle)) + sEnnemy.pos.y,
+						(sAOE.o[i].x * cosf(sAOE.angle)) - (sAOE.o[i].y * sinf(sAOE.angle)) + sAOE.pos.x,
+						(sAOE.o[i].x * sinf(sAOE.angle)) + (sAOE.o[i].y * cosf(sAOE.angle)) + sAOE.pos.y,
 					};
 				}
 
-				if (ShapeOverlap_DIAG(sAOE, sEnnemy))
+				// Check if an ennemy take the attack
+				for (auto& dyn : vecEnnemies)
 				{
-					if (dyn->bIsAttackable)
-						Attack((cDynamicCreature*)dyn, 5);
+					polygon sEnnemy;
+					sEnnemy.pos = { (float)dyn->px * nTileWidth + (float)dyn->fDynWidth / 2.0f, (float)dyn->py * nTileHeight + (float)dyn->fDynHeight / 2.0f }; // Center of the ennemy
+					sEnnemy.angle = 0.0f;
+					sEnnemy.o.push_back({ -dyn->fDynWidth / 2.0f, -dyn->fDynHeight / 2.0f });
+					sEnnemy.o.push_back({ -dyn->fDynWidth / 2.0f, +dyn->fDynHeight / 2.0f });
+					sEnnemy.o.push_back({ +dyn->fDynWidth / 2.0f, +dyn->fDynHeight / 2.0f });
+					sEnnemy.o.push_back({ +dyn->fDynWidth / 2.0f, -dyn->fDynHeight / 2.0f });
+					sEnnemy.p.resize(4);
+
+					for (int i = 0; i < sEnnemy.o.size(); i++)
+					{
+						sEnnemy.p[i] =
+						{	// 2D Rotation Transform + 2D Translation (angle is always 0 here, no rotation allowed)
+							(sEnnemy.o[i].x * cosf(sEnnemy.angle)) - (sEnnemy.o[i].y * sinf(sEnnemy.angle)) + sEnnemy.pos.x,
+							(sEnnemy.o[i].x * sinf(sEnnemy.angle)) + (sEnnemy.o[i].y * cosf(sEnnemy.angle)) + sEnnemy.pos.y,
+						};
+					}
+
+					if (ShapeOverlap_DIAG(sAOE, sEnnemy))
+					{
+						if (dyn->bIsAttackable)
+							Attack((cDynamicCreature*)dyn, 5);
+					}
 				}
 			}
 		}
 
-		if (fAnimationTimer >= animPlayer.mapStates["slap"].size() * animPlayer.fTimeBetweenFrames)
+		// Launch a Jesus Cross
+		if (bLaunchingJesusCross)
+		{
+			if (fAnimationTimer >= 0.7f)
+			{
+				if (bCanLaunchAJesusCross)
+				{
+					cDynamicProjectile* p = CreateProjectile((fPlayerPosX + fFaceDir), fPlayerPosY - 1.0f, true, 10.0f * fFaceDir, -10.0f, 10.0f, "jesuscross", 32.0f, 32.0f, true, 5, true);
+					p->bOneHit = true;
+					AddProjectile(p);
+					bCanLaunchAJesusCross = false;
+				}
+			}
+		}
+
+		// Stop the attack when it's finished
+		if (fAnimationTimer >= animPlayer.mapStates[animPlayer.sCurrentState].size() * animPlayer.fTimeBetweenFrames)
 		{
 			fAnimationTimer = 0.0f;
-			bAttacking = false;
+			StopAnyAttack();
 		}
 	}
 
@@ -550,7 +583,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// calculate elapsed time after damage
 		fAnimationTimer += fElapsedTime;
 		bFlying = false;
-		bAttacking = false;
+		StopAnyAttack();
 
 		if (fAnimationTimer >= animPlayer.mapStates["damaged"].size() * animPlayer.fTimeBetweenFrames)
 		{
@@ -562,7 +595,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	if (bDead)
 	{
 		fPlayerVelX = 0.0f; fPlayerVelY = 0.0f;
-		bAttacking = false;
+		StopAnyAttack();
 
 		fDeadAnimation += fElapsedTime;
 		if (fDeadAnimation != fElapsedTime)
@@ -1062,6 +1095,45 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	return true;
 }
 
+bool OneLoneCoder_Platformer::GameState_WorldMap(float fElapsedTime)
+{
+	worldMap->Update(this, fElapsedTime);
+
+	if (GetKey(olc::Key::SPACE).bPressed)
+		nGameState = GS_LOADLEVEL;
+
+	return false;
+}
+
+bool OneLoneCoder_Platformer::GameState_EndScreen(float fElapsedTime)
+{
+	endScreen->Update(this, fElapsedTime);
+
+	if (GetKey(olc::Key::SPACE).bPressed)
+		nGameState = GS_TITLE;
+
+	return false;
+}
+
+bool OneLoneCoder_Platformer::GameState_PauseMenu(float fElapsedTime)
+{
+	pauseMenu->Update(this, fElapsedTime);
+
+	if (GetKey(olc::Key::P).bPressed)
+	{
+		nGameState = GS_MAIN;
+	}
+
+	return true;
+}
+
+void OneLoneCoder_Platformer::StopAnyAttack()
+{
+	bAttacking = false;
+	bSlapping = false;
+	bLaunchingJesusCross = false;
+}
+
 void OneLoneCoder_Platformer::CheckIfPlayerIsDamaged(cDynamic* object, float angle, float fOffsetX, float fOffsetY)
 {
 	polygon sAOE;
@@ -1144,75 +1216,6 @@ void OneLoneCoder_Platformer::CheckIfPlayerIsDamaged(cDynamic* object, float ang
 	}
 }
 
-bool OneLoneCoder_Platformer::GameState_WorldMap(float fElapsedTime)
-{
-	worldMap->Update(this, fElapsedTime);
-
-	if (GetKey(olc::Key::SPACE).bPressed)
-		nGameState = GS_LOADLEVEL;
-
-	return false;
-}
-
-bool OneLoneCoder_Platformer::GameState_EndScreen(float fElapsedTime)
-{
-	endScreen->Update(this, fElapsedTime);
-
-	if (GetKey(olc::Key::SPACE).bPressed)
-		nGameState = GS_TITLE;
-
-	return false;
-}
-
-bool OneLoneCoder_Platformer::GameState_PauseMenu(float fElapsedTime)
-{
-	pauseMenu->Update(this, fElapsedTime);
-
-	if (GetKey(olc::Key::P).bPressed)
-	{
-		nGameState = GS_MAIN;
-	}
-
-	return true;
-}
-
-bool OneLoneCoder_Platformer::IsSolidTile(wchar_t tile)
-{
-	// List Here all the tiles that are not solid (if there are less non solid tile than solid ones)
-	return
-		tile != '.' &&
-		tile != 'o' &&
-		tile != 'w' &&
-		tile != '?';
-}
-
-bool OneLoneCoder_Platformer::IsSemiSolidTile(wchar_t tile)
-{
-	// List Here all the tiles that are semi solid
-	return tile == '?';
-}
-
-cDynamicProjectile* OneLoneCoder_Platformer::CreateProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, float spriteWidth, float spriteHeight, bool affectedByGravity, int damage, bool solidVSMap)
-{
-	cDynamicProjectile* p = new cDynamicProjectile(ox, oy, bFriend, velx, vely, duration, mapProjectiles[sprite], spriteWidth, spriteHeight, affectedByGravity, damage, solidVSMap);
-	return p;
-}
-
-void OneLoneCoder_Platformer::AddProjectile(cDynamicProjectile* proj)
-{
-	vecProjectiles.push_back(proj);
-}
-
-float OneLoneCoder_Platformer::GetTileWidth()
-{
-	return (float)nTileWidth;
-}
-
-float OneLoneCoder_Platformer::GetTileHeight()
-{
-	return (float)nTileHeight;
-}
-
 bool OneLoneCoder_Platformer::ShapeOverlap_DIAG(polygon& r1, polygon& r2)
 {
 	polygon* poly1 = &r1;
@@ -1276,4 +1279,41 @@ void OneLoneCoder_Platformer::Attack(cDynamicCreature* victim, int damage)
 		else
 			victim->KnockBack(0.0f, 0.0f, 0.3f);
 	}
+}
+
+bool OneLoneCoder_Platformer::IsSolidTile(wchar_t tile)
+{
+	// List Here all the tiles that are not solid (if there are less non solid tile than solid ones)
+	return
+		tile != '.' &&
+		tile != 'o' &&
+		tile != 'w' &&
+		tile != '?';
+}
+
+bool OneLoneCoder_Platformer::IsSemiSolidTile(wchar_t tile)
+{
+	// List Here all the tiles that are semi solid
+	return tile == '?';
+}
+
+cDynamicProjectile* OneLoneCoder_Platformer::CreateProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, float spriteWidth, float spriteHeight, bool affectedByGravity, int damage, bool solidVSMap)
+{
+	cDynamicProjectile* p = new cDynamicProjectile(ox, oy, bFriend, velx, vely, duration, mapProjectiles[sprite], spriteWidth, spriteHeight, affectedByGravity, damage, solidVSMap);
+	return p;
+}
+
+void OneLoneCoder_Platformer::AddProjectile(cDynamicProjectile* proj)
+{
+	vecProjectiles.push_back(proj);
+}
+
+float OneLoneCoder_Platformer::GetTileWidth()
+{
+	return (float)nTileWidth;
+}
+
+float OneLoneCoder_Platformer::GetTileHeight()
+{
+	return (float)nTileHeight;
 }

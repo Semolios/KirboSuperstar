@@ -92,6 +92,9 @@ private:
 	bool bPlayerOnGround = false;
 	bool bDoubleJump = false;
 	bool bAttacking = false;
+	bool bSlapping = false;
+	bool bLaunchingJesusCross = false;
+	bool bCanLaunchAJesusCross = false;
 	bool bPlayerDamaged = false;
 	bool bIsPlayerAttackable = true;
 	bool bFlying = false;
@@ -161,11 +164,12 @@ protected:
 	bool GameState_LoadLevel(float fElapsedTime);
 	bool GameState_Title(float fElapsedTime);
 	bool GameState_Main(float fElapsedTime);
-	void CheckIfPlayerIsDamaged(cDynamic* object, float angle, float fOffsetX, float fOffsetY);
 	bool GameState_WorldMap(float fElapsedTime);
 	bool GameState_EndScreen(float fElapsedTime);
 	bool GameState_PauseMenu(float fElapsedTime);
 
+	void StopAnyAttack();
+	void CheckIfPlayerIsDamaged(cDynamic* object, float angle, float fOffsetX, float fOffsetY);
 	bool ShapeOverlap_DIAG(polygon& r1, polygon& r2);
 	void Attack(cDynamicCreature* victim, int damage);
 
