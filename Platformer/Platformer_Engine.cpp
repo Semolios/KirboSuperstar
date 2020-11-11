@@ -49,11 +49,14 @@ bool OneLoneCoder_Platformer::GameState_Transition(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 {
-	// Assets
+#pragma region Assets
+
 	cAssets::get().LoadSprites();
 	cAssets::get().LoadItems();
 
-	fFaceDir = 1.0f;
+#pragma endregion
+
+#pragma region Loading Levels
 
 	levels.push_back("assets/lvls/lvl1.txt");
 	levels.push_back("assets/lvls/lvl2.txt");
@@ -86,7 +89,10 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	currentLvl = new cLevel();
 	cLevel::engine = this;
 
-	// Player sprites
+#pragma endregion
+
+#pragma region Player Sprites
+
 	animPlayer.mapStates["idle"].push_back(new olc::Sprite("assets/gfx/kirbo00.png"));
 	animPlayer.mapStates["idle"].push_back(new olc::Sprite("assets/gfx/kirbo01.png"));
 	animPlayer.mapStates["idle"].push_back(new olc::Sprite("assets/gfx/kirbo02.png"));
@@ -151,7 +157,10 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("TODO"));
 	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("TODO"));
 
-	// Projectiles Sprites
+#pragma endregion
+
+#pragma region Projectiles sprites
+
 	mapProjectiles["arrow"].push_back(new olc::Sprite("assets/gfx/arrow.png"));
 
 	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion00.png"));
@@ -160,32 +169,52 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion03.png"));
 	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion04.png"));
 
-	// title screen
+#pragma endregion
+
+#pragma region Title Screen
+
 	sprTitleScreen = new olc::Sprite("assets/gfx/title screen.png");
 	titleScreen = new cTitleScreen(this, sprTitleScreen);
 
-	// World Map
+#pragma endregion
+
+#pragma region World Map
+
 	sprWorldMap = new olc::Sprite("assets/gfx/WorldMap.png");
 	worldMap = new cWorldMap(this, sprWorldMap);
 	cWorldMap::animPlayer = &animPlayer;
 	worldMap->SetUnlockedLevel(nUnlockedLevel);
 
-	// Transition
+#pragma endregion
+
+#pragma region Transition
+
 	sprTransition = new olc::Sprite("assets/gfx/transitionScreen.png");
 	transition = new cTransition(this, sprTransition);
 	cTransition::animPlayer = &animPlayer;
 
-	// End Screen
+#pragma endregion
+
+#pragma region End Screen
+
 	sprEndScreen = new olc::Sprite("assets/gfx/endScreen.png");
 	endScreen = new cEndScreen(this, sprEndScreen);
 
-	// Pause Menu
+#pragma endregion
+
+#pragma region Pause Menu
+
 	sprPauseMenu = new olc::Sprite("assets/gfx/PauseMenu.png");
 	pauseMenu = new cPauseMenu(this, sprPauseMenu);
 
-	// HUD
+#pragma endregion
+
+#pragma region HUD Sprites
+
 	sprHealthBar = new olc::Sprite("assets/gfx/emptyHealthBar.png");
 	sprHealthPoint = new olc::Sprite("assets/gfx/healthPoint.png");
+
+#pragma endregion
 
 	nGameState = GS_TITLE;
 
