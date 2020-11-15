@@ -74,7 +74,6 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY, 
 			nGraphicCounter %= nFramesPerSecond;
 		}
 
-		// TODO eventuellement exporter cette méthode dans les classes filles pour avoir différentes animations
 		if (fabs(vx) > 0)
 			nGraphicState = WALKING;
 		else

@@ -483,6 +483,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	if (bAttacking && !bPlayerDamaged && !bDead)
 	{
 		fPlayerVelX = 0.0f;
+		fPlayerVelY = 0.0f;
 	}
 	else
 	{
@@ -896,7 +897,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 				float fTargetY = fPlayerPosY - object->py;
 				float fDistance = sqrtf(fTargetX * fTargetX + fTargetY * fTargetY);
 
-				if (fDistance <= 0.3)
+				if (fDistance <= 0.1)
 				{
 					bSwallowing = true;
 					bAttacking = true;
@@ -956,7 +957,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		}
 
 		// Check collision with player to damage him
-		if (bIsPlayerAttackable && !object->bVacuumed)
+		if (bIsPlayerAttackable && !bSwallowing && !object->bVacuumed)
 		{
 			CheckIfPlayerIsDamaged(object, 0.0f, fOffsetX, fOffsetY);
 		}
@@ -1110,22 +1111,18 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	}
 
 	// Remove dead ennemies
-	auto i = std::remove_if(vecEnnemies.begin(), vecEnnemies.end(), [](const cDynamicCreature* d)
+	vecEnnemies.erase(remove_if(vecEnnemies.begin(), vecEnnemies.end(), [](const cDynamicCreature* d)
 	{
-		return d->bDead;
-	});
-	if (i != vecEnnemies.end())
-		vecEnnemies.erase(i);
+		return ((cDynamicCreature*)d)->bDead;
+	}), vecEnnemies.end());
 
 	// Remove swallowed ennemies
 	if (bSwallowing)
 	{
-		auto i = std::remove_if(vecEnnemies.begin(), vecEnnemies.end(), [](const cDynamicCreature* d)
+		vecEnnemies.erase(remove_if(vecEnnemies.begin(), vecEnnemies.end(), [](const cDynamicCreature* d)
 		{
-			return d->bSwallowable;
-		});
-		if (i != vecEnnemies.end())
-			vecEnnemies.erase(i);
+			return ((cDynamicCreature*)d)->bSwallowable;
+		}), vecEnnemies.end());
 	}
 
 	// Erase and delete redundant projectiles
