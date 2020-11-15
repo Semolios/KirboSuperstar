@@ -44,8 +44,24 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY, 
 			}
 		}
 
-		if (bCanBehaveWhileAttacked)
+		if (bCanBehaveWhileAttacked && !bVacuumed)
 			Behaviour(fElapsedTime, playerX, playerY, gfx);
+
+		if (bVacuumed)
+		{
+			vx = (playerX - px) * cfVacuumSpeed;
+			vy = (playerY - py) * cfVacuumSpeed;
+
+			// ennemies under cfSwallowableLimit is swallowed when swallowing animation occurs but once kirby swallowed he stops vacuuming
+			float fTargetX = playerX - px;
+			float fTargetY = playerY - py;
+			float fDistance = sqrtf(fTargetX * fTargetX + fTargetY * fTargetY);
+
+			if (fDistance < cfSwallowableLimit)
+			{
+				bSwallowable = true;
+			}
+		}
 	}
 	else
 	{

@@ -93,6 +93,7 @@ private:
 	bool bDoubleJump = false;
 	bool bAttacking = false;
 	bool bSlapping = false;
+	bool bVacuuming = false;
 	bool bLaunchingJesusCross = false;
 	bool bCanSpawnProjectile = false;
 	bool bPlayerDamaged = false;
@@ -100,6 +101,7 @@ private:
 	bool bFlying = false;
 	bool bShowKirby = true;
 	bool bDead = false;
+	bool bSwallowing = false;
 
 	// Camera Properties
 	float fCameraPosX = 0.0f;
@@ -172,6 +174,7 @@ protected:
 	void CheckIfPlayerIsDamaged(cDynamic* object, float angle, float fOffsetX, float fOffsetY);
 	bool ShapeOverlap_DIAG(polygon& r1, polygon& r2);
 	void Attack(cDynamicCreature* victim, int damage);
+	void ChangeEnnemyProperties(cDynamicCreature* victim, bool vaccumedState);
 
 public:
 	bool IsSolidTile(wchar_t tile);

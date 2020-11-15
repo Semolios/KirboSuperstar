@@ -12,6 +12,8 @@ private:
 	// Constant values
 	const float cfKnockBackDX = 10.0f;
 	const float cfKnockBackDY = 10.0f;
+	const float cfVacuumSpeed = 5.0f;
+	const float cfSwallowableLimit = 0.5f;
 
 protected:
 	olc::Sprite* sSprite;
@@ -35,6 +37,8 @@ public:
 	bool bAffectedByGravity = false;
 	bool bIsKnockable = true;
 	bool bCanBehaveWhileAttacked = false;
+	bool bVacuumed = false;
+	bool bSwallowable = false;
 	float fInitSpeed;
 
 public:

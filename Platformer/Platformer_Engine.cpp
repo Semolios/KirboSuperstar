@@ -160,6 +160,20 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("assets/gfx/kirbolaunchingcross04.png"));
 	animPlayer.mapStates["jesus_christ"].push_back(new olc::Sprite("assets/gfx/kirbolaunchingcross04.png"));
 
+	animPlayer.mapStates["begin_vacuum"].push_back(new olc::Sprite("assets/gfx/kirboBeginVacuum00.png"));
+	animPlayer.mapStates["begin_vacuum"].push_back(new olc::Sprite("assets/gfx/kirboBeginVacuum01.png"));
+
+	animPlayer.mapStates["vacuum"].push_back(new olc::Sprite("assets/gfx/kirboVacuum00.png"));
+	animPlayer.mapStates["vacuum"].push_back(new olc::Sprite("assets/gfx/kirboVacuum01.png"));
+
+	animPlayer.mapStates["swallow"].push_back(new olc::Sprite("assets/gfx/kirboSwallow00.png"));
+	animPlayer.mapStates["swallow"].push_back(new olc::Sprite("assets/gfx/kirboSwallow01.png"));
+	animPlayer.mapStates["swallow"].push_back(new olc::Sprite("assets/gfx/kirboSwallow02.png"));
+	animPlayer.mapStates["swallow"].push_back(new olc::Sprite("assets/gfx/kirboSwallow03.png"));
+	animPlayer.mapStates["swallow"].push_back(new olc::Sprite("assets/gfx/kirboSwallow04.png"));
+	animPlayer.mapStates["swallow"].push_back(new olc::Sprite("assets/gfx/kirboSwallow04.png"));
+	animPlayer.mapStates["swallow"].push_back(new olc::Sprite("assets/gfx/kirboSwallow04.png"));
+
 #pragma endregion
 
 #pragma region Projectiles sprites
@@ -313,7 +327,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// Fly, enter a door
 		if (GetKey(olc::Key::UP).bHeld)
 		{
-			if (!bAttacking)
+			if (!bAttacking && !bVacuuming)
 			{
 				if (GetTile(fPlayerPosX + 0.5f, fPlayerPosY + 0.5f) == L'w' && bPlayerOnGround)
 				{
@@ -400,7 +414,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// Slap attack
 		if (GetKey(olc::Key::F).bPressed)
 		{
-			// Can't spam slap, can't slap when player is damaged or when he's flying
+			// Can't spam slap, can't slap when player is flying
 			if (!bAttacking && !bFlying)
 			{
 				animPlayer.ChangeState("slap");
@@ -423,7 +437,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// Launch a Jesus Cross
 		if (GetKey(olc::Key::R).bPressed)
 		{
-			// Can't spam Launching cross, can't launch when player is damaged or when he's flying
+			// Can't spam Launching cross, can't launch when player is flying
 			if (!bAttacking && !bFlying)
 			{
 				animPlayer.ChangeState("jesus_christ");
@@ -432,6 +446,30 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 				bCanSpawnProjectile = true;
 				fAnimationTimer = 0.0f;
 			}
+		}
+
+		// Vacuum attack
+		if (GetKey(olc::Key::E).bHeld)
+		{
+			// can't Vacuum when player is attacking, swallowing or flying
+			if (!bFlying && !bSwallowing)
+			{
+				if (!bVacuuming && !bAttacking)
+				{
+					animPlayer.ChangeState("begin_vacuum");
+					bVacuuming = true;
+					fAnimationTimer = 0.0f;
+				}
+				bAttacking = true;
+			}
+			else
+			{
+				bVacuuming = false;
+			}
+		}
+		else
+		{
+			bVacuuming = false;
 		}
 	}
 
@@ -445,7 +483,6 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	if (bAttacking && !bPlayerDamaged && !bDead)
 	{
 		fPlayerVelX = 0.0f;
-		fPlayerVelY = 0.0f;
 	}
 	else
 	{
@@ -504,7 +541,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			{
 				if (bCanSpawnProjectile)
 				{
-					// must offset the projectile on left side si it goes from kirbo's hand
+					// must offset the projectile so it goes from kirbo's hand
 					float fProjectilePosX = fPlayerPosX + (fFaceDir > 0.0f ? 1.0f : -(51.0f / 64.0f));
 					cDynamicProjectile* p = CreateProjectile(fProjectilePosX, fPlayerPosY - ((179.0f - 64.0f) / 128.0f), true, 1.0f * fFaceDir, 0.0f, 0.1f, "slapAOE", 51.0f, 179.0f, false, 5, false);
 					p->bOneHit = false;
@@ -527,6 +564,21 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 					bCanSpawnProjectile = false;
 				}
 			}
+		}
+
+		// Vacuuming
+		if (bVacuuming)
+		{
+			if (fAnimationTimer >= 0.2f)
+			{
+				animPlayer.ChangeState("vacuum");
+			}
+		}
+
+		// Swallowing
+		if (bSwallowing)
+		{
+			animPlayer.ChangeState("swallow");
 		}
 
 		// Stop the attack when it's finished
@@ -783,6 +835,85 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			}
 		}
 
+		// Check if the ennemi is in the vacuum
+		if (bVacuuming)
+		{
+			polygon sEnnemy;
+			sEnnemy.pos = { (object->px - fOffsetX) * nTileWidth + (object->fDynWidth / 2.0f), (object->py - fOffsetY) * nTileHeight + (object->fDynHeight / 2.0f) };
+			sEnnemy.angle = 0.0f;
+			sEnnemy.o.push_back({ -object->fDynWidth / 2.0f, -object->fDynHeight / 2.0f });
+			sEnnemy.o.push_back({ -object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
+			sEnnemy.o.push_back({ +object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
+			sEnnemy.o.push_back({ +object->fDynWidth / 2.0f, -object->fDynHeight / 2.0f });
+			sEnnemy.p.resize(4);
+
+			for (int i = 0; i < sEnnemy.o.size(); i++)
+			{
+				sEnnemy.p[i] =
+				{	// 2D Rotation Transform + 2D Translation
+					(sEnnemy.o[i].x * cosf(sEnnemy.angle)) - (sEnnemy.o[i].y * sinf(sEnnemy.angle)) + sEnnemy.pos.x,
+					(sEnnemy.o[i].x * sinf(sEnnemy.angle)) + (sEnnemy.o[i].y * cosf(sEnnemy.angle)) + sEnnemy.pos.y,
+				};
+			}
+
+			// Debug aoe
+			//DrawLine(sEnnemy.p[0].x, sEnnemy.p[0].y, sEnnemy.p[1].x, sEnnemy.p[1].y, olc::YELLOW);
+			//DrawLine(sEnnemy.p[1].x, sEnnemy.p[1].y, sEnnemy.p[2].x, sEnnemy.p[2].y, olc::YELLOW);
+			//DrawLine(sEnnemy.p[2].x, sEnnemy.p[2].y, sEnnemy.p[3].x, sEnnemy.p[3].y, olc::YELLOW);
+			//DrawLine(sEnnemy.p[3].x, sEnnemy.p[3].y, sEnnemy.p[0].x, sEnnemy.p[0].y, olc::YELLOW);
+
+			polygon sVacuum;
+			sVacuum.pos = { (fPlayerPosX + (fFaceDir > 0.0f ? 1.75f : -0.75f) - fOffsetX) * (float)nTileWidth , (fPlayerPosY + 0.5f - fOffsetY) * (float)nTileHeight }; // 1 block ahead the player's looking direction
+			sVacuum.angle = 0.0f;
+			sVacuum.o.push_back({ -(float)nTileWidth * 1.25f, -(float)nTileHeight / (fFaceDir > 0.0f ? 2.0f : 1.0f) });
+			sVacuum.o.push_back({ -(float)nTileWidth * 1.25f, +(float)nTileHeight / (fFaceDir > 0.0f ? 2.0f : 1.0f) });
+			sVacuum.o.push_back({ +(float)nTileWidth * 1.25f, +(float)nTileHeight / (fFaceDir > 0.0f ? 1.0f : 2.0f) });
+			sVacuum.o.push_back({ +(float)nTileWidth * 1.25f, -(float)nTileHeight / (fFaceDir > 0.0f ? 1.0f : 2.0f) });
+			sVacuum.p.resize(4);
+
+			for (int i = 0; i < sVacuum.o.size(); i++)
+			{
+				sVacuum.p[i] =
+				{	// 2D Rotation Transform + 2D Translation (angle is always 0 here, no rotation allowed)
+					(sVacuum.o[i].x * cosf(sVacuum.angle)) - (sVacuum.o[i].y * sinf(sVacuum.angle)) + sVacuum.pos.x,
+					(sVacuum.o[i].x * sinf(sVacuum.angle)) + (sVacuum.o[i].y * cosf(sVacuum.angle)) + sVacuum.pos.y,
+				};
+			}
+
+			// Debug AOE
+			//DrawLine(sVacuum.p[0].x, sVacuum.p[0].y, sVacuum.p[1].x, sVacuum.p[1].y, olc::GREEN);
+			//DrawLine(sVacuum.p[1].x, sVacuum.p[1].y, sVacuum.p[2].x, sVacuum.p[2].y, olc::GREEN);
+			//DrawLine(sVacuum.p[2].x, sVacuum.p[2].y, sVacuum.p[3].x, sVacuum.p[3].y, olc::GREEN);
+			//DrawLine(sVacuum.p[3].x, sVacuum.p[3].y, sVacuum.p[0].x, sVacuum.p[0].y, olc::GREEN);
+
+			if (ShapeOverlap_DIAG(sEnnemy, sVacuum))
+			{
+				ChangeEnnemyProperties(object, true);
+				Attack(object, 0);
+
+				// if one ennemy is under 0.3 from kirby, every swallowable ennemy is killed and kirby starts swallowing animation
+				float fTargetX = fPlayerPosX - object->px;
+				float fTargetY = fPlayerPosY - object->py;
+				float fDistance = sqrtf(fTargetX * fTargetX + fTargetY * fTargetY);
+
+				if (fDistance <= 0.3)
+				{
+					bSwallowing = true;
+					bAttacking = true;
+				}
+			}
+			else
+			{
+				ChangeEnnemyProperties(object, false);
+				object->bSwallowable = false;
+			}
+		}
+		else
+		{
+			ChangeEnnemyProperties(object, false);
+			object->bSwallowable = false;
+		}
+
 		float fDynObjectPosX = fNewObjectPosX;
 		float fDynObjectPosY = fNewObjectPosY;
 
@@ -825,7 +956,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		}
 
 		// Check collision with player to damage him
-		if (bIsPlayerAttackable)
+		if (bIsPlayerAttackable && !object->bVacuumed)
 		{
 			CheckIfPlayerIsDamaged(object, 0.0f, fOffsetX, fOffsetY);
 		}
@@ -986,6 +1117,17 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	if (i != vecEnnemies.end())
 		vecEnnemies.erase(i);
 
+	// Remove swallowed ennemies
+	if (bSwallowing)
+	{
+		auto i = std::remove_if(vecEnnemies.begin(), vecEnnemies.end(), [](const cDynamicCreature* d)
+		{
+			return d->bSwallowable;
+		});
+		if (i != vecEnnemies.end())
+			vecEnnemies.erase(i);
+	}
+
 	// Erase and delete redundant projectiles
 	vecProjectiles.erase(remove_if(vecProjectiles.begin(), vecProjectiles.end(), [](const cDynamic* d)
 	{
@@ -1091,6 +1233,7 @@ void OneLoneCoder_Platformer::StopAnyAttack()
 	bAttacking = false;
 	bSlapping = false;
 	bLaunchingJesusCross = false;
+	bSwallowing = false;
 }
 
 void OneLoneCoder_Platformer::CheckIfPlayerIsDamaged(cDynamic* object, float angle, float fOffsetX, float fOffsetY)
@@ -1240,14 +1383,17 @@ void OneLoneCoder_Platformer::Attack(cDynamicCreature* victim, int damage)
 	}
 }
 
+void OneLoneCoder_Platformer::ChangeEnnemyProperties(cDynamicCreature* victim, bool vaccumedState)
+{
+	victim->bSolidVsDyn = !vaccumedState;
+	victim->bVacuumed = vaccumedState;
+	victim->bIsKnockable = !vaccumedState;
+}
+
 bool OneLoneCoder_Platformer::IsSolidTile(wchar_t tile)
 {
-	// List Here all the tiles that are not solid (if there are less non solid tile than solid ones)
-	return
-		tile != '.' &&
-		tile != 'o' &&
-		tile != 'w' &&
-		tile != '?';
+	// List Here all the tiles that are solid
+	return tile == '#' || tile == 'G' || tile == 'B';
 }
 
 bool OneLoneCoder_Platformer::IsSemiSolidTile(wchar_t tile)
