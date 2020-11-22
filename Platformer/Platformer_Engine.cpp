@@ -606,7 +606,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	if (bDead)
 	{
-		fPlayerVelX = 0.0f; fPlayerVelY = 0.0f;
+		fPlayerVelX = 0.0f; 
+		fPlayerVelY = 0.0f;
 		StopAnyAttack();
 
 		fDeadAnimation += fElapsedTime;
@@ -745,6 +746,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	float fBackgroundOffsetY = fOffsetY * (float)nTileHeight * ((float)(sprBackground->height - ScreenHeight()) / (float)(nLevelHeight * nTileHeight - ScreenHeight()));
 	DrawPartialSprite(0, 0, sprBackground, fBackgroundOffsetX, fBackgroundOffsetY, ScreenWidth(), ScreenHeight());
 
+	// TODO, peut être revoir cette partie pour n'avoir que des tiles solid, semi-solid, non solid, liquid etc...
+	// les graphismes seraient directement dans le background, on dessine une grande map, on met les plateformes dessus
 	// Draw Visible tile map
 	for (int x = -2; x < nVisibleTilesX + 2; x++)
 	{
@@ -767,7 +770,6 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 					break;
 				case L'o': // Coin
 					SetPixelMode(olc::Pixel::ALPHA);
-					FillRect(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, nTileWidth, nTileHeight, olc::CYAN);
 					DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 4 * nTileWidth, 0 * nTileHeight, nTileWidth, nTileHeight);
 					SetPixelMode(olc::Pixel::NORMAL);
 					break;
