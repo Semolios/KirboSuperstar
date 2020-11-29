@@ -13,6 +13,10 @@ public:
 public:
 	float fDynWidth;
 	float fDynHeight;
+	float fSpriteW;
+	float fSpriteH;
+	float fSpriteOffsetX;
+	float fSpriteOffsetY;
 
 	float px, py;
 	float vx, vy;

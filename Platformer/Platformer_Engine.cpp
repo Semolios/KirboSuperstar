@@ -188,6 +188,12 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 	mapProjectiles["slapAOE"].push_back(new olc::Sprite("assets/gfx/slapAOE.png"));
 
+	mapProjectiles["swordDownAOE"].push_back(new olc::Sprite("assets/gfx/swordDownAOE00.png"));
+	mapProjectiles["swordDownAOE"].push_back(new olc::Sprite("assets/gfx/swordDownAOE01.png"));
+	mapProjectiles["swordDownAOE"].push_back(new olc::Sprite("assets/gfx/swordDownAOE02.png"));
+
+	mapProjectiles["swordUpAOE"].push_back(new olc::Sprite("assets/gfx/swordUpAOE.png"));
+
 #pragma endregion
 
 #pragma region Title Screen
@@ -606,7 +612,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	if (bDead)
 	{
-		fPlayerVelX = 0.0f; 
+		fPlayerVelX = 0.0f;
 		fPlayerVelY = 0.0f;
 		StopAnyAttack();
 
@@ -670,6 +676,14 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	if (GetTile(fNewPlayerPosX + 1.0f, fNewPlayerPosY + 1.0f) == L'o')
 		SetTile(fNewPlayerPosX + 1.0f, fNewPlayerPosY + 1.0f, L'.');
+
+	// Check hole
+	if (fPlayerPosY > nLevelHeight)
+	{
+		fHealth = 0.0f;
+		bDead = true;
+		animPlayer.ChangeState("dead");
+	}
 
 	// Collision
 	if (fPlayerVelX <= 0) // Moving Left

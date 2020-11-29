@@ -8,6 +8,10 @@ cDynamicCreatureBomber::cDynamicCreatureBomber(cLevel* l) : cDynamicCreature("bo
 {
 	fDynWidth = 64.0f;
 	fDynHeight = 64.0f;
+	fSpriteW = 64.0f;
+	fSpriteH = 64.0f;
+	fSpriteOffsetX = 0.0f;
+	fSpriteOffsetY = 0.0f;
 	bFriendly = false;
 	nHealth = 1;
 	nHealthMax = 1;
@@ -17,7 +21,7 @@ cDynamicCreatureBomber::cDynamicCreatureBomber(cLevel* l) : cDynamicCreature("bo
 	bSolidVsMap = true;
 	bSolidVsDynInitValue = true;
 	bAffectedByGravity = true;
-	nDamage = 1;
+	nDamage = 2;
 	bIsKnockable = false;
 	bCanBehaveWhileAttacked = true;
 }

@@ -1,5 +1,6 @@
 waddleDee,10,4
 bomber,11,4
+bladeKnight,12,4
 scarfy,15,2
 rocky,10,3
 brontoBurt,5.0,17,3

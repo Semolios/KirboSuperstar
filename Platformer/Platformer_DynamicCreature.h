@@ -26,7 +26,11 @@ protected:
 	{
 		STANDING,
 		WALKING,
-		DAMAGED
+		DAMAGED,
+		JUMPING,
+		UPATTACK,
+		SIDEATTACK,
+		DOWNATTACK
 	} nGraphicState;
 
 public:

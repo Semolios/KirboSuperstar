@@ -8,6 +8,10 @@ cDynamicCreatureWaddleDee::cDynamicCreatureWaddleDee(cLevel* l) : cDynamicCreatu
 {
 	fDynWidth = 64.0f;
 	fDynHeight = 64.0f;
+	fSpriteW = 64.0f;
+	fSpriteH = 64.0f;
+	fSpriteOffsetX = 0.0f;
+	fSpriteOffsetY = 0.0f;
 	bFriendly = false;
 	nHealth = 10;
 	nHealthMax = 10;

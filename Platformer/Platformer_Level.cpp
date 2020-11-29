@@ -96,6 +96,18 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 				parts.push_back(temp);
 			}
 
+			// Populate a Blade Knight
+			if (parts[0] == L"bladeKnight")
+			{
+				cDynamicCreature* mob = new cDynamicCreatureBladeKnight(this);
+				vecDyns.push_back(mob);
+				cDynamicCreatureBladeKnight::engine = engine;
+
+				// get position
+				mob->px = std::stoi(parts[1]);
+				mob->py = std::stoi(parts[2]);
+			}
+
 			// Populate a bomber
 			if (parts[0] == L"bomber")
 			{

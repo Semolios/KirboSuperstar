@@ -14,11 +14,11 @@ cDynamicCreature::cDynamicCreature(std::string n, olc::Sprite* sprite, int frame
 
 void cDynamicCreature::DrawSelf(olc::PixelGameEngine* gfx, float ox, float oy)
 {
-	int nSheetOffsetX = nGraphicCounter * fDynWidth;					// Same State of a sprite are stored in one line
-	int nSheetOffsetY = (2 * nGraphicState + nFaceDir) * fDynHeight;		// 0 = Left Idle, 1 = Right Idle, 2 = Left Walking, 3 = Right Walking, 4 = Left Damaged, 5 = Right Damaged
+	int nSheetOffsetX = nGraphicCounter * fSpriteW;						// Same State of a sprite are stored in one line
+	int nSheetOffsetY = (2 * nGraphicState + nFaceDir) * fSpriteH;	// 0 = Left Idle, 1 = Right Idle, 2 = Left Walking, 3 = Right Walking, 4 = Left Damaged, 5 = Right Damaged
 
 	gfx->SetPixelMode(olc::Pixel::ALPHA);
-	gfx->DrawPartialSprite((px - ox) * 64.0f, (py - oy) * 64.0f, sSprite, nSheetOffsetX, nSheetOffsetY, fDynWidth, fDynHeight);
+	gfx->DrawPartialSprite((px - ox) * 64.0f + fSpriteOffsetX, (py - oy) * 64.0f + fSpriteOffsetY, sSprite, nSheetOffsetX, nSheetOffsetY, fSpriteW, fSpriteH);
 	gfx->SetPixelMode(olc::Pixel::NORMAL);
 }
 
