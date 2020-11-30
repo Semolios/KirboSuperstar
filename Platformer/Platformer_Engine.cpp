@@ -408,13 +408,45 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			}
 			else if (bPlayerOnGround)
 			{
-				fPlayerVelY = -cfPlayerJumpAcc;
+				bChargeJump = true;
+				//fPlayerVelY = -cfPlayerJumpAcc;
 			}
 			else if (bDoubleJump && fPlayerVelY > 0)
 			{
 				bDoubleJump = false;
-				fPlayerVelY = -cfPlayerDblJumpAcc;
+				bChargeDoubleJump = true;
+				//fPlayerVelY = -cfPlayerDblJumpAcc;
 			}
+		}
+
+		// The more you hold, the higher you go
+		if (GetKey(olc::Key::SPACE).bHeld)
+		{
+			if (bChargeJump)
+			{
+				if (fPlayerVelY >= cfPlayerJumpMinAcc) fPlayerVelY = cfPlayerJumpMinAcc;
+				fPlayerVelY += cfJumpIncrement;
+				if (fPlayerVelY <= cfPlayerJumpMaxAcc)
+				{
+					bChargeJump = false;
+				}
+			}
+			else if (bChargeDoubleJump)
+			{
+				if (fPlayerVelY >= cfPlayerJumpMinAcc) fPlayerVelY = cfPlayerJumpMinAcc;
+				fPlayerVelY += cfJumpIncrement;
+				if (fPlayerVelY <= cfPlayerDblJumpMaxAcc)
+				{
+					bChargeDoubleJump = false;
+				}
+			}
+		}
+
+		// if you release space, jump is cancelled so you can't spam space to glide
+		if (GetKey(olc::Key::SPACE).bReleased)
+		{
+			if (bChargeJump) bChargeJump = false;
+			if (bChargeDoubleJump) bChargeDoubleJump = false;
 		}
 
 		// Slap attack

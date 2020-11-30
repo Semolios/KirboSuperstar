@@ -35,8 +35,10 @@ private:
 	const float cfMaxPlayerFlyingVelY = 5.0f;			// Maximum player vertical velocity while flying
 	const float cfPlayerAccGrdX = 25.0f;				// Acceleration value when on ground
 	const float cfPlayerAccAirX = 15.0f;				// Acceleration value when in the air
-	const float cfPlayerJumpAcc = 12.0f;				// Jump acceleration
-	const float cfPlayerDblJumpAcc = 10.0f;				// Double jump acceleration
+	const float cfPlayerJumpMaxAcc = -9.5f;				// Jump acceleration
+	const float cfPlayerJumpMinAcc = -7.0f;				// Min Jump acceleratin
+	const float cfJumpIncrement = -0.25f;				// Jump increment when holding space
+	const float cfPlayerDblJumpMaxAcc = -8.0f;			// Double jump acceleration
 	const float cfGravity = 20.0f;						// Gravity
 	const float cfDrag = -3.0f;							// Drag
 	const float cfMaxHealth = 10.0f;					// Max Kirbo health
@@ -92,6 +94,8 @@ private:
 	float fDeadAnimation = 0.0f;
 	bool bPlayerOnGround = false;
 	bool bDoubleJump = false;
+	bool bChargeJump = false;
+	bool bChargeDoubleJump = false;
 	bool bAttacking = false;
 	bool bSlapping = false;
 	bool bVacuuming = false;
