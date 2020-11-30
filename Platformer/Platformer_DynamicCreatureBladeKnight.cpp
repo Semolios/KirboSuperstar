@@ -73,8 +73,8 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 #pragma region GO JUMPING STATE
 
 			// If there is an obstacle, he jump
-			if (((vx < 0) && (engine->IsSolidTile(GetTile(px - 1, py)) || (!engine->IsSolidTile(GetTile(px, py)) && !engine->IsSolidTile(GetTile(px, py + 1)) && !engine->IsSemiSolidTile(GetTile(px, py + 1))))) ||
-				((vx > 0) && (engine->IsSolidTile(GetTile(px + 2, py)) || (!engine->IsSolidTile(GetTile(px + 1, py)) && !engine->IsSolidTile(GetTile(px + 1, py + 1)) && !engine->IsSemiSolidTile(GetTile(px + 1, py + 1)))))
+			if (((vx < 0) && (engine->IsSolidTile(GetTile(px - 1, py)) || engine->IsSolidTile(GetTile(px, py)) || (!engine->IsSolidTile(GetTile(px, py)) && !engine->IsSolidTile(GetTile(px, py + 1)) && !engine->IsSemiSolidTile(GetTile(px, py + 1))))) ||
+				((vx > 0) && (engine->IsSolidTile(GetTile(px + 2, py)) || engine->IsSolidTile(GetTile(px + 1, py)) || (!engine->IsSolidTile(GetTile(px + 1, py)) && !engine->IsSolidTile(GetTile(px + 1, py + 1)) && !engine->IsSemiSolidTile(GetTile(px + 1, py + 1)))))
 				)
 			{
 				ChangeState(AI_JUMPING);
@@ -109,6 +109,8 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 		case AI_JUMPING:
 		{
 			nGraphicState = JUMPING;
+			
+			vx = (playerX < px) ? -2.5f : 2.5f;
 
 			if (bOnGround)
 			{
