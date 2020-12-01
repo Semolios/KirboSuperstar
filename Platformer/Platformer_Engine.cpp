@@ -24,6 +24,7 @@ bool OneLoneCoder_Platformer::OnUserUpdate(float fElapsedTime)
 		case GS_WORLDMAP: GameState_WorldMap(fElapsedTime); break;
 		case GS_ENDSCREEN: GameState_EndScreen(fElapsedTime); break;
 		case GS_PAUSE: GameState_PauseMenu(fElapsedTime); break;
+		case GS_LOADBOSSLEVEL: GameState_LoadBossLevel(fElapsedTime); break;
 	}
 
 	return true;
@@ -65,6 +66,13 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	levels.push_back("assets/lvls/lvl5.txt");
 	levels.push_back("assets/lvls/lvl6.txt");
 
+	bossLevels.push_back("assets/lvls/Bosslvl1.txt");
+	bossLevels.push_back("assets/lvls/Bosslvl2.txt");
+	bossLevels.push_back("assets/lvls/Bosslvl3.txt");
+	bossLevels.push_back("assets/lvls/Bosslvl4.txt");
+	bossLevels.push_back("assets/lvls/Bosslvl5.txt");
+	bossLevels.push_back("assets/lvls/Bosslvl6.txt");
+
 	levelsEnnemies.push_back("assets/lvls/ennemiesLvl1.txt");
 	levelsEnnemies.push_back("assets/lvls/ennemiesLvl2.txt");
 	levelsEnnemies.push_back("assets/lvls/ennemiesLvl3.txt");
@@ -85,6 +93,20 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	levelsBackgrounds.push_back("assets/gfx/testBckGrd03.png");
 	levelsBackgrounds.push_back("assets/gfx/testBckGrd04.png");
 	levelsBackgrounds.push_back("assets/gfx/testBckGrd05.png");
+
+	levelsBackgrounds.push_back("assets/gfx/testBckGrd00.png");
+	levelsBackgrounds.push_back("assets/gfx/testBckGrd01.png");
+	levelsBackgrounds.push_back("assets/gfx/testBckGrd02.png");
+	levelsBackgrounds.push_back("assets/gfx/testBckGrd03.png");
+	levelsBackgrounds.push_back("assets/gfx/testBckGrd04.png");
+	levelsBackgrounds.push_back("assets/gfx/testBckGrd05.png");
+
+	bossLevelsBackgrounds.push_back("assets/gfx/testBossBckGrd00.png");
+	bossLevelsBackgrounds.push_back("assets/gfx/testBossBckGrd01.png");
+	bossLevelsBackgrounds.push_back("assets/gfx/testBossBckGrd02.png");
+	bossLevelsBackgrounds.push_back("assets/gfx/testBossBckGrd03.png");
+	bossLevelsBackgrounds.push_back("assets/gfx/testBossBckGrd04.png");
+	bossLevelsBackgrounds.push_back("assets/gfx/testBossBckGrd05.png");
 
 	currentLvl = new cLevel();
 	cLevel::engine = this;
@@ -268,16 +290,12 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 	}
 
 	// Reset variables when level is loading
-	fPlayerVelX = 0.0f;
-	fPlayerVelY = 0.0f;
-	fHealth = cfMaxHealth;
-	fInvulnerabilityTimer = 0.0f;
-	fStopTimebeforeDeadAnim = 0.0f;
-	bDead = false;
-	bPlayerDamaged = false;
+	ResetVariables();
 
 	srand(time(NULL));
 	transitionAnim = rand() % 4;
+
+	bInBossLvl = false;
 
 	nGameState = GS_TRANSITION;
 
@@ -337,23 +355,25 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			{
 				if (GetTile(fPlayerPosX + 0.5f, fPlayerPosY + 0.5f) == L'w' && bPlayerOnGround)
 				{
-					if (nCurrentLevel + 1 == levels.size())
-					{
-						// If Player finishes the last level of the game, the game is over
-						nGameState = GS_ENDSCREEN;
+					nGameState = GS_LOADBOSSLEVEL;
 
-						return true;
-					}
-					else if (nCurrentLevel + 1 == nUnlockedLevel)
-					{
-						// If Player finishes the last level unlocked, another one is unlocked
-						nUnlockedLevel++;
-						worldMap->SetUnlockedLevel(nUnlockedLevel);
-					}
-					animPlayer.ChangeState("riding_star");
-					nGameState = GS_WORLDMAP;
+					//if (nCurrentLevel + 1 == levels.size())
+					//{
+					//	// If Player finishes the last level of the game, the game is over
+					//	nGameState = GS_ENDSCREEN;
 
-					return true;
+					//	return true;
+					//}
+					//else if (nCurrentLevel + 1 == nUnlockedLevel)
+					//{
+					//	// If Player finishes the last level unlocked, another one is unlocked
+					//	nUnlockedLevel++;
+					//	worldMap->SetUnlockedLevel(nUnlockedLevel);
+					//}
+					//animPlayer.ChangeState("riding_star");
+					//nGameState = GS_WORLDMAP;
+
+					//return true;
 				}
 				fPlayerVelY = -cfPlayerVelY;
 				bFlying = true;
@@ -1191,6 +1211,23 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		object->DrawSelf(this, fOffsetX, fOffsetY);
 	}
 
+	if (bInBossLvl && vecEnnemies.empty())
+	{
+		if (nCurrentLevel + 1 == levels.size())
+		{
+			// If Player finishes the last level of the game, the game is over
+			nGameState = GS_ENDSCREEN;
+		}
+		else if (nCurrentLevel + 1 == nUnlockedLevel)
+		{
+			// If Player finishes the last level unlocked, another one is unlocked
+			nUnlockedLevel++;
+			worldMap->SetUnlockedLevel(nUnlockedLevel);
+		}
+		animPlayer.ChangeState("riding_star");
+		nGameState = GS_WORLDMAP;
+	}
+
 	// Check invulnerability frame
 	fInvulnerabilityTimer -= fElapsedTime;
 	if (fInvulnerabilityTimer <= 0.0f)
@@ -1269,6 +1306,36 @@ bool OneLoneCoder_Platformer::GameState_PauseMenu(float fElapsedTime)
 	{
 		nGameState = GS_MAIN;
 	}
+
+	return true;
+}
+
+bool OneLoneCoder_Platformer::GameState_LoadBossLevel(float fElapsedTime)
+{
+	// Destroy all dynamics
+	vecEnnemies.clear();
+	vecProjectiles.clear();
+
+	if (currentLvl->LoadLevel(bossLevels[nCurrentLevel]))
+	{
+		nLevelWidth = currentLvl->GetWidth();
+		nLevelHeight = currentLvl->GetHeight();
+		fPlayerPosX = currentLvl->GetInitPlayerPosX();
+		fPlayerPosY = currentLvl->GetInitPlayerPoxY();
+		sLevel = currentLvl->GetLevel();
+
+		currentLvl->PopulateBoss(vecEnnemies, nCurrentLevel);
+
+		spriteTiles = new olc::Sprite(levelsTiles[nCurrentLevel]);
+		sprBackground = new olc::Sprite(bossLevelsBackgrounds[nCurrentLevel]);
+	}
+
+	// Reset variables when level is loading
+	ResetVariables();
+
+	bInBossLvl = true;
+
+	nGameState = GS_MAIN;
 
 	return true;
 }
@@ -1466,4 +1533,16 @@ float OneLoneCoder_Platformer::GetTileWidth()
 float OneLoneCoder_Platformer::GetTileHeight()
 {
 	return (float)nTileHeight;
+}
+
+void OneLoneCoder_Platformer::ResetVariables()
+{
+	fPlayerVelX = 0.0f;
+	fPlayerVelY = 0.0f;
+	fHealth = cfMaxHealth;
+	fInvulnerabilityTimer = 0.0f;
+	fStopTimebeforeDeadAnim = 0.0f;
+	bDead = false;
+	bPlayerDamaged = false;
+	StopAnyAttack();
 }

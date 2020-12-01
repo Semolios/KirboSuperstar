@@ -168,3 +168,66 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 
 	return true;
 }
+
+bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLvl)
+{
+	// TODO en fonction du numéro de niveau instancier le boss correspondant
+	switch (currentLvl)
+	{
+		case 0:
+		{
+			// TODO Whispywood
+			cDynamicCreature* mob = new cDynamicCreatureWaddleDee(this);
+			vecDyns.push_back(mob);
+			mob->px = 5;
+			mob->py = 5;
+		}
+		break;
+		case 1:
+		{
+			// TODO Mr Shine & Mr Bright
+			cDynamicCreature* mob = new cDynamicCreatureWaddleDee(this);
+			vecDyns.push_back(mob);
+			mob->px = 5;
+			mob->py = 5;
+		}
+		break;
+		case 2:
+		{
+			// TODO Dyna Blade
+			cDynamicCreature* mob = new cDynamicCreatureWaddleDee(this);
+			vecDyns.push_back(mob);
+			mob->px = 5;
+			mob->py = 5;
+		}
+		break;
+		case 3:
+		{
+			// TODO kracko
+			cDynamicCreature* mob = new cDynamicCreatureWaddleDee(this);
+			vecDyns.push_back(mob);
+			mob->px = 5;
+			mob->py = 5;
+		}
+		break;
+		case 4:
+		{
+			// TODO Meta Knight
+			cDynamicCreature* mob = new cDynamicCreatureWaddleDee(this);
+			vecDyns.push_back(mob);
+			mob->px = 5;
+			mob->py = 5;
+		}
+		break;
+		case 5:
+		{
+			// TODO Roi Dadidou
+			cDynamicCreature* mob = new cDynamicCreatureWaddleDee(this);
+			vecDyns.push_back(mob);
+			mob->px = 5;
+			mob->py = 5;
+		}
+		break;
+	}
+	return true;
+}

@@ -78,6 +78,8 @@ private:
 	std::vector<std::string> levelsEnnemies;
 	std::vector<std::string> levelsTiles;
 	std::vector<std::string> levelsBackgrounds;
+	std::vector<std::string> bossLevels;
+	std::vector<std::string> bossLevelsBackgrounds;
 
 	// Player Properties
 	float fPlayerPosX = 0.0f;
@@ -107,6 +109,7 @@ private:
 	bool bShowKirby = true;
 	bool bDead = false;
 	bool bSwallowing = false;
+	bool bInBossLvl = false;
 
 	// Camera Properties
 	float fCameraPosX = 0.0f;
@@ -160,6 +163,7 @@ private:
 		GS_WORLDMAP,
 		GS_ENDSCREEN,
 		GS_PAUSE,
+		GS_LOADBOSSLEVEL,
 	} nGameState = GS_LOADING;
 
 protected:
@@ -174,6 +178,7 @@ protected:
 	bool GameState_WorldMap(float fElapsedTime);
 	bool GameState_EndScreen(float fElapsedTime);
 	bool GameState_PauseMenu(float fElapsedTime);
+	bool GameState_LoadBossLevel(float fElapsedTime);
 
 	void StopAnyAttack();
 	void CheckIfPlayerIsDamaged(cDynamic* object, float angle, float fOffsetX, float fOffsetY);
@@ -188,4 +193,5 @@ public:
 	void AddProjectile(cDynamicProjectile* proj);
 	float GetTileWidth();
 	float GetTileHeight();
+	void ResetVariables();
 };

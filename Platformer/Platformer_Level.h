@@ -34,5 +34,6 @@ public:
 	int GetInitPlayerPosX();
 	int GetInitPlayerPoxY();
 	bool PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::string levelName);
+	bool PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLvl);
 };
 
