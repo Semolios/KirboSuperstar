@@ -181,6 +181,7 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLv
 			vecDyns.push_back(mob);
 			mob->px = 5;
 			mob->py = 5;
+			mob->bIsVacuumable = false;
 		}
 		break;
 		case 1:
@@ -190,6 +191,7 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLv
 			vecDyns.push_back(mob);
 			mob->px = 5;
 			mob->py = 5;
+			mob->bIsVacuumable = false;
 		}
 		break;
 		case 2:
@@ -199,6 +201,7 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLv
 			vecDyns.push_back(mob);
 			mob->px = 5;
 			mob->py = 5;
+			mob->bIsVacuumable = false;
 		}
 		break;
 		case 3:
@@ -208,6 +211,7 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLv
 			vecDyns.push_back(mob);
 			mob->px = 5;
 			mob->py = 5;
+			mob->bIsVacuumable = false;
 		}
 		break;
 		case 4:
@@ -217,6 +221,7 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLv
 			vecDyns.push_back(mob);
 			mob->px = 5;
 			mob->py = 5;
+			mob->bIsVacuumable = false;
 		}
 		break;
 		case 5:
@@ -226,6 +231,7 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLv
 			vecDyns.push_back(mob);
 			mob->px = 5;
 			mob->py = 5;
+			mob->bIsVacuumable = false;
 		}
 		break;
 	}

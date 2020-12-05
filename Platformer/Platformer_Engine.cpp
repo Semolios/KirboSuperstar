@@ -196,6 +196,26 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	animPlayer.mapStates["swallow"].push_back(new olc::Sprite("assets/gfx/kirboSwallow04.png"));
 	animPlayer.mapStates["swallow"].push_back(new olc::Sprite("assets/gfx/kirboSwallow04.png"));
 
+	animPlayer.mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed00.png"));
+	animPlayer.mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed01.png"));
+	animPlayer.mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed02.png"));
+	animPlayer.mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed03.png"));
+	animPlayer.mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed04.png"));
+	animPlayer.mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed05.png"));
+	animPlayer.mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed06.png"));
+	animPlayer.mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed07.png"));
+	animPlayer.mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed08.png"));
+	animPlayer.mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed09.png"));
+	animPlayer.mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed10.png"));
+	animPlayer.mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed11.png"));
+	animPlayer.mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed12.png"));
+	animPlayer.mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed13.png"));
+	animPlayer.mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed14.png"));
+	animPlayer.mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed15.png"));
+	animPlayer.mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed16.png"));
+
+	animPlayer.mapStates["kirbo_goes_away"].push_back(new olc::Sprite("assets/gfx/riding_star00.png"));
+
 #pragma endregion
 
 #pragma region Projectiles sprites
@@ -290,6 +310,7 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 	}
 
 	// Reset variables when level is loading
+	fHealth = cfMaxHealth;
 	ResetVariables();
 
 	srand(time(NULL));
@@ -346,7 +367,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	};
 
 	// Handle input
-	if (IsFocused() && !bPlayerDamaged && !bDead)
+	if (IsFocused() && CanInteract())
 	{
 		// Fly, enter a door
 		if (GetKey(olc::Key::UP).bHeld)
@@ -354,27 +375,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			if (!bAttacking && !bVacuuming)
 			{
 				if (GetTile(fPlayerPosX + 0.5f, fPlayerPosY + 0.5f) == L'w' && bPlayerOnGround)
-				{
 					nGameState = GS_LOADBOSSLEVEL;
 
-					//if (nCurrentLevel + 1 == levels.size())
-					//{
-					//	// If Player finishes the last level of the game, the game is over
-					//	nGameState = GS_ENDSCREEN;
-
-					//	return true;
-					//}
-					//else if (nCurrentLevel + 1 == nUnlockedLevel)
-					//{
-					//	// If Player finishes the last level unlocked, another one is unlocked
-					//	nUnlockedLevel++;
-					//	worldMap->SetUnlockedLevel(nUnlockedLevel);
-					//}
-					//animPlayer.ChangeState("riding_star");
-					//nGameState = GS_WORLDMAP;
-
-					//return true;
-				}
 				fPlayerVelY = -cfPlayerVelY;
 				bFlying = true;
 				animPlayer.ChangeState("flying");
@@ -538,7 +540,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	// Gravity
 	fPlayerVelY += cfGravity * fElapsedTime;
 
-	if (bAttacking && !bPlayerDamaged && !bDead)
+	if (bAttacking && CanInteract())
 	{
 		fPlayerVelX = 0.0f;
 		fPlayerVelY = 0.0f;
@@ -554,18 +556,18 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			{
 				fPlayerVelX = 0.0f;
 
-				if (!bPlayerDamaged && !bDead)
+				if (CanInteract())
 					animPlayer.ChangeState("idle");
 			}
 			else
 			{
-				if (!bPlayerDamaged && !bDead)
+				if (CanInteract())
 					animPlayer.ChangeState("run");
 			}
 		}
 		else
 		{
-			if (!bPlayerDamaged && !bDead)
+			if (CanInteract())
 			{
 				if (!bFlying)
 				{
@@ -596,7 +598,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			// offset sprite so kirbo is centered
 			t.Translate(0.0f, (float)-nTileWidth);
 
-			if (fAnimationTimer >= 0.1f)
+			if (fAnimationTimer >= cfslapSpawnT * animPlayer.fTimeBetweenFrames)
 			{
 				if (bCanSpawnProjectile)
 				{
@@ -613,7 +615,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// Launch a Jesus Cross
 		if (bLaunchingJesusCross)
 		{
-			if (fAnimationTimer >= 0.7f)
+			if (fAnimationTimer >= cfJesusCrossSpawnT * animPlayer.fTimeBetweenFrames)
 			{
 				if (bCanSpawnProjectile)
 				{
@@ -628,7 +630,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// Vacuuming
 		if (bVacuuming)
 		{
-			if (fAnimationTimer >= 0.2f)
+			if (fAnimationTimer >= cfVacuumAnimT * animPlayer.fTimeBetweenFrames)
 			{
 				animPlayer.ChangeState("vacuum");
 			}
@@ -671,18 +673,52 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		fDeadAnimation += fElapsedTime;
 		if (fDeadAnimation != fElapsedTime)
 		{
-			t.Rotate(fDeadAnimation * 15.0f);
-			// animation based on a 2nd degree polynome
+			t.Rotate(fDeadAnimation * cfDeadRotationAnimation);
+			// animation based on a 2nd degree polynome to simulate kirby's death animation
 			t.Translate(0.0f, (4.0f * fDeadAnimation - 2.0f) * 64.0f * (4.0f * fDeadAnimation - 2.0f) - 4 * 64.0f);
 		}
 
 		// Return to the map after dead animation
 		if (fDeadAnimation >= cfDeadAnimation)
 		{
+			// if you die in boss level, you reappear in the boss room
+			if (bInBossLvl)
+			{
+				fHealth = cfMaxHealth;
+				nGameState = GS_LOADBOSSLEVEL;
+				return true;
+			}
+
 			fDeadAnimation = 0.0f;
 			nGameState = GS_WORLDMAP;
 			animPlayer.ChangeState("riding_star");
 			return true;
+		}
+	}
+
+	if (bBossKilled)
+	{
+		fPlayerVelX = 0.0f;
+		fPlayerVelY = 0.0f;
+		StopAnyAttack();
+
+		fWinTimer += fElapsedTime;
+
+		// after the dance, kirbo goes away
+		if (fWinTimer >= animPlayer.mapStates["boss_killed"].size() * animPlayer.fTimeBetweenFrames)
+		{
+			fKirboGoesAwayTimer += fElapsedTime;
+			animPlayer.ChangeState("kirbo_goes_away");
+
+			fFaceDir = 1.0f;
+			t.Scale(-1.0f, 1.0f); // Scale the sprite because riding_star00 sprite is facing left
+			t.Rotate(-fKirboGoesAwayTimer * cfGoAwayRotationAnimation);
+			t.Translate(fKirboGoesAwayTimer * cfGoAwayTranslationAnimation, -fKirboGoesAwayTimer * cfGoAwayTranslationAnimation);
+		}
+		else
+		{
+			fFaceDir = 1.0f;
+			t.Translate(-nTileWidth, -nTileHeight);
 		}
 	}
 
@@ -905,70 +941,78 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		}
 
 		// Check if the ennemi is in the vacuum
-		if (bVacuuming)
+		if (object->bIsVacuumable)
 		{
-			polygon sEnnemy;
-			sEnnemy.pos = { (object->px - fOffsetX) * nTileWidth + (object->fDynWidth / 2.0f), (object->py - fOffsetY) * nTileHeight + (object->fDynHeight / 2.0f) };
-			sEnnemy.angle = 0.0f;
-			sEnnemy.o.push_back({ -object->fDynWidth / 2.0f, -object->fDynHeight / 2.0f });
-			sEnnemy.o.push_back({ -object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
-			sEnnemy.o.push_back({ +object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
-			sEnnemy.o.push_back({ +object->fDynWidth / 2.0f, -object->fDynHeight / 2.0f });
-			sEnnemy.p.resize(4);
-
-			for (int i = 0; i < sEnnemy.o.size(); i++)
+			if (bVacuuming)
 			{
-				sEnnemy.p[i] =
-				{	// 2D Rotation Transform + 2D Translation
-					(sEnnemy.o[i].x * cosf(sEnnemy.angle)) - (sEnnemy.o[i].y * sinf(sEnnemy.angle)) + sEnnemy.pos.x,
-					(sEnnemy.o[i].x * sinf(sEnnemy.angle)) + (sEnnemy.o[i].y * cosf(sEnnemy.angle)) + sEnnemy.pos.y,
-				};
-			}
+				polygon sEnnemy;
+				sEnnemy.pos = { (object->px - fOffsetX) * nTileWidth + (object->fDynWidth / 2.0f), (object->py - fOffsetY) * nTileHeight + (object->fDynHeight / 2.0f) };
+				sEnnemy.angle = 0.0f;
+				sEnnemy.o.push_back({ -object->fDynWidth / 2.0f, -object->fDynHeight / 2.0f });
+				sEnnemy.o.push_back({ -object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
+				sEnnemy.o.push_back({ +object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
+				sEnnemy.o.push_back({ +object->fDynWidth / 2.0f, -object->fDynHeight / 2.0f });
+				sEnnemy.p.resize(4);
 
-			// Debug aoe
-			//DrawLine(sEnnemy.p[0].x, sEnnemy.p[0].y, sEnnemy.p[1].x, sEnnemy.p[1].y, olc::YELLOW);
-			//DrawLine(sEnnemy.p[1].x, sEnnemy.p[1].y, sEnnemy.p[2].x, sEnnemy.p[2].y, olc::YELLOW);
-			//DrawLine(sEnnemy.p[2].x, sEnnemy.p[2].y, sEnnemy.p[3].x, sEnnemy.p[3].y, olc::YELLOW);
-			//DrawLine(sEnnemy.p[3].x, sEnnemy.p[3].y, sEnnemy.p[0].x, sEnnemy.p[0].y, olc::YELLOW);
-
-			polygon sVacuum;
-			sVacuum.pos = { (fPlayerPosX + (fFaceDir > 0.0f ? 1.75f : -0.75f) - fOffsetX) * (float)nTileWidth , (fPlayerPosY + 0.5f - fOffsetY) * (float)nTileHeight }; // 1 block ahead the player's looking direction
-			sVacuum.angle = 0.0f;
-			sVacuum.o.push_back({ -(float)nTileWidth * 1.25f, -(float)nTileHeight / (fFaceDir > 0.0f ? 2.0f : 1.0f) });
-			sVacuum.o.push_back({ -(float)nTileWidth * 1.25f, +(float)nTileHeight / (fFaceDir > 0.0f ? 2.0f : 1.0f) });
-			sVacuum.o.push_back({ +(float)nTileWidth * 1.25f, +(float)nTileHeight / (fFaceDir > 0.0f ? 1.0f : 2.0f) });
-			sVacuum.o.push_back({ +(float)nTileWidth * 1.25f, -(float)nTileHeight / (fFaceDir > 0.0f ? 1.0f : 2.0f) });
-			sVacuum.p.resize(4);
-
-			for (int i = 0; i < sVacuum.o.size(); i++)
-			{
-				sVacuum.p[i] =
-				{	// 2D Rotation Transform + 2D Translation (angle is always 0 here, no rotation allowed)
-					(sVacuum.o[i].x * cosf(sVacuum.angle)) - (sVacuum.o[i].y * sinf(sVacuum.angle)) + sVacuum.pos.x,
-					(sVacuum.o[i].x * sinf(sVacuum.angle)) + (sVacuum.o[i].y * cosf(sVacuum.angle)) + sVacuum.pos.y,
-				};
-			}
-
-			// Debug AOE
-			//DrawLine(sVacuum.p[0].x, sVacuum.p[0].y, sVacuum.p[1].x, sVacuum.p[1].y, olc::GREEN);
-			//DrawLine(sVacuum.p[1].x, sVacuum.p[1].y, sVacuum.p[2].x, sVacuum.p[2].y, olc::GREEN);
-			//DrawLine(sVacuum.p[2].x, sVacuum.p[2].y, sVacuum.p[3].x, sVacuum.p[3].y, olc::GREEN);
-			//DrawLine(sVacuum.p[3].x, sVacuum.p[3].y, sVacuum.p[0].x, sVacuum.p[0].y, olc::GREEN);
-
-			if (ShapeOverlap_DIAG(sEnnemy, sVacuum))
-			{
-				ChangeEnnemyProperties(object, true);
-				Attack(object, 0);
-
-				// if one ennemy is under 0.3 from kirby, every swallowable ennemy is killed and kirby starts swallowing animation
-				float fTargetX = fPlayerPosX - object->px;
-				float fTargetY = fPlayerPosY - object->py;
-				float fDistance = sqrtf(fTargetX * fTargetX + fTargetY * fTargetY);
-
-				if (fDistance <= 0.1)
+				for (int i = 0; i < sEnnemy.o.size(); i++)
 				{
-					bSwallowing = true;
-					bAttacking = true;
+					sEnnemy.p[i] =
+					{	// 2D Rotation Transform + 2D Translation
+						(sEnnemy.o[i].x * cosf(sEnnemy.angle)) - (sEnnemy.o[i].y * sinf(sEnnemy.angle)) + sEnnemy.pos.x,
+						(sEnnemy.o[i].x * sinf(sEnnemy.angle)) + (sEnnemy.o[i].y * cosf(sEnnemy.angle)) + sEnnemy.pos.y,
+					};
+				}
+
+				// Debug aoe
+				//DrawLine(sEnnemy.p[0].x, sEnnemy.p[0].y, sEnnemy.p[1].x, sEnnemy.p[1].y, olc::YELLOW);
+				//DrawLine(sEnnemy.p[1].x, sEnnemy.p[1].y, sEnnemy.p[2].x, sEnnemy.p[2].y, olc::YELLOW);
+				//DrawLine(sEnnemy.p[2].x, sEnnemy.p[2].y, sEnnemy.p[3].x, sEnnemy.p[3].y, olc::YELLOW);
+				//DrawLine(sEnnemy.p[3].x, sEnnemy.p[3].y, sEnnemy.p[0].x, sEnnemy.p[0].y, olc::YELLOW);
+
+				polygon sVacuum;
+				sVacuum.pos = { (fPlayerPosX + (fFaceDir > 0.0f ? 1.75f : -0.75f) - fOffsetX) * (float)nTileWidth , (fPlayerPosY + 0.5f - fOffsetY) * (float)nTileHeight }; // 1 block ahead the player's looking direction
+				sVacuum.angle = 0.0f;
+				sVacuum.o.push_back({ -(float)nTileWidth * 1.25f, -(float)nTileHeight / (fFaceDir > 0.0f ? 2.0f : 1.0f) });
+				sVacuum.o.push_back({ -(float)nTileWidth * 1.25f, +(float)nTileHeight / (fFaceDir > 0.0f ? 2.0f : 1.0f) });
+				sVacuum.o.push_back({ +(float)nTileWidth * 1.25f, +(float)nTileHeight / (fFaceDir > 0.0f ? 1.0f : 2.0f) });
+				sVacuum.o.push_back({ +(float)nTileWidth * 1.25f, -(float)nTileHeight / (fFaceDir > 0.0f ? 1.0f : 2.0f) });
+				sVacuum.p.resize(4);
+
+				for (int i = 0; i < sVacuum.o.size(); i++)
+				{
+					sVacuum.p[i] =
+					{	// 2D Rotation Transform + 2D Translation (angle is always 0 here, no rotation allowed)
+						(sVacuum.o[i].x * cosf(sVacuum.angle)) - (sVacuum.o[i].y * sinf(sVacuum.angle)) + sVacuum.pos.x,
+						(sVacuum.o[i].x * sinf(sVacuum.angle)) + (sVacuum.o[i].y * cosf(sVacuum.angle)) + sVacuum.pos.y,
+					};
+				}
+
+				// Debug AOE
+				//DrawLine(sVacuum.p[0].x, sVacuum.p[0].y, sVacuum.p[1].x, sVacuum.p[1].y, olc::GREEN);
+				//DrawLine(sVacuum.p[1].x, sVacuum.p[1].y, sVacuum.p[2].x, sVacuum.p[2].y, olc::GREEN);
+				//DrawLine(sVacuum.p[2].x, sVacuum.p[2].y, sVacuum.p[3].x, sVacuum.p[3].y, olc::GREEN);
+				//DrawLine(sVacuum.p[3].x, sVacuum.p[3].y, sVacuum.p[0].x, sVacuum.p[0].y, olc::GREEN);
+
+				if (ShapeOverlap_DIAG(sEnnemy, sVacuum))
+				{
+					ChangeEnnemyProperties(object, true);
+					Attack(object, 0);
+
+					// if one ennemy is under 0.1 from kirby, every swallowable ennemy is killed and kirby starts swallowing animation
+					float fTargetX = fPlayerPosX - object->px;
+					float fTargetY = fPlayerPosY - object->py;
+					float fDistance = sqrtf(fTargetX * fTargetX + fTargetY * fTargetY);
+
+					if (fDistance <= 0.1)
+					{
+						bSwallowing = true;
+						bAttacking = true;
+					}
+				}
+				else
+				{
+					ChangeEnnemyProperties(object, false);
+					object->bSwallowable = false;
 				}
 			}
 			else
@@ -976,11 +1020,6 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 				ChangeEnnemyProperties(object, false);
 				object->bSwallowable = false;
 			}
-		}
-		else
-		{
-			ChangeEnnemyProperties(object, false);
-			object->bSwallowable = false;
 		}
 
 		float fDynObjectPosX = fNewObjectPosX;
@@ -1213,19 +1252,37 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	if (bInBossLvl && vecEnnemies.empty())
 	{
-		if (nCurrentLevel + 1 == levels.size())
+		// Wait a little before begin win animation
+		fWaitBeforeWinAnimation += fElapsedTime;
+
+		if (fWaitBeforeWinAnimation >= cfTimeBeforeWinAnimation)
 		{
-			// If Player finishes the last level of the game, the game is over
-			nGameState = GS_ENDSCREEN;
+			bBossKilled = true;
+			if (fWinTimer < animPlayer.mapStates["boss_killed"].size() * animPlayer.fTimeBetweenFrames)
+				animPlayer.ChangeState("boss_killed");
 		}
-		else if (nCurrentLevel + 1 == nUnlockedLevel)
+
+		// When win animation is over, quit the level
+		if (fWinTimer >= cfBossKilledAnimation)
 		{
-			// If Player finishes the last level unlocked, another one is unlocked
-			nUnlockedLevel++;
-			worldMap->SetUnlockedLevel(nUnlockedLevel);
+			if (nCurrentLevel + 1 == levels.size())
+			{
+				// If Player finishes the last level of the game, the game is over
+				nGameState = GS_ENDSCREEN;
+
+				return true;
+			}
+			else if (nCurrentLevel + 1 == nUnlockedLevel)
+			{
+				// If Player finishes the last level unlocked, another one is unlocked
+				nUnlockedLevel++;
+				worldMap->SetUnlockedLevel(nUnlockedLevel);
+			}
+			animPlayer.ChangeState("riding_star");
+			nGameState = GS_WORLDMAP;
+
+			return true;
 		}
-		animPlayer.ChangeState("riding_star");
-		nGameState = GS_WORLDMAP;
 	}
 
 	// Check invulnerability frame
@@ -1271,6 +1328,24 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		SetPixelMode(olc::Pixel::ALPHA);
 		DrawSprite(13 + i * 10, 14, sprHealthPoint);
 		SetPixelMode(olc::Pixel::NORMAL);
+	}
+
+	// Boss HealthBar
+	if (bInBossLvl)
+	{
+		// TODO faire une autre health bar pour les boss
+		// Health bar
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawSprite(652, 0, sprHealthBar);
+		SetPixelMode(olc::Pixel::NORMAL);
+
+		// Health points
+		for (int i = 0; i < vecEnnemies[0]->nHealth; i++)
+		{
+			SetPixelMode(olc::Pixel::ALPHA);
+			DrawSprite(665 + i * 10, 14, sprHealthPoint);
+			SetPixelMode(olc::Pixel::NORMAL);
+		}
 	}
 
 #pragma endregion
@@ -1539,10 +1614,18 @@ void OneLoneCoder_Platformer::ResetVariables()
 {
 	fPlayerVelX = 0.0f;
 	fPlayerVelY = 0.0f;
-	fHealth = cfMaxHealth;
 	fInvulnerabilityTimer = 0.0f;
 	fStopTimebeforeDeadAnim = 0.0f;
 	bDead = false;
 	bPlayerDamaged = false;
+	bBossKilled = false;
+	fWinTimer = 0.0f;
+	fKirboGoesAwayTimer = 0.0f;
+	fWaitBeforeWinAnimation = 0.0f;
 	StopAnyAttack();
+}
+
+bool OneLoneCoder_Platformer::CanInteract()
+{
+	return !bPlayerDamaged && !bDead && !bBossKilled;
 }

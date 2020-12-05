@@ -50,6 +50,14 @@ private:
 	const float cfInvulnerabilityTickingSpeed = 0.2f;	// Ticking Speed when invulnerable
 	const float cfStopTimebeforeDeadAnim = 1.5f;		// Stop time before death animation
 	const float cfDeadAnimation = 4.0f;					// Duration of the dead animation
+	const float cfTimeBeforeWinAnimation = 2.0f;		// Time before animation begins when kirby kills the boss
+	const float cfBossKilledAnimation = 4.0f;			// Boss killed animation duration
+	const float cfDeadRotationAnimation = 15.0f;		// rotation speed of dead animation
+	const float cfGoAwayRotationAnimation = 15.0f;		// rotation speed of Kirbo goes away animation
+	const float cfGoAwayTranslationAnimation = 256.0f;	// speed of kirbo in go away animation
+	const float cfslapSpawnT = 1.0f;					// Number of frames to spawn slap attack
+	const float cfJesusCrossSpawnT = 7.0f;				// Number of frames to spawn jesus cross
+	const float cfVacuumAnimT = 2.0f;					// Number of frames when vacuum animation change to begin vacuum to vacuum
 
 	struct vec2d
 	{
@@ -94,6 +102,9 @@ private:
 	float fInvulnerabilityTickingTimer = 0.0f;
 	float fStopTimebeforeDeadAnim = 0.0f;
 	float fDeadAnimation = 0.0f;
+	float fWaitBeforeWinAnimation = 0.0f;
+	float fWinTimer = 0.0f;
+	float fKirboGoesAwayTimer = 0.0f;
 	bool bPlayerOnGround = false;
 	bool bDoubleJump = false;
 	bool bChargeJump = false;
@@ -110,6 +121,7 @@ private:
 	bool bDead = false;
 	bool bSwallowing = false;
 	bool bInBossLvl = false;
+	bool bBossKilled = false;
 
 	// Camera Properties
 	float fCameraPosX = 0.0f;
@@ -194,4 +206,5 @@ public:
 	float GetTileWidth();
 	float GetTileHeight();
 	void ResetVariables();
+	bool CanInteract();
 };

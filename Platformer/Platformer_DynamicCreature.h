@@ -41,6 +41,7 @@ public:
 	bool bAffectedByGravity = false;
 	bool bIsKnockable = true;
 	bool bCanBehaveWhileAttacked = false;
+	bool bIsVacuumable = true;
 	bool bVacuumed = false;
 	bool bSwallowable = false;
 	float fInitSpeed;

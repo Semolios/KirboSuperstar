@@ -10,7 +10,7 @@ public:
 public:
 	std::string sCurrentState;
 	int nCurrentFrame = 0;
-	float fTimeBetweenFrames = 0.1f;
+	float fTimeBetweenFrames = 0.08f;
 	float fTimeCounter = 0.0f;
 
 	void ChangeState(std::string s);

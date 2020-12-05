@@ -1,4 +1,4 @@
---waddleDee,10,4
+waddleDee,10,4
 --bomber,11,4
 bladeKnight,12,4
 --scarfy,15,2
