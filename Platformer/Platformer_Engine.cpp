@@ -599,7 +599,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 				{
 					// must offset the AOE so it goes from kirbo's hand
 					float fProjectilePosX = fPlayerPosX + (fFaceDir > 0.0f ? 1.0f : -(51.0f / 64.0f));
-					cDynamicProjectile* p = CreateProjectile(fProjectilePosX, fPlayerPosY - ((179.0f - 64.0f) / 128.0f), true, 1.0f * fFaceDir, 0.0f, 0.1f, "slapAOE", 51.0f, 179.0f, false, 5, false);
+					float fProjectilePosY = fPlayerPosY - ((179.0f - 64.0f) / 128.0f);
+					cDynamicProjectile* p = CreateProjectile(fProjectilePosX, fProjectilePosY, true, 1.0f * fFaceDir, 0.0f, 0.1f, "slapAOE", 51.0f, 179.0f, false, 5, false);
 					p->bOneHit = false;
 					AddProjectile(p);
 					bCanSpawnProjectile = false;
