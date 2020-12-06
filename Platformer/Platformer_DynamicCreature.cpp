@@ -1,4 +1,7 @@
 #include "Platformer_DynamicCreature.h"
+#include "Platformer_Engine.h"
+
+OneLoneCoder_Platformer* cDynamicCreature::engine = nullptr;
 
 cDynamicCreature::cDynamicCreature(std::string n, olc::Sprite* sprite, int framesPerSecond) : cDynamic(n)
 {
@@ -39,12 +42,19 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY, 
 			vx = fInitSpeed * signbit(vx) ? 1.0f : -1.0f; // The ennemy turns to kirbo
 			if (nHealth <= 0)
 			{
-				nHealth = 0;
-				bDead = true;
+				if (bIsBoss)
+				{
+					bBossKilled = true;
+				}
+				else
+				{
+					nHealth = 0;
+					bDead = true;
+				}
 			}
 		}
 
-		if (bCanBehaveWhileAttacked && !bVacuumed)
+		if (bCanBehaveWhileAttacked && !bVacuumed && !bBossKilled)
 			Behaviour(fElapsedTime, playerX, playerY, gfx);
 
 		if (bVacuumed)
@@ -63,7 +73,7 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY, 
 			}
 		}
 	}
-	else
+	else if (!bBossKilled)
 	{
 		bSolidVsDyn = bSolidVsDynInitValue;
 		fTimer += fElapsedTime;
@@ -83,6 +93,10 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY, 
 		if (vx > 0.1f) nFaceDir = 1;
 
 		Behaviour(fElapsedTime, playerX, playerY, gfx);
+	}
+	else
+	{
+		ExplodeAndDie(fElapsedTime);
 	}
 }
 
@@ -105,6 +119,28 @@ void cDynamicCreature::Behaviour(float fElapsedTime, float playerX, float player
 	// No default behaviour
 }
 
-void cDynamicCreature::PerformAttack()
+void cDynamicCreature::ExplodeAndDie(float fElapsedTime)
 {
+	fDeadTimer += fElapsedTime;
+
+	vx = 0.0f;
+	vy = 0.0f;
+
+	if (bBossExplosionAvailable)
+	{
+		float explosionWidth = 142.0f;
+		float explosionHeight = 200.0f;
+
+		float centerOfBossX = ((fDynWidth - explosionWidth) / 2.0f) / engine->GetTileWidth();
+		float centerOfBossY = ((fDynHeight - explosionHeight) / 2.0f) / engine->GetTileHeight();
+		engine->AddProjectile(engine->CreateProjectile(px + centerOfBossX, py + centerOfBossY, false, 0.0f, 0.0f, 0.85f, "bossExplosion", explosionWidth, explosionHeight, false, 0, false, false));
+
+		bBossExplosionAvailable = false;
+	}
+
+	if (fDeadTimer >= 0.85f)
+	{
+		nHealth = 0;
+		bDead = true;
+	}
 }

@@ -16,4 +16,3 @@ public:
 public:
 	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
 };
-

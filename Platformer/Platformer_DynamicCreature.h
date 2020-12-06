@@ -3,6 +3,8 @@
 
 class cLevel;
 
+class OneLoneCoder_Platformer;
+
 class cDynamicCreature : public cDynamic
 {
 public:
@@ -44,7 +46,12 @@ public:
 	bool bIsVacuumable = true;
 	bool bVacuumed = false;
 	bool bSwallowable = false;
+	bool bIsBoss = false;
+	bool bBossKilled = false;
+	bool bBossExplosionAvailable = true;
 	float fInitSpeed;
+
+	static OneLoneCoder_Platformer* engine;
 
 public:
 	void DrawSelf(olc::PixelGameEngine* gfx, float ox, float oy) override;
@@ -53,12 +60,13 @@ public:
 	void TurnAround();
 
 	virtual void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
-	virtual void PerformAttack();
+	virtual void ExplodeAndDie(float fElapsedTime);
 
 protected:
 	float fStateTick;
 	float fKnockBackTimer = 0.0f;
 	float fKnockBackDX = 0.0f;
 	float fKnockBackDY = 0.0f;
+	float fDeadTimer = 0.0f;
 };
 

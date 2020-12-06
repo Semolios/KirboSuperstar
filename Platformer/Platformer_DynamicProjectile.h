@@ -5,7 +5,7 @@
 class cDynamicProjectile : public cDynamic
 {
 public:
-	cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, float spriteWidth, float spriteHeight, bool affectedByGravity, int damage, bool solidVSMap);
+	cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, float spriteWidth, float spriteHeight, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit);
 	void DrawSelf(olc::PixelGameEngine* gfx, float ox, float oy) override;
 	void Update(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx) override;
 
@@ -19,6 +19,6 @@ public:
 
 	// animation
 	int nCurrentFrame = 0;
-	float fTimeBetweenFrames = 0.1f;
+	float fTimeBetweenFrames = 0.05f;
 	float fTimeCounter = 0.0f;
 };

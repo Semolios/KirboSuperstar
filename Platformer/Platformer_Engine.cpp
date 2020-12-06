@@ -227,6 +227,8 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion02.png"));
 	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion03.png"));
 	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion04.png"));
+	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion05.png"));
+	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion06.png"));
 
 	mapProjectiles["slapAOE"].push_back(new olc::Sprite("assets/gfx/slapAOE.png"));
 
@@ -235,6 +237,24 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	mapProjectiles["swordDownAOE"].push_back(new olc::Sprite("assets/gfx/swordDownAOE02.png"));
 
 	mapProjectiles["swordUpAOE"].push_back(new olc::Sprite("assets/gfx/swordUpAOE.png"));
+
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion00.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion01.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion02.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion03.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion04.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion05.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion06.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion07.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion08.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion09.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion10.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion11.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion12.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion13.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion14.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion15.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion16.png"));
 
 #pragma endregion
 
@@ -600,7 +620,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 					// must offset the AOE so it goes from kirbo's hand
 					float fProjectilePosX = fPlayerPosX + (fFaceDir > 0.0f ? 1.0f : -(51.0f / 64.0f));
 					float fProjectilePosY = fPlayerPosY - ((179.0f - 64.0f) / 128.0f);
-					cDynamicProjectile* p = CreateProjectile(fProjectilePosX, fProjectilePosY, true, 1.0f * fFaceDir, 0.0f, 0.1f, "slapAOE", 51.0f, 179.0f, false, 5, false);
+					cDynamicProjectile* p = CreateProjectile(fProjectilePosX, fProjectilePosY, true, 1.0f * fFaceDir, 0.0f, 0.1f, "slapAOE", 51.0f, 179.0f, false, 5, false, false);
 					p->bOneHit = false;
 					AddProjectile(p);
 					bCanSpawnProjectile = false;
@@ -616,7 +636,6 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 				if (bCanSpawnProjectile)
 				{
 					cDynamicProjectile* p = CreateProjectile((fPlayerPosX + fFaceDir), fPlayerPosY - 1.0f, true, 10.0f * fFaceDir, -10.0f, 10.0f, "jesuscross", 50.0f, 39.0f, true, 5, true);
-					p->bOneHit = true;
 					AddProjectile(p);
 					bCanSpawnProjectile = false;
 				}
@@ -1584,9 +1603,9 @@ bool OneLoneCoder_Platformer::IsSemiSolidTile(wchar_t tile)
 	return tile == '?';
 }
 
-cDynamicProjectile* OneLoneCoder_Platformer::CreateProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, float spriteWidth, float spriteHeight, bool affectedByGravity, int damage, bool solidVSMap)
+cDynamicProjectile* OneLoneCoder_Platformer::CreateProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, float spriteWidth, float spriteHeight, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit)
 {
-	cDynamicProjectile* p = new cDynamicProjectile(ox, oy, bFriend, velx, vely, duration, mapProjectiles[sprite], spriteWidth, spriteHeight, affectedByGravity, damage, solidVSMap);
+	cDynamicProjectile* p = new cDynamicProjectile(ox, oy, bFriend, velx, vely, duration, mapProjectiles[sprite], spriteWidth, spriteHeight, affectedByGravity, damage, solidVSMap, oneHit);
 	return p;
 }
 
