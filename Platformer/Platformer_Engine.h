@@ -58,6 +58,8 @@ private:
 	const float cfslapSpawnT = 1.0f;					// Number of frames to spawn slap attack
 	const float cfJesusCrossSpawnT = 7.0f;				// Number of frames to spawn jesus cross
 	const float cfVacuumAnimT = 2.0f;					// Number of frames when vacuum animation change to begin vacuum to vacuum
+	const int cnSpriteOffsetX = 64;						// Sprite offset X because kirbo sprites are 192 * 192 pixels
+	const int cnSpriteOffsetY = 64;						// Sprite offset Y because kirbo sprites are 192 * 192 pixels
 
 	struct vec2d
 	{

@@ -55,7 +55,7 @@ void cTitleScreen::DrawNewStar(olc::PixelGameEngine* gfx, float fMarker)
 	sPoint2D p1 = path.GetSplinePoint(fOffset1, true);
 
 	olc::GFX2D::Transform2D t1;
-	t1.Translate(-cnTileWidth / 2, -cnTileHeight / 2);
+	t1.Translate(-cnTileWidth / 2.0f, -cnTileHeight / 2.0f);
 	t1.Rotate(fTheta);
 	t1.Translate(p1.x, p1.y);
 

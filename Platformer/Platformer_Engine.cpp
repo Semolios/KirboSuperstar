@@ -343,9 +343,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	{
 		fStopTimebeforeDeadAnim += fElapsedTime;
 
-		// (fStopTimebeforeDeadAnim != fElapsedTime) => don't stop the first frame.
-		// So if dying while attacking, the sprite is not awkwardly offset.
-		if (fStopTimebeforeDeadAnim != fElapsedTime && fStopTimebeforeDeadAnim < cfStopTimebeforeDeadAnim)
+		if (fStopTimebeforeDeadAnim < cfStopTimebeforeDeadAnim)
 			return true;
 	}
 
@@ -582,7 +580,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	// Draw Player
 	olc::GFX2D::Transform2D t;
-	t.Translate((float)-nTileWidth / 2.0f, (float)-nTileWidth / 2.0f);
+	t.Translate(((float)-nTileWidth / 2.0f) - cnSpriteOffsetX, ((float)-nTileWidth / 2.0f) - cnSpriteOffsetY);
 	t.Scale(fFaceDir * 1.0f, 1.0f);
 
 #pragma region ONE CYCLE ANIMATIONS
@@ -595,14 +593,11 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// Slap Attack
 		if (bSlapping)
 		{
-			// offset sprite so kirbo is centered
-			t.Translate(0.0f, (float)-nTileWidth);
-
 			if (fAnimationTimer >= cfslapSpawnT * animPlayer.fTimeBetweenFrames)
 			{
 				if (bCanSpawnProjectile)
 				{
-					// must offset the projectile so it goes from kirbo's hand
+					// must offset the AOE so it goes from kirbo's hand
 					float fProjectilePosX = fPlayerPosX + (fFaceDir > 0.0f ? 1.0f : -(51.0f / 64.0f));
 					cDynamicProjectile* p = CreateProjectile(fProjectilePosX, fPlayerPosY - ((179.0f - 64.0f) / 128.0f), true, 1.0f * fFaceDir, 0.0f, 0.1f, "slapAOE", 51.0f, 179.0f, false, 5, false);
 					p->bOneHit = false;
@@ -718,7 +713,6 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		else
 		{
 			fFaceDir = 1.0f;
-			t.Translate(-nTileWidth, -nTileHeight);
 		}
 	}
 

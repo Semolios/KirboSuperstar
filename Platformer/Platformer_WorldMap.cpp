@@ -45,14 +45,11 @@ bool cWorldMap::Update(olc::PixelGameEngine* gfx, float fElapsedTime)
 	// Draw Control Points
 	for (int i = 0; i < path.points.size(); i++)
 	{
-		//if (i <= nUnlockedLevels - 1)
 		gfx->FillRect(path.points[i].x - 3, path.points[i].y - 3, 6, 6, (i <= nUnlockedLevels - 1) ? olc::YELLOW : olc::RED);
-		//else
-			//gfx->FillRect(path.points[i].x - 3, path.points[i].y - 3, 6, 6, olc::RED);
 	}
 
 	olc::GFX2D::Transform2D t;
-	t.Translate(path.points[nSelectedLevel].x - 32, path.points[nSelectedLevel].y - 32);
+	t.Translate(path.points[nSelectedLevel].x - (nKirboTileWidth / 2.0f), path.points[nSelectedLevel].y - (nKirboTileHeight / 2.0f));
 
 	gfx->SetPixelMode(olc::Pixel::ALPHA);
 	animPlayer->DrawSelf(gfx, t);
