@@ -128,6 +128,14 @@ private:
 	// Camera Properties
 	float fCameraPosX = 0.0f;
 	float fCameraPosY = 0.0f;
+	float fShakeTimerChange = 0.0f;
+	// used predefined values to simulate an earthquake because rand() function is shitty AF or i do not know how to use it
+	// even srand(time(NULL)); gives an ugly effect not even close to 
+	std::vector<float> fShakeEffectX = { -0.011f, +0.018f, +0.020f, -0.011f, +0.021f, -0.006f, +0.016f, +0.005f, -0.024f, +0.023f };
+	std::vector<float> fShakeEffectY = { +0.007f, -0.023f, +0.016f, -0.018f, -0.001f, +0.013f, -0.016f, -0.009f, +0.019f, +0.004f };
+	bool bShake = false;
+	int nShakeincrementX = 0;
+	int nShakeincrementY = 0;
 
 	// Title screen
 	olc::Sprite* sprTitleScreen;
@@ -166,6 +174,7 @@ private:
 	// HUD
 	olc::Sprite* sprHealthBar;
 	olc::Sprite* sprHealthPoint;
+	olc::Sprite* sprBossHealthBar;
 
 	enum
 	{
@@ -194,6 +203,7 @@ protected:
 	bool GameState_PauseMenu(float fElapsedTime);
 	bool GameState_LoadBossLevel(float fElapsedTime);
 
+	void LoadLevelProperties();
 	void StopAnyAttack();
 	void CheckIfPlayerIsDamaged(cDynamic* object, float angle, float fOffsetX, float fOffsetY);
 	bool ShapeOverlap_DIAG(polygon& r1, polygon& r2);
@@ -209,4 +219,6 @@ public:
 	float GetTileHeight();
 	void ResetVariables();
 	bool CanInteract();
+	void ActivateShakeEffect(bool activate);
+	void CameraShakeEffect(float fElapsedTime);
 };

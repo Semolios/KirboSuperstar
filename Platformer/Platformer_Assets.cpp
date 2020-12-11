@@ -23,6 +23,9 @@ void cAssets::LoadSprites()
 	load("rocky", "assets/gfx/rocky.png");
 	load("scarfy", "assets/gfx/scarfy.png");
 	load("bladeKnight", "assets/gfx/bladeKnight.png");
+
+	// Bosses
+	load("whispyWood", "assets/gfx/whispyWood.png");
 }
 
 void cAssets::LoadItems()

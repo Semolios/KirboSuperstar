@@ -177,11 +177,11 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLv
 	{
 		case 0:
 		{
-			// TODO Whispywood
-			mob = new cDynamicCreatureWaddleDee(this);
+			mob = new cDynamicCreatureWhispyWood(this);
 			vecDyns.push_back(mob);
-			mob->px = 5;
+			mob->px = 14;
 			mob->py = 5;
+			cDynamicCreatureWhispyWood::engine = engine;
 		}
 		break;
 		case 1:

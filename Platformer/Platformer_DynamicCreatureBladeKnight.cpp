@@ -17,7 +17,7 @@ cDynamicCreatureBladeKnight::cDynamicCreatureBladeKnight(cLevel* l) : cDynamicCr
 	nHealthMax = 10;
 	level = l;
 	bSolidVsMap = true;
-	bSolidVsDynInitValue = true; // Blade knight is not stopped by other ennemies
+	bSolidVsDynInitValue = true;
 	bAffectedByGravity = true;
 	nDamage = 5;
 }

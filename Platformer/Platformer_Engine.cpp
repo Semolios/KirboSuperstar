@@ -256,6 +256,45 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion15.png"));
 	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion16.png"));
 
+	mapProjectiles["movingGround"].push_back(new olc::Sprite("assets/gfx/movingGround00.png"));
+	mapProjectiles["movingGround"].push_back(new olc::Sprite("assets/gfx/movingGround01.png"));
+	mapProjectiles["movingGround"].push_back(new olc::Sprite("assets/gfx/movingGround02.png"));
+	mapProjectiles["movingGround"].push_back(new olc::Sprite("assets/gfx/movingGround03.png"));
+	mapProjectiles["movingGround"].push_back(new olc::Sprite("assets/gfx/movingGround04.png"));
+
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root00.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root02.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root03.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root04.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root05.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root06.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root07.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root04.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root03.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root02.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root01.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root00.png"));
+
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple00.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple01.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple02.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple03.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple04.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple05.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple06.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple07.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple08.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple09.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple10.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple11.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple12.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple13.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple14.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple15.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple16.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple17.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple18.png"));
+
 #pragma endregion
 
 #pragma region Title Screen
@@ -300,6 +339,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 	sprHealthBar = new olc::Sprite("assets/gfx/emptyHealthBar.png");
 	sprHealthPoint = new olc::Sprite("assets/gfx/healthPoint.png");
+	sprBossHealthBar = new olc::Sprite("assets/gfx/emptyBossHealthBar.png");
 
 #pragma endregion
 
@@ -317,11 +357,7 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 	nCurrentLevel = worldMap->GetSelectedLevel();
 	if (currentLvl->LoadLevel(levels[nCurrentLevel]))
 	{
-		nLevelWidth = currentLvl->GetWidth();
-		nLevelHeight = currentLvl->GetHeight();
-		fPlayerPosX = currentLvl->GetInitPlayerPosX();
-		fPlayerPosY = currentLvl->GetInitPlayerPoxY();
-		sLevel = currentLvl->GetLevel();
+		LoadLevelProperties();
 
 		currentLvl->PopulateEnnemies(vecEnnemies, levelsEnnemies[nCurrentLevel]);
 
@@ -620,7 +656,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 					// must offset the AOE so it goes from kirbo's hand
 					float fProjectilePosX = fPlayerPosX + (fFaceDir > 0.0f ? 1.0f : -(51.0f / 64.0f));
 					float fProjectilePosY = fPlayerPosY - ((179.0f - 64.0f) / 128.0f);
-					cDynamicProjectile* p = CreateProjectile(fProjectilePosX, fProjectilePosY, true, 1.0f * fFaceDir, 0.0f, 0.1f, "slapAOE", 51.0f, 179.0f, false, 5, false, false);
+					cDynamicProjectile* p = CreateProjectile(fProjectilePosX, fProjectilePosY, true, 1.0f * fFaceDir, 0.0f, 0.1f, "slapAOE", 51.0f, 179.0f, false, 3, false, false);
 					p->bOneHit = false;
 					AddProjectile(p);
 					bCanSpawnProjectile = false;
@@ -699,12 +735,12 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			// if you die in boss level, you reappear in the boss room
 			if (bInBossLvl)
 			{
+				ResetVariables();
 				fHealth = cfMaxHealth;
 				nGameState = GS_LOADBOSSLEVEL;
 				return true;
 			}
 
-			fDeadAnimation = 0.0f;
 			nGameState = GS_WORLDMAP;
 			animPlayer.ChangeState("riding_star");
 			return true;
@@ -838,6 +874,9 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	fCameraPosX = fPlayerPosX;
 	fCameraPosY = fPlayerPosY;
+
+	if (bShake)
+		CameraShakeEffect(fElapsedTime);
 
 	// Draw level
 	int nVisibleTilesX = ScreenWidth() / nTileWidth;
@@ -1347,19 +1386,19 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	// Boss HealthBar
 	if (bInBossLvl)
 	{
-		// TODO faire une autre health bar pour les boss
+		// Health points
+		int nBossHP = 0;
+		for (auto& dyn : vecEnnemies)
+		{
+			nBossHP += dyn->nHealth;
+		}
+
+		FillRect(663 + (100 - (nBossHP * 2)), 30, nBossHP * 2, 25, olc::VERY_DARK_MAGENTA);
+
 		// Health bar
 		SetPixelMode(olc::Pixel::ALPHA);
-		DrawSprite(652, 0, sprHealthBar);
+		DrawSprite(650, 0, sprBossHealthBar);
 		SetPixelMode(olc::Pixel::NORMAL);
-
-		// Health points
-		for (int i = 0; i < vecEnnemies[0]->nHealth; i++)
-		{
-			SetPixelMode(olc::Pixel::ALPHA);
-			DrawSprite(665 + i * 10, 14, sprHealthPoint);
-			SetPixelMode(olc::Pixel::NORMAL);
-		}
 	}
 
 #pragma endregion
@@ -1407,11 +1446,7 @@ bool OneLoneCoder_Platformer::GameState_LoadBossLevel(float fElapsedTime)
 
 	if (currentLvl->LoadLevel(bossLevels[nCurrentLevel]))
 	{
-		nLevelWidth = currentLvl->GetWidth();
-		nLevelHeight = currentLvl->GetHeight();
-		fPlayerPosX = currentLvl->GetInitPlayerPosX();
-		fPlayerPosY = currentLvl->GetInitPlayerPoxY();
-		sLevel = currentLvl->GetLevel();
+		LoadLevelProperties();
 
 		currentLvl->PopulateBoss(vecEnnemies, nCurrentLevel);
 
@@ -1427,6 +1462,15 @@ bool OneLoneCoder_Platformer::GameState_LoadBossLevel(float fElapsedTime)
 	nGameState = GS_MAIN;
 
 	return true;
+}
+
+void OneLoneCoder_Platformer::LoadLevelProperties()
+{
+	nLevelWidth = currentLvl->GetWidth();
+	nLevelHeight = currentLvl->GetHeight();
+	fPlayerPosX = currentLvl->GetInitPlayerPosX();
+	fPlayerPosY = currentLvl->GetInitPlayerPoxY();
+	sLevel = currentLvl->GetLevel();
 }
 
 void OneLoneCoder_Platformer::StopAnyAttack()
@@ -1631,8 +1675,10 @@ void OneLoneCoder_Platformer::ResetVariables()
 	fInvulnerabilityTimer = 0.0f;
 	fStopTimebeforeDeadAnim = 0.0f;
 	bDead = false;
+	fDeadAnimation = 0.0f;
 	bPlayerDamaged = false;
 	bBossKilled = false;
+	bShake = false;
 	fWinTimer = 0.0f;
 	fKirboGoesAwayTimer = 0.0f;
 	fWaitBeforeWinAnimation = 0.0f;
@@ -1642,4 +1688,26 @@ void OneLoneCoder_Platformer::ResetVariables()
 bool OneLoneCoder_Platformer::CanInteract()
 {
 	return !bPlayerDamaged && !bDead && !bBossKilled;
+}
+
+void OneLoneCoder_Platformer::ActivateShakeEffect(bool activate)
+{
+	bShake = activate;
+}
+
+void OneLoneCoder_Platformer::CameraShakeEffect(float fElapsedTime)
+{
+	fShakeTimerChange += fElapsedTime;
+
+	if (fShakeTimerChange >= 0.07f)
+	{
+		nShakeincrementX++;
+		nShakeincrementY++;
+
+		if (nShakeincrementX >= fShakeEffectX.size()) nShakeincrementX = 0;
+		if (nShakeincrementY >= fShakeEffectY.size()) nShakeincrementY = 0;
+	}
+
+	fCameraPosX += fShakeEffectX[nShakeincrementX];
+	fCameraPosY += fShakeEffectY[nShakeincrementY];
 }

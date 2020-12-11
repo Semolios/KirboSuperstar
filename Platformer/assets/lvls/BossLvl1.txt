@@ -1,7 +1,7 @@
 w18
-h8
+h12
 x1
-y6
+y8
 GGGGGGGGGGGGGGGGGG
 G................G
 G................G
@@ -9,4 +9,8 @@ G................G
 G................G
 G................G
 G................G
+G................G
+G................G
+GGGGGGGGGGGGGGGGGG
+GGGGGGGGGGGGGGGGGG
 GGGGGGGGGGGGGGGGGG

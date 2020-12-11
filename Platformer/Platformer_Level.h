@@ -9,6 +9,7 @@
 #include "Platformer_DynamicCreatureRocky.h"
 #include "Platformer_DynamicCreatureScarfy.h"
 #include "Platformer_DynamicCreatureWaddleDee.h"
+#include "Platformer_DynamicCreatureWhispyWood.h"
 
 class OneLoneCoder_Platformer;
 

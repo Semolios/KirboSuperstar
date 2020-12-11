@@ -126,6 +126,8 @@ void cDynamicCreature::ExplodeAndDie(float fElapsedTime)
 	vx = 0.0f;
 	vy = 0.0f;
 
+	engine->ActivateShakeEffect(true);
+
 	if (bBossExplosionAvailable)
 	{
 		float explosionWidth = 142.0f;
@@ -142,5 +144,6 @@ void cDynamicCreature::ExplodeAndDie(float fElapsedTime)
 	{
 		nHealth = 0;
 		bDead = true;
+		engine->ActivateShakeEffect(false);
 	}
 }

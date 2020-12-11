@@ -3,7 +3,7 @@
 #include "Platformer_DynamicCreature.h"
 #include "Platformer_Assets.h"
 
-#include <cTime> 
+#include <cTime>
 
 class OneLoneCoder_Platformer;
 
