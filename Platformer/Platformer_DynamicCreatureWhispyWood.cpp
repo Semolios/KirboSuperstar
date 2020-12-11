@@ -13,8 +13,8 @@ cDynamicCreatureWhispyWood::cDynamicCreatureWhispyWood(cLevel* l) : cDynamicCrea
 	fSpriteOffsetX = -128.0f;
 	fSpriteOffsetY = 0.0f;
 	bFriendly = false;
-	nHealth = 50;
-	nHealthMax = 50;
+	nHealth = 100;
+	nHealthMax = 100;
 	level = l;
 	bSolidVsMap = true;
 	bAffectedByGravity = true;
@@ -34,18 +34,16 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 		{
 			fBehaviourTimer += fElapsedTime;
 
-			bCantSpawnAOE1 = false;
-			bCantSpawnAOE2 = false;
+			bCantSpawnAOE = false;
+			fProjectilesTimer = 0.25f;
 
 			if (fBehaviourTimer >= fWaitingTime)
 			{
-				nStateAfterWait = rand() % 3;
+				nChosenAttack = rand() % 3;
 
-				// TODO PENSER A REMETTRE LE STATE RANDOM
-				//if (nStateAfterWait == 0) ChangeState(AI_SCREAMING);
-				//if (nStateAfterWait == 1) ChangeState(AI_WIND);
-				//if (nStateAfterWait == 2) ChangeState(AI_PROJECTILES);
-				ChangeState(AI_SCREAMING);
+				if (nChosenAttack == 0) ChangeState(AI_SCREAMING);
+				if (nChosenAttack == 1) ChangeState(AI_WIND);
+				if (nChosenAttack == 2) ChangeState(AI_PROJECTILES);
 			}
 		}
 		break;
@@ -63,11 +61,11 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 
 			// spawn a little ground effect during fRootSpawnTime to indicate the player that a root is gonna spawn
 			fRootTimer += fElapsedTime;
-			if (!bCantSpawnAOE1)
+			if (!bCantSpawnAOE)
 			{
 				rootSpawnX = playerX;
 				engine->AddProjectile(engine->CreateProjectile(playerX, 9, false, 0.0f, 0.0f, fRootSpawnTime, "movingGround", 64.0f, 16.0f, false, 0, false, false));
-				bCantSpawnAOE1 = true;
+				bCantSpawnAOE = true;
 			}
 
 			if (fRootTimer >= fRootSpawnTime)
@@ -76,7 +74,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 
 				// spawn moving ground only if the root has the time to spawn
 				if ((fBehaviourTimer + fRootSpawnTime) <= fScreamTime)
-					bCantSpawnAOE1 = false;
+					bCantSpawnAOE = false;
 
 				// Spawn the root to attack kirbo
 				engine->AddProjectile(engine->CreateProjectile(rootSpawnX, 7, false, 0.0f, 0.0f, 0.6f, "root", 32.0f, 128.0f, false, 3, false, false));
@@ -85,12 +83,44 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 		break;
 		case AI_WIND:
 		{
+			fBehaviourTimer += fElapsedTime;
 
+			MapGraphicState(BLOW);
+
+			if (fBehaviourTimer >= cfBlowingAnimationTime)
+				engine->WindEffect(-1.0f, 20.0f, true);
+
+			if (fBehaviourTimer >= cfBlowingTime)
+			{
+				engine->WindEffect(0.0f, 0.0f, false);
+				ChangeState(AI_WAITING);
+			}
+
+			// Freeze animation at the last frame to prevent looping animation while blowing
+			if (fBehaviourTimer >= cfBlowingAnimationTime) nGraphicCounter = 3;
 		}
 		break;
 		case AI_PROJECTILES:
 		{
+			fBehaviourTimer += fElapsedTime;
 
+			MapGraphicState(PROJECTILES);
+
+			fProjectilesTimer += fElapsedTime;
+
+			if (fProjectilesTimer >= cfProjectilesSpawnTime)
+			{
+				fProjectilesTimer = 0.0f;
+
+				// projectile Y speed betweene -5 and +5
+				float projectileSpeedY = ((float)(rand() % 100) / 10.0f) - 5.0f;
+
+				// Spawn the projectile to attack kirbo
+				engine->AddProjectile(engine->CreateProjectile(14, 7.5f, false, -10.0f, projectileSpeedY, 2.0f, "blow", 64.0f, 64.0f, false, 2, false, false));
+			}
+
+			if (fBehaviourTimer >= cfProjectilesTime)
+				ChangeState(AI_WAITING);
 		}
 		break;
 	}
@@ -98,7 +128,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 	// Periodically spawn apples at a random location
 	fAppleTimer += fElapsedTime;
 
-	if (fAppleTimer >= fRootSpawnTime)
+	if (fAppleTimer >= fAppleSpawnTime)
 	{
 		fAppleTimer = 0.0f;
 
@@ -124,19 +154,19 @@ void cDynamicCreatureWhispyWood::ChangeState(AI_STATE state)
 
 void cDynamicCreatureWhispyWood::UpdateTimers()
 {
-	if (nHealth >= 35)
+	if (nHealth >= 70)
 	{
 		fWaitingTime = 2.5f;
 		fRootSpawnTime = 1.3f;
 		fAppleSpawnTime = 2.0f;
 	}
-	else if (nHealth < 35 && nHealth >= 25)
+	else if (nHealth < 70 && nHealth >= 50)
 	{
 		fWaitingTime = 2.0f;
 		fRootSpawnTime = 1.1f;
 		fAppleSpawnTime = 1.6f;
 	}
-	else if (nHealth < 25 && nHealth >= 15)
+	else if (nHealth < 50 && nHealth >= 30)
 	{
 		fWaitingTime = 1.5f;
 		fRootSpawnTime = 1.0f;

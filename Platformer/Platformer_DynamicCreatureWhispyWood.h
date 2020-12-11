@@ -31,19 +31,28 @@ public:
 		BLOW,
 	} nMappedGraphicState;
 
-	int nStateAfterWait;
+	int nChosenAttack;
+	// Standard Behaviour
 	float fBehaviourTimer = 0.0f;
 	float fWaitingTime = 2.5f;
+	// Root attack
+	const float fScreamTime = 3.0f;
 	float fRootTimer = 0.0f;
 	float fRootSpawnTime = 1.0f;
+	// Apple spawn
 	float fAppleTimer = 0.0f;
 	float fAppleSpawnTime = 1.5f;
-	float fScreamTime = 3.0f;
+	// Wind, push kirbo away
+	const float cfBlowingAnimationTime = 0.75f;
+	const float cfBlowingTime = 3.25f;
+	// Blow projectiles to attack kirbo
+	const float cfProjectilesTime = 2.0f;
+	const float cfProjectilesSpawnTime = 0.5f;
+	float fProjectilesTimer = 0.25f; // first projectile spawn at 0.25, the other spawn each 0.5 seconds
 
 	float rootSpawnX;
 
-	bool bCantSpawnAOE1 = false;	// Whispy wood can blow two times and can spawn two roots
-	bool bCantSpawnAOE2 = false;	// Whispy wood can blow two times and can spawn two roots
+	bool bCantSpawnAOE = false;
 
 	static OneLoneCoder_Platformer* engine;
 

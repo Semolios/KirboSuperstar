@@ -295,6 +295,8 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple17.png"));
 	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple18.png"));
 
+	mapProjectiles["blow"].push_back(new olc::Sprite("assets/gfx/blow.png"));
+
 #pragma endregion
 
 #pragma region Title Screen
@@ -798,6 +800,10 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		if (fPlayerVelY > cfMaxPlayerFlyingVelY)
 			fPlayerVelY = cfMaxPlayerFlyingVelY;
 	}
+
+	// Wind effect
+	if (bWind)
+		fPlayerVelX += fWindDirection * fWindPower * fElapsedTime;
 
 	float fNewPlayerPosX = fPlayerPosX + fPlayerVelX * fElapsedTime;
 	float fNewPlayerPosY = fPlayerPosY + fPlayerVelY * fElapsedTime;
@@ -1393,7 +1399,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			nBossHP += dyn->nHealth;
 		}
 
-		FillRect(663 + (100 - (nBossHP * 2)), 30, nBossHP * 2, 25, olc::VERY_DARK_MAGENTA);
+		FillRect(663 + (100 - (nBossHP)), 30, nBossHP, 25, olc::VERY_DARK_MAGENTA);
 
 		// Health bar
 		SetPixelMode(olc::Pixel::ALPHA);
@@ -1710,4 +1716,11 @@ void OneLoneCoder_Platformer::CameraShakeEffect(float fElapsedTime)
 
 	fCameraPosX += fShakeEffectX[nShakeincrementX];
 	fCameraPosY += fShakeEffectY[nShakeincrementY];
+}
+
+void OneLoneCoder_Platformer::WindEffect(float direction, float windPower, bool activate)
+{
+	bWind = activate;
+	fWindDirection = direction;
+	fWindPower = windPower;
 }

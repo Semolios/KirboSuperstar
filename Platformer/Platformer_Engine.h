@@ -107,6 +107,8 @@ private:
 	float fWaitBeforeWinAnimation = 0.0f;
 	float fWinTimer = 0.0f;
 	float fKirboGoesAwayTimer = 0.0f;
+	float fWindDirection = 1.0f;
+	float fWindPower = 25.0f;
 	bool bPlayerOnGround = false;
 	bool bDoubleJump = false;
 	bool bChargeJump = false;
@@ -124,6 +126,7 @@ private:
 	bool bSwallowing = false;
 	bool bInBossLvl = false;
 	bool bBossKilled = false;
+	bool bWind = false;
 
 	// Camera Properties
 	float fCameraPosX = 0.0f;
@@ -221,4 +224,5 @@ public:
 	bool CanInteract();
 	void ActivateShakeEffect(bool activate);
 	void CameraShakeEffect(float fElapsedTime);
+	void WindEffect(float direction, float windPower,bool activate);
 };
