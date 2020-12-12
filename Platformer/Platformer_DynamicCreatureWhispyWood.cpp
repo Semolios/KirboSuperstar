@@ -116,7 +116,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 				float projectileSpeedY = ((float)(rand() % 100) / 10.0f) - 5.0f;
 
 				// Spawn the projectile to attack kirbo
-				engine->AddProjectile(engine->CreateProjectile(14, 7.5f, false, -10.0f, projectileSpeedY, 2.0f, "blow", 64.0f, 64.0f, false, 2, false, false));
+				engine->AddProjectile(engine->CreateProjectile(14, 7.5f, false, -10.0f, projectileSpeedY, 2.0f, "blow", 64.0f, 64.0f, false, 1, false, false));
 			}
 
 			if (fBehaviourTimer >= cfProjectilesTime)
@@ -136,7 +136,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 		float applePosX = ((float)(rand() % 150) / 10.0f) + 1.0f;
 
 		// Spawn apple
-		engine->AddProjectile(engine->CreateProjectile(applePosX, 2, false, 0.0f, 0.0f, 10.0f, "apple", 64.0f, 64.0f, true, 2, true, false));
+		engine->AddProjectile(engine->CreateProjectile(applePosX, 2, false, 0.0f, 0.0f, 10.0f, "apple", 64.0f, 64.0f, true, 1, true, false));
 	}
 
 	UpdateTimers();
@@ -169,13 +169,13 @@ void cDynamicCreatureWhispyWood::UpdateTimers()
 	else if (nHealth < 50 && nHealth >= 30)
 	{
 		fWaitingTime = 1.5f;
-		fRootSpawnTime = 1.0f;
+		fRootSpawnTime = 0.9f;
 		fAppleSpawnTime = 1.3f;
 	}
 	else
 	{
 		fWaitingTime = 1.0f;
-		fRootSpawnTime = 0.75f;
+		fRootSpawnTime = 0.6f;
 		fAppleSpawnTime = 1.0f;
 	}
 }
