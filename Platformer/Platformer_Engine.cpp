@@ -16,15 +16,17 @@ bool OneLoneCoder_Platformer::OnUserUpdate(float fElapsedTime)
 {
 	switch (nGameState)
 	{
-		case GS_LOADING: GameState_Loading(fElapsedTime); break;
-		case GS_TITLE: GameState_Title(fElapsedTime); break;
-		case GS_MAIN: GameState_Main(fElapsedTime); break;
-		case GS_TRANSITION: GameState_Transition(fElapsedTime); break;
-		case GS_LOADLEVEL: GameState_LoadLevel(fElapsedTime); break;
-		case GS_WORLDMAP: GameState_WorldMap(fElapsedTime); break;
-		case GS_ENDSCREEN: GameState_EndScreen(fElapsedTime); break;
-		case GS_PAUSE: GameState_PauseMenu(fElapsedTime); break;
-		case GS_LOADBOSSLEVEL: GameState_LoadBossLevel(fElapsedTime); break;
+		case GS_LOADING:		GameState_Loading(fElapsedTime); break;
+		case GS_TITLE:			GameState_Title(fElapsedTime); break;
+		case GS_MAIN:			GameState_Main(fElapsedTime); break;
+		case GS_TRANSITION:		GameState_Transition(fElapsedTime); break;
+		case GS_LOADLEVEL:		GameState_LoadLevel(fElapsedTime); break;
+		case GS_WORLDMAP:		GameState_WorldMap(fElapsedTime); break;
+		case GS_ENDSCREEN:		GameState_EndScreen(fElapsedTime); break;
+		case GS_PAUSE:			GameState_PauseMenu(fElapsedTime); break;
+		case GS_LOADBOSSLEVEL:	GameState_LoadBossLevel(fElapsedTime); break;
+		case GS_SELECTMENU:		GameState_SelectMenu(fElapsedTime); break;
+		case GS_CONTROLS:		GameState_Controls(fElapsedTime); break;
 	}
 
 	return true;
@@ -333,7 +335,16 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 #pragma region Pause Menu
 
 	sprPauseMenu = new olc::Sprite("assets/gfx/PauseMenu.png");
+	sprCursor = new olc::Sprite("assets/gfx/cursor.png");
 	pauseMenu = new cPauseMenu(this, sprPauseMenu);
+
+#pragma endregion
+
+#pragma region Select Menu
+
+	//TODO
+	sprSelectMenu = new olc::Sprite("assets/gfx/SelectMenu.png");
+	selectMenu = new cSelectMenu(this, sprSelectMenu, sprCursor);
 
 #pragma endregion
 
@@ -386,10 +397,7 @@ bool OneLoneCoder_Platformer::GameState_Title(float fElapsedTime)
 	titleScreen->Update(this, fElapsedTime);
 
 	if (GetKey(olc::Key::SPACE).bPressed)
-	{
-		animPlayer.ChangeState("riding_star");
-		nGameState = GS_WORLDMAP;
-	}
+		nGameState = GS_SELECTMENU;
 
 	return true;
 }
@@ -1466,6 +1474,35 @@ bool OneLoneCoder_Platformer::GameState_LoadBossLevel(float fElapsedTime)
 	bInBossLvl = true;
 
 	nGameState = GS_MAIN;
+
+	return true;
+}
+
+bool OneLoneCoder_Platformer::GameState_SelectMenu(float fElapsedTime)
+{
+	selectMenu->Update(this, fElapsedTime);
+
+	if (GetKey(olc::Key::SPACE).bPressed)
+	{
+		if (selectMenu->GetPlayerChoice() == 0)
+		{
+			animPlayer.ChangeState("riding_star");
+			nGameState = GS_WORLDMAP;
+		}
+		else
+		{
+			nGameState = GS_CONTROLS;
+		}
+	}
+	return true;
+}
+
+bool OneLoneCoder_Platformer::GameState_Controls(float fElapsedTime)
+{
+	DrawString(50, 50, "TODO", olc::WHITE, 1);
+
+	if (GetKey(olc::Key::SPACE).bPressed)
+		nGameState = GS_SELECTMENU;
 
 	return true;
 }

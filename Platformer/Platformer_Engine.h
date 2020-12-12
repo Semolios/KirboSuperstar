@@ -14,6 +14,7 @@
 #include "Platformer_EndScreen.h"
 #include "Platformer_Level.h"
 #include "Platformer_PauseMenu.h"
+#include "Platformer_SelectMenu.h"
 #include "Platformer_TitleScreen.h"
 #include "Platformer_Transition.h"
 #include "Platformer_WorldMap.h"
@@ -159,7 +160,12 @@ private:
 
 	// Pause Screen
 	olc::Sprite* sprPauseMenu;
+	olc::Sprite* sprCursor;
 	cPauseMenu* pauseMenu;
+
+	// Select Menu
+	olc::Sprite* sprSelectMenu;
+	cSelectMenu* selectMenu;
 
 	// Sprites
 	const int nTileWidth = 64;
@@ -190,6 +196,8 @@ private:
 		GS_ENDSCREEN,
 		GS_PAUSE,
 		GS_LOADBOSSLEVEL,
+		GS_SELECTMENU,
+		GS_CONTROLS,
 	} nGameState = GS_LOADING;
 
 protected:
@@ -205,6 +213,8 @@ protected:
 	bool GameState_EndScreen(float fElapsedTime);
 	bool GameState_PauseMenu(float fElapsedTime);
 	bool GameState_LoadBossLevel(float fElapsedTime);
+	bool GameState_SelectMenu(float fElapsedTime);
+	bool GameState_Controls(float fElapsedTime);
 
 	void LoadLevelProperties();
 	void StopAnyAttack();
@@ -224,5 +234,5 @@ public:
 	bool CanInteract();
 	void ActivateShakeEffect(bool activate);
 	void CameraShakeEffect(float fElapsedTime);
-	void WindEffect(float direction, float windPower,bool activate);
+	void WindEffect(float direction, float windPower, bool activate);
 };
