@@ -214,7 +214,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	animPlayer.mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed15.png"));
 	animPlayer.mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed16.png"));
 
-	animPlayer.mapStates["kirbo_goes_away"].push_back(new olc::Sprite("assets/gfx/riding_star00.png"));
+	animPlayer.mapStates["kirbo_goes_away"].push_back(new olc::Sprite("assets/gfx/boss_killed16.png"));
 
 #pragma endregion
 
