@@ -89,6 +89,13 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	levelsTiles.push_back("assets/gfx/tilemap04.png");
 	levelsTiles.push_back("assets/gfx/tilemap05.png");
 
+	groundTiles.push_back("assets/gfx/grdTileMap00.png");
+	groundTiles.push_back("assets/gfx/grdTileMap01.png");
+	groundTiles.push_back("assets/gfx/grdTileMap02.png");
+	groundTiles.push_back("assets/gfx/grdTileMap03.png");
+	groundTiles.push_back("assets/gfx/grdTileMap04.png");
+	groundTiles.push_back("assets/gfx/grdTileMap05.png");
+
 	levelsBackgrounds.push_back("assets/gfx/testBckGrd00.png");
 	levelsBackgrounds.push_back("assets/gfx/testBckGrd01.png");
 	levelsBackgrounds.push_back("assets/gfx/testBckGrd02.png");
@@ -381,6 +388,7 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 		currentLvl->PopulateEnnemies(vecEnnemies, levelsEnnemies[nCurrentLevel]);
 
 		spriteTiles = new olc::Sprite(levelsTiles[nCurrentLevel]);
+		sprGrdTiles = new olc::Sprite(groundTiles[nCurrentLevel]);
 		sprBackground = new olc::Sprite(levelsBackgrounds[nCurrentLevel]);
 	}
 
@@ -858,6 +866,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	}
 	else // Moving Right
 	{
+		if (fNewPlayerPosX >= nLevelWidth - 1) fNewPlayerPosX = nLevelWidth - 1; // Kirbo can't cross the edge of the map
+
 		if (IsSolidTile(GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.0f)) || IsSolidTile(GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.9f)))
 		{
 			fNewPlayerPosX = (int)fNewPlayerPosX;
@@ -884,7 +894,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		if (IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f)) || IsSolidTile(GetTile(fNewPlayerPosX + 0.9f, fNewPlayerPosY + 1.0f)) ||
 			((IsSemiSolidTile(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f)) || IsSemiSolidTile(GetTile(fNewPlayerPosX + 0.9f, fNewPlayerPosY + 1.0f))) && fPlayerPosY + 1.0f < (float)((int)fNewPlayerPosY + 1.0f) + 0.1f))
 		{
-			fNewPlayerPosY = (int)fNewPlayerPosY; // Remove this line to create shifting sand
+			fNewPlayerPosY = (int)fNewPlayerPosY + cfGrdPlayerOverlay; // Remove this line to create shifting sand
 			fPlayerVelY = 0;
 			bPlayerOnGround = true;
 			bDoubleJump = true;
@@ -935,7 +945,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 					DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 0 * nTileWidth, 0 * nTileHeight, nTileWidth, nTileHeight);
 					break;
 				case L'G': // Ground Block
-					DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 1 * nTileWidth, 0 * nTileHeight, nTileWidth, nTileHeight);
+					DrawGroundTile(x, y, fOffsetX, fOffsetY, fTileOffsetX, fTileOffsetY, sprGrdTiles, sTileID);
 					break;
 				case L'B': // Brick Block
 					DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 2 * nTileWidth, 0 * nTileHeight, nTileWidth, nTileHeight);
@@ -949,8 +959,9 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 					SetPixelMode(olc::Pixel::NORMAL);
 					break;
 				case L'w': // Door
+					// TODO faire un sprite à part pour la porte
 					SetPixelMode(olc::Pixel::ALPHA);
-					DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 0 * nTileWidth, 1 * nTileHeight, nTileWidth, nTileHeight);
+					DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY + 5.0f, spriteTiles, 0 * nTileWidth, 1 * nTileHeight, nTileWidth, nTileHeight);
 					SetPixelMode(olc::Pixel::NORMAL);
 					break;
 					// TODO
@@ -1774,4 +1785,492 @@ void OneLoneCoder_Platformer::WindEffect(float direction, float windPower, bool 
 	bWind = activate;
 	fWindDirection = direction;
 	fWindPower = windPower;
+}
+
+void OneLoneCoder_Platformer::DrawGroundTile(int x, int y, float fOffsetX, float fOffsetY, float fTileOffsetX, float fTileOffsetY, olc::Sprite* spriteTiles, wchar_t tile)
+{
+	auto GetTile = [&](int x, int y)
+	{
+		if (x >= 0 && x < nLevelWidth && y >= 0 && y < nLevelHeight)
+			return sLevel[y * nLevelWidth + x];
+		else
+			return L' ';
+	};
+
+	// Get all tiles around the current tile
+	wchar_t tilesAround[3][3];
+	tilesAround[0][0] = GetTile(x - 1 + fOffsetX, y - 1 + fOffsetY); tilesAround[0][1] = GetTile(x + 0 + fOffsetX, y - 1 + fOffsetY);	tilesAround[0][2] = GetTile(x + 1 + fOffsetX, y - 1 + fOffsetY);
+	tilesAround[1][0] = GetTile(x - 1 + fOffsetX, y + 0 + fOffsetY); tilesAround[1][1] = tile;											tilesAround[1][2] = GetTile(x + 1 + fOffsetX, y + 0 + fOffsetY);
+	tilesAround[2][0] = GetTile(x - 1 + fOffsetX, y + 1 + fOffsetY); tilesAround[2][1] = GetTile(x + 0 + fOffsetX, y + 1 + fOffsetY);	tilesAround[2][2] = GetTile(x + 1 + fOffsetX, y + 1 + fOffsetY);
+
+	// Check 47 the configurations
+	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 0 * nTileWidth, 0 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 1 * nTileWidth, 0 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 2 * nTileWidth, 0 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 3 * nTileWidth, 0 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 4 * nTileWidth, 0 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 5 * nTileWidth, 0 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 6 * nTileWidth, 0 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 7 * nTileWidth, 0 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 0 * nTileWidth, 1 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 1 * nTileWidth, 1 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 2 * nTileWidth, 1 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 3 * nTileWidth, 1 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 4 * nTileWidth, 1 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 5 * nTileWidth, 1 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 6 * nTileWidth, 1 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 7 * nTileWidth, 1 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 0 * nTileWidth, 2 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 1 * nTileWidth, 2 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 2 * nTileWidth, 2 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 3 * nTileWidth, 2 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 4 * nTileWidth, 2 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 5 * nTileWidth, 2 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 6 * nTileWidth, 2 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 7 * nTileWidth, 2 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && /*tilesAround[0][2]*/
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+		tilesAround[2][0] == tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 0 * nTileWidth, 3 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && /*tilesAround[0][2]*/
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+		tilesAround[2][0] != tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 1 * nTileWidth, 3 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && /*tilesAround[0][2]*/
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+		tilesAround[2][0] == tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 2 * nTileWidth, 3 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && /*tilesAround[0][2]*/
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+		tilesAround[2][0] != tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 3 * nTileWidth, 3 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 4 * nTileWidth, 3 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 5 * nTileWidth, 3 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 6 * nTileWidth, 3 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 7 * nTileWidth, 3 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && /*tilesAround[0][2]*/
+		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 0 * nTileWidth, 4 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 1 * nTileWidth, 4 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 2 * nTileWidth, 4 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 3 * nTileWidth, 4 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+		tilesAround[2][0] == tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 4 * nTileWidth, 4 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+		tilesAround[2][0] != tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 5 * nTileWidth, 4 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && /*tilesAround[0][2]*/
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 6 * nTileWidth, 4 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && /*tilesAround[0][2]*/
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 7 * nTileWidth, 4 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 0 * nTileWidth, 5 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 1 * nTileWidth, 5 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 2 * nTileWidth, 5 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 3 * nTileWidth, 5 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && /*tilesAround[0][2]*/
+		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 4 * nTileWidth, 5 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 5 * nTileWidth, 5 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
+
+	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+	{
+		SetPixelMode(olc::Pixel::ALPHA);
+		DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 6 * nTileWidth, 5 * nTileHeight, nTileWidth, nTileHeight);
+		SetPixelMode(olc::Pixel::NORMAL);
+		return;
+	}
 }

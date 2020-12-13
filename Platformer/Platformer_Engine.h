@@ -60,6 +60,7 @@ private:
 	const float cfslapSpawnT = 1.0f;					// Number of frames to spawn slap attack
 	const float cfJesusCrossSpawnT = 7.0f;				// Number of frames to spawn jesus cross
 	const float cfVacuumAnimT = 2.0f;					// Number of frames when vacuum animation change to begin vacuum to vacuum
+	const float cfGrdPlayerOverlay = 0.08f;				// little gap to give impression the player cross the grass and don't walk on the grass
 	const int cnSpriteOffsetX = 64;						// Sprite offset X because kirbo sprites are 192 * 192 pixels
 	const int cnSpriteOffsetY = 64;						// Sprite offset Y because kirbo sprites are 192 * 192 pixels
 
@@ -86,9 +87,12 @@ private:
 	int nCurrentLevel = 0;
 	int nUnlockedLevel = 1;
 	olc::Sprite* sprBackground;
+	olc::Sprite* spriteTiles = nullptr;
+	olc::Sprite* sprGrdTiles = nullptr;
 	std::vector<std::string> levels;
 	std::vector<std::string> levelsEnnemies;
 	std::vector<std::string> levelsTiles;
+	std::vector<std::string> groundTiles;
 	std::vector<std::string> levelsBackgrounds;
 	std::vector<std::string> bossLevels;
 	std::vector<std::string> bossLevelsBackgrounds;
@@ -171,7 +175,6 @@ private:
 	// Sprites
 	const int nTileWidth = 64;
 	const int nTileHeight = 64;
-	olc::Sprite* spriteTiles = nullptr;
 	cAnimator animPlayer;
 
 	// Ennemies
@@ -236,4 +239,5 @@ public:
 	void ActivateShakeEffect(bool activate);
 	void CameraShakeEffect(float fElapsedTime);
 	void WindEffect(float direction, float windPower, bool activate);
+	void DrawGroundTile(int x, int y, float fOffsetX, float fOffsetY, float fTileOffsetX, float fTileOffsetY, olc::Sprite* spriteTiles, wchar_t tile);
 };

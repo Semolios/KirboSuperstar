@@ -64,7 +64,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 			if (!bCantSpawnAOE)
 			{
 				rootSpawnX = playerX;
-				engine->AddProjectile(engine->CreateProjectile(playerX, 9, false, 0.0f, 0.0f, fRootSpawnTime, "movingGround", 64.0f, 16.0f, false, 0, false, false));
+				engine->AddProjectile(engine->CreateProjectile(playerX, 9, true, 0.0f, 0.0f, fRootSpawnTime, "movingGround", 64.0f, 16.0f, false, 0, false, false));
 				bCantSpawnAOE = true;
 			}
 
@@ -77,7 +77,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 					bCantSpawnAOE = false;
 
 				// Spawn the root to attack kirbo
-				engine->AddProjectile(engine->CreateProjectile(rootSpawnX, 7, false, 0.0f, 0.0f, 0.6f, "root", 32.0f, 128.0f, false, 3, false, false));
+				engine->AddProjectile(engine->CreateProjectile(rootSpawnX, 7.1f, false, 0.0f, 0.0f, 0.6f, "root", 32.0f, 128.0f, false, 3, false, false));
 			}
 		}
 		break;
