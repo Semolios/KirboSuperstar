@@ -923,8 +923,6 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	float fBackgroundOffsetY = fOffsetY * (float)nTileHeight * ((float)(sprBackground->height - ScreenHeight()) / (float)(nLevelHeight * nTileHeight - ScreenHeight()));
 	DrawPartialSprite(0, 0, sprBackground, fBackgroundOffsetX, fBackgroundOffsetY, ScreenWidth(), ScreenHeight());
 
-	// TODO, peut être revoir cette partie pour n'avoir que des tiles solid, semi-solid, non solid, liquid etc...
-	// les graphismes seraient directement dans le background, on dessine une grande map, on met les plateformes dessus
 	// Draw Visible tile map
 	for (int x = -2; x < nVisibleTilesX + 2; x++)
 	{
@@ -1484,7 +1482,6 @@ bool OneLoneCoder_Platformer::GameState_LoadBossLevel(float fElapsedTime)
 
 		currentLvl->PopulateBoss(vecEnnemies, nCurrentLevel);
 
-		spriteTiles = new olc::Sprite(levelsTiles[nCurrentLevel]);
 		sprBackground = new olc::Sprite(bossLevelsBackgrounds[nCurrentLevel]);
 	}
 
@@ -1764,15 +1761,12 @@ void OneLoneCoder_Platformer::CameraShakeEffect(float fElapsedTime)
 
 	if (fShakeTimerChange >= 0.07f)
 	{
-		nShakeincrementX++;
-		nShakeincrementY++;
-
-		if (nShakeincrementX >= fShakeEffectX.size()) nShakeincrementX = 0;
-		if (nShakeincrementY >= fShakeEffectY.size()) nShakeincrementY = 0;
+		fShakeEffectX = ((float)(rand() % 50) - 100.0f) / 1000.0f;
+		fShakeEffectY = ((float)(rand() % 50) - 100.0f) / 1000.0f;
 	}
 
-	fCameraPosX += fShakeEffectX[nShakeincrementX];
-	fCameraPosY += fShakeEffectY[nShakeincrementY];
+	fCameraPosX += fShakeEffectX;
+	fCameraPosY += fShakeEffectY;
 }
 
 void OneLoneCoder_Platformer::WindEffect(float direction, float windPower, bool activate)
