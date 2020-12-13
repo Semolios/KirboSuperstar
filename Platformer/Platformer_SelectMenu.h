@@ -19,4 +19,3 @@ public:
 	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime);
 	int GetPlayerChoice();
 };
-

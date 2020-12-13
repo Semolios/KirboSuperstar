@@ -3,10 +3,10 @@
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
 
-class cPauseMenu
+class cControlsMenu
 {
 public:
-	cPauseMenu(olc::PixelGameEngine* gfx, olc::Sprite* background);
+	cControlsMenu(olc::PixelGameEngine* gfx, olc::Sprite* background);
 
 public:
 	olc::Sprite* sprBackGround;
@@ -14,4 +14,3 @@ public:
 public:
 	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime);
 };
-

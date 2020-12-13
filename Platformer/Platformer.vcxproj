@@ -151,6 +151,7 @@
     <ClCompile Include="Platformer.cpp" />
     <ClCompile Include="Platformer_Animator.cpp" />
     <ClCompile Include="Platformer_Assets.cpp" />
+    <ClCompile Include="Platformer_ControlsMenu.cpp" />
     <ClCompile Include="Platformer_Dynamic.cpp" />
     <ClCompile Include="Platformer_DynamicCreature.cpp" />
     <ClCompile Include="Platformer_DynamicCreatureBladeKnight.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="olcPixelGameEngine.h" />
     <ClInclude Include="Platformer_Animator.h" />
     <ClInclude Include="Platformer_Assets.h" />
+    <ClInclude Include="Platformer_ControlsMenu.h" />
     <ClInclude Include="Platformer_Dynamic.h" />
     <ClInclude Include="Platformer_DynamicCreature.h" />
     <ClInclude Include="Platformer_DynamicCreatureBladeKnight.h" />

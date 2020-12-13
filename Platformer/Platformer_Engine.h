@@ -3,6 +3,7 @@
 
 #include "Platformer_Animator.h"
 #include "Platformer_Assets.h"
+#include "Platformer_ControlsMenu.h"
 #include "Platformer_Dynamic.h"
 #include "Platformer_DynamicCreature.h"
 #include "Platformer_DynamicCreatureBladeKnight.h"
@@ -166,6 +167,10 @@ private:
 	// Select Menu
 	olc::Sprite* sprSelectMenu;
 	cSelectMenu* selectMenu;
+
+	// Controls menu
+	olc::Sprite* sprControlsMenu;
+	cControlsMenu* controlsMenu;
 
 	// Sprites
 	const int nTileWidth = 64;

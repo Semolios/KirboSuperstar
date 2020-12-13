@@ -342,11 +342,18 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 #pragma region Select Menu
 
-	//TODO
 	sprSelectMenu = new olc::Sprite("assets/gfx/SelectMenu.png");
 	selectMenu = new cSelectMenu(this, sprSelectMenu, sprCursor);
 
 #pragma endregion
+
+#pragma region Controls Menu
+
+	sprControlsMenu = new olc::Sprite("assets/gfx/ControlsMenu.png");
+	controlsMenu = new cControlsMenu(this, sprControlsMenu);
+
+#pragma endregion
+
 
 #pragma region HUD Sprites
 
@@ -1499,7 +1506,7 @@ bool OneLoneCoder_Platformer::GameState_SelectMenu(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_Controls(float fElapsedTime)
 {
-	DrawString(50, 50, "TODO", olc::WHITE, 1);
+	controlsMenu->Update(this, fElapsedTime);
 
 	if (GetKey(olc::Key::SPACE).bPressed)
 		nGameState = GS_SELECTMENU;
