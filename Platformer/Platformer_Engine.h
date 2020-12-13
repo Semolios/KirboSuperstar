@@ -87,8 +87,9 @@ private:
 	int nCurrentLevel = 0;
 	int nUnlockedLevel = 1;
 	olc::Sprite* sprBackground;
-	olc::Sprite* spriteTiles = nullptr;
-	olc::Sprite* sprGrdTiles = nullptr;
+	olc::Sprite* spriteTiles;
+	olc::Sprite* sprGrdTiles;
+	olc::Sprite* sprDoor;
 	std::vector<std::string> levels;
 	std::vector<std::string> levelsEnnemies;
 	std::vector<std::string> levelsTiles;

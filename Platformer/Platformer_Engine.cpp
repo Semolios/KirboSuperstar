@@ -119,6 +119,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 	currentLvl = new cLevel();
 	cLevel::engine = this;
+	sprDoor = new olc::Sprite("assets/gfx/door.png");
 
 #pragma endregion
 
@@ -959,9 +960,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 					SetPixelMode(olc::Pixel::NORMAL);
 					break;
 				case L'w': // Door
-					// TODO faire un sprite à part pour la porte
 					SetPixelMode(olc::Pixel::ALPHA);
-					DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY + 5.0f, spriteTiles, 0 * nTileWidth, 1 * nTileHeight, nTileWidth, nTileHeight);
+					DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY + (nTileHeight - sprDoor->height) + 5.0f, sprDoor, 0, 0, sprDoor->width, sprDoor->height);
 					SetPixelMode(olc::Pixel::NORMAL);
 					break;
 					// TODO
