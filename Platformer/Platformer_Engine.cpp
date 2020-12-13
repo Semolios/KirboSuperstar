@@ -336,7 +336,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 	sprPauseMenu = new olc::Sprite("assets/gfx/PauseMenu.png");
 	sprCursor = new olc::Sprite("assets/gfx/cursor.png");
-	pauseMenu = new cPauseMenu(this, sprPauseMenu);
+	pauseMenu = new cPauseMenu(this, sprPauseMenu, sprCursor);
 
 #pragma endregion
 
@@ -353,7 +353,6 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	controlsMenu = new cControlsMenu(this, sprControlsMenu);
 
 #pragma endregion
-
 
 #pragma region HUD Sprites
 
@@ -559,6 +558,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// Pause
 		if (GetKey(olc::Key::P).bPressed)
 		{
+			pauseMenu->SetPlayerChoice(0);
+
 			// You can't use pause when you are hit.
 			// like you can't pause when you jump in mario sunshine so you can't leave the level when you are falling
 			nGameState = GS_PAUSE;
@@ -1454,6 +1455,18 @@ bool OneLoneCoder_Platformer::GameState_PauseMenu(float fElapsedTime)
 	if (GetKey(olc::Key::P).bPressed)
 	{
 		nGameState = GS_MAIN;
+	}
+	else if (GetKey(olc::Key::SPACE).bPressed)
+	{
+		if (pauseMenu->GetPlayerChoice() == 1)
+		{
+			animPlayer.ChangeState("riding_star");
+			nGameState = GS_WORLDMAP;
+		}
+		else
+		{
+			nGameState = GS_MAIN;
+		}
 	}
 
 	return true;
