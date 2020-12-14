@@ -139,6 +139,10 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 		engine->AddProjectile(engine->CreateProjectile(applePosX, 2, false, 0.0f, 0.0f, 10.0f, "apple", 64.0f, 64.0f, true, 1, true, false));
 	}
 
+	// if he dies while blowing, the wind stops
+	if (nHealth <= 0)
+		engine->WindEffect(0.0f, 0.0f, false);
+
 	UpdateTimers();
 
 	nAIState = nAINextState;
