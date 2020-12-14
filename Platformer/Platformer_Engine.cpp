@@ -857,7 +857,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	// Collision
 	if (fPlayerVelX <= 0) // Moving Left
 	{
-		if (fNewPlayerPosX <= 0) fNewPlayerPosX = 0; // Prevent from being brutally moved to 0 only when reaching -1
+		if (fNewPlayerPosX <= 1) fNewPlayerPosX = 1; // Prevent from being brutally moved to 0 only when reaching -1
 
 		if (IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.0f)) || IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.9f)))
 		{
@@ -867,7 +867,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	}
 	else // Moving Right
 	{
-		if (fNewPlayerPosX >= nLevelWidth - 1) fNewPlayerPosX = nLevelWidth - 1; // Kirbo can't cross the edge of the map
+		if (fNewPlayerPosX >= nLevelWidth - 2) fNewPlayerPosX = nLevelWidth - 2; // Kirbo can't cross the edge of the map
 
 		if (IsSolidTile(GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.0f)) || IsSolidTile(GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.9f)))
 		{
@@ -879,7 +879,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	bPlayerOnGround = false;
 	if (fPlayerVelY <= 0) // Moving Up
 	{
-		if (fNewPlayerPosY <= 0) fNewPlayerPosY = 0; // Prevent from being brutally moved to 0 only when reaching -1
+		if (fNewPlayerPosY <= 1) fNewPlayerPosY = 1; // Prevent from being brutally moved to 0 only when reaching -1
 
 		if (IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY)) || IsSolidTile(GetTile(fNewPlayerPosX + 0.9f, fNewPlayerPosY)))
 		{
@@ -920,10 +920,10 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	float fOffsetY = fCameraPosY - (float)nVisibleTilesY * fCameraLookingDown;
 
 	// Clamp camera to game boundaries
-	if (fOffsetX < 0) fOffsetX = 0;
-	if (fOffsetY < 0) fOffsetY = 0;
-	if (fOffsetX > nLevelWidth - nVisibleTilesX) fOffsetX = nLevelWidth - nVisibleTilesX;
-	if (fOffsetY > nLevelHeight - nVisibleTilesY) fOffsetY = nLevelHeight - nVisibleTilesY;
+	if (fOffsetX < 1) fOffsetX = 1;
+	if (fOffsetY < 1) fOffsetY = 1;
+	if (fOffsetX > nLevelWidth - nVisibleTilesX - 1) fOffsetX = nLevelWidth - nVisibleTilesX - 1;
+	if (fOffsetY > nLevelHeight - nVisibleTilesY - 1) fOffsetY = nLevelHeight - nVisibleTilesY - 1;
 
 	// Get offsets for smooth movement
 	float fTileOffsetX = (fOffsetX - (int)fOffsetX) * nTileWidth;
