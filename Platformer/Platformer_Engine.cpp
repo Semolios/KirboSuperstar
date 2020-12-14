@@ -1018,7 +1018,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 				if (IsSolidTile(GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (object->fDynHeight / (float)nTileHeight))) || IsSolidTile(GetTile(fNewObjectPosX + ((object->fDynWidth / (float)nTileWidth) - fBorder), fNewObjectPosY + (object->fDynHeight / (float)nTileHeight))) ||
 					IsSemiSolidTile(GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (object->fDynHeight / (float)nTileHeight))) || IsSemiSolidTile(GetTile(fNewObjectPosX + ((object->fDynWidth / (float)nTileWidth) - fBorder), fNewObjectPosY + (object->fDynHeight / (float)nTileHeight))))
 				{
-					fNewObjectPosY = (int)fNewObjectPosY;
+					fNewObjectPosY = (int)fNewObjectPosY + cfGrdPlayerOverlay;
 					object->vy = 0;
 				}
 			}
@@ -1581,10 +1581,10 @@ void OneLoneCoder_Platformer::CheckIfPlayerIsDamaged(cDynamic* object, float ang
 	polygon sPlayer;
 	sPlayer.pos = { (fPlayerPosX + 0.5f - fOffsetX) * (float)nTileWidth , (fPlayerPosY + 0.5f - fOffsetY) * (float)nTileHeight }; // Center of the player
 	sPlayer.angle = 0.0f;
-	sPlayer.o.push_back({ -(float)nTileWidth / 2.0f, -(float)nTileHeight / 2.0f });
-	sPlayer.o.push_back({ -(float)nTileWidth / 2.0f, +(float)nTileHeight / 2.0f });
-	sPlayer.o.push_back({ +(float)nTileWidth / 2.0f, +(float)nTileHeight / 2.0f });
-	sPlayer.o.push_back({ +(float)nTileWidth / 2.0f, -(float)nTileHeight / 2.0f });
+	sPlayer.o.push_back({ -(float)nTileWidth / 2.2f, -(float)nTileHeight / 2.2f });	// little reduction of the player hitbox to allow a little overlap with attack
+	sPlayer.o.push_back({ -(float)nTileWidth / 2.2f, +(float)nTileHeight / 2.2f });	// little reduction of the player hitbox to allow a little overlap with attack
+	sPlayer.o.push_back({ +(float)nTileWidth / 2.2f, +(float)nTileHeight / 2.2f });	// little reduction of the player hitbox to allow a little overlap with attack
+	sPlayer.o.push_back({ +(float)nTileWidth / 2.2f, -(float)nTileHeight / 2.2f });	// little reduction of the player hitbox to allow a little overlap with attack
 	sPlayer.p.resize(4);
 
 	for (int i = 0; i < sPlayer.o.size(); i++)
