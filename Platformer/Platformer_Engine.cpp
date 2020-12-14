@@ -96,26 +96,19 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	groundTiles.push_back("assets/gfx/grdTileMap04.png");
 	groundTiles.push_back("assets/gfx/grdTileMap05.png");
 
-	levelsBackgrounds.push_back("assets/gfx/testBckGrd00.png");
-	levelsBackgrounds.push_back("assets/gfx/testBckGrd01.png");
-	levelsBackgrounds.push_back("assets/gfx/testBckGrd02.png");
-	levelsBackgrounds.push_back("assets/gfx/testBckGrd03.png");
-	levelsBackgrounds.push_back("assets/gfx/testBckGrd04.png");
-	levelsBackgrounds.push_back("assets/gfx/testBckGrd05.png");
+	levelsBackgrounds.push_back("assets/gfx/BckGrd00.png");
+	levelsBackgrounds.push_back("assets/gfx/BckGrd01.png");
+	levelsBackgrounds.push_back("assets/gfx/BckGrd02.png");
+	levelsBackgrounds.push_back("assets/gfx/BckGrd03.png");
+	levelsBackgrounds.push_back("assets/gfx/BckGrd04.png");
+	levelsBackgrounds.push_back("assets/gfx/BckGrd05.png");
 
-	levelsBackgrounds.push_back("assets/gfx/testBckGrd00.png");
-	levelsBackgrounds.push_back("assets/gfx/testBckGrd01.png");
-	levelsBackgrounds.push_back("assets/gfx/testBckGrd02.png");
-	levelsBackgrounds.push_back("assets/gfx/testBckGrd03.png");
-	levelsBackgrounds.push_back("assets/gfx/testBckGrd04.png");
-	levelsBackgrounds.push_back("assets/gfx/testBckGrd05.png");
-
-	bossLevelsBackgrounds.push_back("assets/gfx/testBossBckGrd00.png");
-	bossLevelsBackgrounds.push_back("assets/gfx/testBossBckGrd01.png");
-	bossLevelsBackgrounds.push_back("assets/gfx/testBossBckGrd02.png");
-	bossLevelsBackgrounds.push_back("assets/gfx/testBossBckGrd03.png");
-	bossLevelsBackgrounds.push_back("assets/gfx/testBossBckGrd04.png");
-	bossLevelsBackgrounds.push_back("assets/gfx/testBossBckGrd05.png");
+	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd00.png");
+	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd01.png");
+	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd02.png");
+	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd03.png");
+	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd04.png");
+	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd05.png");
 
 	currentLvl = new cLevel();
 	cLevel::engine = this;
