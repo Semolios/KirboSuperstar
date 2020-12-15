@@ -945,7 +945,9 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 					DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 2 * nTileWidth, 0 * nTileHeight, nTileWidth, nTileHeight);
 					break;
 				case L'?': // Question Block
+					SetPixelMode(olc::Pixel::ALPHA);
 					DrawPartialSprite(x * nTileWidth - fTileOffsetX, y * nTileHeight - fTileOffsetY, spriteTiles, 3 * nTileWidth, 0 * nTileHeight, nTileWidth, nTileHeight);
+					SetPixelMode(olc::Pixel::NORMAL);
 					break;
 				case L'o': // Coin
 					SetPixelMode(olc::Pixel::ALPHA);

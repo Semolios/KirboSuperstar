@@ -1,3 +1,2 @@
-waddleDee,7,4
 waddleDee,7,6
 waddleDee,11,6

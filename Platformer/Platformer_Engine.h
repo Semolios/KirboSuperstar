@@ -85,7 +85,7 @@ private:
 	int nLevelHeight;
 	cLevel* currentLvl;
 	int nCurrentLevel = 0;
-	int nUnlockedLevel = 1;
+	int nUnlockedLevel = 6; // TODO PENSER A REMETTRE A 1 A LA FIN
 	olc::Sprite* sprBackground;
 	olc::Sprite* spriteTiles;
 	olc::Sprite* sprGrdTiles;
