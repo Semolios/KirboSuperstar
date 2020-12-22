@@ -64,7 +64,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 			if (!bCantSpawnAOE)
 			{
 				rootSpawnX = playerX;
-				engine->AddProjectile(engine->CreateProjectile(playerX, 9, true, 0.0f, 0.0f, fRootSpawnTime, "movingGround", 64.0f, 16.0f, false, 0, false, false));
+				engine->AddProjectile(engine->CreateProjectile(playerX, 9, true, 0.0f, 0.0f, fRootSpawnTime, "movingGround", false, 0, false, false));
 				bCantSpawnAOE = true;
 			}
 
@@ -77,7 +77,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 					bCantSpawnAOE = false;
 
 				// Spawn the root to attack kirbo
-				engine->AddProjectile(engine->CreateProjectile(rootSpawnX, 7.1f, false, 0.0f, 0.0f, 0.6f, "root", 32.0f, 128.0f, false, 3, false, false));
+				engine->AddProjectile(engine->CreateProjectile(rootSpawnX, 9.1f, false, 0.0f, 0.0f, 0.6f, "root", false, 3, false, false, 3));
 			}
 		}
 		break;
@@ -116,7 +116,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 				float projectileSpeedY = ((float)(rand() % 100) / 10.0f) - 5.0f;
 
 				// Spawn the projectile to attack kirbo
-				engine->AddProjectile(engine->CreateProjectile(14, 7.5f, false, -10.0f, projectileSpeedY, 2.0f, "blow", 64.0f, 64.0f, false, 1, false, false));
+				engine->AddProjectile(engine->CreateProjectile(14, 7.5f, false, -10.0f, projectileSpeedY, 2.0f, "blow", false, 1, false, false));
 			}
 
 			if (fBehaviourTimer >= cfProjectilesTime)
@@ -136,7 +136,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 		float applePosX = ((float)(rand() % 150) / 10.0f) + 1.0f;
 
 		// Spawn apple
-		engine->AddProjectile(engine->CreateProjectile(applePosX, 2, false, 0.0f, 0.0f, 10.0f, "apple", 64.0f, 64.0f, true, 1, true, false));
+		engine->AddProjectile(engine->CreateProjectile(applePosX, 2, false, 0.0f, 0.0f, 10.0f, "apple", true, 1, true, false));
 	}
 
 	// if he dies while blowing, the wind stops

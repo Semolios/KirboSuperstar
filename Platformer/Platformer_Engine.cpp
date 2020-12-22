@@ -676,7 +676,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 					// must offset the AOE so it goes from kirbo's hand
 					float fProjectilePosX = fPlayerPosX + (fFaceDir > 0.0f ? 1.0f : -(51.0f / 64.0f));
 					float fProjectilePosY = fPlayerPosY - ((179.0f - 64.0f) / 128.0f);
-					cDynamicProjectile* p = CreateProjectile(fProjectilePosX, fProjectilePosY, true, 1.0f * fFaceDir, 0.0f, 0.1f, "slapAOE", 51.0f, 179.0f, false, 3, false, false);
+					cDynamicProjectile* p = CreateProjectile(fProjectilePosX, fProjectilePosY, true, 1.0f * fFaceDir, 0.0f, 0.1f, "slapAOE", false, 3, false, false);
 					p->bOneHit = false;
 					AddProjectile(p);
 					bCanSpawnProjectile = false;
@@ -691,7 +691,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			{
 				if (bCanSpawnProjectile)
 				{
-					cDynamicProjectile* p = CreateProjectile((fPlayerPosX + fFaceDir), fPlayerPosY - 1.0f, true, 10.0f * fFaceDir, -10.0f, 10.0f, "jesuscross", 50.0f, 39.0f, true, 5, true);
+					cDynamicProjectile* p = CreateProjectile((fPlayerPosX + fFaceDir), fPlayerPosY - 1.0f, true, 10.0f * fFaceDir, -10.0f, 10.0f, "jesuscross", true, 5, true);
 					AddProjectile(p);
 					bCanSpawnProjectile = false;
 				}
@@ -1025,7 +1025,10 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			if (bVacuuming)
 			{
 				polygon sEnnemy;
-				sEnnemy.pos = { (object->px - fOffsetX) * nTileWidth + (object->fDynWidth / 2.0f), (object->py - fOffsetY) * nTileHeight + (object->fDynHeight / 2.0f) };
+				sEnnemy.pos = {
+					(object->px - fOffsetX) * nTileWidth + (object->fDynWidth / 2.0f),
+					(object->py - fOffsetY) * nTileHeight + (object->fDynHeight / 2.0f)
+				};
 				sEnnemy.angle = 0.0f;
 				sEnnemy.o.push_back({ -object->fDynWidth / 2.0f, -object->fDynHeight / 2.0f });
 				sEnnemy.o.push_back({ -object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
@@ -1049,7 +1052,10 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 				//DrawLine(sEnnemy.p[3].x, sEnnemy.p[3].y, sEnnemy.p[0].x, sEnnemy.p[0].y, olc::YELLOW);
 
 				polygon sVacuum;
-				sVacuum.pos = { (fPlayerPosX + (fFaceDir > 0.0f ? 1.75f : -0.75f) - fOffsetX) * (float)nTileWidth , (fPlayerPosY + 0.5f - fOffsetY) * (float)nTileHeight }; // 1 block ahead the player's looking direction
+				sVacuum.pos = {
+					(fPlayerPosX + (fFaceDir > 0.0f ? 1.75f : -0.75f) - fOffsetX) * (float)nTileWidth,
+					(fPlayerPosY + 0.5f - fOffsetY) * (float)nTileHeight
+				}; // 1 block ahead the player's looking direction
 				sVacuum.angle = 0.0f;
 				sVacuum.o.push_back({ -(float)nTileWidth * 1.25f, -(float)nTileHeight / (fFaceDir > 0.0f ? 2.0f : 1.0f) });
 				sVacuum.o.push_back({ -(float)nTileWidth * 1.25f, +(float)nTileHeight / (fFaceDir > 0.0f ? 2.0f : 1.0f) });
@@ -1210,9 +1216,16 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		{
 			if (object->bFriendly)
 			{
+				// check from which corner we draw the sprite
+				float sprPosX = (object->nCornerSpr == 0 || object->nCornerSpr == 3) ? 0.0f : object->fDynWidth;
+				float sprPosY = (object->nCornerSpr == 0 || object->nCornerSpr == 1) ? 0.0f : -object->fDynHeight;
+
 				// Create an AOE on the projectile and check for ennemies and AOE overlap
 				polygon sAOE;
-				sAOE.pos = { (object->px - fOffsetX) * nTileWidth + (object->fDynWidth / 2.0f), (object->py - fOffsetY) * nTileHeight + (object->fDynHeight / 2.0f) };
+				sAOE.pos = {
+					(object->px - fOffsetX) * nTileWidth + (object->fDynWidth / 2.0f) + sprPosX,
+					(object->py - fOffsetY) * nTileHeight + (object->fDynHeight / 2.0f) + sprPosY
+				};
 				sAOE.angle = atan2f(object->vy, object->vx);
 				sAOE.o.push_back({ -object->fDynWidth / 2.0f, -object->fDynHeight / 2.0f });
 				sAOE.o.push_back({ -object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
@@ -1239,7 +1252,10 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 				for (auto& dyn : vecEnnemies)
 				{
 					polygon sEnnemy;
-					sEnnemy.pos = { ((float)dyn->px - fOffsetX) * nTileWidth + (float)dyn->fDynWidth / 2.0f, ((float)dyn->py - fOffsetY) * nTileHeight + (float)dyn->fDynHeight / 2.0f }; // Center of the ennemy
+					sEnnemy.pos = {
+						((float)dyn->px - fOffsetX) * nTileWidth + (float)dyn->fDynWidth / 2.0f,
+						((float)dyn->py - fOffsetY) * nTileHeight + (float)dyn->fDynHeight / 2.0f
+					}; // Center of the ennemy
 					sEnnemy.angle = 0.0f;
 					sEnnemy.o.push_back({ -dyn->fDynWidth / 2.0f, -dyn->fDynHeight / 2.0f });
 					sEnnemy.o.push_back({ -dyn->fDynWidth / 2.0f, +dyn->fDynHeight / 2.0f });
@@ -1549,8 +1565,15 @@ void OneLoneCoder_Platformer::StopAnyAttack()
 
 void OneLoneCoder_Platformer::CheckIfPlayerIsDamaged(cDynamic* object, float angle, float fOffsetX, float fOffsetY)
 {
+	// check from which corner we draw the sprite
+	float sprPosX = (object->nCornerSpr == 0 || object->nCornerSpr == 3) ? 0.0f : object->fDynWidth;
+	float sprPosY = (object->nCornerSpr == 0 || object->nCornerSpr == 1) ? 0.0f : -object->fDynHeight;
+
 	polygon sAOE;
-	sAOE.pos = { (object->px - fOffsetX) * nTileWidth + (object->fDynWidth / 2.0f), (object->py - fOffsetY) * nTileHeight + (object->fDynHeight / 2.0f) };
+	sAOE.pos = {
+		(object->px - fOffsetX) * nTileWidth + (object->fDynWidth / 2.0f) + sprPosX,
+		(object->py - fOffsetY) * nTileHeight + (object->fDynHeight / 2.0f) + sprPosY
+	};
 	sAOE.angle = angle;
 	sAOE.o.push_back({ -object->fDynWidth / 2.0f, -object->fDynHeight / 2.0f });
 	sAOE.o.push_back({ -object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
@@ -1574,7 +1597,10 @@ void OneLoneCoder_Platformer::CheckIfPlayerIsDamaged(cDynamic* object, float ang
 	//DrawLine(sAOE.p[3].x, sAOE.p[3].y, sAOE.p[0].x, sAOE.p[0].y, olc::RED);
 
 	polygon sPlayer;
-	sPlayer.pos = { (fPlayerPosX + 0.5f - fOffsetX) * (float)nTileWidth , (fPlayerPosY + 0.5f - fOffsetY) * (float)nTileHeight }; // Center of the player
+	sPlayer.pos = {
+		(fPlayerPosX + 0.5f - fOffsetX) * (float)nTileWidth,
+		(fPlayerPosY + 0.5f - fOffsetY) * (float)nTileHeight
+	}; // Center of the player
 	sPlayer.angle = 0.0f;
 	sPlayer.o.push_back({ -(float)nTileWidth / 2.2f, -(float)nTileHeight / 2.2f });	// little reduction of the player hitbox to allow a little overlap with attack
 	sPlayer.o.push_back({ -(float)nTileWidth / 2.2f, +(float)nTileHeight / 2.2f });	// little reduction of the player hitbox to allow a little overlap with attack
@@ -1713,9 +1739,9 @@ bool OneLoneCoder_Platformer::IsSemiSolidTile(wchar_t tile)
 	return tile == '?';
 }
 
-cDynamicProjectile* OneLoneCoder_Platformer::CreateProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, float spriteWidth, float spriteHeight, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit)
+cDynamicProjectile* OneLoneCoder_Platformer::CreateProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner)
 {
-	cDynamicProjectile* p = new cDynamicProjectile(ox, oy, bFriend, velx, vely, duration, mapProjectiles[sprite], spriteWidth, spriteHeight, affectedByGravity, damage, solidVSMap, oneHit);
+	cDynamicProjectile* p = new cDynamicProjectile(ox, oy, bFriend, velx, vely, duration, mapProjectiles[sprite], affectedByGravity, damage, solidVSMap, oneHit, corner);
 	return p;
 }
 

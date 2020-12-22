@@ -135,7 +135,7 @@ void cDynamicCreature::ExplodeAndDie(float fElapsedTime)
 
 		float centerOfBossX = ((fDynWidth - explosionWidth) / 2.0f) / engine->GetTileWidth();
 		float centerOfBossY = ((fDynHeight - explosionHeight) / 2.0f) / engine->GetTileHeight();
-		engine->AddProjectile(engine->CreateProjectile(px + centerOfBossX, py + centerOfBossY, false, 0.0f, 0.0f, 0.85f, "bossExplosion", explosionWidth, explosionHeight, false, 0, false, false));
+		engine->AddProjectile(engine->CreateProjectile(px + centerOfBossX, py + centerOfBossY, false, 0.0f, 0.0f, 0.85f, "bossExplosion", false, 0, false, false));
 
 		bBossExplosionAvailable = false;
 	}

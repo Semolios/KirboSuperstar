@@ -231,7 +231,7 @@ protected:
 public:
 	bool IsSolidTile(wchar_t tile);
 	bool IsSemiSolidTile(wchar_t tile);
-	cDynamicProjectile* CreateProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, float spriteWidth, float spriteHeight, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit = true);
+	cDynamicProjectile* CreateProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit = true, int corner = 0);
 	void AddProjectile(cDynamicProjectile* proj);
 	float GetTileWidth();
 	float GetTileHeight();

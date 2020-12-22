@@ -21,6 +21,7 @@ public:
 	float px, py;
 	float vx, vy;
 	int nDamage;
+	int nCornerSpr = 0;
 	bool bSolidVsMap;
 	bool bSolidVsDyn;
 	bool bSolidVsDynInitValue;
