@@ -6,6 +6,7 @@
 #include "Platformer_DynamicCreatureBladeKnight.h"
 #include "Platformer_DynamicCreatureBomber.h"
 #include "Platformer_DynamicCreatureBrontoBurt.h"
+#include "Platformer_DynamicCreatureMrShineMrBright.h"
 #include "Platformer_DynamicCreatureRocky.h"
 #include "Platformer_DynamicCreatureScarfy.h"
 #include "Platformer_DynamicCreatureWaddleDee.h"

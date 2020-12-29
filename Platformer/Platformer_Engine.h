@@ -6,11 +6,6 @@
 #include "Platformer_ControlsMenu.h"
 #include "Platformer_Dynamic.h"
 #include "Platformer_DynamicCreature.h"
-#include "Platformer_DynamicCreatureBladeKnight.h"
-#include "Platformer_DynamicCreatureBomber.h"
-#include "Platformer_DynamicCreatureBrontoBurt.h"
-#include "Platformer_DynamicCreatureScarfy.h"
-#include "Platformer_DynamicCreatureWaddleDee.h"
 #include "Platformer_DynamicProjectile.h"
 #include "Platformer_EndScreen.h"
 #include "Platformer_Level.h"
@@ -141,6 +136,8 @@ private:
 	float fShakeTimerChange = 0.0f;
 	float fShakeEffectX;
 	float fShakeEffectY;
+	int nShakeAmplitudeX;
+	int nShakeAmplitudeY;
 	bool bShake = false;
 
 	// Title screen
@@ -237,8 +234,7 @@ public:
 	float GetTileHeight();
 	void ResetVariables();
 	bool CanInteract();
-	void ActivateShakeEffect(bool activate);
-	void CameraShakeEffect(float fElapsedTime);
+	void ActivateShakeEffect(bool activate, int shakeAmplitudeX = 50, int shakeAmplitudeY = 50);
 	void WindEffect(float direction, float windPower, bool activate);
 	void DrawGroundTile(int x, int y, float fOffsetX, float fOffsetY, float fTileOffsetX, float fTileOffsetY, olc::Sprite* spriteTiles, wchar_t tile);
 };

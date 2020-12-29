@@ -179,18 +179,18 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLv
 		{
 			mob = new cDynamicCreatureWhispyWood(this);
 			vecDyns.push_back(mob);
-			mob->px = 14;
-			mob->py = 5;
+			mob->px = 14.0f;
+			mob->py = 5.0f;
 			cDynamicCreatureWhispyWood::engine = engine;
 		}
 		break;
 		case 1:
 		{
-			// TODO Mr Shine & Mr Bright
-			mob = new cDynamicCreatureWaddleDee(this);
+			mob = new cDynamicCreatureMrShineMrBright(this);
 			vecDyns.push_back(mob);
-			mob->px = 5;
-			mob->py = 5;
+			mob->px = 7.5f;
+			mob->py = 3.0f;
+			cDynamicCreatureMrShineMrBright::engine = engine;
 		}
 		break;
 		case 2:
@@ -198,8 +198,8 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLv
 			// TODO Dyna Blade
 			mob = new cDynamicCreatureWaddleDee(this);
 			vecDyns.push_back(mob);
-			mob->px = 5;
-			mob->py = 5;
+			mob->px = 5.0f;
+			mob->py = 5.0f;
 		}
 		break;
 		case 3:
@@ -207,8 +207,8 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLv
 			// TODO kracko
 			mob = new cDynamicCreatureWaddleDee(this);
 			vecDyns.push_back(mob);
-			mob->px = 5;
-			mob->py = 5;
+			mob->px = 5.0f;
+			mob->py = 5.0f;
 		}
 		break;
 		case 4:
@@ -216,8 +216,8 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLv
 			// TODO Meta Knight
 			mob = new cDynamicCreatureWaddleDee(this);
 			vecDyns.push_back(mob);
-			mob->px = 5;
-			mob->py = 5;
+			mob->px = 5.0f;
+			mob->py = 5.0f;
 		}
 		break;
 		case 5:
@@ -225,8 +225,8 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLv
 			// TODO Roi Dadidou
 			mob = new cDynamicCreatureWaddleDee(this);
 			vecDyns.push_back(mob);
-			mob->px = 5;
-			mob->py = 5;
+			mob->px = 5.0f;
+			mob->py = 5.0f;
 		}
 		break;
 	}

@@ -27,6 +27,14 @@ void cDynamicCreature::DrawSelf(olc::PixelGameEngine* gfx, float ox, float oy)
 
 void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 {
+	fTimer += fElapsedTime;
+	if (fTimer >= 1.0f / (float)nFramesPerSecond)
+	{
+		fTimer -= 1.0f / (float)nFramesPerSecond;
+		nGraphicCounter++;
+		nGraphicCounter %= nFramesPerSecond;
+	}
+
 	if (fKnockBackTimer > 0.0f)
 	{
 		vx = fKnockBackDX * cfKnockBackDX;
@@ -76,13 +84,6 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY, 
 	else if (!bBossKilled)
 	{
 		bSolidVsDyn = bSolidVsDynInitValue;
-		fTimer += fElapsedTime;
-		if (fTimer >= 1.0f / (float)nFramesPerSecond)
-		{
-			fTimer -= 1.0f / (float)nFramesPerSecond;
-			nGraphicCounter++;
-			nGraphicCounter %= nFramesPerSecond;
-		}
 
 		if (fabs(vx) > 0)
 			nGraphicState = WALKING;

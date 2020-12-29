@@ -26,6 +26,7 @@ void cAssets::LoadSprites()
 
 	// Bosses
 	load("whispyWood", "assets/gfx/whispyWood.png");
+	load("mrShineMrBright", "assets/gfx/mrShineMrBright.png");
 }
 
 void cAssets::LoadItems()

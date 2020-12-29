@@ -300,6 +300,35 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 	mapProjectiles["blow"].push_back(new olc::Sprite("assets/gfx/blow.png"));
 
+	mapProjectiles["movingGroundLava"].push_back(new olc::Sprite("assets/gfx/movingGroundLava00.png"));
+	mapProjectiles["movingGroundLava"].push_back(new olc::Sprite("assets/gfx/movingGroundLava01.png"));
+	mapProjectiles["movingGroundLava"].push_back(new olc::Sprite("assets/gfx/movingGroundLava02.png"));
+	mapProjectiles["movingGroundLava"].push_back(new olc::Sprite("assets/gfx/movingGroundLava03.png"));
+	mapProjectiles["movingGroundLava"].push_back(new olc::Sprite("assets/gfx/movingGroundLava04.png"));
+
+	mapProjectiles["magma"].push_back(new olc::Sprite("assets/gfx/magma00.png"));
+	mapProjectiles["magma"].push_back(new olc::Sprite("assets/gfx/magma01.png"));
+	mapProjectiles["magma"].push_back(new olc::Sprite("assets/gfx/magma02.png"));
+	mapProjectiles["magma"].push_back(new olc::Sprite("assets/gfx/magma03.png"));
+
+	mapProjectiles["magmaBoulder"].push_back(new olc::Sprite("assets/gfx/magmaBoulder.png"));
+
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser00.png"));
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser01.png"));
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser02.png"));
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser03.png"));
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser04.png"));
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser05.png"));
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser06.png"));
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser07.png"));
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser08.png"));
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser09.png"));
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser10.png"));
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser11.png"));
+
+	mapProjectiles["laser"].push_back(new olc::Sprite("assets/gfx/laser00.png"));
+	mapProjectiles["laser"].push_back(new olc::Sprite("assets/gfx/laser01.png"));
+
 #pragma endregion
 
 #pragma region Title Screen
@@ -901,9 +930,6 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	fCameraPosX = fPlayerPosX;
 	fCameraPosY = fPlayerPosY;
 
-	if (bShake)
-		CameraShakeEffect(fElapsedTime);
-
 	// Draw level
 	int nVisibleTilesX = ScreenWidth() / nTileWidth;
 	int nVisibleTilesY = ScreenHeight() / nTileHeight;
@@ -917,6 +943,20 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	if (fOffsetY < 1) fOffsetY = 1;
 	if (fOffsetX > nLevelWidth - nVisibleTilesX - 1) fOffsetX = nLevelWidth - nVisibleTilesX - 1;
 	if (fOffsetY > nLevelHeight - nVisibleTilesY - 1) fOffsetY = nLevelHeight - nVisibleTilesY - 1;
+
+	if (bShake)
+	{
+		fShakeTimerChange += fElapsedTime;
+
+		if (fShakeTimerChange >= 0.07f)
+		{
+			fShakeEffectX = ((float)(rand() % nShakeAmplitudeX) - 100.0f) / 1000.0f;
+			fShakeEffectY = ((float)(rand() % nShakeAmplitudeY) - 100.0f) / 1000.0f;
+		}
+
+		fOffsetX += fShakeEffectX;
+		fOffsetY += fShakeEffectY;
+	}
 
 	// Get offsets for smooth movement
 	float fTileOffsetX = (fOffsetX - (int)fOffsetX) * nTileWidth;
@@ -1782,23 +1822,11 @@ bool OneLoneCoder_Platformer::CanInteract()
 	return !bPlayerDamaged && !bDead && !bBossKilled;
 }
 
-void OneLoneCoder_Platformer::ActivateShakeEffect(bool activate)
+void OneLoneCoder_Platformer::ActivateShakeEffect(bool activate, int shakeAmplitudeX, int shakeAmplitudeY)
 {
 	bShake = activate;
-}
-
-void OneLoneCoder_Platformer::CameraShakeEffect(float fElapsedTime)
-{
-	fShakeTimerChange += fElapsedTime;
-
-	if (fShakeTimerChange >= 0.07f)
-	{
-		fShakeEffectX = ((float)(rand() % 50) - 100.0f) / 1000.0f;
-		fShakeEffectY = ((float)(rand() % 50) - 100.0f) / 1000.0f;
-	}
-
-	fCameraPosX += fShakeEffectX;
-	fCameraPosY += fShakeEffectY;
+	nShakeAmplitudeX = shakeAmplitudeX;
+	nShakeAmplitudeY = shakeAmplitudeY;
 }
 
 void OneLoneCoder_Platformer::WindEffect(float direction, float windPower, bool activate)
