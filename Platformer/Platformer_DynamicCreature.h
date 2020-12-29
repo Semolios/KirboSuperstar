@@ -63,7 +63,6 @@ public:
 	virtual void ExplodeAndDie(float fElapsedTime);
 
 protected:
-	float fStateTick;
 	float fKnockBackTimer = 0.0f;
 	float fKnockBackDX = 0.0f;
 	float fKnockBackDY = 0.0f;

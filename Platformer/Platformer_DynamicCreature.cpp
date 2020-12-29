@@ -45,8 +45,6 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY, 
 
 		if (fKnockBackTimer <= 0.0f)
 		{
-			fStateTick = 0.0f;
-			bIsAttackable = true;
 			vx = fInitSpeed * signbit(vx) ? 1.0f : -1.0f; // The ennemy turns to kirbo
 			if (nHealth <= 0)
 			{
@@ -59,6 +57,10 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY, 
 					nHealth = 0;
 					bDead = true;
 				}
+			}
+			else
+			{
+				bIsAttackable = true;
 			}
 		}
 
