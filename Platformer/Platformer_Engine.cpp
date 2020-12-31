@@ -491,21 +491,21 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 				fPlayerVelY = cfPlayerVelY;
 
 			// If player is on semi solid platform, pass through the platform. cheat a little bit, modify the position of the player to cross it
-			if ((IsSemiSolidTile(GetTile(fPlayerPosX + 0.0f, fPlayerPosY + 1.0f)) || IsSemiSolidTile(GetTile(fPlayerPosX + 0.9f, fPlayerPosY + 1.0f))) && bPlayerOnGround)
+			if ((IsSemiSolidTile(GetTile(fPlayerPosX + 0.0f, fPlayerPosY + 1.0f)) || IsSemiSolidTile(GetTile(fPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY + 1.0f))) && bPlayerOnGround)
 				fPlayerPosY += 0.15;
 
-			if ((IsSolidTile(GetTile(fPlayerPosX + 0.0f, fPlayerPosY + 1.0f)) || IsSolidTile(GetTile(fPlayerPosX + 0.9f, fPlayerPosY + 1.0f))) && bPlayerOnGround)
-				fCameraLookingDown -= 0.02f;
+			if ((IsSolidTile(GetTile(fPlayerPosX + 0.0f, fPlayerPosY + 1.0f)) || IsSolidTile(GetTile(fPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY + 1.0f))) && bPlayerOnGround)
+				fCameraLookingDown -= cfCameraMoveSpeed;
 		}
 		else
 		{
-			fCameraLookingDown += 0.02f;
+			fCameraLookingDown += cfCameraMoveSpeed;
 		}
 
 		// Go left
 		if (GetKey(olc::Key::LEFT).bHeld)
 		{
-			// Init speed by cfDrag + 0.05 or the player won't move when on ground
+			// Init speed by cfMinPlayerVelX + 0.05 or the player won't move when on ground
 			if (fabs(fPlayerVelX) < cfMinPlayerVelX) fPlayerVelX -= (cfMinPlayerVelX + 0.05f);
 
 			fPlayerVelX += (bPlayerOnGround ? -cfPlayerAccGrdX : -cfPlayerAccAirX) * fElapsedTime;
@@ -515,7 +515,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// Go right
 		if (GetKey(olc::Key::RIGHT).bHeld)
 		{
-			// Init speed by cfDrag + 0.05 or the player won't move when on ground
+			// Init speed by cfMinPlayerVelX + 0.05 or the player won't move when on ground
 			if (fabs(fPlayerVelX) < cfMinPlayerVelX) fPlayerVelX += (cfMinPlayerVelX + 0.05f);
 
 			fPlayerVelX += (bPlayerOnGround ? cfPlayerAccGrdX : cfPlayerAccAirX) * fElapsedTime;
@@ -532,13 +532,11 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			else if (bPlayerOnGround)
 			{
 				bChargeJump = true;
-				//fPlayerVelY = -cfPlayerJumpAcc;
 			}
 			else if (bDoubleJump && fPlayerVelY > 0)
 			{
 				bDoubleJump = false;
 				bChargeDoubleJump = true;
-				//fPlayerVelY = -cfPlayerDblJumpAcc;
 			}
 		}
 
@@ -698,14 +696,14 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// Slap Attack
 		if (bSlapping)
 		{
-			if (fAnimationTimer >= cfslapSpawnT * animPlayer.fTimeBetweenFrames)
+			if (fAnimationTimer >= cfSlapSpawnT * animPlayer.fTimeBetweenFrames)
 			{
 				if (bCanSpawnProjectile)
 				{
 					// must offset the AOE so it goes from kirbo's hand
-					float fProjectilePosX = fPlayerPosX + (fFaceDir > 0.0f ? 1.0f : -(51.0f / 64.0f));
-					float fProjectilePosY = fPlayerPosY - ((179.0f - 64.0f) / 128.0f);
-					cDynamicProjectile* p = CreateProjectile(fProjectilePosX, fProjectilePosY, true, 1.0f * fFaceDir, 0.0f, 0.1f, "slapAOE", false, 3, false, false);
+					float fProjectilePosX = fPlayerPosX + (fFaceDir > 0.0f ? 1.0f : -(mapProjectiles["slapAOE"][0]->width / (float)nTileWidth));
+					float fProjectilePosY = fPlayerPosY - ((mapProjectiles["slapAOE"][0]->height - (float)nTileHeight) / (float)(2 * nTileHeight));
+					cDynamicProjectile* p = CreateProjectile(fProjectilePosX, fProjectilePosY, true, fFaceDir, 0.0f, cfSlapDuration, "slapAOE", false, cnSlapDmg, false, false);
 					p->bOneHit = false;
 					AddProjectile(p);
 					bCanSpawnProjectile = false;
@@ -720,7 +718,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			{
 				if (bCanSpawnProjectile)
 				{
-					cDynamicProjectile* p = CreateProjectile((fPlayerPosX + fFaceDir), fPlayerPosY - 1.0f, true, 10.0f * fFaceDir, -10.0f, 10.0f, "jesuscross", true, 5, true);
+					cDynamicProjectile* p = CreateProjectile((fPlayerPosX + fFaceDir), fPlayerPosY - 1.0f, true, cfJesusCrossVelX * fFaceDir, cfJesusCrossVelY, cfJesusCrossDuration, "jesuscross", true, cnJesusCrossDmg, true);
 					AddProjectile(p);
 					bCanSpawnProjectile = false;
 				}
@@ -774,7 +772,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		if (fDeadAnimation != fElapsedTime)
 		{
 			t.Rotate(fDeadAnimation * cfDeadRotationAnimation);
-			// animation based on a 2nd degree polynome to simulate kirby's death animation
+			// animation based on a 2nd degree polynome to simulate kirbo's death animation
 			t.Translate(0.0f, (4.0f * fDeadAnimation - 2.0f) * 64.0f * (4.0f * fDeadAnimation - 2.0f) - 4 * 64.0f);
 		}
 
@@ -881,7 +879,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	{
 		if (fNewPlayerPosX <= 1) fNewPlayerPosX = 1; // Prevent from being brutally moved to 0 only when reaching -1
 
-		if (IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.0f)) || IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.9f)))
+		if (IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.0f)) || IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + fPlayerCollisionUpperLimit)))
 		{
 			fNewPlayerPosX = (int)fNewPlayerPosX + 1;
 			fPlayerVelX = 0;
@@ -891,7 +889,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	{
 		if (fNewPlayerPosX >= nLevelWidth - 2) fNewPlayerPosX = nLevelWidth - 2; // Kirbo can't cross the edge of the map
 
-		if (IsSolidTile(GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.0f)) || IsSolidTile(GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.9f)))
+		if (IsSolidTile(GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.0f)) || IsSolidTile(GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + fPlayerCollisionUpperLimit)))
 		{
 			fNewPlayerPosX = (int)fNewPlayerPosX;
 			fPlayerVelX = 0;
@@ -903,7 +901,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	{
 		if (fNewPlayerPosY <= 1) fNewPlayerPosY = 1; // Prevent from being brutally moved to 0 only when reaching -1
 
-		if (IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY)) || IsSolidTile(GetTile(fNewPlayerPosX + 0.9f, fNewPlayerPosY)))
+		if (IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY)) || IsSolidTile(GetTile(fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY)))
 		{
 			fNewPlayerPosY = (int)fNewPlayerPosY + 1;
 			fPlayerVelY = 0;
@@ -914,8 +912,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// This little trick (fPlayerPosY + 1.0f < (float)((int)fNewPlayerPosY + 1.0f) + 0.1f) checks if the player's feets are above the top of the semi-solid Block.
 		// Otherwise the player is moved to the top of the block when his feets reach the bottom of the block
 		// "fPlayerPosY + 1.0f" is the feets Y position, "(float)((int)fNewPlayerPosY + 1.0f) + 0.1f" takes the top of the block at the feets position and add a 0.1 delta, if the feets are above this delta, the player is moved on top of the block.
-		if (IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f)) || IsSolidTile(GetTile(fNewPlayerPosX + 0.9f, fNewPlayerPosY + 1.0f)) ||
-			((IsSemiSolidTile(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f)) || IsSemiSolidTile(GetTile(fNewPlayerPosX + 0.9f, fNewPlayerPosY + 1.0f))) && fPlayerPosY + 1.0f < (float)((int)fNewPlayerPosY + 1.0f) + 0.1f))
+		if (IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f)) || IsSolidTile(GetTile(fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f)) ||
+			((IsSemiSolidTile(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f)) || IsSemiSolidTile(GetTile(fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f))) && fPlayerPosY + 1.0f < (float)((int)fNewPlayerPosY + 1.0f) + 0.1f))
 		{
 			fNewPlayerPosY = (int)fNewPlayerPosY + cfGrdPlayerOverlay; // Remove this line to create shifting sand
 			fPlayerVelY = 0;
@@ -948,10 +946,10 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	{
 		fShakeTimerChange += fElapsedTime;
 
-		if (fShakeTimerChange >= 0.07f)
+		if (fShakeTimerChange >= cfShakeEffectChangeFrequency)
 		{
-			fShakeEffectX = ((float)(rand() % nShakeAmplitudeX) - 100.0f) / 1000.0f;
-			fShakeEffectY = ((float)(rand() % nShakeAmplitudeY) - 100.0f) / 1000.0f;
+			fShakeEffectX = ((float)(rand() % nShakeAmplitudeX) - 100.0f) / cfShakeAttenuation;
+			fShakeEffectY = ((float)(rand() % nShakeAmplitudeY) - 100.0f) / cfShakeAttenuation;
 		}
 
 		fOffsetX += fShakeEffectX;
@@ -1123,12 +1121,12 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 					ChangeEnnemyProperties(object, true);
 					Attack(object, 0);
 
-					// if one ennemy is under 0.1 from kirby, every swallowable ennemy is killed and kirby starts swallowing animation
+					// if one ennemy is under fSwallowDistance from kirbo, every swallowable ennemy is killed and kirbo starts swallowing animation
 					float fTargetX = fPlayerPosX - object->px;
 					float fTargetY = fPlayerPosY - object->py;
 					float fDistance = sqrtf(fTargetX * fTargetX + fTargetY * fTargetY);
 
-					if (fDistance <= 0.1)
+					if (fDistance <= fSwallowDistance)
 					{
 						bSwallowing = true;
 						bAttacking = true;
@@ -1425,7 +1423,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	if (fInvulnerabilityTimer <= 0.0f)
 	{
 		fInvulnerabilityTimer = 0.0f;
-		bShowKirby = true;
+		bShowKirbo = true;
 		bIsPlayerAttackable = true;
 	}
 	else
@@ -1437,13 +1435,13 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 			// Start ticking only after damage animation
 			if (!bPlayerDamaged)
-				bShowKirby = !bShowKirby;
+				bShowKirbo = !bShowKirbo;
 		}
 	}
 
 	t.Translate((fPlayerPosX - fOffsetX) * nTileWidth + (nTileWidth / 2), (fPlayerPosY - fOffsetY) * nTileHeight + (nTileHeight / 2));
 
-	if (bShowKirby)
+	if (bShowKirbo)
 	{
 		SetPixelMode(olc::Pixel::ALPHA);
 		animPlayer.DrawSelf(this, t);
@@ -1754,9 +1752,9 @@ void OneLoneCoder_Platformer::Attack(cDynamicCreature* victim, int damage)
 		// a visual indicator to the player that something has happened, and the second
 		// it stops the ability to spam attacks on a single creature
 		if (victim->bIsKnockable)
-			victim->KnockBack(tx / d, ty / d, 0.3f);
+			victim->KnockBack(tx / d, ty / d, cfKnockBackDuration);
 		else
-			victim->KnockBack(0.0f, 0.0f, 0.3f);
+			victim->KnockBack(0.0f, 0.0f, cfKnockBackDuration);
 	}
 }
 

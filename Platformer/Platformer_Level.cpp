@@ -179,8 +179,8 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLv
 		{
 			mob = new cDynamicCreatureWhispyWood(this);
 			vecDyns.push_back(mob);
-			mob->px = 14.0f;
-			mob->py = 5.0f;
+			mob->px = cfWhispyWoodPX;
+			mob->py = cfWhispyWoodPY;
 			cDynamicCreatureWhispyWood::engine = engine;
 		}
 		break;
@@ -188,8 +188,8 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLv
 		{
 			mob = new cDynamicCreatureMrShineMrBright(this);
 			vecDyns.push_back(mob);
-			mob->px = 7.5f;
-			mob->py = 3.0f;
+			mob->px = cfMrShineMrBrightPX;
+			mob->py = cfMrShineMrBrightPY;
 			cDynamicCreatureMrShineMrBright::engine = engine;
 		}
 		break;

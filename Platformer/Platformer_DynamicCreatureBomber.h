@@ -11,6 +11,11 @@ public:
 	cDynamicCreatureBomber(cLevel* l);
 
 public:
+	const float cfTriggerDistance = 2.0f;
+	const float cfExplosionDuration = 0.35f;
+	const float cfKnockBackDuration = 0.3f;
+	const int cnExplosionDmg = 5;
+
 	enum AI_STATE
 	{
 		AI_WALKING = 0,

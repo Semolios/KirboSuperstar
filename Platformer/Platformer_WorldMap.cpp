@@ -49,7 +49,7 @@ bool cWorldMap::Update(olc::PixelGameEngine* gfx, float fElapsedTime)
 	}
 
 	olc::GFX2D::Transform2D t;
-	t.Translate(path.points[nSelectedLevel].x - (nKirboTileWidth / 2.0f), path.points[nSelectedLevel].y - (nKirboTileHeight / 2.0f));
+	t.Translate(path.points[nSelectedLevel].x - (cnKirboTileWidth / 2.0f), path.points[nSelectedLevel].y - (cnKirboTileHeight / 2.0f));
 
 	gfx->SetPixelMode(olc::Pixel::ALPHA);
 	animPlayer->DrawSelf(gfx, t);

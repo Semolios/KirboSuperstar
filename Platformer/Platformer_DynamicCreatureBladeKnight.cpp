@@ -44,7 +44,7 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 			float fTargetY = playerY - py;
 			float fDistance = sqrtf(fTargetX * fTargetX + fTargetY * fTargetY);
 
-			if (fDistance < 5.0f)
+			if (fDistance < cfTriggerDistance)
 				ChangeState(AI_WALKING);
 		}
 		break;
@@ -53,7 +53,7 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 			bOnGround = true;
 
 			// Run in kirbo's direction
-			vx = (playerX < px) ? -2.5f : 2.5f;
+			vx = (playerX < px) ? -cfRunSpeed : cfRunSpeed;
 
 			// Check if player is still nearby
 			float fTargetX = playerX - px;
@@ -62,7 +62,7 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 
 #pragma region GO WAITING STATE
 
-			if (fDistance > 5.0f)
+			if (fDistance > cfTriggerDistance)
 			{
 				ChangeState(AI_WAITING);
 				break;
@@ -89,7 +89,7 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 			srand(time(NULL));
 			int chosenAttack = rand() % 2;
 
-			if (fDistance < 1.5f)
+			if (fDistance < cfAttackTriggerDistance)
 			{
 				ChangeState((chosenAttack == 0) ? AI_SIDEATTACK : AI_JUMPING);
 				break;
@@ -109,12 +109,12 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 		case AI_JUMPING:
 		{
 			nGraphicState = JUMPING;
-			
-			vx = (playerX < px) ? -2.5f : 2.5f;
+
+			vx = (playerX < px) ? -cfRunSpeed : cfRunSpeed;
 
 			if (bOnGround)
 			{
-				vy = -10.0f;
+				vy = cfJumpSpeed;
 				bOnGround = false;
 				fTimer = 0.0f;
 			}
@@ -123,12 +123,12 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 				fTimer += fElapsedTime;
 				if ((abs(playerX - px) < 0.5f && playerY > py))
 					ChangeState(AI_DOWNATTACK);
-				else if (engine->IsSolidTile(GetTile(px + 0.1f, py + 1)) || engine->IsSolidTile(GetTile(px + 0.9f, py + 1)))
+				else if (engine->IsSolidTile(GetTile(px + cfCollisionLowerLimit, py + 1)) || engine->IsSolidTile(GetTile(px + cfCollisionUpperLimit, py + 1)))
 					ChangeState(AI_WALKING);
 			}
 
 			// Freeze animation at the last frame to prevent looping animation while falling
-			if (fTimer >= fFallingAnimationTime) nGraphicCounter = 7;
+			if (fTimer >= cfFallingAnimationTime) nGraphicCounter = nFramesPerSecond - 1;
 		}
 		break;
 		case AI_SIDEATTACK:
@@ -139,24 +139,24 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 			fTimer += fElapsedTime;
 
 			// first attack
-			if (fTimer >= 0.375f && !bCantSpawnAOE1)
+			if (fTimer >= cfFirstAttackTime && !bCantSpawnAOE1)
 			{
 				bCantSpawnAOE1 = true;
 
 				// slightly moves toward the player
-				px += (playerX < px) ? -0.75f : 0.75f;
+				px += (playerX < px) ? -cfAttackDash : cfAttackDash;
 			}
 
 			// second attack
-			if (fTimer >= 0.625f && !bCantSpawnAOE2)
+			if (fTimer >= cfSecondAttackTime && !bCantSpawnAOE2)
 			{
 				bCantSpawnAOE2 = true;
 
 				// slightly moves toward the player
-				px += (playerX < px) ? -0.75f : 0.75f;
+				px += (playerX < px) ? -cfAttackDash : cfAttackDash;
 			}
 
-			if (fTimer >= fAttackTime)
+			if (fTimer >= cfAttackTime)
 			{
 				bCantSpawnAOE1 = false;
 				bCantSpawnAOE2 = false;
@@ -171,7 +171,7 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 
 			// Wait 0.5 seconds then fall on the player
 			fTimer += fElapsedTime;
-			if (fTimer <= fTimeBeforeDownAttack)
+			if (fTimer <= cfTimeBeforeDownAttack)
 			{
 				nGraphicCounter = 0;
 				vy = 0.0f;
@@ -179,17 +179,17 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 			else
 			{
 				nGraphicCounter = 1;
-				vy = 8.0f;
+				vy = cfDownAtkSpeed;
 
 				// Create an AOE
 				if (!bCantSpawnAOE1)
 				{
-					engine->AddProjectile(engine->CreateProjectile(px + 0.25f, py + 0.25f, false, 0.0f, 8.0f, 10.0f, "swordDownAOE", false, 5, true));
+					engine->AddProjectile(engine->CreateProjectile(px + cfDownAOESprOffsetX, py + cfDownAOESprOffsetY, false, 0.0f, cfDownAtkSpeed, cfDownAtkAOEDuration, "swordDownAOE", false, cnDownAtkDmg, true));
 					bCantSpawnAOE1 = true;
 				}
 			}
 
-			if (engine->IsSolidTile(GetTile(px + 0.1f, py + 1)) || engine->IsSolidTile(GetTile(px + 0.9f, py + 1)))
+			if (engine->IsSolidTile(GetTile(px + cfCollisionLowerLimit, py + 1)) || engine->IsSolidTile(GetTile(px + cfCollisionUpperLimit, py + 1)))
 			{
 				bCantSpawnAOE1 = false;
 				ChangeState(AI_WALKING);
@@ -204,13 +204,13 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 			fTimer += fElapsedTime;
 
 			// when blade knight raise the sword, an AOE appears
-			if (fTimer >= 0.375f && !bCantSpawnAOE1)
+			if (fTimer >= cfFirstAttackTime && !bCantSpawnAOE1)
 			{
-				engine->AddProjectile(engine->CreateProjectile(px + 0.25f, py - 0.5f, false, 0.0f, -10.0f, 0.1f, "swordUpAOE", false, 5, true));
+				engine->AddProjectile(engine->CreateProjectile(px + cfUpAOESprOffsetX, py + cfUpAOESprOffsetY, false, 0.0f, cfUpAtkSpeed, cfUpAtkDuration, "swordUpAOE", false, cnUpAtkDmg, true));
 				bCantSpawnAOE1 = true;
 			}
 
-			if (fTimer >= fAttackTime)
+			if (fTimer >= cfAttackTime)
 			{
 				bCantSpawnAOE1 = false;
 				ChangeState(AI_WALKING);

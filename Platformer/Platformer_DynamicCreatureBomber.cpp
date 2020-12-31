@@ -73,7 +73,7 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 			float fTargetY = playerY - py;
 			float fDistance = sqrtf(fTargetX * fTargetX + fTargetY * fTargetY);
 
-			if (fDistance < 2.0f)
+			if (fDistance < cfTriggerDistance)
 				nAINextState = AI_CHARGING;
 		}
 		break;
@@ -95,17 +95,17 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 		{
 			if (!bHasExploded)
 			{
-				engine->AddProjectile(engine->CreateProjectile(px - 1, py - 1, false, -1.5f, -1.5f, 0.35f, "explosion", false, 5, false));
-				engine->AddProjectile(engine->CreateProjectile(px + 0, py - 1, false, +0.0f, -1.5f, 0.35f, "explosion", false, 5, false));
-				engine->AddProjectile(engine->CreateProjectile(px + 1, py - 1, false, +1.5f, -1.5f, 0.35f, "explosion", false, 5, false));
-				engine->AddProjectile(engine->CreateProjectile(px + 1, py + 0, false, +1.5f, +0.0f, 0.35f, "explosion", false, 5, false));
-				engine->AddProjectile(engine->CreateProjectile(px + 1, py + 1, false, +1.5f, +1.5f, 0.35f, "explosion", false, 5, false));
-				engine->AddProjectile(engine->CreateProjectile(px + 0, py + 1, false, +0.0f, +1.5f, 0.35f, "explosion", false, 5, false));
-				engine->AddProjectile(engine->CreateProjectile(px - 1, py + 1, false, -1.5f, +1.5f, 0.35f, "explosion", false, 5, false));
-				engine->AddProjectile(engine->CreateProjectile(px - 1, py + 0, false, -1.5f, +0.0f, 0.35f, "explosion", false, 5, false));
+				engine->AddProjectile(engine->CreateProjectile(px - 1, py - 1, false, -1.5f, -1.5f, cfExplosionDuration, "explosion", false, cnExplosionDmg, false));
+				engine->AddProjectile(engine->CreateProjectile(px + 0, py - 1, false, +0.0f, -1.5f, cfExplosionDuration, "explosion", false, cnExplosionDmg, false));
+				engine->AddProjectile(engine->CreateProjectile(px + 1, py - 1, false, +1.5f, -1.5f, cfExplosionDuration, "explosion", false, cnExplosionDmg, false));
+				engine->AddProjectile(engine->CreateProjectile(px + 1, py + 0, false, +1.5f, +0.0f, cfExplosionDuration, "explosion", false, cnExplosionDmg, false));
+				engine->AddProjectile(engine->CreateProjectile(px + 1, py + 1, false, +1.5f, +1.5f, cfExplosionDuration, "explosion", false, cnExplosionDmg, false));
+				engine->AddProjectile(engine->CreateProjectile(px + 0, py + 1, false, +0.0f, +1.5f, cfExplosionDuration, "explosion", false, cnExplosionDmg, false));
+				engine->AddProjectile(engine->CreateProjectile(px - 1, py + 1, false, -1.5f, +1.5f, cfExplosionDuration, "explosion", false, cnExplosionDmg, false));
+				engine->AddProjectile(engine->CreateProjectile(px - 1, py + 0, false, -1.5f, +0.0f, cfExplosionDuration, "explosion", false, cnExplosionDmg, false));
 
 				nHealth = 0;
-				KnockBack(0.0f, 0.0f, 0.3f);
+				KnockBack(0.0f, 0.0f, cfKnockBackDuration);
 
 				bHasExploded = true;
 			}

@@ -13,6 +13,46 @@ public:
 	cDynamicCreatureWhispyWood(cLevel* l);
 
 public:
+	const float cfProjectilesStartTimer = 0.25f;
+	const float cfGroundPosition = 9.0f;
+	const float cfRootPosY = 9.1f;
+	const float cfRootDuration = 0.6f;
+	const float cfWindDirection = -1.0f;
+	const float cfWindPower = 20.0f;
+	const float cfProjectilesYRangeOffset = -5.0f;
+	const float cfProjectilePosX = 14.0f;
+	const float cfProjectilePosY = 7.5f;
+	const float cfProjectileSpeedX = -10.0f;
+	const float cfProjectileDuration = 2.0f;
+	const float cfApplePosXRangeOffset = 1.0f;
+	const float cfApplePosY = 2.0f;
+	const float cfAppleDuration = 10.0f;
+
+	const float cfWaitingTimeMaxHP = 2.5f;
+	const float cfWaitingTimeHiHP = 2.0f;
+	const float cfWaitingTimeMiHP = 1.5f;
+	const float cfWaitingTimeLoHP = 1.0f;
+
+	const float cfRootSpawnTimeMaxHP = 1.3f;
+	const float cfRootSpawnTimeHiHP = 1.1f;
+	const float cfRootSpawnTimeMiHP = 0.9f;
+	const float cfRootSpawnTimeLoHP = 0.6f;
+
+	const float cfAppleSpawnTimeMaxHP = 2.0f;
+	const float cfAppleSpawnTimeHiHP = 1.6f;
+	const float cfAppleSpawnTimeMiHP = 1.3f;
+	const float cfAppleSpawnTimeLoHP = 1.0f;
+
+	const int cnNumberOfAttack = 3;
+	const int cnRootDmg = 3;
+	const int cnCorner = 3;
+	const int cnProjectilesYRange = 100;
+	const int cnProjectileDmg = 1;
+	const int cnApplePosXRange = 150;
+	const int cnAppleDmg = 1;
+	const int cnHiHP = 70;
+	const int cnMiHP = 50;
+	const int cnLoHP = 30;
 
 	enum AI_STATE
 	{

@@ -10,8 +10,8 @@ public:
 	cWorldMap(olc::PixelGameEngine* gfx, olc::Sprite* background);
 
 private:
-	const int nKirboTileWidth = 192;
-	const int nKirboTileHeight = 192;
+	const int cnKirboTileWidth = 192;
+	const int cnKirboTileHeight = 192;
 
 	int nSelectedLevel = 0;
 	int nUnlockedLevels = 0;

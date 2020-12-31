@@ -24,7 +24,7 @@ cDynamicCreatureBrontoBurt::cDynamicCreatureBrontoBurt(cLevel* l, float oscillat
 
 void cDynamicCreatureBrontoBurt::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 {
-	// Bronto Burt moves when kirby is near (when bronto burt appears on the screen)
+	// Bronto Burt moves when kirbo is near (when bronto burt appears on the screen)
 	if (abs((px - playerX) * fDynWidth) < gfx->ScreenWidth() / 2 + fDynWidth && abs((py - playerY) * fDynHeight) < gfx->ScreenHeight() / 2 + 2 * fOscillationAmplitude * fDynHeight)
 	{
 		fTheta += cfOscillationSpeed * fElapsedTime;

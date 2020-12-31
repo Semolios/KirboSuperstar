@@ -17,7 +17,7 @@ cDynamicCreature::cDynamicCreature(std::string n, olc::Sprite* sprite, int frame
 
 void cDynamicCreature::DrawSelf(olc::PixelGameEngine* gfx, float ox, float oy)
 {
-	int nSheetOffsetX = nGraphicCounter * fSpriteW;						// Same State of a sprite are stored in one line
+	int nSheetOffsetX = nGraphicCounter * fSpriteW;					// Same State of a sprite are stored in one line
 	int nSheetOffsetY = (2 * nGraphicState + nFaceDir) * fSpriteH;	// 0 = Left Idle, 1 = Right Idle, 2 = Left Walking, 3 = Right Walking, 4 = Left Damaged, 5 = Right Damaged
 
 	gfx->SetPixelMode(olc::Pixel::ALPHA);
@@ -72,7 +72,7 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY, 
 			vx = (playerX - px) * cfVacuumSpeed;
 			vy = (playerY - py) * cfVacuumSpeed;
 
-			// ennemies under cfSwallowableLimit is swallowed when swallowing animation occurs but once kirby swallowed he stops vacuuming
+			// ennemies under cfSwallowableLimit is swallowed when swallowing animation occurs but once kirbo swallowed he stops vacuuming
 			float fTargetX = playerX - px;
 			float fTargetY = playerY - py;
 			float fDistance = sqrtf(fTargetX * fTargetX + fTargetY * fTargetY);
@@ -138,12 +138,12 @@ void cDynamicCreature::ExplodeAndDie(float fElapsedTime)
 
 		float centerOfBossX = ((fDynWidth - explosionWidth) / 2.0f) / engine->GetTileWidth();
 		float centerOfBossY = ((fDynHeight - explosionHeight) / 2.0f) / engine->GetTileHeight();
-		engine->AddProjectile(engine->CreateProjectile(px + centerOfBossX, py + centerOfBossY, false, 0.0f, 0.0f, 0.85f, "bossExplosion", false, 0, false, false));
+		engine->AddProjectile(engine->CreateProjectile(px + centerOfBossX, py + centerOfBossY, false, 0.0f, 0.0f, cfExplosionDuration, "bossExplosion", false, 0, false, false));
 
 		bBossExplosionAvailable = false;
 	}
 
-	if (fDeadTimer >= 0.85f)
+	if (fDeadTimer >= cfExplosionDuration)
 	{
 		nHealth = 0;
 		bDead = true;

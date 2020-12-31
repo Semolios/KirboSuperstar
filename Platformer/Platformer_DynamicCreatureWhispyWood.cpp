@@ -35,11 +35,11 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 			fBehaviourTimer += fElapsedTime;
 
 			bCantSpawnAOE = false;
-			fProjectilesTimer = 0.25f;
+			fProjectilesTimer = cfProjectilesStartTimer;
 
 			if (fBehaviourTimer >= fWaitingTime)
 			{
-				nChosenAttack = rand() % 3;
+				nChosenAttack = rand() % cnNumberOfAttack;
 
 				if (nChosenAttack == 0) ChangeState(AI_SCREAMING);
 				if (nChosenAttack == 1) ChangeState(AI_WIND);
@@ -64,7 +64,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 			if (!bCantSpawnAOE)
 			{
 				rootSpawnX = playerX;
-				engine->AddProjectile(engine->CreateProjectile(playerX, 9, true, 0.0f, 0.0f, fRootSpawnTime, "movingGround", false, 0, false, false));
+				engine->AddProjectile(engine->CreateProjectile(playerX, cfGroundPosition, true, 0.0f, 0.0f, fRootSpawnTime, "movingGround", false, 0, false, false));
 				bCantSpawnAOE = true;
 			}
 
@@ -77,7 +77,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 					bCantSpawnAOE = false;
 
 				// Spawn the root to attack kirbo
-				engine->AddProjectile(engine->CreateProjectile(rootSpawnX, 9.1f, false, 0.0f, 0.0f, 0.6f, "root", false, 3, false, false, 3));
+				engine->AddProjectile(engine->CreateProjectile(rootSpawnX, cfRootPosY, false, 0.0f, 0.0f, cfRootDuration, "root", false, cnRootDmg, false, false, cnCorner));
 			}
 		}
 		break;
@@ -88,7 +88,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 			MapGraphicState(BLOW);
 
 			if (fBehaviourTimer >= cfBlowingAnimationTime)
-				engine->WindEffect(-1.0f, 20.0f, true);
+				engine->WindEffect(cfWindDirection, cfWindPower, true);
 
 			if (fBehaviourTimer >= cfBlowingTime)
 			{
@@ -97,7 +97,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 			}
 
 			// Freeze animation at the last frame to prevent looping animation while blowing
-			if (fBehaviourTimer >= cfBlowingAnimationTime) nGraphicCounter = 3;
+			if (fBehaviourTimer >= cfBlowingAnimationTime) nGraphicCounter = nFramesPerSecond - 1;
 		}
 		break;
 		case AI_PROJECTILES:
@@ -113,10 +113,10 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 				fProjectilesTimer = 0.0f;
 
 				// projectile Y speed betweene -5 and +5
-				float projectileSpeedY = ((float)(rand() % 100) / 10.0f) - 5.0f;
+				float fProjectileSpeedY = ((float)(rand() % cnProjectilesYRange) / 10.0f) + cfProjectilesYRangeOffset;
 
 				// Spawn the projectile to attack kirbo
-				engine->AddProjectile(engine->CreateProjectile(14, 7.5f, false, -10.0f, projectileSpeedY, 2.0f, "blow", false, 1, false, false));
+				engine->AddProjectile(engine->CreateProjectile(cfProjectilePosX, cfProjectilePosY, false, cfProjectileSpeedX, fProjectileSpeedY, cfProjectileDuration, "blow", false, cnProjectileDmg, false, false));
 			}
 
 			if (fBehaviourTimer >= cfProjectilesTime)
@@ -133,10 +133,10 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 		fAppleTimer = 0.0f;
 
 		// Apple spawn between 1 and 16 (Whispy wood position)
-		float applePosX = ((float)(rand() % 150) / 10.0f) + 1.0f;
+		float fApplePosX = ((float)(rand() % cnApplePosXRange) / 10.0f) + cfApplePosXRangeOffset;
 
 		// Spawn apple
-		engine->AddProjectile(engine->CreateProjectile(applePosX, 2, false, 0.0f, 0.0f, 10.0f, "apple", true, 1, true, false));
+		engine->AddProjectile(engine->CreateProjectile(fApplePosX, cfApplePosY, false, 0.0f, 0.0f, cfAppleDuration, "apple", true, cnAppleDmg, true, false));
 	}
 
 	// if he dies while blowing, the wind stops
@@ -158,29 +158,29 @@ void cDynamicCreatureWhispyWood::ChangeState(AI_STATE state)
 
 void cDynamicCreatureWhispyWood::UpdateTimers()
 {
-	if (nHealth >= 70)
+	if (nHealth >= cnHiHP)
 	{
-		fWaitingTime = 2.5f;
-		fRootSpawnTime = 1.3f;
-		fAppleSpawnTime = 2.0f;
+		fWaitingTime = cfWaitingTimeMaxHP;
+		fRootSpawnTime = cfRootSpawnTimeMaxHP;
+		fAppleSpawnTime = cfAppleSpawnTimeMaxHP;
 	}
-	else if (nHealth < 70 && nHealth >= 50)
+	else if (nHealth < cnHiHP && nHealth >= cnMiHP)
 	{
-		fWaitingTime = 2.0f;
-		fRootSpawnTime = 1.1f;
-		fAppleSpawnTime = 1.6f;
+		fWaitingTime = cfWaitingTimeHiHP;
+		fRootSpawnTime = cfRootSpawnTimeHiHP;
+		fAppleSpawnTime = cfAppleSpawnTimeHiHP;
 	}
-	else if (nHealth < 50 && nHealth >= 30)
+	else if (nHealth < cnMiHP && nHealth >= cnLoHP)
 	{
-		fWaitingTime = 1.5f;
-		fRootSpawnTime = 0.9f;
-		fAppleSpawnTime = 1.3f;
+		fWaitingTime = cfWaitingTimeMiHP;
+		fRootSpawnTime = cfRootSpawnTimeMiHP;
+		fAppleSpawnTime = cfAppleSpawnTimeMiHP;
 	}
 	else
 	{
-		fWaitingTime = 1.0f;
-		fRootSpawnTime = 0.6f;
-		fAppleSpawnTime = 1.0f;
+		fWaitingTime = cfWaitingTimeLoHP;
+		fRootSpawnTime = cfRootSpawnTimeLoHP;
+		fAppleSpawnTime = cfAppleSpawnTimeLoHP;
 	}
 }
 

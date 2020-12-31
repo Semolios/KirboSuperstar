@@ -17,6 +17,12 @@ class OneLoneCoder_Platformer;
 class cLevel
 {
 public:
+	const float cfWhispyWoodPX = 14.0f;
+	const float cfWhispyWoodPY = 5.0f;
+
+	const float cfMrShineMrBrightPX = 7.5f;
+	const float cfMrShineMrBrightPY = 3.0f;
+
 	std::wstring sLevel;
 	int nLevelWidth = 0;
 	int nLevelHeight = 0;

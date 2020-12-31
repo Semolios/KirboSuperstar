@@ -47,15 +47,22 @@ private:
 	const float cfInvulnerabilityTickingSpeed = 0.2f;	// Ticking Speed when invulnerable
 	const float cfStopTimebeforeDeadAnim = 1.5f;		// Stop time before death animation
 	const float cfDeadAnimation = 4.0f;					// Duration of the dead animation
-	const float cfTimeBeforeWinAnimation = 2.0f;		// Time before animation begins when kirby kills the boss
+	const float cfTimeBeforeWinAnimation = 2.0f;		// Time before animation begins when kirbo kills the boss
 	const float cfBossKilledAnimation = 4.0f;			// Boss killed animation duration
 	const float cfDeadRotationAnimation = 15.0f;		// rotation speed of dead animation
 	const float cfGoAwayRotationAnimation = 15.0f;		// rotation speed of Kirbo goes away animation
 	const float cfGoAwayTranslationAnimation = 256.0f;	// speed of kirbo in go away animation
-	const float cfslapSpawnT = 1.0f;					// Number of frames to spawn slap attack
+	const float cfSlapSpawnT = 1.0f;					// Number of frames to spawn slap attack
+	const float cfSlapDuration = 0.1f;					// duration of the slap AOE
 	const float cfJesusCrossSpawnT = 7.0f;				// Number of frames to spawn jesus cross
 	const float cfVacuumAnimT = 2.0f;					// Number of frames when vacuum animation change to begin vacuum to vacuum
 	const float cfGrdPlayerOverlay = 0.08f;				// little gap to give impression the player cross the grass and don't walk on the grass
+	const float cfJesusCrossVelX = 10.0f;				// X Velocity of the jesus cross
+	const float cfJesusCrossVelY = -10.0f;				// Y Velocity of the jesus cross
+	const float cfJesusCrossDuration = 10.0f;			// Duration of the jesus cross
+	const float cfKnockBackDuration = 0.3f;				// Knock back duration
+	const int cnSlapDmg = 3;							// damages of the slap attack
+	const int cnJesusCrossDmg = 5;						// damages of the jesus cross
 	const int cnSpriteOffsetX = 64;						// Sprite offset X because kirbo sprites are 192 * 192 pixels
 	const int cnSpriteOffsetY = 64;						// Sprite offset Y because kirbo sprites are 192 * 192 pixels
 
@@ -111,6 +118,9 @@ private:
 	float fKirboGoesAwayTimer = 0.0f;
 	float fWindDirection = 1.0f;
 	float fWindPower = 25.0f;
+	float fPlayerCollisionUpperLimit = 0.9f;
+	float fPlayerCollisionLowerLimit = 0.1f;
+	float fSwallowDistance = 0.1f;
 	bool bPlayerOnGround = false;
 	bool bDoubleJump = false;
 	bool bChargeJump = false;
@@ -123,7 +133,7 @@ private:
 	bool bPlayerDamaged = false;
 	bool bIsPlayerAttackable = true;
 	bool bFlying = false;
-	bool bShowKirby = true;
+	bool bShowKirbo = true;
 	bool bDead = false;
 	bool bSwallowing = false;
 	bool bInBossLvl = false;
@@ -131,6 +141,9 @@ private:
 	bool bWind = false;
 
 	// Camera Properties
+	const float cfCameraMoveSpeed = 0.02f;
+	const float cfShakeAttenuation = 1000.0f;
+	const float cfShakeEffectChangeFrequency = 0.07f;
 	float fCameraPosX = 0.0f;
 	float fCameraPosY = 0.0f;
 	float fShakeTimerChange = 0.0f;

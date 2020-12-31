@@ -12,7 +12,7 @@ cDynamicCreatureScarfy::cDynamicCreatureScarfy(cLevel* l) : cDynamicCreature("sc
 	nHealth = 10;
 	nHealthMax = 10;
 	level = l;
-	vx = 0;	// initialize the speed so the scarfy waits for kirby
+	vx = 0;	// initialize the speed so the scarfy waits for kirbo
 	bSolidVsMap = true;
 	bSolidVsDynInitValue = true;
 	bAffectedByGravity = false;
@@ -26,10 +26,10 @@ void cDynamicCreatureScarfy::Behaviour(float fElapsedTime, float playerX, float 
 	float fTargetY = playerY - py;
 	float fDistance = sqrtf(fTargetX * fTargetX + fTargetY * fTargetY);
 
-	if (fDistance < 6.0f)
+	if (fDistance < cfTriggerDistance)
 	{
-		vx = (fTargetX / fDistance) * 2.0f;
-		vy = (fTargetY / fDistance) * 2.0f;
+		vx = (fTargetX / fDistance) * cfSpeed;
+		vy = (fTargetY / fDistance) * cfSpeed;
 	}
 	else
 	{

@@ -38,8 +38,8 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 			{
 				fMoveTimer = 0.0f;
 
-				fMoveLocX = (((float)(rand() % 150) / 10.0f) + 1.0f) - px;
-				fMoveLocY = (((float)(rand() % 70) / 10.0f) + 1.0f) - py;
+				fMoveLocX = (((float)(rand() % cnMoveLocXRange) / 10.0f) + 1.0f) - px;
+				fMoveLocY = (((float)(rand() % cnMoveLocYRange) / 10.0f) + 1.0f) - py;
 			}
 			float fDistance = sqrtf(fMoveLocX * fMoveLocX + fMoveLocY * fMoveLocY);
 
@@ -60,7 +60,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 
 			if (fBehaviourTimer >= fWaitingTime)
 			{
-				nChosenAttack = rand() % 4;
+				nChosenAttack = rand() % cnNumberOfAttack;
 
 				if (nChosenAttack == 0) ChangeState(AI_FLAMECOLUMN);
 				if (nChosenAttack == 1) ChangeState(AI_LASER);
@@ -96,7 +96,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 			{
 				engine->ActivateShakeEffect(true);
 
-				engine->AddProjectile(engine->CreateProjectile(px + 1.8f, 8.6f, true, 0.0f, 0.0f, fColumnSpawnTime, "movingGroundLava", false, 0, false, false));
+				engine->AddProjectile(engine->CreateProjectile(px + cfMovingGroundLavaOffsetX, cfMovingGroundLavaPosY, true, 0.0f, 0.0f, fColumnSpawnTime, "movingGroundLava", false, 0, false, false));
 				bCanSpawnAOE = false;
 			}
 
@@ -104,15 +104,15 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 			{
 				bChargingColumn = false;
 
-				engine->ActivateShakeEffect(true, 200, 200);
+				engine->ActivateShakeEffect(true, cnHighShakeAmplitudeX, cnHighShakeAmplitudeY);
 
 				// Spawn magma to attack kirbo
-				engine->AddProjectile(engine->CreateProjectile(px + 1.8f, 0.9f, false, 0.0f, 0.0f, (fColumnTime - fColumnSpawnTime), "magma", false, 3, false, false));
+				engine->AddProjectile(engine->CreateProjectile(px + cfMagmaOffsetX, cfMagmaPosY, false, 0.0f, 0.0f, (fColumnTime - fColumnSpawnTime), "magma", false, cnMagmaDmg, false, false));
 
 				// Spawn rocks
-				engine->AddProjectile(engine->CreateProjectile(px + 1.8f, 8.0f, false, -2.4f, -10.0f, 10, "magmaBoulder", true, 3, true, false));
-				engine->AddProjectile(engine->CreateProjectile(px + 2.1f, 7.7f, false, -0.6f, -12.0f, 10, "magmaBoulder", true, 3, true, false));
-				engine->AddProjectile(engine->CreateProjectile(px + 2.0f, 8.0f, false, +4.8f, -10.0f, 10, "magmaBoulder", true, 3, true, false));
+				engine->AddProjectile(engine->CreateProjectile(px + cfMagmaRock1OffsetX, cfMagmaRock1PosY, false, cfMagmaRock1VelX, cfMagmaRock1VelY, cfMagmaRockDuration, "magmaBoulder", true, cnMagmaDmg, true, false));
+				engine->AddProjectile(engine->CreateProjectile(px + cfMagmaRock2OffsetX, cfMagmaRock2PosY, false, cfMagmaRock2VelX, cfMagmaRock2VelY, cfMagmaRockDuration, "magmaBoulder", true, cnMagmaDmg, true, false));
+				engine->AddProjectile(engine->CreateProjectile(px + cfMagmaRock3OffsetX, cfMagmaRock3PosY, false, cfMagmaRock3VelX, cfMagmaRock3VelY, cfMagmaRockDuration, "magmaBoulder", true, cnMagmaDmg, true, false));
 			}
 
 			fBehaviourTimer += fElapsedTime;
@@ -127,10 +127,9 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 		break;
 		case AI_LASER:
 		{
-			// TODO
 			vx = 0.0f; vy = 0.0f;
 			nGraphicState = SIDEATTACK;
-			nFramesPerSecond = 32; // double the framerate
+			nFramesPerSecond = cnDoubledFrameRate;
 
 			// Animation loop
 			if (bChargingLaser)
@@ -139,17 +138,17 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 			}
 			else
 			{
-				if (nGraphicCounter == 3)
-					nGraphicCounter = 1;
+				if (nGraphicCounter > cnLastLaserFrame)
+					nGraphicCounter = cnFirstLaserFrame;
 			}
 
 			// spawn a little ray during fLaserSpawnTime to indicate the player that magma is gonna spawn
 			fLaserTimer += fElapsedTime;
 			if (bCanSpawnAOE)
 			{
-				engine->ActivateShakeEffect(true, 40, 40);
+				engine->ActivateShakeEffect(true, cnLowShakeAmplitudeX, cnLowShakeAmplitudeY);
 
-				engine->AddProjectile(engine->CreateProjectile(px + 1.8f, py - 0.2f, true, 0.0f, 0.0f, fLaserSpawnTime, "chargeLaser", false, 0, false, false));
+				engine->AddProjectile(engine->CreateProjectile(px + cfChargeLaserOffsetX, py - cfChargeLaserOffsetY, true, 0.0f, 0.0f, fLaserSpawnTime, "chargeLaser", false, 0, false, false));
 				bCanSpawnAOE = false;
 			}
 
@@ -157,13 +156,13 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 			{
 				bChargingLaser = false;
 
-				nGraphicCounter = 1;
+				nGraphicCounter = cnFirstLaserFrame;
 
-				engine->ActivateShakeEffect(true, 200, 200);
+				engine->ActivateShakeEffect(true, cnHighShakeAmplitudeX, cnHighShakeAmplitudeY);
 
 				// Spawn laser to attack kirbo
 				// must offset the laser to give impression it's going out from the moon's mouth
-				engine->AddProjectile(engine->CreateProjectile(px - 8.0f, py + 3.0f, false, -0.01f, 0.01f, (fColumnTime - fLaserSpawnTime), "laser", false, 3, false, false));
+				engine->AddProjectile(engine->CreateProjectile(px - cfLaserOffsetX, py + cfLaserOffsetY, false, -0.01f, 0.01f, (fColumnTime - fLaserSpawnTime), "laser", false, cnLaserDmg, false, false));
 			}
 
 			fBehaviourTimer += fElapsedTime;
@@ -178,49 +177,48 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 		break;
 		case AI_GUN:
 		{
-			// TODO
 			nGraphicState = DOWNATTACK;
 
-			if (fBehaviourTimer <= 1.0f) // phase 1, they stop moving
+			if (fBehaviourTimer <= cfSunTakePunchTime) // phase 1, they stop moving
 			{
 				vx = 0.0f; vy = 0.0f;
 
 				// stop at 2nd frame
-				if (nGraphicCounter == 2)
-					nGraphicCounter = 1;
+				if (nGraphicCounter > cnSunTakePunchLastFrame)
+					nGraphicCounter = cnSunTakePunchLastFrame;
 			}
-			else if (fBehaviourTimer > 1.0f && fBehaviourTimer <= 2.0f) // phase 2, the sun shoot the moon
+			else if (fBehaviourTimer > cfSunTakePunchTime && fBehaviourTimer <= cfSunShootMoonTime) // phase 2, the sun shoot the moon
 			{
 				vx = 0.0f; vy = 0.0f;
 
-				if (nGraphicCounter == 5)
-					nFramesPerSecond = 32;
+				if (nGraphicCounter == cnMoonScreamingFirstFrame)
+					nFramesPerSecond = cnDoubledFrameRate;
 
 				// loop frames 5 and 6
-				if (nGraphicCounter == 7)
-					nGraphicCounter = 5;
+				if (nGraphicCounter > cnMoonScreamingLastFrame)
+					nGraphicCounter = cnMoonScreamingFirstFrame;
 			}
-			else if (fBehaviourTimer > 2.0f && !OnGround()) // phase 3 they fall
+			else if (fBehaviourTimer > cfSunShootMoonTime && !OnGround()) // phase 3 they fall
 			{
-				vx = 0.0f; vy = 8.0f;
+				vx = 0.0f; vy = cfFallingSpeed;
 
 				// loop frames 5 and 6
-				if (nGraphicCounter == 7)
-					nGraphicCounter = 5;
+				if (nGraphicCounter > cnMoonScreamingLastFrame)
+					nGraphicCounter = cnMoonScreamingFirstFrame;
 			}
-			else if (fBehaviourTimer > 2.0f && OnGround()) // phase 4 the sun keep shooting the moon on the ground
+			else if (fBehaviourTimer > cfSunShootMoonTime && OnGround()) // phase 4 the sun keep shooting the moon on the ground
 			{
 				vx = 0.0f; vy = 0.0f;
 
 				// loop frames 7 and 8
-				if (nGraphicCounter == 9)
-					nGraphicCounter = 7;
+				if (nGraphicCounter > cnSunShootingMoonLastFrame)
+					nGraphicCounter = cnSunShootingMoonFirstFrame;
 			}
 
 			fBehaviourTimer += fElapsedTime;
 			if (fBehaviourTimer >= fGunTime)
 			{
-				nFramesPerSecond = 16;
+				nFramesPerSecond = cnStandardFramerate;
 				bFreezeAnimation = false;
 				ChangeState(AI_STATIONARY);
 			}
@@ -244,42 +242,33 @@ void cDynamicCreatureMrShineMrBright::ChangeState(AI_STATE state)
 
 void cDynamicCreatureMrShineMrBright::UpdateTimers()
 {
-	if (nHealth >= 70)
+	if (nHealth >= cnHiHP)
 	{
-		fMoveSpeed = 3.5f;
-		fColumnSpawnTime = 1.3f;
-		fWaitingTime = 2.5f;
+		fMoveSpeed = cfMoveSpeedMaxHP;
+		fColumnSpawnTime = cfColumnSpawnTimeMaxHP;
+		fWaitingTime = cfWaitingTimeMaxHP;
 	}
-	else if (nHealth < 70 && nHealth >= 50)
+	else if (nHealth < cnHiHP && nHealth >= cnMiHP)
 	{
-		fMoveSpeed = 4.2f;
-		fColumnSpawnTime = 1.1f;
-		fWaitingTime = 2.0f;
+		fMoveSpeed = cfMoveSpeedHiHP;
+		fColumnSpawnTime = cfColumnSpawnTimeHiHP;
+		fWaitingTime = cfWaitingTimeHiHP;
 	}
-	else if (nHealth < 50 && nHealth >= 30)
+	else if (nHealth < cnMiHP && nHealth >= cnLoHP)
 	{
-		fMoveSpeed = 4.6f;
-		fColumnSpawnTime = 0.9f;
-		fWaitingTime = 1.8f;
+		fMoveSpeed = cfMoveSpeedMiHP;
+		fColumnSpawnTime = cfColumnSpawnTimeMiHP;
+		fWaitingTime = cfWaitingTimeMiHP;
 	}
 	else
 	{
-		fMoveSpeed = 5.0f;
-		fColumnSpawnTime = 0.6f;
-		fWaitingTime = 1.5f;
+		fMoveSpeed = cfMoveSpeedLoHP;
+		fColumnSpawnTime = cfColumnSpawnTimeLoHP;
+		fWaitingTime = cfWaitingTimeLoHP;
 	}
 }
 
 bool cDynamicCreatureMrShineMrBright::OnGround()
 {
-	// lambda fonction to check if there is a hole or a wall to change direction
-	auto GetTile = [&](int x, int y)
-	{
-		if (x >= 0 && x < level->GetWidth() && y >= 0 && y < level->GetHeight())
-			return level->GetLevel()[y * level->GetWidth() + x];
-		else
-			return L' ';
-	};
-
-	return (engine->IsSolidTile(GetTile(px + 0.1f, py + 2)) || engine->IsSolidTile(GetTile(px + 0.9f, py + 2)));
+	return py >= cfGroundYPos;
 }

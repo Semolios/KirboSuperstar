@@ -11,6 +11,10 @@ public:
 	cDynamicCreatureRocky(cLevel* l);
 
 public:
+	const float cfRockyLowerBoundary = 0.1f;
+	const float cfRockyUpperBoundary = 0.9f;
+	const float cfGoingBackUpSpeed = -2.0f;
+
 	enum AI_STATE
 	{
 		AI_WAITING = 0,
