@@ -505,21 +505,27 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// Go left
 		if (GetKey(olc::Key::LEFT).bHeld)
 		{
-			// Init speed by cfMinPlayerVelX + 0.05 or the player won't move when on ground
-			if (fabs(fPlayerVelX) < cfMinPlayerVelX) fPlayerVelX -= (cfMinPlayerVelX + 0.05f);
+			if (!bAttacking && !bVacuuming)
+			{
+				// Init speed by cfMinPlayerVelX + 0.05 or the player won't move when on ground
+				if (fabs(fPlayerVelX) < cfMinPlayerVelX) fPlayerVelX -= (cfMinPlayerVelX + 0.05f);
 
-			fPlayerVelX += (bPlayerOnGround ? -cfPlayerAccGrdX : -cfPlayerAccAirX) * fElapsedTime;
-			fFaceDir = -1.0f;
+				fPlayerVelX += (bPlayerOnGround ? -cfPlayerAccGrdX : -cfPlayerAccAirX) * fElapsedTime;
+				fFaceDir = -1.0f;
+			}
 		}
 
 		// Go right
 		if (GetKey(olc::Key::RIGHT).bHeld)
 		{
-			// Init speed by cfMinPlayerVelX + 0.05 or the player won't move when on ground
-			if (fabs(fPlayerVelX) < cfMinPlayerVelX) fPlayerVelX += (cfMinPlayerVelX + 0.05f);
+			if (!bAttacking && !bVacuuming)
+			{
+				// Init speed by cfMinPlayerVelX + 0.05 or the player won't move when on ground
+				if (fabs(fPlayerVelX) < cfMinPlayerVelX) fPlayerVelX += (cfMinPlayerVelX + 0.05f);
 
-			fPlayerVelX += (bPlayerOnGround ? cfPlayerAccGrdX : cfPlayerAccAirX) * fElapsedTime;
-			fFaceDir = 1.0f;
+				fPlayerVelX += (bPlayerOnGround ? cfPlayerAccGrdX : cfPlayerAccAirX) * fElapsedTime;
+				fFaceDir = 1.0f;
+			}
 		}
 
 		// Jump, double jump, stop flying
