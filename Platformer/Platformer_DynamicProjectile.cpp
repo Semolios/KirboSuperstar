@@ -1,4 +1,7 @@
 #include "Platformer_DynamicProjectile.h"
+#include "Platformer_Engine.h"
+
+OneLoneCoder_Platformer* cDynamicProjectile::engine = nullptr;
 
 cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner) : cDynamic("projectile")
 {
@@ -54,4 +57,59 @@ void cDynamicProjectile::Update(float fElapsedTime, float playerX, float playerY
 	fDuration -= fElapsedTime;
 	if (fDuration <= 0.0f)
 		bRedundant = true;
+}
+
+void cDynamicProjectile::Collision(float fElapsedTime)
+{
+	float fNewObjectPosX = px + vx * fElapsedTime;
+	float fNewObjectPosY = py + vy * fElapsedTime;
+
+	// Collision
+	float fBorder = 0.1f;
+
+	// Gravity
+	if (bAffectedByGravity)
+		vy += engine->GetGravityValue() * fElapsedTime;
+
+	if (bSolidVsMap)
+	{
+		if (vx <= 0) // Moving Left
+		{
+			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, py + fBorder)) || 
+				engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, py + (fDynHeight / engine->GetTileHeight()) - fBorder)))
+			{
+				bRedundant = true;
+			}
+		}
+		else // Moving Right
+		{
+			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + fBorder)) || 
+				engine->IsSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + (fDynHeight / engine->GetTileHeight()) - fBorder)))
+			{
+				bRedundant = true;
+			}
+		}
+
+		if (vy <= 0) // Moving Up
+		{
+			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY)) || 
+				engine->IsSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY)))
+			{
+				bRedundant = true;
+			}
+		}
+		else // Moving Down
+		{
+			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) || 
+				engine->IsSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
+				engine->IsSemiSolidTile(engine->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) || 
+				engine->IsSemiSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))))
+			{
+				bRedundant = true;
+			}
+		}
+	}
+
+	px = fNewObjectPosX;
+	py = fNewObjectPosY;
 }

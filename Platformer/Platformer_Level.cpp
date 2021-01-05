@@ -101,7 +101,6 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 			{
 				cDynamicCreature* mob = new cDynamicCreatureBladeKnight(this);
 				vecDyns.push_back(mob);
-				cDynamicCreatureBladeKnight::engine = engine;
 
 				// get position
 				mob->px = std::stoi(parts[1]);
@@ -113,7 +112,6 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 			{
 				cDynamicCreature* mob = new cDynamicCreatureBomber(this);
 				vecDyns.push_back(mob);
-				cDynamicCreatureBomber::engine = engine;
 
 				// get position
 				mob->px = std::stoi(parts[1]);
@@ -181,7 +179,6 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLv
 			vecDyns.push_back(mob);
 			mob->px = cfWhispyWoodPX;
 			mob->py = cfWhispyWoodPY;
-			cDynamicCreatureWhispyWood::engine = engine;
 		}
 		break;
 		case 1:
@@ -190,7 +187,6 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLv
 			vecDyns.push_back(mob);
 			mob->px = cfMrShineMrBrightPX;
 			mob->py = cfMrShineMrBrightPY;
-			cDynamicCreatureMrShineMrBright::engine = engine;
 		}
 		break;
 		case 2:
@@ -234,7 +230,6 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLv
 	mob->bIsVacuumable = false;
 	mob->bIsBoss = true;
 	mob->bIsKnockable = false;
-	cDynamicCreature::engine = engine;
 
 	return true;
 }

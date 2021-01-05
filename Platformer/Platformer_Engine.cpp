@@ -392,6 +392,19 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 #pragma endregion
 
+#pragma region Static Classes engine initialisation
+
+	cDynamicCreature::engine = this;
+	cDynamicCreatureBladeKnight::engine = this;
+	cDynamicCreatureBomber::engine = this;
+	cDynamicCreatureMrShineMrBright::engine = this;
+	cDynamicCreatureRocky::engine = this;
+	cDynamicCreatureWaddleDee::engine = this;
+	cDynamicCreatureWhispyWood::engine = this;
+	cDynamicProjectile::engine = this;
+
+#pragma endregion
+
 	nGameState = GS_TITLE;
 
 	return true;
@@ -451,21 +464,6 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	}
 
 	animPlayer.Update(fElapsedTime);
-
-	// Utility Lambdas
-	auto GetTile = [&](int x, int y)
-	{
-		if (x >= 0 && x < nLevelWidth && y >= 0 && y < nLevelHeight)
-			return sLevel[y * nLevelWidth + x];
-		else
-			return L' ';
-	};
-
-	auto SetTile = [&](int x, int y, wchar_t c)
-	{
-		if (x >= 0 && x < nLevelWidth && y >= 0 && y < nLevelHeight)
-			sLevel[y * nLevelWidth + x] = c;
-	};
 
 	// Handle input
 	if (IsFocused() && CanInteract())
@@ -921,7 +919,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		if (IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f)) || IsSolidTile(GetTile(fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f)) ||
 			((IsSemiSolidTile(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f)) || IsSemiSolidTile(GetTile(fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f))) && fPlayerPosY + 1.0f < (float)((int)fNewPlayerPosY + 1.0f) + 0.1f))
 		{
-			fNewPlayerPosY = (int)fNewPlayerPosY + cfGrdPlayerOverlay; // Remove this line to create shifting sand
+			fNewPlayerPosY = (int)fNewPlayerPosY + cfGrdDynamicOverlay; // Remove this line to create shifting sand
 			fPlayerVelY = 0;
 			bPlayerOnGround = true;
 			bDoubleJump = true;
@@ -1012,56 +1010,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	// Ennemies
 	for (auto& object : vecEnnemies)
 	{
-		float fNewObjectPosX = object->px + object->vx * fElapsedTime;
-		float fNewObjectPosY = object->py + object->vy * fElapsedTime;
-
-		// Collision
-		float fBorder = 0.1f;
-
-		// Gravity
-		if (object->bAffectedByGravity)
-			object->vy += cfGravity * fElapsedTime;
-
-		if (object->vy > cfMaxPlayerVelY)
-			object->vy = cfMaxPlayerVelY;
-
-		if (object->bSolidVsMap)
-		{
-			if (object->vx <= 0) // Moving Left
-			{
-				if (IsSolidTile(GetTile(fNewObjectPosX + fBorder, object->py + fBorder)) || IsSolidTile(GetTile(fNewObjectPosX + fBorder, object->py + (object->fDynHeight / (float)nTileHeight) - fBorder)))
-				{
-					fNewObjectPosX = (int)fNewObjectPosX + 1;
-					object->vx = 0;
-				}
-			}
-			else // Moving Right
-			{
-				if (IsSolidTile(GetTile(fNewObjectPosX + ((object->fDynWidth / (float)nTileWidth) - fBorder), object->py + fBorder)) || IsSolidTile(GetTile(fNewObjectPosX + ((object->fDynWidth / (float)nTileWidth) - fBorder), object->py + (object->fDynHeight / (float)nTileHeight) - fBorder)))
-				{
-					fNewObjectPosX = (int)fNewObjectPosX;
-					object->vx = 0;
-				}
-			}
-
-			if (object->vy <= 0) // Moving Up
-			{
-				if (IsSolidTile(GetTile(fNewObjectPosX + fBorder, fNewObjectPosY)) || IsSolidTile(GetTile(fNewObjectPosX + ((object->fDynWidth / (float)nTileWidth) - fBorder), fNewObjectPosY)))
-				{
-					fNewObjectPosY = (int)fNewObjectPosY + 1;
-					object->vy = 0;
-				}
-			}
-			else // Moving Down
-			{
-				if (IsSolidTile(GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (object->fDynHeight / (float)nTileHeight))) || IsSolidTile(GetTile(fNewObjectPosX + ((object->fDynWidth / (float)nTileWidth) - fBorder), fNewObjectPosY + (object->fDynHeight / (float)nTileHeight))) ||
-					IsSemiSolidTile(GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (object->fDynHeight / (float)nTileHeight))) || IsSemiSolidTile(GetTile(fNewObjectPosX + ((object->fDynWidth / (float)nTileWidth) - fBorder), fNewObjectPosY + (object->fDynHeight / (float)nTileHeight))))
-				{
-					fNewObjectPosY = (int)fNewObjectPosY + cfGrdPlayerOverlay;
-					object->vy = 0;
-				}
-			}
-		}
+		object->Collision(fElapsedTime);
 
 		// Check if the ennemi is in the vacuum
 		if (object->bIsVacuumable)
@@ -1151,109 +1100,17 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			}
 		}
 
-		float fDynObjectPosX = fNewObjectPosX;
-		float fDynObjectPosY = fNewObjectPosY;
-
-		// Object vs Object collisions
-		for (auto& dyn : vecEnnemies)
-		{
-			if (dyn != object)
-			{
-				// If the objects are solid then they must not overlap
-				if (dyn->bSolidVsDyn && object->bSolidVsDyn)
-				{
-					// Check if bounding rectangles overlap
-					if (fDynObjectPosX < (dyn->px + (dyn->fDynWidth / (float)nTileWidth)) &&
-						(fDynObjectPosX + (object->fDynWidth / (float)nTileWidth)) > dyn->px &&
-						object->py < (dyn->py + (dyn->fDynHeight / (float)nTileHeight)) &&
-						(object->py + (object->fDynHeight / (float)nTileHeight)) > dyn->py)
-					{
-						// First Check Horizontally - Check Left
-						if (object->vx <= 0)
-							fDynObjectPosX = dyn->px + (dyn->fDynWidth / (float)nTileWidth);
-						else
-							fDynObjectPosX = dyn->px - (object->fDynWidth / (float)nTileWidth);
-
-						object->TurnAround();
-					}
-
-					if (fDynObjectPosX < (dyn->px + (dyn->fDynWidth / (float)nTileWidth)) &&
-						(fDynObjectPosX + (object->fDynWidth / (float)nTileWidth)) > dyn->px &&
-						fDynObjectPosY < (dyn->py + (dyn->fDynHeight / (float)nTileHeight)) &&
-						(fDynObjectPosY + (object->fDynHeight / (float)nTileHeight)) > dyn->py)
-					{
-						// First Check Vertically - Check Top
-						if (object->vy <= 0)
-							fDynObjectPosY = dyn->py + (dyn->fDynHeight / (float)nTileHeight);
-						else
-							fDynObjectPosY = dyn->py - (object->fDynHeight / (float)nTileHeight);
-					}
-				}
-			}
-		}
-
 		// Check collision with player to damage him
 		if (bIsPlayerAttackable && !bSwallowing && !object->bVacuumed)
 		{
 			CheckIfPlayerIsDamaged(object, 0.0f, fOffsetX, fOffsetY);
 		}
-
-		object->px = fDynObjectPosX;
-		object->py = fDynObjectPosY;
 	}
 
 	// Projectiles
 	for (auto& object : vecProjectiles)
 	{
-		float fNewObjectPosX = object->px + object->vx * fElapsedTime;
-		float fNewObjectPosY = object->py + object->vy * fElapsedTime;
-
-		// Collision
-		float fBorder = 0.1f;
-
-		// Gravity
-		if (object->bAffectedByGravity)
-			object->vy += cfGravity * fElapsedTime;
-
-		if (object->vy > cfMaxPlayerVelY)
-			object->vy = cfMaxPlayerVelY;
-
-		if (object->bSolidVsMap)
-		{
-			if (object->vx <= 0) // Moving Left
-			{
-				if (IsSolidTile(GetTile(fNewObjectPosX + fBorder, object->py + fBorder)) || IsSolidTile(GetTile(fNewObjectPosX + fBorder, object->py + (object->fDynHeight / (float)nTileHeight) - fBorder)))
-				{
-					object->bRedundant = true;
-				}
-			}
-			else // Moving Right
-			{
-				if (IsSolidTile(GetTile(fNewObjectPosX + ((object->fDynWidth / (float)nTileWidth) - fBorder), object->py + fBorder)) || IsSolidTile(GetTile(fNewObjectPosX + ((object->fDynWidth / (float)nTileWidth) - fBorder), object->py + (object->fDynHeight / (float)nTileHeight) - fBorder)))
-				{
-					object->bRedundant = true;
-				}
-			}
-
-			if (object->vy <= 0) // Moving Up
-			{
-				if (IsSolidTile(GetTile(fNewObjectPosX + fBorder, fNewObjectPosY)) || IsSolidTile(GetTile(fNewObjectPosX + ((object->fDynWidth / (float)nTileWidth) - fBorder), fNewObjectPosY)))
-				{
-					object->bRedundant = true;
-				}
-			}
-			else // Moving Down
-			{
-				if (IsSolidTile(GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (object->fDynHeight / (float)nTileHeight))) || IsSolidTile(GetTile(fNewObjectPosX + ((object->fDynWidth / (float)nTileWidth) - fBorder), fNewObjectPosY + (object->fDynHeight / (float)nTileHeight))) ||
-					IsSemiSolidTile(GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (object->fDynHeight / (float)nTileHeight))) || IsSemiSolidTile(GetTile(fNewObjectPosX + ((object->fDynWidth / (float)nTileWidth) - fBorder), fNewObjectPosY + (object->fDynHeight / (float)nTileHeight))))
-				{
-					object->bRedundant = true;
-				}
-			}
-		}
-
-		float fDynObjectPosX = fNewObjectPosX;
-		float fDynObjectPosY = fNewObjectPosY;
+		object->Collision(fElapsedTime);
 
 		// check if a Projectile hits a creature
 		if (!object->bRedundant)
@@ -1341,9 +1198,6 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 				}
 			}
 		}
-
-		object->px = fDynObjectPosX;
-		object->py = fDynObjectPosY;
 	}
 
 	for (auto& object : vecEnnemies)
@@ -1804,6 +1658,30 @@ float OneLoneCoder_Platformer::GetTileHeight()
 	return (float)nTileHeight;
 }
 
+float OneLoneCoder_Platformer::GetGravityValue()
+{
+	return cfGravity;
+}
+
+float OneLoneCoder_Platformer::GetGroundDynamicOverlay()
+{
+	return cfGrdDynamicOverlay;
+}
+
+wchar_t OneLoneCoder_Platformer::GetTile(int x, int y)
+{
+	if (x >= 0 && x < nLevelWidth && y >= 0 && y < nLevelHeight)
+		return sLevel[y * nLevelWidth + x];
+	else
+		return L' ';
+}
+
+void OneLoneCoder_Platformer::SetTile(int x, int y, wchar_t c)
+{
+	if (x >= 0 && x < nLevelWidth && y >= 0 && y < nLevelHeight)
+		sLevel[y * nLevelWidth + x] = c;
+}
+
 void OneLoneCoder_Platformer::ResetVariables()
 {
 	fPlayerVelX = 0.0f;
@@ -1842,14 +1720,6 @@ void OneLoneCoder_Platformer::WindEffect(float direction, float windPower, bool 
 
 void OneLoneCoder_Platformer::DrawGroundTile(int x, int y, float fOffsetX, float fOffsetY, float fTileOffsetX, float fTileOffsetY, olc::Sprite* spriteTiles, wchar_t tile)
 {
-	auto GetTile = [&](int x, int y)
-	{
-		if (x >= 0 && x < nLevelWidth && y >= 0 && y < nLevelHeight)
-			return sLevel[y * nLevelWidth + x];
-		else
-			return L' ';
-	};
-
 	// Get all tiles around the current tile
 	wchar_t tilesAround[3][3];
 	tilesAround[0][0] = GetTile(x - 1 + fOffsetX, y - 1 + fOffsetY); tilesAround[0][1] = GetTile(x + 0 + fOffsetX, y - 1 + fOffsetY);	tilesAround[0][2] = GetTile(x + 1 + fOffsetX, y - 1 + fOffsetY);

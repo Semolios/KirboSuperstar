@@ -19,6 +19,21 @@ private:
 	const float cfExplosionDuration = 0.85f;
 
 protected:
+	struct vec2d
+	{
+		float x;
+		float y;
+	};
+
+	struct polygon
+	{
+		std::vector<vec2d> p;	// Transformed Points
+		vec2d pos;				// Position of shape
+		float angle;			// Direction of shape
+		std::vector<vec2d> o;	// "Model" of shape							
+		bool overlap = false;	// Flag to indicate if overlap has occurred
+	};
+
 	olc::Sprite* sSprite;
 	float fTimer;
 	int nGraphicCounter = 0;
@@ -59,6 +74,7 @@ public:
 	void Update(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx) override;
 	void KnockBack(float dx, float dy, float dist);
 	void TurnAround();
+	void Collision(float fElapsedTime);
 
 	virtual void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
 	virtual void ExplodeAndDie(float fElapsedTime);

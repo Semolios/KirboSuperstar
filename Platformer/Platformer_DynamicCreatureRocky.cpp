@@ -26,15 +26,6 @@ cDynamicCreatureRocky::cDynamicCreatureRocky(cLevel* l) : cDynamicCreature("rock
 
 void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 {
-	// lambda fonction to check if there is a hole or a wall to change direction
-	auto GetTile = [&](int x, int y)
-	{
-		if (x >= 0 && x < level->GetWidth() && y >= 0 && y < level->GetHeight())
-			return level->GetLevel()[y * level->GetWidth() + x];
-		else
-			return L' ';
-	};
-
 	vx = 0;
 
 	switch (nAIState)
@@ -53,10 +44,10 @@ void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float p
 			bAffectedByGravity = true;
 			nGraphicState = WALKING;
 
-			if (engine->IsSolidTile(GetTile(px + cfRockyLowerBoundary, py + 1)) ||
-				engine->IsSolidTile(GetTile(px + cfRockyUpperBoundary, py + 1)) ||
-				engine->IsSemiSolidTile(GetTile(px + cfRockyLowerBoundary, py + 1)) ||
-				engine->IsSemiSolidTile(GetTile(px + cfRockyUpperBoundary, py + 1)))
+			if (engine->IsSolidTile(engine->GetTile(px + cfRockyLowerBoundary, py + 1)) ||
+				engine->IsSolidTile(engine->GetTile(px + cfRockyUpperBoundary, py + 1)) ||
+				engine->IsSemiSolidTile(engine->GetTile(px + cfRockyLowerBoundary, py + 1)) ||
+				engine->IsSemiSolidTile(engine->GetTile(px + cfRockyUpperBoundary, py + 1)))
 			{
 				nAINextState = AI_LANDING;
 			}
@@ -78,8 +69,8 @@ void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float p
 			bAffectedByGravity = false;
 			vy = cfGoingBackUpSpeed;
 
-			if (engine->IsSolidTile(GetTile(px + cfRockyLowerBoundary, py - 0.01f)) ||
-				engine->IsSolidTile(GetTile(px + cfRockyUpperBoundary, py - 0.01f)) ||
+			if (engine->IsSolidTile(engine->GetTile(px + cfRockyLowerBoundary, py - 0.01f)) ||
+				engine->IsSolidTile(engine->GetTile(px + cfRockyUpperBoundary, py - 0.01f)) ||
 				py < 1)
 			{
 				vy = 0;

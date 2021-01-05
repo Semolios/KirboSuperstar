@@ -56,7 +56,7 @@ private:
 	const float cfSlapDuration = 0.1f;					// duration of the slap AOE
 	const float cfJesusCrossSpawnT = 7.0f;				// Number of frames to spawn jesus cross
 	const float cfVacuumAnimT = 2.0f;					// Number of frames when vacuum animation change to begin vacuum to vacuum
-	const float cfGrdPlayerOverlay = 0.08f;				// little gap to give impression the player cross the grass and don't walk on the grass
+	const float cfGrdDynamicOverlay = 0.08f;			// little gap to give impression the player cross the grass and don't walk on top of the grass
 	const float cfJesusCrossVelX = 10.0f;				// X Velocity of the jesus cross
 	const float cfJesusCrossVelY = -10.0f;				// Y Velocity of the jesus cross
 	const float cfJesusCrossDuration = 10.0f;			// Duration of the jesus cross
@@ -245,6 +245,10 @@ public:
 	void AddProjectile(cDynamicProjectile* proj);
 	float GetTileWidth();
 	float GetTileHeight();
+	float GetGravityValue();
+	float GetGroundDynamicOverlay();
+	wchar_t GetTile(int x, int y);
+	void SetTile(int x, int y, wchar_t c);
 	void ResetVariables();
 	bool CanInteract();
 	void ActivateShakeEffect(bool activate, int shakeAmplitudeX = 50, int shakeAmplitudeY = 50);

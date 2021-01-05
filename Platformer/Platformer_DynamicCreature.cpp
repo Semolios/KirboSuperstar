@@ -117,6 +117,107 @@ void cDynamicCreature::TurnAround()
 	vx = -vx;
 }
 
+void cDynamicCreature::Collision(float fElapsedTime)
+{
+	float fNewObjectPosX = px + vx * fElapsedTime;
+	float fNewObjectPosY = py + vy * fElapsedTime;
+
+	// Collision
+	float fBorder = 0.1f;
+
+	// Gravity
+	if (bAffectedByGravity)
+		vy += engine->GetGravityValue() * fElapsedTime;
+
+	if (bSolidVsMap)
+	{
+		if (vx <= 0) // Moving Left
+		{
+			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, py + fBorder)) || 
+				engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, py + (fDynHeight / engine->GetTileHeight()) - fBorder)))
+			{
+				fNewObjectPosX = (int)fNewObjectPosX + 1;
+				vx = 0;
+			}
+		}
+		else // Moving Right
+		{
+			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + fBorder)) || 
+				engine->IsSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + (fDynHeight / engine->GetTileHeight()) - fBorder)))
+			{
+				fNewObjectPosX = (int)fNewObjectPosX;
+				vx = 0;
+			}
+		}
+
+		if (vy <= 0) // Moving Up
+		{
+			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY)) || 
+				engine->IsSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY)))
+			{
+				fNewObjectPosY = (int)fNewObjectPosY + 1;
+				vy = 0;
+			}
+		}
+		else // Moving Down
+		{
+			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) || 
+				engine->IsSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
+				engine->IsSemiSolidTile(engine->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) || 
+				engine->IsSemiSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))))
+			{
+				fNewObjectPosY = (int)fNewObjectPosY + engine->GetGroundDynamicOverlay();
+				vy = 0;
+			}
+		}
+	}
+
+	float fDynObjectPosX = fNewObjectPosX;
+	float fDynObjectPosY = fNewObjectPosY;
+
+	// Object vs Object collisions
+	// TODO REVOIR CA CAR CA MARCHE PAS CA FAIT DE LA MERDE
+	//for (auto& dyn : vecEnnemies)
+	//{
+	//	if (dyn != object)
+	//	{
+	//		// If the objects are solid then they must not overlap
+	//		if (dyn->bSolidVsDyn && object->bSolidVsDyn)
+	//		{
+	//			// Check if bounding rectangles overlap
+	//			if (fDynObjectPosX < (dyn->px + (dyn->fDynWidth / (float)nTileWidth)) &&
+	//				(fDynObjectPosX + (object->fDynWidth / (float)nTileWidth)) > dyn->px &&
+	//				object->py < (dyn->py + (dyn->fDynHeight / (float)nTileHeight)) &&
+	//				(object->py + (object->fDynHeight / (float)nTileHeight)) > dyn->py)
+	//			{
+	//				// First Check Horizontally - Check Left
+	//				if (object->vx <= 0)
+	//					fDynObjectPosX = dyn->px + (dyn->fDynWidth / (float)nTileWidth);
+	//				else
+	//					fDynObjectPosX = dyn->px - (object->fDynWidth / (float)nTileWidth);
+
+	//				object->TurnAround();
+	//			}
+
+	//			if (fDynObjectPosX < (dyn->px + (dyn->fDynWidth / (float)nTileWidth)) &&
+	//				(fDynObjectPosX + (object->fDynWidth / (float)nTileWidth)) > dyn->px &&
+	//				fDynObjectPosY < (dyn->py + (dyn->fDynHeight / (float)nTileHeight)) &&
+	//				(fDynObjectPosY + (object->fDynHeight / (float)nTileHeight)) > dyn->py)
+	//			{
+	//				// First Check Vertically - Check Top
+	//				if (object->vy <= 0)
+	//					fDynObjectPosY = dyn->py + (dyn->fDynHeight / (float)nTileHeight);
+	//				else
+	//					fDynObjectPosY = dyn->py - (object->fDynHeight / (float)nTileHeight);
+	//			}
+	//		}
+	//	}
+	//}
+
+	px = fDynObjectPosX;
+	py = fDynObjectPosY;
+}
+
 void cDynamicCreature::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 {
 	// No default behaviour
