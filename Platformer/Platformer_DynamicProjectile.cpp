@@ -113,3 +113,115 @@ void cDynamicProjectile::Collision(float fElapsedTime)
 	px = fNewObjectPosX;
 	py = fNewObjectPosY;
 }
+
+std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProjectilesSprites()
+{
+	std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles;
+	mapProjectiles["jesuscross"].push_back(new olc::Sprite("assets/gfx/jesuscross.png"));
+
+	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion00.png"));
+	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion01.png"));
+	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion02.png"));
+	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion03.png"));
+	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion04.png"));
+	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion05.png"));
+	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/explosion06.png"));
+
+	mapProjectiles["slapAOE"].push_back(new olc::Sprite("assets/gfx/slapAOE.png"));
+
+	mapProjectiles["swordDownAOE"].push_back(new olc::Sprite("assets/gfx/swordDownAOE00.png"));
+	mapProjectiles["swordDownAOE"].push_back(new olc::Sprite("assets/gfx/swordDownAOE01.png"));
+	mapProjectiles["swordDownAOE"].push_back(new olc::Sprite("assets/gfx/swordDownAOE02.png"));
+
+	mapProjectiles["swordUpAOE"].push_back(new olc::Sprite("assets/gfx/swordUpAOE.png"));
+
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion00.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion01.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion02.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion03.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion04.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion05.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion06.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion07.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion08.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion09.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion10.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion11.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion12.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion13.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion14.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion15.png"));
+	mapProjectiles["bossExplosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion16.png"));
+
+	mapProjectiles["movingGround"].push_back(new olc::Sprite("assets/gfx/movingGround00.png"));
+	mapProjectiles["movingGround"].push_back(new olc::Sprite("assets/gfx/movingGround01.png"));
+	mapProjectiles["movingGround"].push_back(new olc::Sprite("assets/gfx/movingGround02.png"));
+	mapProjectiles["movingGround"].push_back(new olc::Sprite("assets/gfx/movingGround03.png"));
+	mapProjectiles["movingGround"].push_back(new olc::Sprite("assets/gfx/movingGround04.png"));
+
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root00.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root02.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root03.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root04.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root05.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root06.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root07.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root04.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root03.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root02.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root01.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root00.png"));
+
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple00.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple01.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple02.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple03.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple04.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple05.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple06.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple07.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple08.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple09.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple10.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple11.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple12.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple13.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple14.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple15.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple16.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple17.png"));
+	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple18.png"));
+
+	mapProjectiles["blow"].push_back(new olc::Sprite("assets/gfx/blow.png"));
+
+	mapProjectiles["movingGroundLava"].push_back(new olc::Sprite("assets/gfx/movingGroundLava00.png"));
+	mapProjectiles["movingGroundLava"].push_back(new olc::Sprite("assets/gfx/movingGroundLava01.png"));
+	mapProjectiles["movingGroundLava"].push_back(new olc::Sprite("assets/gfx/movingGroundLava02.png"));
+	mapProjectiles["movingGroundLava"].push_back(new olc::Sprite("assets/gfx/movingGroundLava03.png"));
+	mapProjectiles["movingGroundLava"].push_back(new olc::Sprite("assets/gfx/movingGroundLava04.png"));
+
+	mapProjectiles["magma"].push_back(new olc::Sprite("assets/gfx/magma00.png"));
+	mapProjectiles["magma"].push_back(new olc::Sprite("assets/gfx/magma01.png"));
+	mapProjectiles["magma"].push_back(new olc::Sprite("assets/gfx/magma02.png"));
+	mapProjectiles["magma"].push_back(new olc::Sprite("assets/gfx/magma03.png"));
+
+	mapProjectiles["magmaBoulder"].push_back(new olc::Sprite("assets/gfx/magmaBoulder.png"));
+
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser00.png"));
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser01.png"));
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser02.png"));
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser03.png"));
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser04.png"));
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser05.png"));
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser06.png"));
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser07.png"));
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser08.png"));
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser09.png"));
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser10.png"));
+	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser11.png"));
+
+	mapProjectiles["laser"].push_back(new olc::Sprite("assets/gfx/laser00.png"));
+	mapProjectiles["laser"].push_back(new olc::Sprite("assets/gfx/laser01.png"));
+
+	return mapProjectiles;
+}

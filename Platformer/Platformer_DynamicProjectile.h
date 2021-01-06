@@ -12,6 +12,8 @@ public:
 	void Update(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx) override;
 	void Collision(float fElapsedTime);
 
+	static std::map<std::string, std::vector<olc::Sprite*>> LoadProjectilesSprites();
+
 public:
 	std::vector<olc::Sprite*> mapStates;
 	float fSpriteX;
