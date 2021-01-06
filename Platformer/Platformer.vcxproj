@@ -165,6 +165,7 @@
     <ClCompile Include="Platformer_DynamicProjectile.cpp" />
     <ClCompile Include="Platformer_EndScreen.cpp" />
     <ClCompile Include="Platformer_Engine.cpp" />
+    <ClCompile Include="Platformer_HUD.cpp" />
     <ClCompile Include="Platformer_Level.cpp" />
     <ClCompile Include="Platformer_PauseMenu.cpp" />
     <ClCompile Include="Platformer_SelectMenu.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="Platformer_DynamicProjectile.h" />
     <ClInclude Include="Platformer_EndScreen.h" />
     <ClInclude Include="Platformer_Engine.h" />
+    <ClInclude Include="Platformer_HUD.h" />
     <ClInclude Include="Platformer_Level.h" />
     <ClInclude Include="Platformer_PauseMenu.h" />
     <ClInclude Include="Platformer_SelectMenu.h" />

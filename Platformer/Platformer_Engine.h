@@ -8,6 +8,7 @@
 #include "Platformer_DynamicCreature.h"
 #include "Platformer_DynamicProjectile.h"
 #include "Platformer_EndScreen.h"
+#include "Platformer_HUD.h"
 #include "Platformer_Level.h"
 #include "Platformer_PauseMenu.h"
 #include "Platformer_SelectMenu.h"
@@ -196,6 +197,7 @@ private:
 	std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles;
 
 	// HUD
+	cHUD* HUD;
 	olc::Sprite* sprHealthBar;
 	olc::Sprite* sprHealthPoint;
 	olc::Sprite* sprBossHealthBar;

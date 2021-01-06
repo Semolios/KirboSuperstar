@@ -384,8 +384,9 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 #pragma endregion
 
-#pragma region HUD Sprites
+#pragma region HUD
 
+	HUD = new cHUD();
 	sprHealthBar = new olc::Sprite("assets/gfx/emptyHealthBar.png");
 	sprHealthPoint = new olc::Sprite("assets/gfx/healthPoint.png");
 	sprBossHealthBar = new olc::Sprite("assets/gfx/emptyBossHealthBar.png");
@@ -1310,36 +1311,11 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 #pragma region HUD
 
-	// Health bar
-	SetPixelMode(olc::Pixel::ALPHA);
-	DrawSprite(0, 0, sprHealthBar);
-	SetPixelMode(olc::Pixel::NORMAL);
+	HUD->HealthBar(this, sprHealthBar);
+	HUD->HealthPoints(this, sprHealthPoint, fHealth);
 
-	// Health points
-	for (int i = 0; i < fHealth; i++)
-	{
-		SetPixelMode(olc::Pixel::ALPHA);
-		DrawSprite(13 + i * 10, 14, sprHealthPoint);
-		SetPixelMode(olc::Pixel::NORMAL);
-	}
-
-	// Boss HealthBar
 	if (bInBossLvl)
-	{
-		// Health points
-		int nBossHP = 0;
-		for (auto& dyn : vecEnnemies)
-		{
-			nBossHP += dyn->nHealth;
-		}
-
-		FillRect(663 + (100 - (nBossHP)), 30, nBossHP, 25, olc::VERY_DARK_MAGENTA);
-
-		// Health bar
-		SetPixelMode(olc::Pixel::ALPHA);
-		DrawSprite(650, 0, sprBossHealthBar);
-		SetPixelMode(olc::Pixel::NORMAL);
-	}
+		HUD->BossHealthBar(this, sprBossHealthBar, vecEnnemies);
 
 #pragma endregion
 
