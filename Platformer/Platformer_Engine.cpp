@@ -61,58 +61,17 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 #pragma region Loading Levels
 
-	levels.push_back("assets/lvls/lvl1.txt");
-	levels.push_back("assets/lvls/lvl2.txt");
-	levels.push_back("assets/lvls/lvl3.txt");
-	levels.push_back("assets/lvls/lvl4.txt");
-	levels.push_back("assets/lvls/lvl5.txt");
-	levels.push_back("assets/lvls/lvl6.txt");
-
-	bossLevels.push_back("assets/lvls/Bosslvl1.txt");
-	bossLevels.push_back("assets/lvls/Bosslvl2.txt");
-	bossLevels.push_back("assets/lvls/Bosslvl3.txt");
-	bossLevels.push_back("assets/lvls/Bosslvl4.txt");
-	bossLevels.push_back("assets/lvls/Bosslvl5.txt");
-	bossLevels.push_back("assets/lvls/Bosslvl6.txt");
-
-	levelsEnnemies.push_back("assets/lvls/ennemiesLvl1.txt");
-	levelsEnnemies.push_back("assets/lvls/ennemiesLvl2.txt");
-	levelsEnnemies.push_back("assets/lvls/ennemiesLvl3.txt");
-	levelsEnnemies.push_back("assets/lvls/ennemiesLvl4.txt");
-	levelsEnnemies.push_back("assets/lvls/ennemiesLvl5.txt");
-	levelsEnnemies.push_back("assets/lvls/ennemiesLvl6.txt");
-
-	levelsTiles.push_back("assets/gfx/tilemap00.png");
-	levelsTiles.push_back("assets/gfx/tilemap01.png");
-	levelsTiles.push_back("assets/gfx/tilemap02.png");
-	levelsTiles.push_back("assets/gfx/tilemap03.png");
-	levelsTiles.push_back("assets/gfx/tilemap04.png");
-	levelsTiles.push_back("assets/gfx/tilemap05.png");
-
-	groundTiles.push_back("assets/gfx/grdTileMap00.png");
-	groundTiles.push_back("assets/gfx/grdTileMap01.png");
-	groundTiles.push_back("assets/gfx/grdTileMap02.png");
-	groundTiles.push_back("assets/gfx/grdTileMap03.png");
-	groundTiles.push_back("assets/gfx/grdTileMap04.png");
-	groundTiles.push_back("assets/gfx/grdTileMap05.png");
-
-	levelsBackgrounds.push_back("assets/gfx/BckGrd00.png");
-	levelsBackgrounds.push_back("assets/gfx/BckGrd01.png");
-	levelsBackgrounds.push_back("assets/gfx/BckGrd02.png");
-	levelsBackgrounds.push_back("assets/gfx/BckGrd03.png");
-	levelsBackgrounds.push_back("assets/gfx/BckGrd04.png");
-	levelsBackgrounds.push_back("assets/gfx/BckGrd05.png");
-
-	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd00.png");
-	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd01.png");
-	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd02.png");
-	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd03.png");
-	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd04.png");
-	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd05.png");
-
-	currentLvl = new cLevel();
+	level = new cLevel();
 	cLevel::engine = this;
 	sprDoor = new olc::Sprite("assets/gfx/door.png");
+
+	levels = level->LoadLevelsList();
+	bossLevels = level->LoadBossLevelsList();
+	levelsEnnemies = level->LoadLevelsEnnemiesList();
+	levelsTiles = level->LoadLevelsTilesList();
+	groundTiles = level->LoadLevelsGrdTilesList();
+	levelsBackgrounds = level->LoadLevelsBackGroundList();
+	bossLevelsBackgrounds = level->LoadLevelsBossBckGrdList();
 
 #pragma endregion
 
@@ -418,11 +377,11 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 	vecProjectiles.clear();
 
 	nCurrentLevel = worldMap->GetSelectedLevel();
-	if (currentLvl->LoadLevel(levels[nCurrentLevel]))
+	if (level->LoadLevel(levels[nCurrentLevel]))
 	{
 		LoadLevelProperties();
 
-		currentLvl->PopulateEnnemies(vecEnnemies, levelsEnnemies[nCurrentLevel]);
+		level->PopulateEnnemies(vecEnnemies, levelsEnnemies[nCurrentLevel]);
 
 		spriteTiles = new olc::Sprite(levelsTiles[nCurrentLevel]);
 		sprGrdTiles = new olc::Sprite(groundTiles[nCurrentLevel]);
@@ -1372,11 +1331,11 @@ bool OneLoneCoder_Platformer::GameState_LoadBossLevel(float fElapsedTime)
 	vecEnnemies.clear();
 	vecProjectiles.clear();
 
-	if (currentLvl->LoadLevel(bossLevels[nCurrentLevel]))
+	if (level->LoadLevel(bossLevels[nCurrentLevel]))
 	{
 		LoadLevelProperties();
 
-		currentLvl->PopulateBoss(vecEnnemies, nCurrentLevel);
+		level->PopulateBoss(vecEnnemies, nCurrentLevel);
 
 		sprBackground = new olc::Sprite(bossLevelsBackgrounds[nCurrentLevel]);
 	}
@@ -1422,11 +1381,11 @@ bool OneLoneCoder_Platformer::GameState_Controls(float fElapsedTime)
 
 void OneLoneCoder_Platformer::LoadLevelProperties()
 {
-	nLevelWidth = currentLvl->GetWidth();
-	nLevelHeight = currentLvl->GetHeight();
-	fPlayerPosX = currentLvl->GetInitPlayerPosX();
-	fPlayerPosY = currentLvl->GetInitPlayerPoxY();
-	sLevel = currentLvl->GetLevel();
+	nLevelWidth = level->GetWidth();
+	nLevelHeight = level->GetHeight();
+	fPlayerPosX = level->GetInitPlayerPosX();
+	fPlayerPosY = level->GetInitPlayerPoxY();
+	sLevel = level->GetLevel();
 }
 
 void OneLoneCoder_Platformer::StopAnyAttack()

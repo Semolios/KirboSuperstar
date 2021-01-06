@@ -233,3 +233,94 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLv
 
 	return true;
 }
+
+std::vector<std::string> cLevel::LoadLevelsList()
+{
+	std::vector<std::string> levelList;
+	levelList.push_back("assets/lvls/lvl1.txt");
+	levelList.push_back("assets/lvls/lvl2.txt");
+	levelList.push_back("assets/lvls/lvl3.txt");
+	levelList.push_back("assets/lvls/lvl4.txt");
+	levelList.push_back("assets/lvls/lvl5.txt");
+	levelList.push_back("assets/lvls/lvl6.txt");
+
+	return levelList;
+}
+
+std::vector<std::string> cLevel::LoadBossLevelsList()
+{
+	std::vector<std::string> bossLevels;
+	bossLevels.push_back("assets/lvls/Bosslvl1.txt");
+	bossLevels.push_back("assets/lvls/Bosslvl2.txt");
+	bossLevels.push_back("assets/lvls/Bosslvl3.txt");
+	bossLevels.push_back("assets/lvls/Bosslvl4.txt");
+	bossLevels.push_back("assets/lvls/Bosslvl5.txt");
+	bossLevels.push_back("assets/lvls/Bosslvl6.txt");
+
+	return bossLevels;
+}
+
+std::vector<std::string> cLevel::LoadLevelsEnnemiesList()
+{
+	std::vector<std::string> levelsEnnemies;
+	levelsEnnemies.push_back("assets/lvls/ennemiesLvl1.txt");
+	levelsEnnemies.push_back("assets/lvls/ennemiesLvl2.txt");
+	levelsEnnemies.push_back("assets/lvls/ennemiesLvl3.txt");
+	levelsEnnemies.push_back("assets/lvls/ennemiesLvl4.txt");
+	levelsEnnemies.push_back("assets/lvls/ennemiesLvl5.txt");
+	levelsEnnemies.push_back("assets/lvls/ennemiesLvl6.txt");
+
+	return levelsEnnemies;
+}
+
+std::vector<std::string> cLevel::LoadLevelsTilesList()
+{
+	std::vector<std::string> levelsTiles;
+	levelsTiles.push_back("assets/gfx/tilemap00.png");
+	levelsTiles.push_back("assets/gfx/tilemap01.png");
+	levelsTiles.push_back("assets/gfx/tilemap02.png");
+	levelsTiles.push_back("assets/gfx/tilemap03.png");
+	levelsTiles.push_back("assets/gfx/tilemap04.png");
+	levelsTiles.push_back("assets/gfx/tilemap05.png");
+
+	return levelsTiles;
+}
+
+std::vector<std::string> cLevel::LoadLevelsGrdTilesList()
+{
+	std::vector<std::string> groundTiles;
+	groundTiles.push_back("assets/gfx/grdTileMap00.png");
+	groundTiles.push_back("assets/gfx/grdTileMap01.png");
+	groundTiles.push_back("assets/gfx/grdTileMap02.png");
+	groundTiles.push_back("assets/gfx/grdTileMap03.png");
+	groundTiles.push_back("assets/gfx/grdTileMap04.png");
+	groundTiles.push_back("assets/gfx/grdTileMap05.png");
+
+	return groundTiles;
+}
+
+std::vector<std::string> cLevel::LoadLevelsBackGroundList()
+{
+	std::vector<std::string> levelsBackgrounds;
+	levelsBackgrounds.push_back("assets/gfx/BckGrd00.png");
+	levelsBackgrounds.push_back("assets/gfx/BckGrd01.png");
+	levelsBackgrounds.push_back("assets/gfx/BckGrd02.png");
+	levelsBackgrounds.push_back("assets/gfx/BckGrd03.png");
+	levelsBackgrounds.push_back("assets/gfx/BckGrd04.png");
+	levelsBackgrounds.push_back("assets/gfx/BckGrd05.png");
+
+	return levelsBackgrounds;
+}
+
+std::vector<std::string> cLevel::LoadLevelsBossBckGrdList()
+{
+	std::vector<std::string> bossLevelsBackgrounds;
+	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd00.png");
+	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd01.png");
+	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd02.png");
+	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd03.png");
+	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd04.png");
+	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd05.png");
+
+	return bossLevelsBackgrounds;
+}

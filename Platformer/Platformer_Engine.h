@@ -86,7 +86,7 @@ private:
 	std::wstring sLevel;
 	int nLevelWidth;
 	int nLevelHeight;
-	cLevel* currentLvl;
+	cLevel* level;
 	int nCurrentLevel = 0;
 	int nUnlockedLevel = 6; // TODO PENSER A REMETTRE A 1 A LA FIN
 	olc::Sprite* sprBackground;

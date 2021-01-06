@@ -43,5 +43,12 @@ public:
 	int GetInitPlayerPoxY();
 	bool PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::string levelName);
 	bool PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLvl);
+	std::vector<std::string> LoadLevelsList();
+	std::vector<std::string> LoadBossLevelsList();
+	std::vector<std::string> LoadLevelsEnnemiesList();
+	std::vector<std::string> LoadLevelsTilesList();
+	std::vector<std::string> LoadLevelsGrdTilesList();
+	std::vector<std::string> LoadLevelsBackGroundList();
+	std::vector<std::string> LoadLevelsBossBckGrdList();
 };
 
