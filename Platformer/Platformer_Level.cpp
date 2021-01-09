@@ -73,7 +73,7 @@ int cLevel::GetInitPlayerPosX()
 	return nInitPlayerPosX;
 }
 
-int cLevel::GetInitPlayerPoxY()
+int cLevel::GetInitPlayerPosY()
 {
 	return nInitPlayerPosY;
 }

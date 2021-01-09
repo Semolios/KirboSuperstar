@@ -168,6 +168,7 @@
     <ClCompile Include="Platformer_HUD.cpp" />
     <ClCompile Include="Platformer_Level.cpp" />
     <ClCompile Include="Platformer_PauseMenu.cpp" />
+    <ClCompile Include="Platformer_Player.cpp" />
     <ClCompile Include="Platformer_SelectMenu.cpp" />
     <ClCompile Include="Platformer_Transition.cpp" />
     <ClCompile Include="Platformer_Spline.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="Platformer_HUD.h" />
     <ClInclude Include="Platformer_Level.h" />
     <ClInclude Include="Platformer_PauseMenu.h" />
+    <ClInclude Include="Platformer_Player.h" />
     <ClInclude Include="Platformer_SelectMenu.h" />
     <ClInclude Include="Platformer_Transition.h" />
     <ClInclude Include="Platformer_Spline.h" />

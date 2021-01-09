@@ -7,8 +7,6 @@ OneLoneCoder_Platformer::OneLoneCoder_Platformer()
 
 bool OneLoneCoder_Platformer::OnUserCreate()
 {
-	animPlayer.ChangeState("idle");
-
 	return true;
 }
 
@@ -159,6 +157,13 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	cDynamicCreatureWaddleDee::engine = this;
 	cDynamicCreatureWhispyWood::engine = this;
 	cDynamicProjectile::engine = this;
+	cPlayer::engine = this;
+
+#pragma endregion
+
+#pragma region Player
+
+	player = new cPlayer(&animPlayer);
 
 #pragma endregion
 
@@ -186,7 +191,7 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 	}
 
 	// Reset variables when level is loading
-	fHealth = cfMaxHealth;
+	player->InitialiseKirboHealth();
 	ResetVariables();
 
 	srand(time(NULL));
@@ -212,7 +217,7 @@ bool OneLoneCoder_Platformer::GameState_Title(float fElapsedTime)
 bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 {
 	// Stop time a while before dead animation
-	if (bDead)
+	if (player->IsDead())
 	{
 		fStopTimebeforeDeadAnim += fElapsedTime;
 
@@ -222,472 +227,45 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	animPlayer.Update(fElapsedTime);
 
-	// Handle input
-	if (IsFocused() && CanInteract())
+	player->HandleInput(this, fElapsedTime);
+	// Handle pause button pressed
+	if (bBreakLoop)
 	{
-		// Fly, enter a door
-		if (GetKey(olc::Key::UP).bHeld)
-		{
-			if (!bAttacking && !bVacuuming)
-			{
-				if (GetTile(fPlayerPosX + 0.5f, fPlayerPosY + 0.5f) == L'w' && bPlayerOnGround)
-					nGameState = GS_LOADBOSSLEVEL;
-
-				fPlayerVelY = -cfPlayerVelY;
-				bFlying = true;
-				animPlayer.ChangeState("flying");
-			}
-		}
-
-		// Go down when flying, cross semi solid platform and control camera when onground
-		if (GetKey(olc::Key::DOWN).bHeld)
-		{
-			if (bFlying)
-				fPlayerVelY = cfPlayerVelY;
-
-			// If player is on semi solid platform, pass through the platform. cheat a little bit, modify the position of the player to cross it
-			if ((IsSemiSolidTile(GetTile(fPlayerPosX + 0.0f, fPlayerPosY + 1.0f)) || IsSemiSolidTile(GetTile(fPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY + 1.0f))) && bPlayerOnGround)
-				fPlayerPosY += 0.15;
-
-			if ((IsSolidTile(GetTile(fPlayerPosX + 0.0f, fPlayerPosY + 1.0f)) || IsSolidTile(GetTile(fPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY + 1.0f))) && bPlayerOnGround)
-				fCameraLookingDown -= cfCameraMoveSpeed;
-		}
-		else
-		{
-			fCameraLookingDown += cfCameraMoveSpeed;
-		}
-
-		// Go left
-		if (GetKey(olc::Key::LEFT).bHeld)
-		{
-			if (!bAttacking && !bVacuuming)
-			{
-				// Init speed by cfMinPlayerVelX + 0.05 or the player won't move when on ground
-				if (fabs(fPlayerVelX) < cfMinPlayerVelX) fPlayerVelX -= (cfMinPlayerVelX + 0.05f);
-
-				fPlayerVelX += (bPlayerOnGround ? -cfPlayerAccGrdX : -cfPlayerAccAirX) * fElapsedTime;
-				fFaceDir = -1.0f;
-			}
-		}
-
-		// Go right
-		if (GetKey(olc::Key::RIGHT).bHeld)
-		{
-			if (!bAttacking && !bVacuuming)
-			{
-				// Init speed by cfMinPlayerVelX + 0.05 or the player won't move when on ground
-				if (fabs(fPlayerVelX) < cfMinPlayerVelX) fPlayerVelX += (cfMinPlayerVelX + 0.05f);
-
-				fPlayerVelX += (bPlayerOnGround ? cfPlayerAccGrdX : cfPlayerAccAirX) * fElapsedTime;
-				fFaceDir = 1.0f;
-			}
-		}
-
-		// Jump, double jump, stop flying
-		if (GetKey(olc::Key::SPACE).bPressed)
-		{
-			if (bFlying)
-			{
-				bFlying = false;
-			}
-			else if (bPlayerOnGround)
-			{
-				bChargeJump = true;
-			}
-			else if (bDoubleJump && fPlayerVelY > 0)
-			{
-				bDoubleJump = false;
-				bChargeDoubleJump = true;
-			}
-		}
-
-		// The more you hold, the higher you go
-		if (GetKey(olc::Key::SPACE).bHeld)
-		{
-			if (bChargeJump)
-			{
-				if (fPlayerVelY >= cfPlayerJumpMinAcc) fPlayerVelY = cfPlayerJumpMinAcc;
-				fPlayerVelY += cfJumpIncrement;
-				if (fPlayerVelY <= cfPlayerJumpMaxAcc)
-				{
-					bChargeJump = false;
-				}
-			}
-			else if (bChargeDoubleJump)
-			{
-				if (fPlayerVelY >= cfPlayerJumpMinAcc) fPlayerVelY = cfPlayerJumpMinAcc;
-				fPlayerVelY += cfJumpIncrement;
-				if (fPlayerVelY <= cfPlayerDblJumpMaxAcc)
-				{
-					bChargeDoubleJump = false;
-				}
-			}
-		}
-
-		// if you release space, jump is cancelled so you can't spam space to glide
-		if (GetKey(olc::Key::SPACE).bReleased)
-		{
-			if (bChargeJump) bChargeJump = false;
-			if (bChargeDoubleJump) bChargeDoubleJump = false;
-		}
-
-		// Slap attack
-		if (GetKey(olc::Key::F).bPressed)
-		{
-			// Can't spam slap, can't slap when player is flying
-			if (!bAttacking && !bFlying)
-			{
-				animPlayer.ChangeState("slap");
-				bAttacking = true;
-				bSlapping = true;
-				bCanSpawnProjectile = true;
-				fAnimationTimer = 0.0f;
-			}
-		}
-
-		// Pause
-		if (GetKey(olc::Key::P).bPressed)
-		{
-			pauseMenu->SetPlayerChoice(0);
-
-			// You can't use pause when you are hit.
-			// like you can't pause when you jump in mario sunshine so you can't leave the level when you are falling
-			nGameState = GS_PAUSE;
-			return true;
-		}
-
-		// Launch a Jesus Cross
-		if (GetKey(olc::Key::R).bPressed)
-		{
-			// Can't spam Launching cross, can't launch when player is flying
-			if (!bAttacking && !bFlying)
-			{
-				animPlayer.ChangeState("jesus_christ");
-				bAttacking = true;
-				bLaunchingJesusCross = true;
-				bCanSpawnProjectile = true;
-				fAnimationTimer = 0.0f;
-			}
-		}
-
-		// Vacuum attack
-		if (GetKey(olc::Key::E).bHeld)
-		{
-			// can't Vacuum when player is attacking, swallowing or flying
-			if (!bFlying && !bSwallowing)
-			{
-				if (!bVacuuming && !bAttacking)
-				{
-					animPlayer.ChangeState("begin_vacuum");
-					bVacuuming = true;
-					fAnimationTimer = 0.0f;
-				}
-				bAttacking = true;
-			}
-			else
-			{
-				bVacuuming = false;
-			}
-		}
-		else
-		{
-			bVacuuming = false;
-		}
+		bBreakLoop = false;
+		return true;
 	}
 
 	// Clamp camera offset
 	if (fCameraLookingDown <= cfCameraLowerPos) fCameraLookingDown = cfCameraLowerPos;
 	if (fCameraLookingDown >= cfCameraUpperPos) fCameraLookingDown = cfCameraUpperPos;
 
-	// Gravity
-	fPlayerVelY += cfGravity * fElapsedTime;
+	player->ApplyGravity(fElapsedTime);
 
-	if (bAttacking && CanInteract())
-	{
-		fPlayerVelX = 0.0f;
-		fPlayerVelY = 0.0f;
-	}
-	else
-	{
-		if (bPlayerOnGround)
-		{
-			bFlying = false;
-
-			fPlayerVelX += cfDrag * fPlayerVelX * fElapsedTime;
-			if (fabs(fPlayerVelX) < cfMinPlayerVelX)
-			{
-				fPlayerVelX = 0.0f;
-
-				if (CanInteract())
-					animPlayer.ChangeState("idle");
-			}
-			else
-			{
-				if (CanInteract())
-					animPlayer.ChangeState("run");
-			}
-		}
-		else
-		{
-			if (CanInteract())
-			{
-				if (!bFlying)
-				{
-					if (fPlayerVelY < 0)
-						animPlayer.ChangeState("jump");
-					else
-						animPlayer.ChangeState("fall");
-				}
-			}
-		}
-	}
+	player->Update(fElapsedTime);
 
 	// Draw Player
 	olc::GFX2D::Transform2D t;
 	t.Translate(((float)-nTileWidth / 2.0f) - cnSpriteOffsetX, ((float)-nTileWidth / 2.0f) - cnSpriteOffsetY);
-	t.Scale(fFaceDir * 1.0f, 1.0f);
+	t.Scale(player->GetFaceDir() * 1.0f, 1.0f);
 
-#pragma region ONE CYCLE ANIMATIONS
-
-	if (bAttacking && !bDead)
+	player->OneCycleAnimations(fElapsedTime, &t, mapProjectiles);
+	// Handle State Change
+	if (bBreakLoop)
 	{
-		// calculate elapsed time during attack
-		fAnimationTimer += fElapsedTime;
-
-		// Slap Attack
-		if (bSlapping)
-		{
-			if (fAnimationTimer >= cfSlapSpawnT * animPlayer.fTimeBetweenFrames)
-			{
-				if (bCanSpawnProjectile)
-				{
-					// must offset the AOE so it goes from kirbo's hand
-					float fProjectilePosX = fPlayerPosX + (fFaceDir > 0.0f ? 1.0f : -(mapProjectiles["slapAOE"][0]->width / (float)nTileWidth));
-					float fProjectilePosY = fPlayerPosY - ((mapProjectiles["slapAOE"][0]->height - (float)nTileHeight) / (float)(2 * nTileHeight));
-					cDynamicProjectile* p = CreateProjectile(fProjectilePosX, fProjectilePosY, true, fFaceDir, 0.0f, cfSlapDuration, "slapAOE", false, cnSlapDmg, false, false);
-					p->bOneHit = false;
-					AddProjectile(p);
-					bCanSpawnProjectile = false;
-				}
-			}
-		}
-
-		// Launch a Jesus Cross
-		if (bLaunchingJesusCross)
-		{
-			if (fAnimationTimer >= cfJesusCrossSpawnT * animPlayer.fTimeBetweenFrames)
-			{
-				if (bCanSpawnProjectile)
-				{
-					cDynamicProjectile* p = CreateProjectile((fPlayerPosX + fFaceDir), fPlayerPosY - 1.0f, true, cfJesusCrossVelX * fFaceDir, cfJesusCrossVelY, cfJesusCrossDuration, "jesuscross", true, cnJesusCrossDmg, true);
-					AddProjectile(p);
-					bCanSpawnProjectile = false;
-				}
-			}
-		}
-
-		// Vacuuming
-		if (bVacuuming)
-		{
-			if (fAnimationTimer >= cfVacuumAnimT * animPlayer.fTimeBetweenFrames)
-			{
-				animPlayer.ChangeState("vacuum");
-			}
-		}
-
-		// Swallowing
-		if (bSwallowing)
-		{
-			animPlayer.ChangeState("swallow");
-		}
-
-		// Stop the attack when it's finished
-		if (fAnimationTimer >= animPlayer.mapStates[animPlayer.sCurrentState].size() * animPlayer.fTimeBetweenFrames)
-		{
-			fAnimationTimer = 0.0f;
-			StopAnyAttack();
-		}
+		bBreakLoop = false;
+		return true;
 	}
 
-	if (bPlayerDamaged && !bDead)
-	{
-		// calculate elapsed time after damage
-		fAnimationTimer += fElapsedTime;
-		bFlying = false;
-		StopAnyAttack();
-
-		if (fAnimationTimer >= animPlayer.mapStates["damaged"].size() * animPlayer.fTimeBetweenFrames)
-		{
-			fAnimationTimer = 0.0f;
-			bPlayerDamaged = false;
-		}
-	}
-
-	if (bDead)
-	{
-		fPlayerVelX = 0.0f;
-		fPlayerVelY = 0.0f;
-		StopAnyAttack();
-
-		fDeadAnimation += fElapsedTime;
-		if (fDeadAnimation != fElapsedTime)
-		{
-			t.Rotate(fDeadAnimation * cfDeadRotationAnimation);
-			// animation based on a 2nd degree polynome to simulate kirbo's death animation
-			t.Translate(0.0f, (4.0f * fDeadAnimation - 2.0f) * 64.0f * (4.0f * fDeadAnimation - 2.0f) - 4 * 64.0f);
-		}
-
-		// Return to the map after dead animation
-		if (fDeadAnimation >= cfDeadAnimation)
-		{
-			// if you die in boss level, you reappear in the boss room
-			if (bInBossLvl)
-			{
-				ResetVariables();
-				fHealth = cfMaxHealth;
-				nGameState = GS_LOADBOSSLEVEL;
-				return true;
-			}
-
-			nGameState = GS_WORLDMAP;
-			animPlayer.ChangeState("riding_star");
-			return true;
-		}
-	}
-
-	if (bBossKilled)
-	{
-		fPlayerVelX = 0.0f;
-		fPlayerVelY = 0.0f;
-		StopAnyAttack();
-
-		fWinTimer += fElapsedTime;
-
-		// after the dance, kirbo goes away
-		if (fWinTimer >= animPlayer.mapStates["boss_killed"].size() * animPlayer.fTimeBetweenFrames)
-		{
-			fKirboGoesAwayTimer += fElapsedTime;
-			animPlayer.ChangeState("kirbo_goes_away");
-
-			fFaceDir = 1.0f;
-			t.Scale(-1.0f, 1.0f); // Scale the sprite because riding_star00 sprite is facing left
-			t.Rotate(-fKirboGoesAwayTimer * cfGoAwayRotationAnimation);
-			t.Translate(fKirboGoesAwayTimer * cfGoAwayTranslationAnimation, -fKirboGoesAwayTimer * cfGoAwayTranslationAnimation);
-		}
-		else
-		{
-			fFaceDir = 1.0f;
-		}
-	}
-
-#pragma endregion
-
-	// Clamp velocities
-	if (fPlayerVelX > cfMaxPlayerVelX)
-		fPlayerVelX = cfMaxPlayerVelX;
-
-	if (fPlayerVelX < -cfMaxPlayerVelX)
-		fPlayerVelX = -cfMaxPlayerVelX;
-
-	if (fPlayerVelY > cfMaxPlayerVelY)
-		fPlayerVelY = cfMaxPlayerVelY;
-
-	if (fPlayerVelY < -cfMaxPlayerVelY)
-		fPlayerVelY = -cfMaxPlayerVelY;
-
-	if (bFlying)
-	{
-		if (fPlayerVelX > cfMaxPlayerFlyingVelX)
-			fPlayerVelX = cfMaxPlayerFlyingVelX;
-
-		if (fPlayerVelX < -cfMaxPlayerFlyingVelX)
-			fPlayerVelX = -cfMaxPlayerFlyingVelX;
-
-		if (fPlayerVelY > cfMaxPlayerFlyingVelY)
-			fPlayerVelY = cfMaxPlayerFlyingVelY;
-	}
+	player->ClampVelocities();
 
 	// Wind effect
 	if (bWind)
-		fPlayerVelX += fWindDirection * fWindPower * fElapsedTime;
+		player->IncreasePlayerVel(fWindDirection * fWindPower * fElapsedTime, 0);
 
-	float fNewPlayerPosX = fPlayerPosX + fPlayerVelX * fElapsedTime;
-	float fNewPlayerPosY = fPlayerPosY + fPlayerVelY * fElapsedTime;
+	player->Collisions(fElapsedTime, level);
 
-	// Check for pickups !
-	if (GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 0.0f) == L'o')
-		SetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 0.0f, L'.');
-
-	if (GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f) == L'o')
-		SetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f, L'.');
-
-	if (GetTile(fNewPlayerPosX + 1.0f, fNewPlayerPosY + 0.0f) == L'o')
-		SetTile(fNewPlayerPosX + 1.0f, fNewPlayerPosY + 0.0f, L'.');
-
-	if (GetTile(fNewPlayerPosX + 1.0f, fNewPlayerPosY + 1.0f) == L'o')
-		SetTile(fNewPlayerPosX + 1.0f, fNewPlayerPosY + 1.0f, L'.');
-
-	// Check hole
-	if (fPlayerPosY > nLevelHeight)
-	{
-		fHealth = 0.0f;
-		bDead = true;
-		animPlayer.ChangeState("dead");
-	}
-
-	// Collision
-	if (fPlayerVelX <= 0) // Moving Left
-	{
-		if (fNewPlayerPosX <= 1) fNewPlayerPosX = 1; // Prevent from being brutally moved to 0 only when reaching -1
-
-		if (IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.0f)) || IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + fPlayerCollisionUpperLimit)))
-		{
-			fNewPlayerPosX = (int)fNewPlayerPosX + 1;
-			fPlayerVelX = 0;
-		}
-	}
-	else // Moving Right
-	{
-		if (fNewPlayerPosX >= nLevelWidth - 2) fNewPlayerPosX = nLevelWidth - 2; // Kirbo can't cross the edge of the map
-
-		if (IsSolidTile(GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.0f)) || IsSolidTile(GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + fPlayerCollisionUpperLimit)))
-		{
-			fNewPlayerPosX = (int)fNewPlayerPosX;
-			fPlayerVelX = 0;
-		}
-	}
-
-	bPlayerOnGround = false;
-	if (fPlayerVelY <= 0) // Moving Up
-	{
-		if (fNewPlayerPosY <= 1) fNewPlayerPosY = 1; // Prevent from being brutally moved to 0 only when reaching -1
-
-		if (IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY)) || IsSolidTile(GetTile(fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY)))
-		{
-			fNewPlayerPosY = (int)fNewPlayerPosY + 1;
-			fPlayerVelY = 0;
-		}
-	}
-	else // Moving Down
-	{
-		// This little trick (fPlayerPosY + 1.0f < (float)((int)fNewPlayerPosY + 1.0f) + 0.1f) checks if the player's feets are above the top of the semi-solid Block.
-		// Otherwise the player is moved to the top of the block when his feets reach the bottom of the block
-		// "fPlayerPosY + 1.0f" is the feets Y position, "(float)((int)fNewPlayerPosY + 1.0f) + 0.1f" takes the top of the block at the feets position and add a 0.1 delta, if the feets are above this delta, the player is moved on top of the block.
-		if (IsSolidTile(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f)) || IsSolidTile(GetTile(fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f)) ||
-			((IsSemiSolidTile(GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f)) || IsSemiSolidTile(GetTile(fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f))) && fPlayerPosY + 1.0f < (float)((int)fNewPlayerPosY + 1.0f) + 0.1f))
-		{
-			fNewPlayerPosY = (int)fNewPlayerPosY + cfGrdDynamicOverlay; // Remove this line to create shifting sand
-			fPlayerVelY = 0;
-			bPlayerOnGround = true;
-			bDoubleJump = true;
-		}
-	}
-
-	fPlayerPosX = fNewPlayerPosX;
-	fPlayerPosY = fNewPlayerPosY;
-
-	fCameraPosX = fPlayerPosX;
-	fCameraPosY = fPlayerPosY;
+	fCameraPosX = player->GetPlayerPosX();
+	fCameraPosY = player->GetPlayerPosY();
 
 	// Draw level
 	int nVisibleTilesX = ScreenWidth() / nTileWidth;
@@ -700,8 +278,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	// Clamp camera to game boundaries
 	if (fOffsetX < 1) fOffsetX = 1;
 	if (fOffsetY < 1) fOffsetY = 1;
-	if (fOffsetX > nLevelWidth - nVisibleTilesX - 1) fOffsetX = nLevelWidth - nVisibleTilesX - 1;
-	if (fOffsetY > nLevelHeight - nVisibleTilesY - 1) fOffsetY = nLevelHeight - nVisibleTilesY - 1;
+	if (fOffsetX > level->GetWidth() - nVisibleTilesX - 1) fOffsetX = level->GetWidth() - nVisibleTilesX - 1;
+	if (fOffsetY > level->GetHeight() - nVisibleTilesY - 1) fOffsetY = level->GetHeight() - nVisibleTilesY - 1;
 
 	if (bShake)
 	{
@@ -722,8 +300,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	float fTileOffsetY = (fOffsetY - (int)fOffsetY) * nTileHeight;
 
 	// Draw Level background
-	float fBackgroundOffsetX = fOffsetX * (float)nTileWidth * ((float)(sprBackground->width - ScreenWidth()) / (float)(nLevelWidth * nTileWidth - ScreenWidth()));
-	float fBackgroundOffsetY = fOffsetY * (float)nTileHeight * ((float)(sprBackground->height - ScreenHeight()) / (float)(nLevelHeight * nTileHeight - ScreenHeight()));
+	float fBackgroundOffsetX = fOffsetX * (float)nTileWidth * ((float)(sprBackground->width - ScreenWidth()) / (float)(level->GetWidth() * nTileWidth - ScreenWidth()));
+	float fBackgroundOffsetY = fOffsetY * (float)nTileHeight * ((float)(sprBackground->height - ScreenHeight()) / (float)(level->GetWidth() * nTileHeight - ScreenHeight()));
 	DrawPartialSprite(0, 0, sprBackground, fBackgroundOffsetX, fBackgroundOffsetY, ScreenWidth(), ScreenHeight());
 
 	// Draw Visible tile map
@@ -772,7 +350,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// Check if the ennemi is in the vacuum
 		if (object->bIsVacuumable)
 		{
-			if (bVacuuming)
+			if (player->IsVacuuming())
 			{
 				polygon sEnnemy;
 				sEnnemy.pos = {
@@ -803,14 +381,14 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 				polygon sVacuum;
 				sVacuum.pos = {
-					(fPlayerPosX + (fFaceDir > 0.0f ? 1.75f : -0.75f) - fOffsetX) * (float)nTileWidth,
-					(fPlayerPosY + 0.5f - fOffsetY) * (float)nTileHeight
+					(player->GetPlayerPosX() + (player->GetFaceDir() > 0.0f ? 1.75f : -0.75f) - fOffsetX) * (float)nTileWidth,
+					(player->GetPlayerPosY() + 0.5f - fOffsetY) * (float)nTileHeight
 				}; // 1 block ahead the player's looking direction
 				sVacuum.angle = 0.0f;
-				sVacuum.o.push_back({ -(float)nTileWidth * 1.25f, -(float)nTileHeight / (fFaceDir > 0.0f ? 2.0f : 1.0f) });
-				sVacuum.o.push_back({ -(float)nTileWidth * 1.25f, +(float)nTileHeight / (fFaceDir > 0.0f ? 2.0f : 1.0f) });
-				sVacuum.o.push_back({ +(float)nTileWidth * 1.25f, +(float)nTileHeight / (fFaceDir > 0.0f ? 1.0f : 2.0f) });
-				sVacuum.o.push_back({ +(float)nTileWidth * 1.25f, -(float)nTileHeight / (fFaceDir > 0.0f ? 1.0f : 2.0f) });
+				sVacuum.o.push_back({ -(float)nTileWidth * 1.25f, -(float)nTileHeight / (player->GetFaceDir() > 0.0f ? 2.0f : 1.0f) });
+				sVacuum.o.push_back({ -(float)nTileWidth * 1.25f, +(float)nTileHeight / (player->GetFaceDir() > 0.0f ? 2.0f : 1.0f) });
+				sVacuum.o.push_back({ +(float)nTileWidth * 1.25f, +(float)nTileHeight / (player->GetFaceDir() > 0.0f ? 1.0f : 2.0f) });
+				sVacuum.o.push_back({ +(float)nTileWidth * 1.25f, -(float)nTileHeight / (player->GetFaceDir() > 0.0f ? 1.0f : 2.0f) });
 				sVacuum.p.resize(4);
 
 				for (int i = 0; i < sVacuum.o.size(); i++)
@@ -833,16 +411,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 					ChangeEnnemyProperties(object, true);
 					Attack(object, 0);
 
-					// if one ennemy is under fSwallowDistance from kirbo, every swallowable ennemy is killed and kirbo starts swallowing animation
-					float fTargetX = fPlayerPosX - object->px;
-					float fTargetY = fPlayerPosY - object->py;
-					float fDistance = sqrtf(fTargetX * fTargetX + fTargetY * fTargetY);
-
-					if (fDistance <= fSwallowDistance)
-					{
-						bSwallowing = true;
-						bAttacking = true;
-					}
+					player->VacuumEnnemy(object);
 				}
 				else
 				{
@@ -858,7 +427,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		}
 
 		// Check collision with player to damage him
-		if (bIsPlayerAttackable && !bSwallowing && !object->bVacuumed)
+		if (player->IsAttackable() && !player->IsSwallowing() && !object->bVacuumed)
 		{
 			CheckIfPlayerIsDamaged(object, 0.0f, fOffsetX, fOffsetY);
 		}
@@ -949,7 +518,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			}
 			else
 			{
-				if (bIsPlayerAttackable)
+				if (player->IsAttackable())
 				{
 					CheckIfPlayerIsDamaged(object, atan2f(object->vy, object->vx), fOffsetX, fOffsetY);
 				}
@@ -959,12 +528,12 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	for (auto& object : vecEnnemies)
 	{
-		object->Update(fElapsedTime, fPlayerPosX, fPlayerPosY, this);
+		object->Update(fElapsedTime, player->GetPlayerPosX(), player->GetPlayerPosY(), this);
 	}
 
 	for (auto& object : vecProjectiles)
 	{
-		object->Update(fElapsedTime, fPlayerPosX, fPlayerPosY, this);
+		object->Update(fElapsedTime, player->GetPlayerPosX(), player->GetPlayerPosY(), this);
 	}
 
 	// Remove dead ennemies
@@ -974,7 +543,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	}), vecEnnemies.end());
 
 	// Remove swallowed ennemies
-	if (bSwallowing)
+	if (player->IsSwallowing())
 	{
 		vecEnnemies.erase(remove_if(vecEnnemies.begin(), vecEnnemies.end(), [](const cDynamicCreature* d)
 		{
@@ -1035,40 +604,14 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		}
 	}
 
-	// Check invulnerability frame
-	fInvulnerabilityTimer -= fElapsedTime;
-	if (fInvulnerabilityTimer <= 0.0f)
-	{
-		fInvulnerabilityTimer = 0.0f;
-		bShowKirbo = true;
-		bIsPlayerAttackable = true;
-	}
-	else
-	{
-		fInvulnerabilityTickingTimer += fElapsedTime;
-		if (fInvulnerabilityTickingTimer >= cfInvulnerabilityTickingSpeed)
-		{
-			fInvulnerabilityTickingTimer -= cfInvulnerabilityTickingSpeed;
-
-			// Start ticking only after damage animation
-			if (!bPlayerDamaged)
-				bShowKirbo = !bShowKirbo;
-		}
-	}
-
-	t.Translate((fPlayerPosX - fOffsetX) * nTileWidth + (nTileWidth / 2), (fPlayerPosY - fOffsetY) * nTileHeight + (nTileHeight / 2));
-
-	if (bShowKirbo)
-	{
-		SetPixelMode(olc::Pixel::ALPHA);
-		animPlayer.DrawSelf(this, t);
-		SetPixelMode(olc::Pixel::NORMAL);
-	}
+	player->UpdateInvulnerability(fElapsedTime);
+	t.Translate((player->GetPlayerPosX() - fOffsetX) * nTileWidth + (nTileWidth / 2), (player->GetPlayerPosY() - fOffsetY) * nTileHeight + (nTileHeight / 2));
+	player->DrawKirbo(this, t);
 
 #pragma region HUD
 
 	HUD->HealthBar(this, sprHealthBar);
-	HUD->HealthPoints(this, sprHealthPoint, fHealth);
+	HUD->HealthPoints(this, sprHealthPoint, player->GetHealth());
 
 	if (bInBossLvl)
 		HUD->BossHealthBar(this, sprBossHealthBar, vecEnnemies);
@@ -1178,19 +721,9 @@ bool OneLoneCoder_Platformer::GameState_Controls(float fElapsedTime)
 
 void OneLoneCoder_Platformer::LoadLevelProperties()
 {
-	nLevelWidth = level->GetWidth();
-	nLevelHeight = level->GetHeight();
-	fPlayerPosX = level->GetInitPlayerPosX();
-	fPlayerPosY = level->GetInitPlayerPoxY();
+	player->SetPlayerPosX(level->GetInitPlayerPosX());
+	player->SetPlayerPosY(level->GetInitPlayerPosY());
 	sLevel = level->GetLevel();
-}
-
-void OneLoneCoder_Platformer::StopAnyAttack()
-{
-	bAttacking = false;
-	bSlapping = false;
-	bLaunchingJesusCross = false;
-	bSwallowing = false;
 }
 
 void OneLoneCoder_Platformer::CheckIfPlayerIsDamaged(cDynamic* object, float angle, float fOffsetX, float fOffsetY)
@@ -1228,8 +761,8 @@ void OneLoneCoder_Platformer::CheckIfPlayerIsDamaged(cDynamic* object, float ang
 
 	polygon sPlayer;
 	sPlayer.pos = {
-		(fPlayerPosX + 0.5f - fOffsetX) * (float)nTileWidth,
-		(fPlayerPosY + 0.5f - fOffsetY) * (float)nTileHeight
+		(player->GetPlayerPosX() + 0.5f - fOffsetX) * (float)nTileWidth,
+		(player->GetPlayerPosY() + 0.5f - fOffsetY) * (float)nTileHeight
 	}; // Center of the player
 	sPlayer.angle = 0.0f;
 	sPlayer.o.push_back({ -(float)nTileWidth / 2.2f, -(float)nTileHeight / 2.2f });	// little reduction of the player hitbox to allow a little overlap with attack
@@ -1254,35 +787,7 @@ void OneLoneCoder_Platformer::CheckIfPlayerIsDamaged(cDynamic* object, float ang
 	//DrawLine(sPlayer.p[3].x, sPlayer.p[3].y, sPlayer.p[0].x, sPlayer.p[0].y, olc::BLUE);
 
 	if (ShapeOverlap_DIAG(sAOE, sPlayer))
-	{
-		// Player is damaged
-		animPlayer.ChangeState("damaged");
-		fInvulnerabilityTimer = cfInvulnerabilityFrame;
-		bPlayerDamaged = true;
-		bIsPlayerAttackable = false;
-		fHealth -= object->nDamage;
-
-		if (fHealth <= 0.0f)
-		{
-			bDead = true;
-			animPlayer.ChangeState("dead");
-		}
-
-		if (!bDead)
-		{
-			// Knockback the player out of the ennemy
-			if (object->px < fPlayerPosX)
-			{
-				fPlayerVelX = cfDamageEjectionVelX;
-				fPlayerVelY = -cfDamageEjectionVelY;
-			}
-			else
-			{
-				fPlayerVelX = -cfDamageEjectionVelX;
-				fPlayerVelY = -cfDamageEjectionVelY;
-			}
-		}
-	}
+		player->Damage(object);
 }
 
 bool OneLoneCoder_Platformer::ShapeOverlap_DIAG(polygon& r1, polygon& r2)
@@ -1334,8 +839,8 @@ void OneLoneCoder_Platformer::Attack(cDynamicCreature* victim, int damage)
 		victim->nHealth -= damage;
 
 		// Knock victim back
-		float tx = victim->px - fPlayerPosX;
-		float ty = victim->py - fPlayerPosY;
+		float tx = victim->px - player->GetPlayerPosX();
+		float ty = victim->py - player->GetPlayerPosY();
 		float d = sqrtf(tx * tx + ty * ty);
 		if (d < 1) d = 1.0f;
 
@@ -1402,38 +907,95 @@ float OneLoneCoder_Platformer::GetGroundDynamicOverlay()
 
 wchar_t OneLoneCoder_Platformer::GetTile(int x, int y)
 {
-	if (x >= 0 && x < nLevelWidth && y >= 0 && y < nLevelHeight)
-		return sLevel[y * nLevelWidth + x];
+	if (x >= 0 && x < level->GetWidth() && y >= 0 && y < level->GetHeight())
+		return sLevel[y * level->GetWidth() + x];
 	else
 		return L' ';
 }
 
 void OneLoneCoder_Platformer::SetTile(int x, int y, wchar_t c)
 {
-	if (x >= 0 && x < nLevelWidth && y >= 0 && y < nLevelHeight)
-		sLevel[y * nLevelWidth + x] = c;
+	if (x >= 0 && x < level->GetWidth() && y >= 0 && y < level->GetHeight())
+		sLevel[y * level->GetWidth() + x] = c;
+}
+
+bool OneLoneCoder_Platformer::IsInBossLevel()
+{
+	return bInBossLvl;
+}
+
+void OneLoneCoder_Platformer::SetbInBossLevel(bool inBossLevel)
+{
+	bInBossLvl = inBossLevel;
+}
+
+bool OneLoneCoder_Platformer::IsBossKilled()
+{
+	return bBossKilled;
+}
+
+void OneLoneCoder_Platformer::SetbBossKilled(bool bossKilled)
+{
+	bBossKilled = bossKilled;
+}
+
+void OneLoneCoder_Platformer::SetGameState(std::string gameState)
+{
+	if (gameState == "GS_LOADING")				nGameState = GS_LOADING;
+	else if (gameState == "GS_TITLE")			nGameState = GS_TITLE;
+	else if (gameState == "GS_MAIN")			nGameState = GS_MAIN;
+	else if (gameState == "GS_TRANSITION")		nGameState = GS_TRANSITION;
+	else if (gameState == "GS_LOADLEVEL")		nGameState = GS_LOADLEVEL;
+	else if (gameState == "GS_WORLDMAP")		nGameState = GS_WORLDMAP;
+	else if (gameState == "GS_ENDSCREEN")		nGameState = GS_ENDSCREEN;
+	else if (gameState == "GS_PAUSE")			nGameState = GS_PAUSE;
+	else if (gameState == "GS_LOADBOSSLEVEL")	nGameState = GS_LOADBOSSLEVEL;
+	else if (gameState == "GS_SELECTMENU")		nGameState = GS_SELECTMENU;
+	else if (gameState == "GS_CONTROLS")		nGameState = GS_CONTROLS;
+}
+
+void OneLoneCoder_Platformer::LowerCameraPosition()
+{
+	fCameraLookingDown -= cfCameraMoveSpeed;
+}
+
+void OneLoneCoder_Platformer::RaiseCameraPosition()
+{
+	fCameraLookingDown += cfCameraMoveSpeed;
+}
+
+float OneLoneCoder_Platformer::GetDragValue()
+{
+	return cfDrag;
+}
+
+void OneLoneCoder_Platformer::SetPlayerChoice(int choice)
+{
+	pauseMenu->SetPlayerChoice(choice);
+}
+
+float OneLoneCoder_Platformer::GetGrdDynamicOverlay()
+{
+	return cfGrdDynamicOverlay;
+}
+
+void OneLoneCoder_Platformer::UpdateWinTimer(float fElapsedTime)
+{
+	fWinTimer += fElapsedTime;
+}
+
+float OneLoneCoder_Platformer::GetWinTimer()
+{
+	return fWinTimer;
 }
 
 void OneLoneCoder_Platformer::ResetVariables()
 {
-	fPlayerVelX = 0.0f;
-	fPlayerVelY = 0.0f;
-	fInvulnerabilityTimer = 0.0f;
+	player->ResetVariables();
 	fStopTimebeforeDeadAnim = 0.0f;
-	bDead = false;
-	fDeadAnimation = 0.0f;
-	bPlayerDamaged = false;
 	bBossKilled = false;
 	bShake = false;
-	fWinTimer = 0.0f;
-	fKirboGoesAwayTimer = 0.0f;
 	fWaitBeforeWinAnimation = 0.0f;
-	StopAnyAttack();
-}
-
-bool OneLoneCoder_Platformer::CanInteract()
-{
-	return !bPlayerDamaged && !bDead && !bBossKilled;
 }
 
 void OneLoneCoder_Platformer::ActivateShakeEffect(bool activate, int shakeAmplitudeX, int shakeAmplitudeY)
@@ -1928,4 +1490,9 @@ void OneLoneCoder_Platformer::DrawGroundTile(int x, int y, float fOffsetX, float
 		SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
+}
+
+void OneLoneCoder_Platformer::BreakLoop()
+{
+	bBreakLoop = true;
 }

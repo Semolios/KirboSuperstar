@@ -40,7 +40,7 @@ public:
 	int GetWidth();
 	int GetHeight();
 	int GetInitPlayerPosX();
-	int GetInitPlayerPoxY();
+	int GetInitPlayerPosY();
 	bool PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::string levelName);
 	bool PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLvl);
 	std::vector<std::string> LoadLevelsList();
