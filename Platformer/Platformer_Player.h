@@ -19,10 +19,8 @@ private:
 	const float cfMaxPlayerFlyingVelY = 5.0f;			// Maximum player vertical velocity while flying
 	const float cfPlayerAccGrdX = 25.0f;				// Acceleration value when on ground
 	const float cfPlayerAccAirX = 15.0f;				// Acceleration value when in the air
-	const float cfPlayerJumpMaxAcc = -9.5f;				// Jump acceleration
-	const float cfPlayerJumpMinAcc = -7.0f;				// Min Jump acceleratin
-	const float cfJumpIncrement = -0.25f;				// Jump increment when holding space
-	const float cfPlayerDblJumpMaxAcc = -8.0f;			// Double jump acceleration
+	const float cfJumpAcceleration = -8.0f;				// Jump speed
+	const float cfJumpDecelerationRatio = 1.5f;			// Jump Deceleration while holding jump
 	const float cfSlapSpawnT = 1.0f;					// Number of frames to spawn slap attack
 	const float cfSlapDuration = 0.1f;					// duration of the slap AOE
 	const float cfJesusCrossSpawnT = 7.0f;				// Number of frames to spawn jesus cross
@@ -38,6 +36,8 @@ private:
 	const float cfInvulnerabilityFrame = 4.0f;			// Invulnerability frame after a hit
 	const float cfDamageEjectionVelX = 4.0f;			// horizontal velocity when hit by ennemy
 	const float cfDamageEjectionVelY = 4.0f;			// vertical velocity when hit by ennemy
+	const float cfJumpTime = 0.75f;						// The more you hold, the more kirbo jump high
+	const float cfDblJumpTime = 0.5f;					// idem for double jump
 
 	const int cnSlapDmg = 3;							// damages of the slap attack
 	const int cnJesusCrossDmg = 5;						// damages of the jesus cross
@@ -52,13 +52,13 @@ private:
 	float fHealth = 10.0f;
 	float fInvulnerabilityTickingTimer = 0.0f;
 	float fDeadAnimation = 0.0f;
-	float fWaitBeforeWinAnimation = 0.0f;
 	float fKirboGoesAwayTimer = 0.0f;
 	float fWindDirection = 1.0f;
 	float fWindPower = 25.0f;
 	float fPlayerCollisionUpperLimit = 0.9f;
 	float fPlayerCollisionLowerLimit = 0.1f;
 	float fSwallowDistance = 0.1f;
+	float fJumpTimer = 0.0f;
 	bool bPlayerOnGround = false;
 	bool bDoubleJump = false;
 	bool bChargeJump = false;
@@ -92,8 +92,8 @@ public:
 	void OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t, std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles);
 	void StopAnyAttack();
 	void ClampVelocities();
-	void IncreasePlayerVel(float dvx, float dvy);
-	void DecreasePlayerVel(float dvx, float dvy);
+	void IncreaseVelocities(float dvx, float dvy);
+	void DecreaseVelocities(float dvx, float dvy);
 	void Collisions(float fElapsedTime, cLevel* lvl);
 	float GetPlayerPosX();
 	float GetPlayerPosY();

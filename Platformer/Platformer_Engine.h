@@ -71,6 +71,7 @@ private:
 	std::vector<std::string> bossLevelsBackgrounds;
 
 	// engine Properties
+	cPlayer* player;
 	bool bBreakLoop = false;
 	float fStopTimebeforeDeadAnim = 0.0f;
 	float fWindDirection = 1.0f;
@@ -80,36 +81,6 @@ private:
 	bool bWind = false;
 	float fWaitBeforeWinAnimation = 0.0f;
 	float fWinTimer = 0.0f;
-
-	// Player Properties
-	cPlayer* player;
-	//float fPlayerPosX = 0.0f;
-	//float fPlayerPosY = 0.0f;
-	//float fPlayerVelX = 0.0f;
-	//float fPlayerVelY = 0.0f;
-	//float fAnimationTimer = 0.0f;
-	//float fFaceDir = 1.0f;
-	//float fHealth = 10.0f;
-	//float fInvulnerabilityTickingTimer = 0.0f;
-	//float fDeadAnimation = 0.0f;
-	//float fKirboGoesAwayTimer = 0.0f;
-	//float fPlayerCollisionUpperLimit = 0.9f;
-	//float fPlayerCollisionLowerLimit = 0.1f;
-	//float fSwallowDistance = 0.1f;
-	//bool bPlayerOnGround = false;
-	//bool bDoubleJump = false;
-	//bool bChargeJump = false;
-	//bool bChargeDoubleJump = false;
-	//bool bAttacking = false;
-	//bool bSlapping = false;
-	//bool bVacuuming = false;
-	//bool bLaunchingJesusCross = false;
-	//bool bCanSpawnProjectile = false;
-	//bool bPlayerDamaged = false;
-	//bool bIsPlayerAttackable = true;
-	//bool bFlying = false;
-	//bool bDead = false;
-	//bool bSwallowing = false;
 
 	// Camera Properties
 	float fCameraLookingDown = 2.0f / 3.0f;

@@ -260,7 +260,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	// Wind effect
 	if (bWind)
-		player->IncreasePlayerVel(fWindDirection * fWindPower * fElapsedTime, 0);
+		player->IncreaseVelocities(fWindDirection * fWindPower * fElapsedTime, 0);
 
 	player->Collisions(fElapsedTime, level);
 
@@ -992,10 +992,11 @@ float OneLoneCoder_Platformer::GetWinTimer()
 void OneLoneCoder_Platformer::ResetVariables()
 {
 	player->ResetVariables();
-	fStopTimebeforeDeadAnim = 0.0f;
 	bBossKilled = false;
 	bShake = false;
+	fStopTimebeforeDeadAnim = 0.0f;
 	fWaitBeforeWinAnimation = 0.0f;
+	fWinTimer = 0.0f;
 }
 
 void OneLoneCoder_Platformer::ActivateShakeEffect(bool activate, int shakeAmplitudeX, int shakeAmplitudeY)

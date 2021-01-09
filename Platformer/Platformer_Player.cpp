@@ -109,19 +109,21 @@ void cPlayer::HandleInput(olc::PixelGameEngine* gfx, float fElapsedTime)
 		{
 			if (bChargeJump)
 			{
-				if (fPlayerVelY >= cfPlayerJumpMinAcc) fPlayerVelY = cfPlayerJumpMinAcc;
-				fPlayerVelY += cfJumpIncrement;
-				if (fPlayerVelY <= cfPlayerJumpMaxAcc)
+				fJumpTimer += fElapsedTime;
+				fPlayerVelY = cfJumpAcceleration - (cfJumpDecelerationRatio * fJumpTimer * cfJumpAcceleration);
+				if (fJumpTimer >= cfJumpTime)
 				{
+					fJumpTimer = 0.0f;
 					bChargeJump = false;
 				}
 			}
 			else if (bChargeDoubleJump)
 			{
-				if (fPlayerVelY >= cfPlayerJumpMinAcc) fPlayerVelY = cfPlayerJumpMinAcc;
-				fPlayerVelY += cfJumpIncrement;
-				if (fPlayerVelY <= cfPlayerDblJumpMaxAcc)
+				fJumpTimer += fElapsedTime;
+				fPlayerVelY = cfJumpAcceleration - (cfJumpDecelerationRatio * fJumpTimer * cfJumpAcceleration);
+				if (fJumpTimer >= cfDblJumpTime)
 				{
+					fJumpTimer = 0.0f;
 					bChargeDoubleJump = false;
 				}
 			}
@@ -130,8 +132,16 @@ void cPlayer::HandleInput(olc::PixelGameEngine* gfx, float fElapsedTime)
 		// if you release space, jump is cancelled so you can't spam space to glide
 		if (gfx->GetKey(olc::Key::SPACE).bReleased)
 		{
-			if (bChargeJump) bChargeJump = false;
-			if (bChargeDoubleJump) bChargeDoubleJump = false;
+			if (bChargeJump)
+			{
+				fJumpTimer = 0.0f;
+				bChargeJump = false;
+			}
+			if (bChargeDoubleJump)
+			{
+				fJumpTimer = 0.0f;
+				bChargeDoubleJump = false;
+			}
 		}
 
 		// Slap attack
@@ -417,13 +427,13 @@ void cPlayer::ClampVelocities()
 	}
 }
 
-void cPlayer::IncreasePlayerVel(float dvx, float dvy)
+void cPlayer::IncreaseVelocities(float dvx, float dvy)
 {
 	fPlayerVelX += dvx;
 	fPlayerVelY += dvy;
 }
 
-void cPlayer::DecreasePlayerVel(float dvx, float dvy)
+void cPlayer::DecreaseVelocities(float dvx, float dvy)
 {
 	fPlayerVelX -= dvx;
 	fPlayerVelY -= dvy;
@@ -638,5 +648,6 @@ void cPlayer::ResetVariables()
 	fDeadAnimation = 0.0f;
 	bPlayerDamaged = false;
 	fKirboGoesAwayTimer = 0.0f;
+	fJumpTimer = 0.0f;
 	StopAnyAttack();
 }
