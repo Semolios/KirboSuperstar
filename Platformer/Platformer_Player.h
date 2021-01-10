@@ -1,5 +1,6 @@
 #pragma once
 #include "Platformer_Animator.h"
+#include "Platformer_Camera.h"
 #include "Platformer_Level.h"
 
 class OneLoneCoder_Platformer;
@@ -13,7 +14,7 @@ private:
 	const float cfMaxHealth = 10.0f;					// Max Kirbo health
 	const float cfPlayerVelY = 5.0f;					// Up and Down velocities
 	const float cfMinPlayerVelX = 1.0f;					// Minimum player horizontal velocity
-	const float cfMaxPlayerVelX = 10.0f;				// Maximum player horizontal velocity
+	const float cfMaxPlayerVelX = 7.0f;					// Maximum player horizontal velocity
 	const float cfMaxPlayerVelY = 100.0f;				// Maximum player vertical velocity
 	const float cfMaxPlayerFlyingVelX = 5.0f;			// Maximum player horizontal velocity while flying
 	const float cfMaxPlayerFlyingVelY = 5.0f;			// Maximum player vertical velocity while flying
@@ -84,7 +85,7 @@ public:
 public:
 	void InitialiseKirboHealth();
 	bool IsDead();
-	void HandleInput(olc::PixelGameEngine* gfx, float fElapsedTime);
+	void HandleInput(olc::PixelGameEngine* gfx, float fElapsedTime, cCamera* camera);
 	bool CanInteract();
 	void ApplyGravity(float fElapsedTime);
 	void Update(float fElapsedTime);

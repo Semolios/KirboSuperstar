@@ -18,7 +18,7 @@ bool cPlayer::IsDead()
 	return bDead;
 }
 
-void cPlayer::HandleInput(olc::PixelGameEngine* gfx, float fElapsedTime)
+void cPlayer::HandleInput(olc::PixelGameEngine* gfx, float fElapsedTime, cCamera* camera)
 {
 	if (engine->IsFocused() && CanInteract())
 	{
@@ -52,12 +52,12 @@ void cPlayer::HandleInput(olc::PixelGameEngine* gfx, float fElapsedTime)
 			if ((engine->IsSolidTile(engine->GetTile(fPlayerPosX + 0.0f, fPlayerPosY + 1.0f)) ||
 				 engine->IsSolidTile(engine->GetTile(fPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY + 1.0f))) && bPlayerOnGround)
 			{
-				engine->LowerCameraPosition();
+				camera->LowerCameraPosition();
 			}
 		}
 		else
 		{
-			engine->RaiseCameraPosition();
+			camera->RaiseCameraPosition();
 		}
 
 		// Go left

@@ -3,6 +3,7 @@
 
 #include "Platformer_Animator.h"
 #include "Platformer_Assets.h"
+#include "Platformer_Camera.h"
 #include "Platformer_ControlsMenu.h"
 #include "Platformer_Dynamic.h"
 #include "Platformer_DynamicCreature.h"
@@ -28,8 +29,6 @@ private:
 	// Constant values
 	const float cfGravity = 20.0f;						// Gravity
 	const float cfDrag = -3.0f;							// Drag
-	const float cfCameraLowerPos = 1.0f / 4.0f;			// Lower position for the camera (when the player is not pushing down)
-	const float cfCameraUpperPos = 2.0f / 3.0f;			// Upper position for the camera (when the player holds down when on ground)
 	const float cfStopTimebeforeDeadAnim = 1.5f;		// Stop time before death animation
 	const float cfTimeBeforeWinAnimation = 2.0f;		// Time before animation begins when kirbo kills the boss
 	const float cfBossKilledAnimation = 4.0f;			// Boss killed animation duration
@@ -83,18 +82,7 @@ private:
 	float fWinTimer = 0.0f;
 
 	// Camera Properties
-	float fCameraLookingDown = 2.0f / 3.0f;
-	const float cfCameraMoveSpeed = 0.02f;
-	const float cfShakeAttenuation = 1000.0f;
-	const float cfShakeEffectChangeFrequency = 0.07f;
-	float fCameraPosX = 0.0f;
-	float fCameraPosY = 0.0f;
-	float fShakeTimerChange = 0.0f;
-	float fShakeEffectX;
-	float fShakeEffectY;
-	int nShakeAmplitudeX;
-	int nShakeAmplitudeY;
-	bool bShake = false;
+	cCamera* camera;
 
 	// Title screen
 	olc::Sprite* sprTitleScreen;
@@ -197,8 +185,6 @@ public:
 	bool IsBossKilled();
 	void SetbBossKilled(bool bossKilled);
 	void SetGameState(std::string gameState);
-	void LowerCameraPosition();
-	void RaiseCameraPosition();
 	float GetDragValue();
 	void SetPlayerChoice(int choice);
 	float GetGrdDynamicOverlay();
@@ -207,6 +193,9 @@ public:
 	void ResetVariables();
 	void ActivateShakeEffect(bool activate, int shakeAmplitudeX = 50, int shakeAmplitudeY = 50);
 	void WindEffect(float direction, float windPower, bool activate);
-	void DrawGroundTile(int x, int y, float fOffsetX, float fOffsetY, float fTileOffsetX, float fTileOffsetY, olc::Sprite* spriteTiles, wchar_t tile);
 	void BreakLoop();
+	olc::Sprite* GetBackGround();
+	olc::Sprite* GetTilesSprites();
+	olc::Sprite* GetGroundTiles();
+	olc::Sprite* GetDoorSpr();
 };
