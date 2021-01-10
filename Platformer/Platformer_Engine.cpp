@@ -243,7 +243,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	player->Update(fElapsedTime);
 
-	// Draw Player
+	// Initialize the Transform2D object
 	olc::GFX2D::Transform2D t;
 	t.Translate(((float)-nTileWidth / 2.0f) - cnSpriteOffsetX, ((float)-nTileWidth / 2.0f) - cnSpriteOffsetY);
 	t.Scale(player->GetFaceDir() * 1.0f, 1.0f);
