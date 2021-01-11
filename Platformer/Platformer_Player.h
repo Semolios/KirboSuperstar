@@ -1,6 +1,7 @@
 #pragma once
 #include "Platformer_Animator.h"
 #include "Platformer_Camera.h"
+#include "Platformer_Hitbox.h"
 #include "Platformer_Level.h"
 
 class OneLoneCoder_Platformer;
@@ -109,4 +110,6 @@ public:
 	float GetHealth();
 	void Damage(cDynamic* object);
 	void ResetVariables();
+	cHitbox VacuumHitbox(cCamera* camera);
+	cHitbox Hitbox(float cameraOffsetX, float cameraOffsetY);
 };

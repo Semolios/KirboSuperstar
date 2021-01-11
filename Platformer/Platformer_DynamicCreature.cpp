@@ -133,7 +133,7 @@ void cDynamicCreature::Collision(float fElapsedTime)
 	{
 		if (vx <= 0) // Moving Left
 		{
-			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, py + fBorder)) || 
+			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, py + fBorder)) ||
 				engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, py + (fDynHeight / engine->GetTileHeight()) - fBorder)))
 			{
 				fNewObjectPosX = (int)fNewObjectPosX + 1;
@@ -142,7 +142,7 @@ void cDynamicCreature::Collision(float fElapsedTime)
 		}
 		else // Moving Right
 		{
-			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + fBorder)) || 
+			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + fBorder)) ||
 				engine->IsSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + (fDynHeight / engine->GetTileHeight()) - fBorder)))
 			{
 				fNewObjectPosX = (int)fNewObjectPosX;
@@ -152,7 +152,7 @@ void cDynamicCreature::Collision(float fElapsedTime)
 
 		if (vy <= 0) // Moving Up
 		{
-			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY)) || 
+			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY)) ||
 				engine->IsSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY)))
 			{
 				fNewObjectPosY = (int)fNewObjectPosY + 1;
@@ -161,9 +161,9 @@ void cDynamicCreature::Collision(float fElapsedTime)
 		}
 		else // Moving Down
 		{
-			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) || 
+			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
 				engine->IsSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
-				engine->IsSemiSolidTile(engine->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) || 
+				engine->IsSemiSolidTile(engine->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
 				engine->IsSemiSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))))
 			{
 				fNewObjectPosY = (int)fNewObjectPosY + engine->GetGroundDynamicOverlay();
@@ -216,6 +216,32 @@ void cDynamicCreature::Collision(float fElapsedTime)
 
 	px = fDynObjectPosX;
 	py = fDynObjectPosY;
+}
+
+cHitbox cDynamicCreature::Hitbox(float cameraOffsetX, float cameraOffsetY)
+{
+	cHitbox sEnnemy;
+	sEnnemy.pos = {
+		(px - cameraOffsetX) * engine->GetTileWidth() + (fDynWidth / 2.0f),
+		(py - cameraOffsetY) * engine->GetTileHeight() + (fDynHeight / 2.0f)
+	};
+	sEnnemy.angle = 0.0f;
+	sEnnemy.o.push_back({ -fDynWidth / 2.0f, -fDynHeight / 2.0f });
+	sEnnemy.o.push_back({ -fDynWidth / 2.0f, +fDynHeight / 2.0f });
+	sEnnemy.o.push_back({ +fDynWidth / 2.0f, +fDynHeight / 2.0f });
+	sEnnemy.o.push_back({ +fDynWidth / 2.0f, -fDynHeight / 2.0f });
+	sEnnemy.p.resize(4);
+
+	for (int i = 0; i < sEnnemy.o.size(); i++)
+	{
+		sEnnemy.p[i] =
+		{	// 2D Rotation Transform + 2D Translation
+			(sEnnemy.o[i].x * cosf(sEnnemy.angle)) - (sEnnemy.o[i].y * sinf(sEnnemy.angle)) + sEnnemy.pos.x,
+			(sEnnemy.o[i].x * sinf(sEnnemy.angle)) + (sEnnemy.o[i].y * cosf(sEnnemy.angle)) + sEnnemy.pos.y,
+		};
+	}
+
+	return sEnnemy;
 }
 
 void cDynamicCreature::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)

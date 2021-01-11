@@ -75,7 +75,7 @@ void cDynamicProjectile::Collision(float fElapsedTime)
 	{
 		if (vx <= 0) // Moving Left
 		{
-			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, py + fBorder)) || 
+			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, py + fBorder)) ||
 				engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, py + (fDynHeight / engine->GetTileHeight()) - fBorder)))
 			{
 				bRedundant = true;
@@ -83,7 +83,7 @@ void cDynamicProjectile::Collision(float fElapsedTime)
 		}
 		else // Moving Right
 		{
-			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + fBorder)) || 
+			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + fBorder)) ||
 				engine->IsSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + (fDynHeight / engine->GetTileHeight()) - fBorder)))
 			{
 				bRedundant = true;
@@ -92,7 +92,7 @@ void cDynamicProjectile::Collision(float fElapsedTime)
 
 		if (vy <= 0) // Moving Up
 		{
-			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY)) || 
+			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY)) ||
 				engine->IsSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY)))
 			{
 				bRedundant = true;
@@ -100,9 +100,9 @@ void cDynamicProjectile::Collision(float fElapsedTime)
 		}
 		else // Moving Down
 		{
-			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) || 
+			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
 				engine->IsSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
-				engine->IsSemiSolidTile(engine->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) || 
+				engine->IsSemiSolidTile(engine->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
 				engine->IsSemiSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))))
 			{
 				bRedundant = true;
@@ -112,6 +112,37 @@ void cDynamicProjectile::Collision(float fElapsedTime)
 
 	px = fNewObjectPosX;
 	py = fNewObjectPosY;
+}
+
+cHitbox cDynamicProjectile::Hitbox(float cameraOffsetX, float cameraOffsetY)
+{
+	cHitbox sAOE;
+
+	// check from which corner we draw the sprite
+	float sprPosX = (nCornerSpr == 0 || nCornerSpr == 3) ? 0.0f : fDynWidth;
+	float sprPosY = (nCornerSpr == 0 || nCornerSpr == 1) ? 0.0f : -fDynHeight;
+
+	sAOE.pos = {
+		(px - cameraOffsetX) * engine->GetTileWidth() + (fDynWidth / 2.0f) + sprPosX,
+		(py - cameraOffsetY) * engine->GetTileHeight() + (fDynHeight / 2.0f) + sprPosY
+	};
+	sAOE.angle = atan2f(vy, vx);
+	sAOE.o.push_back({ -fDynWidth / 2.0f, -fDynHeight / 2.0f });
+	sAOE.o.push_back({ -fDynWidth / 2.0f, +fDynHeight / 2.0f });
+	sAOE.o.push_back({ +fDynWidth / 2.0f, +fDynHeight / 2.0f });
+	sAOE.o.push_back({ +fDynWidth / 2.0f, -fDynHeight / 2.0f });
+	sAOE.p.resize(4);
+
+	for (int i = 0; i < sAOE.o.size(); i++)
+	{
+		sAOE.p[i] =
+		{	// 2D Rotation Transform + 2D Translation
+			(sAOE.o[i].x * cosf(sAOE.angle)) - (sAOE.o[i].y * sinf(sAOE.angle)) + sAOE.pos.x,
+			(sAOE.o[i].x * sinf(sAOE.angle)) + (sAOE.o[i].y * cosf(sAOE.angle)) + sAOE.pos.y,
+		};
+	}
+
+	return sAOE;
 }
 
 std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProjectilesSprites()

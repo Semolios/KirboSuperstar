@@ -11,6 +11,7 @@ public:
 	void DrawSelf(olc::PixelGameEngine* gfx, float ox, float oy) override;
 	void Update(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx) override;
 	void Collision(float fElapsedTime);
+	cHitbox Hitbox(float cameraOffsetX, float cameraOffsetY) override;
 
 	static std::map<std::string, std::vector<olc::Sprite*>> LoadProjectilesSprites();
 

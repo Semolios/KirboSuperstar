@@ -60,6 +60,7 @@ public:
 	void KnockBack(float dx, float dy, float dist);
 	void TurnAround();
 	void Collision(float fElapsedTime);
+	cHitbox Hitbox(float cameraOffsetX, float cameraOffsetY) override;
 
 	virtual void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
 	virtual void ExplodeAndDie(float fElapsedTime);

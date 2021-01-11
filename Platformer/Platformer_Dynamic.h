@@ -1,6 +1,7 @@
 #pragma once
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
+#include "Platformer_Hitbox.h"
 
 class Platformer_Engine;
 
@@ -44,7 +45,9 @@ public:
 	virtual void OnInteract(cDynamic* player = nullptr)
 	{
 	}
-
-	static Platformer_Engine* g_engine;
+	virtual cHitbox Hitbox(float cameraOffsetX, float cameraOffsetY)
+	{
+		return cHitbox();
+	}
 };
 

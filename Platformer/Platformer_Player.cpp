@@ -651,3 +651,54 @@ void cPlayer::ResetVariables()
 	fJumpTimer = 0.0f;
 	StopAnyAttack();
 }
+
+cHitbox cPlayer::VacuumHitbox(cCamera* camera)
+{
+	cHitbox sVacuum;
+	sVacuum.pos = {
+		(fPlayerPosX + (fFaceDir > 0.0f ? 1.75f : -0.75f) - camera->GetOffsetX()) * engine->GetTileWidth(),
+		(fPlayerPosY + 0.5f - camera->GetOffsetY()) * engine->GetTileHeight()
+	}; // 1 block ahead the player's looking direction
+	sVacuum.angle = 0.0f;
+	sVacuum.o.push_back({ -engine->GetTileWidth() * 1.25f, -engine->GetTileHeight() / (fFaceDir > 0.0f ? 2.0f : 1.0f) });
+	sVacuum.o.push_back({ -engine->GetTileWidth() * 1.25f, +engine->GetTileHeight() / (fFaceDir > 0.0f ? 2.0f : 1.0f) });
+	sVacuum.o.push_back({ +engine->GetTileWidth() * 1.25f, +engine->GetTileHeight() / (fFaceDir > 0.0f ? 1.0f : 2.0f) });
+	sVacuum.o.push_back({ +engine->GetTileWidth() * 1.25f, -engine->GetTileHeight() / (fFaceDir > 0.0f ? 1.0f : 2.0f) });
+	sVacuum.p.resize(4);
+
+	for (int i = 0; i < sVacuum.o.size(); i++)
+	{
+		sVacuum.p[i] =
+		{	// 2D Rotation Transform + 2D Translation (angle is always 0 here, no rotation allowed)
+			(sVacuum.o[i].x * cosf(sVacuum.angle)) - (sVacuum.o[i].y * sinf(sVacuum.angle)) + sVacuum.pos.x,
+			(sVacuum.o[i].x * sinf(sVacuum.angle)) + (sVacuum.o[i].y * cosf(sVacuum.angle)) + sVacuum.pos.y,
+		};
+	}
+
+	return sVacuum;
+}
+
+cHitbox cPlayer::Hitbox(float cameraOffsetX, float cameraOffsetY)
+{
+	cHitbox sPlayer;
+	sPlayer.pos = {
+		(fPlayerPosX + 0.5f - cameraOffsetX) * engine->GetTileWidth(),
+		(fPlayerPosY + 0.5f - cameraOffsetY) * engine->GetTileHeight()
+	}; // Center of the player
+	sPlayer.angle = 0.0f;
+	sPlayer.o.push_back({ -engine->GetTileWidth() / 2.2f, -engine->GetTileHeight() / 2.2f });	// little reduction of the player hitbox to allow a little overlap with attack
+	sPlayer.o.push_back({ -engine->GetTileWidth() / 2.2f, +engine->GetTileHeight() / 2.2f });	// little reduction of the player hitbox to allow a little overlap with attack
+	sPlayer.o.push_back({ +engine->GetTileWidth() / 2.2f, +engine->GetTileHeight() / 2.2f });	// little reduction of the player hitbox to allow a little overlap with attack
+	sPlayer.o.push_back({ +engine->GetTileWidth() / 2.2f, -engine->GetTileHeight() / 2.2f });	// little reduction of the player hitbox to allow a little overlap with attack
+	sPlayer.p.resize(4);
+
+	for (int i = 0; i < sPlayer.o.size(); i++)
+	{
+		sPlayer.p[i] =
+		{	// 2D Rotation Transform + 2D Translation (angle is always 0 here, no rotation allowed)
+			(sPlayer.o[i].x * cosf(sPlayer.angle)) - (sPlayer.o[i].y * sinf(sPlayer.angle)) + sPlayer.pos.x,
+			(sPlayer.o[i].x * sinf(sPlayer.angle)) + (sPlayer.o[i].y * cosf(sPlayer.angle)) + sPlayer.pos.y,
+		};
+	}
+	return sPlayer;
+}

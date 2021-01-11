@@ -9,6 +9,7 @@
 #include "Platformer_DynamicCreature.h"
 #include "Platformer_DynamicProjectile.h"
 #include "Platformer_EndScreen.h"
+#include "Platformer_Hitbox.h"
 #include "Platformer_HUD.h"
 #include "Platformer_Level.h"
 #include "Platformer_PauseMenu.h"
@@ -36,21 +37,6 @@ private:
 	const float cfKnockBackDuration = 0.3f;				// Knock back duration
 	const int cnSpriteOffsetX = 64;						// Sprite offset X because kirbo sprites are 192 * 192 pixels
 	const int cnSpriteOffsetY = 64;						// Sprite offset Y because kirbo sprites are 192 * 192 pixels
-
-	struct vec2d
-	{
-		float x;
-		float y;
-	};
-
-	struct polygon
-	{
-		std::vector<vec2d> p;	// Transformed Points
-		vec2d pos;				// Position of shape
-		float angle;			// Direction of shape
-		std::vector<vec2d> o;	// "Model" of shape							
-		bool overlap = false;	// Flag to indicate if overlap has occurred
-	};
 
 	// Level storage
 	std::wstring sLevel;
@@ -165,7 +151,6 @@ protected:
 
 	void LoadLevelProperties();
 	void CheckIfPlayerIsDamaged(cDynamic* object, float angle, float fOffsetX, float fOffsetY);
-	bool ShapeOverlap_DIAG(polygon& r1, polygon& r2);
 	void Attack(cDynamicCreature* victim, int damage);
 	void ChangeEnnemyProperties(cDynamicCreature* victim, bool vaccumedState);
 

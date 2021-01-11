@@ -283,61 +283,17 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		{
 			if (player->IsVacuuming())
 			{
-				polygon sEnnemy;
-				sEnnemy.pos = {
-					(object->px - camera->GetOffsetX()) * nTileWidth + (object->fDynWidth / 2.0f),
-					(object->py - camera->GetOffsetY()) * nTileHeight + (object->fDynHeight / 2.0f)
-				};
-				sEnnemy.angle = 0.0f;
-				sEnnemy.o.push_back({ -object->fDynWidth / 2.0f, -object->fDynHeight / 2.0f });
-				sEnnemy.o.push_back({ -object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
-				sEnnemy.o.push_back({ +object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
-				sEnnemy.o.push_back({ +object->fDynWidth / 2.0f, -object->fDynHeight / 2.0f });
-				sEnnemy.p.resize(4);
+				cHitbox sEnnemy = object->Hitbox(camera->GetOffsetX(), camera->GetOffsetY());
 
-				for (int i = 0; i < sEnnemy.o.size(); i++)
-				{
-					sEnnemy.p[i] =
-					{	// 2D Rotation Transform + 2D Translation
-						(sEnnemy.o[i].x * cosf(sEnnemy.angle)) - (sEnnemy.o[i].y * sinf(sEnnemy.angle)) + sEnnemy.pos.x,
-						(sEnnemy.o[i].x * sinf(sEnnemy.angle)) + (sEnnemy.o[i].y * cosf(sEnnemy.angle)) + sEnnemy.pos.y,
-					};
-				}
+				// debug AOE
+				sEnnemy.Draw(this, olc::YELLOW);
 
-				// Debug aoe
-				//DrawLine(sEnnemy.p[0].x, sEnnemy.p[0].y, sEnnemy.p[1].x, sEnnemy.p[1].y, olc::YELLOW);
-				//DrawLine(sEnnemy.p[1].x, sEnnemy.p[1].y, sEnnemy.p[2].x, sEnnemy.p[2].y, olc::YELLOW);
-				//DrawLine(sEnnemy.p[2].x, sEnnemy.p[2].y, sEnnemy.p[3].x, sEnnemy.p[3].y, olc::YELLOW);
-				//DrawLine(sEnnemy.p[3].x, sEnnemy.p[3].y, sEnnemy.p[0].x, sEnnemy.p[0].y, olc::YELLOW);
+				cHitbox sVacuum = player->VacuumHitbox(camera);
 
-				polygon sVacuum;
-				sVacuum.pos = {
-					(player->GetPlayerPosX() + (player->GetFaceDir() > 0.0f ? 1.75f : -0.75f) - camera->GetOffsetX()) * (float)nTileWidth,
-					(player->GetPlayerPosY() + 0.5f - camera->GetOffsetY()) * (float)nTileHeight
-				}; // 1 block ahead the player's looking direction
-				sVacuum.angle = 0.0f;
-				sVacuum.o.push_back({ -(float)nTileWidth * 1.25f, -(float)nTileHeight / (player->GetFaceDir() > 0.0f ? 2.0f : 1.0f) });
-				sVacuum.o.push_back({ -(float)nTileWidth * 1.25f, +(float)nTileHeight / (player->GetFaceDir() > 0.0f ? 2.0f : 1.0f) });
-				sVacuum.o.push_back({ +(float)nTileWidth * 1.25f, +(float)nTileHeight / (player->GetFaceDir() > 0.0f ? 1.0f : 2.0f) });
-				sVacuum.o.push_back({ +(float)nTileWidth * 1.25f, -(float)nTileHeight / (player->GetFaceDir() > 0.0f ? 1.0f : 2.0f) });
-				sVacuum.p.resize(4);
+				// debug AOE
+				sVacuum.Draw(this, olc::GREEN);
 
-				for (int i = 0; i < sVacuum.o.size(); i++)
-				{
-					sVacuum.p[i] =
-					{	// 2D Rotation Transform + 2D Translation (angle is always 0 here, no rotation allowed)
-						(sVacuum.o[i].x * cosf(sVacuum.angle)) - (sVacuum.o[i].y * sinf(sVacuum.angle)) + sVacuum.pos.x,
-						(sVacuum.o[i].x * sinf(sVacuum.angle)) + (sVacuum.o[i].y * cosf(sVacuum.angle)) + sVacuum.pos.y,
-					};
-				}
-
-				// Debug AOE
-				//DrawLine(sVacuum.p[0].x, sVacuum.p[0].y, sVacuum.p[1].x, sVacuum.p[1].y, olc::GREEN);
-				//DrawLine(sVacuum.p[1].x, sVacuum.p[1].y, sVacuum.p[2].x, sVacuum.p[2].y, olc::GREEN);
-				//DrawLine(sVacuum.p[2].x, sVacuum.p[2].y, sVacuum.p[3].x, sVacuum.p[3].y, olc::GREEN);
-				//DrawLine(sVacuum.p[3].x, sVacuum.p[3].y, sVacuum.p[0].x, sVacuum.p[0].y, olc::GREEN);
-
-				if (ShapeOverlap_DIAG(sEnnemy, sVacuum))
+				if (cHitbox::ShapeOverlap_DIAG(&sEnnemy, &sVacuum))
 				{
 					ChangeEnnemyProperties(object, true);
 					Attack(object, 0);
@@ -374,69 +330,20 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		{
 			if (object->bFriendly)
 			{
-				// check from which corner we draw the sprite
-				float sprPosX = (object->nCornerSpr == 0 || object->nCornerSpr == 3) ? 0.0f : object->fDynWidth;
-				float sprPosY = (object->nCornerSpr == 0 || object->nCornerSpr == 1) ? 0.0f : -object->fDynHeight;
+				cHitbox sAOE = object->Hitbox(camera->GetOffsetX(), camera->GetOffsetY());
 
-				// Create an AOE on the projectile and check for ennemies and AOE overlap
-				polygon sAOE;
-				sAOE.pos = {
-					(object->px - camera->GetOffsetX()) * nTileWidth + (object->fDynWidth / 2.0f) + sprPosX,
-					(object->py - camera->GetOffsetY()) * nTileHeight + (object->fDynHeight / 2.0f) + sprPosY
-				};
-				sAOE.angle = atan2f(object->vy, object->vx);
-				sAOE.o.push_back({ -object->fDynWidth / 2.0f, -object->fDynHeight / 2.0f });
-				sAOE.o.push_back({ -object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
-				sAOE.o.push_back({ +object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
-				sAOE.o.push_back({ +object->fDynWidth / 2.0f, -object->fDynHeight / 2.0f });
-				sAOE.p.resize(4);
-
-				for (int i = 0; i < sAOE.o.size(); i++)
-				{
-					sAOE.p[i] =
-					{	// 2D Rotation Transform + 2D Translation
-						(sAOE.o[i].x * cosf(sAOE.angle)) - (sAOE.o[i].y * sinf(sAOE.angle)) + sAOE.pos.x,
-						(sAOE.o[i].x * sinf(sAOE.angle)) + (sAOE.o[i].y * cosf(sAOE.angle)) + sAOE.pos.y,
-					};
-				}
-
-				// Debug aoe
-				//DrawLine(sAOE.p[0].x, sAOE.p[0].y, sAOE.p[1].x, sAOE.p[1].y, olc::RED);
-				//DrawLine(sAOE.p[1].x, sAOE.p[1].y, sAOE.p[2].x, sAOE.p[2].y, olc::RED);
-				//DrawLine(sAOE.p[2].x, sAOE.p[2].y, sAOE.p[3].x, sAOE.p[3].y, olc::RED);
-				//DrawLine(sAOE.p[3].x, sAOE.p[3].y, sAOE.p[0].x, sAOE.p[0].y, olc::RED);
+				// debug AOE
+				sAOE.Draw(this, olc::RED);
 
 				// Check if an ennemy take the attack
 				for (auto& dyn : vecEnnemies)
 				{
-					polygon sEnnemy;
-					sEnnemy.pos = {
-						((float)dyn->px - camera->GetOffsetX()) * nTileWidth + (float)dyn->fDynWidth / 2.0f,
-						((float)dyn->py - camera->GetOffsetY()) * nTileHeight + (float)dyn->fDynHeight / 2.0f
-					}; // Center of the ennemy
-					sEnnemy.angle = 0.0f;
-					sEnnemy.o.push_back({ -dyn->fDynWidth / 2.0f, -dyn->fDynHeight / 2.0f });
-					sEnnemy.o.push_back({ -dyn->fDynWidth / 2.0f, +dyn->fDynHeight / 2.0f });
-					sEnnemy.o.push_back({ +dyn->fDynWidth / 2.0f, +dyn->fDynHeight / 2.0f });
-					sEnnemy.o.push_back({ +dyn->fDynWidth / 2.0f, -dyn->fDynHeight / 2.0f });
-					sEnnemy.p.resize(4);
+					cHitbox sEnnemy = dyn->Hitbox(camera->GetOffsetX(), camera->GetOffsetY());
 
-					for (int i = 0; i < sEnnemy.o.size(); i++)
-					{
-						sEnnemy.p[i] =
-						{	// 2D Rotation Transform + 2D Translation (angle is always 0 here, no rotation allowed)
-							(sEnnemy.o[i].x * cosf(sEnnemy.angle)) - (sEnnemy.o[i].y * sinf(sEnnemy.angle)) + sEnnemy.pos.x,
-							(sEnnemy.o[i].x * sinf(sEnnemy.angle)) + (sEnnemy.o[i].y * cosf(sEnnemy.angle)) + sEnnemy.pos.y,
-						};
-					}
+					// debug AOE
+					sEnnemy.Draw(this, olc::YELLOW);
 
-					// Debug AOE
-					//DrawLine(sEnnemy.p[0].x, sEnnemy.p[0].y, sEnnemy.p[1].x, sEnnemy.p[1].y, olc::BLUE);
-					//DrawLine(sEnnemy.p[1].x, sEnnemy.p[1].y, sEnnemy.p[2].x, sEnnemy.p[2].y, olc::BLUE);
-					//DrawLine(sEnnemy.p[2].x, sEnnemy.p[2].y, sEnnemy.p[3].x, sEnnemy.p[3].y, olc::BLUE);
-					//DrawLine(sEnnemy.p[3].x, sEnnemy.p[3].y, sEnnemy.p[0].x, sEnnemy.p[0].y, olc::BLUE);
-
-					if (ShapeOverlap_DIAG(sAOE, sEnnemy))
+					if (cHitbox::ShapeOverlap_DIAG(&sAOE, &sEnnemy))
 					{
 						if (dyn->bIsAttackable)
 						{
@@ -659,107 +566,18 @@ void OneLoneCoder_Platformer::LoadLevelProperties()
 
 void OneLoneCoder_Platformer::CheckIfPlayerIsDamaged(cDynamic* object, float angle, float fOffsetX, float fOffsetY)
 {
-	// check from which corner we draw the sprite
-	float sprPosX = (object->nCornerSpr == 0 || object->nCornerSpr == 3) ? 0.0f : object->fDynWidth;
-	float sprPosY = (object->nCornerSpr == 0 || object->nCornerSpr == 1) ? 0.0f : -object->fDynHeight;
+	cHitbox sAOE = object->Hitbox(camera->GetOffsetX(), camera->GetOffsetY());
 
-	polygon sAOE;
-	sAOE.pos = {
-		(object->px - fOffsetX) * nTileWidth + (object->fDynWidth / 2.0f) + sprPosX,
-		(object->py - fOffsetY) * nTileHeight + (object->fDynHeight / 2.0f) + sprPosY
-	};
-	sAOE.angle = angle;
-	sAOE.o.push_back({ -object->fDynWidth / 2.0f, -object->fDynHeight / 2.0f });
-	sAOE.o.push_back({ -object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
-	sAOE.o.push_back({ +object->fDynWidth / 2.0f, +object->fDynHeight / 2.0f });
-	sAOE.o.push_back({ +object->fDynWidth / 2.0f, -object->fDynHeight / 2.0f });
-	sAOE.p.resize(4);
+	// debug AOE
+	sAOE.Draw(this, olc::RED);
 
-	for (int i = 0; i < sAOE.o.size(); i++)
-	{
-		sAOE.p[i] =
-		{	// 2D Rotation Transform + 2D Translation
-			(sAOE.o[i].x * cosf(sAOE.angle)) - (sAOE.o[i].y * sinf(sAOE.angle)) + sAOE.pos.x,
-			(sAOE.o[i].x * sinf(sAOE.angle)) + (sAOE.o[i].y * cosf(sAOE.angle)) + sAOE.pos.y,
-		};
-	}
+	cHitbox sPlayer = player->Hitbox(camera->GetOffsetX(), camera->GetOffsetY());
 
-	// Debug aoe
-	//DrawLine(sAOE.p[0].x, sAOE.p[0].y, sAOE.p[1].x, sAOE.p[1].y, olc::RED);
-	//DrawLine(sAOE.p[1].x, sAOE.p[1].y, sAOE.p[2].x, sAOE.p[2].y, olc::RED);
-	//DrawLine(sAOE.p[2].x, sAOE.p[2].y, sAOE.p[3].x, sAOE.p[3].y, olc::RED);
-	//DrawLine(sAOE.p[3].x, sAOE.p[3].y, sAOE.p[0].x, sAOE.p[0].y, olc::RED);
+	// debug AOE
+	sPlayer.Draw(this, olc::BLUE);
 
-	polygon sPlayer;
-	sPlayer.pos = {
-		(player->GetPlayerPosX() + 0.5f - fOffsetX) * (float)nTileWidth,
-		(player->GetPlayerPosY() + 0.5f - fOffsetY) * (float)nTileHeight
-	}; // Center of the player
-	sPlayer.angle = 0.0f;
-	sPlayer.o.push_back({ -(float)nTileWidth / 2.2f, -(float)nTileHeight / 2.2f });	// little reduction of the player hitbox to allow a little overlap with attack
-	sPlayer.o.push_back({ -(float)nTileWidth / 2.2f, +(float)nTileHeight / 2.2f });	// little reduction of the player hitbox to allow a little overlap with attack
-	sPlayer.o.push_back({ +(float)nTileWidth / 2.2f, +(float)nTileHeight / 2.2f });	// little reduction of the player hitbox to allow a little overlap with attack
-	sPlayer.o.push_back({ +(float)nTileWidth / 2.2f, -(float)nTileHeight / 2.2f });	// little reduction of the player hitbox to allow a little overlap with attack
-	sPlayer.p.resize(4);
-
-	for (int i = 0; i < sPlayer.o.size(); i++)
-	{
-		sPlayer.p[i] =
-		{	// 2D Rotation Transform + 2D Translation (angle is always 0 here, no rotation allowed)
-			(sPlayer.o[i].x * cosf(sPlayer.angle)) - (sPlayer.o[i].y * sinf(sPlayer.angle)) + sPlayer.pos.x,
-			(sPlayer.o[i].x * sinf(sPlayer.angle)) + (sPlayer.o[i].y * cosf(sPlayer.angle)) + sPlayer.pos.y,
-		};
-	}
-
-	// Debug AOE
-	//DrawLine(sPlayer.p[0].x, sPlayer.p[0].y, sPlayer.p[1].x, sPlayer.p[1].y, olc::BLUE);
-	//DrawLine(sPlayer.p[1].x, sPlayer.p[1].y, sPlayer.p[2].x, sPlayer.p[2].y, olc::BLUE);
-	//DrawLine(sPlayer.p[2].x, sPlayer.p[2].y, sPlayer.p[3].x, sPlayer.p[3].y, olc::BLUE);
-	//DrawLine(sPlayer.p[3].x, sPlayer.p[3].y, sPlayer.p[0].x, sPlayer.p[0].y, olc::BLUE);
-
-	if (ShapeOverlap_DIAG(sAOE, sPlayer))
+	if (cHitbox::ShapeOverlap_DIAG(&sAOE, &sPlayer))
 		player->Damage(object);
-}
-
-bool OneLoneCoder_Platformer::ShapeOverlap_DIAG(polygon& r1, polygon& r2)
-{
-	polygon* poly1 = &r1;
-	polygon* poly2 = &r2;
-
-	for (int shape = 0; shape < 2; shape++)
-	{
-		if (shape == 1)
-		{
-			poly1 = &r2;
-			poly2 = &r1;
-		}
-
-		// Check diagonals of polygon...
-		for (int p = 0; p < poly1->p.size(); p++)
-		{
-			vec2d line_r1s = poly1->pos;
-			vec2d line_r1e = poly1->p[p];
-
-			// ...against edges of the other
-			for (int q = 0; q < poly2->p.size(); q++)
-			{
-				vec2d line_r2s = poly2->p[q];
-				vec2d line_r2e = poly2->p[(q + 1) % poly2->p.size()];
-
-				// Standard "off the shelf" line segment intersection
-				float h = (line_r2e.x - line_r2s.x) * (line_r1s.y - line_r1e.y) - (line_r1s.x - line_r1e.x) * (line_r2e.y - line_r2s.y);
-				float t1 = ((line_r2s.y - line_r2e.y) * (line_r1s.x - line_r2s.x) + (line_r2e.x - line_r2s.x) * (line_r1s.y - line_r2s.y)) / h;
-				float t2 = ((line_r1s.y - line_r1e.y) * (line_r1s.x - line_r2s.x) + (line_r1e.x - line_r1s.x) * (line_r1s.y - line_r2s.y)) / h;
-
-				if (t1 >= 0.0f && t1 < 1.0f && t2 >= 0.0f && t2 < 1.0f)
-				{
-					return true;
-				}
-			}
-		}
-	}
-
-	return false;
 }
 
 void OneLoneCoder_Platformer::Attack(cDynamicCreature* victim, int damage)
