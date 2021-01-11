@@ -241,7 +241,17 @@ cHitbox cDynamicCreature::Hitbox(float cameraOffsetX, float cameraOffsetY)
 		};
 	}
 
+	// debug AOE
+	//sEnnemy.Draw(engine, olc::YELLOW);
+
 	return sEnnemy;
+}
+
+void cDynamicCreature::Vacuumed(bool vaccumedState)
+{
+	bSolidVsDyn = !vaccumedState;
+	bVacuumed = vaccumedState;
+	bIsKnockable = !vaccumedState;
 }
 
 void cDynamicCreature::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)

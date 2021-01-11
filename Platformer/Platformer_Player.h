@@ -40,6 +40,7 @@ private:
 	const float cfDamageEjectionVelY = 4.0f;			// vertical velocity when hit by ennemy
 	const float cfJumpTime = 0.75f;						// The more you hold, the more kirbo jump high
 	const float cfDblJumpTime = 0.5f;					// idem for double jump
+	const float cfKnockBackDuration = 0.3f;				// Ennemies Knock back duration
 
 	const int cnSlapDmg = 3;							// damages of the slap attack
 	const int cnJesusCrossDmg = 5;						// damages of the jesus cross
@@ -110,6 +111,9 @@ public:
 	float GetHealth();
 	void Damage(cDynamic* object);
 	void ResetVariables();
-	cHitbox VacuumHitbox(cCamera* camera);
+	cHitbox VacuumHitbox(float cameraOffsetX, float cameraOffsetY);
 	cHitbox Hitbox(float cameraOffsetX, float cameraOffsetY);
+	void Attack(cDynamicCreature* victim, int damage);
+	void Vacuum(cDynamicCreature* object, float cameraOffsetX, float cameraOffsetY);
+	void CheckIfDamaged(cDynamic* object, float angle, float fOffsetX, float fOffsetY);
 };

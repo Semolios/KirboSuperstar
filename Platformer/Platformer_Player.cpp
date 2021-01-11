@@ -652,12 +652,12 @@ void cPlayer::ResetVariables()
 	StopAnyAttack();
 }
 
-cHitbox cPlayer::VacuumHitbox(cCamera* camera)
+cHitbox cPlayer::VacuumHitbox(float cameraOffsetX, float cameraOffsetY)
 {
 	cHitbox sVacuum;
 	sVacuum.pos = {
-		(fPlayerPosX + (fFaceDir > 0.0f ? 1.75f : -0.75f) - camera->GetOffsetX()) * engine->GetTileWidth(),
-		(fPlayerPosY + 0.5f - camera->GetOffsetY()) * engine->GetTileHeight()
+		(fPlayerPosX + (fFaceDir > 0.0f ? 1.75f : -0.75f) - cameraOffsetX) * engine->GetTileWidth(),
+		(fPlayerPosY + 0.5f - cameraOffsetY) * engine->GetTileHeight()
 	}; // 1 block ahead the player's looking direction
 	sVacuum.angle = 0.0f;
 	sVacuum.o.push_back({ -engine->GetTileWidth() * 1.25f, -engine->GetTileHeight() / (fFaceDir > 0.0f ? 2.0f : 1.0f) });
@@ -674,6 +674,9 @@ cHitbox cPlayer::VacuumHitbox(cCamera* camera)
 			(sVacuum.o[i].x * sinf(sVacuum.angle)) + (sVacuum.o[i].y * cosf(sVacuum.angle)) + sVacuum.pos.y,
 		};
 	}
+
+	// debug AOE
+	//sVacuum.Draw(engine, olc::GREEN);
 
 	return sVacuum;
 }
@@ -700,5 +703,61 @@ cHitbox cPlayer::Hitbox(float cameraOffsetX, float cameraOffsetY)
 			(sPlayer.o[i].x * sinf(sPlayer.angle)) + (sPlayer.o[i].y * cosf(sPlayer.angle)) + sPlayer.pos.y,
 		};
 	}
+
+	// Debug AOE
+	//sPlayer.Draw(engine, olc::BLUE);
+
 	return sPlayer;
+}
+
+void cPlayer::Attack(cDynamicCreature* victim, int damage)
+{
+	if (victim != nullptr)
+	{
+		// Attack victim with damage
+		victim->nHealth -= damage;
+
+		// Knock victim back
+		float tx = victim->px - fPlayerPosX;
+		float ty = victim->py - fPlayerPosY;
+		float d = sqrtf(tx * tx + ty * ty);
+		if (d < 1) d = 1.0f;
+
+		// After a hit, the object experiences knock back, where it is temporarily
+		// under system control. This delivers two functions, the first being
+		// a visual indicator to the player that something has happened, and the second
+		// it stops the ability to spam attacks on a single creature
+		if (victim->bIsKnockable)
+			victim->KnockBack(tx / d, ty / d, cfKnockBackDuration);
+		else
+			victim->KnockBack(0.0f, 0.0f, cfKnockBackDuration);
+	}
+}
+
+void cPlayer::Vacuum(cDynamicCreature* object, float cameraOffsetX, float cameraOffsetY)
+{
+	cHitbox sEnnemy = object->Hitbox(cameraOffsetX, cameraOffsetY);
+	cHitbox sVacuum = VacuumHitbox(cameraOffsetX, cameraOffsetY);
+
+	if (cHitbox::ShapeOverlap_DIAG(&sEnnemy, &sVacuum))
+	{
+		object->Vacuumed(true);
+		Attack(object, 0);
+
+		VacuumEnnemy(object);
+	}
+	else
+	{
+		object->Vacuumed(false);
+		object->bSwallowable = false;
+	}
+}
+
+void cPlayer::CheckIfDamaged(cDynamic* object, float angle, float fOffsetX, float fOffsetY)
+{
+	cHitbox sAOE = object->Hitbox(fOffsetX, fOffsetY);
+	cHitbox sPlayer = Hitbox(fOffsetX, fOffsetY);
+
+	if (cHitbox::ShapeOverlap_DIAG(&sAOE, &sPlayer))
+		Damage(object);
 }

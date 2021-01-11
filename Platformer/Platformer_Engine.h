@@ -34,7 +34,6 @@ private:
 	const float cfTimeBeforeWinAnimation = 2.0f;		// Time before animation begins when kirbo kills the boss
 	const float cfBossKilledAnimation = 4.0f;			// Boss killed animation duration
 	const float cfGrdDynamicOverlay = 0.08f;			// little gap to give impression the player lightly overlap the platform
-	const float cfKnockBackDuration = 0.3f;				// Knock back duration
 	const int cnSpriteOffsetX = 64;						// Sprite offset X because kirbo sprites are 192 * 192 pixels
 	const int cnSpriteOffsetY = 64;						// Sprite offset Y because kirbo sprites are 192 * 192 pixels
 
@@ -150,9 +149,6 @@ protected:
 	bool GameState_Controls(float fElapsedTime);
 
 	void LoadLevelProperties();
-	void CheckIfPlayerIsDamaged(cDynamic* object, float angle, float fOffsetX, float fOffsetY);
-	void Attack(cDynamicCreature* victim, int damage);
-	void ChangeEnnemyProperties(cDynamicCreature* victim, bool vaccumedState);
 
 public:
 	bool IsSolidTile(wchar_t tile);

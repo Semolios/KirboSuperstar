@@ -142,6 +142,9 @@ cHitbox cDynamicProjectile::Hitbox(float cameraOffsetX, float cameraOffsetY)
 		};
 	}
 
+	// debug AOE
+	//sAOE.Draw(engine, olc::RED);
+
 	return sAOE;
 }
 

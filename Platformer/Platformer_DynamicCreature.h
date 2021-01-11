@@ -61,6 +61,7 @@ public:
 	void TurnAround();
 	void Collision(float fElapsedTime);
 	cHitbox Hitbox(float cameraOffsetX, float cameraOffsetY) override;
+	void Vacuumed(bool vaccumedState);
 
 	virtual void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
 	virtual void ExplodeAndDie(float fElapsedTime);

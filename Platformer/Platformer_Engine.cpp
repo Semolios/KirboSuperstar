@@ -283,32 +283,11 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		{
 			if (player->IsVacuuming())
 			{
-				cHitbox sEnnemy = object->Hitbox(camera->GetOffsetX(), camera->GetOffsetY());
-
-				// debug AOE
-				sEnnemy.Draw(this, olc::YELLOW);
-
-				cHitbox sVacuum = player->VacuumHitbox(camera);
-
-				// debug AOE
-				sVacuum.Draw(this, olc::GREEN);
-
-				if (cHitbox::ShapeOverlap_DIAG(&sEnnemy, &sVacuum))
-				{
-					ChangeEnnemyProperties(object, true);
-					Attack(object, 0);
-
-					player->VacuumEnnemy(object);
-				}
-				else
-				{
-					ChangeEnnemyProperties(object, false);
-					object->bSwallowable = false;
-				}
+				player->Vacuum(object, camera->GetOffsetX(), camera->GetOffsetY());
 			}
 			else
 			{
-				ChangeEnnemyProperties(object, false);
+				object->Vacuumed(false);
 				object->bSwallowable = false;
 			}
 		}
@@ -316,7 +295,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// Check collision with player to damage him
 		if (player->IsAttackable() && !player->IsSwallowing() && !object->bVacuumed)
 		{
-			CheckIfPlayerIsDamaged(object, 0.0f, camera->GetOffsetX(), camera->GetOffsetY());
+			player->CheckIfDamaged(object, 0.0f, camera->GetOffsetX(), camera->GetOffsetY());
 		}
 	}
 
@@ -333,7 +312,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 				cHitbox sAOE = object->Hitbox(camera->GetOffsetX(), camera->GetOffsetY());
 
 				// debug AOE
-				sAOE.Draw(this, olc::RED);
+				//sAOE.Draw(this, olc::RED);
 
 				// Check if an ennemy take the attack
 				for (auto& dyn : vecEnnemies)
@@ -341,13 +320,13 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 					cHitbox sEnnemy = dyn->Hitbox(camera->GetOffsetX(), camera->GetOffsetY());
 
 					// debug AOE
-					sEnnemy.Draw(this, olc::YELLOW);
+					//sEnnemy.Draw(this, olc::YELLOW);
 
 					if (cHitbox::ShapeOverlap_DIAG(&sAOE, &sEnnemy))
 					{
 						if (dyn->bIsAttackable)
 						{
-							Attack((cDynamicCreature*)dyn, object->nDamage);
+							player->Attack(dyn, object->nDamage);
 							if (object->bOneHit)
 								object->bRedundant = true;
 						}
@@ -358,7 +337,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			{
 				if (player->IsAttackable())
 				{
-					CheckIfPlayerIsDamaged(object, atan2f(object->vy, object->vx), camera->GetOffsetX(), camera->GetOffsetY());
+					player->CheckIfDamaged(object, atan2f(object->vy, object->vx), camera->GetOffsetX(), camera->GetOffsetY());
 				}
 			}
 		}
@@ -562,53 +541,6 @@ void OneLoneCoder_Platformer::LoadLevelProperties()
 	player->SetPlayerPosX(level->GetInitPlayerPosX());
 	player->SetPlayerPosY(level->GetInitPlayerPosY());
 	sLevel = level->GetLevel();
-}
-
-void OneLoneCoder_Platformer::CheckIfPlayerIsDamaged(cDynamic* object, float angle, float fOffsetX, float fOffsetY)
-{
-	cHitbox sAOE = object->Hitbox(camera->GetOffsetX(), camera->GetOffsetY());
-
-	// debug AOE
-	sAOE.Draw(this, olc::RED);
-
-	cHitbox sPlayer = player->Hitbox(camera->GetOffsetX(), camera->GetOffsetY());
-
-	// debug AOE
-	sPlayer.Draw(this, olc::BLUE);
-
-	if (cHitbox::ShapeOverlap_DIAG(&sAOE, &sPlayer))
-		player->Damage(object);
-}
-
-void OneLoneCoder_Platformer::Attack(cDynamicCreature* victim, int damage)
-{
-	if (victim != nullptr)
-	{
-		// Attack victim with damage
-		victim->nHealth -= damage;
-
-		// Knock victim back
-		float tx = victim->px - player->GetPlayerPosX();
-		float ty = victim->py - player->GetPlayerPosY();
-		float d = sqrtf(tx * tx + ty * ty);
-		if (d < 1) d = 1.0f;
-
-		// After a hit, the object experiences knock back, where it is temporarily
-		// under system control. This delivers two functions, the first being
-		// a visual indicator to the player that something has happened, and the second
-		// it stops the ability to spam attacks on a single creature
-		if (victim->bIsKnockable)
-			victim->KnockBack(tx / d, ty / d, cfKnockBackDuration);
-		else
-			victim->KnockBack(0.0f, 0.0f, cfKnockBackDuration);
-	}
-}
-
-void OneLoneCoder_Platformer::ChangeEnnemyProperties(cDynamicCreature* victim, bool vaccumedState)
-{
-	victim->bSolidVsDyn = !vaccumedState;
-	victim->bVacuumed = vaccumedState;
-	victim->bIsKnockable = !vaccumedState;
 }
 
 bool OneLoneCoder_Platformer::IsSolidTile(wchar_t tile)
