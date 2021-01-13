@@ -234,7 +234,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	animPlayer.Update(fElapsedTime);
 
-	player->HandleInput(this, fElapsedTime, camera);
+	player->HandleInput(this, fElapsedTime, camera, level);
 	// Handle pause button pressed
 	if (bBreakLoop)
 	{
@@ -302,7 +302,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	// Projectiles
 	for (auto& object : vecProjectiles)
 	{
-		object->Collision(fElapsedTime);
+		object->Collision(fElapsedTime, level);
 
 		// check if a Projectile hits a creature
 		if (!object->bRedundant)
@@ -584,20 +584,6 @@ float OneLoneCoder_Platformer::GetGravityValue()
 float OneLoneCoder_Platformer::GetGroundDynamicOverlay()
 {
 	return cfGrdDynamicOverlay;
-}
-
-wchar_t OneLoneCoder_Platformer::GetTile(int x, int y)
-{
-	if (x >= 0 && x < level->GetWidth() && y >= 0 && y < level->GetHeight())
-		return sLevel[y * level->GetWidth() + x];
-	else
-		return L' ';
-}
-
-void OneLoneCoder_Platformer::SetTile(int x, int y, wchar_t c)
-{
-	if (x >= 0 && x < level->GetWidth() && y >= 0 && y < level->GetHeight())
-		sLevel[y * level->GetWidth() + x] = c;
 }
 
 bool OneLoneCoder_Platformer::IsInBossLevel()

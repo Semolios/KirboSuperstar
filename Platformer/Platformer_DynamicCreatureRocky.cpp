@@ -44,10 +44,10 @@ void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float p
 			bAffectedByGravity = true;
 			nGraphicState = WALKING;
 
-			if (engine->IsSolidTile(engine->GetTile(px + cfRockyLowerBoundary, py + 1)) ||
-				engine->IsSolidTile(engine->GetTile(px + cfRockyUpperBoundary, py + 1)) ||
-				engine->IsSemiSolidTile(engine->GetTile(px + cfRockyLowerBoundary, py + 1)) ||
-				engine->IsSemiSolidTile(engine->GetTile(px + cfRockyUpperBoundary, py + 1)))
+			if (engine->IsSolidTile(level->GetTile(px + cfRockyLowerBoundary, py + 1)) ||
+				engine->IsSolidTile(level->GetTile(px + cfRockyUpperBoundary, py + 1)) ||
+				engine->IsSemiSolidTile(level->GetTile(px + cfRockyLowerBoundary, py + 1)) ||
+				engine->IsSemiSolidTile(level->GetTile(px + cfRockyUpperBoundary, py + 1)))
 			{
 				nAINextState = AI_LANDING;
 			}
@@ -69,8 +69,8 @@ void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float p
 			bAffectedByGravity = false;
 			vy = cfGoingBackUpSpeed;
 
-			if (engine->IsSolidTile(engine->GetTile(px + cfRockyLowerBoundary, py - 0.01f)) ||
-				engine->IsSolidTile(engine->GetTile(px + cfRockyUpperBoundary, py - 0.01f)) ||
+			if (engine->IsSolidTile(level->GetTile(px + cfRockyLowerBoundary, py - 0.01f)) ||
+				engine->IsSolidTile(level->GetTile(px + cfRockyUpperBoundary, py - 0.01f)) ||
 				py < 1)
 			{
 				vy = 0;

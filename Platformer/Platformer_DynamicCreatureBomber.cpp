@@ -40,7 +40,7 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 				if (vx < 0)
 				{
 					// Check left wall or hole
-					if (engine->IsSolidTile(engine->GetTile(px, py)) || (!engine->IsSolidTile(engine->GetTile(px, py)) && !engine->IsSolidTile(engine->GetTile(px, py + 1)) && !engine->IsSemiSolidTile(engine->GetTile(px, py + 1))))
+					if (engine->IsSolidTile(level->GetTile(px, py)) || (!engine->IsSolidTile(level->GetTile(px, py)) && !engine->IsSolidTile(level->GetTile(px, py + 1)) && !engine->IsSemiSolidTile(level->GetTile(px, py + 1))))
 					{
 						TurnAround();
 					}
@@ -48,7 +48,7 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 				else if (vx > 0)
 				{
 					// Check right wall or hole
-					if (engine->IsSolidTile(engine->GetTile(px + 1, py)) || (!engine->IsSolidTile(engine->GetTile(px + 1, py)) && !engine->IsSolidTile(engine->GetTile(px + 1, py + 1)) && !engine->IsSemiSolidTile(engine->GetTile(px + 1, py + 1))))
+					if (engine->IsSolidTile(level->GetTile(px + 1, py)) || (!engine->IsSolidTile(level->GetTile(px + 1, py)) && !engine->IsSolidTile(level->GetTile(px + 1, py + 1)) && !engine->IsSemiSolidTile(level->GetTile(px + 1, py + 1))))
 					{
 						TurnAround();
 					}

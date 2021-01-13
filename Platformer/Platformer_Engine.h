@@ -159,8 +159,6 @@ public:
 	float GetTileHeight();
 	float GetGravityValue();
 	float GetGroundDynamicOverlay();
-	wchar_t GetTile(int x, int y);
-	void SetTile(int x, int y, wchar_t c);
 	bool IsInBossLevel();
 	void SetbInBossLevel(bool inBossLevel);
 	bool IsBossKilled();

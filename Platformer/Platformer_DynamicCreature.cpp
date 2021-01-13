@@ -133,8 +133,8 @@ void cDynamicCreature::Collision(float fElapsedTime)
 	{
 		if (vx <= 0) // Moving Left
 		{
-			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, py + fBorder)) ||
-				engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, py + (fDynHeight / engine->GetTileHeight()) - fBorder)))
+			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, py + fBorder)) ||
+				engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, py + (fDynHeight / engine->GetTileHeight()) - fBorder)))
 			{
 				fNewObjectPosX = (int)fNewObjectPosX + 1;
 				vx = 0;
@@ -142,8 +142,8 @@ void cDynamicCreature::Collision(float fElapsedTime)
 		}
 		else // Moving Right
 		{
-			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + fBorder)) ||
-				engine->IsSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + (fDynHeight / engine->GetTileHeight()) - fBorder)))
+			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + fBorder)) ||
+				engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + (fDynHeight / engine->GetTileHeight()) - fBorder)))
 			{
 				fNewObjectPosX = (int)fNewObjectPosX;
 				vx = 0;
@@ -152,8 +152,8 @@ void cDynamicCreature::Collision(float fElapsedTime)
 
 		if (vy <= 0) // Moving Up
 		{
-			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY)) ||
-				engine->IsSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY)))
+			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY)) ||
+				engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY)))
 			{
 				fNewObjectPosY = (int)fNewObjectPosY + 1;
 				vy = 0;
@@ -161,10 +161,10 @@ void cDynamicCreature::Collision(float fElapsedTime)
 		}
 		else // Moving Down
 		{
-			if (engine->IsSolidTile(engine->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
-				engine->IsSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
-				engine->IsSemiSolidTile(engine->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
-				engine->IsSemiSolidTile(engine->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))))
+			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
+				engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
+				engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
+				engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))))
 			{
 				fNewObjectPosY = (int)fNewObjectPosY + engine->GetGroundDynamicOverlay();
 				vy = 0;

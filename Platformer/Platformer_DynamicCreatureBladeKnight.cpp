@@ -64,8 +64,8 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 #pragma region GO JUMPING STATE
 
 			// If there is an obstacle, he jump
-			if (((vx < 0) && (engine->IsSolidTile(engine->GetTile(px - 1, py)) || engine->IsSolidTile(engine->GetTile(px, py)) || (!engine->IsSolidTile(engine->GetTile(px, py)) && !engine->IsSolidTile(engine->GetTile(px, py + 1)) && !engine->IsSemiSolidTile(engine->GetTile(px, py + 1))))) ||
-				((vx > 0) && (engine->IsSolidTile(engine->GetTile(px + 2, py)) || engine->IsSolidTile(engine->GetTile(px + 1, py)) || (!engine->IsSolidTile(engine->GetTile(px + 1, py)) && !engine->IsSolidTile(engine->GetTile(px + 1, py + 1)) && !engine->IsSemiSolidTile(engine->GetTile(px + 1, py + 1)))))
+			if (((vx < 0) && (engine->IsSolidTile(level->GetTile(px - 1, py)) || engine->IsSolidTile(level->GetTile(px, py)) || (!engine->IsSolidTile(level->GetTile(px, py)) && !engine->IsSolidTile(level->GetTile(px, py + 1)) && !engine->IsSemiSolidTile(level->GetTile(px, py + 1))))) ||
+				((vx > 0) && (engine->IsSolidTile(level->GetTile(px + 2, py)) || engine->IsSolidTile(level->GetTile(px + 1, py)) || (!engine->IsSolidTile(level->GetTile(px + 1, py)) && !engine->IsSolidTile(level->GetTile(px + 1, py + 1)) && !engine->IsSemiSolidTile(level->GetTile(px + 1, py + 1)))))
 				)
 			{
 				ChangeState(AI_JUMPING);
@@ -114,7 +114,7 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 				fTimer += fElapsedTime;
 				if ((abs(playerX - px) < 0.5f && playerY > py))
 					ChangeState(AI_DOWNATTACK);
-				else if (engine->IsSolidTile(engine->GetTile(px + cfCollisionLowerLimit, py + 1)) || engine->IsSolidTile(engine->GetTile(px + cfCollisionUpperLimit, py + 1)))
+				else if (engine->IsSolidTile(level->GetTile(px + cfCollisionLowerLimit, py + 1)) || engine->IsSolidTile(level->GetTile(px + cfCollisionUpperLimit, py + 1)))
 					ChangeState(AI_WALKING);
 			}
 
@@ -180,7 +180,7 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 				}
 			}
 
-			if (engine->IsSolidTile(engine->GetTile(px + cfCollisionLowerLimit, py + 1)) || engine->IsSolidTile(engine->GetTile(px + cfCollisionUpperLimit, py + 1)))
+			if (engine->IsSolidTile(level->GetTile(px + cfCollisionLowerLimit, py + 1)) || engine->IsSolidTile(level->GetTile(px + cfCollisionUpperLimit, py + 1)))
 			{
 				bCantSpawnAOE1 = false;
 				ChangeState(AI_WALKING);

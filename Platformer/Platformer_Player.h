@@ -87,7 +87,7 @@ public:
 public:
 	void InitialiseKirboHealth();
 	bool IsDead();
-	void HandleInput(olc::PixelGameEngine* gfx, float fElapsedTime, cCamera* camera);
+	void HandleInput(olc::PixelGameEngine* gfx, float fElapsedTime, cCamera* camera, cLevel* lvl);
 	bool CanInteract();
 	void ApplyGravity(float fElapsedTime);
 	void Update(float fElapsedTime);

@@ -43,6 +43,10 @@ public:
 	int GetInitPlayerPosY();
 	bool PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::string levelName);
 	bool PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLvl);
+	void DrawTiles(int nVisibleTilesX, int nVisibleTilesY, float fOffsetX, float fOffsetY);
+	void DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY, float fCamOffsetX, float fCamOffsetY , olc::Sprite* spriteTiles, wchar_t tile);
+	wchar_t GetTile(int x, int y);
+	void SetTile(int x, int y, wchar_t c);
 	std::vector<std::string> LoadLevelsList();
 	std::vector<std::string> LoadBossLevelsList();
 	std::vector<std::string> LoadLevelsEnnemiesList();
