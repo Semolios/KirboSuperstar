@@ -35,7 +35,7 @@ public:
 public:
 	void ClampCameraOffset();
 	void SetPositions(float fPlayerPosX, float fPlayerPosY);
-	void DrawLevel(olc::PixelGameEngine* gfx, cLevel* level, float fElapsedTime);
+	void DrawLevel(cLevel* level, float fElapsedTime);
 	void DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY, olc::Sprite* spriteTiles, wchar_t tile, olc::PixelGameEngine* gfx);
 	float GetOffsetX();
 	float GetOffsetY();

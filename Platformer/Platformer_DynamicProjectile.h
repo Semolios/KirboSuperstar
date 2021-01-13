@@ -9,8 +9,8 @@ class cDynamicProjectile : public cDynamic
 {
 public:
 	cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner = 0);
-	void DrawSelf(olc::PixelGameEngine* gfx, float ox, float oy) override;
-	void Update(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx) override;
+	void DrawSelf(float ox, float oy) override;
+	void Update(float fElapsedTime, float playerX, float playerY) override;
 	void Collision(float fElapsedTime, cLevel* level);
 	cHitbox Hitbox(float cameraOffsetX, float cameraOffsetY) override;
 

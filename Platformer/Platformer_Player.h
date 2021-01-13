@@ -87,7 +87,7 @@ public:
 public:
 	void InitialiseKirboHealth();
 	bool IsDead();
-	void HandleInput(olc::PixelGameEngine* gfx, float fElapsedTime, cCamera* camera, cLevel* lvl);
+	void HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl);
 	bool CanInteract();
 	void ApplyGravity(float fElapsedTime);
 	void Update(float fElapsedTime);
@@ -107,7 +107,7 @@ public:
 	bool IsAttackable();
 	bool IsSwallowing();
 	void UpdateInvulnerability(float fElapsedTime);
-	void DrawKirbo(olc::PixelGameEngine* gfx, olc::GFX2D::Transform2D t);
+	void DrawKirbo(olc::GFX2D::Transform2D t);
 	float GetHealth();
 	void Damage(cDynamic* object);
 	void ResetVariables();

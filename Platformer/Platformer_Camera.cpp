@@ -19,10 +19,10 @@ void cCamera::SetPositions(float fPlayerPosX, float fPlayerPosY)
 	fCameraPosY = fPlayerPosY;
 }
 
-void cCamera::DrawLevel(olc::PixelGameEngine* gfx, cLevel* level, float fElapsedTime)
+void cCamera::DrawLevel(cLevel* level, float fElapsedTime)
 {
-	int nVisibleTilesX = gfx->ScreenWidth() / engine->GetTileWidth();
-	int nVisibleTilesY = gfx->ScreenHeight() / engine->GetTileHeight();
+	int nVisibleTilesX = engine->ScreenWidth() / engine->GetTileWidth();
+	int nVisibleTilesY = engine->ScreenHeight() / engine->GetTileHeight();
 
 	// Calculate Top-Left most visible tile
 	fOffsetX = fCameraPosX - (float)nVisibleTilesX / 2.0f;
@@ -49,9 +49,9 @@ void cCamera::DrawLevel(olc::PixelGameEngine* gfx, cLevel* level, float fElapsed
 	}
 
 	// Draw Level background
-	float fBackgroundOffsetX = fOffsetX * engine->GetTileWidth() * ((float)(engine->GetBackGround()->width - gfx->ScreenWidth()) / (float)(level->GetWidth() * engine->GetTileWidth() - gfx->ScreenWidth()));
-	float fBackgroundOffsetY = fOffsetY * engine->GetTileHeight() * ((float)(engine->GetBackGround()->height - gfx->ScreenHeight()) / (float)(level->GetWidth() * engine->GetTileHeight() - gfx->ScreenHeight()));
-	gfx->DrawPartialSprite(0, 0, engine->GetBackGround(), fBackgroundOffsetX, fBackgroundOffsetY, gfx->ScreenWidth(), gfx->ScreenHeight());
+	float fBackgroundOffsetX = fOffsetX * engine->GetTileWidth() * ((float)(engine->GetBackGround()->width - engine->ScreenWidth()) / (float)(level->GetWidth() * engine->GetTileWidth() - engine->ScreenWidth()));
+	float fBackgroundOffsetY = fOffsetY * engine->GetTileHeight() * ((float)(engine->GetBackGround()->height - engine->ScreenHeight()) / (float)(level->GetWidth() * engine->GetTileHeight() - engine->ScreenHeight()));
+	engine->DrawPartialSprite(0, 0, engine->GetBackGround(), fBackgroundOffsetX, fBackgroundOffsetY, engine->ScreenWidth(), engine->ScreenHeight());
 
 	level->DrawTiles(nVisibleTilesX, nVisibleTilesY, fOffsetX, fOffsetY);
 }

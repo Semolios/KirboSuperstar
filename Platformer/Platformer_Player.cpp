@@ -18,12 +18,12 @@ bool cPlayer::IsDead()
 	return bDead;
 }
 
-void cPlayer::HandleInput(olc::PixelGameEngine* gfx, float fElapsedTime, cCamera* camera, cLevel* lvl)
+void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 {
 	if (engine->IsFocused() && CanInteract())
 	{
 		// Fly, enter a door
-		if (gfx->GetKey(olc::Key::UP).bHeld)
+		if (engine->GetKey(olc::Key::UP).bHeld)
 		{
 			if (!bAttacking && !bVacuuming)
 			{
@@ -37,7 +37,7 @@ void cPlayer::HandleInput(olc::PixelGameEngine* gfx, float fElapsedTime, cCamera
 		}
 
 		// Go down when flying, cross semi solid platform and control camera when onground
-		if (gfx->GetKey(olc::Key::DOWN).bHeld)
+		if (engine->GetKey(olc::Key::DOWN).bHeld)
 		{
 			if (bFlying)
 				fPlayerVelY = cfPlayerVelY;
@@ -61,7 +61,7 @@ void cPlayer::HandleInput(olc::PixelGameEngine* gfx, float fElapsedTime, cCamera
 		}
 
 		// Go left
-		if (gfx->GetKey(olc::Key::LEFT).bHeld)
+		if (engine->GetKey(olc::Key::LEFT).bHeld)
 		{
 			if (!bAttacking && !bVacuuming)
 			{
@@ -74,7 +74,7 @@ void cPlayer::HandleInput(olc::PixelGameEngine* gfx, float fElapsedTime, cCamera
 		}
 
 		// Go right
-		if (gfx->GetKey(olc::Key::RIGHT).bHeld)
+		if (engine->GetKey(olc::Key::RIGHT).bHeld)
 		{
 			if (!bAttacking && !bVacuuming)
 			{
@@ -87,7 +87,7 @@ void cPlayer::HandleInput(olc::PixelGameEngine* gfx, float fElapsedTime, cCamera
 		}
 
 		// Jump, double jump, stop flying
-		if (gfx->GetKey(olc::Key::SPACE).bPressed)
+		if (engine->GetKey(olc::Key::SPACE).bPressed)
 		{
 			if (bFlying)
 			{
@@ -105,7 +105,7 @@ void cPlayer::HandleInput(olc::PixelGameEngine* gfx, float fElapsedTime, cCamera
 		}
 
 		// The more you hold, the higher you go
-		if (gfx->GetKey(olc::Key::SPACE).bHeld)
+		if (engine->GetKey(olc::Key::SPACE).bHeld)
 		{
 			if (bChargeJump)
 			{
@@ -130,7 +130,7 @@ void cPlayer::HandleInput(olc::PixelGameEngine* gfx, float fElapsedTime, cCamera
 		}
 
 		// if you release space, jump is cancelled so you can't spam space to glide
-		if (gfx->GetKey(olc::Key::SPACE).bReleased)
+		if (engine->GetKey(olc::Key::SPACE).bReleased)
 		{
 			if (bChargeJump)
 			{
@@ -145,7 +145,7 @@ void cPlayer::HandleInput(olc::PixelGameEngine* gfx, float fElapsedTime, cCamera
 		}
 
 		// Slap attack
-		if (gfx->GetKey(olc::Key::F).bPressed)
+		if (engine->GetKey(olc::Key::F).bPressed)
 		{
 			// Can't spam slap, can't slap when player is flying
 			if (!bAttacking && !bFlying)
@@ -159,7 +159,7 @@ void cPlayer::HandleInput(olc::PixelGameEngine* gfx, float fElapsedTime, cCamera
 		}
 
 		// Pause
-		if (gfx->GetKey(olc::Key::P).bPressed)
+		if (engine->GetKey(olc::Key::P).bPressed)
 		{
 			engine->SetPlayerChoice(0);
 
@@ -171,7 +171,7 @@ void cPlayer::HandleInput(olc::PixelGameEngine* gfx, float fElapsedTime, cCamera
 		}
 
 		// Launch a Jesus Cross
-		if (gfx->GetKey(olc::Key::R).bPressed)
+		if (engine->GetKey(olc::Key::R).bPressed)
 		{
 			// Can't spam Launching cross, can't launch when player is flying
 			if (!bAttacking && !bFlying)
@@ -185,7 +185,7 @@ void cPlayer::HandleInput(olc::PixelGameEngine* gfx, float fElapsedTime, cCamera
 		}
 
 		// Vacuum attack
-		if (gfx->GetKey(olc::Key::E).bHeld)
+		if (engine->GetKey(olc::Key::E).bHeld)
 		{
 			// can't Vacuum when player is attacking, swallowing or flying
 			if (!bFlying && !bSwallowing)
@@ -594,13 +594,13 @@ void cPlayer::UpdateInvulnerability(float fElapsedTime)
 	}
 }
 
-void cPlayer::DrawKirbo(olc::PixelGameEngine* gfx, olc::GFX2D::Transform2D t)
+void cPlayer::DrawKirbo(olc::GFX2D::Transform2D t)
 {
 	if (bShowKirbo)
 	{
-		gfx->SetPixelMode(olc::Pixel::ALPHA);
-		animPlayer->DrawSelf(gfx, t);
-		gfx->SetPixelMode(olc::Pixel::NORMAL);
+		engine->SetPixelMode(olc::Pixel::ALPHA);
+		animPlayer->DrawSelf(engine, t);
+		engine->SetPixelMode(olc::Pixel::NORMAL);
 	}
 }
 

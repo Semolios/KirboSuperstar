@@ -55,8 +55,8 @@ public:
 	static OneLoneCoder_Platformer* engine;
 
 public:
-	void DrawSelf(olc::PixelGameEngine* gfx, float ox, float oy) override;
-	void Update(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx) override;
+	void DrawSelf(float ox, float oy) override;
+	void Update(float fElapsedTime, float playerX, float playerY) override;
 	void KnockBack(float dx, float dy, float dist);
 	void TurnAround();
 	void Collision(float fElapsedTime);

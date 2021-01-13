@@ -234,7 +234,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	animPlayer.Update(fElapsedTime);
 
-	player->HandleInput(this, fElapsedTime, camera, level);
+	player->HandleInput(fElapsedTime, camera, level);
 	// Handle pause button pressed
 	if (bBreakLoop)
 	{
@@ -271,7 +271,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	camera->SetPositions(player->GetPlayerPosX(), player->GetPlayerPosY());
 
-	camera->DrawLevel(this, level, fElapsedTime);
+	camera->DrawLevel(level, fElapsedTime);
 
 	// Ennemies
 	for (auto& object : vecEnnemies)
@@ -345,12 +345,12 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	for (auto& object : vecEnnemies)
 	{
-		object->Update(fElapsedTime, player->GetPlayerPosX(), player->GetPlayerPosY(), this);
+		object->Update(fElapsedTime, player->GetPlayerPosX(), player->GetPlayerPosY());
 	}
 
 	for (auto& object : vecProjectiles)
 	{
-		object->Update(fElapsedTime, player->GetPlayerPosX(), player->GetPlayerPosY(), this);
+		object->Update(fElapsedTime, player->GetPlayerPosX(), player->GetPlayerPosY());
 	}
 
 	// Remove dead ennemies
@@ -377,13 +377,13 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	// Draw Ennemies
 	for (auto& object : vecEnnemies)
 	{
-		object->DrawSelf(this, camera->GetOffsetX(), camera->GetOffsetY());
+		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
 	}
 
 	// Draw Projectiles
 	for (auto& object : vecProjectiles)
 	{
-		object->DrawSelf(this, camera->GetOffsetX(), camera->GetOffsetY());
+		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
 	}
 
 	if (bInBossLvl && vecEnnemies.empty())
@@ -423,7 +423,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	player->UpdateInvulnerability(fElapsedTime);
 	t.Translate((player->GetPlayerPosX() - camera->GetOffsetX()) * nTileWidth + (nTileWidth / 2), (player->GetPlayerPosY() - camera->GetOffsetY()) * nTileHeight + (nTileHeight / 2));
-	player->DrawKirbo(this, t);
+	player->DrawKirbo(t);
 
 #pragma region HUD
 

@@ -15,17 +15,17 @@ cDynamicCreature::cDynamicCreature(std::string n, olc::Sprite* sprite, int frame
 	bIsAttackable = true;
 }
 
-void cDynamicCreature::DrawSelf(olc::PixelGameEngine* gfx, float ox, float oy)
+void cDynamicCreature::DrawSelf(float ox, float oy)
 {
 	int nSheetOffsetX = nGraphicCounter * fSpriteW;					// Same State of a sprite are stored in one line
 	int nSheetOffsetY = (2 * nGraphicState + nFaceDir) * fSpriteH;	// 0 = Left Idle, 1 = Right Idle, 2 = Left Walking, 3 = Right Walking, 4 = Left Damaged, 5 = Right Damaged
 
-	gfx->SetPixelMode(olc::Pixel::ALPHA);
-	gfx->DrawPartialSprite((px - ox) * 64.0f + fSpriteOffsetX, (py - oy) * 64.0f + fSpriteOffsetY, sSprite, nSheetOffsetX, nSheetOffsetY, fSpriteW, fSpriteH);
-	gfx->SetPixelMode(olc::Pixel::NORMAL);
+	engine->SetPixelMode(olc::Pixel::ALPHA);
+	engine->DrawPartialSprite((px - ox) * 64.0f + fSpriteOffsetX, (py - oy) * 64.0f + fSpriteOffsetY, sSprite, nSheetOffsetX, nSheetOffsetY, fSpriteW, fSpriteH);
+	engine->SetPixelMode(olc::Pixel::NORMAL);
 }
 
-void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
+void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY)
 {
 	fTimer += fElapsedTime;
 	if (fTimer >= 1.0f / (float)nFramesPerSecond)
@@ -65,7 +65,7 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY, 
 		}
 
 		if (bCanBehaveWhileAttacked && !bVacuumed && !bBossKilled)
-			Behaviour(fElapsedTime, playerX, playerY, gfx);
+			Behaviour(fElapsedTime, playerX, playerY, engine);
 
 		if (bVacuumed)
 		{
@@ -95,7 +95,7 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY, 
 		if (vx < -0.1f) nFaceDir = 0;
 		if (vx > 0.1f) nFaceDir = 1;
 
-		Behaviour(fElapsedTime, playerX, playerY, gfx);
+		Behaviour(fElapsedTime, playerX, playerY, engine);
 	}
 	else
 	{

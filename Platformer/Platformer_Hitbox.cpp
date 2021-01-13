@@ -1,5 +1,4 @@
 #include "Platformer_Hitbox.h"
-#include "Platformer_Engine.h"
 
 cHitbox::cHitbox()
 {
