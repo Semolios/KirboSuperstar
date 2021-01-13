@@ -245,6 +245,7 @@ void cLevel::DrawTiles(int nVisibleTilesX, int nVisibleTilesY, float fOffsetX, f
 		for (int y = -2; y < nVisibleTilesY + 2; y++)
 		{
 			wchar_t sTileID = GetTile(x + fOffsetX, y + fOffsetY);
+			engine->SetPixelMode(olc::Pixel::ALPHA);
 			switch (sTileID)
 			{
 				case L'#': // Solid Block
@@ -257,23 +258,18 @@ void cLevel::DrawTiles(int nVisibleTilesX, int nVisibleTilesY, float fOffsetX, f
 					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, engine->GetTilesSprites(), 2 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
 					break;
 				case L'?': // Question Block
-					engine->SetPixelMode(olc::Pixel::ALPHA);
 					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, engine->GetTilesSprites(), 3 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-					engine->SetPixelMode(olc::Pixel::NORMAL);
 					break;
 				case L'o': // Coin
-					engine->SetPixelMode(olc::Pixel::ALPHA);
 					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, engine->GetTilesSprites(), 4 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-					engine->SetPixelMode(olc::Pixel::NORMAL);
 					break;
 				case L'w': // Door
-					engine->SetPixelMode(olc::Pixel::ALPHA);
 					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY + (engine->GetTileHeight() - engine->GetDoorSpr()->height) + 5.0f, engine->GetDoorSpr(), 0, 0, engine->GetDoorSpr()->width, engine->GetDoorSpr()->height);
-					engine->SetPixelMode(olc::Pixel::NORMAL);
 					break;
 					// TODO
 					/*ADD HERE THE NEW TILES*/
 			}
+			engine->SetPixelMode(olc::Pixel::NORMAL);
 		}
 	}
 }
@@ -291,9 +287,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 0 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -301,9 +295,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 1 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -311,9 +303,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 2 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -321,9 +311,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 3 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -331,9 +319,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 4 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -341,9 +327,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 5 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -351,9 +335,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 6 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -361,9 +343,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 7 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -371,9 +351,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 0 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -381,9 +359,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 1 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -391,9 +367,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 2 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -401,9 +375,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 3 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -411,9 +383,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 4 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -421,9 +391,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 5 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -431,9 +399,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 6 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -441,9 +407,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 7 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -451,9 +415,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] == tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 0 * engine->GetTileWidth(), 2 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -461,9 +423,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] == tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 1 * engine->GetTileWidth(), 2 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -471,9 +431,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] != tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 2 * engine->GetTileWidth(), 2 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -481,9 +439,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] != tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 3 * engine->GetTileWidth(), 2 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -491,9 +447,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 4 * engine->GetTileWidth(), 2 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -501,9 +455,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 5 * engine->GetTileWidth(), 2 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -511,9 +463,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 6 * engine->GetTileWidth(), 2 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -521,9 +471,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 7 * engine->GetTileWidth(), 2 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -531,9 +479,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
 		tilesAround[2][0] == tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 0 * engine->GetTileWidth(), 3 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -541,9 +487,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
 		tilesAround[2][0] != tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 1 * engine->GetTileWidth(), 3 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -551,9 +495,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
 		tilesAround[2][0] == tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 2 * engine->GetTileWidth(), 3 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -561,9 +503,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
 		tilesAround[2][0] != tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 3 * engine->GetTileWidth(), 3 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -571,9 +511,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 4 * engine->GetTileWidth(), 3 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -581,9 +519,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 5 * engine->GetTileWidth(), 3 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -591,9 +527,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 6 * engine->GetTileWidth(), 3 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -601,9 +535,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 7 * engine->GetTileWidth(), 3 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -611,9 +543,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
 		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 0 * engine->GetTileWidth(), 4 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -621,9 +551,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 1 * engine->GetTileWidth(), 4 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -631,9 +559,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] == tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 2 * engine->GetTileWidth(), 4 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -641,9 +567,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] != tile)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 3 * engine->GetTileWidth(), 4 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -651,9 +575,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
 		tilesAround[2][0] == tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 4 * engine->GetTileWidth(), 4 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -661,9 +583,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
 		tilesAround[2][0] != tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 5 * engine->GetTileWidth(), 4 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -671,9 +591,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
 		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 6 * engine->GetTileWidth(), 4 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -681,9 +599,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
 		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 7 * engine->GetTileWidth(), 4 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -691,9 +607,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 0 * engine->GetTileWidth(), 5 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -701,9 +615,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 1 * engine->GetTileWidth(), 5 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -711,9 +623,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
 		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 2 * engine->GetTileWidth(), 5 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -721,9 +631,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
 		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 3 * engine->GetTileWidth(), 5 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -731,9 +639,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
 		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 4 * engine->GetTileWidth(), 5 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -741,9 +647,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
 		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 5 * engine->GetTileWidth(), 5 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 
@@ -751,9 +655,7 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
 		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
 		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 6 * engine->GetTileWidth(), 5 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		engine->SetPixelMode(olc::Pixel::NORMAL);
 		return;
 	}
 }
