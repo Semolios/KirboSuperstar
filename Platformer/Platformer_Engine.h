@@ -38,7 +38,6 @@ private:
 	const int cnSpriteOffsetY = 64;						// Sprite offset Y because kirbo sprites are 192 * 192 pixels
 
 	// Level storage
-	std::wstring sLevel;
 	cLevel* level;
 	int nCurrentLevel = 0;
 	int nUnlockedLevel = 6; // TODO PENSER A REMETTRE A 1 A LA FIN

@@ -540,7 +540,6 @@ void OneLoneCoder_Platformer::LoadLevelProperties()
 {
 	player->SetPlayerPosX(level->GetInitPlayerPosX());
 	player->SetPlayerPosY(level->GetInitPlayerPosY());
-	sLevel = level->GetLevel();
 }
 
 bool OneLoneCoder_Platformer::IsSolidTile(wchar_t tile)
