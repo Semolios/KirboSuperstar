@@ -30,19 +30,15 @@ bool cTitleScreen::Update(olc::PixelGameEngine* gfx, float fElapsedTime)
 		path.fTotalSplineLength += (path.points[i].length = path.CalculateSegmentLength(i, true));
 	}
 
+	fMarker1 += cfStarsMovSpeed * fElapsedTime;
+	if (fMarker1 >= path.fTotalSplineLength) fMarker1 = 0.0f;
+
+	fMarker2 -= cfStarsMovSpeed * fElapsedTime;
+	if (fMarker2 < 0.0f) fMarker2 = path.fTotalSplineLength;
+
 	// Draw agent to demonstrate gradient
 	DrawNewStar(gfx, fMarker1);
 	DrawNewStar(gfx, fMarker2);
-
-	fMarker1 += cfStarsMovSpeed * fElapsedTime;
-
-	if (fMarker1 >= (float)path.fTotalSplineLength)
-		fMarker1 -= (float)path.fTotalSplineLength;
-
-	fMarker2 -= cfStarsMovSpeed * fElapsedTime;
-
-	if (fMarker2 < 0.0f)
-		fMarker2 += (float)path.fTotalSplineLength;
 
 	fTheta += cfStarsRotSpeed * fElapsedTime;
 
