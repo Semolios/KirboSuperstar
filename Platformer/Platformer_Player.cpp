@@ -753,7 +753,7 @@ void cPlayer::Vacuum(cDynamicCreature* object, float cameraOffsetX, float camera
 	}
 }
 
-void cPlayer::CheckIfDamaged(cDynamic* object, float angle, float fOffsetX, float fOffsetY)
+void cPlayer::CheckIfDamaged(cDynamic* object, float fOffsetX, float fOffsetY)
 {
 	cHitbox sAOE = object->Hitbox(fOffsetX, fOffsetY);
 	cHitbox sPlayer = Hitbox(fOffsetX, fOffsetY);

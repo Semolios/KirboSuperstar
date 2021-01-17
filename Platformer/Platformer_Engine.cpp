@@ -295,7 +295,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// Check collision with player to damage him
 		if (player->IsAttackable() && !player->IsSwallowing() && !object->bVacuumed)
 		{
-			player->CheckIfDamaged(object, 0.0f, camera->GetOffsetX(), camera->GetOffsetY());
+			player->CheckIfDamaged(object, camera->GetOffsetX(), camera->GetOffsetY());
 		}
 	}
 
@@ -337,7 +337,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			{
 				if (player->IsAttackable())
 				{
-					player->CheckIfDamaged(object, atan2f(object->vy, object->vx), camera->GetOffsetX(), camera->GetOffsetY());
+					player->CheckIfDamaged(object, camera->GetOffsetX(), camera->GetOffsetY());
 				}
 			}
 		}

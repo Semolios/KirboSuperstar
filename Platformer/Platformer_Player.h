@@ -115,5 +115,5 @@ public:
 	cHitbox Hitbox(float cameraOffsetX, float cameraOffsetY);
 	void Attack(cDynamicCreature* victim, int damage);
 	void Vacuum(cDynamicCreature* object, float cameraOffsetX, float cameraOffsetY);
-	void CheckIfDamaged(cDynamic* object, float angle, float fOffsetX, float fOffsetY);
+	void CheckIfDamaged(cDynamic* object, float fOffsetX, float fOffsetY);
 };
