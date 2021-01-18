@@ -54,5 +54,7 @@ public:
 	std::vector<std::string> LoadLevelsGrdTilesList();
 	std::vector<std::string> LoadLevelsBackGroundList();
 	std::vector<std::string> LoadLevelsBossBckGrdList();
+	std::vector<std::string> LoadLevelsMusics();
+	std::vector<std::string> LoadBossLevelsMusics();
 };
 

@@ -53,14 +53,19 @@ private:
 	std::vector<std::string> levels;
 	std::vector<std::string> levelsEnnemies;
 	std::vector<std::string> levelsTiles;
+	std::vector<std::string> levelsMusics;
 	std::vector<std::string> groundTiles;
 	std::vector<std::string> levelsBackgrounds;
 	std::vector<std::string> bossLevels;
+	std::vector<std::string> bossLevelsMusics;
 	std::vector<std::string> bossLevelsBackgrounds;
 
 	// Sounds
 	int sndTitleScreen;
 	int sndWorldMap;
+	int sndLevelMusic;
+	int sndBossLevelMusic;
+	int sndBossKilled;
 
 	// engine Properties
 	cPlayer* player;
@@ -187,4 +192,5 @@ public:
 	olc::Sprite* GetTilesSprites();
 	olc::Sprite* GetGroundTiles();
 	olc::Sprite* GetDoorSpr();
+	void ReturnToWorldMap();
 };

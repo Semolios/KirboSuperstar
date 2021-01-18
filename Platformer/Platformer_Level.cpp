@@ -764,3 +764,29 @@ std::vector<std::string> cLevel::LoadLevelsBossBckGrdList()
 
 	return bossLevelsBackgrounds;
 }
+
+std::vector<std::string> cLevel::LoadLevelsMusics()
+{
+	std::vector<std::string> levelsMusics;
+	levelsMusics.push_back("assets/snd/lvl00.wav");
+	levelsMusics.push_back("assets/snd/lvl01.wav");
+	levelsMusics.push_back("assets/snd/lvl02.wav");
+	levelsMusics.push_back("assets/snd/lvl03.wav");
+	levelsMusics.push_back("assets/snd/lvl04.wav");
+	levelsMusics.push_back("assets/snd/lvl05.wav");
+
+	return levelsMusics;
+}
+
+std::vector<std::string> cLevel::LoadBossLevelsMusics()
+{
+	std::vector<std::string> bossLevelsMusics;
+	bossLevelsMusics.push_back("assets/snd/bossLvl00.wav");
+	bossLevelsMusics.push_back("assets/snd/bossLvl01.wav");
+	bossLevelsMusics.push_back("assets/snd/bossLvl02.wav");
+	bossLevelsMusics.push_back("assets/snd/bossLvl03.wav");
+	bossLevelsMusics.push_back("assets/snd/bossLvl04.wav");
+	bossLevelsMusics.push_back("assets/snd/bossLvl05.wav");
+
+	return bossLevelsMusics;
+}
