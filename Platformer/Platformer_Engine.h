@@ -60,6 +60,7 @@ private:
 
 	// Sounds
 	int sndTitleScreen;
+	int sndWorldMap;
 
 	// engine Properties
 	cPlayer* player;

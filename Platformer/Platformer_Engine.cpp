@@ -179,6 +179,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 #pragma region Sounds
 
 	sndTitleScreen = olc::SOUND::LoadAudioSample("assets/snd/titleScreen.wav");
+	sndWorldMap = olc::SOUND::LoadAudioSample("assets/snd/worldMap.wav");
 
 #pragma endregion
 
@@ -458,7 +459,10 @@ bool OneLoneCoder_Platformer::GameState_WorldMap(float fElapsedTime)
 		nGameState = GS_LOADLEVEL;
 
 	if (GetKey(olc::Key::ESCAPE).bPressed)
+	{
+		olc::SOUND::StopSample(sndWorldMap);
 		nGameState = GS_SELECTMENU;
+	}
 
 	return false;
 }
@@ -530,6 +534,7 @@ bool OneLoneCoder_Platformer::GameState_SelectMenu(float fElapsedTime)
 	{
 		if (selectMenu->GetPlayerChoice() == 0)
 		{
+			olc::SOUND::PlaySample(sndWorldMap, true);
 			animPlayer.ChangeState("riding_star");
 			nGameState = GS_WORLDMAP;
 		}
