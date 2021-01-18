@@ -14,21 +14,27 @@ bool cSelectMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime)
 	if (gfx->GetKey(olc::DOWN).bReleased)
 	{
 		nPlayerChoice++;
-		if (nPlayerChoice >= 2) nPlayerChoice = 0;
+		if (nPlayerChoice > 2) nPlayerChoice = 0;
 	}
 
 	if (gfx->GetKey(olc::UP).bReleased)
 	{
 		nPlayerChoice--;
-		if (nPlayerChoice < 0) nPlayerChoice = 1;
+		if (nPlayerChoice < 0) nPlayerChoice = 2;
 	}
 
 	// Draw choices and cursor
 	gfx->DrawString(160, 30, "Play", olc::WHITE, 5);
 	gfx->DrawString(160, 70, "Controls", olc::WHITE, 5);
+	gfx->DrawString(160, 110, "Quit", olc::WHITE, 5);
+
+	int ncursorY;
+	if (nPlayerChoice == 0) ncursorY = 32;
+	if (nPlayerChoice == 1) ncursorY = 72;
+	if (nPlayerChoice == 2) ncursorY = 112;
 
 	gfx->SetPixelMode(olc::Pixel::ALPHA);
-	gfx->DrawSprite(120, nPlayerChoice == 0 ? 32 : 72, sprCursor);
+	gfx->DrawSprite(120, ncursorY, sprCursor);
 	gfx->SetPixelMode(olc::Pixel::NORMAL);
 
 	return true;

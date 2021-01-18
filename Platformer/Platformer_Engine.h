@@ -1,5 +1,6 @@
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
+#include "olcPGEX_Sound.h"
 
 #include "Platformer_Animator.h"
 #include "Platformer_Assets.h"
@@ -34,8 +35,12 @@ private:
 	const float cfTimeBeforeWinAnimation = 2.0f;		// Time before animation begins when kirbo kills the boss
 	const float cfBossKilledAnimation = 4.0f;			// Boss killed animation duration
 	const float cfGrdDynamicOverlay = 0.08f;			// little gap to give impression the player lightly overlap the platform
+	const float cfGameCloseTime = 2.0f;					// Application wait a little time before closing because sound take a little time to be shut off
 	const int cnSpriteOffsetX = 64;						// Sprite offset X because kirbo sprites are 192 * 192 pixels
 	const int cnSpriteOffsetY = 64;						// Sprite offset Y because kirbo sprites are 192 * 192 pixels
+
+	// Engine properties
+	float fGameCloseTimer = 0.0f;
 
 	// Level storage
 	cLevel* level;
@@ -52,6 +57,9 @@ private:
 	std::vector<std::string> levelsBackgrounds;
 	std::vector<std::string> bossLevels;
 	std::vector<std::string> bossLevelsBackgrounds;
+
+	// Sounds
+	int sndTitleScreen;
 
 	// engine Properties
 	cPlayer* player;
@@ -129,6 +137,7 @@ private:
 		GS_LOADBOSSLEVEL,
 		GS_SELECTMENU,
 		GS_CONTROLS,
+		GS_CLOSE,
 	} nGameState = GS_LOADING;
 
 protected:
@@ -146,6 +155,7 @@ protected:
 	bool GameState_LoadBossLevel(float fElapsedTime);
 	bool GameState_SelectMenu(float fElapsedTime);
 	bool GameState_Controls(float fElapsedTime);
+	bool GameState_Close(float fElapsedTime);
 
 	void LoadLevelProperties();
 

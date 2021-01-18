@@ -7,6 +7,7 @@ OneLoneCoder_Platformer::OneLoneCoder_Platformer()
 
 bool OneLoneCoder_Platformer::OnUserCreate()
 {
+	olc::SOUND::InitialiseAudio();
 	return true;
 }
 
@@ -25,6 +26,7 @@ bool OneLoneCoder_Platformer::OnUserUpdate(float fElapsedTime)
 		case GS_LOADBOSSLEVEL:	GameState_LoadBossLevel(fElapsedTime); break;
 		case GS_SELECTMENU:		GameState_SelectMenu(fElapsedTime); break;
 		case GS_CONTROLS:		GameState_Controls(fElapsedTime); break;
+		case GS_CLOSE:			GameState_Close(fElapsedTime); break;
 	}
 
 	return true;
@@ -174,6 +176,13 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 #pragma endregion
 
+#pragma region Sounds
+
+	sndTitleScreen = olc::SOUND::LoadAudioSample("assets/snd/titleScreen.wav");
+
+#pragma endregion
+
+	olc::SOUND::PlaySample(sndTitleScreen, true);
 	nGameState = GS_TITLE;
 
 	return true;
@@ -216,7 +225,10 @@ bool OneLoneCoder_Platformer::GameState_Title(float fElapsedTime)
 	titleScreen->Update(this, fElapsedTime);
 
 	if (GetKey(olc::Key::SPACE).bPressed)
+	{
+		olc::SOUND::StopSample(sndTitleScreen);
 		nGameState = GS_SELECTMENU;
+	}
 
 	return true;
 }
@@ -445,6 +457,9 @@ bool OneLoneCoder_Platformer::GameState_WorldMap(float fElapsedTime)
 	if (GetKey(olc::Key::SPACE).bPressed)
 		nGameState = GS_LOADLEVEL;
 
+	if (GetKey(olc::Key::ESCAPE).bPressed)
+		nGameState = GS_SELECTMENU;
+
 	return false;
 }
 
@@ -518,9 +533,13 @@ bool OneLoneCoder_Platformer::GameState_SelectMenu(float fElapsedTime)
 			animPlayer.ChangeState("riding_star");
 			nGameState = GS_WORLDMAP;
 		}
-		else
+		else if (selectMenu->GetPlayerChoice() == 1)
 		{
 			nGameState = GS_CONTROLS;
+		}
+		else
+		{
+			nGameState = GS_CLOSE;
 		}
 	}
 	return true;
@@ -532,6 +551,14 @@ bool OneLoneCoder_Platformer::GameState_Controls(float fElapsedTime)
 
 	if (GetKey(olc::Key::SPACE).bPressed)
 		nGameState = GS_SELECTMENU;
+
+	return true;
+}
+
+bool OneLoneCoder_Platformer::GameState_Close(float fElapsedTime)
+{
+	olc::SOUND::StopAll();
+	olc_Terminate();
 
 	return true;
 }

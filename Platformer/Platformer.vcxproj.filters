@@ -191,5 +191,8 @@
     <ClInclude Include="Platformer_Hitbox.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="olcPGEX_Sound.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
