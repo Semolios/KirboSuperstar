@@ -67,6 +67,11 @@ private:
 	int sndBossLevelMusic;
 	int sndBossKilled;
 
+	// Sounds shared with other classes
+	std::map<std::string, int> sharedSounds;
+	int sndWhispyScream;
+	int sndLoseLife;
+
 	// engine Properties
 	cPlayer* player;
 	bool bBreakLoop = false;
@@ -193,4 +198,6 @@ public:
 	olc::Sprite* GetGroundTiles();
 	olc::Sprite* GetDoorSpr();
 	void ReturnToWorldMap();
+	void AddSharedSound(std::string name, int sound, std::string fileName);
+	int GetSound(std::string name);
 };

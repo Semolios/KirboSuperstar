@@ -350,6 +350,8 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 		fPlayerVelY = 0.0f;
 		StopAnyAttack();
 
+		if (fDeadAnimation == 0.0f) olc::SOUND::PlaySample(engine->GetSound("loseLife"));
+
 		fDeadAnimation += fElapsedTime;
 		if (fDeadAnimation != fElapsedTime)
 		{
@@ -371,8 +373,7 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 				return;
 			}
 
-			engine->SetGameState("GS_WORLDMAP");
-			animPlayer->ChangeState("riding_star");
+			engine->ReturnToWorldMap();
 			engine->BreakLoop();
 			return;
 		}

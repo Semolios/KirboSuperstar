@@ -184,6 +184,9 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	sndWorldMap = olc::SOUND::LoadAudioSample("assets/snd/worldMap.wav");
 	sndBossKilled = olc::SOUND::LoadAudioSample("assets/snd/bossKilled.wav");
 
+	AddSharedSound("whispyScream", sndWhispyScream, "assets/snd/whispyScream.wav");
+	AddSharedSound("loseLife", sndLoseLife, "assets/snd/loseLife.wav");
+
 #pragma endregion
 
 	olc::SOUND::PlaySample(sndTitleScreen, true);
@@ -246,6 +249,11 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	// Stop time a while before dead animation
 	if (player->IsDead())
 	{
+		if (fStopTimebeforeDeadAnim == 0.0f)
+		{
+			olc::SOUND::StopSample(sndLevelMusic);
+			olc::SOUND::StopSample(sndBossLevelMusic);
+		}
 		fStopTimebeforeDeadAnim += fElapsedTime;
 
 		if (fStopTimebeforeDeadAnim < cfStopTimebeforeDeadAnim)
@@ -522,12 +530,16 @@ bool OneLoneCoder_Platformer::GameState_LoadBossLevel(float fElapsedTime)
 		level->PopulateBoss(vecEnnemies, nCurrentLevel);
 
 		sprBackground = new olc::Sprite(bossLevelsBackgrounds[nCurrentLevel]);
+		sndBossLevelMusic = olc::SOUND::LoadAudioSample(bossLevelsMusics[nCurrentLevel]);
 	}
 
 	// Reset variables when level is loading
 	ResetVariables();
 
 	bInBossLvl = true;
+
+	olc::SOUND::StopAll();
+	olc::SOUND::PlaySample(sndBossLevelMusic, true);
 
 	nGameState = GS_MAIN;
 
@@ -730,4 +742,15 @@ void OneLoneCoder_Platformer::ReturnToWorldMap()
 	olc::SOUND::PlaySample(sndWorldMap, true);
 	animPlayer.ChangeState("riding_star");
 	nGameState = GS_WORLDMAP;
+}
+
+void OneLoneCoder_Platformer::AddSharedSound(std::string name, int sound, std::string fileName)
+{
+	sound = olc::SOUND::LoadAudioSample(fileName);
+	sharedSounds[name] = sound;
+}
+
+int OneLoneCoder_Platformer::GetSound(std::string name)
+{
+	return sharedSounds[name];
 }

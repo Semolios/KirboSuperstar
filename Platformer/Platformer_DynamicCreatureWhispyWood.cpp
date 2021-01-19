@@ -52,6 +52,8 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 			MapGraphicState(SCREAMING);
 			engine->ActivateShakeEffect(true);
 
+			if (fBehaviourTimer == 0.0f) olc::SOUND::PlaySample(engine->GetSound("whispyScream"));
+
 			fBehaviourTimer += fElapsedTime;
 			if (fBehaviourTimer >= fScreamTime)
 			{
