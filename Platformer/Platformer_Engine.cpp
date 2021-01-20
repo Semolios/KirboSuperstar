@@ -186,6 +186,11 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 	AddSharedSound("whispyScream", sndWhispyScream, "assets/snd/whispyScream.wav");
 	AddSharedSound("loseLife", sndLoseLife, "assets/snd/loseLife.wav");
+	AddSharedSound("punch", sndPunch, "assets/snd/punch.wav");
+	AddSharedSound("slap", sndSlap, "assets/snd/slap.wav");
+	AddSharedSound("kirboWalk", sndSlap, "assets/snd/kirboWalk.wav");
+	AddSharedSound("kirboFly", sndSlap, "assets/snd/kirboFly.wav");
+	AddSharedSound("explosion", sndSlap, "assets/snd/explosion.wav");
 
 #pragma endregion
 
@@ -354,6 +359,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 					{
 						if (dyn->bIsAttackable)
 						{
+							object->SoundEffect();
 							player->Attack(dyn, object->nDamage);
 							if (object->bOneHit)
 								object->bRedundant = true;

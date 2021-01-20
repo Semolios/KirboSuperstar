@@ -148,6 +148,12 @@ cHitbox cDynamicProjectile::Hitbox(float cameraOffsetX, float cameraOffsetY)
 	return sAOE;
 }
 
+void cDynamicProjectile::SoundEffect()
+{
+	if (!soundEffect.empty())
+		olc::SOUND::PlaySample(engine->GetSound(soundEffect));
+}
+
 std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProjectilesSprites()
 {
 	std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles;

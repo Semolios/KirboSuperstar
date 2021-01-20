@@ -71,6 +71,11 @@ private:
 	std::map<std::string, int> sharedSounds;
 	int sndWhispyScream;
 	int sndLoseLife;
+	int sndExplosion;
+	int sndPunch;
+	int sndSlap;
+	int sndKirboWalk;
+	int sndKirboFly;
 
 	// engine Properties
 	cPlayer* player;

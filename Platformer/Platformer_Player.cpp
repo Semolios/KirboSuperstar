@@ -27,7 +27,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		{
 			if (!bAttacking && !bVacuuming)
 			{
-				if (lvl->GetTile(fPlayerPosX + 0.5f, fPlayerPosY + 0.5f) == L'w' && bPlayerOnGround)
+				if (lvl->GetTile(fPlayerPosX + 0.5f, fPlayerPosY + 0.5f) == L'w' && bOnGround)
 					engine->SetGameState("GS_LOADBOSSLEVEL");
 
 				fPlayerVelY = -cfPlayerVelY;
@@ -44,13 +44,13 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 
 			// If player is on semi solid platform, pass through the platform. cheat a little bit, modify the position of the player to cross it
 			if ((engine->IsSemiSolidTile(lvl->GetTile(fPlayerPosX + 0.0f, fPlayerPosY + 1.0f)) ||
-				 engine->IsSemiSolidTile(lvl->GetTile(fPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY + 1.0f))) && bPlayerOnGround)
+				 engine->IsSemiSolidTile(lvl->GetTile(fPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY + 1.0f))) && bOnGround)
 			{
 				fPlayerPosY += 0.15;
 			}
 
 			if ((engine->IsSolidTile(lvl->GetTile(fPlayerPosX + 0.0f, fPlayerPosY + 1.0f)) ||
-				 engine->IsSolidTile(lvl->GetTile(fPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY + 1.0f))) && bPlayerOnGround)
+				 engine->IsSolidTile(lvl->GetTile(fPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY + 1.0f))) && bOnGround)
 			{
 				camera->LowerCameraPosition();
 			}
@@ -65,10 +65,13 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		{
 			if (!bAttacking && !bVacuuming)
 			{
+				// Init walking sound
+				if (!olc::SOUND::IsSamplePlaying(engine->GetSound("kirboWalk"))) olc::SOUND::PlaySample(engine->GetSound("kirboWalk"), true);
+
 				// Init speed by cfMinPlayerVelX + 0.05 or the player won't move when on ground
 				if (fabs(fPlayerVelX) < cfMinPlayerVelX) fPlayerVelX -= (cfMinPlayerVelX + 0.05f);
 
-				fPlayerVelX += (bPlayerOnGround ? -cfPlayerAccGrdX : -cfPlayerAccAirX) * fElapsedTime;
+				fPlayerVelX += (bOnGround ? -cfPlayerAccGrdX : -cfPlayerAccAirX) * fElapsedTime;
 				fFaceDir = -1.0f;
 			}
 		}
@@ -78,13 +81,20 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		{
 			if (!bAttacking && !bVacuuming)
 			{
+				// Init walking sound
+				if (!olc::SOUND::IsSamplePlaying(engine->GetSound("kirboWalk"))) olc::SOUND::PlaySample(engine->GetSound("kirboWalk"), true);
+
 				// Init speed by cfMinPlayerVelX + 0.05 or the player won't move when on ground
 				if (fabs(fPlayerVelX) < cfMinPlayerVelX) fPlayerVelX += (cfMinPlayerVelX + 0.05f);
 
-				fPlayerVelX += (bPlayerOnGround ? cfPlayerAccGrdX : cfPlayerAccAirX) * fElapsedTime;
+				fPlayerVelX += (bOnGround ? cfPlayerAccGrdX : cfPlayerAccAirX) * fElapsedTime;
 				fFaceDir = 1.0f;
 			}
 		}
+
+		// Stop kirbo walk sound
+		if ((!engine->GetKey(olc::Key::LEFT).bHeld && !engine->GetKey(olc::Key::RIGHT).bHeld) || !bOnGround) 
+			olc::SOUND::StopSample(engine->GetSound("kirboWalk"));
 
 		// Jump, double jump, stop flying
 		if (engine->GetKey(olc::Key::SPACE).bPressed)
@@ -93,7 +103,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 			{
 				bFlying = false;
 			}
-			else if (bPlayerOnGround)
+			else if (bOnGround)
 			{
 				bChargeJump = true;
 			}
@@ -229,9 +239,10 @@ void cPlayer::Update(float fElapsedTime)
 	}
 	else
 	{
-		if (bPlayerOnGround)
+		if (bOnGround)
 		{
 			bFlying = false;
+			olc::SOUND::StopSample(engine->GetSound("kirboFly"));
 
 			fPlayerVelX += engine->GetDragValue() * fPlayerVelX * fElapsedTime;
 			if (fabs(fPlayerVelX) < cfMinPlayerVelX)
@@ -253,10 +264,15 @@ void cPlayer::Update(float fElapsedTime)
 			{
 				if (!bFlying)
 				{
+					olc::SOUND::StopSample(engine->GetSound("kirboFly"));
 					if (fPlayerVelY < 0)
 						animPlayer->ChangeState("jump");
 					else
 						animPlayer->ChangeState("fall");
+				}
+				else
+				{
+					if (!olc::SOUND::IsSamplePlaying(engine->GetSound("kirboFly"))) olc::SOUND::PlaySample(engine->GetSound("kirboFly"), true);
 				}
 			}
 		}
@@ -287,6 +303,7 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 					float fProjectilePosY = fPlayerPosY - ((mapProjectiles["slapAOE"][0]->height - engine->GetTileHeight()) / (2 * engine->GetTileHeight()));
 					cDynamicProjectile* p = engine->CreateProjectile(fProjectilePosX, fProjectilePosY, true, fFaceDir, 0.0f, cfSlapDuration, "slapAOE", false, cnSlapDmg, false, false);
 					p->bOneHit = false;
+					p->soundEffect = "slap";
 					engine->AddProjectile(p);
 					bCanSpawnProjectile = false;
 				}
@@ -490,7 +507,7 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 		}
 	}
 
-	bPlayerOnGround = false;
+	bOnGround = false;
 	if (fPlayerVelY <= 0) // Moving Up
 	{
 		if (fNewPlayerPosY <= 1) fNewPlayerPosY = 1; // Prevent from being brutally moved to 0 only when reaching -1
@@ -514,7 +531,7 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 		{
 			fNewPlayerPosY = (int)fNewPlayerPosY + engine->GetGrdDynamicOverlay(); // Remove this line to create shifting sand
 			fPlayerVelY = 0;
-			bPlayerOnGround = true;
+			bOnGround = true;
 			bDoubleJump = true;
 		}
 	}

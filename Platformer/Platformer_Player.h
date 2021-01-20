@@ -62,7 +62,7 @@ private:
 	float fPlayerCollisionLowerLimit = 0.1f;
 	float fSwallowDistance = 0.1f;
 	float fJumpTimer = 0.0f;
-	bool bPlayerOnGround = false;
+	bool bOnGround = false;
 	bool bDoubleJump = false;
 	bool bChargeJump = false;
 	bool bChargeDoubleJump = false;

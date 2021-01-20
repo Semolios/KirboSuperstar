@@ -13,11 +13,13 @@ public:
 	void Update(float fElapsedTime, float playerX, float playerY) override;
 	void Collision(float fElapsedTime, cLevel* level);
 	cHitbox Hitbox(float cameraOffsetX, float cameraOffsetY) override;
+	void SoundEffect();
 
 	static std::map<std::string, std::vector<olc::Sprite*>> LoadProjectilesSprites();
 
 public:
 	std::vector<olc::Sprite*> mapStates;
+	std::string soundEffect;
 	float fSpriteX;
 	float fSpriteY;
 	float fDuration;

@@ -153,7 +153,7 @@ namespace olc
 		static void StopSample(int id);
 		static void StopAll();
 		static float GetMixerOutput(int nChannel, float fGlobalTime, float fTimeStep);
-
+		static bool IsSamplePlaying(int id);
 
 	private:
 #ifdef USE_WINDOWS // Windows specific sound management
@@ -417,6 +417,15 @@ namespace olc
 			return funcUserFilter(nChannel, fGlobalTime, fMixerSample);
 		else
 			return fMixerSample;
+	}
+
+	bool SOUND::IsSamplePlaying(int id)
+	{
+		auto s = std::find_if(listActiveSamples.begin(), listActiveSamples.end(), [&](const olc::SOUND::sCurrentlyPlayingSample& s)
+		{
+			return s.nAudioSampleID == id;
+		});
+		return s != listActiveSamples.end();
 	}
 
 	std::thread SOUND::m_AudioThread;
