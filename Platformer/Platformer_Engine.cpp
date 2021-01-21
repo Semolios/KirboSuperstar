@@ -191,10 +191,11 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	AddSharedSound("kirboWalk", sndSlap, "assets/snd/kirboWalk.wav");
 	AddSharedSound("kirboFly", sndSlap, "assets/snd/kirboFly.wav");
 	AddSharedSound("explosion", sndSlap, "assets/snd/explosion.wav");
+	AddSharedSound("kirboJump", sndKirboJump, "assets/snd/kirboJump.wav");
+	AddSharedSound("kirboHit", sndKirboHit, "assets/snd/kirboHit.wav");
 
 #pragma endregion
 
-	olc::SOUND::PlaySample(sndTitleScreen, true);
 	nGameState = GS_TITLE;
 
 	return true;
@@ -238,6 +239,8 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_Title(float fElapsedTime)
 {
+	if (!olc::SOUND::IsSamplePlaying(sndTitleScreen)) olc::SOUND::PlaySample(sndTitleScreen, true);
+
 	titleScreen->Update(this, fElapsedTime);
 
 	if (GetKey(olc::Key::SPACE).bPressed)

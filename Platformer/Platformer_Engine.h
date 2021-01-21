@@ -75,7 +75,9 @@ private:
 	int sndPunch;
 	int sndSlap;
 	int sndKirboWalk;
+	int sndKirboJump;
 	int sndKirboFly;
+	int sndKirboHit;
 
 	// engine Properties
 	cPlayer* player;

@@ -93,7 +93,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		}
 
 		// Stop kirbo walk sound
-		if ((!engine->GetKey(olc::Key::LEFT).bHeld && !engine->GetKey(olc::Key::RIGHT).bHeld) || !bOnGround) 
+		if ((!engine->GetKey(olc::Key::LEFT).bHeld && !engine->GetKey(olc::Key::RIGHT).bHeld) || !bOnGround)
 			olc::SOUND::StopSample(engine->GetSound("kirboWalk"));
 
 		// Jump, double jump, stop flying
@@ -105,10 +105,12 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 			}
 			else if (bOnGround)
 			{
+				olc::SOUND::PlaySample(engine->GetSound("kirboJump"));
 				bChargeJump = true;
 			}
 			else if (bDoubleJump && fPlayerVelY > 0)
 			{
+				olc::SOUND::PlaySample(engine->GetSound("kirboJump"));
 				bDoubleJump = false;
 				bChargeDoubleJump = true;
 			}
@@ -478,6 +480,7 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 	// Check hole
 	if (fPlayerPosY > lvl->GetHeight())
 	{
+		if (!bDead) olc::SOUND::PlaySample(engine->GetSound("kirboHit"));
 		fHealth = 0.0f;
 		bDead = true;
 		animPlayer->ChangeState("dead");
@@ -629,6 +632,7 @@ float cPlayer::GetHealth()
 
 void cPlayer::Damage(cDynamic* object)
 {
+	olc::SOUND::PlaySample(engine->GetSound("kirboHit"));
 	animPlayer->ChangeState("damaged");
 	fInvulnerabilityTimer = cfInvulnerabilityFrame;
 	bPlayerDamaged = true;
