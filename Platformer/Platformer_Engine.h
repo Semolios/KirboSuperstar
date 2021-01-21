@@ -78,6 +78,9 @@ private:
 	int sndKirboJump;
 	int sndKirboFly;
 	int sndKirboHit;
+	int sndKirboBeginVacuum;
+	int sndKirboVacuum;
+	int sndKirboSwallow;
 
 	// engine Properties
 	cPlayer* player;

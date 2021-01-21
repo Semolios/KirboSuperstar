@@ -204,6 +204,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 			{
 				if (!bVacuuming && !bAttacking)
 				{
+					olc::SOUND::PlaySample(engine->GetSound("beginVacuum"));
 					animPlayer->ChangeState("begin_vacuum");
 					bVacuuming = true;
 					fAnimationTimer = 0.0f;
@@ -217,6 +218,8 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		}
 		else
 		{
+			olc::SOUND::StopSample(engine->GetSound("beginVacuum"));
+			olc::SOUND::StopSample(engine->GetSound("vacuum"));
 			bVacuuming = false;
 		}
 	}
@@ -331,6 +334,8 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 		{
 			if (fAnimationTimer >= cfVacuumAnimT * animPlayer->fTimeBetweenFrames)
 			{
+				if (!olc::SOUND::IsSamplePlaying(engine->GetSound("beginVacuum")) && !olc::SOUND::IsSamplePlaying(engine->GetSound("vacuum")))
+					olc::SOUND::PlaySample(engine->GetSound("vacuum"), true);
 				animPlayer->ChangeState("vacuum");
 			}
 		}
@@ -338,6 +343,15 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 		// Swallowing
 		if (bSwallowing)
 		{
+			olc::SOUND::StopSample(engine->GetSound("beginVacuum"));
+			olc::SOUND::StopSample(engine->GetSound("vacuum"));
+
+			if (bSwallowSound)
+			{
+				bSwallowSound = false;
+				olc::SOUND::PlaySample(engine->GetSound("swallow"));
+			}
+
 			animPlayer->ChangeState("swallow");
 		}
 
@@ -578,6 +592,7 @@ void cPlayer::VacuumEnnemy(cDynamicCreature* object)
 	if (fDistance <= fSwallowDistance)
 	{
 		bSwallowing = true;
+		bSwallowSound = true;
 		bAttacking = true;
 	}
 }

@@ -78,6 +78,7 @@ private:
 	bool bDead = false;
 	bool bSwallowing = false;
 	bool bWind = false;
+	bool bSwallowSound = false;
 
 	cAnimator* animPlayer;
 

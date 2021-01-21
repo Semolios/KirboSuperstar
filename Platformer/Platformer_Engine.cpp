@@ -193,6 +193,9 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	AddSharedSound("explosion", sndSlap, "assets/snd/explosion.wav");
 	AddSharedSound("kirboJump", sndKirboJump, "assets/snd/kirboJump.wav");
 	AddSharedSound("kirboHit", sndKirboHit, "assets/snd/kirboHit.wav");
+	AddSharedSound("beginVacuum", sndKirboBeginVacuum, "assets/snd/kirboBeginVacuum.wav");
+	AddSharedSound("vacuum", sndKirboBeginVacuum, "assets/snd/kirboVacuum.wav");
+	AddSharedSound("swallow", sndKirboSwallow, "assets/snd/kirboSwallow.wav");
 
 #pragma endregion
 
