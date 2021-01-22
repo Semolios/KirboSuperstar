@@ -13,20 +13,23 @@ bool OneLoneCoder_Platformer::OnUserCreate()
 
 bool OneLoneCoder_Platformer::OnUserUpdate(float fElapsedTime)
 {
-	switch (nGameState)
+	if (fElapsedTime <= 0.25f)
 	{
-		case GS_LOADING:		GameState_Loading(fElapsedTime); break;
-		case GS_TITLE:			GameState_Title(fElapsedTime); break;
-		case GS_MAIN:			GameState_Main(fElapsedTime); break;
-		case GS_TRANSITION:		GameState_Transition(fElapsedTime); break;
-		case GS_LOADLEVEL:		GameState_LoadLevel(fElapsedTime); break;
-		case GS_WORLDMAP:		GameState_WorldMap(fElapsedTime); break;
-		case GS_ENDSCREEN:		GameState_EndScreen(fElapsedTime); break;
-		case GS_PAUSE:			GameState_PauseMenu(fElapsedTime); break;
-		case GS_LOADBOSSLEVEL:	GameState_LoadBossLevel(fElapsedTime); break;
-		case GS_SELECTMENU:		GameState_SelectMenu(fElapsedTime); break;
-		case GS_CONTROLS:		GameState_Controls(fElapsedTime); break;
-		case GS_CLOSE:			GameState_Close(fElapsedTime); break;
+		switch (nGameState)
+		{
+			case GS_LOADING:		GameState_Loading(fElapsedTime); break;
+			case GS_TITLE:			GameState_Title(fElapsedTime); break;
+			case GS_MAIN:			GameState_Main(fElapsedTime); break;
+			case GS_TRANSITION:		GameState_Transition(fElapsedTime); break;
+			case GS_LOADLEVEL:		GameState_LoadLevel(fElapsedTime); break;
+			case GS_WORLDMAP:		GameState_WorldMap(fElapsedTime); break;
+			case GS_ENDSCREEN:		GameState_EndScreen(fElapsedTime); break;
+			case GS_PAUSE:			GameState_PauseMenu(fElapsedTime); break;
+			case GS_LOADBOSSLEVEL:	GameState_LoadBossLevel(fElapsedTime); break;
+			case GS_SELECTMENU:		GameState_SelectMenu(fElapsedTime); break;
+			case GS_CONTROLS:		GameState_Controls(fElapsedTime); break;
+			case GS_CLOSE:			GameState_Close(fElapsedTime); break;
+		}
 	}
 
 	return true;
@@ -752,6 +755,7 @@ void OneLoneCoder_Platformer::ReturnToWorldMap()
 {
 	olc::SOUND::StopAll();
 	olc::SOUND::PlaySample(sndWorldMap, true);
+	WindEffect(0.0f, 0.0f, false);
 	animPlayer.ChangeState("riding_star");
 	nGameState = GS_WORLDMAP;
 }
