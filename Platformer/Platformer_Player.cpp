@@ -226,10 +226,13 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		// Poyo
 		if (engine->GetKey(olc::Key::O).bPressed)
 		{
-			// Can't spam poyo, can only poyo on ground
-			if (!bAttacking && bOnGround)
+			// Can only poyo on ground
+			if (bOnGround)
 			{
-				olc::SOUND::PlaySample(engine->GetSound("poyo"));
+				animPlayer->nCurrentFrame = 0;
+				int poyo = rand() % 2;
+				if (poyo == 0) olc::SOUND::PlaySample(engine->GetSound("poyo01"));
+				else if (poyo == 1) olc::SOUND::PlaySample(engine->GetSound("poyo02"));
 				animPlayer->ChangeState("poyo");
 				bAttacking = true;
 				bPoyo = true;

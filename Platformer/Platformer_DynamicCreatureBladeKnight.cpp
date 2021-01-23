@@ -180,7 +180,10 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 				}
 			}
 
-			if (engine->IsSolidTile(level->GetTile(px + cfCollisionLowerLimit, py + 1)) || engine->IsSolidTile(level->GetTile(px + cfCollisionUpperLimit, py + 1)))
+			if (engine->IsSolidTile(level->GetTile(px + cfCollisionLowerLimit, py + 1)) || 
+				engine->IsSolidTile(level->GetTile(px + cfCollisionUpperLimit, py + 1)) ||
+				engine->IsSemiSolidTile(level->GetTile(px + cfCollisionLowerLimit, py + 1)) || 
+				engine->IsSemiSolidTile(level->GetTile(px + cfCollisionUpperLimit, py + 1)))
 			{
 				bCantSpawnAOE1 = false;
 				ChangeState(AI_WALKING);
