@@ -66,7 +66,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 			if (!bAttacking && !bVacuuming)
 			{
 				// Init walking sound
-				if (!olc::SOUND::IsSamplePlaying(engine->GetSound("kirboWalk"))) olc::SOUND::PlaySample(engine->GetSound("kirboWalk"), true);
+				if (!olc::SOUND::IsSamplePlaying(engine->GetSound("kirboWalk"))) olc::SOUND::PlaySample(engine->GetSound("kirboWalk"));
 
 				// Init speed by cfMinPlayerVelX + 0.05 or the player won't move when on ground
 				if (fabs(fPlayerVelX) < cfMinPlayerVelX) fPlayerVelX -= (cfMinPlayerVelX + 0.05f);
@@ -82,7 +82,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 			if (!bAttacking && !bVacuuming)
 			{
 				// Init walking sound
-				if (!olc::SOUND::IsSamplePlaying(engine->GetSound("kirboWalk"))) olc::SOUND::PlaySample(engine->GetSound("kirboWalk"), true);
+				if (!olc::SOUND::IsSamplePlaying(engine->GetSound("kirboWalk"))) olc::SOUND::PlaySample(engine->GetSound("kirboWalk"));
 
 				// Init speed by cfMinPlayerVelX + 0.05 or the player won't move when on ground
 				if (fabs(fPlayerVelX) < cfMinPlayerVelX) fPlayerVelX += (cfMinPlayerVelX + 0.05f);
@@ -277,7 +277,7 @@ void cPlayer::Update(float fElapsedTime)
 				}
 				else
 				{
-					if (!olc::SOUND::IsSamplePlaying(engine->GetSound("kirboFly"))) olc::SOUND::PlaySample(engine->GetSound("kirboFly"), true);
+					if (!olc::SOUND::IsSamplePlaying(engine->GetSound("kirboFly"))) olc::SOUND::PlaySample(engine->GetSound("kirboFly"));
 				}
 			}
 		}

@@ -186,6 +186,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	sndTitleScreen = olc::SOUND::LoadAudioSample("assets/snd/titleScreen.wav");
 	sndWorldMap = olc::SOUND::LoadAudioSample("assets/snd/worldMap.wav");
 	sndBossKilled = olc::SOUND::LoadAudioSample("assets/snd/bossKilled.wav");
+	sndWind = olc::SOUND::LoadAudioSample("assets/snd/wind.wav");
 
 	AddSharedSound("whispyScream", sndWhispyScream, "assets/snd/whispyScream.wav");
 	AddSharedSound("loseLife", sndLoseLife, "assets/snd/loseLife.wav");
@@ -201,6 +202,8 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	AddSharedSound("swallow", sndKirboSwallow, "assets/snd/kirboSwallow.wav");
 	AddSharedSound("wetSlap", sndWetSlap, "assets/snd/wetSlap.wav");
 	AddSharedSound("earthQuake", sndEarthQuake, "assets/snd/earthQuake.wav");
+	AddSharedSound("blow", sndEarthQuake, "assets/snd/blow.wav");
+	AddSharedSound("inhale", sndInhale, "assets/snd/inhale.wav");
 
 #pragma endregion
 
@@ -265,13 +268,14 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	// Stop time a while before dead animation
 	if (player->IsDead())
 	{
-		if (fStopTimebeforeDeadAnim == 0.0f)
+		// stop looping kirbo sounds
+		olc::SOUND::StopSample(sndKirboFly);
+		olc::SOUND::StopSample(sndKirboWalk);
+
+		//if (fStopTimebeforeDeadAnim == 0.0f)
 		{
 			olc::SOUND::StopSample(sndLevelMusic);
 			olc::SOUND::StopSample(sndBossLevelMusic);
-			// stop looping kirbo sounds
-			olc::SOUND::StopSample(sndKirboFly);
-			olc::SOUND::StopSample(sndKirboWalk);
 		}
 		fStopTimebeforeDeadAnim += fElapsedTime;
 
@@ -730,6 +734,16 @@ void OneLoneCoder_Platformer::WindEffect(float direction, float windPower, bool 
 	bWind = activate;
 	fWindDirection = direction;
 	fWindPower = windPower;
+
+	if (bWind)
+	{
+		if (!olc::SOUND::IsSamplePlaying(sndWind))
+			olc::SOUND::PlaySample(sndWind, true);
+	}
+	else
+	{
+		olc::SOUND::StopSample(sndWind);
+	}
 }
 
 void OneLoneCoder_Platformer::BreakLoop()

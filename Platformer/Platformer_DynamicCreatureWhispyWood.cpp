@@ -88,6 +88,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 		break;
 		case AI_WIND:
 		{
+			if (fBehaviourTimer == 0.0f) olc::SOUND::PlaySample(engine->GetSound("inhale"));
 			fBehaviourTimer += fElapsedTime;
 
 			MapGraphicState(BLOW);
@@ -121,6 +122,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 				float fProjectileSpeedY = ((float)(rand() % cnProjectilesYRange) / 10.0f) + cfProjectilesYRangeOffset;
 
 				// Spawn the projectile to attack kirbo
+				olc::SOUND::PlaySample(engine->GetSound("blow"));
 				engine->AddProjectile(engine->CreateProjectile(cfProjectilePosX, cfProjectilePosY, false, cfProjectileSpeedX, fProjectileSpeedY, cfProjectileDuration, "blow", false, cnProjectileDmg, false, false));
 			}
 

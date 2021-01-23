@@ -66,6 +66,7 @@ private:
 	int sndLevelMusic;
 	int sndBossLevelMusic;
 	int sndBossKilled;
+	int sndWind;
 
 	// Sounds shared with other classes
 	std::map<std::string, int> sharedSounds;
@@ -83,6 +84,8 @@ private:
 	int sndKirboSwallow;
 	int sndWetSlap;
 	int sndEarthQuake;
+	int sndBlow;
+	int sndInhale;
 
 	// engine Properties
 	cPlayer* player;
