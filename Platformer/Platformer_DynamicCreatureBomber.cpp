@@ -86,14 +86,13 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 		{
 			if (!bHasExploded)
 			{
-				engine->AddProjectile(engine->CreateProjectile(px - 1, py - 1, false, -1.5f, -1.5f, cfExplosionDuration, "explosion", false, cnExplosionDmg, false));
-				engine->AddProjectile(engine->CreateProjectile(px + 0, py - 1, false, +0.0f, -1.5f, cfExplosionDuration, "explosion", false, cnExplosionDmg, false));
-				engine->AddProjectile(engine->CreateProjectile(px + 1, py - 1, false, +1.5f, -1.5f, cfExplosionDuration, "explosion", false, cnExplosionDmg, false));
-				engine->AddProjectile(engine->CreateProjectile(px + 1, py + 0, false, +1.5f, +0.0f, cfExplosionDuration, "explosion", false, cnExplosionDmg, false));
-				engine->AddProjectile(engine->CreateProjectile(px + 1, py + 1, false, +1.5f, +1.5f, cfExplosionDuration, "explosion", false, cnExplosionDmg, false));
-				engine->AddProjectile(engine->CreateProjectile(px + 0, py + 1, false, +0.0f, +1.5f, cfExplosionDuration, "explosion", false, cnExplosionDmg, false));
-				engine->AddProjectile(engine->CreateProjectile(px - 1, py + 1, false, -1.5f, +1.5f, cfExplosionDuration, "explosion", false, cnExplosionDmg, false));
-				engine->AddProjectile(engine->CreateProjectile(px - 1, py + 0, false, -1.5f, +0.0f, cfExplosionDuration, "explosion", false, cnExplosionDmg, false));
+				olc::SOUND::PlaySample(engine->GetSound("explosion"));
+				float explosionWidth = 142.0f;
+				float explosionHeight = 200.0f;
+
+				float centerOfBossX = ((fDynWidth - explosionWidth) / 2.0f) / engine->GetTileWidth();
+				float centerOfBossY = ((fDynHeight - explosionHeight) / 2.0f) / engine->GetTileHeight();
+				engine->AddProjectile(engine->CreateProjectile(px + centerOfBossX, py + centerOfBossY, false, 0.0f, 0.0f, cfExplosionDuration, "explosion", false, cnExplosionDmg, false));
 
 				nHealth = 0;
 				KnockBack(0.0f, 0.0f, cfKnockBackDuration);
