@@ -86,6 +86,7 @@ private:
 	int sndEarthQuake;
 	int sndBlow;
 	int sndInhale;
+	int sndPoyo;
 
 	// engine Properties
 	cPlayer* player;

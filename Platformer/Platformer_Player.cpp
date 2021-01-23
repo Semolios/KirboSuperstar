@@ -222,6 +222,20 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 			olc::SOUND::StopSample(engine->GetSound("vacuum"));
 			bVacuuming = false;
 		}
+
+		// Poyo
+		if (engine->GetKey(olc::Key::O).bPressed)
+		{
+			// Can't spam poyo, can only poyo on ground
+			if (!bAttacking && bOnGround)
+			{
+				olc::SOUND::PlaySample(engine->GetSound("poyo"));
+				animPlayer->ChangeState("poyo");
+				bAttacking = true;
+				bPoyo = true;
+				fAnimationTimer = 0.0f;
+			}
+		}
 	}
 }
 
@@ -313,6 +327,12 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 					bCanSpawnProjectile = false;
 				}
 			}
+		}
+
+		// Poyo
+		if (bPoyo)
+		{
+			// Poyo
 		}
 
 		// Launch a Jesus Cross
@@ -444,6 +464,7 @@ void cPlayer::StopAnyAttack()
 	bSlapping = false;
 	bLaunchingJesusCross = false;
 	bSwallowing = false;
+	bPoyo = false;
 }
 
 void cPlayer::ClampVelocities()

@@ -204,6 +204,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	AddSharedSound("earthQuake", sndEarthQuake, "assets/snd/earthQuake.wav");
 	AddSharedSound("blow", sndEarthQuake, "assets/snd/blow.wav");
 	AddSharedSound("inhale", sndInhale, "assets/snd/inhale.wav");
+	AddSharedSound("poyo", sndPoyo, "assets/snd/poyo.wav");
 
 #pragma endregion
 
