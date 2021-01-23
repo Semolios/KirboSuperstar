@@ -81,6 +81,8 @@ private:
 	int sndKirboBeginVacuum;
 	int sndKirboVacuum;
 	int sndKirboSwallow;
+	int sndWetSlap;
+	int sndEarthQuake;
 
 	// engine Properties
 	cPlayer* player;

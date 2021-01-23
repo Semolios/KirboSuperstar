@@ -199,6 +199,8 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	AddSharedSound("beginVacuum", sndKirboBeginVacuum, "assets/snd/kirboBeginVacuum.wav");
 	AddSharedSound("vacuum", sndKirboBeginVacuum, "assets/snd/kirboVacuum.wav");
 	AddSharedSound("swallow", sndKirboSwallow, "assets/snd/kirboSwallow.wav");
+	AddSharedSound("wetSlap", sndWetSlap, "assets/snd/wetSlap.wav");
+	AddSharedSound("earthQuake", sndEarthQuake, "assets/snd/earthQuake.wav");
 
 #pragma endregion
 
@@ -267,6 +269,9 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		{
 			olc::SOUND::StopSample(sndLevelMusic);
 			olc::SOUND::StopSample(sndBossLevelMusic);
+			// stop looping kirbo sounds
+			olc::SOUND::StopSample(sndKirboFly);
+			olc::SOUND::StopSample(sndKirboWalk);
 		}
 		fStopTimebeforeDeadAnim += fElapsedTime;
 
@@ -709,6 +714,7 @@ void OneLoneCoder_Platformer::ResetVariables()
 	player->ResetVariables();
 	bBossKilled = false;
 	camera->SetShake(false);
+	WindEffect(0.0f, 0.0f, false);
 	fStopTimebeforeDeadAnim = 0.0f;
 	fWaitBeforeWinAnimation = 0.0f;
 	fWinTimer = 0.0f;
