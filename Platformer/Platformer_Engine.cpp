@@ -601,6 +601,7 @@ bool OneLoneCoder_Platformer::GameState_Controls(float fElapsedTime)
 bool OneLoneCoder_Platformer::GameState_Close(float fElapsedTime)
 {
 	olc::SOUND::StopAll();
+	olc::SOUND::DestroyAudio();
 	olc_Terminate();
 
 	return true;

@@ -40,7 +40,6 @@ private:
 	const int cnSpriteOffsetY = 64;						// Sprite offset Y because kirbo sprites are 192 * 192 pixels
 
 	// Engine properties
-	float fGameCloseTimer = 0.0f;
 
 	// Level storage
 	cLevel* level;
