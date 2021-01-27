@@ -206,6 +206,11 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	AddSharedSound("inhale", sndInhale, "assets/snd/inhale.wav");
 	AddSharedSound("poyo01", sndPoyo01, "assets/snd/poyo01.wav");
 	AddSharedSound("poyo02", sndPoyo02, "assets/snd/poyo02.wav");
+	AddSharedSound("sunShootingMoon", sndSunShootingMoon, "assets/snd/sunShootingMoon.wav");
+	AddSharedSound("sunShootUp", sndSunShootUp, "assets/snd/sunShootUp.wav");
+	AddSharedSound("beamCharge", sndBeamCharge, "assets/snd/beamCharge.wav");
+	AddSharedSound("beam", sndBeam, "assets/snd/beam.wav");
+	AddSharedSound("volcanoBoom", sndVolcanoBoom, "assets/snd/volcanoBoom.wav");
 
 #pragma endregion
 

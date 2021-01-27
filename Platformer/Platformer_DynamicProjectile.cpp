@@ -239,21 +239,21 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProject
 
 	mapProjectiles["magmaBoulder"].push_back(new olc::Sprite("assets/gfx/magmaBoulder.png"));
 
-	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser00.png"));
-	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser01.png"));
-	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser02.png"));
-	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser03.png"));
-	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser04.png"));
-	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser05.png"));
-	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser06.png"));
-	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser07.png"));
-	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser08.png"));
-	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser09.png"));
-	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser10.png"));
-	mapProjectiles["chargeLaser"].push_back(new olc::Sprite("assets/gfx/chargeLaser11.png"));
+	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam00.png"));
+	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam01.png"));
+	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam02.png"));
+	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam03.png"));
+	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam04.png"));
+	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam05.png"));
+	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam06.png"));
+	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam07.png"));
+	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam08.png"));
+	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam09.png"));
+	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam10.png"));
+	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam11.png"));
 
-	mapProjectiles["laser"].push_back(new olc::Sprite("assets/gfx/laser00.png"));
-	mapProjectiles["laser"].push_back(new olc::Sprite("assets/gfx/laser01.png"));
+	mapProjectiles["beam"].push_back(new olc::Sprite("assets/gfx/beam00.png"));
+	mapProjectiles["beam"].push_back(new olc::Sprite("assets/gfx/beam01.png"));
 
 	return mapProjectiles;
 }

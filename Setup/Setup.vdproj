@@ -33,13 +33,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_04A90BEFC5A34C8896068ED96B8C645F"
+        "MsmKey" = "8:_02A315EE9C73488FB90E28B3C4766F88"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_07C874C5C1A742B79158DDCD9F33EE45"
+        "MsmKey" = "8:_04A90BEFC5A34C8896068ED96B8C645F"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -99,19 +99,25 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_135C6847EE53400696058985C5E1326C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_13C40C729AEB447785D8E0480A8A7BD0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_14CCC2867B8A44C68CD1F1A5A45BC897"
+        "MsmKey" = "8:_14199D267DF04616AFF9FECA299595D2"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_152A916705E841399B11F9EEAB81D78E"
+        "MsmKey" = "8:_14CCC2867B8A44C68CD1F1A5A45BC897"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -201,7 +207,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_2574F0C56C6B4325838A63C0FA40B1BA"
+        "MsmKey" = "8:_23CA459E0A0542C48AB8BDE2511B282B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -243,12 +249,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_2CC4550023BC46608FF908364321BA6A"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_2D408563D0AA4C89800BBDE876329593"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -262,6 +262,12 @@
         "Entry"
         {
         "MsmKey" = "8:_2F1BAB26ED5041F3AA67B3600ACF58CE"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2F6ECBAA89F04654B88D7005E90A98BF"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -309,12 +315,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_34BBF5BA1B2E44F280ABE6CC2C91CA4F"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_3656E84028BF4092B2555E4174E7DF07"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -346,12 +346,6 @@
         "Entry"
         {
         "MsmKey" = "8:_3BCC753FF72C4BFF9CCF15AF9FC51D28"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_3D2B1F43434E440C83C90EBFC2F03BF2"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -429,12 +423,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_49D24DD6724248F89412AD917CF03276"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_4A5DC8F633864F648D7B54178C1DF603"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -442,6 +430,12 @@
         "Entry"
         {
         "MsmKey" = "8:_4B3698A41C3D4385B675236D2815B4D8"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4B86D04893ED44DF967C17018406B784"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -495,6 +489,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_515637B2D59D4B5D908AED2447C12F44"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_53BB327E1DD6401F8E78C2FE481B74FA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -531,12 +531,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_56CF003849844505ABBA88F511A8282B"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_575D1870E824409F8D70A8E1F09058DD"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -555,13 +549,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_598A5726CCC54FA1B9CC9B96182659FD"
+        "MsmKey" = "8:_59F754F7158F4619A4CF5ADB3106F7E8"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_59F754F7158F4619A4CF5ADB3106F7E8"
+        "MsmKey" = "8:_5A100015542F49E7B266B81401D88874"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -603,7 +597,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_60649ACA11E34B03803E21969D2144A8"
+        "MsmKey" = "8:_6246F5B2C8D44F7E9BC3AE4837338CB8"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -621,13 +615,25 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_65A9FD628C63423BB885ADE27BD130AF"
+        "MsmKey" = "8:_662D4FDE673341D39B1612095E78A5FC"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_665C83C1D28D438D9F189F77947FAD05"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_66BA52BCD6AF4298BC2A0E40ABE1E0E7"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6A401237CEBD4D7DA1C4218B1903013F"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -675,12 +681,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_6DFEB708EE8347A08471BA45EA00EC2E"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_6FA9F479192B4E9FA809BCA3EFF1555A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -699,7 +699,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_706992A490B4435D8416DD5D0166D26D"
+        "MsmKey" = "8:_70C717D02F1640E19376197D022DB856"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -729,7 +729,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7608DF8F86F44445B9D45FBBBDAA5FBB"
+        "MsmKey" = "8:_75BAF0FC216743D5AD01DC0E44FF6113"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -747,7 +747,25 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_7B501E8305B44F13B6B5522F69C7D4C0"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_7BDAF57E52174E9C9266D0500CC10271"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7C5D4C25E6874D32A11578458DD5287E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7D260D7306BA4D83BCD51AD617D90349"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -789,13 +807,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_85AE3B577C8B44158E8CADC1719D1C6C"
+        "MsmKey" = "8:_85B0C393BC4B4703AD762FEAA56E6060"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_85B0C393BC4B4703AD762FEAA56E6060"
+        "MsmKey" = "8:_87384DC5DF9A42818CDA6F6020C88F8D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -807,19 +825,25 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_87ED8E52F80E4B988BF86048387DC9A3"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_8A0F3E28CDC84BDD855C18D20EA4E5C1"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
+        "MsmKey" = "8:_8A93E025FBD0471F838651171578ADD4"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_8B51300CA1C54C38866DE8575694DB5A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8C3A532C2C404741A3F621EF17EE0A3B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -891,6 +915,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_96FBFF2C74484CAC9AF9D985B74BC831"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_98635664E2984FAB992FC87F528C94B2"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -910,6 +940,18 @@
         "Entry"
         {
         "MsmKey" = "8:_99BA62B2494E48D9A2F4EE3C6FF8CC49"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_99ECF1DECE854941A4DD959E2A42C264"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9B23C662884B473A8CE4F1C3E96D9941"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -946,6 +988,12 @@
         "Entry"
         {
         "MsmKey" = "8:_9F7ADB8E19AB431E92EB6DBF46A24575"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9FB7A2A7C69D4C3FB8713932FAD09D13"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1012,6 +1060,12 @@
         "Entry"
         {
         "MsmKey" = "8:_AAFEDAD876E34B2EBF309DC75E6EC4DD"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_ABE3DC1F2B8B4F71A7BF6B0776C44DEF"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1095,7 +1149,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_BA1F6E148DD54CFDBF63D7C560B8DC3A"
+        "MsmKey" = "8:_B8B71A67E1E44500BA54E8F2CEF62D68"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BA6A2CDFD16946179CBA94E3D114F88D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1108,6 +1168,12 @@
         "Entry"
         {
         "MsmKey" = "8:_BDE8C5E954DB4CE796168FFC761DD2F4"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BFA0D3CB319A408393108BB6F3B80CA0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1150,12 +1216,6 @@
         "Entry"
         {
         "MsmKey" = "8:_C3487037BB0D4EDEBEF8DDAADFD752BC"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C45027CFA865424FA47C345386951F3D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1221,12 +1281,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_C97DF39762234E9D905C7EABBF00E7A5"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_CCA94C19E602441C9DFB116007683E54"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -1281,25 +1335,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_D56364A747604B4F8ACEA15E33B6C6DD"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_D5F1C052F8BE458089A4A5505D116618"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D9643B572FA54170B5E6A6A770EE6412"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D9F4E2F841A646178FC39BD5F3771845"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1323,25 +1359,19 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_DDD7ED3592164EDF9A3F15A5E1278B7A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_E06958F9F1DD43C0BEC20B9646841943"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_E13ED9F431334594B4B3C59250487888"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_E140D08789C74D85860226CB0E646FD6"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E31F699DFE334BBCB14F36D9AC1AE94E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1383,12 +1413,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_EAFA8B70893E4CBFA6046C01D7788115"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_ED60AE8DCAC6497DABD7811F2030F470"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -1402,12 +1426,6 @@
         "Entry"
         {
         "MsmKey" = "8:_EF90849DD9554E518DC933255E667039"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F00C2A6B1FE84BA8826F480C3C6F4CEB"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1438,12 +1456,6 @@
         "Entry"
         {
         "MsmKey" = "8:_F5933BBD1F1C42C3BA2B5B0722663849"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F6D665C9F179466AAEF8ECA9E84B8952"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1550,6 +1562,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -1664,12 +1684,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_04A90BEFC5A34C8896068ED96B8C645F"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_02A315EE9C73488FB90E28B3C4766F88"
             {
-            "SourcePath" = "8:..\\Platformer\\assets\\gfx\\bossExplosion06.png"
-            "TargetName" = "8:bossExplosion06.png"
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\kirboSwallow.wav"
+            "TargetName" = "8:kirboSwallow.wav"
             "Tag" = "8:"
-            "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1684,12 +1704,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_07C874C5C1A742B79158DDCD9F33EE45"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_04A90BEFC5A34C8896068ED96B8C645F"
             {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\blow.wav"
-            "TargetName" = "8:blow.wav"
+            "SourcePath" = "8:..\\Platformer\\assets\\gfx\\bossExplosion06.png"
+            "TargetName" = "8:bossExplosion06.png"
             "Tag" = "8:"
-            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
+            "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1884,6 +1904,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_135C6847EE53400696058985C5E1326C"
+            {
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\kirboJump.wav"
+            "TargetName" = "8:kirboJump.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_13C40C729AEB447785D8E0480A8A7BD0"
             {
             "SourcePath" = "8:..\\Platformer\\assets\\gfx\\kirboJump05.png"
@@ -1904,12 +1944,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_14CCC2867B8A44C68CD1F1A5A45BC897"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_14199D267DF04616AFF9FECA299595D2"
             {
-            "SourcePath" = "8:..\\Platformer\\assets\\gfx\\kirboSwallow01.png"
-            "TargetName" = "8:kirboSwallow01.png"
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\poyo01.wav"
+            "TargetName" = "8:poyo01.wav"
             "Tag" = "8:"
-            "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1924,12 +1964,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_152A916705E841399B11F9EEAB81D78E"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_14CCC2867B8A44C68CD1F1A5A45BC897"
             {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\titleScreen.wav"
-            "TargetName" = "8:titleScreen.wav"
+            "SourcePath" = "8:..\\Platformer\\assets\\gfx\\kirboSwallow01.png"
+            "TargetName" = "8:kirboSwallow01.png"
             "Tag" = "8:"
-            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
+            "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -2224,10 +2264,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2574F0C56C6B4325838A63C0FA40B1BA"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_23CA459E0A0542C48AB8BDE2511B282B"
             {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\lvl00.wav"
-            "TargetName" = "8:lvl00.wav"
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\earthQuake.wav"
+            "TargetName" = "8:earthQuake.wav"
             "Tag" = "8:"
             "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
@@ -2364,26 +2404,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2CC4550023BC46608FF908364321BA6A"
-            {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\bossLvl00.wav"
-            "TargetName" = "8:bossLvl00.wav"
-            "Tag" = "8:"
-            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2D408563D0AA4C89800BBDE876329593"
             {
             "SourcePath" = "8:..\\Platformer\\assets\\gfx\\apple02.png"
@@ -2430,6 +2450,26 @@
             "TargetName" = "8:BossBckGrd00.png"
             "Tag" = "8:"
             "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2F6ECBAA89F04654B88D7005E90A98BF"
+            {
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\bossLvl00.wav"
+            "TargetName" = "8:bossLvl00.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -2584,26 +2624,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_34BBF5BA1B2E44F280ABE6CC2C91CA4F"
-            {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\punch.wav"
-            "TargetName" = "8:punch.wav"
-            "Tag" = "8:"
-            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3656E84028BF4092B2555E4174E7DF07"
             {
             "SourcePath" = "8:..\\Platformer\\assets\\gfx\\endScreen.png"
@@ -2710,26 +2730,6 @@
             "TargetName" = "8:magma00.png"
             "Tag" = "8:"
             "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3D2B1F43434E440C83C90EBFC2F03BF2"
-            {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\kirboWalk.wav"
-            "TargetName" = "8:kirboWalk.wav"
-            "Tag" = "8:"
-            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -2984,26 +2984,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_49D24DD6724248F89412AD917CF03276"
-            {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\sadPoyo.wav"
-            "TargetName" = "8:sadPoyo.wav"
-            "Tag" = "8:"
-            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4A5DC8F633864F648D7B54178C1DF603"
             {
             "SourcePath" = "8:..\\Platformer\\assets\\gfx\\bossExplosion00.png"
@@ -3030,6 +3010,26 @@
             "TargetName" = "8:chargeLaser05.png"
             "Tag" = "8:"
             "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4B86D04893ED44DF967C17018406B784"
+            {
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\sunShootUp.wav"
+            "TargetName" = "8:sunShootUp.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -3204,6 +3204,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_515637B2D59D4B5D908AED2447C12F44"
+            {
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\slap.wav"
+            "TargetName" = "8:slap.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_53BB327E1DD6401F8E78C2FE481B74FA"
             {
             "SourcePath" = "8:..\\Platformer\\assets\\lvls\\ennemiesLvl5.txt"
@@ -3324,26 +3344,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_56CF003849844505ABBA88F511A8282B"
-            {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\slap.wav"
-            "TargetName" = "8:slap.wav"
-            "Tag" = "8:"
-            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_575D1870E824409F8D70A8E1F09058DD"
             {
             "SourcePath" = "8:..\\Platformer\\assets\\gfx\\movingGroundLava04.png"
@@ -3404,12 +3404,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_598A5726CCC54FA1B9CC9B96182659FD"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_59F754F7158F4619A4CF5ADB3106F7E8"
             {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\whispyScream.wav"
-            "TargetName" = "8:whispyScream.wav"
+            "SourcePath" = "8:..\\Platformer\\assets\\gfx\\scarfy.png"
+            "TargetName" = "8:scarfy.png"
             "Tag" = "8:"
-            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
+            "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -3424,12 +3424,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_59F754F7158F4619A4CF5ADB3106F7E8"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5A100015542F49E7B266B81401D88874"
             {
-            "SourcePath" = "8:..\\Platformer\\assets\\gfx\\scarfy.png"
-            "TargetName" = "8:scarfy.png"
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\lvl00.wav"
+            "TargetName" = "8:lvl00.wav"
             "Tag" = "8:"
-            "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -3564,10 +3564,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_60649ACA11E34B03803E21969D2144A8"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6246F5B2C8D44F7E9BC3AE4837338CB8"
             {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\loseLife.wav"
-            "TargetName" = "8:loseLife.wav"
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\inhale.wav"
+            "TargetName" = "8:inhale.wav"
             "Tag" = "8:"
             "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
@@ -3624,10 +3624,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_65A9FD628C63423BB885ADE27BD130AF"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_662D4FDE673341D39B1612095E78A5FC"
             {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\kirboVacuum.wav"
-            "TargetName" = "8:kirboVacuum.wav"
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\kirboWalk.wav"
+            "TargetName" = "8:kirboWalk.wav"
             "Tag" = "8:"
             "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
@@ -3650,6 +3650,46 @@
             "TargetName" = "8:root01.png"
             "Tag" = "8:"
             "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_66BA52BCD6AF4298BC2A0E40ABE1E0E7"
+            {
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\kirboVacuum.wav"
+            "TargetName" = "8:kirboVacuum.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6A401237CEBD4D7DA1C4218B1903013F"
+            {
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\explosion.wav"
+            "TargetName" = "8:explosion.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -3804,26 +3844,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6DFEB708EE8347A08471BA45EA00EC2E"
-            {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\kirboSwallow.wav"
-            "TargetName" = "8:kirboSwallow.wav"
-            "Tag" = "8:"
-            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6FA9F479192B4E9FA809BCA3EFF1555A"
             {
             "SourcePath" = "8:..\\Platformer\\assets\\gfx\\chargeLaser04.png"
@@ -3884,10 +3904,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_706992A490B4435D8416DD5D0166D26D"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_70C717D02F1640E19376197D022DB856"
             {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\bossLvl01.wav"
-            "TargetName" = "8:bossLvl01.wav"
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\sunShootingMoon.wav"
+            "TargetName" = "8:sunShootingMoon.wav"
             "Tag" = "8:"
             "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
@@ -3984,10 +4004,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7608DF8F86F44445B9D45FBBBDAA5FBB"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_75BAF0FC216743D5AD01DC0E44FF6113"
             {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\kirboBeginVacuum.wav"
-            "TargetName" = "8:kirboBeginVacuum.wav"
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\wetSlap.wav"
+            "TargetName" = "8:wetSlap.wav"
             "Tag" = "8:"
             "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
@@ -4044,12 +4064,72 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7B501E8305B44F13B6B5522F69C7D4C0"
+            {
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\poyo02.wav"
+            "TargetName" = "8:poyo02.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7BDAF57E52174E9C9266D0500CC10271"
             {
             "SourcePath" = "8:..\\Platformer\\assets\\gfx\\apple06.png"
             "TargetName" = "8:apple06.png"
             "Tag" = "8:"
             "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7C5D4C25E6874D32A11578458DD5287E"
+            {
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\punch.wav"
+            "TargetName" = "8:punch.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7D260D7306BA4D83BCD51AD617D90349"
+            {
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\wind.wav"
+            "TargetName" = "8:wind.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -4184,12 +4264,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_85AE3B577C8B44158E8CADC1719D1C6C"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_85B0C393BC4B4703AD762FEAA56E6060"
             {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\kirboJump.wav"
-            "TargetName" = "8:kirboJump.wav"
+            "SourcePath" = "8:..\\Platformer\\assets\\gfx\\tilemap01.png"
+            "TargetName" = "8:tilemap01.png"
             "Tag" = "8:"
-            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
+            "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -4204,12 +4284,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_85B0C393BC4B4703AD762FEAA56E6060"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_87384DC5DF9A42818CDA6F6020C88F8D"
             {
-            "SourcePath" = "8:..\\Platformer\\assets\\gfx\\tilemap01.png"
-            "TargetName" = "8:tilemap01.png"
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\kirboBeginVacuum.wav"
+            "TargetName" = "8:kirboBeginVacuum.wav"
             "Tag" = "8:"
-            "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -4244,26 +4324,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_87ED8E52F80E4B988BF86048387DC9A3"
-            {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\poyo02.wav"
-            "TargetName" = "8:poyo02.wav"
-            "Tag" = "8:"
-            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8A0F3E28CDC84BDD855C18D20EA4E5C1"
             {
             "SourcePath" = "8:..\\Platformer\\assets\\lvls\\BossLvl5.txt"
@@ -4284,12 +4344,52 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8A93E025FBD0471F838651171578ADD4"
+            {
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\lvl01.wav"
+            "TargetName" = "8:lvl01.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8B51300CA1C54C38866DE8575694DB5A"
             {
             "SourcePath" = "8:..\\Platformer\\assets\\gfx\\boss_killed06.png"
             "TargetName" = "8:boss_killed06.png"
             "Tag" = "8:"
             "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8C3A532C2C404741A3F621EF17EE0A3B"
+            {
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\loseLife.wav"
+            "TargetName" = "8:loseLife.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -4524,6 +4624,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_96FBFF2C74484CAC9AF9D985B74BC831"
+            {
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\whispyScream.wav"
+            "TargetName" = "8:whispyScream.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_98DDA7E5BEA14C36A76830B8A8432EC5"
             {
             "SourcePath" = "8:..\\Platformer\\assets\\gfx\\PauseMenu.png"
@@ -4570,6 +4690,46 @@
             "TargetName" = "8:poyo00.png"
             "Tag" = "8:"
             "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_99ECF1DECE854941A4DD959E2A42C264"
+            {
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\bossKilled.wav"
+            "TargetName" = "8:bossKilled.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9B23C662884B473A8CE4F1C3E96D9941"
+            {
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\kirboFly.wav"
+            "TargetName" = "8:kirboFly.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -4690,6 +4850,26 @@
             "TargetName" = "8:poyo01.png"
             "Tag" = "8:"
             "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9FB7A2A7C69D4C3FB8713932FAD09D13"
+            {
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\blow.wav"
+            "TargetName" = "8:blow.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -4910,6 +5090,26 @@
             "TargetName" = "8:movingGroundLava03.png"
             "Tag" = "8:"
             "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_ABE3DC1F2B8B4F71A7BF6B0776C44DEF"
+            {
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\titleScreen.wav"
+            "TargetName" = "8:titleScreen.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -5184,10 +5384,30 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BA1F6E148DD54CFDBF63D7C560B8DC3A"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B8B71A67E1E44500BA54E8F2CEF62D68"
             {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\wind.wav"
-            "TargetName" = "8:wind.wav"
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\sadPoyo.wav"
+            "TargetName" = "8:sadPoyo.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BA6A2CDFD16946179CBA94E3D114F88D"
+            {
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\worldMap.wav"
+            "TargetName" = "8:worldMap.wav"
             "Tag" = "8:"
             "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
@@ -5230,6 +5450,26 @@
             "TargetName" = "8:bossExplosion05.png"
             "Tag" = "8:"
             "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BFA0D3CB319A408393108BB6F3B80CA0"
+            {
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\kirboHit.wav"
+            "TargetName" = "8:kirboHit.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -5370,26 +5610,6 @@
             "TargetName" = "8:ennemiesLvl3.txt"
             "Tag" = "8:"
             "Folder" = "8:_EA76159DDA8F49268F31C42BEF0A946A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C45027CFA865424FA47C345386951F3D"
-            {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\worldMap.wav"
-            "TargetName" = "8:worldMap.wav"
-            "Tag" = "8:"
-            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -5604,26 +5824,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C97DF39762234E9D905C7EABBF00E7A5"
-            {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\lvl01.wav"
-            "TargetName" = "8:lvl01.wav"
-            "Tag" = "8:"
-            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CCA94C19E602441C9DFB116007683E54"
             {
             "SourcePath" = "8:..\\Platformer\\assets\\gfx\\bossExplosion15.png"
@@ -5804,72 +6004,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D56364A747604B4F8ACEA15E33B6C6DD"
-            {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\bossKilled.wav"
-            "TargetName" = "8:bossKilled.wav"
-            "Tag" = "8:"
-            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D5F1C052F8BE458089A4A5505D116618"
             {
             "SourcePath" = "8:..\\Platformer\\assets\\gfx\\riding_star07.png"
             "TargetName" = "8:riding_star07.png"
             "Tag" = "8:"
             "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D9643B572FA54170B5E6A6A770EE6412"
-            {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\wetSlap.wav"
-            "TargetName" = "8:wetSlap.wav"
-            "Tag" = "8:"
-            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D9F4E2F841A646178FC39BD5F3771845"
-            {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\kirboHit.wav"
-            "TargetName" = "8:kirboHit.wav"
-            "Tag" = "8:"
-            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -5944,6 +6084,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DDD7ED3592164EDF9A3F15A5E1278B7A"
+            {
+            "SourcePath" = "8:..\\Platformer\\assets\\snd\\bossLvl01.wav"
+            "TargetName" = "8:bossLvl01.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E06958F9F1DD43C0BEC20B9646841943"
             {
             "SourcePath" = "8:..\\Platformer\\assets\\gfx\\kirboBeginVacuum00.png"
@@ -5964,52 +6124,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E13ED9F431334594B4B3C59250487888"
-            {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\kirboFly.wav"
-            "TargetName" = "8:kirboFly.wav"
-            "Tag" = "8:"
-            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E140D08789C74D85860226CB0E646FD6"
             {
             "SourcePath" = "8:..\\Platformer\\assets\\gfx\\kirboRunning02.png"
             "TargetName" = "8:kirboRunning02.png"
             "Tag" = "8:"
             "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E31F699DFE334BBCB14F36D9AC1AE94E"
-            {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\poyo01.wav"
-            "TargetName" = "8:poyo01.wav"
-            "Tag" = "8:"
-            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -6144,26 +6264,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EAFA8B70893E4CBFA6046C01D7788115"
-            {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\explosion.wav"
-            "TargetName" = "8:explosion.wav"
-            "Tag" = "8:"
-            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_ED60AE8DCAC6497DABD7811F2030F470"
             {
             "SourcePath" = "8:..\\Platformer\\assets\\gfx\\swordDownAOE01.png"
@@ -6210,26 +6310,6 @@
             "TargetName" = "8:riding_star02.png"
             "Tag" = "8:"
             "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F00C2A6B1FE84BA8826F480C3C6F4CEB"
-            {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\earthQuake.wav"
-            "TargetName" = "8:earthQuake.wav"
-            "Tag" = "8:"
-            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -6330,26 +6410,6 @@
             "TargetName" = "8:boss_killed11.png"
             "Tag" = "8:"
             "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F6D665C9F179466AAEF8ECA9E84B8952"
-            {
-            "SourcePath" = "8:..\\Platformer\\assets\\snd\\inhale.wav"
-            "TargetName" = "8:inhale.wav"
-            "Tag" = "8:"
-            "Folder" = "8:_F60CAEB9D153466F88F1BEEE0CAA9227"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"

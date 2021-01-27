@@ -87,6 +87,11 @@ private:
 	int sndInhale;
 	int sndPoyo01;
 	int sndPoyo02;
+	int sndSunShootingMoon;
+	int sndSunShootUp;
+	int sndBeamCharge;
+	int sndBeam;
+	int sndVolcanoBoom;
 
 	// engine Properties
 	cPlayer* player;

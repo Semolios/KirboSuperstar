@@ -63,7 +63,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 				nChosenAttack = rand() % cnNumberOfAttack;
 
 				if (nChosenAttack == 0) ChangeState(AI_FLAMECOLUMN);
-				if (nChosenAttack == 1) ChangeState(AI_LASER);
+				if (nChosenAttack == 1) ChangeState(AI_BEAM);
 				if (nChosenAttack == 2) ChangeState(AI_GUN);
 			}
 		}
@@ -94,6 +94,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 			fColumnTimer += fElapsedTime;
 			if (bCanSpawnAOE)
 			{
+				olc::SOUND::PlaySample(engine->GetSound("earthQuake"));
 				engine->ActivateShakeEffect(true);
 
 				engine->AddProjectile(engine->CreateProjectile(px + cfMovingGroundLavaOffsetX, cfMovingGroundLavaPosY, true, 0.0f, 0.0f, fColumnSpawnTime, "movingGroundLava", false, 0, false, false));
@@ -102,6 +103,8 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 
 			if (fColumnTimer >= fColumnSpawnTime && bChargingColumn)
 			{
+				olc::SOUND::PlaySample(engine->GetSound("volcanoBoom"));
+
 				bChargingColumn = false;
 
 				engine->ActivateShakeEffect(true, cnHighShakeAmplitudeX, cnHighShakeAmplitudeY);
@@ -118,6 +121,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 			fBehaviourTimer += fElapsedTime;
 			if (fBehaviourTimer >= fColumnTime)
 			{
+				olc::SOUND::StopSample(engine->GetSound("volcanoBoom"));
 				bChargingColumn = true;
 				bFreezeAnimation = false;
 				engine->ActivateShakeEffect(false);
@@ -125,51 +129,55 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 			}
 		}
 		break;
-		case AI_LASER:
+		case AI_BEAM:
 		{
 			vx = 0.0f; vy = 0.0f;
 			nGraphicState = SIDEATTACK;
 			nFramesPerSecond = cnDoubledFrameRate;
 
 			// Animation loop
-			if (bChargingLaser)
+			if (bChargingBeam)
 			{
 				nGraphicCounter = 0;
 			}
 			else
 			{
-				if (nGraphicCounter > cnLastLaserFrame)
-					nGraphicCounter = cnFirstLaserFrame;
+				if (nGraphicCounter > cnLastBeamFrame)
+					nGraphicCounter = cnFirstBeamFrame;
 			}
 
-			// spawn a little ray during fLaserSpawnTime to indicate the player that magma is gonna spawn
-			fLaserTimer += fElapsedTime;
+			// spawn a little ray during fBeamSpawnTime to indicate the player that magma is gonna spawn
+			fBeamTimer += fElapsedTime;
 			if (bCanSpawnAOE)
 			{
+				olc::SOUND::PlaySample(engine->GetSound("beamCharge"));
 				engine->ActivateShakeEffect(true, cnLowShakeAmplitudeX, cnLowShakeAmplitudeY);
 
-				engine->AddProjectile(engine->CreateProjectile(px + cfChargeLaserOffsetX, py - cfChargeLaserOffsetY, false, 0.0f, 0.0f, fLaserSpawnTime, "chargeLaser", false, 0, false, false));
+				engine->AddProjectile(engine->CreateProjectile(px + cfChargeBeamOffsetX, py - cfChargeBeamOffsetY, false, 0.0f, 0.0f, fBeamSpawnTime, "chargeBeam", false, 0, false, false));
 				bCanSpawnAOE = false;
 			}
 
-			if (fLaserTimer >= fLaserSpawnTime && bChargingLaser)
+			if (fBeamTimer >= fBeamSpawnTime && bChargingBeam)
 			{
-				bChargingLaser = false;
+				olc::SOUND::StopSample(engine->GetSound("beamCharge"));
+				olc::SOUND::PlaySample(engine->GetSound("beam"));
 
-				nGraphicCounter = cnFirstLaserFrame;
+				bChargingBeam = false;
+
+				nGraphicCounter = cnFirstBeamFrame;
 
 				engine->ActivateShakeEffect(true, cnHighShakeAmplitudeX, cnHighShakeAmplitudeY);
 
-				// Spawn laser to attack kirbo
-				// must offset the laser to give impression it's going out from the moon's mouth
-				engine->AddProjectile(engine->CreateProjectile(px - cfLaserOffsetX, py + cfLaserOffsetY, false, -0.01f, 0.01f, (fColumnTime - fLaserSpawnTime), "laser", false, cnLaserDmg, false, false));
+				// Spawn beam to attack kirbo
+				// must offset the beam to give impression it's going out from the moon's mouth
+				engine->AddProjectile(engine->CreateProjectile(px - cfBeamOffsetX, py + cfBeamOffsetY, false, -0.01f, 0.01f, (fColumnTime - fBeamSpawnTime), "beam", false, cnBeamDmg, false, false));
 			}
 
 			fBehaviourTimer += fElapsedTime;
 			if (fBehaviourTimer >= fColumnTime)
 			{
 				nFramesPerSecond = 16; // reset framerate to normal
-				bChargingLaser = true;
+				bChargingBeam = true;
 				engine->ActivateShakeEffect(false);
 				ChangeState(AI_STATIONARY);
 			}
@@ -177,6 +185,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 		break;
 		case AI_GUN:
 		{
+			if (fBehaviourTimer == 0.0f) olc::SOUND::PlaySample(engine->GetSound("sunShootingMoon"));
 			nGraphicState = DOWNATTACK;
 
 			if (fBehaviourTimer <= cfSunTakePunchTime) // phase 1, they stop moving
@@ -208,6 +217,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 			}
 			else if (fBehaviourTimer > cfSunShootMoonTime && OnGround()) // phase 4 the sun keep shooting the moon on the ground
 			{
+				if (!olc::SOUND::IsSamplePlaying(engine->GetSound("sunShootUp"))) olc::SOUND::PlaySample(engine->GetSound("sunShootUp"), true);
 				vx = 0.0f; vy = 0.0f;
 
 				// loop frames 7 and 8
@@ -218,6 +228,8 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 			fBehaviourTimer += fElapsedTime;
 			if (fBehaviourTimer >= fGunTime)
 			{
+				olc::SOUND::StopSample(engine->GetSound("sunShootUp"));
+
 				nFramesPerSecond = cnStandardFramerate;
 				bFreezeAnimation = false;
 				ChangeState(AI_STATIONARY);
@@ -236,7 +248,7 @@ void cDynamicCreatureMrShineMrBright::ChangeState(AI_STATE state)
 	nGraphicCounter = 0;
 	fBehaviourTimer = 0.0f;
 	fColumnTimer = 0.0f;
-	fLaserTimer = 0.0f;
+	fBeamTimer = 0.0f;
 	nAINextState = state;
 }
 

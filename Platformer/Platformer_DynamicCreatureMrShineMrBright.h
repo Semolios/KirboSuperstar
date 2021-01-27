@@ -36,10 +36,10 @@ public:
 
 	const float cfMagmaRockDuration = 10.0f;
 
-	const float cfChargeLaserOffsetX = 1.8f;
-	const float cfChargeLaserOffsetY = 0.2f;
-	const float cfLaserOffsetX = 8.0f;
-	const float cfLaserOffsetY = 3.0f;
+	const float cfChargeBeamOffsetX = 1.8f;
+	const float cfChargeBeamOffsetY = 0.2f;
+	const float cfBeamOffsetX = 8.0f;
+	const float cfBeamOffsetY = 3.0f;
 	const float cfSunTakePunchTime = 1.0f;
 	const float cfSunShootMoonTime = 2.0f;
 	const float cfFallingSpeed = 10.0f;
@@ -69,9 +69,9 @@ public:
 	const int cnMagmaDmg = 3;
 	const int cnDoubledFrameRate = 32;
 	const int cnStandardFramerate = 16;
-	const int cnLastLaserFrame = 2;
-	const int cnFirstLaserFrame = 1;
-	const int cnLaserDmg = 3;
+	const int cnLastBeamFrame = 2;
+	const int cnFirstBeamFrame = 1;
+	const int cnBeamDmg = 3;
 	const int cnSunTakePunchLastFrame = 1;
 	const int cnMoonScreamingFirstFrame = 5;
 	const int cnMoonScreamingLastFrame = 6;
@@ -85,7 +85,7 @@ public:
 	{
 		AI_STATIONARY = 0,
 		AI_FLAMECOLUMN,
-		AI_LASER,
+		AI_BEAM,
 		AI_GUN,
 	} nAIState, nAINextState;
 
@@ -108,11 +108,11 @@ public:
 	float fColumnTimer = 0.0f;
 	float fColumnSpawnTime = 1.0f;
 	bool bChargingColumn = true;
-	// Laser attack
-	const float fLaserTime = 4.0f;
-	float fLaserTimer = 0.0f;
-	float fLaserSpawnTime = 1.0f;
-	bool bChargingLaser = true;
+	// Beam attack
+	const float fBeamTime = 4.0f;
+	float fBeamTimer = 0.0f;
+	float fBeamSpawnTime = 1.0f;
+	bool bChargingBeam = true;
 	// Gun attack
 	const float fGunTime = 4.0f;
 
