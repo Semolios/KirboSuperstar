@@ -393,7 +393,7 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 		bFlying = false;
 		StopAnyAttack();
 
-		if (fAnimationTimer >= animPlayer->mapStates["damaged"].size() * animPlayer->fTimeBetweenFrames)
+		if (fAnimationTimer >= animPlayer->mapStates[animPlayer->sCurrentState].size() * animPlayer->fTimeBetweenFrames)
 		{
 			fAnimationTimer = 0.0f;
 			bPlayerDamaged = false;

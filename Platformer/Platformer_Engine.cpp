@@ -13,7 +13,7 @@ bool OneLoneCoder_Platformer::OnUserCreate()
 
 bool OneLoneCoder_Platformer::OnUserUpdate(float fElapsedTime)
 {
-	if (fElapsedTime <= 0.25f)
+	if (fElapsedTime <= 0.15f)
 	{
 		switch (nGameState)
 		{
@@ -278,12 +278,10 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// stop looping kirbo sounds
 		olc::SOUND::StopSample(sndKirboFly);
 		olc::SOUND::StopSample(sndKirboWalk);
+		// stop music
+		olc::SOUND::StopSample(sndLevelMusic);
+		olc::SOUND::StopSample(sndBossLevelMusic);
 
-		//if (fStopTimebeforeDeadAnim == 0.0f)
-		{
-			olc::SOUND::StopSample(sndLevelMusic);
-			olc::SOUND::StopSample(sndBossLevelMusic);
-		}
 		fStopTimebeforeDeadAnim += fElapsedTime;
 
 		if (fStopTimebeforeDeadAnim < cfStopTimebeforeDeadAnim)
@@ -445,7 +443,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
 	}
 
-	if (bInBossLvl && vecEnnemies.empty())
+	if (bInBossLvl && vecEnnemies.empty() && !player->IsDead())
 	{
 		// Wait a little before begin win animation
 		fWaitBeforeWinAnimation += fElapsedTime;
