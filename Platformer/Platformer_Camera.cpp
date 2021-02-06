@@ -48,7 +48,10 @@ void cCamera::DrawLevel(cLevel* level, float fElapsedTime)
 		fOffsetY += fShakeEffectY;
 	}
 
-	DrawLevelBackground(level);
+	// Draw Level background
+	float fBackgroundOffsetX = fOffsetX * engine->GetTileWidth() * ((float)(engine->GetBackGround()->width - engine->ScreenWidth()) / (float)(level->GetWidth() * engine->GetTileWidth() - engine->ScreenWidth()));
+	float fBackgroundOffsetY = fOffsetY * engine->GetTileHeight() * ((float)(engine->GetBackGround()->height - engine->ScreenHeight()) / (float)(level->GetWidth() * engine->GetTileHeight() - engine->ScreenHeight()));
+	engine->DrawPartialSprite(0, 0, engine->GetBackGround(), fBackgroundOffsetX, fBackgroundOffsetY, engine->ScreenWidth(), engine->ScreenHeight());
 
 	level->DrawTiles(nVisibleTilesX, nVisibleTilesY, fOffsetX, fOffsetY);
 }
@@ -83,30 +86,4 @@ void cCamera::ActivateShakeEffect(bool activate, int shakeAmplitudeX, int shakeA
 	bShake = activate;
 	nShakeAmplitudeX = shakeAmplitudeX;
 	nShakeAmplitudeY = shakeAmplitudeY;
-}
-
-void cCamera::DrawLevelBackground(cLevel* level)
-{
-	// Calculate parallax
-	float fBackgroundOffsetX = fOffsetX * engine->GetTileWidth() * ((float)(engine->GetBackGround()->width - engine->ScreenWidth()) / (float)(level->GetWidth() * engine->GetTileWidth() - engine->ScreenWidth()));
-	float fBackgroundOffsetY = fOffsetY * engine->GetTileHeight() * ((float)(engine->GetBackGround()->height - engine->ScreenHeight()) / (float)(level->GetWidth() * engine->GetTileHeight() - engine->ScreenHeight()));
-
-	// Threading the process
-	int nSectionWidth = engine->ScreenWidth() / nMaxThreads;
-
-	std::thread t[nMaxThreads];
-	for (size_t i = 0; i < nMaxThreads; i++)
-	{
-		t[i] = std::thread(&cCamera::DrawBackground, this, nSectionWidth * i, 0, fBackgroundOffsetX + (nSectionWidth * i), fBackgroundOffsetY, nSectionWidth, engine->ScreenHeight());
-	}
-
-	for (size_t i = 0; i < nMaxThreads; i++)
-	{
-		t[i].join();
-	}
-}
-
-void cCamera::DrawBackground(int ox, int oy, float fBackgroundOffsetX, float fBackgroundOffsetY, float width, float height)
-{
-	engine->DrawPartialSprite(ox, oy, engine->GetBackGround(), fBackgroundOffsetX, fBackgroundOffsetY, width, height);
 }
