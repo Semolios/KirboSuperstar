@@ -5,6 +5,8 @@
 
 class OneLoneCoder_Platformer;
 
+constexpr int nMaxThreads = 4;							// 4 threads is the fastest
+
 class cCamera
 {
 public:
@@ -42,4 +44,6 @@ public:
 	void RaiseCameraPosition();
 	void SetShake(bool shake);
 	void ActivateShakeEffect(bool activate, int shakeAmplitudeX = 50, int shakeAmplitudeY = 50);
+	void DrawLevelBackground(cLevel* level);
+	void DrawBackground(int ox, int oy, float fBackgroundOffsetX, float fBackgroundOffsetY, float width, float height);
 };
