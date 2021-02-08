@@ -49,11 +49,33 @@ void cCamera::DrawLevel(cLevel* level, float fElapsedTime)
 	}
 
 	// Draw Level background
-	float fBackgroundOffsetX = fOffsetX * engine->GetTileWidth() * ((float)(engine->GetBackGround()->width - engine->ScreenWidth()) / (float)(level->GetWidth() * engine->GetTileWidth() - engine->ScreenWidth()));
-	float fBackgroundOffsetY = fOffsetY * engine->GetTileHeight() * ((float)(engine->GetBackGround()->height - engine->ScreenHeight()) / (float)(level->GetWidth() * engine->GetTileHeight() - engine->ScreenHeight()));
-	engine->DrawPartialSprite(0, 0, engine->GetBackGround(), fBackgroundOffsetX, fBackgroundOffsetY, engine->ScreenWidth(), engine->ScreenHeight());
+	DrawBackground(level);
 
 	level->DrawTiles(nVisibleTilesX, nVisibleTilesY, fOffsetX, fOffsetY);
+}
+
+void cCamera::DrawBackground(cLevel* level)
+{
+	float fBackgroundOffsetX = fOffsetX * engine->GetTileWidth() * ((float)(engine->GetBackGround()->width - engine->ScreenWidth()) / (float)(level->GetWidth() * engine->GetTileWidth() - engine->ScreenWidth()));
+	float fBackgroundOffsetY = fOffsetY * engine->GetTileHeight() * ((float)(engine->GetBackGround()->height - engine->ScreenHeight()) / (float)(level->GetWidth() * engine->GetTileHeight() - engine->ScreenHeight()));
+
+	int nSectionWidth = engine->ScreenWidth() / nMaxThreads;
+
+	nWorkerComplete = 0;
+
+	for (size_t i = 0; i < nMaxThreads; i++)
+	{
+		workers[i].Start(nSectionWidth * i, 0, fBackgroundOffsetX + (nSectionWidth * i), fBackgroundOffsetY, nSectionWidth, engine->ScreenHeight(), this);
+	}
+
+	while (nWorkerComplete < nMaxThreads) // Wait for all workers to complete
+	{
+	}
+}
+
+void cCamera::DrawBackgroundThread(int x, int y, float fBckgrdoffX, float fBckgrdoffY, int w, int h)
+{
+	engine->DrawPartialSprite(x, y, engine->GetBackGround(), fBckgrdoffX, fBckgrdoffY, w, h);
 }
 
 float cCamera::GetOffsetX()
@@ -86,4 +108,14 @@ void cCamera::ActivateShakeEffect(bool activate, int shakeAmplitudeX, int shakeA
 	bShake = activate;
 	nShakeAmplitudeX = shakeAmplitudeX;
 	nShakeAmplitudeY = shakeAmplitudeY;
+}
+
+void cCamera::InitialiseThreadPool()
+{
+	for (int i = 0; i < nMaxThreads; i++)
+	{
+		workers[i].alive = true;
+		workers[i].screen_width = engine->ScreenWidth();
+		workers[i].thread = std::thread(&WorkerThread::DrawBackground, &workers[i]);
+	}
 }

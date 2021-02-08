@@ -3,7 +3,13 @@
 #include "olcPGEX_Graphics2D.h"
 #include "Platformer_Level.h"
 
+#include <mutex>
+
 class OneLoneCoder_Platformer;
+
+constexpr int nMaxThreads = 32;
+
+static std::atomic<int> nWorkerComplete;
 
 class cCamera
 {
@@ -30,16 +36,66 @@ private:
 	bool bShake = false;
 
 public:
+	struct WorkerThread
+	{
+		int ox;
+		int oy;
+		float fBackgroundOffsetX;
+		float fBackgroundOffsetY;
+		int width;
+		int height;
+		std::condition_variable cvStart;
+		bool alive = true;
+		std::mutex mux;
+		int screen_width = 0;
+		cCamera* cam;
+
+		std::thread thread;
+
+		void Start(int x, int y, float fBckgrdoffX, float fBckgrdoffY, int w, int h, cCamera* camera)
+		{
+			ox = x;
+			oy = y;
+			fBackgroundOffsetX = fBckgrdoffX;
+			fBackgroundOffsetY = fBckgrdoffY;
+			width = w;
+			height = h;
+			cam = camera;
+
+			std::unique_lock<std::mutex> lm(mux);
+			cvStart.notify_one();
+		}
+
+		void DrawBackground()
+		{
+			while (alive)
+			{
+				std::unique_lock<std::mutex> lm(mux);
+				cvStart.wait(lm);
+
+				//engine->DrawPartialSprite(ox, oy, engine->GetBackGround(), fBackgroundOffsetX, fBackgroundOffsetY, width, height);
+				cam->DrawBackgroundThread(ox, oy, fBackgroundOffsetX, fBackgroundOffsetY, width, height);
+
+				nWorkerComplete++;
+			}
+		}
+	};
+
+	WorkerThread workers[nMaxThreads];
+
 	static OneLoneCoder_Platformer* engine;
 
 public:
 	void ClampCameraOffset();
 	void SetPositions(float fPlayerPosX, float fPlayerPosY);
 	void DrawLevel(cLevel* level, float fElapsedTime);
+	void DrawBackground(cLevel* level);
+	void DrawBackgroundThread(int x, int y, float fBckgrdoffX, float fBckgrdoffY, int w, int h);
 	float GetOffsetX();
 	float GetOffsetY();
 	void LowerCameraPosition();
 	void RaiseCameraPosition();
 	void SetShake(bool shake);
 	void ActivateShakeEffect(bool activate, int shakeAmplitudeX = 50, int shakeAmplitudeY = 50);
+	void InitialiseThreadPool();
 };

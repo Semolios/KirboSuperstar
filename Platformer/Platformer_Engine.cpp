@@ -178,6 +178,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 #pragma region Camera
 
 	camera = new cCamera();
+	camera->InitialiseThreadPool();
 
 #pragma endregion
 
