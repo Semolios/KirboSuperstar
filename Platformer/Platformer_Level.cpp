@@ -254,8 +254,6 @@ void cLevel::DrawTiles(int nVisibleTilesX, int nVisibleTilesY, float fOffsetX, f
 	{
 	}
 	engine->SetPixelMode(olc::Pixel::NORMAL);
-
-	//SelectTile(nVisibleTilesX, nVisibleTilesY, fOffsetX, fOffsetY, fTileOffsetX, fTileOffsetY);
 }
 
 void cLevel::SelectTile(int startX, int endX, int nVisibleTilesX, int nVisibleTilesY, float fOffsetX, float fOffsetY, float fTileOffsetX, float fTileOffsetY)
