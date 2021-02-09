@@ -12,7 +12,13 @@
 #include "Platformer_DynamicCreatureWaddleDee.h"
 #include "Platformer_DynamicCreatureWhispyWood.h"
 
+#include <mutex>
+
 class OneLoneCoder_Platformer;
+
+constexpr int nMaxLvlThreads = 16;
+
+static std::atomic<int> nLvlWorkerComplete;
 
 class cLevel
 {
@@ -31,6 +37,57 @@ public:
 
 	static OneLoneCoder_Platformer* engine;
 
+	struct WorkerThread
+	{
+		int sx;
+		int sy;
+		int nVisibleTilesX;
+		int nVisibleTilesY;
+		float fOffsetX;
+		float fOffsetY;
+		float fTileOffsetX;
+		float fTileOffsetY;
+
+		std::condition_variable cvStart;
+		bool alive = true;
+		std::mutex mux;
+		int screen_width = 0;
+		cLevel* lvl;
+
+		std::thread thread;
+
+		void Start(int x, int y, int visibleTilesX, int visibleTilesY, float offsetX, float offsetY, float tileOffsetX, float tileOffsetY, cLevel* level)
+		{
+			sx = x;
+			sy = y;
+			nVisibleTilesX = visibleTilesX;
+			nVisibleTilesY = visibleTilesY;
+			fOffsetX = offsetX;
+			fOffsetY = offsetY;
+			fTileOffsetX = tileOffsetX;
+			fTileOffsetY = tileOffsetY;
+			lvl = level;
+
+			std::unique_lock<std::mutex> lm(mux);
+			cvStart.notify_one();
+		}
+
+		void SelectTile()
+		{
+			while (alive)
+			{
+				std::unique_lock<std::mutex> lm(mux);
+				cvStart.wait(lm);
+
+				lvl->SelectTile(sx, sy, nVisibleTilesX, nVisibleTilesY, fOffsetX, fOffsetY, fTileOffsetX, fTileOffsetY);
+
+				nLvlWorkerComplete++;
+			}
+		}
+	};
+
+	WorkerThread workers[nMaxLvlThreads];
+
 public:
 	cLevel();
 
@@ -44,7 +101,9 @@ public:
 	bool PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::string levelName);
 	bool PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLvl);
 	void DrawTiles(int nVisibleTilesX, int nVisibleTilesY, float fOffsetX, float fOffsetY);
-	void DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY, float fCamOffsetX, float fCamOffsetY , olc::Sprite* spriteTiles, wchar_t tile);
+	void SelectTile(int startX, int endX, int nVisibleTilesX, int nVisibleTilesY, float fOffsetX, float fOffsetY, float fTileOffsetX, float fTileOffsetY);
+	void InitialiseThreadPool();
+	void DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY, float fCamOffsetX, float fCamOffsetY, olc::Sprite* spriteTiles, wchar_t tile);
 	wchar_t GetTile(int x, int y);
 	void SetTile(int x, int y, wchar_t c);
 	std::vector<std::string> LoadLevelsList();

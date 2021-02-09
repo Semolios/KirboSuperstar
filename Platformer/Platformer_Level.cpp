@@ -240,12 +240,31 @@ void cLevel::DrawTiles(int nVisibleTilesX, int nVisibleTilesY, float fOffsetX, f
 	float fTileOffsetX = (fOffsetX - (int)fOffsetX) * engine->GetTileWidth();
 	float fTileOffsetY = (fOffsetY - (int)fOffsetY) * engine->GetTileHeight();
 
-	for (int x = -2; x < nVisibleTilesX + 2; x++)
+	int nSectionWidth = (nVisibleTilesX + 4) / nMaxLvlThreads;
+
+	nLvlWorkerComplete = 0;
+
+	engine->SetPixelMode(olc::Pixel::ALPHA);
+	for (size_t i = 0; i < nMaxLvlThreads; i++)
+	{
+		workers[i].Start(i, i + nSectionWidth, nVisibleTilesX, nVisibleTilesY, fOffsetX, fOffsetY, fTileOffsetX, fTileOffsetY, this);
+	}
+
+	while (nLvlWorkerComplete < nMaxLvlThreads) // Wait for all workers to complete
+	{
+	}
+	engine->SetPixelMode(olc::Pixel::NORMAL);
+
+	//SelectTile(nVisibleTilesX, nVisibleTilesY, fOffsetX, fOffsetY, fTileOffsetX, fTileOffsetY);
+}
+
+void cLevel::SelectTile(int startX, int endX, int nVisibleTilesX, int nVisibleTilesY, float fOffsetX, float fOffsetY, float fTileOffsetX, float fTileOffsetY)
+{
+	for (int x = startX; x < endX; x++)
 	{
 		for (int y = -2; y < nVisibleTilesY + 2; y++)
 		{
 			wchar_t sTileID = GetTile(x + fOffsetX, y + fOffsetY);
-			engine->SetPixelMode(olc::Pixel::ALPHA);
 			switch (sTileID)
 			{
 				case L'#': // Solid Block
@@ -269,8 +288,17 @@ void cLevel::DrawTiles(int nVisibleTilesX, int nVisibleTilesY, float fOffsetX, f
 					// TODO
 					/*ADD HERE THE NEW TILES*/
 			}
-			engine->SetPixelMode(olc::Pixel::NORMAL);
 		}
+	}
+}
+
+void cLevel::InitialiseThreadPool()
+{
+	for (int i = 0; i < nMaxLvlThreads; i++)
+	{
+		workers[i].alive = true;
+		workers[i].screen_width = engine->ScreenWidth();
+		workers[i].thread = std::thread(&WorkerThread::SelectTile, &workers[i]);
 	}
 }
 

@@ -78,6 +78,8 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	levelsMusics = level->LoadLevelsMusics();
 	bossLevelsMusics = level->LoadBossLevelsMusics();
 
+	level->InitialiseThreadPool();
+
 #pragma endregion
 
 #pragma region Load Animations

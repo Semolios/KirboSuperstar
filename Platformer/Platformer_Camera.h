@@ -3,8 +3,6 @@
 #include "olcPGEX_Graphics2D.h"
 #include "Platformer_Level.h"
 
-#include <mutex>
-
 class OneLoneCoder_Platformer;
 
 constexpr int nMaxThreads = 32;
@@ -73,7 +71,6 @@ public:
 				std::unique_lock<std::mutex> lm(mux);
 				cvStart.wait(lm);
 
-				//engine->DrawPartialSprite(ox, oy, engine->GetBackGround(), fBackgroundOffsetX, fBackgroundOffsetY, width, height);
 				cam->DrawBackgroundThread(ox, oy, fBackgroundOffsetX, fBackgroundOffsetY, width, height);
 
 				nWorkerComplete++;
