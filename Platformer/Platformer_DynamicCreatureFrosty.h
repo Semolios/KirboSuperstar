@@ -11,9 +11,9 @@ class cDynamicCreatureFrosty : public cDynamicCreature
 {
 public:
 	cDynamicCreatureFrosty(cLevel* l);
+	virtual ~cDynamicCreatureFrosty();
 
-public:
-
+private:
 	enum AI_STATE
 	{
 		AI_IDLE = 0,
@@ -27,6 +27,7 @@ public:
 
 	bool bCantSpawnAOE = false;
 
+public:
 	static OneLoneCoder_Platformer* engine;
 
 public:

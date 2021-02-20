@@ -7,11 +7,13 @@ class cDynamicCreatureScarfy : public cDynamicCreature
 {
 public:
 	cDynamicCreatureScarfy(cLevel* l);
+	virtual ~cDynamicCreatureScarfy();
 
-public:
+private:
 	const float cfTriggerDistance = 6.0f;
 	const float cfSpeed = 2.0f;
 
+public:
 	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
 };
 

@@ -19,6 +19,13 @@ cDynamicCreatureScarfy::cDynamicCreatureScarfy(cLevel* l) : cDynamicCreature("sc
 	nDamage = 4;
 }
 
+cDynamicCreatureScarfy::~cDynamicCreatureScarfy()
+{
+	delete hitbox;
+	delete sSprite;
+	delete level;
+}
+
 void cDynamicCreatureScarfy::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 {
 	// Check if player is nearby

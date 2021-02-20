@@ -11,7 +11,6 @@ public:
 private:
 	int nPlayerChoice = 0;
 
-public:
 	olc::Sprite* sprBackGround;
 	olc::Sprite* sprCursor;
 

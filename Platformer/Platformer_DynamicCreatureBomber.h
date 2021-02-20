@@ -9,8 +9,9 @@ class cDynamicCreatureBomber : public cDynamicCreature
 {
 public:
 	cDynamicCreatureBomber(cLevel* l);
+	virtual ~cDynamicCreatureBomber();
 
-public:
+private:
 	const float cfTriggerDistance = 2.0f;
 	const float cfExplosionDuration = 0.85f;
 	const float cfKnockBackDuration = 0.3f;
@@ -28,6 +29,7 @@ public:
 
 	bool bHasExploded = false;
 
+public:
 	static OneLoneCoder_Platformer* engine;
 
 public:

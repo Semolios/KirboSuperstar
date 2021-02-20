@@ -7,7 +7,7 @@
 class cWorldMap
 {
 public:
-	cWorldMap(olc::PixelGameEngine* gfx, olc::Sprite* background);
+	cWorldMap(olc::PixelGameEngine* gfx, olc::Sprite* background, cAnimator* anim);
 
 private:
 	const int cnKirboTileWidth = 192;
@@ -16,7 +16,6 @@ private:
 	int nSelectedLevel = 0;
 	int nUnlockedLevels = 0;
 
-public:
 	static cAnimator* animPlayer;
 	cSpline path;
 	olc::Sprite* sprBackGround;

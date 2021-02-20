@@ -22,6 +22,13 @@ cDynamicCreatureBrontoBurt::cDynamicCreatureBrontoBurt(cLevel* l, float oscillat
 	nDamage = 2;
 }
 
+cDynamicCreatureBrontoBurt::~cDynamicCreatureBrontoBurt()
+{
+	delete hitbox;
+	delete sSprite;
+	delete level;
+}
+
 void cDynamicCreatureBrontoBurt::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 {
 	// Bronto Burt moves when kirbo is near (when bronto burt appears on the screen)

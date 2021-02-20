@@ -24,6 +24,13 @@ cDynamicCreatureMrShineMrBright::cDynamicCreatureMrShineMrBright(cLevel* l) : cD
 	srand(time(NULL));
 }
 
+cDynamicCreatureMrShineMrBright::~cDynamicCreatureMrShineMrBright()
+{
+	delete hitbox;
+	delete sSprite;
+	delete level;
+}
+
 void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 {
 	nFaceDir = 0; // they don't switch position, sun is always left and moon always right

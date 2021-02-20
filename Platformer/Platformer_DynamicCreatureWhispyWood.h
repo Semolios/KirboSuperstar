@@ -11,8 +11,9 @@ class cDynamicCreatureWhispyWood : public cDynamicCreature
 {
 public:
 	cDynamicCreatureWhispyWood(cLevel* l);
+	virtual ~cDynamicCreatureWhispyWood();
 
-public:
+private:
 	const float cfProjectilesStartTimer = 0.25f;
 	const float cfGroundPosition = 9.0f;
 	const float cfRootPosY = 9.1f;
@@ -94,6 +95,7 @@ public:
 
 	bool bCantSpawnAOE = false;
 
+public:
 	static OneLoneCoder_Platformer* engine;
 
 public:

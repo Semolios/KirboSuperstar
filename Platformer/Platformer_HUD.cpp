@@ -27,7 +27,7 @@ void cHUD::BossHealthBar(olc::PixelGameEngine* gfx, olc::Sprite* bossHealthBar, 
 	int nBossHP = 0;
 	for (auto& dyn : vecEnnemies)
 	{
-		nBossHP += dyn->nHealth;
+		nBossHP += dyn->GetHealth();
 	}
 
 	gfx->FillRect(663 + (100 - (nBossHP)), 30, nBossHP, 25, olc::VERY_DARK_MAGENTA);

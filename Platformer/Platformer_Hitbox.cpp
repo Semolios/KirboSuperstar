@@ -52,3 +52,63 @@ void cHitbox::Draw(olc::PixelGameEngine* gfx, olc::Pixel col)
 	gfx->DrawLine(p[2].x, p[2].y, p[3].x, p[3].y, col);
 	gfx->DrawLine(p[3].x, p[3].y, p[0].x, p[0].y, col);
 }
+
+void cHitbox::SetPos(float px, float py)
+{
+	pos = { px, py };
+}
+
+void cHitbox::SetAngle(float a)
+{
+	angle = a;
+}
+
+void cHitbox::AddPoint(float px, float py)
+{
+	o.push_back({ px, py });
+}
+
+void cHitbox::ClearO()
+{
+	std::vector<vec2d>().swap(o);
+}
+
+void cHitbox::ResizeP(int i)
+{
+	p.resize(i);
+}
+
+int cHitbox::GetOSize()
+{
+	return o.size();
+}
+
+void cHitbox::SetP(int i, float pix, float piy)
+{
+	p[i] = { pix, piy };
+}
+
+float cHitbox::GetAngle()
+{
+	return angle;
+}
+
+float cHitbox::GetOIX(int i)
+{
+	return o[i].x;
+}
+
+float cHitbox::GetOIY(int i)
+{
+	return o[i].y;
+}
+
+float cHitbox::GetPosX()
+{
+	return pos.x;
+}
+
+float cHitbox::GetPosY()
+{
+	return pos.y;
+}

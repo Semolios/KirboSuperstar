@@ -6,9 +6,9 @@
 class cTransition
 {
 public:
-	cTransition(olc::PixelGameEngine* gfx, olc::Sprite* background);
+	cTransition(olc::PixelGameEngine* gfx, olc::Sprite* background, cAnimator* anim);
 
-public:
+private:
 	static cAnimator* animPlayer;
 	olc::Sprite* sprBackGround;
 

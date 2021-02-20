@@ -23,7 +23,7 @@ static std::atomic<int> nLvlWorkerComplete;
 
 class cLevel
 {
-public:
+private:
 	const float cfWhispyWoodPX = 14.0f;
 	const float cfWhispyWoodPY = 5.0f;
 
@@ -38,8 +38,6 @@ public:
 	int nLevelHeight = 0;
 	int nInitPlayerPosX = 0;
 	int nInitPlayerPosY = 0;
-
-	static OneLoneCoder_Platformer* engine;
 
 	struct WorkerThread
 	{
@@ -91,6 +89,9 @@ public:
 	};
 
 	WorkerThread workers[nMaxLvlThreads];
+
+public:
+	static OneLoneCoder_Platformer* engine;
 
 public:
 	cLevel();

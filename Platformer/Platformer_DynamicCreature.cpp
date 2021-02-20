@@ -15,6 +15,13 @@ cDynamicCreature::cDynamicCreature(std::string n, olc::Sprite* sprite, int frame
 	bIsAttackable = true;
 }
 
+cDynamicCreature::~cDynamicCreature()
+{
+	delete hitbox;
+	delete sSprite;
+	delete level;
+}
+
 void cDynamicCreature::DrawSelf(float ox, float oy)
 {
 	int nSheetOffsetX = nGraphicCounter * fSpriteW;					// Same State of a sprite are stored in one line
@@ -218,33 +225,33 @@ void cDynamicCreature::Collision(float fElapsedTime)
 	py = fDynObjectPosY;
 }
 
-cHitbox cDynamicCreature::Hitbox(float cameraOffsetX, float cameraOffsetY)
+void cDynamicCreature::UpdateHitbox(float cameraOffsetX, float cameraOffsetY)
 {
-	cHitbox sEnnemy;
-	sEnnemy.pos = {
+	hitbox->SetPos(
 		(px - cameraOffsetX) * engine->GetTileWidth() + (fDynWidth / 2.0f),
 		(py - cameraOffsetY) * engine->GetTileHeight() + (fDynHeight / 2.0f)
-	};
-	sEnnemy.angle = 0.0f;
-	sEnnemy.o.push_back({ -fDynWidth / 2.0f, -fDynHeight / 2.0f });
-	sEnnemy.o.push_back({ -fDynWidth / 2.0f, +fDynHeight / 2.0f });
-	sEnnemy.o.push_back({ +fDynWidth / 2.0f, +fDynHeight / 2.0f });
-	sEnnemy.o.push_back({ +fDynWidth / 2.0f, -fDynHeight / 2.0f });
-	sEnnemy.p.resize(4);
+	);
+	hitbox->SetAngle(0.0f);
+	hitbox->AddPoint(-fDynWidth / 2.0f, -fDynHeight / 2.0f);
+	hitbox->AddPoint(-fDynWidth / 2.0f, +fDynHeight / 2.0f);
+	hitbox->AddPoint(+fDynWidth / 2.0f, +fDynHeight / 2.0f);
+	hitbox->AddPoint(+fDynWidth / 2.0f, -fDynHeight / 2.0f);
+	hitbox->ResizeP(4);
 
-	for (int i = 0; i < sEnnemy.o.size(); i++)
+	for (int i = 0; i < hitbox->GetOSize(); i++)
 	{
-		sEnnemy.p[i] =
-		{	// 2D Rotation Transform + 2D Translation
-			(sEnnemy.o[i].x * cosf(sEnnemy.angle)) - (sEnnemy.o[i].y * sinf(sEnnemy.angle)) + sEnnemy.pos.x,
-			(sEnnemy.o[i].x * sinf(sEnnemy.angle)) + (sEnnemy.o[i].y * cosf(sEnnemy.angle)) + sEnnemy.pos.y,
-		};
+		// 2D Rotation Transform + 2D Translation
+		hitbox->SetP(i,
+					 (hitbox->GetOIX(i) * cosf(hitbox->GetAngle())) - (hitbox->GetOIY(i) * sinf(hitbox->GetAngle())) + hitbox->GetPosX(),
+					 (hitbox->GetOIX(i) * sinf(hitbox->GetAngle())) + (hitbox->GetOIY(i) * cosf(hitbox->GetAngle())) + hitbox->GetPosY()
+		);
 	}
 
-	// debug AOE
-	//sEnnemy.Draw(engine, olc::YELLOW);
+	// Clear the vector o in the hitbox class or GetOSize() will not stop growing each frames
+	hitbox->ClearO();
 
-	return sEnnemy;
+	// debug AOE
+	//hitbox->Draw(engine, olc::YELLOW);
 }
 
 void cDynamicCreature::Vacuumed(bool vaccumedState)
@@ -252,6 +259,66 @@ void cDynamicCreature::Vacuumed(bool vaccumedState)
 	bSolidVsDyn = !vaccumedState;
 	bVacuumed = vaccumedState;
 	bIsKnockable = !vaccumedState;
+}
+
+int cDynamicCreature::GetHealth()
+{
+	return nHealth;
+}
+
+void cDynamicCreature::TakeDamage(int damage)
+{
+	nHealth -= damage;
+}
+
+bool cDynamicCreature::IsVacuumable()
+{
+	return bIsVacuumable;
+}
+
+void cDynamicCreature::SetVacuumable(bool vacuumable)
+{
+	bIsVacuumable = vacuumable;
+}
+
+bool cDynamicCreature::IsVacuumed()
+{
+	return bVacuumed;
+}
+
+bool cDynamicCreature::IsSwallowable()
+{
+	return bSwallowable;
+}
+
+void cDynamicCreature::SetSwallowable(bool swallowable)
+{
+	bSwallowable = swallowable;
+}
+
+bool cDynamicCreature::IsBoss()
+{
+	return bIsBoss;
+}
+
+void cDynamicCreature::SetBoss(bool boss)
+{
+	bIsBoss = boss;
+}
+
+bool cDynamicCreature::IsKnockable()
+{
+	return bIsKnockable;
+}
+
+void cDynamicCreature::SetKnockable(bool knockable)
+{
+	bIsKnockable = knockable;
+}
+
+bool cDynamicCreature::IsDead()
+{
+	return bDead;
 }
 
 void cDynamicCreature::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)

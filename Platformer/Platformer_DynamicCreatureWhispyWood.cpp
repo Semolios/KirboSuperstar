@@ -24,6 +24,13 @@ cDynamicCreatureWhispyWood::cDynamicCreatureWhispyWood(cLevel* l) : cDynamicCrea
 	srand(time(NULL));
 }
 
+cDynamicCreatureWhispyWood::~cDynamicCreatureWhispyWood()
+{
+	delete hitbox;
+	delete sSprite;
+	delete level;
+}
+
 void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 {
 	vx = 0.0f; vy = 0.0f; nFaceDir = 0; // Whispy wood can't move and is always facing left

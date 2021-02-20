@@ -11,8 +11,9 @@ class cDynamicCreatureMrShineMrBright : public cDynamicCreature
 {
 public:
 	cDynamicCreatureMrShineMrBright(cLevel* l);
+	virtual ~cDynamicCreatureMrShineMrBright();
 
-public:
+private:
 	const float cfGroundYPos = 7.0f;
 	const float cfMovingGroundLavaOffsetX = 1.8f;
 	const float cfMovingGroundLavaPosY = 8.6f;
@@ -118,6 +119,7 @@ public:
 
 	bool bCanSpawnAOE = true;
 
+public:
 	static OneLoneCoder_Platformer* engine;
 
 public:

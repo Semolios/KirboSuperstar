@@ -2,16 +2,18 @@
 
 cAnimator* cWorldMap::animPlayer = nullptr;
 
-cWorldMap::cWorldMap(olc::PixelGameEngine* gfx, olc::Sprite* background)
+cWorldMap::cWorldMap(olc::PixelGameEngine* gfx, olc::Sprite* background, cAnimator* anim)
 {
 	sprBackGround = background;
 
-	path.points.push_back({ 0.22f * gfx->ScreenWidth(), 0.75f * gfx->ScreenHeight() });	// Beginning level
-	path.points.push_back({ 0.52f * gfx->ScreenWidth(), 0.60f * gfx->ScreenHeight() });	// Lake level
-	path.points.push_back({ 0.70f * gfx->ScreenWidth(), 0.30f * gfx->ScreenHeight() });	// Ice level
-	path.points.push_back({ 0.33f * gfx->ScreenWidth(), 0.50f * gfx->ScreenHeight() });	// Forest level
-	path.points.push_back({ 0.33f * gfx->ScreenWidth(), 0.20f * gfx->ScreenHeight() });	// Volcano level
-	path.points.push_back({ 0.77f * gfx->ScreenWidth(), 0.82f * gfx->ScreenHeight() });	// Beach level
+	path.AddPoint(0.22f * gfx->ScreenWidth(), 0.75f * gfx->ScreenHeight());	// Beginning level
+	path.AddPoint(0.52f * gfx->ScreenWidth(), 0.60f * gfx->ScreenHeight());	// Lake level
+	path.AddPoint(0.70f * gfx->ScreenWidth(), 0.30f * gfx->ScreenHeight());	// Ice level
+	path.AddPoint(0.33f * gfx->ScreenWidth(), 0.50f * gfx->ScreenHeight());	// Forest level
+	path.AddPoint(0.33f * gfx->ScreenWidth(), 0.20f * gfx->ScreenHeight());	// Volcano level
+	path.AddPoint(0.77f * gfx->ScreenWidth(), 0.82f * gfx->ScreenHeight());	// Beach level
+
+	animPlayer = anim;
 }
 
 bool cWorldMap::Update(olc::PixelGameEngine* gfx, float fElapsedTime)
@@ -36,20 +38,20 @@ bool cWorldMap::Update(olc::PixelGameEngine* gfx, float fElapsedTime)
 	}
 
 	// Draw Spline
-	for (float t = 0; t < (float)path.points.size(); t += 0.0005f)
+	for (float t = 0; t < (float)path.GetPointsSize(); t += 0.0005f)
 	{
 		sPoint2D pos = path.GetSplinePoint(t, true);
 		gfx->Draw(pos.x, pos.y);
 	}
 
 	// Draw Control Points
-	for (int i = 0; i < path.points.size(); i++)
+	for (int i = 0; i < path.GetPointsSize(); i++)
 	{
-		gfx->FillRect(path.points[i].x - 3, path.points[i].y - 3, 6, 6, (i <= nUnlockedLevels - 1) ? olc::YELLOW : olc::RED);
+		gfx->FillRect(path.GetIX(i) - 3, path.GetIY(i) - 3, 6, 6, (i <= nUnlockedLevels - 1) ? olc::YELLOW : olc::RED);
 	}
 
 	olc::GFX2D::Transform2D t;
-	t.Translate(path.points[nSelectedLevel].x - (cnKirboTileWidth / 2.0f), path.points[nSelectedLevel].y - (cnKirboTileHeight / 2.0f));
+	t.Translate(path.GetIX(nSelectedLevel) - (cnKirboTileWidth / 2.0f), path.GetIY(nSelectedLevel) - (cnKirboTileHeight / 2.0f));
 
 	gfx->SetPixelMode(olc::Pixel::ALPHA);
 	animPlayer->DrawSelf(gfx, t);

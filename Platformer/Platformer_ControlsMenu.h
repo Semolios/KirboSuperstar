@@ -8,7 +8,7 @@ class cControlsMenu
 public:
 	cControlsMenu(olc::PixelGameEngine* gfx, olc::Sprite* background);
 
-public:
+private:
 	olc::Sprite* sprBackGround;
 
 public:

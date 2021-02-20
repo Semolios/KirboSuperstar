@@ -22,6 +22,13 @@ cDynamicCreatureBladeKnight::cDynamicCreatureBladeKnight(cLevel* l) : cDynamicCr
 	nDamage = 5;
 }
 
+cDynamicCreatureBladeKnight::~cDynamicCreatureBladeKnight()
+{
+	delete hitbox;
+	delete sSprite;
+	delete level;
+}
+
 void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 {
 	switch (nAIState)

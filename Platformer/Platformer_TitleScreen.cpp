@@ -8,12 +8,12 @@ cTitleScreen::cTitleScreen(olc::PixelGameEngine* gfx, olc::Sprite* background)
 	fMarker2 = 0.0f;
 	fTheta = 0.0f;
 
-	path.points.push_back({ 0.5f * gfx->ScreenWidth(), 0.5f * gfx->ScreenHeight() });
-	path.points.push_back({ 0.8f * gfx->ScreenWidth(), 0.2f * gfx->ScreenHeight() });
-	path.points.push_back({ 0.7f * gfx->ScreenWidth(), 0.8f * gfx->ScreenHeight() });
-	path.points.push_back({ 0.5f * gfx->ScreenWidth(), 0.5f * gfx->ScreenHeight() });
-	path.points.push_back({ 0.2f * gfx->ScreenWidth(), 0.2f * gfx->ScreenHeight() });
-	path.points.push_back({ 0.3f * gfx->ScreenWidth(), 0.8f * gfx->ScreenHeight() });
+	path.AddPoint(0.5f * gfx->ScreenWidth(), 0.5f * gfx->ScreenHeight());
+	path.AddPoint(0.8f * gfx->ScreenWidth(), 0.2f * gfx->ScreenHeight());
+	path.AddPoint(0.7f * gfx->ScreenWidth(), 0.8f * gfx->ScreenHeight());
+	path.AddPoint(0.5f * gfx->ScreenWidth(), 0.5f * gfx->ScreenHeight());
+	path.AddPoint(0.2f * gfx->ScreenWidth(), 0.2f * gfx->ScreenHeight());
+	path.AddPoint(0.3f * gfx->ScreenWidth(), 0.8f * gfx->ScreenHeight());
 
 	sprstars = new olc::Sprite("assets/gfx/stars.png");
 }
@@ -22,19 +22,20 @@ bool cTitleScreen::Update(olc::PixelGameEngine* gfx, float fElapsedTime)
 {
 	gfx->DrawSprite(0, 0, sprBackGround);
 
-	path.fTotalSplineLength = 0.0f;
+	path.SetTotalLength(0.0f);
 
 	// Draw Control Points
-	for (int i = 0; i < path.points.size(); i++)
+	for (int i = 0; i < path.GetPointsSize(); i++)
 	{
-		path.fTotalSplineLength += (path.points[i].length = path.CalculateSegmentLength(i, true));
+		path.SetIPointLength(i, path.CalculateSegmentLength(i, true));
+		path.IncreaseLength(path.CalculateSegmentLength(i, true));
 	}
 
 	fMarker1 += cfStarsMovSpeed * fElapsedTime;
-	if (fMarker1 >= path.fTotalSplineLength) fMarker1 = 0.0f;
+	if (fMarker1 >= path.GetTotalLength()) fMarker1 = 0.0f;
 
 	fMarker2 -= cfStarsMovSpeed * fElapsedTime;
-	if (fMarker2 < 0.0f) fMarker2 = path.fTotalSplineLength;
+	if (fMarker2 < 0.0f) fMarker2 = path.GetTotalLength();
 
 	// Draw agent to demonstrate gradient
 	DrawNewStar(gfx, fMarker1);

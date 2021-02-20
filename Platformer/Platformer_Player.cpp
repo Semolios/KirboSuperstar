@@ -6,6 +6,8 @@ OneLoneCoder_Platformer* cPlayer::engine = nullptr;
 cPlayer::cPlayer(cAnimator* animator)
 {
 	animPlayer = animator;
+	hitbox = new cHitbox();
+	vacuumHitbox = new cHitbox();
 }
 
 void cPlayer::InitialiseKirboHealth()
@@ -324,8 +326,8 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 					float fProjectilePosX = fPlayerPosX + (fFaceDir > 0.0f ? 1.0f : -(mapProjectiles["slapAOE"][0]->width / engine->GetTileWidth()));
 					float fProjectilePosY = fPlayerPosY - ((mapProjectiles["slapAOE"][0]->height - engine->GetTileHeight()) / (2 * engine->GetTileHeight()));
 					cDynamicProjectile* p = engine->CreateProjectile(fProjectilePosX, fProjectilePosY, true, fFaceDir, 0.0f, cfSlapDuration, "slapAOE", false, cnSlapDmg, false, false);
-					p->bOneHit = false;
-					p->soundEffect = "slap";
+					p->SetOneHit(false);
+					p->SetSoundEffect("slap");
 					engine->AddProjectile(p);
 					bCanSpawnProjectile = false;
 				}
@@ -609,8 +611,8 @@ bool cPlayer::IsVacuuming()
 void cPlayer::VacuumEnnemy(cDynamicCreature* object)
 {
 	// if one ennemy is under fSwallowDistance from kirbo, every swallowable ennemy is killed and kirbo starts swallowing animation
-	float fTargetX = GetPlayerPosX() - object->px;
-	float fTargetY = GetPlayerPosY() - object->py;
+	float fTargetX = GetPlayerPosX() - object->GetPX();
+	float fTargetY = GetPlayerPosY() - object->GetPY();
 	float fDistance = sqrtf(fTargetX * fTargetX + fTargetY * fTargetY);
 
 	if (fDistance <= fSwallowDistance)
@@ -676,7 +678,7 @@ void cPlayer::Damage(cDynamic* object)
 	fInvulnerabilityTimer = cfInvulnerabilityFrame;
 	bPlayerDamaged = true;
 	bIsPlayerAttackable = false;
-	fHealth -= object->nDamage;
+	fHealth -= object->GetDamage();
 
 	if (fHealth <= 0.0f)
 	{
@@ -687,7 +689,7 @@ void cPlayer::Damage(cDynamic* object)
 	if (!bDead)
 	{
 		// Knockback the player out of the ennemy
-		if (object->px < fPlayerPosX)
+		if (object->GetPX() < fPlayerPosX)
 		{
 			fPlayerVelX = cfDamageEjectionVelX;
 			fPlayerVelY = -cfDamageEjectionVelY;
@@ -713,62 +715,70 @@ void cPlayer::ResetVariables()
 	StopAnyAttack();
 }
 
-cHitbox cPlayer::VacuumHitbox(float cameraOffsetX, float cameraOffsetY)
+void cPlayer::VacuumHitbox(float cameraOffsetX, float cameraOffsetY)
 {
-	cHitbox sVacuum;
-	sVacuum.pos = {
+	vacuumHitbox->SetPos(
 		(fPlayerPosX + (fFaceDir > 0.0f ? 1.75f : -0.75f) - cameraOffsetX) * engine->GetTileWidth(),
 		(fPlayerPosY + 0.5f - cameraOffsetY) * engine->GetTileHeight()
-	}; // 1 block ahead the player's looking direction
-	sVacuum.angle = 0.0f;
-	sVacuum.o.push_back({ -engine->GetTileWidth() * 1.25f, -engine->GetTileHeight() / (fFaceDir > 0.0f ? 2.0f : 1.0f) });
-	sVacuum.o.push_back({ -engine->GetTileWidth() * 1.25f, +engine->GetTileHeight() / (fFaceDir > 0.0f ? 2.0f : 1.0f) });
-	sVacuum.o.push_back({ +engine->GetTileWidth() * 1.25f, +engine->GetTileHeight() / (fFaceDir > 0.0f ? 1.0f : 2.0f) });
-	sVacuum.o.push_back({ +engine->GetTileWidth() * 1.25f, -engine->GetTileHeight() / (fFaceDir > 0.0f ? 1.0f : 2.0f) });
-	sVacuum.p.resize(4);
+	); // 1 block ahead the player's looking direction
+	vacuumHitbox->SetAngle(0.0f);
+	vacuumHitbox->AddPoint(-engine->GetTileWidth() * 1.25f, -engine->GetTileHeight() / (fFaceDir > 0.0f ? 2.0f : 1.0f));
+	vacuumHitbox->AddPoint(-engine->GetTileWidth() * 1.25f, +engine->GetTileHeight() / (fFaceDir > 0.0f ? 2.0f : 1.0f));
+	vacuumHitbox->AddPoint(+engine->GetTileWidth() * 1.25f, +engine->GetTileHeight() / (fFaceDir > 0.0f ? 1.0f : 2.0f));
+	vacuumHitbox->AddPoint(+engine->GetTileWidth() * 1.25f, -engine->GetTileHeight() / (fFaceDir > 0.0f ? 1.0f : 2.0f));
+	vacuumHitbox->ResizeP(4);
 
-	for (int i = 0; i < sVacuum.o.size(); i++)
+	for (int i = 0; i < vacuumHitbox->GetOSize(); i++)
 	{
-		sVacuum.p[i] =
-		{	// 2D Rotation Transform + 2D Translation (angle is always 0 here, no rotation allowed)
-			(sVacuum.o[i].x * cosf(sVacuum.angle)) - (sVacuum.o[i].y * sinf(sVacuum.angle)) + sVacuum.pos.x,
-			(sVacuum.o[i].x * sinf(sVacuum.angle)) + (sVacuum.o[i].y * cosf(sVacuum.angle)) + sVacuum.pos.y,
-		};
+		// 2D Rotation Transform + 2D Translation (angle is always 0 here, no rotation allowed)
+		vacuumHitbox->SetP(i,
+						   (vacuumHitbox->GetOIX(i) * cosf(vacuumHitbox->GetAngle())) - (vacuumHitbox->GetOIY(i) * sinf(vacuumHitbox->GetAngle())) + vacuumHitbox->GetPosX(),
+						   (vacuumHitbox->GetOIX(i) * sinf(vacuumHitbox->GetAngle())) + (vacuumHitbox->GetOIY(i) * cosf(vacuumHitbox->GetAngle())) + vacuumHitbox->GetPosY()
+		);
 	}
+
+	vacuumHitbox->ClearO();
 
 	// debug AOE
-	//sVacuum.Draw(engine, olc::GREEN);
-
-	return sVacuum;
+	//vacuumHitbox->Draw(engine, olc::GREEN);
 }
 
-cHitbox cPlayer::Hitbox(float cameraOffsetX, float cameraOffsetY)
+cHitbox* cPlayer::GetVacuumHitbox()
 {
-	cHitbox sPlayer;
-	sPlayer.pos = {
+	return vacuumHitbox;
+}
+
+void cPlayer::UpdateHitbox(float cameraOffsetX, float cameraOffsetY)
+{
+	hitbox->SetPos(
 		(fPlayerPosX + 0.5f - cameraOffsetX) * engine->GetTileWidth(),
 		(fPlayerPosY + 0.5f - cameraOffsetY) * engine->GetTileHeight()
-	}; // Center of the player
-	sPlayer.angle = 0.0f;
-	sPlayer.o.push_back({ -engine->GetTileWidth() / 2.2f, -engine->GetTileHeight() / 2.2f });	// little reduction of the player hitbox to allow a little overlap with attack
-	sPlayer.o.push_back({ -engine->GetTileWidth() / 2.2f, +engine->GetTileHeight() / 2.2f });	// little reduction of the player hitbox to allow a little overlap with attack
-	sPlayer.o.push_back({ +engine->GetTileWidth() / 2.2f, +engine->GetTileHeight() / 2.2f });	// little reduction of the player hitbox to allow a little overlap with attack
-	sPlayer.o.push_back({ +engine->GetTileWidth() / 2.2f, -engine->GetTileHeight() / 2.2f });	// little reduction of the player hitbox to allow a little overlap with attack
-	sPlayer.p.resize(4);
+	); // Center of the player
+	hitbox->SetAngle(0.0f);
+	hitbox->AddPoint(-engine->GetTileWidth() / 2.2f, -engine->GetTileHeight() / 2.2f);	// little reduction of the player hitbox to allow a little overlap with attack
+	hitbox->AddPoint(-engine->GetTileWidth() / 2.2f, +engine->GetTileHeight() / 2.2f);	// little reduction of the player hitbox to allow a little overlap with attack
+	hitbox->AddPoint(+engine->GetTileWidth() / 2.2f, +engine->GetTileHeight() / 2.2f);	// little reduction of the player hitbox to allow a little overlap with attack
+	hitbox->AddPoint(+engine->GetTileWidth() / 2.2f, -engine->GetTileHeight() / 2.2f);	// little reduction of the player hitbox to allow a little overlap with attack
+	hitbox->ResizeP(4);
 
-	for (int i = 0; i < sPlayer.o.size(); i++)
+	for (int i = 0; i < hitbox->GetOSize(); i++)
 	{
-		sPlayer.p[i] =
-		{	// 2D Rotation Transform + 2D Translation (angle is always 0 here, no rotation allowed)
-			(sPlayer.o[i].x * cosf(sPlayer.angle)) - (sPlayer.o[i].y * sinf(sPlayer.angle)) + sPlayer.pos.x,
-			(sPlayer.o[i].x * sinf(sPlayer.angle)) + (sPlayer.o[i].y * cosf(sPlayer.angle)) + sPlayer.pos.y,
-		};
+		// 2D Rotation Transform + 2D Translation (angle is always 0 here, no rotation allowed)
+		hitbox->SetP(i,
+					 (hitbox->GetOIX(i) * cosf(hitbox->GetAngle())) - (hitbox->GetOIY(i) * sinf(hitbox->GetAngle())) + hitbox->GetPosX(),
+					 (hitbox->GetOIX(i) * sinf(hitbox->GetAngle())) + (hitbox->GetOIY(i) * cosf(hitbox->GetAngle())) + hitbox->GetPosY()
+		);
 	}
 
-	// Debug AOE
-	//sPlayer.Draw(engine, olc::BLUE);
+	hitbox->ClearO();
 
-	return sPlayer;
+	// Debug AOE
+	//hitbox->Draw(engine, olc::BLUE);
+}
+
+cHitbox* cPlayer::GetHitbox()
+{
+	return hitbox;
 }
 
 void cPlayer::Attack(cDynamicCreature* victim, int damage)
@@ -776,11 +786,11 @@ void cPlayer::Attack(cDynamicCreature* victim, int damage)
 	if (victim != nullptr)
 	{
 		// Attack victim with damage
-		victim->nHealth -= damage;
+		victim->TakeDamage(damage);
 
 		// Knock victim back
-		float tx = victim->px - fPlayerPosX;
-		float ty = victim->py - fPlayerPosY;
+		float tx = victim->GetPX() - fPlayerPosX;
+		float ty = victim->GetPY() - fPlayerPosY;
 		float d = sqrtf(tx * tx + ty * ty);
 		if (d < 1) d = 1.0f;
 
@@ -788,7 +798,7 @@ void cPlayer::Attack(cDynamicCreature* victim, int damage)
 		// under system control. This delivers two functions, the first being
 		// a visual indicator to the player that something has happened, and the second
 		// it stops the ability to spam attacks on a single creature
-		if (victim->bIsKnockable)
+		if (victim->IsKnockable())
 			victim->KnockBack(tx / d, ty / d, cfKnockBackDuration);
 		else
 			victim->KnockBack(0.0f, 0.0f, cfKnockBackDuration);
@@ -797,10 +807,10 @@ void cPlayer::Attack(cDynamicCreature* victim, int damage)
 
 void cPlayer::Vacuum(cDynamicCreature* object, float cameraOffsetX, float cameraOffsetY)
 {
-	cHitbox sEnnemy = object->Hitbox(cameraOffsetX, cameraOffsetY);
-	cHitbox sVacuum = VacuumHitbox(cameraOffsetX, cameraOffsetY);
+	object->UpdateHitbox(cameraOffsetX, cameraOffsetY);
+	VacuumHitbox(cameraOffsetX, cameraOffsetY);
 
-	if (cHitbox::ShapeOverlap_DIAG(&sEnnemy, &sVacuum))
+	if (cHitbox::ShapeOverlap_DIAG(object->GetHitbox(), GetVacuumHitbox()))
 	{
 		object->Vacuumed(true);
 		Attack(object, 0);
@@ -810,15 +820,15 @@ void cPlayer::Vacuum(cDynamicCreature* object, float cameraOffsetX, float camera
 	else
 	{
 		object->Vacuumed(false);
-		object->bSwallowable = false;
+		object->SetSwallowable(false);
 	}
 }
 
 void cPlayer::CheckIfDamaged(cDynamic* object, float fOffsetX, float fOffsetY)
 {
-	cHitbox sAOE = object->Hitbox(fOffsetX, fOffsetY);
-	cHitbox sPlayer = Hitbox(fOffsetX, fOffsetY);
+	object->UpdateHitbox(fOffsetX, fOffsetY);
+	UpdateHitbox(fOffsetX, fOffsetY);
 
-	if (cHitbox::ShapeOverlap_DIAG(&sAOE, &sPlayer))
+	if (cHitbox::ShapeOverlap_DIAG(object->GetHitbox(), GetHitbox()))
 		Damage(object);
 }

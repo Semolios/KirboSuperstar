@@ -101,10 +101,7 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 			{
 				cDynamicCreature* mob = new cDynamicCreatureBladeKnight(this);
 				vecDyns.push_back(mob);
-
-				// get position
-				mob->px = std::stoi(parts[1]);
-				mob->py = std::stoi(parts[2]);
+				mob->SetPosition(std::stoi(parts[1]), std::stoi(parts[2]));
 			}
 
 			// Populate a bomber
@@ -112,10 +109,7 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 			{
 				cDynamicCreature* mob = new cDynamicCreatureBomber(this);
 				vecDyns.push_back(mob);
-
-				// get position
-				mob->px = std::stoi(parts[1]);
-				mob->py = std::stoi(parts[2]);
+				mob->SetPosition(std::stoi(parts[1]), std::stoi(parts[2]));
 			}
 
 			// Populate a Bronto Burt
@@ -123,10 +117,7 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 			{
 				cDynamicCreature* mob = new cDynamicCreatureBrontoBurt(this, std::stof(parts[1]));
 				vecDyns.push_back(mob);
-
-				// get position
-				mob->px = std::stoi(parts[2]);
-				mob->py = std::stoi(parts[3]);
+				mob->SetPosition(std::stoi(parts[2]), std::stoi(parts[3]));
 			}
 
 			// Populate a rocky
@@ -134,10 +125,7 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 			{
 				cDynamicCreature* mob = new cDynamicCreatureRocky(this);
 				vecDyns.push_back(mob);
-
-				// get position
-				mob->px = std::stoi(parts[1]);
-				mob->py = std::stoi(parts[2]);
+				mob->SetPosition(std::stoi(parts[1]), std::stoi(parts[2]));
 			}
 
 			// Populate a scarfy
@@ -145,10 +133,7 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 			{
 				cDynamicCreature* mob = new cDynamicCreatureScarfy(this);
 				vecDyns.push_back(mob);
-
-				// get position
-				mob->px = std::stoi(parts[1]);
-				mob->py = std::stoi(parts[2]);
+				mob->SetPosition(std::stoi(parts[1]), std::stoi(parts[2]));
 			}
 
 			// Populate a waddle dee
@@ -156,10 +141,7 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 			{
 				cDynamicCreature* mob = new cDynamicCreatureWaddleDee(this);
 				vecDyns.push_back(mob);
-
-				// get position
-				mob->px = std::stoi(parts[1]);
-				mob->py = std::stoi(parts[2]);
+				mob->SetPosition(std::stoi(parts[1]), std::stoi(parts[2]));
 			}
 		}
 	}
@@ -177,24 +159,21 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLv
 		{
 			mob = new cDynamicCreatureWhispyWood(this);
 			vecDyns.push_back(mob);
-			mob->px = cfWhispyWoodPX;
-			mob->py = cfWhispyWoodPY;
+			mob->SetPosition(cfWhispyWoodPX, cfWhispyWoodPY);
 		}
 		break;
 		case 1:
 		{
 			mob = new cDynamicCreatureMrShineMrBright(this);
 			vecDyns.push_back(mob);
-			mob->px = cfMrShineMrBrightPX;
-			mob->py = cfMrShineMrBrightPY;
+			mob->SetPosition(cfMrShineMrBrightPX, cfMrShineMrBrightPY);
 		}
 		break;
 		case 2:
 		{
 			mob = new cDynamicCreatureFrosty(this);
 			vecDyns.push_back(mob);
-			mob->px = cfFrostyPX;
-			mob->py = cfFrostyPY;
+			mob->SetPosition(cfFrostyPX, cfFrostyPY);
 		}
 		break;
 		case 3:
@@ -202,8 +181,7 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLv
 			// TODO kracko
 			mob = new cDynamicCreatureWaddleDee(this);
 			vecDyns.push_back(mob);
-			mob->px = 5.0f;
-			mob->py = 5.0f;
+			mob->SetPosition(5.0f, 5.0f);
 		}
 		break;
 		case 4:
@@ -211,8 +189,7 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLv
 			// TODO Meta Knight
 			mob = new cDynamicCreatureWaddleDee(this);
 			vecDyns.push_back(mob);
-			mob->px = 5.0f;
-			mob->py = 5.0f;
+			mob->SetPosition(5.0f, 5.0f);
 		}
 		break;
 		case 5:
@@ -220,15 +197,14 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLv
 			// TODO Roi Dadidou
 			mob = new cDynamicCreatureWaddleDee(this);
 			vecDyns.push_back(mob);
-			mob->px = 5.0f;
-			mob->py = 5.0f;
+			mob->SetPosition(5.0f, 5.0f);
 		}
 		break;
 	}
 
-	mob->bIsVacuumable = false;
-	mob->bIsBoss = true;
-	mob->bIsKnockable = false;
+	mob->SetVacuumable(false);
+	mob->SetBoss(true);
+	mob->SetKnockable(false);
 
 	return true;
 }

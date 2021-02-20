@@ -10,7 +10,7 @@ struct sPoint2D
 
 class cSpline
 {
-public:
+private:
 	std::vector<sPoint2D> points;
 	float fTotalSplineLength;
 
@@ -19,4 +19,12 @@ public:
 	sPoint2D GetSplineGradient(float t, bool bLooped = false);
 	float CalculateSegmentLength(int node, bool bLooped = false);
 	float GetNormalisedOffset(float p);
+	float GetTotalLength();
+	void AddPoint(float x, float y);
+	void SetTotalLength(float l);
+	int GetPointsSize();
+	void IncreaseLength(float l);
+	void SetIPointLength(int i, float l);
+	float GetIX(int i);
+	float GetIY(int i);
 };

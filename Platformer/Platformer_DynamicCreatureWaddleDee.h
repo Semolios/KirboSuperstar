@@ -9,6 +9,7 @@ class cDynamicCreatureWaddleDee : public cDynamicCreature
 {
 public:
 	cDynamicCreatureWaddleDee(cLevel* l);
+	virtual ~cDynamicCreatureWaddleDee();
 
 public:
 	static OneLoneCoder_Platformer* engine;

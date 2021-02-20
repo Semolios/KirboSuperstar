@@ -7,13 +7,15 @@ class cDynamicCreatureBrontoBurt : public cDynamicCreature
 {
 public:
 	cDynamicCreatureBrontoBurt(cLevel* l, float oscillationAmplitude);
+	virtual ~cDynamicCreatureBrontoBurt();
 
-public:
+private:
 	const float cfOscillationSpeed = 5.0f; // Bronto burt oscillation speed
 
 	float fTheta;
 	float fOscillationAmplitude;
 
+public:
 	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
 };
 

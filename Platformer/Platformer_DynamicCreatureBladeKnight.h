@@ -11,8 +11,9 @@ class cDynamicCreatureBladeKnight : public cDynamicCreature
 {
 public:
 	cDynamicCreatureBladeKnight(cLevel* l);
+	virtual ~cDynamicCreatureBladeKnight();
 
-public:
+private:
 	const float cfFallingAnimationTime = 0.875f;
 	const float cfAttackTime = 1.0f;
 	const float cfTimeBeforeDownAttack = 0.5f;
@@ -52,6 +53,7 @@ public:
 	bool bCantSpawnAOE1 = false;	// in side attack, blade knight send 2 hits
 	bool bCantSpawnAOE2 = false;	// in side attack, blade knight send 2 hits
 
+public:
 	static OneLoneCoder_Platformer* engine;
 
 public:

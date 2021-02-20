@@ -24,6 +24,13 @@ cDynamicCreatureWaddleDee::cDynamicCreatureWaddleDee(cLevel* l) : cDynamicCreatu
 	nDamage = 2;
 }
 
+cDynamicCreatureWaddleDee::~cDynamicCreatureWaddleDee()
+{
+	delete hitbox;
+	delete sSprite;
+	delete level;
+}
+
 void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 {
 	if (vy == 0)

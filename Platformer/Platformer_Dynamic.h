@@ -9,9 +9,9 @@ class cDynamic
 {
 public:
 	cDynamic(std::string n);
-	~cDynamic();
+	virtual ~cDynamic();
 
-public:
+protected:
 	float fDynWidth;
 	float fDynHeight;
 	float fSpriteW;
@@ -27,15 +27,15 @@ public:
 	bool bSolidVsDyn;
 	bool bSolidVsDynInitValue;
 	bool bFriendly;
-	bool bRedundant;
 	bool bIsProjectile;
 	bool bIsAttackable;
 	bool bDead = false;
+	bool bAffectedByGravity = false;
 	std::string sName;
+	cHitbox* hitbox;
 
 public:
-
-public:
+	// Virtual methods
 	virtual void DrawSelf(float ox, float oy)
 	{
 	}
@@ -45,9 +45,17 @@ public:
 	virtual void OnInteract(cDynamic* player = nullptr)
 	{
 	}
-	virtual cHitbox Hitbox(float cameraOffsetX, float cameraOffsetY)
+	virtual void UpdateHitbox(float cameraOffsetX, float cameraOffsetY)
 	{
-		return cHitbox();
 	}
+
+public:
+	void SetPosition(float x, float y);
+	float GetPX();
+	float GetPY();
+	int GetDamage();
+	bool IsAttackable();
+	bool IsFriendly();
+	cHitbox* GetHitbox();
 };
 

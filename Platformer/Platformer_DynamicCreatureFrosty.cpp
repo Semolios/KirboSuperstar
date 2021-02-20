@@ -24,6 +24,13 @@ cDynamicCreatureFrosty::cDynamicCreatureFrosty(cLevel* l) : cDynamicCreature("fr
 	srand(time(NULL));
 }
 
+cDynamicCreatureFrosty::~cDynamicCreatureFrosty()
+{
+	delete hitbox;
+	delete sSprite;
+	delete level;
+}
+
 void cDynamicCreatureFrosty::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 {
 }

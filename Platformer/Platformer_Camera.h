@@ -33,7 +33,6 @@ private:
 	int nShakeAmplitudeY;
 	bool bShake = false;
 
-public:
 	struct WorkerThread
 	{
 		int ox;
@@ -80,6 +79,7 @@ public:
 
 	WorkerThread workers[nMaxThreads];
 
+public:
 	static OneLoneCoder_Platformer* engine;
 
 public:

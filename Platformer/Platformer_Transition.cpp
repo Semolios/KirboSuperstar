@@ -2,9 +2,10 @@
 
 cAnimator* cTransition::animPlayer = nullptr;
 
-cTransition::cTransition(olc::PixelGameEngine* gfx, olc::Sprite* background)
+cTransition::cTransition(olc::PixelGameEngine* gfx, olc::Sprite* background, cAnimator* anim)
 {
 	sprBackGround = background;
+	animPlayer = anim;
 }
 
 bool cTransition::Update(olc::PixelGameEngine* gfx, float fElapsedTime)

@@ -26,6 +26,13 @@ cDynamicCreatureBomber::cDynamicCreatureBomber(cLevel* l) : cDynamicCreature("bo
 	bCanBehaveWhileAttacked = true;
 }
 
+cDynamicCreatureBomber::~cDynamicCreatureBomber()
+{
+	delete hitbox;
+	delete sSprite;
+	delete level;
+}
+
 void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 {
 	// if hit by a player, instantly explodes

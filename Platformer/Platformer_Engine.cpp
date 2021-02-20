@@ -104,8 +104,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 #pragma region World Map
 
 	sprWorldMap = new olc::Sprite("assets/gfx/WorldMap.png");
-	worldMap = new cWorldMap(this, sprWorldMap);
-	cWorldMap::animPlayer = &animPlayer;
+	worldMap = new cWorldMap(this, sprWorldMap, &animPlayer);
 	worldMap->SetUnlockedLevel(nUnlockedLevel);
 
 #pragma endregion
@@ -113,8 +112,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 #pragma region Transition
 
 	sprTransition = new olc::Sprite("assets/gfx/transitionScreen.png");
-	transition = new cTransition(this, sprTransition);
-	cTransition::animPlayer = &animPlayer;
+	transition = new cTransition(this, sprTransition, &animPlayer);
 
 #pragma endregion
 
@@ -338,7 +336,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		object->Collision(fElapsedTime);
 
 		// Check if the ennemi is in the vacuum
-		if (object->bIsVacuumable)
+		if (object->IsVacuumable())
 		{
 			if (player->IsVacuuming())
 			{
@@ -347,12 +345,12 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			else
 			{
 				object->Vacuumed(false);
-				object->bSwallowable = false;
+				object->SetSwallowable(false);
 			}
 		}
 
 		// Check collision with player to damage him
-		if (player->IsAttackable() && !player->IsSwallowing() && !object->bVacuumed)
+		if (player->IsAttackable() && !player->IsSwallowing() && !object->IsVacuumed())
 		{
 			player->CheckIfDamaged(object, camera->GetOffsetX(), camera->GetOffsetY());
 		}
@@ -364,31 +362,25 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		object->Collision(fElapsedTime, level);
 
 		// check if a Projectile hits a creature
-		if (!object->bRedundant)
+		if (!object->IsRedundant())
 		{
-			if (object->bFriendly)
+			if (object->IsFriendly())
 			{
-				cHitbox sAOE = object->Hitbox(camera->GetOffsetX(), camera->GetOffsetY());
-
-				// debug AOE
-				//sAOE.Draw(this, olc::RED);
+				object->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
 
 				// Check if an ennemy take the attack
 				for (auto& dyn : vecEnnemies)
 				{
-					cHitbox sEnnemy = dyn->Hitbox(camera->GetOffsetX(), camera->GetOffsetY());
+					dyn->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
 
-					// debug AOE
-					//sEnnemy.Draw(this, olc::YELLOW);
-
-					if (cHitbox::ShapeOverlap_DIAG(&sAOE, &sEnnemy))
+					if (cHitbox::ShapeOverlap_DIAG(object->GetHitbox(), dyn->GetHitbox()))
 					{
-						if (dyn->bIsAttackable)
+						if (dyn->IsAttackable())
 						{
-							object->SoundEffect();
-							player->Attack(dyn, object->nDamage);
-							if (object->bOneHit)
-								object->bRedundant = true;
+							object->PlaySoundEffect();
+							player->Attack(dyn, object->GetDamage());
+							if (object->IsOneHit())
+								object->SetRedundant(true);
 						}
 					}
 				}
@@ -416,7 +408,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	// Remove dead ennemies
 	vecEnnemies.erase(remove_if(vecEnnemies.begin(), vecEnnemies.end(), [](const cDynamicCreature* d)
 	{
-		return ((cDynamicCreature*)d)->bDead;
+		return ((cDynamicCreature*)d)->IsDead();
 	}), vecEnnemies.end());
 
 	// Remove swallowed ennemies
@@ -424,14 +416,14 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	{
 		vecEnnemies.erase(remove_if(vecEnnemies.begin(), vecEnnemies.end(), [](const cDynamicCreature* d)
 		{
-			return ((cDynamicCreature*)d)->bSwallowable;
+			return ((cDynamicCreature*)d)->IsSwallowable();
 		}), vecEnnemies.end());
 	}
 
 	// Erase and delete redundant projectiles
 	vecProjectiles.erase(remove_if(vecProjectiles.begin(), vecProjectiles.end(), [](const cDynamic* d)
 	{
-		return ((cDynamicProjectile*)d)->bRedundant;
+		return ((cDynamicProjectile*)d)->IsRedundant();
 	}), vecProjectiles.end());
 
 	// Draw Ennemies

@@ -100,3 +100,43 @@ float cSpline::GetNormalisedOffset(float p)
 	// The fractional is the offset
 	return (float)i + (p / points[i].length);
 }
+
+float cSpline::GetTotalLength()
+{
+	return fTotalSplineLength;
+}
+
+void cSpline::AddPoint(float x, float y)
+{
+	points.push_back({ x, y });
+}
+
+void cSpline::SetTotalLength(float l)
+{
+	fTotalSplineLength = l;
+}
+
+int cSpline::GetPointsSize()
+{
+	return points.size();
+}
+
+void cSpline::IncreaseLength(float l)
+{
+	fTotalSplineLength += l;
+}
+
+void cSpline::SetIPointLength(int i, float l)
+{
+	points[i].length = l;
+}
+
+float cSpline::GetIX(int i)
+{
+	return points[i].x;
+}
+
+float cSpline::GetIY(int i)
+{
+	return points[i].y;
+}

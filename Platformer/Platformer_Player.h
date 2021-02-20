@@ -82,6 +82,8 @@ private:
 	bool bPoyo = false;
 
 	cAnimator* animPlayer;
+	cHitbox* hitbox;
+	cHitbox* vacuumHitbox;
 
 public:
 	static OneLoneCoder_Platformer* engine;
@@ -113,8 +115,10 @@ public:
 	float GetHealth();
 	void Damage(cDynamic* object);
 	void ResetVariables();
-	cHitbox VacuumHitbox(float cameraOffsetX, float cameraOffsetY);
-	cHitbox Hitbox(float cameraOffsetX, float cameraOffsetY);
+	void VacuumHitbox(float cameraOffsetX, float cameraOffsetY);
+	cHitbox* GetVacuumHitbox();
+	void UpdateHitbox(float cameraOffsetX, float cameraOffsetY);
+	cHitbox* GetHitbox();
 	void Attack(cDynamicCreature* victim, int damage);
 	void Vacuum(cDynamicCreature* object, float cameraOffsetX, float cameraOffsetY);
 	void CheckIfDamaged(cDynamic* object, float fOffsetX, float fOffsetY);

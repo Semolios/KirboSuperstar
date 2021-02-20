@@ -9,8 +9,9 @@ class cDynamicCreatureRocky : public cDynamicCreature
 {
 public:
 	cDynamicCreatureRocky(cLevel* l);
+	virtual ~cDynamicCreatureRocky();
 
-public:
+private:
 	const float cfRockyLowerBoundary = 0.1f;
 	const float cfRockyUpperBoundary = 0.9f;
 	const float cfGoingBackUpSpeed = -2.0f;
@@ -26,6 +27,7 @@ public:
 	float fLandingTime = 1.0f;
 	float fTimer = 0.0f;
 
+public:
 	static OneLoneCoder_Platformer* engine;
 
 public:

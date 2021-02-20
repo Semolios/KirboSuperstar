@@ -24,6 +24,13 @@ cDynamicCreatureRocky::cDynamicCreatureRocky(cLevel* l) : cDynamicCreature("rock
 	nDamage = 4;
 }
 
+cDynamicCreatureRocky::~cDynamicCreatureRocky()
+{
+	delete hitbox;
+	delete sSprite;
+	delete level;
+}
+
 void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 {
 	vx = 0;

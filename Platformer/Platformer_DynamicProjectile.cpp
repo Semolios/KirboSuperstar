@@ -25,6 +25,11 @@ cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float v
 	nCornerSpr = corner % 4;
 }
 
+cDynamicProjectile::~cDynamicProjectile()
+{
+	delete hitbox;
+}
+
 void cDynamicProjectile::DrawSelf(float ox, float oy)
 {
 	// check from which corner we draw the sprite
@@ -114,41 +119,39 @@ void cDynamicProjectile::Collision(float fElapsedTime, cLevel* level)
 	py = fNewObjectPosY;
 }
 
-cHitbox cDynamicProjectile::Hitbox(float cameraOffsetX, float cameraOffsetY)
+void cDynamicProjectile::UpdateHitbox(float cameraOffsetX, float cameraOffsetY)
 {
-	cHitbox sAOE;
-
 	// check from which corner we draw the sprite
 	float sprPosX = (nCornerSpr == 0 || nCornerSpr == 3) ? 0.0f : fDynWidth;
 	float sprPosY = (nCornerSpr == 0 || nCornerSpr == 1) ? 0.0f : -fDynHeight;
 
-	sAOE.pos = {
+	hitbox->SetPos(
 		(px - cameraOffsetX) * engine->GetTileWidth() + (fDynWidth / 2.0f) + sprPosX,
 		(py - cameraOffsetY) * engine->GetTileHeight() + (fDynHeight / 2.0f) + sprPosY
-	};
-	sAOE.angle = atan2f(vy, vx);
-	sAOE.o.push_back({ -fDynWidth / 2.0f, -fDynHeight / 2.0f });
-	sAOE.o.push_back({ -fDynWidth / 2.0f, +fDynHeight / 2.0f });
-	sAOE.o.push_back({ +fDynWidth / 2.0f, +fDynHeight / 2.0f });
-	sAOE.o.push_back({ +fDynWidth / 2.0f, -fDynHeight / 2.0f });
-	sAOE.p.resize(4);
+	);
+	hitbox->SetAngle(atan2f(vy, vx));
+	hitbox->AddPoint(-fDynWidth / 2.0f, -fDynHeight / 2.0f);
+	hitbox->AddPoint(-fDynWidth / 2.0f, +fDynHeight / 2.0f);
+	hitbox->AddPoint(+fDynWidth / 2.0f, +fDynHeight / 2.0f);
+	hitbox->AddPoint(+fDynWidth / 2.0f, -fDynHeight / 2.0f);
+	hitbox->ResizeP(4);
 
-	for (int i = 0; i < sAOE.o.size(); i++)
+	for (int i = 0; i < hitbox->GetOSize(); i++)
 	{
-		sAOE.p[i] =
-		{	// 2D Rotation Transform + 2D Translation
-			(sAOE.o[i].x * cosf(sAOE.angle)) - (sAOE.o[i].y * sinf(sAOE.angle)) + sAOE.pos.x,
-			(sAOE.o[i].x * sinf(sAOE.angle)) + (sAOE.o[i].y * cosf(sAOE.angle)) + sAOE.pos.y,
-		};
+		// 2D Rotation Transform + 2D Translation
+		hitbox->SetP(i,
+					 (hitbox->GetOIX(i) * cosf(hitbox->GetAngle())) - (hitbox->GetOIY(i) * sinf(hitbox->GetAngle())) + hitbox->GetPosX(),
+					 (hitbox->GetOIX(i) * sinf(hitbox->GetAngle())) + (hitbox->GetOIY(i) * cosf(hitbox->GetAngle())) + hitbox->GetPosY()
+		);
 	}
 
-	// debug AOE
-	//sAOE.Draw(engine, olc::RED);
+	hitbox->ClearO();
 
-	return sAOE;
+	// debug AOE
+	//hitbox->Draw(engine, olc::RED);
 }
 
-void cDynamicProjectile::SoundEffect()
+void cDynamicProjectile::PlaySoundEffect()
 {
 	if (!soundEffect.empty())
 		olc::SOUND::PlaySample(engine->GetSound(soundEffect));
@@ -256,4 +259,34 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProject
 	mapProjectiles["beam"].push_back(new olc::Sprite("assets/gfx/beam01.png"));
 
 	return mapProjectiles;
+}
+
+bool cDynamicProjectile::IsOneHit()
+{
+	return bOneHit;
+}
+
+void cDynamicProjectile::SetOneHit(bool oneHit)
+{
+	bOneHit = oneHit;
+}
+
+std::string cDynamicProjectile::GetSoundEffect()
+{
+	return soundEffect;
+}
+
+void cDynamicProjectile::SetSoundEffect(std::string sndEffect)
+{
+	soundEffect = sndEffect;
+}
+
+bool cDynamicProjectile::IsRedundant()
+{
+	return bRedundant;
+}
+
+void cDynamicProjectile::SetRedundant(bool redundant)
+{
+	bRedundant = redundant;
 }
