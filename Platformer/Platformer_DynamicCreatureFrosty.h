@@ -17,6 +17,10 @@ private:
 	enum AI_STATE
 	{
 		AI_IDLE = 0,
+		AI_GLIDING,
+		AI_ICECUBE,
+		AI_ICEBLOW,
+		AI_JUMPING,
 	} nAIState, nAINextState;
 
 	int nChosenAttack;
