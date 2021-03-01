@@ -1,3 +1,6 @@
+#ifndef DEF_SPLINE
+#define	DEF_SPLINE
+
 #pragma once
 #include <vector>
 
@@ -28,3 +31,5 @@ public:
 	float GetIX(int i);
 	float GetIY(int i);
 };
+
+#endif // !DEF_SPLINE

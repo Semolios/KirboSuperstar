@@ -1,3 +1,6 @@
+#ifndef DEF_MR_SHINE_MR_BRIGHT
+#define DEF_MR_SHINE_MR_BRIGHT
+
 #pragma once
 
 #include "Platformer_DynamicCreature.h"
@@ -130,3 +133,5 @@ private:
 	void UpdateTimers();
 	bool OnGround();
 };
+
+#endif // !DEF_MR_SHINE_MR_BRIGHT

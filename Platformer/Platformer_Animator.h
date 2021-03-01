@@ -1,3 +1,6 @@
+#ifndef DEF_ANIMATOR
+#define DEF_ANIMATOR
+
 #pragma once
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
@@ -18,3 +21,5 @@ public:
 	void DrawSelf(olc::PixelGameEngine* pge, olc::GFX2D::Transform2D& t);
 	void LoadAnimations();
 };
+
+#endif // !DEF_ANIMATOR

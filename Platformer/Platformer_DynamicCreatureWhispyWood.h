@@ -1,3 +1,6 @@
+#ifndef DEF_WHISPY_WOOD
+#define DEF_WHISPY_WOOD
+
 #pragma once
 
 #include "Platformer_DynamicCreature.h"
@@ -106,3 +109,5 @@ private:
 	void UpdateTimers();
 	void MapGraphicState(MAP_GRAPHIC_STATE mappedState);
 };
+
+#endif // !DEF_WHISPY_WOOD

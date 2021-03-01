@@ -1,3 +1,6 @@
+#ifndef DEF_PAUSE_MENU
+#define DEF_PAUSE_MENU
+
 #pragma once
 
 #include "olcPixelGameEngine.h"
@@ -20,3 +23,4 @@ public:
 	void SetPlayerChoice(int choice);
 };
 
+#endif // !DEF_PAUSE_MENU

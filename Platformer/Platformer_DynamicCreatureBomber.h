@@ -1,3 +1,6 @@
+#ifndef DEF_BOMBER
+#define DEF_BOMBER
+
 #pragma once
 
 #include "Platformer_DynamicCreature.h"
@@ -36,3 +39,4 @@ public:
 	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
 };
 
+#endif // !DEF_BOMBER

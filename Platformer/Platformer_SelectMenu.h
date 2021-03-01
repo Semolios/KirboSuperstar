@@ -1,3 +1,6 @@
+#ifndef DEF_SELECT_MENU
+#define DEF_SELECT_MENU
+
 #pragma once
 
 #include "olcPixelGameEngine.h"
@@ -18,3 +21,5 @@ public:
 	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime);
 	int GetPlayerChoice();
 };
+
+#endif // !DEF_SELECT_MENU

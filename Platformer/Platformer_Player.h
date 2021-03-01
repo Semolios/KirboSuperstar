@@ -1,3 +1,6 @@
+#ifndef DEF_PLAYER
+#define	DEF_PLAYER
+
 #pragma once
 #include "Platformer_Animator.h"
 #include "Platformer_Camera.h"
@@ -123,3 +126,5 @@ public:
 	void Vacuum(cDynamicCreature* object, float cameraOffsetX, float cameraOffsetY);
 	void CheckIfDamaged(cDynamic* object, float fOffsetX, float fOffsetY);
 };
+
+#endif // !DEF_PLAYER

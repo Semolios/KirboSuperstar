@@ -1,3 +1,6 @@
+#ifndef DEF_TITLE_SCREEN
+#define DEF_TITLE_SCREEN
+
 #pragma once
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
@@ -28,3 +31,5 @@ public:
 	void DrawNewStar(olc::PixelGameEngine* gfx, float fMarker);
 	void DrawStar(olc::PixelGameEngine* gfx, olc::GFX2D::Transform2D& t);
 };
+
+#endif // !DEF_TITLE_SCREEN

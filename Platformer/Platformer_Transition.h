@@ -1,3 +1,6 @@
+#ifndef DEF_TRANSITION
+#define DEF_TRANSITION
+
 #pragma once
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
@@ -15,3 +18,5 @@ private:
 public:
 	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime);
 };
+
+#endif // !DEF_TRANSITION

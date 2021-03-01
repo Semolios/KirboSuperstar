@@ -1,3 +1,6 @@
+#ifndef DEF_CONTROLS_MENU
+#define DEF_CONTROLS_MENU
+
 #pragma once
 
 #include "olcPixelGameEngine.h"
@@ -14,3 +17,5 @@ private:
 public:
 	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime);
 };
+
+#endif // !DEF_CONTROLS_MENU

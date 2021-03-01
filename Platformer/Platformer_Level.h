@@ -1,3 +1,6 @@
+#ifndef DEF_LEVEL
+#define DEF_LEVEL
+
 #pragma once
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
@@ -122,3 +125,4 @@ public:
 	std::vector<std::string> LoadBossLevelsMusics();
 };
 
+#endif // !DEF_LEVEL

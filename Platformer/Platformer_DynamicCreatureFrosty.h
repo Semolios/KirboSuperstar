@@ -1,3 +1,6 @@
+#ifndef DEF_FROSTY
+#define DEF_FROSTY
+
 #pragma once
 
 #include "Platformer_DynamicCreature.h"
@@ -38,3 +41,4 @@ public:
 	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
 };
 
+#endif // !DEF_FROSTY

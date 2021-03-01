@@ -1,3 +1,6 @@
+#ifndef DEF_DYNAMIC
+#define DEF_DYNAMIC
+
 #pragma once
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
@@ -59,3 +62,4 @@ public:
 	cHitbox* GetHitbox();
 };
 
+#endif // !DEF_DYNAMIC

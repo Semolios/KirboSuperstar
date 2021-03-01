@@ -1,3 +1,6 @@
+#ifndef DEF_WADDLE_DEE
+#define DEF_WADDLE_DEE
+
 #pragma once
 
 #include "Platformer_DynamicCreature.h"
@@ -17,3 +20,5 @@ public:
 public:
 	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
 };
+
+#endif // !DEF_WADDLE_DEE

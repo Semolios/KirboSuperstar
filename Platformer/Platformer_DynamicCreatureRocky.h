@@ -1,3 +1,6 @@
+#ifndef DEF_ROCKY
+#define DEF_ROCKY
+
 #pragma once
 
 #include "Platformer_DynamicCreature.h"
@@ -34,3 +37,4 @@ public:
 	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
 };
 
+#endif // !DEF_ROCKY

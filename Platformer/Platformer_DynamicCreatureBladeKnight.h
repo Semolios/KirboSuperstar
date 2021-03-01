@@ -1,3 +1,6 @@
+#ifndef DEF_BLADE_KNIGHT
+#define DEF_BLADE_KNIGHT
+
 #pragma once
 
 #include "Platformer_DynamicCreature.h"
@@ -63,3 +66,4 @@ private:
 	void ChangeState(AI_STATE state);
 };
 
+#endif // !DEF_BLADE_KNIGHT

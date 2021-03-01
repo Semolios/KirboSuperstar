@@ -1,3 +1,6 @@
+#ifndef DEF_PROJECTILE
+#define DEF_PROJECTILE
+
 #pragma once
 
 #include "Platformer_Dynamic.h"
@@ -42,3 +45,5 @@ public:
 	bool IsRedundant();
 	void SetRedundant(bool redundant);
 };
+
+#endif // !DEF_PROJECTILE

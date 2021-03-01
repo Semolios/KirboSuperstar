@@ -1,3 +1,6 @@
+#ifndef DEF_DYNAMIC_CREATURE
+#define DEF_DYNAMIC_CREATURE
+
 #pragma once
 #include "Platformer_Dynamic.h"
 
@@ -83,3 +86,4 @@ public:
 	virtual void ExplodeAndDie(float fElapsedTime);
 };
 
+#endif // !DEF_DYNAMIC_CREATURE

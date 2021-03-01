@@ -1,3 +1,6 @@
+#ifndef DEF_HITBOX
+#define DEF_HITBOX
+
 #pragma once
 #include "olcPixelGameEngine.h"
 
@@ -36,3 +39,5 @@ public:
 	float GetPosX();
 	float GetPosY();
 };
+
+#endif // !DEF_HITBOX

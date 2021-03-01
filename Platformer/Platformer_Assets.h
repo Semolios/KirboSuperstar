@@ -1,3 +1,6 @@
+#ifndef DEF_ASSETS
+#define DEF_ASSETS
+
 #pragma once
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
@@ -42,3 +45,4 @@ private:
 	//std::map<std::string, cItem*> m_mapItems;
 };
 
+#endif // !DEF_ASSETS

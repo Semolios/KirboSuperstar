@@ -1,3 +1,6 @@
+#ifndef DEF_HUD
+#define DEF_HUD
+
 #pragma once
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
@@ -13,3 +16,5 @@ public:
 	void HealthPoints(olc::PixelGameEngine* gfx, olc::Sprite* healthPoint, int health);
 	void BossHealthBar(olc::PixelGameEngine* gfx, olc::Sprite* bossHealthBar, std::vector<cDynamicCreature*> vecEnnemies);
 };
+
+#endif // !DEF_HUD

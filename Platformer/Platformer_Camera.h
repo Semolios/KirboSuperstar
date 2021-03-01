@@ -1,3 +1,6 @@
+#ifndef DEF_CAMERA
+#define DEF_CAMERA
+
 #pragma once
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
@@ -96,3 +99,5 @@ public:
 	void ActivateShakeEffect(bool activate, int shakeAmplitudeX = 50, int shakeAmplitudeY = 50);
 	void InitialiseThreadPool();
 };
+
+#endif // !DEF_CAMERA

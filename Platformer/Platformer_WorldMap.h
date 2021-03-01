@@ -1,3 +1,6 @@
+#ifndef DEF_WORLD_MAP
+#define DEF_WORLD_MAP
+
 #pragma once
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
@@ -26,3 +29,4 @@ public:
 	void SetUnlockedLevel(int unlockedLevels);
 };
 
+#endif // !DEF_WORLD_MAP
