@@ -15,11 +15,14 @@ public:
 	virtual ~cDynamicProjectile();
 
 private:
+	const float cfMinGlideVX = 0.1;
+
 	std::vector<olc::Sprite*> mapStates;
 	std::string soundEffect;
 	float fSpriteX;
 	float fSpriteY;
 	float fDuration;
+	float fDrag;
 	bool bOneHit;
 	bool bRedundant;
 	bool bBreaksAgainstTiles;
@@ -47,6 +50,7 @@ public:
 	void SetRedundant(bool redundant);
 	bool BreaksAgainstTiles();
 	void SetBreakableAgainstTiles(bool breakable);
+	void SetDrag(float drag);
 };
 
 #endif // !DEF_PROJECTILE

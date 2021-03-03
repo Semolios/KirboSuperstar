@@ -24,6 +24,7 @@ cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float v
 	bSolidVsMap = solidVSMap;
 	bOneHit = oneHit;
 	nCornerSpr = corner % 4;
+	fDrag = -3.0f;
 }
 
 cDynamicProjectile::~cDynamicProjectile()
@@ -87,7 +88,7 @@ void cDynamicProjectile::Collision(float fElapsedTime, cLevel* level)
 				if (bBreaksAgainstTiles)
 					bRedundant = true;
 				else
-					vx = 0;
+					vx = 0.0f;
 			}
 		}
 		else // Moving Right
@@ -98,7 +99,7 @@ void cDynamicProjectile::Collision(float fElapsedTime, cLevel* level)
 				if (bBreaksAgainstTiles)
 					bRedundant = true;
 				else
-					vx = 0;
+					vx = 0.0f;
 			}
 		}
 
@@ -110,7 +111,7 @@ void cDynamicProjectile::Collision(float fElapsedTime, cLevel* level)
 				if (bBreaksAgainstTiles)
 					bRedundant = true;
 				else
-					vy = 0;
+					vy = 0.0f;
 			}
 		}
 		else // Moving Down
@@ -121,9 +122,16 @@ void cDynamicProjectile::Collision(float fElapsedTime, cLevel* level)
 				engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))))
 			{
 				if (bBreaksAgainstTiles)
+				{
 					bRedundant = true;
+				}
 				else
-					vy = 0;
+				{
+					vy = 0.0f;
+
+					vx += fDrag * vx * fElapsedTime;
+					if (fabs(vx) < cfMinGlideVX) vx = 0.0f;
+				}
 			}
 		}
 	}
@@ -312,4 +320,9 @@ bool cDynamicProjectile::BreaksAgainstTiles()
 void cDynamicProjectile::SetBreakableAgainstTiles(bool breakable)
 {
 	bBreaksAgainstTiles = breakable;
+}
+
+void cDynamicProjectile::SetDrag(float drag)
+{
+	fDrag = drag;
 }
