@@ -16,6 +16,7 @@ cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float v
 	bSolidVsMap = true;
 	bIsProjectile = true;
 	bIsAttackable = false;
+	bBreaksAgainstTiles = true;
 	bAffectedByGravity = affectedByGravity;
 	bFriendly = bFriend;
 	mapStates = map;
@@ -83,7 +84,10 @@ void cDynamicProjectile::Collision(float fElapsedTime, cLevel* level)
 			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, py + fBorder)) ||
 				engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, py + (fDynHeight / engine->GetTileHeight()) - fBorder)))
 			{
-				bRedundant = true;
+				if (bBreaksAgainstTiles)
+					bRedundant = true;
+				else
+					vx = 0;
 			}
 		}
 		else // Moving Right
@@ -91,7 +95,10 @@ void cDynamicProjectile::Collision(float fElapsedTime, cLevel* level)
 			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + fBorder)) ||
 				engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + (fDynHeight / engine->GetTileHeight()) - fBorder)))
 			{
-				bRedundant = true;
+				if (bBreaksAgainstTiles)
+					bRedundant = true;
+				else
+					vx = 0;
 			}
 		}
 
@@ -100,7 +107,10 @@ void cDynamicProjectile::Collision(float fElapsedTime, cLevel* level)
 			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY)) ||
 				engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY)))
 			{
-				bRedundant = true;
+				if (bBreaksAgainstTiles)
+					bRedundant = true;
+				else
+					vy = 0;
 			}
 		}
 		else // Moving Down
@@ -110,7 +120,10 @@ void cDynamicProjectile::Collision(float fElapsedTime, cLevel* level)
 				engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
 				engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))))
 			{
-				bRedundant = true;
+				if (bBreaksAgainstTiles)
+					bRedundant = true;
+				else
+					vy = 0;
 			}
 		}
 	}
@@ -289,4 +302,14 @@ bool cDynamicProjectile::IsRedundant()
 void cDynamicProjectile::SetRedundant(bool redundant)
 {
 	bRedundant = redundant;
+}
+
+bool cDynamicProjectile::BreaksAgainstTiles()
+{
+	return bBreaksAgainstTiles;
+}
+
+void cDynamicProjectile::SetBreakableAgainstTiles(bool breakable)
+{
+	bBreaksAgainstTiles = breakable;
 }

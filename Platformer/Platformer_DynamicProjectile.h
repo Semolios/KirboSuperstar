@@ -22,6 +22,7 @@ private:
 	float fDuration;
 	bool bOneHit;
 	bool bRedundant;
+	bool bBreaksAgainstTiles;
 
 	// animation
 	int nCurrentFrame = 0;
@@ -44,6 +45,8 @@ public:
 	void SetSoundEffect(std::string sndEffect);
 	bool IsRedundant();
 	void SetRedundant(bool redundant);
+	bool BreaksAgainstTiles();
+	void SetBreakableAgainstTiles(bool breakable);
 };
 
 #endif // !DEF_PROJECTILE
