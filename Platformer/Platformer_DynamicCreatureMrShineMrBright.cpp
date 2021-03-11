@@ -20,8 +20,6 @@ cDynamicCreatureMrShineMrBright::cDynamicCreatureMrShineMrBright(cLevel* l) : cD
 	bAffectedByGravity = false;
 	nDamage = 3;
 	bCanBehaveWhileAttacked = true;
-
-	srand(time(NULL));
 }
 
 cDynamicCreatureMrShineMrBright::~cDynamicCreatureMrShineMrBright()

@@ -84,7 +84,6 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 #pragma region GO ATTACK STATE
 
 			// Randomly choose to directly attack or jump over the player to attack him with plungeon attack when he's near the player
-			srand(time(NULL));
 			int chosenAttack = rand() % 2;
 
 			if (fDistance < cfAttackTriggerDistance)

@@ -55,6 +55,9 @@ bool OneLoneCoder_Platformer::GameState_Transition(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 {
+
+	srand(time(NULL));
+
 #pragma region Assets
 
 	cAssets::get().LoadSprites();
@@ -243,7 +246,6 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 	player->InitialiseKirboHealth();
 	ResetVariables();
 
-	srand(time(NULL));
 	transitionAnim = rand() % 4;
 
 	bInBossLvl = false;

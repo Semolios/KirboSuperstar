@@ -20,8 +20,6 @@ cDynamicCreatureFrosty::cDynamicCreatureFrosty(cLevel* l) : cDynamicCreature("fr
 	bAffectedByGravity = true;
 	nDamage = 3;
 	bCanBehaveWhileAttacked = true;
-
-	srand(time(NULL));
 }
 
 cDynamicCreatureFrosty::~cDynamicCreatureFrosty()
