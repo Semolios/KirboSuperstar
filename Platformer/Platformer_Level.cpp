@@ -149,11 +149,11 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 	return true;
 }
 
-bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLvl)
+bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns)
 {
 	// TODO en fonction du numéro de niveau instancier le boss correspondant
 	cDynamicCreature* mob = nullptr;
-	switch (currentLvl)
+	switch (nCurrentLevel)
 	{
 		case 0:
 		{
@@ -675,119 +675,167 @@ void cLevel::SetTile(int x, int y, wchar_t c)
 		sLevel[y * nLevelWidth + x] = c;
 }
 
-std::vector<std::string> cLevel::LoadLevelsList()
+void cLevel::LoadLevelsList()
 {
-	std::vector<std::string> levelList;
-	levelList.push_back("assets/lvls/lvl1.txt");
-	levelList.push_back("assets/lvls/lvl2.txt");
-	levelList.push_back("assets/lvls/lvl3.txt");
-	levelList.push_back("assets/lvls/lvl4.txt");
-	levelList.push_back("assets/lvls/lvl5.txt");
-	levelList.push_back("assets/lvls/lvl6.txt");
-
-	return levelList;
+	levels.push_back("assets/lvls/lvl1.txt");
+	levels.push_back("assets/lvls/lvl2.txt");
+	levels.push_back("assets/lvls/lvl3.txt");
+	levels.push_back("assets/lvls/lvl4.txt");
+	levels.push_back("assets/lvls/lvl5.txt");
+	levels.push_back("assets/lvls/lvl6.txt");
 }
 
-std::vector<std::string> cLevel::LoadBossLevelsList()
+void cLevel::LoadBossLevelsList()
 {
-	std::vector<std::string> bossLevels;
 	bossLevels.push_back("assets/lvls/Bosslvl1.txt");
 	bossLevels.push_back("assets/lvls/Bosslvl2.txt");
 	bossLevels.push_back("assets/lvls/Bosslvl3.txt");
 	bossLevels.push_back("assets/lvls/Bosslvl4.txt");
 	bossLevels.push_back("assets/lvls/Bosslvl5.txt");
 	bossLevels.push_back("assets/lvls/Bosslvl6.txt");
-
-	return bossLevels;
 }
 
-std::vector<std::string> cLevel::LoadLevelsEnnemiesList()
+void cLevel::LoadLevelsEnnemiesList()
 {
-	std::vector<std::string> levelsEnnemies;
 	levelsEnnemies.push_back("assets/lvls/ennemiesLvl1.txt");
 	levelsEnnemies.push_back("assets/lvls/ennemiesLvl2.txt");
 	levelsEnnemies.push_back("assets/lvls/ennemiesLvl3.txt");
 	levelsEnnemies.push_back("assets/lvls/ennemiesLvl4.txt");
 	levelsEnnemies.push_back("assets/lvls/ennemiesLvl5.txt");
 	levelsEnnemies.push_back("assets/lvls/ennemiesLvl6.txt");
-
-	return levelsEnnemies;
 }
 
-std::vector<std::string> cLevel::LoadLevelsTilesList()
+void cLevel::LoadLevelsTilesList()
 {
-	std::vector<std::string> levelsTiles;
 	levelsTiles.push_back("assets/gfx/tilemap00.png");
 	levelsTiles.push_back("assets/gfx/tilemap01.png");
 	levelsTiles.push_back("assets/gfx/tilemap02.png");
 	levelsTiles.push_back("assets/gfx/tilemap03.png");
 	levelsTiles.push_back("assets/gfx/tilemap04.png");
 	levelsTiles.push_back("assets/gfx/tilemap05.png");
-
-	return levelsTiles;
 }
 
-std::vector<std::string> cLevel::LoadLevelsGrdTilesList()
+void cLevel::LoadLevelsGrdTilesList()
 {
-	std::vector<std::string> groundTiles;
 	groundTiles.push_back("assets/gfx/grdTileMap00.png");
 	groundTiles.push_back("assets/gfx/grdTileMap01.png");
 	groundTiles.push_back("assets/gfx/grdTileMap02.png");
 	groundTiles.push_back("assets/gfx/grdTileMap03.png");
 	groundTiles.push_back("assets/gfx/grdTileMap04.png");
 	groundTiles.push_back("assets/gfx/grdTileMap05.png");
-
-	return groundTiles;
 }
 
-std::vector<std::string> cLevel::LoadLevelsBackGroundList()
+void cLevel::LoadLevelsBackGroundList()
 {
-	std::vector<std::string> levelsBackgrounds;
 	levelsBackgrounds.push_back("assets/gfx/BckGrd00.png");
 	levelsBackgrounds.push_back("assets/gfx/BckGrd01.png");
 	levelsBackgrounds.push_back("assets/gfx/BckGrd02.png");
 	levelsBackgrounds.push_back("assets/gfx/BckGrd03.png");
 	levelsBackgrounds.push_back("assets/gfx/BckGrd04.png");
 	levelsBackgrounds.push_back("assets/gfx/BckGrd05.png");
-
-	return levelsBackgrounds;
 }
 
-std::vector<std::string> cLevel::LoadLevelsBossBckGrdList()
+void cLevel::LoadLevelsBossBckGrdList()
 {
-	std::vector<std::string> bossLevelsBackgrounds;
 	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd00.png");
 	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd01.png");
 	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd02.png");
 	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd03.png");
 	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd04.png");
 	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd05.png");
-
-	return bossLevelsBackgrounds;
 }
 
-std::vector<std::string> cLevel::LoadLevelsMusics()
+void cLevel::LoadLevelsMusics()
 {
-	std::vector<std::string> levelsMusics;
 	levelsMusics.push_back("assets/snd/lvl00.wav");
 	levelsMusics.push_back("assets/snd/lvl01.wav");
 	levelsMusics.push_back("assets/snd/lvl02.wav");
 	levelsMusics.push_back("assets/snd/lvl03.wav");	// TODO
 	levelsMusics.push_back("assets/snd/lvl04.wav");	// TODO
 	levelsMusics.push_back("assets/snd/lvl05.wav");	// TODO
-
-	return levelsMusics;
 }
 
-std::vector<std::string> cLevel::LoadBossLevelsMusics()
+void cLevel::LoadBossLevelsMusics()
 {
-	std::vector<std::string> bossLevelsMusics;
 	bossLevelsMusics.push_back("assets/snd/bossLvl00.wav");
 	bossLevelsMusics.push_back("assets/snd/bossLvl01.wav");
 	bossLevelsMusics.push_back("assets/snd/bossLvl01.wav");
 	bossLevelsMusics.push_back("assets/snd/bossLvl03.wav");	// TODO
 	bossLevelsMusics.push_back("assets/snd/bossLvl04.wav");	// TODO
 	bossLevelsMusics.push_back("assets/snd/bossLvl05.wav");	// TODO
+}
 
-	return bossLevelsMusics;
+std::string cLevel::GetLevelName()
+{
+	return levels[nCurrentLevel];
+}
+
+std::string cLevel::GetBossLevelName()
+{
+	return bossLevels[nCurrentLevel];
+}
+
+std::string cLevel::GetLevelsEnnemiesName()
+{
+	return levelsEnnemies[nCurrentLevel];
+}
+
+std::string cLevel::GetLevelsTilesName()
+{
+	return levelsTiles[nCurrentLevel];
+}
+
+std::string cLevel::GetLevelsGrdTilesName()
+{
+	return groundTiles[nCurrentLevel];
+}
+
+std::string cLevel::GetLevelsBackGroundName()
+{
+	return levelsBackgrounds[nCurrentLevel];
+}
+
+std::string cLevel::GetLevelsBossBckGrdName()
+{
+	return bossLevelsBackgrounds[nCurrentLevel];
+}
+
+std::string cLevel::GetLevelsMusicsName()
+{
+	return levelsMusics[nCurrentLevel];
+}
+
+std::string cLevel::GetBossLevelsMusicsName()
+{
+	return bossLevelsMusics[nCurrentLevel];
+}
+
+int cLevel::GetCurrentLvl()
+{
+	return nCurrentLevel;
+}
+
+void cLevel::SetCurrentLvl(int selectedLvl)
+{
+	nCurrentLevel = selectedLvl;
+}
+
+int cLevel::GetUnlockedLvl()
+{
+	return nUnlockedLevel;
+}
+
+void cLevel::UnlockNewLvl()
+{
+	nUnlockedLevel++;
+}
+
+bool cLevel::IsLastOfGame()
+{
+	return nCurrentLevel + 1 == levels.size();
+}
+
+bool cLevel::IsLastUnlocked()
+{
+	return nCurrentLevel + 1 == nUnlockedLevel;
 }

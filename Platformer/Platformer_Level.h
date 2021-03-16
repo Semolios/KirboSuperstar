@@ -41,6 +41,18 @@ private:
 	int nLevelHeight = 0;
 	int nInitPlayerPosX = 0;
 	int nInitPlayerPosY = 0;
+	int nCurrentLevel = 0;
+	int nUnlockedLevel = 6; // TODO PENSER A REMETTRE A 1 A LA FIN
+
+	std::vector<std::string> levels;
+	std::vector<std::string> levelsEnnemies;
+	std::vector<std::string> levelsTiles;
+	std::vector<std::string> levelsMusics;
+	std::vector<std::string> groundTiles;
+	std::vector<std::string> levelsBackgrounds;
+	std::vector<std::string> bossLevels;
+	std::vector<std::string> bossLevelsMusics;
+	std::vector<std::string> bossLevelsBackgrounds;
 
 	struct WorkerThread
 	{
@@ -107,22 +119,41 @@ public:
 	int GetInitPlayerPosX();
 	int GetInitPlayerPosY();
 	bool PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::string levelName);
-	bool PopulateBoss(std::vector<cDynamicCreature*>& vecDyns, int currentLvl);
+	bool PopulateBoss(std::vector<cDynamicCreature*>& vecDyns);
 	void DrawTiles(int nVisibleTilesX, int nVisibleTilesY, float fOffsetX, float fOffsetY);
 	void SelectTile(int startX, int endX, int nVisibleTilesX, int nVisibleTilesY, float fOffsetX, float fOffsetY, float fTileOffsetX, float fTileOffsetY);
 	void InitialiseThreadPool();
 	void DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY, float fCamOffsetX, float fCamOffsetY, olc::Sprite* spriteTiles, wchar_t tile);
 	wchar_t GetTile(int x, int y);
 	void SetTile(int x, int y, wchar_t c);
-	std::vector<std::string> LoadLevelsList();
-	std::vector<std::string> LoadBossLevelsList();
-	std::vector<std::string> LoadLevelsEnnemiesList();
-	std::vector<std::string> LoadLevelsTilesList();
-	std::vector<std::string> LoadLevelsGrdTilesList();
-	std::vector<std::string> LoadLevelsBackGroundList();
-	std::vector<std::string> LoadLevelsBossBckGrdList();
-	std::vector<std::string> LoadLevelsMusics();
-	std::vector<std::string> LoadBossLevelsMusics();
+
+	void LoadLevelsList();
+	void LoadBossLevelsList();
+	void LoadLevelsEnnemiesList();
+	void LoadLevelsTilesList();
+	void LoadLevelsGrdTilesList();
+	void LoadLevelsBackGroundList();
+	void LoadLevelsBossBckGrdList();
+	void LoadLevelsMusics();
+	void LoadBossLevelsMusics();
+
+	std::string GetLevelName();
+	std::string GetBossLevelName();
+	std::string GetLevelsEnnemiesName();
+	std::string GetLevelsTilesName();
+	std::string GetLevelsGrdTilesName();
+	std::string GetLevelsBackGroundName();
+	std::string GetLevelsBossBckGrdName();
+	std::string GetLevelsMusicsName();
+	std::string GetBossLevelsMusicsName();
+
+	int GetCurrentLvl();
+	void SetCurrentLvl(int selectedLvl);
+	int GetUnlockedLvl();
+	void UnlockNewLvl();
+
+	bool IsLastOfGame();
+	bool IsLastUnlocked();
 };
 
 #endif // !DEF_LEVEL

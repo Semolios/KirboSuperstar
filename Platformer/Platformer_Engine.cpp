@@ -71,15 +71,15 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	cLevel::engine = this;
 	sprDoor = new olc::Sprite("assets/gfx/door.png");
 
-	levels = level->LoadLevelsList();
-	bossLevels = level->LoadBossLevelsList();
-	levelsEnnemies = level->LoadLevelsEnnemiesList();
-	levelsTiles = level->LoadLevelsTilesList();
-	groundTiles = level->LoadLevelsGrdTilesList();
-	levelsBackgrounds = level->LoadLevelsBackGroundList();
-	bossLevelsBackgrounds = level->LoadLevelsBossBckGrdList();
-	levelsMusics = level->LoadLevelsMusics();
-	bossLevelsMusics = level->LoadBossLevelsMusics();
+	level->LoadLevelsList();
+	level->LoadBossLevelsList();
+	level->LoadLevelsEnnemiesList();
+	level->LoadLevelsTilesList();
+	level->LoadLevelsGrdTilesList();
+	level->LoadLevelsBackGroundList();
+	level->LoadLevelsBossBckGrdList();
+	level->LoadLevelsMusics();
+	level->LoadBossLevelsMusics();
 
 	level->InitialiseThreadPool();
 
@@ -108,7 +108,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 	sprWorldMap = new olc::Sprite("assets/gfx/WorldMap.png");
 	worldMap = new cWorldMap(this, sprWorldMap, &animPlayer);
-	worldMap->SetUnlockedLevel(nUnlockedLevel);
+	worldMap->SetUnlockedLevel(level->GetUnlockedLvl());
 
 #pragma endregion
 
@@ -229,17 +229,17 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 	vecEnnemies.clear();
 	vecProjectiles.clear();
 
-	nCurrentLevel = worldMap->GetSelectedLevel();
-	if (level->LoadLevel(levels[nCurrentLevel]))
+	level->SetCurrentLvl(worldMap->GetSelectedLevel());
+	if (level->LoadLevel(level->GetLevelName()))
 	{
 		LoadLevelProperties();
 
-		level->PopulateEnnemies(vecEnnemies, levelsEnnemies[nCurrentLevel]);
+		level->PopulateEnnemies(vecEnnemies, level->GetLevelsEnnemiesName());
 
-		spriteTiles = new olc::Sprite(levelsTiles[nCurrentLevel]);
-		sprGrdTiles = new olc::Sprite(groundTiles[nCurrentLevel]);
-		sprBackground = new olc::Sprite(levelsBackgrounds[nCurrentLevel]);
-		sndLevelMusic = olc::SOUND::LoadAudioSample(levelsMusics[nCurrentLevel]);
+		spriteTiles = new olc::Sprite(level->GetLevelsTilesName());
+		sprGrdTiles = new olc::Sprite(level->GetLevelsGrdTilesName());
+		sprBackground = new olc::Sprite(level->GetLevelsBackGroundName());
+		sndLevelMusic = olc::SOUND::LoadAudioSample(level->GetLevelsMusicsName());
 	}
 
 	// Reset variables when level is loading
@@ -462,18 +462,16 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// When win animation is over, quit the level
 		if (fWinTimer >= cfBossKilledAnimation)
 		{
-			if (nCurrentLevel + 1 == levels.size())
+			if (level->IsLastOfGame())
 			{
-				// If Player finishes the last level of the game, the game is over
 				nGameState = GS_ENDSCREEN;
 
 				return true;
 			}
-			else if (nCurrentLevel + 1 == nUnlockedLevel)
+			else if (level->IsLastUnlocked())
 			{
-				// If Player finishes the last level unlocked, another one is unlocked
-				nUnlockedLevel++;
-				worldMap->SetUnlockedLevel(nUnlockedLevel);
+				level->UnlockNewLvl();
+				worldMap->SetUnlockedLevel(level->GetUnlockedLvl());
 			}
 			ReturnToWorldMap();
 
@@ -549,14 +547,14 @@ bool OneLoneCoder_Platformer::GameState_LoadBossLevel(float fElapsedTime)
 	vecEnnemies.clear();
 	vecProjectiles.clear();
 
-	if (level->LoadLevel(bossLevels[nCurrentLevel]))
+	if (level->LoadLevel(level->GetBossLevelName()))
 	{
 		LoadLevelProperties();
 
-		level->PopulateBoss(vecEnnemies, nCurrentLevel);
+		level->PopulateBoss(vecEnnemies);
 
-		sprBackground = new olc::Sprite(bossLevelsBackgrounds[nCurrentLevel]);
-		sndBossLevelMusic = olc::SOUND::LoadAudioSample(bossLevelsMusics[nCurrentLevel]);
+		sprBackground = new olc::Sprite(level->GetLevelsBossBckGrdName());
+		sndBossLevelMusic = olc::SOUND::LoadAudioSample(level->GetBossLevelsMusicsName());
 	}
 
 	// Reset variables when level is loading

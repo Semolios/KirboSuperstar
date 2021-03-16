@@ -46,21 +46,10 @@ private:
 
 	// Level storage
 	cLevel* level;
-	int nCurrentLevel = 0;
-	int nUnlockedLevel = 6; // TODO PENSER A REMETTRE A 1 A LA FIN
 	olc::Sprite* sprBackground;
 	olc::Sprite* spriteTiles;
 	olc::Sprite* sprGrdTiles;
 	olc::Sprite* sprDoor;
-	std::vector<std::string> levels;
-	std::vector<std::string> levelsEnnemies;
-	std::vector<std::string> levelsTiles;
-	std::vector<std::string> levelsMusics;
-	std::vector<std::string> groundTiles;
-	std::vector<std::string> levelsBackgrounds;
-	std::vector<std::string> bossLevels;
-	std::vector<std::string> bossLevelsMusics;
-	std::vector<std::string> bossLevelsBackgrounds;
 
 	// Sounds
 	int sndTitleScreen;
