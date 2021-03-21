@@ -12,6 +12,7 @@
 #include "Platformer_Dynamic.h"
 #include "Platformer_DynamicCreature.h"
 #include "Platformer_DynamicProjectile.h"
+#include "Platformer_DynamicProjectileBoomerang.h"
 #include "Platformer_EndScreen.h"
 #include "Platformer_Hitbox.h"
 #include "Platformer_HUD.h"
@@ -187,6 +188,7 @@ public:
 	bool IsSolidTile(wchar_t tile);
 	bool IsSemiSolidTile(wchar_t tile);
 	cDynamicProjectile* CreateProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit = true, int corner = 0);
+	cDynamicProjectile* CreateBoomerang(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit = true, int corner = 0);
 	void AddProjectile(cDynamicProjectile* proj);
 	float GetTileWidth();
 	float GetTileHeight();

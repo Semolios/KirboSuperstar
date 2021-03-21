@@ -14,7 +14,7 @@ public:
 	cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner = 0);
 	virtual ~cDynamicProjectile();
 
-private:
+protected:
 	const float cfMinGlideVX = 0.1;
 
 	std::vector<olc::Sprite*> mapStates;
@@ -51,6 +51,8 @@ public:
 	bool BreaksAgainstTiles();
 	void SetBreakableAgainstTiles(bool breakable);
 	void SetDrag(float drag);
+
+	virtual void UpdateTrajectory(float fElapsedTime);
 };
 
 #endif // !DEF_PROJECTILE

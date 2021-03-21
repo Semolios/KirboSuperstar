@@ -64,6 +64,8 @@ void cDynamicProjectile::Update(float fElapsedTime, float playerX, float playerY
 	fDuration -= fElapsedTime;
 	if (fDuration <= 0.0f)
 		bRedundant = true;
+
+	UpdateTrajectory(fElapsedTime);
 }
 
 void cDynamicProjectile::Collision(float fElapsedTime, cLevel* level)
@@ -325,4 +327,9 @@ void cDynamicProjectile::SetBreakableAgainstTiles(bool breakable)
 void cDynamicProjectile::SetDrag(float drag)
 {
 	fDrag = drag;
+}
+
+void cDynamicProjectile::UpdateTrajectory(float fElapsedTime)
+{
+	// Standard projectile has no particular trajectory, either straight or bell curved
 }

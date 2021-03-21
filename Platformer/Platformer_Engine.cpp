@@ -629,6 +629,12 @@ cDynamicProjectile* OneLoneCoder_Platformer::CreateProjectile(float ox, float oy
 	return p;
 }
 
+cDynamicProjectile* OneLoneCoder_Platformer::CreateBoomerang(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit, int corner)
+{
+	cDynamicProjectile* p = new cDynamicProjectileBoomerang(ox, oy, bFriend, velx, vely, duration, mapProjectiles[sprite], damage, solidVSMap, oneHit, corner);
+	return p;
+}
+
 void OneLoneCoder_Platformer::AddProjectile(cDynamicProjectile* proj)
 {
 	vecProjectiles.push_back(proj);

@@ -105,6 +105,9 @@
     <ClCompile Include="Platformer_DynamicCreatureFrosty.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="Platformer_DynamicProjectileBoomerang.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="olcPixelGameEngine.h">
@@ -198,6 +201,9 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Platformer_DynamicCreatureFrosty.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Platformer_DynamicProjectileBoomerang.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
