@@ -4,7 +4,6 @@
 #pragma once
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
-#include "Platformer_Spline.h"
 
 class cTitleScreen
 {
@@ -15,21 +14,19 @@ private:
 	// Constant values
 	const int cnTileWidth = 64;
 	const int cnTileHeight = 64;
-	const float cfStarsMovSpeed = 600.0f;
 	const float cfStarsRotSpeed = 8.0f;
+
+	const float p1x = 140.0f, p1y = 440.0f;
+	const float p2x = 620.0f, p2y = 440.0f;
 
 	olc::Sprite* sprBackGround;
 
-	cSpline path;
 	olc::Sprite* sprstars;
-	float fMarker1;
-	float fMarker2;
 	float fTheta;
 
 public:
 	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime);
-	void DrawNewStar(olc::PixelGameEngine* gfx, float fMarker);
-	void DrawStar(olc::PixelGameEngine* gfx, olc::GFX2D::Transform2D& t);
+	void DrawNewStar(olc::PixelGameEngine* gfx, float px, float py, float theta);
 };
 
 #endif // !DEF_TITLE_SCREEN
