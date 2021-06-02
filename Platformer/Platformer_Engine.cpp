@@ -163,6 +163,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	cDynamicCreature::engine = this;
 	cDynamicCreatureBladeKnight::engine = this;
 	cDynamicCreatureBomber::engine = this;
+	cDynamicCreatureFrosty::engine = this;
 	cDynamicCreatureMrShineMrBright::engine = this;
 	cDynamicCreatureRocky::engine = this;
 	cDynamicCreatureWaddleDee::engine = this;
@@ -260,7 +261,8 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_Title(float fElapsedTime)
 {
-	if (!olc::SOUND::IsSamplePlaying(sndTitleScreen)) olc::SOUND::PlaySample(sndTitleScreen, true);
+	if (!olc::SOUND::IsSamplePlaying(sndTitleScreen))
+		olc::SOUND::PlaySample(sndTitleScreen, true);
 
 	titleScreen->Update(this, fElapsedTime);
 
@@ -623,9 +625,9 @@ bool OneLoneCoder_Platformer::IsSemiSolidTile(wchar_t tile)
 	return tile == '?';
 }
 
-cDynamicProjectile* OneLoneCoder_Platformer::CreateProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner)
+cDynamicProjectile* OneLoneCoder_Platformer::CreateProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float fDrag)
 {
-	cDynamicProjectile* p = new cDynamicProjectile(ox, oy, bFriend, velx, vely, duration, mapProjectiles[sprite], affectedByGravity, damage, solidVSMap, oneHit, corner);
+	cDynamicProjectile* p = new cDynamicProjectile(ox, oy, bFriend, velx, vely, duration, mapProjectiles[sprite], affectedByGravity, damage, solidVSMap, oneHit, corner, breackableAgainstTiles, fDrag);
 	return p;
 }
 

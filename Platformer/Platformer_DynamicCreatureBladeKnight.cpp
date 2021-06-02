@@ -120,7 +120,7 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 				fTimer += fElapsedTime;
 				if ((abs(playerX - px) < 0.5f && playerY > py))
 					ChangeState(AI_DOWNATTACK);
-				else if (engine->IsSolidTile(level->GetTile(px + cfCollisionLowerLimit, py + 1)) || engine->IsSolidTile(level->GetTile(px + cfCollisionUpperLimit, py + 1)))
+				else if (OnGround() && vy >= 0)
 					ChangeState(AI_WALKING);
 			}
 
@@ -186,10 +186,7 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 				}
 			}
 
-			if (engine->IsSolidTile(level->GetTile(px + cfCollisionLowerLimit, py + 1)) || 
-				engine->IsSolidTile(level->GetTile(px + cfCollisionUpperLimit, py + 1)) ||
-				engine->IsSemiSolidTile(level->GetTile(px + cfCollisionLowerLimit, py + 1)) || 
-				engine->IsSemiSolidTile(level->GetTile(px + cfCollisionUpperLimit, py + 1)))
+			if (OnGround())
 			{
 				bCantSpawnAOE1 = false;
 				ChangeState(AI_WALKING);
@@ -227,4 +224,12 @@ void cDynamicCreatureBladeKnight::ChangeState(AI_STATE state)
 	nGraphicCounter = 0;
 	fTimer = 0.0f;
 	nAINextState = state;
+}
+
+bool cDynamicCreatureBladeKnight::OnGround()
+{
+	return engine->IsSolidTile(level->GetTile(px + cfCollisionLowerLimit, py + 1)) ||
+		engine->IsSolidTile(level->GetTile(px + cfCollisionUpperLimit, py + 1)) ||
+		engine->IsSemiSolidTile(level->GetTile(px + cfCollisionLowerLimit, py + 1)) ||
+		engine->IsSemiSolidTile(level->GetTile(px + cfCollisionUpperLimit, py + 1));
 }

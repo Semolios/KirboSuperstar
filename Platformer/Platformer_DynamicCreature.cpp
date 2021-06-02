@@ -25,7 +25,7 @@ cDynamicCreature::~cDynamicCreature()
 void cDynamicCreature::DrawSelf(float ox, float oy)
 {
 	int nSheetOffsetX = nGraphicCounter * fSpriteW;					// Same State of a sprite are stored in one line
-	int nSheetOffsetY = (2 * nGraphicState + nFaceDir) * fSpriteH;	// 0 = Left Idle, 1 = Right Idle, 2 = Left Walking, 3 = Right Walking, 4 = Left Damaged, 5 = Right Damaged
+	int nSheetOffsetY = (2 * nGraphicState + nFaceDir) * fSpriteH;	// 0 = Left Idle, 1 = Right Idle, 2 = Left Walking, 3 = Right Walking, 4 = Left Damaged, 5 = Right Damaged ...
 
 	engine->SetPixelMode(olc::Pixel::ALPHA);
 	engine->DrawPartialSprite((px - ox) * 64.0f + fSpriteOffsetX, (py - oy) * 64.0f + fSpriteOffsetY, sSprite, nSheetOffsetX, nSheetOffsetY, fSpriteW, fSpriteH);
@@ -44,8 +44,11 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY)
 
 	if (fKnockBackTimer > 0.0f)
 	{
-		vx = fKnockBackDX * cfKnockBackDX;
-		vy = fKnockBackDY * cfKnockBackDY;
+		if (bIsKnockable)
+		{
+			vx = fKnockBackDX * cfKnockBackDX;
+			vy = fKnockBackDY * cfKnockBackDY;
+		}
 		bIsAttackable = false;
 		fKnockBackTimer -= fElapsedTime;
 		nGraphicState = DAMAGED;

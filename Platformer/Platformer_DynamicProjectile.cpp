@@ -3,7 +3,7 @@
 
 OneLoneCoder_Platformer* cDynamicProjectile::engine = nullptr;
 
-cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner) : cDynamic("projectile")
+cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float drag) : cDynamic("projectile")
 {
 	fDynWidth = map[0]->width;
 	fDynHeight = map[0]->height;
@@ -16,7 +16,7 @@ cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float v
 	bSolidVsMap = true;
 	bIsProjectile = true;
 	bIsAttackable = false;
-	bBreaksAgainstTiles = true;
+	bBreaksAgainstTiles = breackableAgainstTiles;
 	bAffectedByGravity = affectedByGravity;
 	bFriendly = bFriend;
 	mapStates = map;
@@ -24,7 +24,7 @@ cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float v
 	bSolidVsMap = solidVSMap;
 	bOneHit = oneHit;
 	nCornerSpr = corner % 4;
-	fDrag = -3.0f;
+	fDrag = drag;
 }
 
 cDynamicProjectile::~cDynamicProjectile()
@@ -280,6 +280,17 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProject
 
 	mapProjectiles["beam"].push_back(new olc::Sprite("assets/gfx/beam00.png"));
 	mapProjectiles["beam"].push_back(new olc::Sprite("assets/gfx/beam01.png"));
+
+	mapProjectiles["tinyIceCube"].push_back(new olc::Sprite("assets/gfx/tinyIceCube.png"));
+	mapProjectiles["mediumIceCube"].push_back(new olc::Sprite("assets/gfx/mediumIceCube.png"));
+	mapProjectiles["bigIceCube"].push_back(new olc::Sprite("assets/gfx/bigIceCube.png"));
+	mapProjectiles["hugeIceCubeLeft"].push_back(new olc::Sprite("assets/gfx/hugeIceCubeLeft.png"));
+	mapProjectiles["hugeIceCubeRight"].push_back(new olc::Sprite("assets/gfx/hugeIceCubeRight.png"));
+
+	mapProjectiles["frostyWind"].push_back(new olc::Sprite("assets/gfx/frostyWind00.png"));
+	mapProjectiles["frostyWind"].push_back(new olc::Sprite("assets/gfx/frostyWind01.png"));
+	mapProjectiles["frostyWind"].push_back(new olc::Sprite("assets/gfx/frostyWind02.png"));
+	mapProjectiles["frostyWind"].push_back(new olc::Sprite("assets/gfx/frostyWind03.png"));
 
 	return mapProjectiles;
 }

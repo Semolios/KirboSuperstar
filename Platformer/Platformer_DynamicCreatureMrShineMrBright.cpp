@@ -222,7 +222,8 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 			}
 			else if (fBehaviourTimer > cfSunShootMoonTime && OnGround()) // phase 4 the sun keep shooting the moon on the ground
 			{
-				if (!olc::SOUND::IsSamplePlaying(engine->GetSound("sunShootUp"))) olc::SOUND::PlaySample(engine->GetSound("sunShootUp"), true);
+				if (!olc::SOUND::IsSamplePlaying(engine->GetSound("sunShootUp")))
+					olc::SOUND::PlaySample(engine->GetSound("sunShootUp"), true);
 				vx = 0.0f; vy = 0.0f;
 
 				// loop frames 7 and 8

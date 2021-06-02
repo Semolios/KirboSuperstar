@@ -68,7 +68,8 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 			if (!bAttacking && !bVacuuming)
 			{
 				// Init walking sound
-				if (!olc::SOUND::IsSamplePlaying(engine->GetSound("kirboWalk"))) olc::SOUND::PlaySample(engine->GetSound("kirboWalk"));
+				if (!olc::SOUND::IsSamplePlaying(engine->GetSound("kirboWalk")))
+					olc::SOUND::PlaySample(engine->GetSound("kirboWalk"));
 
 				// Init speed by cfMinPlayerVelX + 0.05 or the player won't move when on ground
 				if (fabs(fPlayerVelX) < cfMinPlayerVelX) fPlayerVelX -= (cfMinPlayerVelX + 0.05f);
@@ -84,7 +85,8 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 			if (!bAttacking && !bVacuuming)
 			{
 				// Init walking sound
-				if (!olc::SOUND::IsSamplePlaying(engine->GetSound("kirboWalk"))) olc::SOUND::PlaySample(engine->GetSound("kirboWalk"));
+				if (!olc::SOUND::IsSamplePlaying(engine->GetSound("kirboWalk")))
+					olc::SOUND::PlaySample(engine->GetSound("kirboWalk"));
 
 				// Init speed by cfMinPlayerVelX + 0.05 or the player won't move when on ground
 				if (fabs(fPlayerVelX) < cfMinPlayerVelX) fPlayerVelX += (cfMinPlayerVelX + 0.05f);
@@ -220,8 +222,11 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		}
 		else
 		{
-			olc::SOUND::StopSample(engine->GetSound("beginVacuum"));
-			olc::SOUND::StopSample(engine->GetSound("vacuum"));
+			if (bVacuuming)
+			{
+				olc::SOUND::StopSample(engine->GetSound("beginVacuum"));
+				olc::SOUND::StopSample(engine->GetSound("vacuum"));
+			}
 			bVacuuming = false;
 		}
 
@@ -288,7 +293,9 @@ void cPlayer::Update(float fElapsedTime)
 			{
 				if (!bFlying)
 				{
-					olc::SOUND::StopSample(engine->GetSound("kirboFly"));
+					if (olc::SOUND::IsSamplePlaying(engine->GetSound("kirboFly")))
+						olc::SOUND::StopSample(engine->GetSound("kirboFly"));
+
 					if (fPlayerVelY < 0)
 						animPlayer->ChangeState("jump");
 					else
@@ -296,7 +303,8 @@ void cPlayer::Update(float fElapsedTime)
 				}
 				else
 				{
-					if (!olc::SOUND::IsSamplePlaying(engine->GetSound("kirboFly"))) olc::SOUND::PlaySample(engine->GetSound("kirboFly"));
+					if (!olc::SOUND::IsSamplePlaying(engine->GetSound("kirboFly")))
+						olc::SOUND::PlaySample(engine->GetSound("kirboFly"));
 				}
 			}
 		}

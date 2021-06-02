@@ -86,7 +86,8 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 					bCantSpawnAOE = false;
 
 				// Spawn the root to attack kirbo
-				if (!olc::SOUND::IsSamplePlaying(engine->GetSound("wetSlap"))) olc::SOUND::PlaySample(engine->GetSound("wetSlap"));
+				if (!olc::SOUND::IsSamplePlaying(engine->GetSound("wetSlap")))
+					olc::SOUND::PlaySample(engine->GetSound("wetSlap"));
 				engine->AddProjectile(engine->CreateProjectile(rootSpawnX, cfRootPosY, false, 0.0f, 0.0f, cfRootDuration, "root", false, cnRootDmg, false, false, cnCorner));
 			}
 		}

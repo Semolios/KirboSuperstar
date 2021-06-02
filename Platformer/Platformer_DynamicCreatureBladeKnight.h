@@ -62,6 +62,8 @@ public:
 public:
 	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
 
+	bool OnGround();
+
 private:
 	void ChangeState(AI_STATE state);
 };
