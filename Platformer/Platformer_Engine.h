@@ -85,6 +85,12 @@ private:
 	int sndBeamCharge;
 	int sndBeam;
 	int sndVolcanoBoom;
+	int sndIceBlow;
+	int sndpatpat;
+	int sndItemLaunch;
+	int sndSuperstar;
+	int sndFrostyJump;
+	int sndFrostyGroundPound;
 
 	// engine Properties
 	cPlayer* player;

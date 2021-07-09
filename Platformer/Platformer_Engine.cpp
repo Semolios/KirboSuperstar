@@ -216,6 +216,12 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	AddSharedSound("beamCharge", sndBeamCharge, "assets/snd/beamCharge.wav");
 	AddSharedSound("beam", sndBeam, "assets/snd/beam.wav");
 	AddSharedSound("volcanoBoom", sndVolcanoBoom, "assets/snd/volcanoBoom.wav");
+	AddSharedSound("iceBlow", sndIceBlow, "assets/snd/iceBlow.wav");
+	AddSharedSound("patpat", sndpatpat, "assets/snd/patpat.wav");
+	AddSharedSound("itemLaunch", sndItemLaunch, "assets/snd/itemLaunch.wav");
+	AddSharedSound("superstar", sndSuperstar, "assets/snd/superstar.wav");
+	AddSharedSound("frostyJump", sndFrostyJump, "assets/snd/frostyJump.wav");
+	AddSharedSound("frostyGroundPound", sndFrostyGroundPound, "assets/snd/frostyGroundPound.wav");
 
 #pragma endregion
 
