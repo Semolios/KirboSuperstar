@@ -60,6 +60,8 @@ private:
 	const int cnMiHP = 50;
 	const int cnLoHP = 30;
 
+	const int cnShakeAmplitude = 50;
+
 	enum AI_STATE
 	{
 		AI_IDLE = 0,
@@ -91,7 +93,7 @@ private:
 	float fIceCubeAnimationDuration = 1.0f;
 	float fIceCubeVX = 7.0f;
 	float fIceCubeVY = -7.0f;
-	float fIceCubeDuration = 5.0f;
+	float fIceCubeDuration = 4.0f;
 	float fIceCubeDrag = -1.0f;
 	float fIceCubeOffset = 0.0f;
 	int nIceCubeDmg = 4;

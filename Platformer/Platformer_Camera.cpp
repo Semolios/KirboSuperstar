@@ -36,13 +36,8 @@ void cCamera::DrawLevel(cLevel* level, float fElapsedTime)
 
 	if (bShake)
 	{
-		fShakeTimerChange += fElapsedTime;
-
-		if (fShakeTimerChange >= cfShakeEffectChangeFrequency)
-		{
-			fShakeEffectX = ((float)(rand() % nShakeAmplitudeX) - 100.0f) / cfShakeAttenuation;
-			fShakeEffectY = ((float)(rand() % nShakeAmplitudeY) - 100.0f) / cfShakeAttenuation;
-		}
+		fShakeEffectX = ((float)(rand() % nShakeAmplitudeX) - 100.0f) / cfShakeAttenuation;
+		fShakeEffectY = ((float)(rand() % nShakeAmplitudeY) - 100.0f) / cfShakeAttenuation;
 
 		fOffsetX += fShakeEffectX;
 		fOffsetY += fShakeEffectY;
