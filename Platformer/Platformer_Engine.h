@@ -13,6 +13,7 @@
 #include "Platformer_DynamicCreature.h"
 #include "Platformer_DynamicProjectile.h"
 #include "Platformer_DynamicProjectileBoomerang.h"
+#include "Platformer_DynamicProjectileOrbital.h"
 #include "Platformer_EndScreen.h"
 #include "Platformer_Hitbox.h"
 #include "Platformer_HUD.h"
@@ -91,6 +92,9 @@ private:
 	int sndSuperstar;
 	int sndFrostyJump;
 	int sndFrostyGroundPound;
+	int sndLightning;
+	int sndElectricity;
+	int sndElectricity2;
 
 	// engine Properties
 	cPlayer* player;
@@ -195,6 +199,7 @@ public:
 	bool IsSemiSolidTile(wchar_t tile);
 	cDynamicProjectile* CreateProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, bool breackableAgainstTiles = true, float fDrag = -3.0f);
 	cDynamicProjectile* CreateBoomerang(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit = true, int corner = 0);
+	cDynamicProjectile* CreateOrbital(float ox, float oy, bool bFriend, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, float cx = 0.0f, float cy = 0.0f, float angrot = 0.0f);
 	void AddProjectile(cDynamicProjectile* proj);
 	float GetTileWidth();
 	float GetTileHeight();

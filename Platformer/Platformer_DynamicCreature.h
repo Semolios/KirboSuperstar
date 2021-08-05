@@ -45,6 +45,7 @@ protected:
 	bool bIsBoss = false;
 	bool bBossKilled = false;
 	bool bBossExplosionAvailable = true;
+	bool bLoopAnimation = true;
 
 	enum
 	{
@@ -71,6 +72,8 @@ public:
 	void Vacuumed(bool vaccumedState);
 	int GetHealth();
 	void TakeDamage(int damage);
+	int GetGraphicCounter();
+	void SetGraphicCounter(int counter);
 	bool IsVacuumable();
 	void SetVacuumable(bool vacuumable);
 	bool IsVacuumed();

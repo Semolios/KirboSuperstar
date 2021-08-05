@@ -31,6 +31,9 @@ cDynamicCreatureBladeKnight::~cDynamicCreatureBladeKnight()
 
 void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 {
+	// don't loop jump animation
+	bLoopAnimation = nAIState != AI_JUMPING;
+
 	switch (nAIState)
 	{
 		case AI_WAITING:
@@ -123,9 +126,6 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 				else if (OnGround() && vy >= 0)
 					ChangeState(AI_WALKING);
 			}
-
-			// Freeze animation at the last frame to prevent looping animation while falling
-			if (fTimer >= cfFallingAnimationTime) nGraphicCounter = nFramesPerSecond - 1;
 		}
 		break;
 		case AI_SIDEATTACK:

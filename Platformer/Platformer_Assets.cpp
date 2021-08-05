@@ -28,6 +28,7 @@ void cAssets::LoadSprites()
 	load("whispyWood", "assets/gfx/whispyWood.png");
 	load("mrShineMrBright", "assets/gfx/mrShineMrBright.png");
 	load("frosty", "assets/gfx/frosty.png");
+	load("kracko", "assets/gfx/kracko.png");
 }
 
 void cAssets::LoadItems()

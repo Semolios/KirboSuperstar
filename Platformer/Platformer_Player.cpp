@@ -793,6 +793,9 @@ void cPlayer::Attack(cDynamicCreature* victim, int damage)
 {
 	if (victim != nullptr)
 	{
+		// Restart the animation at begining when hit
+		victim->SetGraphicCounter(0);
+
 		// Attack victim with damage
 		victim->TakeDamage(damage);
 

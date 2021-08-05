@@ -37,9 +37,13 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY)
 	fTimer += fElapsedTime;
 	if (fTimer >= 1.0f / (float)nFramesPerSecond)
 	{
-		fTimer -= 1.0f / (float)nFramesPerSecond;
-		nGraphicCounter++;
-		nGraphicCounter %= nFramesPerSecond;
+		// loop animation only if bLoopAnimation is true
+		if (bLoopAnimation || nGraphicCounter != nFramesPerSecond - 1)
+		{
+			fTimer -= 1.0f / (float)nFramesPerSecond;
+			nGraphicCounter++;
+			nGraphicCounter %= nFramesPerSecond;
+		}
 	}
 
 	if (fKnockBackTimer > 0.0f)
@@ -272,6 +276,16 @@ int cDynamicCreature::GetHealth()
 void cDynamicCreature::TakeDamage(int damage)
 {
 	nHealth -= damage;
+}
+
+int cDynamicCreature::GetGraphicCounter()
+{
+	return nGraphicCounter;
+}
+
+void cDynamicCreature::SetGraphicCounter(int counter)
+{
+	nGraphicCounter = counter;
 }
 
 bool cDynamicCreature::IsVacuumable()

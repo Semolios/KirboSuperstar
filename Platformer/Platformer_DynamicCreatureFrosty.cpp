@@ -43,7 +43,7 @@ void cDynamicCreatureFrosty::Behaviour(float fElapsedTime, float playerX, float 
 			if (fBehaviourTimer >= fWaitingTime)
 			{
 				// if kirbo is far away from frosty, he doesn't use the ice blow,
-				if (abs(px - playerX) > 5.0f && nChosenAttack == 3)
+				if (abs(px - playerX) > 5.0f)
 					nChosenAttack = rand() % (cnNumberOfAttack - 1);
 				else
 					nChosenAttack = rand() % cnNumberOfAttack;

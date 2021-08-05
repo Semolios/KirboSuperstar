@@ -292,6 +292,24 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProject
 	mapProjectiles["frostyWind"].push_back(new olc::Sprite("assets/gfx/frostyWind02.png"));
 	mapProjectiles["frostyWind"].push_back(new olc::Sprite("assets/gfx/frostyWind03.png"));
 
+	mapProjectiles["thunderShot"].push_back(new olc::Sprite("assets/gfx/thunderShot00.png"));
+	mapProjectiles["thunderShot"].push_back(new olc::Sprite("assets/gfx/thunderShot01.png"));
+
+	mapProjectiles["thunderUnder"].push_back(new olc::Sprite("assets/gfx/thunderUnder.png"));
+
+	mapProjectiles["aim"].push_back(new olc::Sprite("assets/gfx/aim.png"));
+
+	mapProjectiles["lightning"].push_back(new olc::Sprite("assets/gfx/lightning.png"));
+
+	mapProjectiles["chargeLightning"].push_back(new olc::Sprite("assets/gfx/chargeLightning00.png"));
+	mapProjectiles["chargeLightning"].push_back(new olc::Sprite("assets/gfx/chargeLightning01.png"));
+	mapProjectiles["chargeLightning"].push_back(new olc::Sprite("assets/gfx/chargeLightning02.png"));
+	mapProjectiles["chargeLightning"].push_back(new olc::Sprite("assets/gfx/chargeLightning03.png"));
+
+	mapProjectiles["lightningAround"].push_back(new olc::Sprite("assets/gfx/lightningAround00.png"));
+	mapProjectiles["lightningAround"].push_back(new olc::Sprite("assets/gfx/lightningAround01.png"));
+	mapProjectiles["lightningAround"].push_back(new olc::Sprite("assets/gfx/lightningAround02.png"));
+
 	return mapProjectiles;
 }
 

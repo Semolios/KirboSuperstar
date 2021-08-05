@@ -55,7 +55,6 @@ bool OneLoneCoder_Platformer::GameState_Transition(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 {
-
 	srand(time(NULL));
 
 #pragma region Assets
@@ -164,6 +163,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	cDynamicCreatureBladeKnight::engine = this;
 	cDynamicCreatureBomber::engine = this;
 	cDynamicCreatureFrosty::engine = this;
+	cDynamicCreatureKracko::engine = this;
 	cDynamicCreatureMrShineMrBright::engine = this;
 	cDynamicCreatureRocky::engine = this;
 	cDynamicCreatureWaddleDee::engine = this;
@@ -222,6 +222,9 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	AddSharedSound("superstar", sndSuperstar, "assets/snd/superstar.wav");
 	AddSharedSound("frostyJump", sndFrostyJump, "assets/snd/frostyJump.wav");
 	AddSharedSound("frostyGroundPound", sndFrostyGroundPound, "assets/snd/frostyGroundPound.wav");
+	AddSharedSound("lightning", sndLightning, "assets/snd/lightning.wav");
+	AddSharedSound("electricity", sndElectricity, "assets/snd/electricity.wav");
+	AddSharedSound("electricity2", sndElectricity2, "assets/snd/electricity2.wav");
 
 #pragma endregion
 
@@ -640,6 +643,12 @@ cDynamicProjectile* OneLoneCoder_Platformer::CreateProjectile(float ox, float oy
 cDynamicProjectile* OneLoneCoder_Platformer::CreateBoomerang(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit, int corner)
 {
 	cDynamicProjectile* p = new cDynamicProjectileBoomerang(ox, oy, bFriend, velx, vely, duration, mapProjectiles[sprite], damage, solidVSMap, oneHit, corner);
+	return p;
+}
+
+cDynamicProjectile* OneLoneCoder_Platformer::CreateOrbital(float ox, float oy, bool bFriend, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit, int corner, float cx, float cy, float angrot)
+{
+	cDynamicProjectile* p = new cDynamicProjectileOrbital(ox, oy, bFriend, duration, mapProjectiles[sprite], damage, solidVSMap, oneHit, corner, cx, cy, angrot);
 	return p;
 }
 

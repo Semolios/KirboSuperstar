@@ -151,7 +151,6 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 
 bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns)
 {
-	// TODO en fonction du numéro de niveau instancier le boss correspondant
 	cDynamicCreature* mob = nullptr;
 	switch (nCurrentLevel)
 	{
@@ -178,10 +177,9 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns)
 		break;
 		case 3:
 		{
-			// TODO kracko
-			mob = new cDynamicCreatureWaddleDee(this);
+			mob = new cDynamicCreatureKracko(this);
 			vecDyns.push_back(mob);
-			mob->SetPosition(5.0f, 5.0f);
+			mob->SetPosition(cfKrackoPX, cfKrackoPY);
 		}
 		break;
 		case 4:
@@ -750,7 +748,7 @@ void cLevel::LoadLevelsMusics()
 	levelsMusics.push_back("assets/snd/lvl00.wav");
 	levelsMusics.push_back("assets/snd/lvl01.wav");
 	levelsMusics.push_back("assets/snd/lvl02.wav");
-	levelsMusics.push_back("assets/snd/lvl03.wav");	// TODO
+	levelsMusics.push_back("assets/snd/lvl03.wav");
 	levelsMusics.push_back("assets/snd/lvl04.wav");	// TODO
 	levelsMusics.push_back("assets/snd/lvl05.wav");	// TODO
 }
@@ -760,7 +758,7 @@ void cLevel::LoadBossLevelsMusics()
 	bossLevelsMusics.push_back("assets/snd/bossLvl00.wav");
 	bossLevelsMusics.push_back("assets/snd/bossLvl01.wav");
 	bossLevelsMusics.push_back("assets/snd/bossLvl01.wav");
-	bossLevelsMusics.push_back("assets/snd/bossLvl03.wav");	// TODO
+	bossLevelsMusics.push_back("assets/snd/bossLvl01.wav");
 	bossLevelsMusics.push_back("assets/snd/bossLvl04.wav");	// TODO
 	bossLevelsMusics.push_back("assets/snd/bossLvl05.wav");	// TODO
 }
