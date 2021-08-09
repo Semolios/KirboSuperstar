@@ -35,8 +35,7 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 	{
 		case AI_IDLE:
 		{
-			if (!olc::SOUND::IsSamplePlaying(engine->GetSound("meleeControllerRape")))
-				olc::SOUND::PlaySample(engine->GetSound("meleeControllerRape"));
+			engine->PlaySample("meleeControllerRape", false, true);
 
 			vx = 0.0f; vy = 0.0f;
 			fBehaviourTimer += fElapsedTime;
@@ -54,14 +53,14 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 					if (chosenAttack == 0)
 					{
 						if (px < playerX - fStayAwayDistance || px > playerX + fStayAwayDistance)
-							olc::SOUND::PlaySample(engine->GetSound("dash"));
+							engine->PlaySample("dash");
 
 						ChangeState(AI_DASHING);
 					}
 					else
 					{
 						bUseTPAttack = true;
-						olc::SOUND::PlaySample(engine->GetSound("behold"));
+						engine->PlaySample("behold");
 						ChangeState(AI_DISAPPEARING);
 					}
 				}
@@ -116,8 +115,8 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 
 				if (bCanSpawnAOE)
 				{
-					olc::SOUND::PlaySample(engine->GetSound("hiyayayaya"));
-					olc::SOUND::PlaySample(engine->GetSound("multipleSwordStrike"));
+					engine->PlaySample("hiyayayaya");
+					engine->PlaySample("multipleSwordStrike");
 
 					float aoeX = 0.0f, aoeY = py + cfMKWidth - fAOEHeight;
 					if (nFaceDir == 0)
@@ -205,7 +204,7 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 
 				if (bPlaySound)
 				{
-					olc::SOUND::PlaySample(engine->GetSound("hiyayayaya"));
+					engine->PlaySample("hiyayayaya");
 					bPlaySound = false;
 				}
 
@@ -213,7 +212,7 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 
 				if (fSwordAttackTimer >= fTimeBetweenUpStrikes)
 				{
-					olc::SOUND::PlaySample(engine->GetSound("singleSwordStrike"));
+					engine->PlaySample("singleSwordStrike");
 
 					fSwordAttackTimer = 0.0f;
 
@@ -234,7 +233,7 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 			vx = 0.0f; vy = 0.0f;
 
 			if (fBehaviourTimer == 0.0f)
-				olc::SOUND::PlaySample(engine->GetSound("loudScreaming"));
+				engine->PlaySample("loudScreaming");
 
 			fBehaviourTimer += fElapsedTime;
 			nGraphicState = SIDEATTACK;
@@ -250,7 +249,7 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 				if (fBehaviourTimer >= fWaitBeforeAttack + ((float)nNbFramesBeforeTornado * (1.0f / (float)nFramesPerSecond)) && bCanSpawnAOE)
 				{
 					bCanSpawnAOE = false;
-					olc::SOUND::PlaySample(engine->GetSound("tornado"));
+					engine->PlaySample("tornado");
 
 					engine->ActivateShakeEffect(true, 50, 50);
 					engine->AddProjectile(px - cfMKWidth, py - 2.0f * cfMKWidth, false, 0.0f, 0.0f, fAttackTime, "tornado", false, cnSSTierMKDmg, false);
@@ -289,8 +288,8 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 						nFaceDir = 0;
 
 					bCanSpawnAOE = false;
-					olc::SOUND::PlaySample(engine->GetSound("singleSwordStrike"));
-					olc::SOUND::PlaySample(engine->GetSound("ha"));
+					engine->PlaySample("singleSwordStrike");
+					engine->PlaySample("ha");
 
 					float fOffsetX = 0.0f;
 					if (nFaceDir == 0)
@@ -334,8 +333,8 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 
 				if (fSwordAttackTimer >= fTimeBetweenDownStrikes)
 				{
-					olc::SOUND::PlaySample(engine->GetSound("singleSwordStrike"));
-					olc::SOUND::PlaySample(engine->GetSound("ha"));
+					engine->PlaySample("singleSwordStrike");
+					engine->PlaySample("ha");
 
 					fSwordAttackTimer = 0.0f;
 
@@ -371,8 +370,8 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 
 				if (fSwordAttackTimer >= fTimeBetweenDownStrikes)
 				{
-					olc::SOUND::PlaySample(engine->GetSound("singleSwordStrike"));
-					olc::SOUND::PlaySample(engine->GetSound("ha"));
+					engine->PlaySample("singleSwordStrike");
+					engine->PlaySample("ha");
 
 					fSwordAttackTimer = 0.0f;
 
@@ -406,8 +405,8 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 
 	nAIState = nAINextState;
 
-	if (nHealth <= 0 && olc::SOUND::IsSamplePlaying(engine->GetSound("meleeControllerRape")))
-		olc::SOUND::StopSample(engine->GetSound("meleeControllerRape"));
+	if (nHealth <= 0 && engine->IsSamplePlaying("meleeControllerRape"))
+		engine->StopSample("meleeControllerRape");
 }
 
 void cDynamicCreatureSSTierMetaKnight::ChangeState(AI_STATE state, bool resetBehaviourTimer)
@@ -417,8 +416,7 @@ void cDynamicCreatureSSTierMetaKnight::ChangeState(AI_STATE state, bool resetBeh
 		fBehaviourTimer = 0.0f;
 	nAINextState = state;
 
-	if (olc::SOUND::IsSamplePlaying(engine->GetSound("meleeControllerRape")))
-		olc::SOUND::StopSample(engine->GetSound("meleeControllerRape"));
+	engine->StopSample("meleeControllerRape");
 }
 
 void cDynamicCreatureSSTierMetaKnight::UpdateTimers()

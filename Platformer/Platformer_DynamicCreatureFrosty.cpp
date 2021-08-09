@@ -70,8 +70,7 @@ void cDynamicCreatureFrosty::Behaviour(float fElapsedTime, float playerX, float 
 		break;
 		case AI_GLIDING:
 		{
-			if (!olc::SOUND::IsSamplePlaying(engine->GetSound("superstar")))
-				olc::SOUND::PlaySample(engine->GetSound("superstar"));
+			engine->PlaySample("superstar", false, true);
 
 			vx = fGlidingSpeed * fGlideDirection;
 			nGraphicState = SIDEATTACK;
@@ -79,7 +78,7 @@ void cDynamicCreatureFrosty::Behaviour(float fElapsedTime, float playerX, float 
 
 			if (fBehaviourTimer >= fGlidingTime || px <= cfMinPosX || px >= cfMaxPosX)
 			{
-				olc::SOUND::StopSample(engine->GetSound("superstar"));
+				engine->StopSample("superstar");
 				ChangeState(AI_IDLE);
 			}
 		}
@@ -92,7 +91,7 @@ void cDynamicCreatureFrosty::Behaviour(float fElapsedTime, float playerX, float 
 			// Frosty can't turn around if kirbo jump over his back
 			if (fBehaviourTimer == 0.0f)
 			{
-				olc::SOUND::PlaySample(engine->GetSound("patpat"));
+				engine->PlaySample("patpat");
 
 				fIceCubeDirection = (playerX < px) ? -1.0f : 1.0f;
 				nFaceDir = (playerX < px) ? 0 : 1;
@@ -109,7 +108,7 @@ void cDynamicCreatureFrosty::Behaviour(float fElapsedTime, float playerX, float 
 					fIceCubeOffset = 100.0f; // Offset the huge ice cube so it does not bug against tiles
 				}
 
-				olc::SOUND::PlaySample(engine->GetSound("itemLaunch"));
+				engine->PlaySample("itemLaunch");
 
 				engine->AddProjectile(px, py - (fIceCubeOffset / engine->GetTileHeight()), false, fIceCubeDirection * fIceCubeVX, fIceCubeVY, fIceCubeDuration, sIceCube, true, nIceCubeDmg, true, true, 0, false, fIceCubeDrag);
 				bCanSpawnAOE = false;
@@ -136,7 +135,7 @@ void cDynamicCreatureFrosty::Behaviour(float fElapsedTime, float playerX, float 
 
 				if (bCanSpawnAOE)
 				{
-					olc::SOUND::PlaySample(engine->GetSound("iceBlow"));
+					engine->PlaySample("iceBlow");
 
 					// Spawn the wind around Frosty
 					engine->ActivateShakeEffect(true, cnShakeAmplitude, cnShakeAmplitude);
@@ -146,7 +145,7 @@ void cDynamicCreatureFrosty::Behaviour(float fElapsedTime, float playerX, float 
 			}
 			else
 			{
-				olc::SOUND::StopSample(engine->GetSound("iceBlow"));
+				engine->StopSample("iceBlow");
 
 				engine->ActivateShakeEffect(false);
 				ChangeState(AI_IDLE);
@@ -165,7 +164,7 @@ void cDynamicCreatureFrosty::Behaviour(float fElapsedTime, float playerX, float 
 			}
 			else
 			{
-				olc::SOUND::PlaySample(engine->GetSound("frostyJump"));
+				engine->PlaySample("frostyJump");
 
 				vx = (playerX < px) ? -fJumpVX : fJumpVX;
 				vy = fJumpVY;
@@ -206,8 +205,7 @@ void cDynamicCreatureFrosty::Behaviour(float fElapsedTime, float playerX, float 
 
 				if (OnGround())
 				{
-					if (!olc::SOUND::IsSamplePlaying(engine->GetSound("frostyGroundPound")))
-						olc::SOUND::PlaySample(engine->GetSound("frostyGroundPound"));
+					engine->PlaySample("frostyGroundPound", false, true);
 
 					fGroundPoundTimer += fElapsedTime;
 					if (fGroundPoundTimer <= fGroundPoundShakeEffectTimer)

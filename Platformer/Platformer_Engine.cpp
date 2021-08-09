@@ -821,7 +821,26 @@ void OneLoneCoder_Platformer::AddSharedSound(std::string name, int sound, std::s
 	sharedSounds[name] = sound;
 }
 
-int OneLoneCoder_Platformer::GetSound(std::string name)
+void OneLoneCoder_Platformer::PlaySample(std::string name, bool loop, bool dontPlayIfAlreadyPlaying)
 {
-	return sharedSounds[name];
+	if (dontPlayIfAlreadyPlaying)
+	{
+		if (!olc::SOUND::IsSamplePlaying(sharedSounds[name]))
+			olc::SOUND::PlaySample(sharedSounds[name]);
+	}
+	else
+	{
+		olc::SOUND::PlaySample(sharedSounds[name]);
+	}
+}
+
+void OneLoneCoder_Platformer::StopSample(std::string name)
+{
+	if (olc::SOUND::IsSamplePlaying(sharedSounds[name]))
+		olc::SOUND::StopSample(sharedSounds[name]);
+}
+
+bool OneLoneCoder_Platformer::IsSamplePlaying(std::string name)
+{
+	return olc::SOUND::IsSamplePlaying(sharedSounds[name]);
 }

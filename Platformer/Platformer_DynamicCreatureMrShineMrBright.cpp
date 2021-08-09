@@ -99,7 +99,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 			fColumnTimer += fElapsedTime;
 			if (bCanSpawnAOE)
 			{
-				olc::SOUND::PlaySample(engine->GetSound("earthQuake"));
+				engine->PlaySample("earthQuake");
 				engine->ActivateShakeEffect(true);
 
 				engine->AddProjectile(px + cfMovingGroundLavaOffsetX, cfMovingGroundLavaPosY, true, 0.0f, 0.0f, fColumnSpawnTime, "movingGroundLava", false, 0, false, false);
@@ -108,7 +108,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 
 			if (fColumnTimer >= fColumnSpawnTime && bChargingColumn)
 			{
-				olc::SOUND::PlaySample(engine->GetSound("volcanoBoom"));
+				engine->PlaySample("volcanoBoom");
 
 				bChargingColumn = false;
 
@@ -126,7 +126,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 			fBehaviourTimer += fElapsedTime;
 			if (fBehaviourTimer >= fColumnTime)
 			{
-				olc::SOUND::StopSample(engine->GetSound("volcanoBoom"));
+				engine->StopSample("volcanoBoom");
 				bChargingColumn = true;
 				bFreezeAnimation = false;
 				engine->ActivateShakeEffect(false);
@@ -155,7 +155,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 			fBeamTimer += fElapsedTime;
 			if (bCanSpawnAOE)
 			{
-				olc::SOUND::PlaySample(engine->GetSound("beamCharge"));
+				engine->PlaySample("beamCharge");
 				engine->ActivateShakeEffect(true, cnLowShakeAmplitudeX, cnLowShakeAmplitudeY);
 
 				engine->AddProjectile(px + cfChargeBeamOffsetX, py - cfChargeBeamOffsetY, false, 0.0f, 0.0f, fBeamSpawnTime, "chargeBeam", false, 0, false, false);
@@ -164,8 +164,8 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 
 			if (fBeamTimer >= fBeamSpawnTime && bChargingBeam)
 			{
-				olc::SOUND::StopSample(engine->GetSound("beamCharge"));
-				olc::SOUND::PlaySample(engine->GetSound("beam"));
+				engine->StopSample("beamCharge");
+				engine->PlaySample("beam");
 
 				bChargingBeam = false;
 
@@ -190,7 +190,9 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 		break;
 		case AI_GUN:
 		{
-			if (fBehaviourTimer == 0.0f) olc::SOUND::PlaySample(engine->GetSound("sunShootingMoon"));
+			if (fBehaviourTimer == 0.0f) 
+				engine->PlaySample("sunShootingMoon");
+
 			nGraphicState = DOWNATTACK;
 
 			if (fBehaviourTimer <= cfSunTakePunchTime) // phase 1, they stop moving
@@ -222,8 +224,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 			}
 			else if (fBehaviourTimer > cfSunShootMoonTime && OnGround()) // phase 4 the sun keep shooting the moon on the ground
 			{
-				if (!olc::SOUND::IsSamplePlaying(engine->GetSound("sunShootUp")))
-					olc::SOUND::PlaySample(engine->GetSound("sunShootUp"), true);
+				engine->PlaySample("sunShootUp", true, true);
 				vx = 0.0f; vy = 0.0f;
 
 				// loop frames 7 and 8
@@ -234,7 +235,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 			fBehaviourTimer += fElapsedTime;
 			if (fBehaviourTimer >= fGunTime)
 			{
-				olc::SOUND::StopSample(engine->GetSound("sunShootUp"));
+				engine->StopSample("sunShootUp");
 
 				nFramesPerSecond = cnStandardFramerate;
 				bFreezeAnimation = false;

@@ -93,7 +93,7 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 		{
 			if (!bHasExploded)
 			{
-				olc::SOUND::PlaySample(engine->GetSound("explosion"));
+				engine->PlaySample("explosion");
 				float explosionWidth = 142.0f;
 				float explosionHeight = 200.0f;
 

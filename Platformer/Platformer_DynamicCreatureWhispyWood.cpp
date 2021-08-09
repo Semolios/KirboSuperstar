@@ -57,13 +57,14 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 			MapGraphicState(SCREAMING);
 			engine->ActivateShakeEffect(true);
 
-			if (fBehaviourTimer == 0.0f) olc::SOUND::PlaySample(engine->GetSound("whispyScream"));
+			if (fBehaviourTimer == 0.0f) 
+				engine->PlaySample("whispyScream");
 
 			fBehaviourTimer += fElapsedTime;
 			if (fBehaviourTimer >= fScreamTime)
 			{
 				engine->ActivateShakeEffect(false);
-				olc::SOUND::StopSample(engine->GetSound("wetSlap"));
+				engine->StopSample("wetSlap");
 				ChangeState(AI_WAITING);
 			}
 
@@ -72,7 +73,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 			if (!bCantSpawnAOE)
 			{
 				rootSpawnX = playerX;
-				olc::SOUND::PlaySample(engine->GetSound("earthQuake"));
+				engine->PlaySample("earthQuake");
 				engine->AddProjectile(playerX, cfGroundPosition, true, 0.0f, 0.0f, fRootSpawnTime, "movingGround", false, 0, false, false);
 				bCantSpawnAOE = true;
 			}
@@ -86,15 +87,16 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 					bCantSpawnAOE = false;
 
 				// Spawn the root to attack kirbo
-				if (!olc::SOUND::IsSamplePlaying(engine->GetSound("wetSlap")))
-					olc::SOUND::PlaySample(engine->GetSound("wetSlap"));
+				engine->PlaySample("wetSlap", false, true);
 				engine->AddProjectile(rootSpawnX, cfRootPosY, false, 0.0f, 0.0f, cfRootDuration, "root", false, cnRootDmg, false, false, cnCorner);
 			}
 		}
 		break;
 		case AI_WIND:
 		{
-			if (fBehaviourTimer == 0.0f) olc::SOUND::PlaySample(engine->GetSound("inhale"));
+			if (fBehaviourTimer == 0.0f) 
+				engine->PlaySample("inhale");
+
 			fBehaviourTimer += fElapsedTime;
 
 			MapGraphicState(BLOW);
@@ -128,7 +130,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 				float fProjectileSpeedY = ((float)(rand() % cnProjectilesYRange) / 10.0f) + cfProjectilesYRangeOffset;
 
 				// Spawn the projectile to attack kirbo
-				olc::SOUND::PlaySample(engine->GetSound("blow"));
+				engine->PlaySample("blow");
 				engine->AddProjectile(cfProjectilePosX, cfProjectilePosY, false, cfProjectileSpeedX, fProjectileSpeedY, cfProjectileDuration, "blow", false, cnProjectileDmg, false, false);
 			}
 

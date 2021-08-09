@@ -177,7 +177,7 @@ void cDynamicProjectile::UpdateHitbox(float cameraOffsetX, float cameraOffsetY)
 void cDynamicProjectile::PlaySoundEffect()
 {
 	if (!soundEffect.empty())
-		olc::SOUND::PlaySample(engine->GetSound(soundEffect));
+		engine->PlaySample(soundEffect);
 }
 
 std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProjectilesSprites()

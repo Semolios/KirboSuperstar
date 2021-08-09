@@ -233,7 +233,9 @@ public:
 	olc::Sprite* GetDoorSpr();
 	void ReturnToWorldMap();
 	void AddSharedSound(std::string name, int sound, std::string fileName);
-	int GetSound(std::string name);
+	void PlaySample(std::string name, bool loop = false, bool dontPlayIfAlreadyPlaying = false);
+	void StopSample(std::string name);
+	bool IsSamplePlaying(std::string name);
 };
 
 #endif // !DEF_ENGINE

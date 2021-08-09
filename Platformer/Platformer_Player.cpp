@@ -68,8 +68,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 			if (!bAttacking && !bVacuuming)
 			{
 				// Init walking sound
-				if (!olc::SOUND::IsSamplePlaying(engine->GetSound("kirboWalk")))
-					olc::SOUND::PlaySample(engine->GetSound("kirboWalk"));
+				engine->PlaySample("kirboWalk", false, true);
 
 				// Init speed by cfMinPlayerVelX + 0.05 or the player won't move when on ground
 				if (fabs(fPlayerVelX) < cfMinPlayerVelX) fPlayerVelX -= (cfMinPlayerVelX + 0.05f);
@@ -85,8 +84,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 			if (!bAttacking && !bVacuuming)
 			{
 				// Init walking sound
-				if (!olc::SOUND::IsSamplePlaying(engine->GetSound("kirboWalk")))
-					olc::SOUND::PlaySample(engine->GetSound("kirboWalk"));
+				engine->PlaySample("kirboWalk", false, true);
 
 				// Init speed by cfMinPlayerVelX + 0.05 or the player won't move when on ground
 				if (fabs(fPlayerVelX) < cfMinPlayerVelX) fPlayerVelX += (cfMinPlayerVelX + 0.05f);
@@ -98,7 +96,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 
 		// Stop kirbo walk sound
 		if ((!engine->GetKey(olc::Key::LEFT).bHeld && !engine->GetKey(olc::Key::RIGHT).bHeld) || !bOnGround)
-			olc::SOUND::StopSample(engine->GetSound("kirboWalk"));
+			engine->StopSample("kirboWalk");
 
 		// Jump, double jump, stop flying
 		if (engine->GetKey(olc::Key::SPACE).bPressed)
@@ -109,12 +107,12 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 			}
 			else if (bOnGround)
 			{
-				olc::SOUND::PlaySample(engine->GetSound("kirboJump"));
+				engine->PlaySample("kirboJump");
 				bChargeJump = true;
 			}
 			else if (bDoubleJump && fPlayerVelY > 0)
 			{
-				olc::SOUND::PlaySample(engine->GetSound("kirboJump"));
+				engine->PlaySample("kirboJump");
 				bDoubleJump = false;
 				bChargeDoubleJump = true;
 			}
@@ -208,7 +206,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 			{
 				if (!bVacuuming && !bAttacking)
 				{
-					olc::SOUND::PlaySample(engine->GetSound("beginVacuum"));
+					engine->PlaySample("beginVacuum");
 					animPlayer->ChangeState("begin_vacuum");
 					bVacuuming = true;
 					fAnimationTimer = 0.0f;
@@ -224,8 +222,8 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		{
 			if (bVacuuming)
 			{
-				olc::SOUND::StopSample(engine->GetSound("beginVacuum"));
-				olc::SOUND::StopSample(engine->GetSound("vacuum"));
+				engine->StopSample("beginVacuum");
+				engine->StopSample("vacuum");
 			}
 			bVacuuming = false;
 		}
@@ -237,9 +235,11 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 			if (bOnGround)
 			{
 				animPlayer->nCurrentFrame = 0;
+
 				int poyo = rand() % 2;
-				if (poyo == 0) olc::SOUND::PlaySample(engine->GetSound("poyo01"));
-				else if (poyo == 1) olc::SOUND::PlaySample(engine->GetSound("poyo02"));
+				if (poyo == 0) engine->PlaySample("poyo01");
+				if (poyo == 1) engine->PlaySample("poyo02");
+				
 				animPlayer->ChangeState("poyo");
 				bAttacking = true;
 				bPoyo = true;
@@ -271,7 +271,7 @@ void cPlayer::Update(float fElapsedTime)
 		if (bOnGround)
 		{
 			bFlying = false;
-			olc::SOUND::StopSample(engine->GetSound("kirboFly"));
+			engine->StopSample("kirboFly");
 
 			fPlayerVelX += engine->GetDragValue() * fPlayerVelX * fElapsedTime;
 			if (fabs(fPlayerVelX) < cfMinPlayerVelX)
@@ -293,8 +293,7 @@ void cPlayer::Update(float fElapsedTime)
 			{
 				if (!bFlying)
 				{
-					if (olc::SOUND::IsSamplePlaying(engine->GetSound("kirboFly")))
-						olc::SOUND::StopSample(engine->GetSound("kirboFly"));
+					engine->StopSample("kirboFly");
 
 					if (fPlayerVelY < 0)
 						animPlayer->ChangeState("jump");
@@ -303,8 +302,7 @@ void cPlayer::Update(float fElapsedTime)
 				}
 				else
 				{
-					if (!olc::SOUND::IsSamplePlaying(engine->GetSound("kirboFly")))
-						olc::SOUND::PlaySample(engine->GetSound("kirboFly"));
+					engine->PlaySample("kirboFly", false, true);
 				}
 			}
 		}
@@ -363,8 +361,8 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 		{
 			if (fAnimationTimer >= cfVacuumAnimT * animPlayer->fTimeBetweenFrames)
 			{
-				if (!olc::SOUND::IsSamplePlaying(engine->GetSound("beginVacuum")) && !olc::SOUND::IsSamplePlaying(engine->GetSound("vacuum")))
-					olc::SOUND::PlaySample(engine->GetSound("vacuum"), true);
+				if (!engine->IsSamplePlaying("beginVacuum"))
+					engine->PlaySample("vacuum", false, true);
 				animPlayer->ChangeState("vacuum");
 			}
 		}
@@ -372,13 +370,13 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 		// Swallowing
 		if (bSwallowing)
 		{
-			olc::SOUND::StopSample(engine->GetSound("beginVacuum"));
-			olc::SOUND::StopSample(engine->GetSound("vacuum"));
+			engine->StopSample("beginVacuum");
+			engine->StopSample("vacuum");
 
 			if (bSwallowSound)
 			{
 				bSwallowSound = false;
-				olc::SOUND::PlaySample(engine->GetSound("swallow"));
+				engine->PlaySample("swallow");
 			}
 
 			animPlayer->ChangeState("swallow");
@@ -412,7 +410,8 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 		fPlayerVelY = 0.0f;
 		StopAnyAttack();
 
-		if (fDeadAnimation == 0.0f) olc::SOUND::PlaySample(engine->GetSound("loseLife"));
+		if (fDeadAnimation == 0.0f) 
+			engine->PlaySample("loseLife");
 
 		fDeadAnimation += fElapsedTime;
 		if (fDeadAnimation != fElapsedTime)
@@ -524,7 +523,8 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 	// Check hole
 	if (fPlayerPosY > lvl->GetHeight())
 	{
-		if (!bDead) olc::SOUND::PlaySample(engine->GetSound("kirboHit"));
+		if (!bDead) 
+			engine->PlaySample("kirboHit");
 		fHealth = 0.0f;
 		bDead = true;
 		animPlayer->ChangeState("dead");
@@ -677,7 +677,7 @@ float cPlayer::GetHealth()
 
 void cPlayer::Damage(cDynamic* object)
 {
-	olc::SOUND::PlaySample(engine->GetSound("kirboHit"));
+	engine->PlaySample("kirboHit");
 	animPlayer->ChangeState("damaged");
 	fInvulnerabilityTimer = cfInvulnerabilityFrame;
 	bPlayerDamaged = true;
