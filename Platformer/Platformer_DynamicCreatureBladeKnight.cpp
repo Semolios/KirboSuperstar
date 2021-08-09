@@ -181,7 +181,7 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 				// Create an AOE
 				if (!bCantSpawnAOE1)
 				{
-					engine->AddProjectile(engine->CreateProjectile(px + cfDownAOESprOffsetX, py + cfDownAOESprOffsetY, false, 0.0f, cfDownAtkSpeed, cfDownAtkAOEDuration, "swordDownAOE", false, cnDownAtkDmg, true));
+					engine->AddProjectile(px + cfDownAOESprOffsetX, py + cfDownAOESprOffsetY, false, 0.0f, cfDownAtkSpeed, cfDownAtkAOEDuration, "swordDownAOE", false, cnDownAtkDmg, true);
 					bCantSpawnAOE1 = true;
 				}
 			}
@@ -203,7 +203,7 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 			// when blade knight raise the sword, an AOE appears
 			if (fTimer >= cfFirstAttackTime && !bCantSpawnAOE1)
 			{
-				engine->AddProjectile(engine->CreateProjectile(px + cfUpAOESprOffsetX, py + cfUpAOESprOffsetY, false, 0.0f, cfUpAtkSpeed, cfUpAtkDuration, "swordUpAOE", false, cnUpAtkDmg, true));
+				engine->AddProjectile(px + cfUpAOESprOffsetX, py + cfUpAOESprOffsetY, false, 0.0f, cfUpAtkSpeed, cfUpAtkDuration, "swordUpAOE", false, cnUpAtkDmg, true);
 				bCantSpawnAOE1 = true;
 			}
 

@@ -111,7 +111,7 @@ void cDynamicCreatureFrosty::Behaviour(float fElapsedTime, float playerX, float 
 
 				olc::SOUND::PlaySample(engine->GetSound("itemLaunch"));
 
-				engine->AddProjectile(engine->CreateProjectile(px, py - (fIceCubeOffset / engine->GetTileHeight()), false, fIceCubeDirection * fIceCubeVX, fIceCubeVY, fIceCubeDuration, sIceCube, true, nIceCubeDmg, true, true, 0, false, fIceCubeDrag));
+				engine->AddProjectile(px, py - (fIceCubeOffset / engine->GetTileHeight()), false, fIceCubeDirection * fIceCubeVX, fIceCubeVY, fIceCubeDuration, sIceCube, true, nIceCubeDmg, true, true, 0, false, fIceCubeDrag);
 				bCanSpawnAOE = false;
 			}
 
@@ -140,7 +140,7 @@ void cDynamicCreatureFrosty::Behaviour(float fElapsedTime, float playerX, float 
 
 					// Spawn the wind around Frosty
 					engine->ActivateShakeEffect(true, cnShakeAmplitude, cnShakeAmplitude);
-					engine->AddProjectile(engine->CreateProjectile(px + fWindOffsetX, py, false, 0.0f, 0.0f, fBlowTime, "frostyWind", false, nWindDmg, false));
+					engine->AddProjectile(px + fWindOffsetX, py, false, 0.0f, 0.0f, fBlowTime, "frostyWind", false, nWindDmg, false);
 					bCanSpawnAOE = false;
 				}
 			}

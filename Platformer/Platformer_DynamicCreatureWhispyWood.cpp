@@ -73,7 +73,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 			{
 				rootSpawnX = playerX;
 				olc::SOUND::PlaySample(engine->GetSound("earthQuake"));
-				engine->AddProjectile(engine->CreateProjectile(playerX, cfGroundPosition, true, 0.0f, 0.0f, fRootSpawnTime, "movingGround", false, 0, false, false));
+				engine->AddProjectile(playerX, cfGroundPosition, true, 0.0f, 0.0f, fRootSpawnTime, "movingGround", false, 0, false, false);
 				bCantSpawnAOE = true;
 			}
 
@@ -88,7 +88,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 				// Spawn the root to attack kirbo
 				if (!olc::SOUND::IsSamplePlaying(engine->GetSound("wetSlap")))
 					olc::SOUND::PlaySample(engine->GetSound("wetSlap"));
-				engine->AddProjectile(engine->CreateProjectile(rootSpawnX, cfRootPosY, false, 0.0f, 0.0f, cfRootDuration, "root", false, cnRootDmg, false, false, cnCorner));
+				engine->AddProjectile(rootSpawnX, cfRootPosY, false, 0.0f, 0.0f, cfRootDuration, "root", false, cnRootDmg, false, false, cnCorner);
 			}
 		}
 		break;
@@ -129,7 +129,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 
 				// Spawn the projectile to attack kirbo
 				olc::SOUND::PlaySample(engine->GetSound("blow"));
-				engine->AddProjectile(engine->CreateProjectile(cfProjectilePosX, cfProjectilePosY, false, cfProjectileSpeedX, fProjectileSpeedY, cfProjectileDuration, "blow", false, cnProjectileDmg, false, false));
+				engine->AddProjectile(cfProjectilePosX, cfProjectilePosY, false, cfProjectileSpeedX, fProjectileSpeedY, cfProjectileDuration, "blow", false, cnProjectileDmg, false, false);
 			}
 
 			if (fBehaviourTimer >= cfProjectilesTime)
@@ -149,7 +149,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 		float fApplePosX = ((float)(rand() % cnApplePosXRange) / 10.0f) + cfApplePosXRangeOffset;
 
 		// Spawn apple
-		engine->AddProjectile(engine->CreateProjectile(fApplePosX, cfApplePosY, false, 0.0f, 0.0f, cfAppleDuration, "apple", true, cnAppleDmg, true, false));
+		engine->AddProjectile(fApplePosX, cfApplePosY, false, 0.0f, 0.0f, cfAppleDuration, "apple", true, cnAppleDmg, true, false);
 	}
 
 	// if he dies while blowing, the wind stops

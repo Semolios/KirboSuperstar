@@ -359,7 +359,7 @@ void cDynamicCreature::ExplodeAndDie(float fElapsedTime)
 
 		float centerOfBossX = ((fDynWidth - explosionWidth) / 2.0f) / engine->GetTileWidth();
 		float centerOfBossY = ((fDynHeight - explosionHeight) / 2.0f) / engine->GetTileHeight();
-		engine->AddProjectile(engine->CreateProjectile(px + centerOfBossX, py + centerOfBossY, false, 0.0f, 0.0f, cfExplosionDuration, "explosion", false, 0, false, false));
+		engine->AddProjectile(px + centerOfBossX, py + centerOfBossY, false, 0.0f, 0.0f, cfExplosionDuration, "explosion", false, 0, false, false);
 		olc::SOUND::PlaySample(engine->GetSound("explosion"));
 
 		bBossExplosionAvailable = false;

@@ -81,7 +81,7 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 			if (fBehaviourTimer2 >= fThunderSpawnTime && bCanSpawnAOE)
 			{
 				// after 0.5 seconds, spawn a thunder under kracko
-				engine->AddProjectile(engine->CreateProjectile(px + fThunderOffsetX, py + fThunderOffsetY, false, 0.0f, 0.0f, fThunderUnderSpawnTime, "thunderUnder", false, cnAttacksDmg, false, false, 0, false));
+				engine->AddProjectile(px + fThunderOffsetX, py + fThunderOffsetY, false, 0.0f, 0.0f, fThunderUnderSpawnTime, "thunderUnder", false, cnAttacksDmg, false, false, 0, false);
 				olc::SOUND::PlaySample(engine->GetSound("lightning"));
 
 				bCanSpawnAOE = false;
@@ -118,7 +118,7 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 
 			if (fBehaviourTimer == 0.0f)
 			{
-				engine->AddProjectile(engine->CreateProjectile(px + cfMiddleOfKracko, py + cfMiddleOfKracko, false, 0.0f, 0.0f, fAimingTime + fFireTime, "chargeLightning", false, 0, false));
+				engine->AddProjectile(px + cfMiddleOfKracko, py + cfMiddleOfKracko, false, 0.0f, 0.0f, fAimingTime + fFireTime, "chargeLightning", false, 0, false);
 				olc::SOUND::PlaySample(engine->GetSound("electricity"));
 			}
 
@@ -130,13 +130,13 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 			if (fBehaviourTimer <= fAimingTime)
 			{
 				// during aiming time, a target spawn on kirbo to indicate the player to move
-				engine->AddProjectile(engine->CreateProjectile(playerX, playerY, true, 0.0f, 0.0f, 0.05f, "aim", false, 0, false));
+				engine->AddProjectile(playerX, playerY, true, 0.0f, 0.0f, 0.05f, "aim", false, 0, false);
 				fPlayerPosX = playerX;
 				fPlayerPosY = playerY;
 			}
 			else if (fBehaviourTimer <= fAimingTime + fFireTime)
 			{
-				engine->AddProjectile(engine->CreateProjectile(fPlayerPosX, fPlayerPosY, true, 0.0f, 0.0f, 0.05f, "aim", false, 0, false));
+				engine->AddProjectile(fPlayerPosX, fPlayerPosY, true, 0.0f, 0.0f, 0.05f, "aim", false, 0, false);
 			}
 			else
 			{
@@ -196,7 +196,7 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 				if (olc::SOUND::IsSamplePlaying(engine->GetSound("electricity")))
 					olc::SOUND::StopSample(engine->GetSound("electricity"));
 
-				engine->AddProjectile(engine->CreateProjectile(fLightningX - (fLightningSemiWidth / engine->GetTileWidth()), fLightningY - (fLightningSemiHeight / engine->GetTileWidth()), false, fPlayerPosX - (px + cfMiddleOfKracko), fPlayerPosY - (py + cfMiddleOfKracko), fAimingLightningDuration, "lightning", false, cnAttacksDmg, false, false));
+				engine->AddProjectile(fLightningX - (fLightningSemiWidth / engine->GetTileWidth()), fLightningY - (fLightningSemiHeight / engine->GetTileWidth()), false, fPlayerPosX - (px + cfMiddleOfKracko), fPlayerPosY - (py + cfMiddleOfKracko), fAimingLightningDuration, "lightning", false, cnAttacksDmg, false, false);
 				olc::SOUND::PlaySample(engine->GetSound("lightning"));
 
 				ChangeState(AI_IDLE);
@@ -211,7 +211,7 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 			{
 				fLightningPosX1 = px + cfMiddleOfKracko;
 				fLightningPosX2 = px + cfMiddleOfKracko;
-				engine->AddProjectile(engine->CreateProjectile(fLightningPosX1, fGroundPositionY, true, 0.0f, 0.0f, fFireTime, "chargeLightning", false, 0, false));
+				engine->AddProjectile(fLightningPosX1, fGroundPositionY, true, 0.0f, 0.0f, fFireTime, "chargeLightning", false, 0, false);
 				olc::SOUND::PlaySample(engine->GetSound("electricity"));
 			}
 
@@ -226,8 +226,8 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 				if (olc::SOUND::IsSamplePlaying(engine->GetSound("electricity")))
 					olc::SOUND::StopSample(engine->GetSound("electricity"));
 
-				engine->AddProjectile(engine->CreateProjectile(fLightningPosX1 - (fLightningSemiWidth / engine->GetTileWidth()), fLightningPosY, false, 0.0f, fLightningSpdY, fLightningDuration, "lightning", false, cnAttacksDmg, false));
-				engine->AddProjectile(engine->CreateProjectile(fLightningPosX2 - (fLightningSemiWidth / engine->GetTileWidth()), fLightningPosY, false, 0.0f, fLightningSpdY, fLightningDuration, "lightning", false, cnAttacksDmg, false));
+				engine->AddProjectile(fLightningPosX1 - (fLightningSemiWidth / engine->GetTileWidth()), fLightningPosY, false, 0.0f, fLightningSpdY, fLightningDuration, "lightning", false, cnAttacksDmg, false);
+				engine->AddProjectile(fLightningPosX2 - (fLightningSemiWidth / engine->GetTileWidth()), fLightningPosY, false, 0.0f, fLightningSpdY, fLightningDuration, "lightning", false, cnAttacksDmg, false);
 				olc::SOUND::PlaySample(engine->GetSound("lightning"));
 
 				fBehaviourTimer2 = 0.0f;
@@ -237,8 +237,8 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 
 				if (fBehaviourTimer < fNumberOfAttacks * fFireTime)
 				{
-					engine->AddProjectile(engine->CreateProjectile(fLightningPosX1, fGroundPositionY, true, 0.0f, 0.0f, fFireTime, "chargeLightning", false, 0, false));
-					engine->AddProjectile(engine->CreateProjectile(fLightningPosX2, fGroundPositionY, true, 0.0f, 0.0f, fFireTime, "chargeLightning", false, 0, false));
+					engine->AddProjectile(fLightningPosX1, fGroundPositionY, true, 0.0f, 0.0f, fFireTime, "chargeLightning", false, 0, false);
+					engine->AddProjectile(fLightningPosX2, fGroundPositionY, true, 0.0f, 0.0f, fFireTime, "chargeLightning", false, 0, false);
 					olc::SOUND::PlaySample(engine->GetSound("electricity"));
 				}
 			}
@@ -253,8 +253,8 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 					if (olc::SOUND::IsSamplePlaying(engine->GetSound("electricity")))
 						olc::SOUND::StopSample(engine->GetSound("electricity"));
 
-					engine->AddProjectile(engine->CreateProjectile(fLightningPosX1 - (fLightningSemiWidth / engine->GetTileWidth()), fLightningPosY, false, 0.0f, fLightningSpdY, fLightningDuration, "lightning", false, cnAttacksDmg, false));
-					engine->AddProjectile(engine->CreateProjectile(fLightningPosX2 - (fLightningSemiWidth / engine->GetTileWidth()), fLightningPosY, false, 0.0f, fLightningSpdY, fLightningDuration, "lightning", false, cnAttacksDmg, false));
+					engine->AddProjectile(fLightningPosX1 - (fLightningSemiWidth / engine->GetTileWidth()), fLightningPosY, false, 0.0f, fLightningSpdY, fLightningDuration, "lightning", false, cnAttacksDmg, false);
+					engine->AddProjectile(fLightningPosX2 - (fLightningSemiWidth / engine->GetTileWidth()), fLightningPosY, false, 0.0f, fLightningSpdY, fLightningDuration, "lightning", false, cnAttacksDmg, false);
 					olc::SOUND::PlaySample(engine->GetSound("lightning"));
 				}
 
@@ -274,7 +274,7 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 
 			if (fBehaviourTimer2 == 0)
 			{
-				engine->AddProjectile(engine->CreateProjectile(px + fThunderOffsetX, py, false, 0.0f, 0.0f, fFireTime, "thunderShot", false, cnAttacksDmg, false, false, 0, false));
+				engine->AddProjectile(px + fThunderOffsetX, py, false, 0.0f, 0.0f, fFireTime, "thunderShot", false, cnAttacksDmg, false, false, 0, false);
 			}
 
 			fBehaviourTimer2 += fElapsedTime;
@@ -300,10 +300,10 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 				float y = py + 1.0f - fLightningSprSemiH;	// middle of kracko
 
 				olc::SOUND::PlaySample(engine->GetSound("electricity2"));
-				engine->AddProjectile(engine->CreateOrbital(fLightning1X, fLightning1Y, false, fLightningAroundTime, "lightningAround", cnAttacksDmg, false, false, 0, x, y, fAngrot));
-				engine->AddProjectile(engine->CreateOrbital(fLightning2X, fLightning2Y, false, fLightningAroundTime, "lightningAround", cnAttacksDmg, false, false, 0, x, y, fAngrot));
-				engine->AddProjectile(engine->CreateOrbital(fLightning3X, fLightning3Y, false, fLightningAroundTime, "lightningAround", cnAttacksDmg, false, false, 0, x, y, fAngrot));
-				engine->AddProjectile(engine->CreateOrbital(fLightning4X, fLightning4Y, false, fLightningAroundTime, "lightningAround", cnAttacksDmg, false, false, 0, x, y, fAngrot));
+				engine->AddOrbital(fLightning1X, fLightning1Y, false, fLightningAroundTime, "lightningAround", cnAttacksDmg, false, false, 0, x, y, fAngrot);
+				engine->AddOrbital(fLightning2X, fLightning2Y, false, fLightningAroundTime, "lightningAround", cnAttacksDmg, false, false, 0, x, y, fAngrot);
+				engine->AddOrbital(fLightning3X, fLightning3Y, false, fLightningAroundTime, "lightningAround", cnAttacksDmg, false, false, 0, x, y, fAngrot);
+				engine->AddOrbital(fLightning4X, fLightning4Y, false, fLightningAroundTime, "lightningAround", cnAttacksDmg, false, false, 0, x, y, fAngrot);
 			}
 
 			if (fBehaviourTimer2 >= fFireTime + fLightningAroundTime)
@@ -327,7 +327,7 @@ void cDynamicCreatureKracko::AimForKirboUnder(float playerX, float playerY)
 	if (playerX >= px + 0.5f && playerX <= px + cfMiddleOfKracko && playerY >= py)
 	{
 		// Spawn a little lightning under kracko to tell the player something is gonna happen
-		engine->AddProjectile(engine->CreateProjectile(px + fThunderOffsetX, py + fThunderOffsetY, false, 0.0f, 0.0f, fThunderSpawnTime, "thunderShot", false, cnAttacksDmg, false, false, 0, false));
+		engine->AddProjectile(px + fThunderOffsetX, py + fThunderOffsetY, false, 0.0f, 0.0f, fThunderSpawnTime, "thunderShot", false, cnAttacksDmg, false, false, 0, false);
 		ChangeState(AI_THUNDERUNDER, false);
 	}
 	else if (playerX >= px + 0.5f && playerX <= px + cfMiddleOfKracko && playerY <= py)

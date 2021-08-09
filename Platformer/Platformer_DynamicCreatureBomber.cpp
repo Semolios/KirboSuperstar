@@ -99,7 +99,7 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 
 				float centerOfBossX = ((fDynWidth - explosionWidth) / 2.0f) / engine->GetTileWidth();
 				float centerOfBossY = ((fDynHeight - explosionHeight) / 2.0f) / engine->GetTileHeight();
-				engine->AddProjectile(engine->CreateProjectile(px + centerOfBossX, py + centerOfBossY, false, 0.0f, 0.0f, cfExplosionDuration, "explosion", false, cnExplosionDmg, false));
+				engine->AddProjectile(px + centerOfBossX, py + centerOfBossY, false, 0.0f, 0.0f, cfExplosionDuration, "explosion", false, cnExplosionDmg, false);
 
 				nHealth = 0;
 				KnockBack(0.0f, 0.0f, cfKnockBackDuration);

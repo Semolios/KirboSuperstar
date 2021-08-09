@@ -102,7 +102,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 				olc::SOUND::PlaySample(engine->GetSound("earthQuake"));
 				engine->ActivateShakeEffect(true);
 
-				engine->AddProjectile(engine->CreateProjectile(px + cfMovingGroundLavaOffsetX, cfMovingGroundLavaPosY, true, 0.0f, 0.0f, fColumnSpawnTime, "movingGroundLava", false, 0, false, false));
+				engine->AddProjectile(px + cfMovingGroundLavaOffsetX, cfMovingGroundLavaPosY, true, 0.0f, 0.0f, fColumnSpawnTime, "movingGroundLava", false, 0, false, false);
 				bCanSpawnAOE = false;
 			}
 
@@ -115,12 +115,12 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 				engine->ActivateShakeEffect(true, cnHighShakeAmplitudeX, cnHighShakeAmplitudeY);
 
 				// Spawn magma to attack kirbo
-				engine->AddProjectile(engine->CreateProjectile(px + cfMagmaOffsetX, cfMagmaPosY, false, 0.0f, 0.0f, (fColumnTime - fColumnSpawnTime), "magma", false, cnMagmaDmg, false, false));
+				engine->AddProjectile(px + cfMagmaOffsetX, cfMagmaPosY, false, 0.0f, 0.0f, (fColumnTime - fColumnSpawnTime), "magma", false, cnMagmaDmg, false, false);
 
 				// Spawn rocks
-				engine->AddProjectile(engine->CreateProjectile(px + cfMagmaRock1OffsetX, cfMagmaRock1PosY, false, cfMagmaRock1VelX, cfMagmaRock1VelY, cfMagmaRockDuration, "magmaBoulder", true, cnMagmaDmg, true, false));
-				engine->AddProjectile(engine->CreateProjectile(px + cfMagmaRock2OffsetX, cfMagmaRock2PosY, false, cfMagmaRock2VelX, cfMagmaRock2VelY, cfMagmaRockDuration, "magmaBoulder", true, cnMagmaDmg, true, false));
-				engine->AddProjectile(engine->CreateProjectile(px + cfMagmaRock3OffsetX, cfMagmaRock3PosY, false, cfMagmaRock3VelX, cfMagmaRock3VelY, cfMagmaRockDuration, "magmaBoulder", true, cnMagmaDmg, true, false));
+				engine->AddProjectile(px + cfMagmaRock1OffsetX, cfMagmaRock1PosY, false, cfMagmaRock1VelX, cfMagmaRock1VelY, cfMagmaRockDuration, "magmaBoulder", true, cnMagmaDmg, true, false);
+				engine->AddProjectile(px + cfMagmaRock2OffsetX, cfMagmaRock2PosY, false, cfMagmaRock2VelX, cfMagmaRock2VelY, cfMagmaRockDuration, "magmaBoulder", true, cnMagmaDmg, true, false);
+				engine->AddProjectile(px + cfMagmaRock3OffsetX, cfMagmaRock3PosY, false, cfMagmaRock3VelX, cfMagmaRock3VelY, cfMagmaRockDuration, "magmaBoulder", true, cnMagmaDmg, true, false);
 			}
 
 			fBehaviourTimer += fElapsedTime;
@@ -158,7 +158,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 				olc::SOUND::PlaySample(engine->GetSound("beamCharge"));
 				engine->ActivateShakeEffect(true, cnLowShakeAmplitudeX, cnLowShakeAmplitudeY);
 
-				engine->AddProjectile(engine->CreateProjectile(px + cfChargeBeamOffsetX, py - cfChargeBeamOffsetY, false, 0.0f, 0.0f, fBeamSpawnTime, "chargeBeam", false, 0, false, false));
+				engine->AddProjectile(px + cfChargeBeamOffsetX, py - cfChargeBeamOffsetY, false, 0.0f, 0.0f, fBeamSpawnTime, "chargeBeam", false, 0, false, false);
 				bCanSpawnAOE = false;
 			}
 
@@ -175,7 +175,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 
 				// Spawn beam to attack kirbo
 				// must offset the beam to give impression it's going out from the moon's mouth
-				engine->AddProjectile(engine->CreateProjectile(px - cfBeamOffsetX, py + cfBeamOffsetY, false, -0.01f, 0.01f, (fColumnTime - fBeamSpawnTime), "beam", false, cnBeamDmg, false, false));
+				engine->AddProjectile(px - cfBeamOffsetX, py + cfBeamOffsetY, false, -0.01f, 0.01f, (fColumnTime - fBeamSpawnTime), "beam", false, cnBeamDmg, false, false);
 			}
 
 			fBehaviourTimer += fElapsedTime;

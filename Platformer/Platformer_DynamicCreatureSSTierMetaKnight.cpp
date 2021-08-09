@@ -126,7 +126,7 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 						aoeX = px + cfMKWidth;
 
 					engine->ActivateShakeEffect(true, 50, 50);
-					engine->AddProjectile(engine->CreateProjectile(aoeX, aoeY, false, 0.0f, 0.0f, fAttackTime, "SSTierMKHiyayaAOE", false, cnSSTierMKDmg, false));
+					engine->AddProjectile(aoeX, aoeY, false, 0.0f, 0.0f, fAttackTime, "SSTierMKHiyayaAOE", false, cnSSTierMKDmg, false);
 					bCanSpawnAOE = false;
 				}
 			}
@@ -217,7 +217,7 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 
 					fSwordAttackTimer = 0.0f;
 
-					engine->AddProjectile(engine->CreateProjectile(px - 1.5f, py - 1.0f, false, 0.0f, 0.0f, cfOneSSTierMKFrame, "swordAttack", false, cnSSTierMKDmg, false));
+					engine->AddProjectile(px - 1.5f, py - 1.0f, false, 0.0f, 0.0f, cfOneSSTierMKFrame, "swordAttack", false, cnSSTierMKDmg, false);
 				}
 			}
 			else
@@ -253,7 +253,7 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 					olc::SOUND::PlaySample(engine->GetSound("tornado"));
 
 					engine->ActivateShakeEffect(true, 50, 50);
-					engine->AddProjectile(engine->CreateProjectile(px - cfMKWidth, py - 2.0f * cfMKWidth, false, 0.0f, 0.0f, fAttackTime, "tornado", false, cnSSTierMKDmg, false));
+					engine->AddProjectile(px - cfMKWidth, py - 2.0f * cfMKWidth, false, 0.0f, 0.0f, fAttackTime, "tornado", false, cnSSTierMKDmg, false);
 				}
 			}
 			else
@@ -296,7 +296,7 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 					if (nFaceDir == 0)
 						fOffsetX = -2.0f;
 
-					engine->AddProjectile(engine->CreateProjectile(px + fOffsetX * cfMKWidth, py - 1.0f * cfMKWidth, false, 0.0f, 0.0f, fAOEDuration, "SSTierMKTPAttack", false, cnSSTierMKDmg, false));
+					engine->AddProjectile(px + fOffsetX * cfMKWidth, py - 1.0f * cfMKWidth, false, 0.0f, 0.0f, fAOEDuration, "SSTierMKTPAttack", false, cnSSTierMKDmg, false);
 				}
 			}
 			else
@@ -340,7 +340,7 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 					fSwordAttackTimer = 0.0f;
 
 					// slightly move the aoe to the left to turn the sprite to the down
-					engine->AddProjectile(engine->CreateProjectile(px - 1.5f, py + 1.0f, false, -0.05f, 0.0f, cfOneSSTierMKFrame, "swordAttack", false, cnSSTierMKDmg, false));
+					engine->AddProjectile(px - 1.5f, py + 1.0f, false, -0.05f, 0.0f, cfOneSSTierMKFrame, "swordAttack", false, cnSSTierMKDmg, false);
 				}
 			}
 			else
@@ -389,7 +389,7 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 						fVX = -1.0f;
 					}
 
-					engine->AddProjectile(engine->CreateProjectile(px + fOffsetX, py + 0.5f, false, fVX, 0.0f, cfOneSSTierMKFrame, "downTilt", false, cnSSTierMKDmg, false));
+					engine->AddProjectile(px + fOffsetX, py + 0.5f, false, fVX, 0.0f, cfOneSSTierMKFrame, "downTilt", false, cnSSTierMKDmg, false);
 				}
 			}
 			else
