@@ -1,7 +1,8 @@
+#pragma region license_and_help
 /*
 	olcPixelGameEngine.h
 	+-------------------------------------------------------------+
-	|           OneLoneCoder Pixel Game Engine v2.14              |
+	|           OneLoneCoder Pixel Game Engine v2.16              |
 	|  "What do you need? Pixels... Lots of Pixels..." - javidx9  |
 	+-------------------------------------------------------------+
 	What is this?
@@ -81,7 +82,14 @@
 	arguing, thanks to Mumflr the PGE is now supported on Mac. Now I know nothing
 	about Mac, so if you need support, I suggest checking out the instructions
 	here: https://github.com/MumflrFumperdink/olcPGEMac
-	clang++ -arch x86_64 -std=c++17 -mmacosx-version-min=10.15 -Wall -framework OpenGL -framework GLUT -lpng YourSource.cpp -o YourProgName
+	clang++ -arch x86_64 -std=c++17 -mmacosx-version-min=10.15 -Wall -framework OpenGL
+		-framework GLUT -framework Carbon -lpng YourSource.cpp -o YourProgName
+	Compiling with Emscripten (New & Experimental)
+	~~~~~~~~~~~~~~~~~~~~~~~~~
+	Emscripten compiler will turn your awesome C++ PixelGameEngine project into WASM!
+	This means you can run your application in teh browser, great for distributing
+	and submission in to jams and things! It's a bit new at the moment.
+	em++ -std=c++17 -O2 -s ALLOW_MEMORY_GROWTH=1 -s MAX_WEBGL_VERSION=2 -s MIN_WEBGL_VERSION=2 -s USE_LIBPNG=1 ./YourSource.cpp -o pge.html
 	Using stb_image.h
 	~~~~~~~~~~~~~~~~~
 	The PGE will load png images by default (with help from libpng on non-windows systems).
@@ -91,6 +99,18 @@
 	#define OLC_IMAGE_STB
 	Before including the olcPixelGameEngine.h header file. stb_image.h works on many systems
 	and can be downloaded here: https://github.com/nothings/stb/blob/master/stb_image.h
+	Multiple cpp file projects?
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	As a single header solution, the OLC_PGE_APPLICATION definition is used to
+	insert the engine implementation at a project location of your choosing.
+	The simplest way to setup multifile projects is to create a file called
+	"olcPixelGameEngine.cpp" which includes the following:
+	#define OLC_PGE_APPLICATION
+	#include "olcPixelGameEngine.h"
+	That's all it should include. You can also include PGEX includes and
+	defines in here too. With this in place, you dont need to
+	#define OLC_PGE_APPLICATION anywhere, and can simply include this
+	header file as an when you need to.
 	Ports
 	~~~~~
 	olc::PixelGameEngine has been ported and tested with varying degrees of
@@ -99,20 +119,20 @@
 	interested in the details of these ports, come and visit the Discord!
 	Thanks
 	~~~~~~
-	I'd like to extend thanks to Bispoo, Eremiell, slavka, gurkanctn, Phantim, IProgramInCPP
-	JackOJC, KrossX, Huhlig, Dragoneye, Appa, JustinRichardsMusic, SliceNDice, dandistine
-	Ralakus, Gorbit99, raoul, joshinils, benedani, Moros1138, Alexio, SaladinAkara & MagetzUb
-	for advice, ideas and testing, and I'd like to extend my appreciation to the
-	210K YouTube followers,	80+ Patreons and 10K Discord server members who give me
+	I'd like to extend thanks to Ian McKay, Bispoo, Eremiell, slavka, gurkanctn, Phantim,
+	IProgramInCPP, JackOJC, KrossX, Huhlig, Dragoneye, Appa, JustinRichardsMusic, SliceNDice,
+	dandistine,	Ralakus, Gorbit99, raoul, joshinils, benedani, Moros1138, Alexio, SaladinAkara
+	& MagetzUb for advice, ideas and testing, and I'd like to extend my appreciation to the
+	230K YouTube followers,	80+ Patreons and 10K Discord server members who give me
 	the motivation to keep going with all this :D
 	Significant Contributors: @Moros1138, @SaladinAkara, @MaGetzUb, @slavka,
-							  @Dragoneye, @Gorbit99 & @Mumflr
+							  @Dragoneye, @Gorbit99, @dandistine & @Mumflr
 	Special thanks to those who bring gifts!
 	GnarGnarHead.......Domina
-	Gorbit99...........Bastion, Ori & The Blind Forest, Terraria, Spelunky 2
+	Gorbit99...........Bastion, Ori & The Blind Forest, Terraria, Spelunky 2, Skully
 	Marti Morta........Gris
 	Danicron...........Terraria
-	SaladinAkara.......Aseprite, Inside
+	SaladinAkara.......Aseprite, Inside, Quern: Undying Thoughts, Outer Wilds
 	AlterEgo...........Final Fantasy XII - The Zodiac Age
 	SlicEnDicE.........Noita, Inside
 	Special thanks to my Patreons too - I wont name you on here, but I've
@@ -120,6 +140,11 @@
 	Author
 	~~~~~~
 	David Barr, aka javidx9, ©OneLoneCoder 2018, 2019, 2020, 2021
+*/
+#pragma endregion
+
+#pragma region version_history
+/*
 	2.01: Made renderer and platform static for multifile projects
 	2.02: Added Decal destructor, optimised Pixel constructor
 	2.03: Added FreeBSD flags, Added DrawStringDecal()
@@ -179,14 +204,32 @@
 	2.14: Fix WIN32 Definition reshuffle
 		  Fix DrawPartialDecal() - messed up dimension during renderer experiment, didnt remove junk code, thanks Alexio
 		  Fix? Strange error regarding GDI+ Image Loader not knowing about COM, SDK change?
+	2.15: Big Reformat
+		  +WASM Platform (via Emscripten) - Big Thanks to OLC Community - See Platform for details
+		  +Sample Mode for Decals
+		  +Made olc_ConfigureSystem() accessible
+		  +Added OLC_----_CUSTOM_EX for externalised platforms, renderers and image loaders
+		  =Refactored olc::Sprite pixel data store
+		  -Deprecating LoadFromPGESprFile()
+		  -Deprecating SaveToPGESprFile()
+		  Fix Pixel -= operator (thanks Au Lit)
+	2.16: FIX Emscripten JS formatting in VS IDE (thanks Moros)
+		  +"Headless" Mode
+		  +DrawLineDecal()
+		  +Mouse Button Constants
+		  +Move Constructor for olc::Renderable
+		  +Polar/Cartesian conversion for v2d_generic
+		  +DrawRotatedStringDecal()/DrawRotatedStringPropDecal() (thanks Oso-Grande/Sopadeoso (PR #209))
+		  =Using olc::Renderable for layer surface
+		  +Major Mac and GLUT Update (thanks Mumflr)
+
 
 	!! Apple Platforms will not see these updates immediately - Sorry, I dont have a mac to test... !!
 	!!   Volunteers willing to help appreciated, though PRs are manually integrated with credit     !!
 */
+#pragma endregion
 
-//////////////////////////////////////////////////////////////////////////////////////////
-
-
+#pragma region hello_world_example
 // O------------------------------------------------------------------------------O
 // | Example "Hello World" Program (main.cpp)                                     |
 // O------------------------------------------------------------------------------O
@@ -225,10 +268,12 @@ int main()
 	return 0;
 }
 */
+#pragma endregion
 
 #ifndef OLC_PGE_DEF
 #define OLC_PGE_DEF
 
+#pragma region std_includes
 // O------------------------------------------------------------------------------O
 // | STANDARD INCLUDES                                                            |
 // O------------------------------------------------------------------------------O
@@ -249,29 +294,26 @@ int main()
 #include <algorithm>
 #include <array>
 #include <cstring>
+#pragma endregion
 
-#define PGE_VER 214
+#define PGE_VER 216
 
 // O------------------------------------------------------------------------------O
 // | COMPILER CONFIGURATION ODDITIES                                              |
 // O------------------------------------------------------------------------------O
+#pragma region compiler_config
 #define USE_EXPERIMENTAL_FS
-
 #if defined(_WIN32)
 #if _MSC_VER >= 1920 && _MSVC_LANG >= 201703L
 #undef USE_EXPERIMENTAL_FS
 #endif
 #endif
-
 #if defined(__linux__) || defined(__MINGW32__) || defined(__EMSCRIPTEN__) || defined(__FreeBSD__) || defined(__APPLE__)
 #if __cplusplus >= 201703L
 #undef USE_EXPERIMENTAL_FS
 #endif
 #endif
 
-#if defined(__APPLE__)
-#define PGE_USE_CUSTOM_START
-#endif
 
 #if defined(USE_EXPERIMENTAL_FS) || defined(FORCE_EXPERIMENTAL_FS)
 	// C++14
@@ -297,7 +339,8 @@ namespace _gfs = std::filesystem;
 // O------------------------------------------------------------------------------O
 
 // Platform
-#if !defined(OLC_PLATFORM_WINAPI) && !defined(OLC_PLATFORM_X11) && !defined(OLC_PLATFORM_GLUT)
+#if !defined(OLC_PLATFORM_WINAPI) && !defined(OLC_PLATFORM_X11) && !defined(OLC_PLATFORM_GLUT) && !defined(OLC_PLATFORM_EMSCRIPTEN)
+#if !defined(OLC_PLATFORM_CUSTOM_EX)
 #if defined(_WIN32)
 #define OLC_PLATFORM_WINAPI
 #endif
@@ -305,22 +348,40 @@ namespace _gfs = std::filesystem;
 #define OLC_PLATFORM_X11
 #endif
 #if defined(__APPLE__)
+#define GL_SILENCE_DEPRECATION
 #define OLC_PLATFORM_GLUT
 #endif
+#if defined(__EMSCRIPTEN__)
+#define OLC_PLATFORM_EMSCRIPTEN
+#endif
+#endif
+#endif
+
+// Start Situation
+#if defined(OLC_PLATFORM_GLUT) || defined(OLC_PLATFORM_EMSCRIPTEN)
+#define PGE_USE_CUSTOM_START
 #endif
 
 // Renderer
 #if !defined(OLC_GFX_OPENGL10) && !defined(OLC_GFX_OPENGL33) && !defined(OLC_GFX_DIRECTX10)
+#if !defined(OLC_GFX_CUSTOM_EX)
+#if defined(OLC_PLATFORM_EMSCRIPTEN)
+#define OLC_GFX_OPENGL33
+#else
 #define OLC_GFX_OPENGL10
+#endif
+#endif
 #endif
 
 // Image loader
 #if !defined(OLC_IMAGE_STB) && !defined(OLC_IMAGE_GDI) && !defined(OLC_IMAGE_LIBPNG)
+#if !defined(OLC_IMAGE_CUSTOM_EX)
 #if defined(_WIN32)
 #define	OLC_IMAGE_GDI
 #endif
-#if defined(__linux__) || defined(__APPLE__) || defined(__FreeBSD__)
+#if defined(__linux__) || defined(__APPLE__) || defined(__FreeBSD__) || defined(__EMSCRIPTEN__)
 #define	OLC_IMAGE_LIBPNG
+#endif
 #endif
 #endif
 
@@ -328,12 +389,9 @@ namespace _gfs = std::filesystem;
 // O------------------------------------------------------------------------------O
 // | PLATFORM-SPECIFIC DEPENDENCIES                                               |
 // O------------------------------------------------------------------------------O
+#if !defined(OLC_PGE_HEADLESS)
 #if defined(OLC_PLATFORM_WINAPI)	
 #define _WINSOCKAPI_ // Thanks Cornchipss
-
-//#if !defined(WIN32_LEAN_AND_MEAN) // Removes something GDI requires
-//	#define WIN32_LEAN_AND_MEAN
-//#endif
 #if !defined(VC_EXTRALEAN)
 #define VC_EXTRALEAN
 #endif
@@ -351,7 +409,6 @@ namespace _gfs = std::filesystem;
 #endif
 
 #include <windows.h>
-
 #undef _WINSOCKAPI_
 #endif
 
@@ -364,20 +421,23 @@ namespace X11
 #endif
 
 #if defined(OLC_PLATFORM_GLUT)
-#define PGE_USE_CUSTOM_START
 #if defined(__linux__)
 #include <GL/glut.h>
 #include <GL/freeglut_ext.h>
 #endif
 #if defined(__APPLE__)
 #include <GLUT/glut.h>
+#include <objc/message.h>
+#include <objc/NSObjCRuntime.h>
 #endif
 #endif
-
+#endif
+#pragma endregion
 
 // O------------------------------------------------------------------------------O
 // | olcPixelGameEngine INTERFACE DECLARATION                                     |
 // O------------------------------------------------------------------------------O
+#pragma region pge_declaration
 namespace olc
 {
 	class PixelGameEngine;
@@ -463,6 +523,24 @@ namespace olc
 		CAPS_LOCK, ENUM_END
 	};
 
+	namespace Mouse
+	{
+		static constexpr int32_t LEFT = 0;
+		static constexpr int32_t RIGHT = 1;
+		static constexpr int32_t MIDDLE = 2;
+	};
+
+	// O------------------------------------------------------------------------------O
+	// | olc::HWButton - Represents the state of a hardware button (mouse/key/joy)    |
+	// O------------------------------------------------------------------------------O
+	struct HWButton
+	{
+		bool bPressed = false;	// Set once during the frame the event occurs
+		bool bReleased = false;	// Set once during the frame the event occurs
+		bool bHeld = false;		// Set true for all frames between pressed and released events
+	};
+
+
 
 
 	// O------------------------------------------------------------------------------O
@@ -515,6 +593,14 @@ namespace olc
 		v2d_generic  min(const v2d_generic& v) const
 		{
 			return v2d_generic(std::min(x, v.x), std::min(y, v.y));
+		}
+		v2d_generic  cart()
+		{
+			return { std::cos(y) * x, std::sin(y) * x };
+		}
+		v2d_generic  polar()
+		{
+			return { mag(), std::atan2(y, x) };
 		}
 		T dot(const v2d_generic& rhs) const
 		{
@@ -655,15 +741,6 @@ namespace olc
 
 
 
-	// O------------------------------------------------------------------------------O
-	// | olc::HWButton - Represents the state of a hardware button (mouse/key/joy)    |
-	// O------------------------------------------------------------------------------O
-	struct HWButton
-	{
-		bool bPressed = false;	// Set once during the frame the event occurs
-		bool bReleased = false;	// Set once during the frame the event occurs
-		bool bHeld = false;		// Set true for all frames between pressed and released events
-	};
 
 
 
@@ -722,8 +799,6 @@ namespace olc
 
 	public:
 		olc::rcode LoadFromFile(const std::string& sImageFile, olc::ResourcePack* pack = nullptr);
-		olc::rcode LoadFromPGESprFile(const std::string& sImageFile, olc::ResourcePack* pack = nullptr);
-		olc::rcode SaveToPGESprFile(const std::string& sImageFile);
 
 	public:
 		int32_t width = 0;
@@ -748,7 +823,7 @@ namespace olc
 		Pixel* GetData();
 		olc::Sprite* Duplicate();
 		olc::Sprite* Duplicate(const olc::vi2d& vPos, const olc::vi2d& vSize);
-		Pixel* pColData = nullptr;
+		std::vector<olc::Pixel> pColData;
 		Mode modeSample = Mode::NORMAL;
 
 		static std::unique_ptr<olc::ImageLoader> loader;
@@ -760,7 +835,7 @@ namespace olc
 	class Decal
 	{
 	public:
-		Decal(olc::Sprite* spr, bool filter = false);
+		Decal(olc::Sprite* spr, bool filter = false, bool clamp = true);
 		Decal(const uint32_t nExistingTextureResource, olc::Sprite* spr);
 		virtual ~Decal();
 		void Update();
@@ -789,8 +864,12 @@ namespace olc
 	{
 	public:
 		Renderable() = default;
-		olc::rcode Load(const std::string& sFile, ResourcePack* pack = nullptr, bool filter = false);
-		void Create(uint32_t width, uint32_t height, bool filter = false);
+		Renderable(Renderable&& r) : pSprite(std::move(r.pSprite)), pDecal(std::move(r.pDecal))
+		{
+		}
+		Renderable(const Renderable&) = delete;
+		olc::rcode Load(const std::string& sFile, ResourcePack* pack = nullptr, bool filter = false, bool clamp = true);
+		void Create(uint32_t width, uint32_t height, bool filter = false, bool clamp = true);
 		olc::Decal* Decal() const;
 		olc::Sprite* Sprite() const;
 
@@ -821,7 +900,7 @@ namespace olc
 		olc::vf2d vScale = { 1, 1 };
 		bool bShow = false;
 		bool bUpdate = false;
-		olc::Sprite* pDrawTarget = nullptr;
+		olc::Renderable pDrawTarget;
 		uint32_t nResID = 0;
 		std::vector<DecalInstance> vecDecalInstance;
 		olc::Pixel tint = olc::WHITE;
@@ -840,7 +919,7 @@ namespace olc
 		virtual void	   SetDecalMode(const olc::DecalMode& mode) = 0;
 		virtual void       DrawLayerQuad(const olc::vf2d& offset, const olc::vf2d& scale, const olc::Pixel tint) = 0;
 		virtual void       DrawDecal(const olc::DecalInstance& decal) = 0;
-		virtual uint32_t   CreateTexture(const uint32_t width, const uint32_t height, const bool filtered = false) = 0;
+		virtual uint32_t   CreateTexture(const uint32_t width, const uint32_t height, const bool filtered = false, const bool clamp = true) = 0;
 		virtual void       UpdateTexture(uint32_t id, olc::Sprite* spr) = 0;
 		virtual void       ReadTexture(uint32_t id, olc::Sprite* spr) = 0;
 		virtual uint32_t   DeleteTexture(const uint32_t id) = 0;
@@ -868,8 +947,7 @@ namespace olc
 
 	class PGEX;
 
-
-
+	// The Static Twins (plus one)
 	static std::unique_ptr<Renderer> renderer;
 	static std::unique_ptr<Platform> platform;
 	static std::map<size_t, uint8_t> mapKeys;
@@ -999,6 +1077,14 @@ namespace olc
 		// selected area is (ox,oy) to (ox+w,oy+h)
 		void DrawPartialSprite(int32_t x, int32_t y, Sprite* sprite, int32_t ox, int32_t oy, int32_t w, int32_t h, uint32_t scale = 1, uint8_t flip = olc::Sprite::NONE);
 		void DrawPartialSprite(const olc::vi2d& pos, Sprite* sprite, const olc::vi2d& sourcepos, const olc::vi2d& size, uint32_t scale = 1, uint8_t flip = olc::Sprite::NONE);
+		// Draws a single line of text - traditional monospaced
+		void DrawString(int32_t x, int32_t y, const std::string& sText, Pixel col = olc::WHITE, uint32_t scale = 1);
+		void DrawString(const olc::vi2d& pos, const std::string& sText, Pixel col = olc::WHITE, uint32_t scale = 1);
+		olc::vi2d GetTextSize(const std::string& s);
+		// Draws a single line of text - non-monospaced
+		void DrawStringProp(int32_t x, int32_t y, const std::string& sText, Pixel col = olc::WHITE, uint32_t scale = 1);
+		void DrawStringProp(const olc::vi2d& pos, const std::string& sText, Pixel col = olc::WHITE, uint32_t scale = 1);
+		olc::vi2d GetTextSizeProp(const std::string& s);
 
 		// Decal Quad functions
 		void SetDecalMode(const olc::DecalMode& mode);
@@ -1029,16 +1115,10 @@ namespace olc
 		void GradientFillRectDecal(const olc::vf2d& pos, const olc::vf2d& size, const olc::Pixel colTL, const olc::Pixel colBL, const olc::Pixel colBR, const olc::Pixel colTR);
 		// Draws an arbitrary convex textured polygon using GPU
 		void DrawPolygonDecal(olc::Decal* decal, const std::vector<olc::vf2d>& pos, const std::vector<olc::vf2d>& uv, const olc::Pixel tint = olc::WHITE);
-		// Draws a single line of text - traditional monospaced
-		void DrawString(int32_t x, int32_t y, const std::string& sText, Pixel col = olc::WHITE, uint32_t scale = 1);
-		void DrawString(const olc::vi2d& pos, const std::string& sText, Pixel col = olc::WHITE, uint32_t scale = 1);
-		olc::vi2d GetTextSize(const std::string& s);
-
-		// Draws a single line of text - non-monospaced
-		void DrawStringProp(int32_t x, int32_t y, const std::string& sText, Pixel col = olc::WHITE, uint32_t scale = 1);
-		void DrawStringProp(const olc::vi2d& pos, const std::string& sText, Pixel col = olc::WHITE, uint32_t scale = 1);
-		olc::vi2d GetTextSizeProp(const std::string& s);
-
+		// Draws a line in Decal Space
+		void DrawLineDecal(const olc::vf2d& pos1, const olc::vf2d& pos2, Pixel p = olc::WHITE);
+		void DrawRotatedStringDecal(const olc::vf2d& pos, const std::string& sText, const float fAngle, const olc::vf2d& center = { 0.0f, 0.0f }, const olc::Pixel col = olc::WHITE, const olc::vf2d& scale = { 1.0f, 1.0f });
+		void DrawRotatedStringPropDecal(const olc::vf2d& pos, const std::string& sText, const float fAngle, const olc::vf2d& center = { 0.0f, 0.0f }, const olc::Pixel col = olc::WHITE, const olc::vf2d& scale = { 1.0f, 1.0f });
 		// Clears entire draw target to Pixel
 		void Clear(Pixel p);
 		// Clears the rendering back buffer
@@ -1050,7 +1130,7 @@ namespace olc
 		std::string sAppName;
 
 	private: // Inner mysterious workings
-		Sprite* pDrawTarget = nullptr;
+		olc::Sprite* pDrawTarget = nullptr;
 		Pixel::Mode	nPixelMode = Pixel::NORMAL;
 		float		fBlendFactor = 1.0f;
 		olc::vi2d	vScreenSize = { 256, 240 };
@@ -1075,7 +1155,6 @@ namespace olc
 		int			nFrameCount = 0;
 		Sprite* fontSprite = nullptr;
 		Decal* fontDecal = nullptr;
-		Sprite* pDefaultDrawTarget = nullptr;
 		std::vector<LayerDesc> vLayers;
 		uint8_t		nTargetLayer = 0;
 		uint32_t	nLastFPS = 0;
@@ -1098,9 +1177,6 @@ namespace olc
 		// The main engine thread
 		void		EngineThread();
 
-		// At the very end of this file, chooses which
-		// components to compile
-		void        olc_ConfigureSystem();
 
 		// If anything sets this flag to false, the engine
 		// "should" shut down gracefully
@@ -1120,6 +1196,12 @@ namespace olc
 		void olc_UpdateMouseFocus(bool state);
 		void olc_UpdateKeyFocus(bool state);
 		void olc_Terminate();
+		void olc_Reanimate();
+		bool olc_IsRunning();
+
+		// At the very end of this file, chooses which
+		// components to compile
+		virtual void olc_ConfigureSystem();
 
 		// NOTE: Items Here are to be deprecated, I have left them in for now
 		// in case you are using them, but they will be removed.
@@ -1131,8 +1213,6 @@ namespace olc
 
 	private:
 		std::vector<olc::PGEX*> vExtensions;
-
-
 	};
 
 
@@ -1157,24 +1237,9 @@ namespace olc
 	};
 }
 
+#pragma endregion
+
 #endif // OLC_PGE_DEF
-
-
-
-
-/*
-	Object Oriented Mode
-	~~~~~~~~~~~~~~~~~~~~
-	If the olcPixelGameEngine.h is called from several sources it can cause
-	multiple definitions of objects. To prevent this, ONLY ONE of the pathways
-	to including this file must have OLC_PGE_APPLICATION defined before it. This prevents
-	the definitions being duplicated.
-	If all else fails, create a file called "olcPixelGameEngine.cpp" with the following
-	two lines. Then you can just #include "olcPixelGameEngine.h" as normal without worrying
-	about defining things. Dont forget to include that cpp file as part of your build!
-	#define OLC_PGE_APPLICATION
-	#include "olcPixelGameEngine.h"
-*/
 
 
 // O------------------------------------------------------------------------------O
@@ -1187,6 +1252,7 @@ namespace olc
 // | olcPixelGameEngine INTERFACE IMPLEMENTATION (CORE)                           |
 // | Note: The core implementation is platform independent                        |
 // O------------------------------------------------------------------------------O
+#pragma region pge_implementation
 namespace olc
 {
 	// O------------------------------------------------------------------------------O
@@ -1201,7 +1267,6 @@ namespace olc
 	{
 		n = red | (green << 8) | (blue << 16) | (alpha << 24);
 	} // Thanks jarekpelczar 
-
 
 	Pixel::Pixel(uint32_t p)
 	{
@@ -1274,11 +1339,11 @@ namespace olc
 		return *this;
 	}
 
-	Pixel& Pixel::operator -= (const Pixel& p)
+	Pixel& Pixel::operator -= (const Pixel& p) // Thanks Au Lit
 	{
-		this->r = uint8_t(std::min(255, std::max(0, int(r) + int(p.r))));
-		this->g = uint8_t(std::min(255, std::max(0, int(g) + int(p.g))));
-		this->b = uint8_t(std::min(255, std::max(0, int(b) + int(p.b))));
+		this->r = uint8_t(std::min(255, std::max(0, int(r) - int(p.r))));
+		this->g = uint8_t(std::min(255, std::max(0, int(g) - int(p.g))));
+		this->b = uint8_t(std::min(255, std::max(0, int(b) - int(p.b))));
 		return *this;
 	}
 
@@ -1305,7 +1370,7 @@ namespace olc
 	// O------------------------------------------------------------------------------O
 	Sprite::Sprite()
 	{
-		pColData = nullptr; width = 0; height = 0;
+		width = 0; height = 0;
 	}
 
 	Sprite::Sprite(const std::string& sImageFile, olc::ResourcePack* pack)
@@ -1315,70 +1380,14 @@ namespace olc
 
 	Sprite::Sprite(int32_t w, int32_t h)
 	{
-		if (pColData) delete[] pColData;
 		width = w;		height = h;
-		pColData = new Pixel[width * height];
-		for (int32_t i = 0; i < width * height; i++)
-			pColData[i] = Pixel();
+		pColData.resize(width * height);
+		pColData.resize(width * height, nDefaultPixel);
 	}
 
 	Sprite::~Sprite()
 	{
-		if (pColData) delete[] pColData;
-	}
-
-
-	olc::rcode Sprite::LoadFromPGESprFile(const std::string& sImageFile, olc::ResourcePack* pack)
-	{
-		if (pColData) delete[] pColData;
-		auto ReadData = [&](std::istream& is)
-		{
-			is.read((char*)&width, sizeof(int32_t));
-			is.read((char*)&height, sizeof(int32_t));
-			pColData = new Pixel[width * height];
-			is.read((char*)pColData, (size_t)width * (size_t)height * sizeof(uint32_t));
-		};
-
-		// These are essentially Memory Surfaces represented by olc::Sprite
-		// which load very fast, but are completely uncompressed
-		if (pack == nullptr)
-		{
-			std::ifstream ifs;
-			ifs.open(sImageFile, std::ifstream::binary);
-			if (ifs.is_open())
-			{
-				ReadData(ifs);
-				return olc::OK;
-			}
-			else
-				return olc::FAIL;
-		}
-		else
-		{
-			ResourceBuffer rb = pack->GetFileBuffer(sImageFile);
-			std::istream is(&rb);
-			ReadData(is);
-			return olc::OK;
-		}
-		return olc::FAIL;
-	}
-
-	olc::rcode Sprite::SaveToPGESprFile(const std::string& sImageFile)
-	{
-		if (pColData == nullptr) return olc::FAIL;
-
-		std::ofstream ofs;
-		ofs.open(sImageFile, std::ifstream::binary);
-		if (ofs.is_open())
-		{
-			ofs.write((char*)&width, sizeof(int32_t));
-			ofs.write((char*)&height, sizeof(int32_t));
-			ofs.write((char*)pColData, (size_t)width * (size_t)height * sizeof(uint32_t));
-			ofs.close();
-			return olc::OK;
-		}
-
-		return olc::FAIL;
+		pColData.clear();
 	}
 
 	void Sprite::SetSampleMode(olc::Sprite::Mode mode)
@@ -1453,7 +1462,7 @@ namespace olc
 
 	Pixel* Sprite::GetData()
 	{
-		return pColData;
+		return pColData.data();
 	}
 
 
@@ -1481,14 +1490,14 @@ namespace olc
 	}
 
 	// O------------------------------------------------------------------------------O
-	// | olc::Decal IMPLEMENTATION                                                   |
+	// | olc::Decal IMPLEMENTATION                                                    |
 	// O------------------------------------------------------------------------------O
-	Decal::Decal(olc::Sprite* spr, bool filter)
+	Decal::Decal(olc::Sprite* spr, bool filter, bool clamp)
 	{
 		id = -1;
 		if (spr == nullptr) return;
 		sprite = spr;
-		id = renderer->CreateTexture(sprite->width, sprite->height, filter);
+		id = renderer->CreateTexture(sprite->width, sprite->height, filter, clamp);
 		Update();
 	}
 
@@ -1522,18 +1531,18 @@ namespace olc
 		}
 	}
 
-	void Renderable::Create(uint32_t width, uint32_t height, bool filter)
+	void Renderable::Create(uint32_t width, uint32_t height, bool filter, bool clamp)
 	{
 		pSprite = std::make_unique<olc::Sprite>(width, height);
-		pDecal = std::make_unique<olc::Decal>(pSprite.get(), filter);
+		pDecal = std::make_unique<olc::Decal>(pSprite.get(), filter, clamp);
 	}
 
-	olc::rcode Renderable::Load(const std::string& sFile, ResourcePack* pack, bool filter)
+	olc::rcode Renderable::Load(const std::string& sFile, ResourcePack* pack, bool filter, bool clamp)
 	{
 		pSprite = std::make_unique<olc::Sprite>();
 		if (pSprite->LoadFromFile(sFile, pack) == olc::rcode::OK)
 		{
-			pDecal = std::make_unique<olc::Decal>(pSprite.get(), filter);
+			pDecal = std::make_unique<olc::Decal>(pSprite.get(), filter, clamp);
 			return olc::rcode::OK;
 		}
 		else
@@ -1616,9 +1625,7 @@ namespace olc
 
 		auto get = [&read]() -> int
 		{
-			char c;
-			read(&c, 1);
-			return c;
+			char c; read(&c, 1); return c;
 		};
 
 		// 2) Read Map
@@ -1776,8 +1783,6 @@ namespace olc
 
 		if (vPixelSize.x <= 0 || vPixelSize.y <= 0 || vScreenSize.x <= 0 || vScreenSize.y <= 0)
 			return olc::FAIL;
-
-
 		return olc::OK;
 	}
 
@@ -1788,12 +1793,10 @@ namespace olc
 		vInvScreenSize = { 1.0f / float(w), 1.0f / float(h) };
 		for (auto& layer : vLayers)
 		{
-			delete layer.pDrawTarget; // Erase existing layer sprites
-			layer.pDrawTarget = new Sprite(vScreenSize.x, vScreenSize.y);
+			layer.pDrawTarget.Create(vScreenSize.x, vScreenSize.y);
 			layer.bUpdate = true;
 		}
 		SetDrawTarget(nullptr);
-
 		renderer->ClearBuffer(olc::BLACK, true);
 		renderer->DisplayFrame();
 		renderer->ClearBuffer(olc::BLACK, true);
@@ -1834,7 +1837,7 @@ namespace olc
 		else
 		{
 			nTargetLayer = 0;
-			pDrawTarget = vLayers[0].pDrawTarget;
+			pDrawTarget = vLayers[0].pDrawTarget.Sprite();
 		}
 	}
 
@@ -1842,7 +1845,7 @@ namespace olc
 	{
 		if (layer < vLayers.size())
 		{
-			pDrawTarget = vLayers[layer].pDrawTarget;
+			pDrawTarget = vLayers[layer].pDrawTarget.Sprite();
 			vLayers[layer].bUpdate = true;
 			nTargetLayer = layer;
 		}
@@ -1891,10 +1894,8 @@ namespace olc
 	uint32_t PixelGameEngine::CreateLayer()
 	{
 		LayerDesc ld;
-		ld.pDrawTarget = new olc::Sprite(vScreenSize.x, vScreenSize.y);
-		ld.nResID = renderer->CreateTexture(vScreenSize.x, vScreenSize.y);
-		renderer->UpdateTexture(ld.nResID, ld.pDrawTarget);
-		vLayers.push_back(ld);
+		ld.pDrawTarget.Create(vScreenSize.x, vScreenSize.y);
+		vLayers.push_back(std::move(ld));
 		return uint32_t(vLayers.size()) - 1;
 	}
 
@@ -1993,7 +1994,6 @@ namespace olc
 	{
 		return vMouseWindowPos;
 	}
-
 
 	bool PixelGameEngine::Draw(const olc::vi2d& pos, Pixel p)
 	{
@@ -2391,7 +2391,6 @@ namespace olc
 			t2x += t2xp;
 			y += 1;
 			if (y == y2) break;
-
 		}
 	next:
 		// Second half
@@ -2685,6 +2684,27 @@ namespace olc
 		vLayers[nTargetLayer].vecDecalInstance.push_back(di);
 	}
 
+	void PixelGameEngine::DrawLineDecal(const olc::vf2d& pos1, const olc::vf2d& pos2, Pixel p)
+	{
+		DecalInstance di;
+		di.decal = nullptr;
+		di.points = uint32_t(2);
+		di.pos.resize(di.points);
+		di.uv.resize(di.points);
+		di.w.resize(di.points);
+		di.tint.resize(di.points);
+		di.pos[0] = { (pos1.x * vInvScreenSize.x) * 2.0f - 1.0f, ((pos1.y * vInvScreenSize.y) * 2.0f - 1.0f) * -1.0f };
+		di.uv[0] = { 0.0f, 0.0f };
+		di.tint[0] = p;
+		di.w[0] = 1.0f;
+		di.pos[1] = { (pos2.x * vInvScreenSize.x) * 2.0f - 1.0f, ((pos2.y * vInvScreenSize.y) * 2.0f - 1.0f) * -1.0f };
+		di.uv[1] = { 0.0f, 0.0f };
+		di.tint[1] = p;
+		di.w[1] = 1.0f;
+		di.mode = olc::DecalMode::WIREFRAME;
+		vLayers[nTargetLayer].vecDecalInstance.push_back(di);
+	}
+
 	void PixelGameEngine::FillRectDecal(const olc::vf2d& pos, const olc::vf2d& size, const olc::Pixel col)
 	{
 		std::array<olc::vf2d, 4> points = { { {pos}, {pos.x, pos.y + size.y}, {pos + size}, {pos.x + size.x, pos.y} } };
@@ -2875,6 +2895,44 @@ namespace olc
 			}
 		}
 	}
+	// Thanks Oso-Grande/Sopadeoso For these awesom and stupidly clever Text Rotation routines... duh XD
+	void PixelGameEngine::DrawRotatedStringDecal(const olc::vf2d& pos, const std::string& sText, const float fAngle, const olc::vf2d& center, const Pixel col, const olc::vf2d& scale)
+	{
+		olc::vf2d spos = center;
+		for (auto c : sText)
+		{
+			if (c == '\n')
+			{
+				spos.x = center.x; spos.y -= 8.0f;
+			}
+			else
+			{
+				int32_t ox = (c - 32) % 16;
+				int32_t oy = (c - 32) / 16;
+				DrawPartialRotatedDecal(pos, fontDecal, fAngle, spos, { float(ox) * 8.0f, float(oy) * 8.0f }, { 8.0f, 8.0f }, scale, col);
+				spos.x -= 8.0f;
+			}
+		}
+	}
+
+	void PixelGameEngine::DrawRotatedStringPropDecal(const olc::vf2d& pos, const std::string& sText, const float fAngle, const olc::vf2d& center, const Pixel col, const olc::vf2d& scale)
+	{
+		olc::vf2d spos = center;
+		for (auto c : sText)
+		{
+			if (c == '\n')
+			{
+				spos.x = center.x; spos.y -= 8.0f;
+			}
+			else
+			{
+				int32_t ox = (c - 32) % 16;
+				int32_t oy = (c - 32) / 16;
+				DrawPartialRotatedDecal(pos, fontDecal, fAngle, spos, { float(ox) * 8.0f + float(vFontSpacing[c - 32].x), float(oy) * 8.0f }, { float(vFontSpacing[c - 32].y), 8.0f }, scale, col);
+				spos.x -= float(vFontSpacing[c - 32].y);
+			}
+		}
+	}
 
 	olc::vi2d PixelGameEngine::GetTextSize(const std::string& s)
 	{
@@ -3051,7 +3109,6 @@ namespace olc
 	{
 		return true;
 	}
-	//////////////////////////////////////////////////////////////////
 
 	void PixelGameEngine::olc_UpdateViewport()
 	{
@@ -3125,6 +3182,16 @@ namespace olc
 	void PixelGameEngine::olc_UpdateKeyFocus(bool state)
 	{
 		bHasInputFocus = state;
+	}
+
+	void PixelGameEngine::olc_Reanimate()
+	{
+		bAtomActive = true;
+	}
+
+	bool PixelGameEngine::olc_IsRunning()
+	{
+		return bAtomActive;
 	}
 
 	void PixelGameEngine::olc_Terminate()
@@ -3253,10 +3320,10 @@ namespace olc
 			{
 				if (layer->funcHook == nullptr)
 				{
-					renderer->ApplyTexture(layer->nResID);
+					renderer->ApplyTexture(layer->pDrawTarget.Decal()->id);
 					if (layer->bUpdate)
 					{
-						renderer->UpdateTexture(layer->nResID, layer->pDrawTarget);
+						layer->pDrawTarget.Decal()->Update();
 						layer->bUpdate = false;
 					}
 
@@ -3378,21 +3445,23 @@ namespace olc
 	olc::PixelGameEngine* olc::Renderer::ptrPGE = nullptr;
 	std::unique_ptr<ImageLoader> olc::Sprite::loader = nullptr;
 };
-
-
+#pragma endregion 
 
 // O------------------------------------------------------------------------------O
-// | olcPixelGameEngine PLATFORM SPECIFIC IMPLEMENTATIONS                         |
+// | olcPixelGameEngine Renderers - the draw-y bits                               |
 // O------------------------------------------------------------------------------O
 
+#if !defined(OLC_PGE_HEADLESS)
+
+#pragma region renderer_ogl10
 // O------------------------------------------------------------------------------O
 // | START RENDERER: OpenGL 1.0 (the original, the best...)                       |
 // O------------------------------------------------------------------------------O
 #if defined(OLC_GFX_OPENGL10)
+
 #if defined(OLC_PLATFORM_WINAPI)
 #include <dwmapi.h>
 #include <GL/gl.h>
-
 #if !defined(__MINGW32__)
 #pragma comment(lib, "Dwmapi.lib")
 #endif
@@ -3411,7 +3480,6 @@ namespace X11
 {
 #include <GL/glx.h>
 }
-
 typedef int(glSwapInterval_t)(X11::Display* dpy, X11::GLXDrawable drawable, int interval);
 static glSwapInterval_t* glSwapIntervalEXT;
 typedef X11::GLXContext glDeviceContext_t;
@@ -3454,15 +3522,11 @@ namespace olc
 			int argc = 0;
 			char* argv[1] = { (char*)"" };
 			glutInit(&argc, argv);
-
 			glutInitWindowPosition(0, 0);
 			glutInitWindowSize(512, 512);
-
 			glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH | GLUT_RGBA);
-
 			// Creates the window and the OpenGL context for it
 			glutCreateWindow("OneLoneCoder.com - Pixel Game Engine");
-
 			glEnable(GL_TEXTURE_2D); // Turn on texturing
 			glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 #endif
@@ -3648,7 +3712,7 @@ namespace olc
 			glEnd();
 		}
 
-		uint32_t CreateTexture(const uint32_t width, const uint32_t height, const bool filtered) override
+		uint32_t CreateTexture(const uint32_t width, const uint32_t height, const bool filtered, const bool clamp) override
 		{
 			UNUSED(width);
 			UNUSED(height);
@@ -3666,8 +3730,17 @@ namespace olc
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 			}
 
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+			if (clamp)
+			{
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+			}
+			else
+			{
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			}
+
 			glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 			return id;
 		}
@@ -3703,11 +3776,7 @@ namespace olc
 
 		void UpdateViewport(const olc::vi2d& pos, const olc::vi2d& size) override
 		{
-#if defined(OLC_PLATFORM_GLUT)
-			if (!mFullScreen) glutReshapeWindow(size.x, size.y);
-#else
 			glViewport(pos.x, pos.y, size.x, size.y);
-#endif
 		}
 	};
 }
@@ -3715,15 +3784,17 @@ namespace olc
 // O------------------------------------------------------------------------------O
 // | END RENDERER: OpenGL 1.0 (the original, the best...)                         |
 // O------------------------------------------------------------------------------O
+#pragma endregion
 
+#pragma region renderer_ogl33
 // O------------------------------------------------------------------------------O
 // | START RENDERER: OpenGL 3.3 (3.0 es) (sh-sh-sh-shaders....)                   |
 // O------------------------------------------------------------------------------O
 #if defined(OLC_GFX_OPENGL33)
+
 #if defined(OLC_PLATFORM_WINAPI)
 #include <dwmapi.h>
 #include <gl/GL.h>
-
 #if !defined(__MINGW32__)
 #pragma comment(lib, "Dwmapi.lib")
 #endif		
@@ -3731,7 +3802,7 @@ typedef void __stdcall locSwapInterval_t(GLsizei n);
 typedef HDC glDeviceContext_t;
 typedef HGLRC glRenderContext_t;
 #define CALLSTYLE __stdcall
-#define OGL_LOAD(t, n) (t*)wglGetProcAddress(n)
+#define OGL_LOAD(t, n) (t*)wglGetProcAddress(#n)
 #endif
 
 #if defined(__linux__) || defined(__FreeBSD__)
@@ -3747,7 +3818,7 @@ typedef int(locSwapInterval_t)(X11::Display* dpy, X11::GLXDrawable drawable, int
 typedef X11::GLXContext glDeviceContext_t;
 typedef X11::GLXContext glRenderContext_t;
 #define CALLSTYLE 
-#define OGL_LOAD(t, n) (t*)glXGetProcAddress((unsigned char*)n);
+#define OGL_LOAD(t, n) (t*)glXGetProcAddress((unsigned char*)#n);
 #endif
 
 #if defined(__APPLE__)
@@ -3757,6 +3828,17 @@ typedef X11::GLXContext glRenderContext_t;
 #include <OpenGL/glu.h>
 #endif
 
+#if defined(OLC_PLATFORM_EMSCRIPTEN)
+#include <EGL/egl.h>
+#include <GLES2/gl2.h>
+#define GL_GLEXT_PROTOTYPES
+#include <GLES2/gl2ext.h>
+#include <emscripten/emscripten.h>
+#define CALLSTYLE
+typedef EGLBoolean(locSwapInterval_t)(EGLDisplay display, EGLint interval);
+#define GL_CLAMP GL_CLAMP_TO_EDGE
+#define OGL_LOAD(t, n) n;
+#endif
 
 namespace olc
 {
@@ -3765,7 +3847,11 @@ namespace olc
 	typedef GLuint CALLSTYLE locCreateShader_t(GLenum type);
 	typedef GLuint CALLSTYLE locCreateProgram_t(void);
 	typedef void CALLSTYLE locDeleteShader_t(GLuint shader);
+#if defined(OLC_PLATFORM_EMSCRIPTEN)
+	typedef void CALLSTYLE locShaderSource_t(GLuint shader, GLsizei count, const GLchar* const* string, const GLint* length);
+#else
 	typedef void CALLSTYLE locShaderSource_t(GLuint shader, GLsizei count, const GLchar** string, const GLint* length);
+#endif
 	typedef void CALLSTYLE locCompileShader_t(GLuint shader);
 	typedef void CALLSTYLE locLinkProgram_t(GLuint program);
 	typedef void CALLSTYLE locDeleteProgram_t(GLuint program);
@@ -3780,23 +3866,28 @@ namespace olc
 	typedef void CALLSTYLE locGenVertexArrays_t(GLsizei n, GLuint* arrays);
 	typedef void CALLSTYLE locGetShaderInfoLog_t(GLuint shader, GLsizei bufSize, GLsizei* length, GLchar* infoLog);
 
-
-
 	constexpr size_t OLC_MAX_VERTS = 128;
 
 	class Renderer_OGL33 : public olc::Renderer
 	{
 	private:
+#if defined(OLC_PLATFORM_EMSCRIPTEN)
+		EGLDisplay olc_Display;
+		EGLConfig olc_Config;
+		EGLContext olc_Context;
+		EGLSurface olc_Surface;
+#endif
+
 #if defined(OLC_PLATFORM_GLUT)
 		bool mFullScreen = false;
 #else
+#if !defined(OLC_PLATFORM_EMSCRIPTEN)
 		glDeviceContext_t glDeviceContext = 0;
 		glRenderContext_t glRenderContext = 0;
 #endif
-
+#endif
 		bool bSync = false;
 		olc::DecalMode nDecalMode = olc::DecalMode(-1); // Thanks Gusgo & Bispoo
-
 #if defined(OLC_PLATFORM_X11)
 		X11::Display* olc_Display = nullptr;
 		X11::Window* olc_Window = nullptr;
@@ -3848,15 +3939,11 @@ namespace olc
 			int argc = 0;
 			char* argv[1] = { (char*)"" };
 			glutInit(&argc, argv);
-
 			glutInitWindowPosition(0, 0);
 			glutInitWindowSize(512, 512);
-
 			glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH | GLUT_RGBA);
-
 			// Creates the window and the OpenGL context for it
 			glutCreateWindow("OneLoneCoder.com - Pixel Game Engine");
-
 			glEnable(GL_TEXTURE_2D); // Turn on texturing
 			glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 #endif
@@ -3865,7 +3952,6 @@ namespace olc
 		olc::rcode CreateDevice(std::vector<void*> params, bool bFullScreen, bool bVSYNC) override
 		{
 			// Create OpenGL Context
-
 #if defined(OLC_PLATFORM_WINAPI)
 			// Create Device Context
 			glDeviceContext = GetDC((HWND)(params[0]));
@@ -3918,6 +4004,24 @@ namespace olc
 				locSwapInterval(olc_Display, *olc_Window, 0);
 #endif		
 
+#if defined(OLC_PLATFORM_EMSCRIPTEN)
+			EGLint const attribute_list[] = { EGL_RED_SIZE, 8, EGL_GREEN_SIZE, 8, EGL_BLUE_SIZE, 8, EGL_ALPHA_SIZE, 8, EGL_NONE };
+			EGLint const context_config[] = { EGL_CONTEXT_CLIENT_VERSION , 2, EGL_NONE };
+			EGLint num_config;
+
+			olc_Display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+			eglInitialize(olc_Display, nullptr, nullptr);
+			eglChooseConfig(olc_Display, attribute_list, &olc_Config, 1, &num_config);
+
+			/* create an EGL rendering context */
+			olc_Context = eglCreateContext(olc_Display, olc_Config, EGL_NO_CONTEXT, context_config);
+			olc_Surface = eglCreateWindowSurface(olc_Display, olc_Config, NULL, nullptr);
+			eglMakeCurrent(olc_Display, olc_Surface, olc_Surface, olc_Context);
+			//eglSwapInterval is currently a NOP, plement anyways in case it becomes supported
+			locSwapInterval = &eglSwapInterval;
+			locSwapInterval(olc_Display, bVSYNC ? 1 : 0);
+#endif
+
 #if defined(OLC_PLATFORM_GLUT)
 			mFullScreen = bFullScreen;
 			if (!bVSYNC)
@@ -3929,32 +4033,39 @@ namespace olc
 #endif
 			}
 #else
+#if !defined(OLC_PLATFORM_EMSCRIPTEN)
 			glEnable(GL_TEXTURE_2D); // Turn on texturing
 			glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 #endif
+#endif
 			// Load External OpenGL Functions
-			locCreateShader = OGL_LOAD(locCreateShader_t, "glCreateShader");
-			locCompileShader = OGL_LOAD(locCompileShader_t, "glCompileShader");
-			locShaderSource = OGL_LOAD(locShaderSource_t, "glShaderSource");
-			locDeleteShader = OGL_LOAD(locDeleteShader_t, "glDeleteShader");
-			locCreateProgram = OGL_LOAD(locCreateProgram_t, "glCreateProgram");
-			locDeleteProgram = OGL_LOAD(locDeleteProgram_t, "glDeleteProgram");
-			locLinkProgram = OGL_LOAD(locLinkProgram_t, "glLinkProgram");
-			locAttachShader = OGL_LOAD(locAttachShader_t, "glAttachShader");
-			locBindBuffer = OGL_LOAD(locBindBuffer_t, "glBindBuffer");
-			locBufferData = OGL_LOAD(locBufferData_t, "glBufferData");
-			locGenBuffers = OGL_LOAD(locGenBuffers_t, "glGenBuffers");
-			locVertexAttribPointer = OGL_LOAD(locVertexAttribPointer_t, "glVertexAttribPointer");
-			locEnableVertexAttribArray = OGL_LOAD(locEnableVertexAttribArray_t, "glEnableVertexAttribArray");
-			locUseProgram = OGL_LOAD(locUseProgram_t, "glUseProgram");
-			locBindVertexArray = OGL_LOAD(locBindVertexArray_t, "glBindVertexArray");
-			locGenVertexArrays = OGL_LOAD(locGenVertexArrays_t, "glGenVertexArrays");
-			locGetShaderInfoLog = OGL_LOAD(locGetShaderInfoLog_t, "glGetShaderInfoLog");
+			locCreateShader = OGL_LOAD(locCreateShader_t, glCreateShader);
+			locCompileShader = OGL_LOAD(locCompileShader_t, glCompileShader);
+			locShaderSource = OGL_LOAD(locShaderSource_t, glShaderSource);
+			locDeleteShader = OGL_LOAD(locDeleteShader_t, glDeleteShader);
+			locCreateProgram = OGL_LOAD(locCreateProgram_t, glCreateProgram);
+			locDeleteProgram = OGL_LOAD(locDeleteProgram_t, glDeleteProgram);
+			locLinkProgram = OGL_LOAD(locLinkProgram_t, glLinkProgram);
+			locAttachShader = OGL_LOAD(locAttachShader_t, glAttachShader);
+			locBindBuffer = OGL_LOAD(locBindBuffer_t, glBindBuffer);
+			locBufferData = OGL_LOAD(locBufferData_t, glBufferData);
+			locGenBuffers = OGL_LOAD(locGenBuffers_t, glGenBuffers);
+			locVertexAttribPointer = OGL_LOAD(locVertexAttribPointer_t, glVertexAttribPointer);
+			locEnableVertexAttribArray = OGL_LOAD(locEnableVertexAttribArray_t, glEnableVertexAttribArray);
+			locUseProgram = OGL_LOAD(locUseProgram_t, glUseProgram);
+			locGetShaderInfoLog = OGL_LOAD(locGetShaderInfoLog_t, glGetShaderInfoLog);
+#if !defined(OLC_PLATFORM_EMSCRIPTEN)
+			locBindVertexArray = OGL_LOAD(locBindVertexArray_t, glBindVertexArray);
+			locGenVertexArrays = OGL_LOAD(locGenVertexArrays_t, glGenVertexArrays);
+#else
+			locBindVertexArray = glBindVertexArrayOES;
+			locGenVertexArrays = glGenVertexArraysOES;
+#endif
 
 			// Load & Compile Quad Shader - assumes no errors
 			m_nFS = locCreateShader(0x8B30);
 			const GLchar* strFS =
-#if defined(__arm__)
+#if defined(__arm__) || defined(OLC_PLATFORM_EMSCRIPTEN)
 				"#version 300 es\n"
 				"precision mediump float;"
 #else
@@ -3967,7 +4078,7 @@ namespace olc
 
 			m_nVS = locCreateShader(0x8B31);
 			const GLchar* strVS =
-#if defined(__arm__)
+#if defined(__arm__) || defined(OLC_PLATFORM_EMSCRIPTEN)
 				"#version 300 es\n"
 				"precision mediump float;"
 #else
@@ -4019,6 +4130,16 @@ namespace olc
 #if defined(OLC_PLATFORM_GLUT)
 			glutDestroyWindow(glutGetWindow());
 #endif
+
+#if defined(OLC_PLATFORM_EMSCRIPTEN)
+			eglMakeCurrent(olc_Display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+			eglDestroyContext(olc_Display, olc_Context);
+			eglDestroySurface(olc_Display, olc_Surface);
+			eglTerminate(olc_Display);
+			olc_Display = EGL_NO_DISPLAY;
+			olc_Surface = EGL_NO_SURFACE;
+			olc_Context = EGL_NO_CONTEXT;
+#endif
 			return olc::rcode::OK;
 		}
 
@@ -4036,6 +4157,10 @@ namespace olc
 #if defined(OLC_PLATFORM_GLUT)
 			glutSwapBuffers();
 #endif
+
+#if defined(OLC_PLATFORM_EMSCRIPTEN)
+			eglSwapBuffers(olc_Display, olc_Surface);
+#endif
 		}
 
 		void PrepareDrawing() override
@@ -4045,9 +4170,15 @@ namespace olc
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			locUseProgram(m_nQuadShader);
 			locBindVertexArray(m_vaQuad);
+
+#if defined(OLC_PLATFORM_EMSCRIPTEN)
+			locVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(locVertex), 0); locEnableVertexAttribArray(0);
+			locVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(locVertex), (void*)(3 * sizeof(float))); locEnableVertexAttribArray(1);
+			locVertexAttribPointer(2, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(locVertex), (void*)(5 * sizeof(float)));	locEnableVertexAttribArray(2);
+#endif
 		}
 
-		void SetDecalMode(const olc::DecalMode& mode)
+		void SetDecalMode(const olc::DecalMode& mode) override
 		{
 			if (mode != nDecalMode)
 			{
@@ -4100,7 +4231,7 @@ namespace olc
 				glDrawArrays(GL_TRIANGLE_FAN, 0, decal.points);
 		}
 
-		uint32_t CreateTexture(const uint32_t width, const uint32_t height, const bool filtered) override
+		uint32_t CreateTexture(const uint32_t width, const uint32_t height, const bool filtered, const bool clamp) override
 		{
 			UNUSED(width);
 			UNUSED(height);
@@ -4119,9 +4250,19 @@ namespace olc
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 			}
 
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+			if (clamp)
+			{
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+			}
+			else
+			{
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			}
+#if !defined(OLC_PLATFORM_EMSCRIPTEN)
 			glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+#endif
 			return id;
 		}
 
@@ -4156,11 +4297,7 @@ namespace olc
 
 		void UpdateViewport(const olc::vi2d& pos, const olc::vi2d& size) override
 		{
-#if defined(OLC_PLATFORM_GLUT)
-			if (!mFullScreen) glutReshapeWindow(size.x, size.y);
-#else
 			glViewport(pos.x, pos.y, size.x, size.y);
-#endif
 		}
 	};
 }
@@ -4168,7 +4305,13 @@ namespace olc
 // O------------------------------------------------------------------------------O
 // | END RENDERER: OpenGL 3.3 (3.0 es) (sh-sh-sh-shaders....)                     |
 // O------------------------------------------------------------------------------O
+#pragma endregion
 
+// O------------------------------------------------------------------------------O
+// | olcPixelGameEngine Image loaders                                             |
+// O------------------------------------------------------------------------------O
+
+#pragma region image_gdi
 // O------------------------------------------------------------------------------O
 // | START IMAGE LOADER: GDI+, Windows Only, always exists, a little slow         |
 // O------------------------------------------------------------------------------O
@@ -4241,7 +4384,7 @@ namespace olc
 		olc::rcode LoadImageResource(olc::Sprite* spr, const std::string& sImageFile, olc::ResourcePack* pack) override
 		{
 			// clear out existing sprite
-			if (spr->pColData != nullptr) delete[] spr->pColData;
+			spr->pColData.clear();
 
 			// Open file
 			UNUSED(pack);
@@ -4264,7 +4407,8 @@ namespace olc
 			if (bmp->GetLastStatus() != Gdiplus::Ok) return olc::rcode::FAIL;
 			spr->width = bmp->GetWidth();
 			spr->height = bmp->GetHeight();
-			spr->pColData = new Pixel[spr->width * spr->height];
+
+			spr->pColData.resize(spr->width * spr->height);
 
 			for (int y = 0; y < spr->height; y++)
 				for (int x = 0; x < spr->width; x++)
@@ -4287,10 +4431,9 @@ namespace olc
 // O------------------------------------------------------------------------------O
 // | END IMAGE LOADER: GDI+                                                       |
 // O------------------------------------------------------------------------------O
+#pragma endregion
 
-
-
-
+#pragma region image_libpng
 // O------------------------------------------------------------------------------O
 // | START IMAGE LOADER: libpng, default on linux, requires -lpng  (libpng-dev)   |
 // O------------------------------------------------------------------------------O
@@ -4316,7 +4459,7 @@ namespace olc
 			UNUSED(pack);
 
 			// clear out existing sprite
-			if (spr->pColData != nullptr) delete[] spr->pColData;
+			spr->pColData.clear();
 
 			////////////////////////////////////////////////////////////////////////////
 			// Use libpng, Thanks to Guillaume Cottenceau
@@ -4353,7 +4496,7 @@ namespace olc
 				png_read_image(png, row_pointers);
 				////////////////////////////////////////////////////////////////////////////
 				// Create sprite array
-				spr->pColData = new Pixel[spr->width * spr->height];
+				spr->pColData.resize(spr->width * spr->height);
 				// Iterate through image rows, converting into sprite format
 				for (int y = 0; y < spr->height; y++)
 				{
@@ -4400,7 +4543,7 @@ namespace olc
 		fail_load:
 			spr->width = 0;
 			spr->height = 0;
-			spr->pColData = nullptr;
+			spr->pColData.clear();
 			return olc::rcode::FAIL;
 		}
 
@@ -4414,10 +4557,9 @@ namespace olc
 // O------------------------------------------------------------------------------O
 // | END IMAGE LOADER:                                                            |
 // O------------------------------------------------------------------------------O
+#pragma endregion
 
-
-
-
+#pragma region image_stb
 // O------------------------------------------------------------------------------O
 // | START IMAGE LOADER: stb_image.h, all systems, very fast                      |
 // O------------------------------------------------------------------------------O
@@ -4445,7 +4587,7 @@ namespace olc
 		{
 			UNUSED(pack);
 			// clear out existing sprite
-			if (spr->pColData != nullptr) delete[] spr->pColData;
+			spr->pColData.clear();
 			// Open file
 			stbi_uc* bytes = nullptr;
 			int w = 0, h = 0, cmp = 0;
@@ -4463,8 +4605,8 @@ namespace olc
 
 			if (!bytes) return olc::rcode::FAIL;
 			spr->width = w; spr->height = h;
-			spr->pColData = new Pixel[spr->width * spr->height];
-			std::memcpy(spr->pColData, bytes, spr->width * spr->height * 4);
+			spr->pColData.resize(spr->width * spr->height);
+			std::memcpy(spr->pColData.data(), bytes, spr->width * spr->height * 4);
 			delete[] bytes;
 			return olc::rcode::OK;
 		}
@@ -4479,8 +4621,13 @@ namespace olc
 // O------------------------------------------------------------------------------O
 // | START IMAGE LOADER: stb_image.h                                              |
 // O------------------------------------------------------------------------------O
+#pragma endregion
 
+// O------------------------------------------------------------------------------O
+// | olcPixelGameEngine Platforms                                                 |
+// O------------------------------------------------------------------------------O
 
+#pragma region platform_windows
 // O------------------------------------------------------------------------------O
 // | START PLATFORM: MICROSOFT WINDOWS XP, VISTA, 7, 8, 10                        |
 // O------------------------------------------------------------------------------O
@@ -4702,11 +4849,9 @@ namespace olc
 // O------------------------------------------------------------------------------O
 // | END PLATFORM: MICROSOFT WINDOWS XP, VISTA, 7, 8, 10                          |
 // O------------------------------------------------------------------------------O
+#pragma endregion 
 
-
-
-
-
+#pragma region platform_linux
 // O------------------------------------------------------------------------------O
 // | START PLATFORM: LINUX                                                        |
 // O------------------------------------------------------------------------------O
@@ -4955,10 +5100,9 @@ namespace olc
 // O------------------------------------------------------------------------------O
 // | END PLATFORM: LINUX                                                          |
 // O------------------------------------------------------------------------------O
+#pragma endregion
 
-
-
-
+#pragma region platform_glut
 // O------------------------------------------------------------------------------O
 // | START PLATFORM: GLUT (used to make it simple for Apple)                      |
 // O------------------------------------------------------------------------------O
@@ -5022,8 +5166,49 @@ namespace olc
 			exit(0);
 		}
 
+#if defined(__APPLE__)
+		static void scrollWheelUpdate(id selff, SEL _sel, id theEvent)
+		{
+			static const SEL deltaYSel = sel_registerName("deltaY");
+
+			double deltaY = ((double (*)(id, SEL))objc_msgSend_fpret)(theEvent, deltaYSel);
+
+			for (int i = 0; i < abs(deltaY); i++)
+			{
+				if (deltaY > 0)
+				{
+					ptrPGE->olc_UpdateMouseWheel(-1);
+				}
+				else if (deltaY < 0)
+				{
+					ptrPGE->olc_UpdateMouseWheel(1);
+				}
+			}
+		}
+#endif
 		static void ThreadFunct()
 		{
+#if defined(__APPLE__)
+			static bool hasEnabledCocoa = false;
+			if (!hasEnabledCocoa)
+			{
+				// Objective-C Wizardry
+				Class NSApplicationClass = objc_getClass("NSApplication");
+
+				// NSApp = [NSApplication sharedApplication]
+				SEL sharedApplicationSel = sel_registerName("sharedApplication");
+				id NSApp = ((id(*)(Class, SEL))objc_msgSend)(NSApplicationClass, sharedApplicationSel);
+				// window = [NSApp mainWindow]
+				SEL mainWindowSel = sel_registerName("mainWindow");
+				id window = ((id(*)(id, SEL))objc_msgSend)(NSApp, mainWindowSel);
+
+				// [window setStyleMask: NSWindowStyleMaskClosable | ~NSWindowStyleMaskResizable]
+				SEL setStyleMaskSel = sel_registerName("setStyleMask:");
+				((void (*)(id, SEL, NSUInteger))objc_msgSend)(window, setStyleMaskSel, 7);
+
+				hasEnabledCocoa = true;
+			}
+#endif
 			if (!*bActiveRef)
 			{
 				ExitMainLoop();
@@ -5039,8 +5224,15 @@ namespace olc
 
 		virtual olc::rcode CreateWindowPane(const olc::vi2d& vWindowPos, olc::vi2d& vWindowSize, bool bFullScreen) override
 		{
-			renderer->PrepareDevice();
+#if defined(__APPLE__)
+			Class GLUTViewClass = objc_getClass("GLUTView");
 
+			SEL scrollWheelSel = sel_registerName("scrollWheel:");
+			bool resultAddMethod = class_addMethod(GLUTViewClass, scrollWheelSel, (IMP)scrollWheelUpdate, "v@:@");
+			assert(resultAddMethod);
+#endif
+
+			renderer->PrepareDevice();
 
 			if (bFullScreen)
 			{
@@ -5048,11 +5240,14 @@ namespace olc
 				vWindowSize.y = glutGet(GLUT_SCREEN_HEIGHT);
 				glutFullScreen();
 			}
-
-			if (vWindowSize.x > glutGet(GLUT_SCREEN_WIDTH) || vWindowSize.y > glutGet(GLUT_SCREEN_HEIGHT))
+			else
 			{
-				perror("ERROR: The specified window dimensions do not fit on your screen\n");
-				return olc::FAIL;
+				if (vWindowSize.x > glutGet(GLUT_SCREEN_WIDTH) || vWindowSize.y > glutGet(GLUT_SCREEN_HEIGHT))
+				{
+					perror("ERROR: The specified window dimensions do not fit on your screen\n");
+					return olc::FAIL;
+				}
+				glutReshapeWindow(vWindowSize.x, vWindowSize.y - 1);
 			}
 
 			// Create Keyboard Mapping
@@ -5209,19 +5404,12 @@ namespace olc
 		if (platform->CreateWindowPane({ 30,30 }, vWindowSize, bFullScreen) != olc::OK) return olc::FAIL;
 		olc_UpdateWindowSize(vWindowSize.x, vWindowSize.y);
 
-
 		if (platform->ThreadStartUp() == olc::FAIL)  return olc::FAIL;
-
 		olc_PrepareEngine();
-
 		if (!OnUserCreate()) return olc::FAIL;
-
 		Platform_GLUT::bActiveRef = &bAtomActive;
-
 		glutWMCloseFunc(Platform_GLUT::ExitMainLoop);
-
 		bAtomActive = true;
-
 		platform->StartSystemEventLoop();
 
 		//This code will not even be run but why not
@@ -5235,13 +5423,490 @@ namespace olc
 // O------------------------------------------------------------------------------O
 // | END PLATFORM: GLUT                                                           |
 // O------------------------------------------------------------------------------O
+#pragma endregion 
 
 
+#pragma region platform_emscripten
+// O------------------------------------------------------------------------------O
+// | START PLATFORM: Emscripten - Totally Game Changing...                        |
+// O------------------------------------------------------------------------------O
 
+//
+//	Firstly a big mega thank you to members of the OLC Community for sorting this 
+//	out. Making a browser compatible version has been a priority for quite some
+//	time, but I lacked the expertise to do it. This awesome feature is possible
+//	because a group of former strangers got together and formed friendships over
+//	their shared passion for code. If anything demonstrates how powerful helping
+//	each other can be, it's this. - Javidx9
+
+//	Emscripten Platform: MaGetzUb, Moros1138, Slavka, Dandistine, Gorbit99, Bispoo
+//				   also: Ishidex, Gusgo99, SlicEnDicE, Alexio
+
+
+#if defined(OLC_PLATFORM_EMSCRIPTEN)
+
+#include <emscripten/html5.h>
+#include <emscripten/key_codes.h>
+
+extern "C"
+{
+	EMSCRIPTEN_KEEPALIVE inline int olc_OnPageUnload()
+	{
+		olc::platform->ApplicationCleanUp(); return 0;
+	}
+}
+
+namespace olc
+{
+	class Platform_Emscripten : public olc::Platform
+	{
+	public:
+
+		virtual olc::rcode ApplicationStartUp() override
+		{
+			return olc::rcode::OK;
+		}
+
+		virtual olc::rcode ApplicationCleanUp() override
+		{
+			ThreadCleanUp(); return olc::rcode::OK;
+		}
+
+		virtual olc::rcode ThreadStartUp() override
+		{
+			return olc::rcode::OK;
+		}
+
+		virtual olc::rcode ThreadCleanUp() override
+		{
+			renderer->DestroyDevice(); return olc::OK;
+		}
+
+		virtual olc::rcode CreateGraphics(bool bFullScreen, bool bEnableVSYNC, const olc::vi2d& vViewPos, const olc::vi2d& vViewSize) override
+		{
+			if (renderer->CreateDevice({}, bFullScreen, bEnableVSYNC) == olc::rcode::OK)
+			{
+				renderer->UpdateViewport(vViewPos, vViewSize);
+				return olc::rcode::OK;
+			}
+			else
+				return olc::rcode::FAIL;
+		}
+
+		virtual olc::rcode CreateWindowPane(const olc::vi2d& vWindowPos, olc::vi2d& vWindowSize, bool bFullScreen) override
+		{
+			emscripten_set_canvas_element_size("#canvas", vWindowSize.x, vWindowSize.y);
+
+			mapKeys[DOM_PK_UNKNOWN] = Key::NONE;
+			mapKeys[DOM_PK_A] = Key::A; mapKeys[DOM_PK_B] = Key::B; mapKeys[DOM_PK_C] = Key::C; mapKeys[DOM_PK_D] = Key::D;
+			mapKeys[DOM_PK_E] = Key::E; mapKeys[DOM_PK_F] = Key::F; mapKeys[DOM_PK_G] = Key::G; mapKeys[DOM_PK_H] = Key::H;
+			mapKeys[DOM_PK_I] = Key::I; mapKeys[DOM_PK_J] = Key::J; mapKeys[DOM_PK_K] = Key::K; mapKeys[DOM_PK_L] = Key::L;
+			mapKeys[DOM_PK_M] = Key::M; mapKeys[DOM_PK_N] = Key::N; mapKeys[DOM_PK_O] = Key::O; mapKeys[DOM_PK_P] = Key::P;
+			mapKeys[DOM_PK_Q] = Key::Q; mapKeys[DOM_PK_R] = Key::R; mapKeys[DOM_PK_S] = Key::S; mapKeys[DOM_PK_T] = Key::T;
+			mapKeys[DOM_PK_U] = Key::U; mapKeys[DOM_PK_V] = Key::V; mapKeys[DOM_PK_W] = Key::W; mapKeys[DOM_PK_X] = Key::X;
+			mapKeys[DOM_PK_Y] = Key::Y; mapKeys[DOM_PK_Z] = Key::Z;
+			mapKeys[DOM_PK_0] = Key::K0; mapKeys[DOM_PK_1] = Key::K1; mapKeys[DOM_PK_2] = Key::K2;
+			mapKeys[DOM_PK_3] = Key::K3; mapKeys[DOM_PK_4] = Key::K4; mapKeys[DOM_PK_5] = Key::K5;
+			mapKeys[DOM_PK_6] = Key::K6; mapKeys[DOM_PK_7] = Key::K7; mapKeys[DOM_PK_8] = Key::K8;
+			mapKeys[DOM_PK_9] = Key::K9;
+			mapKeys[DOM_PK_F1] = Key::F1; mapKeys[DOM_PK_F2] = Key::F2; mapKeys[DOM_PK_F3] = Key::F3; mapKeys[DOM_PK_F4] = Key::F4;
+			mapKeys[DOM_PK_F5] = Key::F5; mapKeys[DOM_PK_F6] = Key::F6; mapKeys[DOM_PK_F7] = Key::F7; mapKeys[DOM_PK_F8] = Key::F8;
+			mapKeys[DOM_PK_F9] = Key::F9; mapKeys[DOM_PK_F10] = Key::F10; mapKeys[DOM_PK_F11] = Key::F11; mapKeys[DOM_PK_F12] = Key::F12;
+			mapKeys[DOM_PK_ARROW_UP] = Key::UP; mapKeys[DOM_PK_ARROW_DOWN] = Key::DOWN;
+			mapKeys[DOM_PK_ARROW_LEFT] = Key::LEFT; mapKeys[DOM_PK_ARROW_RIGHT] = Key::RIGHT;
+			mapKeys[DOM_PK_SPACE] = Key::SPACE; mapKeys[DOM_PK_TAB] = Key::TAB;
+			mapKeys[DOM_PK_SHIFT_LEFT] = Key::SHIFT; mapKeys[DOM_PK_SHIFT_RIGHT] = Key::SHIFT;
+			mapKeys[DOM_PK_CONTROL_LEFT] = Key::CTRL; mapKeys[DOM_PK_CONTROL_RIGHT] = Key::CTRL;
+			mapKeys[DOM_PK_INSERT] = Key::INS; mapKeys[DOM_PK_DELETE] = Key::DEL; mapKeys[DOM_PK_HOME] = Key::HOME;
+			mapKeys[DOM_PK_END] = Key::END; mapKeys[DOM_PK_PAGE_UP] = Key::PGUP; mapKeys[DOM_PK_PAGE_DOWN] = Key::PGDN;
+			mapKeys[DOM_PK_BACKSPACE] = Key::BACK; mapKeys[DOM_PK_ESCAPE] = Key::ESCAPE;
+			mapKeys[DOM_PK_ENTER] = Key::ENTER; mapKeys[DOM_PK_NUMPAD_EQUAL] = Key::EQUALS;
+			mapKeys[DOM_PK_NUMPAD_ENTER] = Key::ENTER; mapKeys[DOM_PK_PAUSE] = Key::PAUSE;
+			mapKeys[DOM_PK_SCROLL_LOCK] = Key::SCROLL;
+			mapKeys[DOM_PK_NUMPAD_0] = Key::NP0; mapKeys[DOM_PK_NUMPAD_1] = Key::NP1; mapKeys[DOM_PK_NUMPAD_2] = Key::NP2;
+			mapKeys[DOM_PK_NUMPAD_3] = Key::NP3; mapKeys[DOM_PK_NUMPAD_4] = Key::NP4; mapKeys[DOM_PK_NUMPAD_5] = Key::NP5;
+			mapKeys[DOM_PK_NUMPAD_6] = Key::NP6; mapKeys[DOM_PK_NUMPAD_7] = Key::NP7; mapKeys[DOM_PK_NUMPAD_8] = Key::NP8;
+			mapKeys[DOM_PK_NUMPAD_9] = Key::NP9;
+			mapKeys[DOM_PK_NUMPAD_MULTIPLY] = Key::NP_MUL; mapKeys[DOM_PK_NUMPAD_DIVIDE] = Key::NP_DIV;
+			mapKeys[DOM_PK_NUMPAD_ADD] = Key::NP_ADD; mapKeys[DOM_PK_NUMPAD_SUBTRACT] = Key::NP_SUB;
+			mapKeys[DOM_PK_NUMPAD_DECIMAL] = Key::NP_DECIMAL;
+			mapKeys[DOM_PK_PERIOD] = Key::PERIOD; mapKeys[DOM_PK_EQUAL] = Key::EQUALS;
+			mapKeys[DOM_PK_COMMA] = Key::COMMA; mapKeys[DOM_PK_MINUS] = Key::MINUS;
+			mapKeys[DOM_PK_CAPS_LOCK] = Key::CAPS_LOCK;
+			mapKeys[DOM_PK_SEMICOLON] = Key::OEM_1;	mapKeys[DOM_PK_SLASH] = Key::OEM_2; mapKeys[DOM_PK_BACKQUOTE] = Key::OEM_3;
+			mapKeys[DOM_PK_BRACKET_LEFT] = Key::OEM_4; mapKeys[DOM_PK_BACKSLASH] = Key::OEM_5; mapKeys[DOM_PK_BRACKET_RIGHT] = Key::OEM_6;
+			mapKeys[DOM_PK_QUOTE] = Key::OEM_7; mapKeys[DOM_PK_BACKSLASH] = Key::OEM_8;
+
+			// Keyboard Callbacks
+			emscripten_set_keydown_callback("#canvas", 0, 1, keyboard_callback);
+			emscripten_set_keyup_callback("#canvas", 0, 1, keyboard_callback);
+
+			// Mouse Callbacks
+			emscripten_set_wheel_callback("#canvas", 0, 1, wheel_callback);
+			emscripten_set_mousedown_callback("#canvas", 0, 1, mouse_callback);
+			emscripten_set_mouseup_callback("#canvas", 0, 1, mouse_callback);
+			emscripten_set_mousemove_callback("#canvas", 0, 1, mouse_callback);
+
+			// Touch Callbacks
+			emscripten_set_touchstart_callback("#canvas", 0, 1, touch_callback);
+			emscripten_set_touchmove_callback("#canvas", 0, 1, touch_callback);
+			emscripten_set_touchend_callback("#canvas", 0, 1, touch_callback);
+
+			// Canvas Focus Callbacks
+			emscripten_set_blur_callback("#canvas", 0, 1, focus_callback);
+			emscripten_set_focus_callback("#canvas", 0, 1, focus_callback);
+
+#pragma warning disable format
+			EM_ASM(window.onunload = Module._olc_OnPageUnload; );
+
+			// IMPORTANT! - Sorry About This...
+			//
+			//	In order to handle certain browser based events, such as resizing and
+			//	going to full screen, we have to effectively inject code into the container
+			//	running the PGE. Yes, I vomited about 11 times too when the others were
+			//	convincing me this is the future. Well, this isnt the future, and if it
+			//	were to be, I want no part of what must be a miserable distopian free
+			//	for all of anarchic code injection to get rudimentary events like "Resize()".
+			//
+			//	Wake up people! Of course theres a spoon. There has to be to keep feeding
+			//	the giant web baby.
+
+
+			// Fullscreen and Resize Observers
+			EM_ASM({
+
+				// cache for reuse
+				Module._olc_EmscriptenShellCss = "width: 100%; height: 70vh; margin-left: auto; margin-right: auto;";
+
+			// width / height = aspect ratio
+			Module._olc_WindowAspectRatio = $0 / $1;
+			Module.canvas.parentNode.addEventListener("resize", function(e) {
+
+				if (e.defaultPrevented)
+ {
+e.stopPropagation(); 	return;
+}
+var viewWidth = e.detail.width;
+var viewHeight = e.detail.width / Module._olc_WindowAspectRatio;
+if (viewHeight > e.detail.height)
+{
+	viewHeight = e.detail.height;
+	viewWidth = e.detail.height * Module._olc_WindowAspectRatio;
+}
+
+if (Module.canvas.parentNode.className == 'emscripten_border')
+	Module.canvas.parentNode.style.cssText = Module._olc_EmscriptenShellCss + " width: " + viewWidth.toString() + "px; height: " + viewHeight.toString() + "px;";
+
+Module.canvas.setAttribute("width", viewWidth);
+Module.canvas.setAttribute("height", viewHeight);
+
+if (document.fullscreenElement != null)
+{
+	var top = (e.detail.height - viewHeight) / 2;
+	var left = (e.detail.width - viewWidth) / 2;
+	Module.canvas.style.position = "fixed";
+	Module.canvas.style.top = top.toString() + "px";
+	Module.canvas.style.left = left.toString() + "px";
+	Module.canvas.style.width = "";
+	Module.canvas.style.height = "";
+}
+
+// trigger PGE update
+Module._olc_PGE_UpdateWindowSize(viewWidth, viewHeight);
+// this is really only needed when enter/exiting fullscreen
+Module.canvas.focus();
+// prevent this event from ever affecting the document beyond this element
+e.stopPropagation();
+});
+
+			// helper function to prevent repeating the same code everywhere
+			Module._olc_ResizeCanvas = function()
+			{
+				// yes, we still have to wait, sigh..
+				setTimeout(function()
+				{
+					// if default template, stretch width as well
+					if (Module.canvas.parentNode.className == 'emscripten_border')
+						Module.canvas.parentNode.style.cssText = Module._olc_EmscriptenShellCss;
+
+					// override it's styling so we can get it's stretched size
+					Module.canvas.style.cssText = "width: 100%; height: 100%; outline: none;";
+
+					// setup custom resize event
+					var resizeEvent = new CustomEvent('resize',
+					{
+						detail:
+ {
+width: Module.canvas.clientWidth,
+height : Module.canvas.clientHeight
+},
+bubbles : true,
+cancelable : true
+});
+
+					// trigger custom resize event on canvas element
+					Module.canvas.dispatchEvent(resizeEvent);
+				}, 50);
+			};
+
+
+			// Disable Refresh Gesture on mobile
+			document.body.style.cssText += " overscroll-behavior-y: contain;";
+
+			if (Module.canvas.parentNode.className == 'emscripten_border')
+			{
+				// force body to have no margin in emscripten's minimal shell
+				document.body.style.margin = "0";
+				Module.canvas.parentNode.style.cssText = Module._olc_EmscriptenShellCss;
+			}
+
+			Module._olc_ResizeCanvas();
+
+			// observe and react to resizing of the container element
+			var resizeObserver = new ResizeObserver(function(entries)
+ {
+Module._olc_ResizeCanvas();
+}).observe(Module.canvas.parentNode);
+
+// observe and react to changes that occur when entering/exiting fullscreen
+var mutationObserver = new MutationObserver(function(mutationsList, observer)
+{
+	// a change has occurred, let's check them out!
+	for (var i = 0; i < mutationsList.length; i++)
+	{
+		// cycle through all of the newly added elements
+		for (var j = 0; j < mutationsList[i].addedNodes.length; j++)
+		{
+			// if this element is a our canvas, trigger resize
+			if (mutationsList[i].addedNodes[j].id == 'canvas')
+				Module._olc_ResizeCanvas();
+		}
+	}
+}).observe(Module.canvas.parentNode,
+{
+	attributes: false,
+	childList : true,
+	subtree : false
+});
+
+// add resize listener on window
+window.addEventListener("resize", function(e) { Module._olc_ResizeCanvas(); });
+
+				   }, vWindowSize.x, vWindowSize.y); // Fullscreen and Resize Observers
+#pragma warning restore format
+			return olc::rcode::OK;
+		}
+
+		// Interface PGE's UpdateWindowSize, for use in Javascript
+		void UpdateWindowSize(int width, int height)
+		{
+			ptrPGE->olc_UpdateWindowSize(width, height);
+		}
+
+		//TY Gorbit
+		static EM_BOOL focus_callback(int eventType, const EmscriptenFocusEvent* focusEvent, void* userData)
+		{
+			if (eventType == EMSCRIPTEN_EVENT_BLUR)
+			{
+				ptrPGE->olc_UpdateKeyFocus(false);
+				ptrPGE->olc_UpdateMouseFocus(false);
+			}
+			else if (eventType == EMSCRIPTEN_EVENT_FOCUS)
+			{
+				ptrPGE->olc_UpdateKeyFocus(true);
+				ptrPGE->olc_UpdateMouseFocus(true);
+			}
+
+			return 0;
+		}
+
+		//TY Moros
+		static EM_BOOL keyboard_callback(int eventType, const EmscriptenKeyboardEvent* e, void* userData)
+		{
+			if (eventType == EMSCRIPTEN_EVENT_KEYDOWN)
+				ptrPGE->olc_UpdateKeyState(mapKeys[emscripten_compute_dom_pk_code(e->code)], true);
+
+			// THANK GOD!! for this compute function. And thanks Dandistine for pointing it out!
+			if (eventType == EMSCRIPTEN_EVENT_KEYUP)
+				ptrPGE->olc_UpdateKeyState(mapKeys[emscripten_compute_dom_pk_code(e->code)], false);
+
+			//Consume keyboard events so that keys like F1 and F5 don't do weird things
+			return EM_TRUE;
+		}
+
+		//TY Moros
+		static EM_BOOL wheel_callback(int eventType, const EmscriptenWheelEvent* e, void* userData)
+		{
+			if (eventType == EMSCRIPTEN_EVENT_WHEEL)
+				ptrPGE->olc_UpdateMouseWheel(-1 * e->deltaY);
+
+			return EM_TRUE;
+		}
+
+		//TY Bispoo
+		static EM_BOOL touch_callback(int eventType, const EmscriptenTouchEvent* e, void* userData)
+		{
+			// Move
+			if (eventType == EMSCRIPTEN_EVENT_TOUCHMOVE)
+			{
+				ptrPGE->olc_UpdateMouse(e->touches->targetX, e->touches->targetY);
+			}
+
+			// Start
+			if (eventType == EMSCRIPTEN_EVENT_TOUCHSTART)
+			{
+				ptrPGE->olc_UpdateMouse(e->touches->targetX, e->touches->targetY);
+				ptrPGE->olc_UpdateMouseState(0, true);
+			}
+
+			// End
+			if (eventType == EMSCRIPTEN_EVENT_TOUCHEND)
+			{
+				ptrPGE->olc_UpdateMouseState(0, false);
+			}
+
+			return EM_TRUE;
+		}
+
+		//TY Moros
+		static EM_BOOL mouse_callback(int eventType, const EmscriptenMouseEvent* e, void* userData)
+		{
+			//Mouse Movement
+			if (eventType == EMSCRIPTEN_EVENT_MOUSEMOVE)
+				ptrPGE->olc_UpdateMouse(e->targetX, e->targetY);
+
+
+			//Mouse button press
+			if (e->button == 0) // left click
+			{
+				if (eventType == EMSCRIPTEN_EVENT_MOUSEDOWN)
+					ptrPGE->olc_UpdateMouseState(0, true);
+				else if (eventType == EMSCRIPTEN_EVENT_MOUSEUP)
+					ptrPGE->olc_UpdateMouseState(0, false);
+			}
+
+			if (e->button == 2) // right click
+			{
+				if (eventType == EMSCRIPTEN_EVENT_MOUSEDOWN)
+					ptrPGE->olc_UpdateMouseState(1, true);
+				else if (eventType == EMSCRIPTEN_EVENT_MOUSEUP)
+					ptrPGE->olc_UpdateMouseState(1, false);
+
+			}
+
+			if (e->button == 1) // middle click
+			{
+				if (eventType == EMSCRIPTEN_EVENT_MOUSEDOWN)
+					ptrPGE->olc_UpdateMouseState(2, true);
+				else if (eventType == EMSCRIPTEN_EVENT_MOUSEUP)
+					ptrPGE->olc_UpdateMouseState(2, false);
+
+				//at the moment only middle mouse needs to consume events.
+				return EM_TRUE;
+			}
+
+			return EM_FALSE;
+		}
+
+
+		virtual olc::rcode SetWindowTitle(const std::string& s) override
+		{
+			emscripten_set_window_title(s.c_str()); return olc::OK;
+		}
+
+		virtual olc::rcode StartSystemEventLoop() override
+		{
+			return olc::OK;
+		}
+
+		virtual olc::rcode HandleSystemEvent() override
+		{
+			return olc::OK;
+		}
+
+		static void MainLoop()
+		{
+			olc::Platform::ptrPGE->olc_CoreUpdate();
+			if (!ptrPGE->olc_IsRunning())
+			{
+				if (ptrPGE->OnUserDestroy())
+				{
+					emscripten_cancel_main_loop();
+					platform->ApplicationCleanUp();
+				}
+				else
+				{
+					ptrPGE->olc_Reanimate();
+				}
+			}
+		}
+	};
+
+	//Emscripten needs a special Start function
+	//Much of this is usually done in EngineThread, but that isn't used here
+	olc::rcode PixelGameEngine::Start()
+	{
+		if (platform->ApplicationStartUp() != olc::OK) return olc::FAIL;
+
+		// Construct the window
+		if (platform->CreateWindowPane({ 30,30 }, vWindowSize, bFullScreen) != olc::OK) return olc::FAIL;
+		olc_UpdateWindowSize(vWindowSize.x, vWindowSize.y);
+
+		// Some implementations may form an event loop here
+		if (platform->ThreadStartUp() == olc::FAIL)	return olc::FAIL;
+
+		// Do engine context specific initialisation
+		olc_PrepareEngine();
+
+		// Consider the "thread" started
+		bAtomActive = true;
+
+		// Create user resources as part of this thread
+		for (auto& ext : vExtensions) ext->OnBeforeUserCreate();
+		if (!OnUserCreate()) bAtomActive = false;
+		for (auto& ext : vExtensions) ext->OnAfterUserCreate();
+
+		platform->StartSystemEventLoop();
+
+		//This causes a heap memory corruption in Emscripten for some reason
+		//Platform_Emscripten::bActiveRef = &bAtomActive;
+		emscripten_set_main_loop(&Platform_Emscripten::MainLoop, 0, 1);
+
+		// Wait for thread to be exited
+		if (platform->ApplicationCleanUp() != olc::OK) return olc::FAIL;
+		return olc::OK;
+	}
+}
+
+extern "C"
+{
+	EMSCRIPTEN_KEEPALIVE inline void olc_PGE_UpdateWindowSize(int width, int height)
+	{
+		emscripten_set_canvas_element_size("#canvas", width, height);
+		// Thanks slavka
+		((olc::Platform_Emscripten*)olc::platform.get())->UpdateWindowSize(width, height);
+	}
+}
+
+#endif
+// O------------------------------------------------------------------------------O
+// | END PLATFORM: Emscripten                                                     |
+// O------------------------------------------------------------------------------O
+#pragma endregion
+
+
+#endif // Headless
+
+// O------------------------------------------------------------------------------O
+// | olcPixelGameEngine Auto-Configuration                                        |
+// O------------------------------------------------------------------------------O
+#pragma region pge_config
 namespace olc
 {
 	void PixelGameEngine::olc_ConfigureSystem()
 	{
+
+#if !defined(OLC_PGE_HEADLESS)
 
 #if defined(OLC_IMAGE_GDI)
 		olc::Sprite::loader = std::make_unique<olc::ImageLoader_GDIPlus>();
@@ -5253,6 +5918,10 @@ namespace olc
 
 #if defined(OLC_IMAGE_STB)
 		olc::Sprite::loader = std::make_unique<olc::ImageLoader_STB>();
+#endif
+
+#if defined(OLC_IMAGE_CUSTOM_EX)
+		olc::Sprite::loader = std::make_unique<OLC_IMAGE_CUSTOM_EX>();
 #endif
 
 
@@ -5268,6 +5937,14 @@ namespace olc
 
 #if defined(OLC_PLATFORM_GLUT)
 		platform = std::make_unique<olc::Platform_GLUT>();
+#endif
+
+#if defined(OLC_PLATFORM_EMSCRIPTEN)
+		platform = std::make_unique<olc::Platform_Emscripten>();
+#endif
+
+#if defined(OLC_PLATFORM_CUSTOM_EX)
+		platform = std::make_unique<OLC_PLATFORM_CUSTOM_EX>();
 #endif
 
 
@@ -5292,13 +5969,24 @@ namespace olc
 		renderer = std::make_unique<olc::Renderer_DX11>();
 #endif
 
+#if defined(OLC_GFX_CUSTOM_EX)
+		renderer = std::make_unique<OLC_RENDERER_CUSTOM_EX>();
+#endif
+
 		// Associate components with PGE instance
 		platform->ptrPGE = this;
 		renderer->ptrPGE = this;
+#else
+		olc::Sprite::loader = nullptr;
+		platform = nullptr;
+		renderer = nullptr;
+#endif
 	}
 }
 
-#endif // End olc namespace
+#pragma endregion
+
+#endif // End OLC_PGE_APPLICATION
 
 // O------------------------------------------------------------------------------O
 // | END OF OLC_PGE_APPLICATION                                                   |

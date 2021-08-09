@@ -166,6 +166,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	cDynamicCreatureKracko::engine = this;
 	cDynamicCreatureMrShineMrBright::engine = this;
 	cDynamicCreatureRocky::engine = this;
+	cDynamicCreatureSSTierMetaKnight::engine = this;
 	cDynamicCreatureWaddleDee::engine = this;
 	cDynamicCreatureWhispyWood::engine = this;
 	cDynamicProjectile::engine = this;
@@ -225,6 +226,15 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	AddSharedSound("lightning", sndLightning, "assets/snd/lightning.wav");
 	AddSharedSound("electricity", sndElectricity, "assets/snd/electricity.wav");
 	AddSharedSound("electricity2", sndElectricity2, "assets/snd/electricity2.wav");
+	AddSharedSound("meleeControllerRape", sndMeleeControllerRape, "assets/snd/meleeControllerRape.wav");
+	AddSharedSound("dash", sndDash, "assets/snd/dash.wav");
+	AddSharedSound("hiyayayaya", sndHiyayayaya, "assets/snd/hiyayayaya.wav");
+	AddSharedSound("singleSwordStrike", sndSingleSwordStrike, "assets/snd/singleSwordStrike.wav");
+	AddSharedSound("multipleSwordStrike", sndMultipleSwordStrike, "assets/snd/multipleSwordStrike.wav");
+	AddSharedSound("ha", sndHa, "assets/snd/ha.wav");
+	AddSharedSound("tornado", sndTornado, "assets/snd/tornado.wav");
+	AddSharedSound("loudScreaming", sndLoudScreaming, "assets/snd/loudScreaming.wav");
+	AddSharedSound("behold", sndBehold, "assets/snd/behold.wav");
 
 #pragma endregion
 

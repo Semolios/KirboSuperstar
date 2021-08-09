@@ -310,6 +310,20 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProject
 	mapProjectiles["lightningAround"].push_back(new olc::Sprite("assets/gfx/lightningAround01.png"));
 	mapProjectiles["lightningAround"].push_back(new olc::Sprite("assets/gfx/lightningAround02.png"));
 
+	mapProjectiles["SSTierMKHiyayaAOE"].push_back(new olc::Sprite("assets/gfx/SSTierMKHiyayaAOE.png")); // this one is invisible because the animation already shows the attacks
+
+	mapProjectiles["swordAttack"].push_back(new olc::Sprite("assets/gfx/swordAttack.png"));
+
+	mapProjectiles["tornado"].push_back(new olc::Sprite("assets/gfx/tornado00.png"));
+	mapProjectiles["tornado"].push_back(new olc::Sprite("assets/gfx/tornado01.png"));
+	mapProjectiles["tornado"].push_back(new olc::Sprite("assets/gfx/tornado02.png"));
+	mapProjectiles["tornado"].push_back(new olc::Sprite("assets/gfx/tornado03.png"));
+	mapProjectiles["tornado"].push_back(new olc::Sprite("assets/gfx/tornado04.png"));
+	
+	mapProjectiles["SSTierMKTPAttack"].push_back(new olc::Sprite("assets/gfx/SSTierMKTPAttack.png"));
+
+	mapProjectiles["downTilt"].push_back(new olc::Sprite("assets/gfx/downTilt.png"));
+
 	return mapProjectiles;
 }
 

@@ -1,7 +1,6 @@
 #include "Platformer_DynamicCreatureKracko.h"
 #include "Platformer_Level.h"
 #include "Platformer_Engine.h"
-#include "math.h"
 
 OneLoneCoder_Platformer* cDynamicCreatureKracko::engine = nullptr;
 

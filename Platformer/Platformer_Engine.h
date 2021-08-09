@@ -95,6 +95,15 @@ private:
 	int sndLightning;
 	int sndElectricity;
 	int sndElectricity2;
+	int sndMeleeControllerRape;
+	int sndDash;
+	int sndHiyayayaya;
+	int sndSingleSwordStrike;
+	int sndMultipleSwordStrike;
+	int sndHa;
+	int sndTornado;
+	int sndLoudScreaming;
+	int sndBehold;
 
 	// engine Properties
 	cPlayer* player;

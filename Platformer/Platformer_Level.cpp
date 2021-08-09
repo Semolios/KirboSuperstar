@@ -184,10 +184,9 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns)
 		break;
 		case 4:
 		{
-			// TODO Meta Knight
-			mob = new cDynamicCreatureWaddleDee(this);
+			mob = new cDynamicCreatureSSTierMetaKnight(this);
 			vecDyns.push_back(mob);
-			mob->SetPosition(5.0f, 5.0f);
+			mob->SetPosition(cfSSTierMetaKnightPX, cfSSTierMetaKnightPY);
 		}
 		break;
 		case 5:
@@ -749,7 +748,7 @@ void cLevel::LoadLevelsMusics()
 	levelsMusics.push_back("assets/snd/lvl01.wav");
 	levelsMusics.push_back("assets/snd/lvl02.wav");
 	levelsMusics.push_back("assets/snd/lvl03.wav");
-	levelsMusics.push_back("assets/snd/lvl04.wav");	// TODO
+	levelsMusics.push_back("assets/snd/lvl04.wav");
 	levelsMusics.push_back("assets/snd/lvl05.wav");	// TODO
 }
 
@@ -759,7 +758,7 @@ void cLevel::LoadBossLevelsMusics()
 	bossLevelsMusics.push_back("assets/snd/bossLvl01.wav");
 	bossLevelsMusics.push_back("assets/snd/bossLvl01.wav");
 	bossLevelsMusics.push_back("assets/snd/bossLvl01.wav");
-	bossLevelsMusics.push_back("assets/snd/bossLvl04.wav");	// TODO
+	bossLevelsMusics.push_back("assets/snd/bossLvl04.wav");
 	bossLevelsMusics.push_back("assets/snd/bossLvl05.wav");	// TODO
 }
 
