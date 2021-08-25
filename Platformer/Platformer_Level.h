@@ -10,6 +10,7 @@
 #include "Platformer_DynamicCreatureBomber.h"
 #include "Platformer_DynamicCreatureBrontoBurt.h"
 #include "Platformer_DynamicCreatureFrosty.h"
+#include "Platformer_DynamicCreatureKingDDD.h"
 #include "Platformer_DynamicCreatureKracko.h"
 #include "Platformer_DynamicCreatureMrShineMrBright.h"
 #include "Platformer_DynamicCreatureRocky.h"
@@ -43,6 +44,9 @@ private:
 
 	const float cfSSTierMetaKnightPX = 10.0f;
 	const float cfSSTierMetaKnightPY = 7.0f;
+
+	const float cfKingDDDPX = 13.0f;
+	const float cfKingDDDPY = 7.0f;
 
 	std::wstring sLevel;
 	int nLevelWidth = 0;

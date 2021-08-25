@@ -191,10 +191,9 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns)
 		break;
 		case 5:
 		{
-			// TODO Roi Dadidou
-			mob = new cDynamicCreatureWaddleDee(this);
+			mob = new cDynamicCreatureKingDDD(this);
 			vecDyns.push_back(mob);
-			mob->SetPosition(5.0f, 5.0f);
+			mob->SetPosition(cfKingDDDPX, cfKingDDDPY);
 		}
 		break;
 	}
@@ -749,17 +748,17 @@ void cLevel::LoadLevelsMusics()
 	levelsMusics.push_back("assets/snd/lvl02.wav");
 	levelsMusics.push_back("assets/snd/lvl03.wav");
 	levelsMusics.push_back("assets/snd/lvl04.wav");
-	levelsMusics.push_back("assets/snd/lvl05.wav");	// TODO
+	levelsMusics.push_back("assets/snd/lvl05.wav");
 }
 
 void cLevel::LoadBossLevelsMusics()
 {
 	bossLevelsMusics.push_back("assets/snd/bossLvl00.wav");
 	bossLevelsMusics.push_back("assets/snd/bossLvl01.wav");
-	bossLevelsMusics.push_back("assets/snd/bossLvl01.wav");
-	bossLevelsMusics.push_back("assets/snd/bossLvl01.wav");
+	bossLevelsMusics.push_back("assets/snd/bossLvl02.wav");
+	bossLevelsMusics.push_back("assets/snd/bossLvl01.wav"); // the music is the same for "Mr Shine and Mr Bright" and "Kracko"
 	bossLevelsMusics.push_back("assets/snd/bossLvl04.wav");
-	bossLevelsMusics.push_back("assets/snd/bossLvl05.wav");	// TODO
+	bossLevelsMusics.push_back("assets/snd/bossLvl05.wav");
 }
 
 std::string cLevel::GetLevelName()

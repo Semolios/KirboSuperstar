@@ -30,6 +30,7 @@ void cAssets::LoadSprites()
 	load("frosty", "assets/gfx/frosty.png");
 	load("kracko", "assets/gfx/kracko.png");
 	load("SSTierMetaKnight", "assets/gfx/SSTierMetaKnight.png");
+	load("kingDDD", "assets/gfx/kingDDD.png");
 }
 
 void cAssets::LoadItems()

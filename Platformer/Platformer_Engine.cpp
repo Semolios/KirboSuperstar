@@ -163,6 +163,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	cDynamicCreatureBladeKnight::engine = this;
 	cDynamicCreatureBomber::engine = this;
 	cDynamicCreatureFrosty::engine = this;
+	cDynamicCreatureKingDDD::engine = this;
 	cDynamicCreatureKracko::engine = this;
 	cDynamicCreatureMrShineMrBright::engine = this;
 	cDynamicCreatureRocky::engine = this;

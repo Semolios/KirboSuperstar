@@ -52,7 +52,7 @@ void cCamera::DrawLevel(cLevel* level, float fElapsedTime)
 void cCamera::DrawBackground(cLevel* level)
 {
 	float fBackgroundOffsetX = fOffsetX * engine->GetTileWidth() * ((float)(engine->GetBackGround()->width - engine->ScreenWidth()) / (float)(level->GetWidth() * engine->GetTileWidth() - engine->ScreenWidth()));
-	float fBackgroundOffsetY = fOffsetY * engine->GetTileHeight() * ((float)(engine->GetBackGround()->height - engine->ScreenHeight()) / (float)(level->GetWidth() * engine->GetTileHeight() - engine->ScreenHeight()));
+	float fBackgroundOffsetY = fOffsetY * engine->GetTileHeight() * ((float)(engine->GetBackGround()->height - engine->ScreenHeight()) / (float)(level->GetHeight() * engine->GetTileHeight() - engine->ScreenHeight()));
 
 	int nSectionWidth = engine->ScreenWidth() / nMaxThreads;
 
