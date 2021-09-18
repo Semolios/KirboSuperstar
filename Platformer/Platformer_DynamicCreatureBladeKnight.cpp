@@ -116,11 +116,9 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 			{
 				vy = cfJumpSpeed;
 				bOnGround = false;
-				fTimer = 0.0f;
 			}
 			else
 			{
-				fTimer += fElapsedTime;
 				if ((abs(playerX - px) < 0.5f && playerY > py))
 					ChangeState(AI_DOWNATTACK);
 				else if (OnGround() && vy >= 0)
@@ -130,7 +128,7 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 		break;
 		case AI_SIDEATTACK:
 		{
-			nGraphicState = SIDEATTACK;
+			nGraphicState = MOVE2;
 			vx = 0.0f;
 
 			fTimer += fElapsedTime;
@@ -163,7 +161,7 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 		break;
 		case AI_DOWNATTACK:
 		{
-			nGraphicState = DOWNATTACK;
+			nGraphicState = MOVE3;
 			vx = 0.0f;
 
 			// Wait 0.5 seconds then fall on the player
@@ -195,7 +193,7 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 		break;
 		case AI_UPATTACK:
 		{
-			nGraphicState = UPATTACK;
+			nGraphicState = MOVE1;
 			vx = 0.0f;
 
 			fTimer += fElapsedTime;

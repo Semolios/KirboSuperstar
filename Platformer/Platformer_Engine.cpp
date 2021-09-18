@@ -645,9 +645,9 @@ bool OneLoneCoder_Platformer::IsSemiSolidTile(wchar_t tile)
 	return tile == '?';
 }
 
-void OneLoneCoder_Platformer::AddProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float fDrag, std::string sound)
+void OneLoneCoder_Platformer::AddProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float fDrag, std::string sound, bool bouncy)
 {
-	cDynamicProjectile* p = new cDynamicProjectile(ox, oy, bFriend, velx, vely, duration, mapProjectiles[sprite], affectedByGravity, damage, solidVSMap, oneHit, corner, breackableAgainstTiles, fDrag);
+	cDynamicProjectile* p = new cDynamicProjectile(ox, oy, bFriend, velx, vely, duration, mapProjectiles[sprite], affectedByGravity, damage, solidVSMap, oneHit, corner, breackableAgainstTiles, fDrag, bouncy);
 	if (sound != "")
 		p->SetSoundEffect(sound);
 	vecProjectiles.push_back(p);
@@ -729,11 +729,6 @@ float OneLoneCoder_Platformer::GetDragValue()
 	return cfDrag;
 }
 
-void OneLoneCoder_Platformer::SetPlayerChoice(int choice)
-{
-	pauseMenu->SetPlayerChoice(choice);
-}
-
 float OneLoneCoder_Platformer::GetGrdDynamicOverlay()
 {
 	return cfGrdDynamicOverlay;
@@ -758,28 +753,6 @@ void OneLoneCoder_Platformer::ResetVariables()
 	fStopTimebeforeDeadAnim = 0.0f;
 	fWaitBeforeWinAnimation = 0.0f;
 	fWinTimer = 0.0f;
-}
-
-void OneLoneCoder_Platformer::ActivateShakeEffect(bool activate, int shakeAmplitudeX, int shakeAmplitudeY)
-{
-	camera->ActivateShakeEffect(activate, shakeAmplitudeX, shakeAmplitudeY);
-}
-
-void OneLoneCoder_Platformer::WindEffect(float direction, float windPower, bool activate)
-{
-	bWind = activate;
-	fWindDirection = direction;
-	fWindPower = windPower;
-
-	if (bWind)
-	{
-		if (!olc::SOUND::IsSamplePlaying(sndWind))
-			olc::SOUND::PlaySample(sndWind, true);
-	}
-	else
-	{
-		olc::SOUND::StopSample(sndWind);
-	}
 }
 
 void OneLoneCoder_Platformer::BreakLoop()
@@ -816,6 +789,33 @@ void OneLoneCoder_Platformer::ReturnToWorldMap()
 	nGameState = GS_WORLDMAP;
 }
 
+void OneLoneCoder_Platformer::SetPlayerChoice(int choice)
+{
+	pauseMenu->SetPlayerChoice(choice);
+}
+
+void OneLoneCoder_Platformer::ActivateShakeEffect(bool activate, int shakeAmplitudeX, int shakeAmplitudeY)
+{
+	camera->ActivateShakeEffect(activate, shakeAmplitudeX, shakeAmplitudeY);
+}
+
+void OneLoneCoder_Platformer::WindEffect(float direction, float windPower, bool activate)
+{
+	bWind = activate;
+	fWindDirection = direction;
+	fWindPower = windPower;
+
+	if (bWind)
+	{
+		if (!olc::SOUND::IsSamplePlaying(sndWind))
+			olc::SOUND::PlaySample(sndWind, true);
+	}
+	else
+	{
+		olc::SOUND::StopSample(sndWind);
+	}
+}
+
 void OneLoneCoder_Platformer::AddSharedSound(std::string name, int sound, std::string fileName)
 {
 	sound = olc::SOUND::LoadAudioSample(fileName);
@@ -844,4 +844,45 @@ void OneLoneCoder_Platformer::StopSample(std::string name)
 bool OneLoneCoder_Platformer::IsSamplePlaying(std::string name)
 {
 	return olc::SOUND::IsSamplePlaying(sharedSounds[name]);
+}
+
+void OneLoneCoder_Platformer::ChangeKirboVelocities(float vx, float vy)
+{
+	player->SetVelocities(vx, vy);
+}
+
+void OneLoneCoder_Platformer::SetKirboGrabbed(bool grabbed)
+{
+	player->SetGrabbedByEnnemy(grabbed);
+}
+
+void OneLoneCoder_Platformer::ChangeKirboAnimation(std::string animation)
+{
+	player->ChangeAnimation(animation);
+}
+
+void OneLoneCoder_Platformer::SetKirboVisible(bool visible)
+{
+	player->SetVisible(visible);
+}
+
+void OneLoneCoder_Platformer::SetKirboAttackable(bool attackable)
+{
+	player->SetAttackable(attackable);
+}
+
+void OneLoneCoder_Platformer::SetKirboPositions(float px, float py)
+{
+	player->SetPlayerPosX(px);
+	player->SetPlayerPosY(py);
+}
+
+bool OneLoneCoder_Platformer::CheckIfKirboCollisionWithEnnemy(cDynamic* object)
+{
+	return player->CheckIfEnnemyCollision(object, camera->GetOffsetX(), camera->GetOffsetY());
+}
+
+bool OneLoneCoder_Platformer::IsKirboAttackable()
+{
+	return player->IsAttackable();
 }

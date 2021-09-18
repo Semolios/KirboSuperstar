@@ -217,7 +217,7 @@ void cDynamicCreatureWhispyWood::MapGraphicState(MAP_GRAPHIC_STATE mappedState)
 			nGraphicState = JUMPING;
 			break;
 		case BLOW:
-			nGraphicState = UPATTACK;
+			nGraphicState = MOVE1;
 			break;
 	}
 }

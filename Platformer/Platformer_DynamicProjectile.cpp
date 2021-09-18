@@ -3,7 +3,7 @@
 
 OneLoneCoder_Platformer* cDynamicProjectile::engine = nullptr;
 
-cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float drag) : cDynamic("projectile")
+cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float drag, bool bouncy) : cDynamic("projectile")
 {
 	fDynWidth = map[0]->width;
 	fDynHeight = map[0]->height;
@@ -25,6 +25,7 @@ cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float v
 	bOneHit = oneHit;
 	nCornerSpr = corner % 4;
 	fDrag = drag;
+	bBouncy = bouncy;
 }
 
 cDynamicProjectile::~cDynamicProjectile()
@@ -123,16 +124,23 @@ void cDynamicProjectile::Collision(float fElapsedTime, cLevel* level)
 				engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
 				engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))))
 			{
-				if (bBreaksAgainstTiles)
+				if (bBreaksAgainstTiles && !bBouncy)
 				{
 					bRedundant = true;
 				}
 				else
 				{
-					vy = 0.0f;
+					if (!bBouncy)
+					{
+						vy = 0.0f;
 
-					vx += fDrag * vx * fElapsedTime;
-					if (fabs(vx) < cfMinGlideVX) vx = 0.0f;
+						vx += fDrag * vx * fElapsedTime;
+						if (fabs(vx) < cfMinGlideVX) vx = 0.0f;
+					}
+					else
+					{
+						vy = -vy;
+					}
 				}
 			}
 		}
@@ -310,8 +318,6 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProject
 	mapProjectiles["lightningAround"].push_back(new olc::Sprite("assets/gfx/lightningAround01.png"));
 	mapProjectiles["lightningAround"].push_back(new olc::Sprite("assets/gfx/lightningAround02.png"));
 
-	mapProjectiles["SSTierMKHiyayaAOE"].push_back(new olc::Sprite("assets/gfx/SSTierMKHiyayaAOE.png")); // this one is invisible because the animation already shows the attacks
-
 	mapProjectiles["swordAttack"].push_back(new olc::Sprite("assets/gfx/swordAttack.png"));
 
 	mapProjectiles["tornado"].push_back(new olc::Sprite("assets/gfx/tornado00.png"));
@@ -319,10 +325,32 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProject
 	mapProjectiles["tornado"].push_back(new olc::Sprite("assets/gfx/tornado02.png"));
 	mapProjectiles["tornado"].push_back(new olc::Sprite("assets/gfx/tornado03.png"));
 	mapProjectiles["tornado"].push_back(new olc::Sprite("assets/gfx/tornado04.png"));
-	
+
 	mapProjectiles["SSTierMKTPAttack"].push_back(new olc::Sprite("assets/gfx/SSTierMKTPAttack.png"));
 
 	mapProjectiles["downTilt"].push_back(new olc::Sprite("assets/gfx/downTilt.png"));
+
+	mapProjectiles["kingDDDUpSmash"].push_back(new olc::Sprite("assets/gfx/kingDDDUpSmash.png"));
+
+	mapProjectiles["kingDDDLeftSideSmash"].push_back(new olc::Sprite("assets/gfx/kingDDDLeftSideSmash.png"));
+	mapProjectiles["kingDDDRightSideSmash"].push_back(new olc::Sprite("assets/gfx/kingDDDRightSideSmash.png"));
+
+	mapProjectiles["kingDDDDownSmash"].push_back(new olc::Sprite("assets/gfx/kingDDDDownSmash.png"));
+
+	mapProjectiles["spike"].push_back(new olc::Sprite("assets/gfx/spike00.png"));
+	mapProjectiles["spike"].push_back(new olc::Sprite("assets/gfx/spike01.png"));
+	mapProjectiles["spike"].push_back(new olc::Sprite("assets/gfx/spike02.png"));
+	mapProjectiles["spike"].push_back(new olc::Sprite("assets/gfx/spike03.png"));
+	mapProjectiles["spike"].push_back(new olc::Sprite("assets/gfx/spike04.png"));
+	mapProjectiles["spike"].push_back(new olc::Sprite("assets/gfx/spike05.png"));
+	mapProjectiles["spike"].push_back(new olc::Sprite("assets/gfx/spike06.png"));
+	mapProjectiles["spike"].push_back(new olc::Sprite("assets/gfx/spike07.png"));
+	mapProjectiles["spike"].push_back(new olc::Sprite("assets/gfx/spike08.png"));
+	mapProjectiles["spike"].push_back(new olc::Sprite("assets/gfx/spike09.png"));
+
+	// Invisibles Projectiles (these ones are invisible because they are included in the ennemies animations
+	mapProjectiles["SSTierMKHiyayaAOE"].push_back(new olc::Sprite("assets/gfx/SSTierMKHiyayaAOE.png"));
+	mapProjectiles["kingDDDDownB"].push_back(new olc::Sprite("assets/gfx/kingDDDDownB.png"));
 
 	return mapProjectiles;
 }

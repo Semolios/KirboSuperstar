@@ -101,7 +101,7 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 		case AI_HIYAYAYAYA:
 		{
 			fBehaviourTimer += fElapsedTime;
-			nGraphicState = UPATTACK; // UPATTACK Row contains most of the animations because they are short
+			nGraphicState = MOVE1; // UPATTACK Row contains most of the animations because they are short
 
 			if (fBehaviourTimer <= fWaitBeforeAttack)
 			{
@@ -197,7 +197,7 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 			}
 			else if (fBehaviourTimer <= fWaitBeforeAttack + fAttackTime)
 			{
-				nGraphicState = UPATTACK;
+				nGraphicState = MOVE1;
 
 				LoopAnimation(nFirstFrameUpAttack, nLastFrameUpAttack);
 				vx = 0.0f; vy = 0.0f;
@@ -236,7 +236,7 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 				engine->PlaySample("loudScreaming");
 
 			fBehaviourTimer += fElapsedTime;
-			nGraphicState = SIDEATTACK;
+			nGraphicState = MOVE2;
 
 			if (fBehaviourTimer <= fWaitBeforeAttack)
 			{
@@ -277,7 +277,7 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 				py = fKirboPosY;
 
 				// Reappears and attack at the 4th frame
-				nGraphicState = SIDEATTACK;
+				nGraphicState = MOVE2;
 				SingleAnimation(nFirstFrameTeleport, nLastFrameTeleport);
 
 				if (fBehaviourTimer >= fWaitBeforeAttack + ((float)nNbFramesBeforeTPAtk * (1.0f / (float)nFramesPerSecond)) && bCanSpawnAOE)
@@ -324,7 +324,7 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 			}
 			else if (fBehaviourTimer <= fWaitBeforeAttack + fAttackTime)
 			{
-				nGraphicState = UPATTACK;
+				nGraphicState = MOVE1;
 
 				LoopAnimation(nFirstFrameDownAttack, nLastFrameDownAttack);
 				vx = 0.0f; vy = 0.0f;
@@ -352,7 +352,7 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 		break;
 		case AI_DOWNTILT:
 		{
-			nGraphicState = DOWNATTACK;
+			nGraphicState = MOVE3;
 
 			fBehaviourTimer += fElapsedTime;
 

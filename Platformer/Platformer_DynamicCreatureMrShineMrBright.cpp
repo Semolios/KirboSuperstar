@@ -76,7 +76,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 		case AI_FLAMECOLUMN:
 		{
 			vx = 0.0f; vy = 0.0f;
-			nGraphicState = UPATTACK;
+			nGraphicState = MOVE1;
 
 			// Animation loop
 			if (bChargingColumn)
@@ -137,7 +137,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 		case AI_BEAM:
 		{
 			vx = 0.0f; vy = 0.0f;
-			nGraphicState = SIDEATTACK;
+			nGraphicState = MOVE2;
 			nFramesPerSecond = cnDoubledFrameRate;
 
 			// Animation loop
@@ -193,7 +193,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 			if (fBehaviourTimer == 0.0f) 
 				engine->PlaySample("sunShootingMoon");
 
-			nGraphicState = DOWNATTACK;
+			nGraphicState = MOVE3;
 
 			if (fBehaviourTimer <= cfSunTakePunchTime) // phase 1, they stop moving
 			{

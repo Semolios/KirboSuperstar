@@ -83,6 +83,9 @@ private:
 	bool bWind = false;
 	bool bSwallowSound = false;
 	bool bPoyo = false;
+	bool bIsGrabbedByEnnemy = false;
+	bool bForceInvincible = false;
+	bool bForceInvisible = false;
 
 	cAnimator* animPlayer;
 	cHitbox* hitbox;
@@ -104,6 +107,7 @@ public:
 	void ClampVelocities();
 	void IncreaseVelocities(float dvx, float dvy);
 	void DecreaseVelocities(float dvx, float dvy);
+	void SetVelocities(float vx, float vy);
 	void Collisions(float fElapsedTime, cLevel* lvl);
 	float GetPlayerPosX();
 	float GetPlayerPosY();
@@ -112,6 +116,7 @@ public:
 	bool IsVacuuming();
 	void VacuumEnnemy(cDynamicCreature* object);
 	bool IsAttackable();
+	void SetAttackable(bool attackable);
 	bool IsSwallowing();
 	void UpdateInvulnerability(float fElapsedTime);
 	void DrawKirbo(olc::GFX2D::Transform2D t);
@@ -124,7 +129,11 @@ public:
 	cHitbox* GetHitbox();
 	void Attack(cDynamicCreature* victim, int damage);
 	void Vacuum(cDynamicCreature* object, float cameraOffsetX, float cameraOffsetY);
-	void CheckIfDamaged(cDynamic* object, float fOffsetX, float fOffsetY);
+	void CheckIfDamaged(cDynamic* object, float cameraOffsetX, float cameraOffsetY);
+	bool CheckIfEnnemyCollision(cDynamic* object, float cameraOffsetX, float cameraOffsetY);
+	void SetGrabbedByEnnemy(bool grabbed);
+	void ChangeAnimation(std::string animation);
+	void SetVisible(bool visible);
 };
 
 #endif // !DEF_PLAYER

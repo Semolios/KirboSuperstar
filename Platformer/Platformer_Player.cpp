@@ -239,7 +239,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 				int poyo = rand() % 2;
 				if (poyo == 0) engine->PlaySample("poyo01");
 				if (poyo == 1) engine->PlaySample("poyo02");
-				
+
 				animPlayer->ChangeState("poyo");
 				bAttacking = true;
 				bPoyo = true;
@@ -251,7 +251,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 
 bool cPlayer::CanInteract()
 {
-	return !bPlayerDamaged && !bDead && !engine->IsBossKilled();
+	return !bPlayerDamaged && !bDead && !bIsGrabbedByEnnemy && !engine->IsBossKilled();
 }
 
 void cPlayer::ApplyGravity(float fElapsedTime)
@@ -410,7 +410,7 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 		fPlayerVelY = 0.0f;
 		StopAnyAttack();
 
-		if (fDeadAnimation == 0.0f) 
+		if (fDeadAnimation == 0.0f)
 			engine->PlaySample("loseLife");
 
 		fDeadAnimation += fElapsedTime;
@@ -502,6 +502,12 @@ void cPlayer::DecreaseVelocities(float dvx, float dvy)
 	fPlayerVelY -= dvy;
 }
 
+void cPlayer::SetVelocities(float vx, float vy)
+{
+	fPlayerVelX = vx;
+	fPlayerVelY = vy;
+}
+
 void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 {
 	float fNewPlayerPosX = fPlayerPosX + fPlayerVelX * fElapsedTime;
@@ -523,7 +529,7 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 	// Check hole
 	if (fPlayerPosY > lvl->GetHeight())
 	{
-		if (!bDead) 
+		if (!bDead)
 			engine->PlaySample("kirboHit");
 		fHealth = 0.0f;
 		bDead = true;
@@ -632,6 +638,12 @@ bool cPlayer::IsAttackable()
 	return bIsPlayerAttackable;
 }
 
+void cPlayer::SetAttackable(bool attackable)
+{
+	bIsPlayerAttackable = attackable;
+	bForceInvincible = !attackable;
+}
+
 bool cPlayer::IsSwallowing()
 {
 	return bSwallowing;
@@ -643,8 +655,14 @@ void cPlayer::UpdateInvulnerability(float fElapsedTime)
 	if (fInvulnerabilityTimer <= 0.0f)
 	{
 		fInvulnerabilityTimer = 0.0f;
-		bShowKirbo = true;
-		bIsPlayerAttackable = true;
+		if (!bForceInvisible)
+		{
+			bShowKirbo = true;
+		}
+		if (!bForceInvincible)
+		{
+			bIsPlayerAttackable = true;
+		}
 	}
 	else
 	{
@@ -716,6 +734,7 @@ void cPlayer::ResetVariables()
 	bPlayerDamaged = false;
 	fKirboGoesAwayTimer = 0.0f;
 	fJumpTimer = 0.0f;
+	bIsGrabbedByEnnemy = false;
 	StopAnyAttack();
 }
 
@@ -831,11 +850,35 @@ void cPlayer::Vacuum(cDynamicCreature* object, float cameraOffsetX, float camera
 	}
 }
 
-void cPlayer::CheckIfDamaged(cDynamic* object, float fOffsetX, float fOffsetY)
+void cPlayer::CheckIfDamaged(cDynamic* object, float cameraOffsetX, float cameraOffsetY)
 {
-	object->UpdateHitbox(fOffsetX, fOffsetY);
-	UpdateHitbox(fOffsetX, fOffsetY);
+	object->UpdateHitbox(cameraOffsetX, cameraOffsetY);
+	UpdateHitbox(cameraOffsetX, cameraOffsetY);
 
 	if (cHitbox::ShapeOverlap_DIAG(object->GetHitbox(), GetHitbox()))
 		Damage(object);
+}
+
+bool cPlayer::CheckIfEnnemyCollision(cDynamic* object, float cameraOffsetX, float cameraOffsetY)
+{
+	object->UpdateHitbox(cameraOffsetX, cameraOffsetY);
+	UpdateHitbox(cameraOffsetX, cameraOffsetY);
+
+	return cHitbox::ShapeOverlap_DIAG(object->GetHitbox(), GetHitbox());
+}
+
+void cPlayer::SetGrabbedByEnnemy(bool grabbed)
+{
+	bIsGrabbedByEnnemy = grabbed;
+}
+
+void cPlayer::ChangeAnimation(std::string animation)
+{
+	animPlayer->ChangeState(animation);
+}
+
+void cPlayer::SetVisible(bool visible)
+{
+	bShowKirbo = visible;
+	bForceInvisible = !visible;
 }

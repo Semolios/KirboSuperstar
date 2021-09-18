@@ -47,15 +47,27 @@ protected:
 	bool bBossExplosionAvailable = true;
 	bool bLoopAnimation = true;
 
-	enum
+	enum GraphicState
 	{
 		STANDING,
 		WALKING,
 		DAMAGED,
 		JUMPING,
-		UPATTACK,
-		SIDEATTACK,
-		DOWNATTACK
+		MOVE1,	  // Lines 9-10  of the spritesheet
+		MOVE2,	  // Lines 11-12 of the spritesheet
+		MOVE3,	  // Lines 13-14 of the spritesheet
+		MOVE4,	  // Lines 15-16 of the spritesheet
+		MOVE5,	  // Lines 17-18 of the spritesheet
+		MOVE6,	  // Lines 19-20 of the spritesheet
+		MOVE7,	  // Lines 21-22 of the spritesheet
+		MOVE8,	  // Lines 23-24 of the spritesheet
+		MOVE9,	  // Lines 25-26 of the spritesheet
+		MOVE10,	  // Lines 27-28 of the spritesheet
+		MOVE11,	  // Lines 29-30 of the spritesheet
+		MOVE12,	  // Lines 31-32 of the spritesheet
+		MOVE13,	  // Lines 33-34 of the spritesheet
+		MOVE14,	  // Lines 35-36 of the spritesheet
+		MOVE15,	  // Lines 37-38 of the spritesheet
 	} nGraphicState;
 
 public:

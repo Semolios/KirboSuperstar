@@ -204,11 +204,16 @@ protected:
 	void LoadLevelProperties();
 
 public:
+	// Level detection functions
 	bool IsSolidTile(wchar_t tile);
 	bool IsSemiSolidTile(wchar_t tile);
-	void AddProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, bool breackableAgainstTiles = true, float fDrag = -3.0f, std::string sound = "");
+
+	// Projectiles functions
+	void AddProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, bool breackableAgainstTiles = true, float fDrag = -3.0f, std::string sound = "", bool bouncy = false);
 	void AddBoomerang(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, std::string sound = "");
 	void AddOrbital(float ox, float oy, bool bFriend, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, float cx = 0.0f, float cy = 0.0f, float angrot = 0.0f, std::string sound = "");
+	
+	// Engine properties/modifications functions
 	float GetTileWidth();
 	float GetTileHeight();
 	float GetGravityValue();
@@ -219,23 +224,39 @@ public:
 	void SetbBossKilled(bool bossKilled);
 	void SetGameState(std::string gameState);
 	float GetDragValue();
-	void SetPlayerChoice(int choice);
 	float GetGrdDynamicOverlay();
 	void UpdateWinTimer(float fElapsedTime);
 	float GetWinTimer();
 	void ResetVariables();
-	void ActivateShakeEffect(bool activate, int shakeAmplitudeX = 50, int shakeAmplitudeY = 50);
-	void WindEffect(float direction, float windPower, bool activate);
 	void BreakLoop();
 	olc::Sprite* GetBackGround();
 	olc::Sprite* GetTilesSprites();
 	olc::Sprite* GetGroundTiles();
 	olc::Sprite* GetDoorSpr();
 	void ReturnToWorldMap();
+
+	// Pause menu functions
+	void SetPlayerChoice(int choice);
+
+	// Camera functions
+	void ActivateShakeEffect(bool activate, int shakeAmplitudeX = 50, int shakeAmplitudeY = 50);
+	void WindEffect(float direction, float windPower, bool activate);
+
+	// Sound functions
 	void AddSharedSound(std::string name, int sound, std::string fileName);
 	void PlaySample(std::string name, bool loop = false, bool dontPlayIfAlreadyPlaying = false);
 	void StopSample(std::string name);
 	bool IsSamplePlaying(std::string name);
+
+	// Change Player state functions
+	void ChangeKirboVelocities(float vx, float vy);
+	void SetKirboGrabbed(bool grabbed);
+	void ChangeKirboAnimation(std::string animation);
+	void SetKirboVisible(bool visible);
+	void SetKirboAttackable(bool attackable);
+	void SetKirboPositions(float px, float py);
+	bool CheckIfKirboCollisionWithEnnemy(cDynamic* object);
+	bool IsKirboAttackable();
 };
 
 #endif // !DEF_ENGINE

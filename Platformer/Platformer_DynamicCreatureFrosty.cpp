@@ -73,7 +73,7 @@ void cDynamicCreatureFrosty::Behaviour(float fElapsedTime, float playerX, float 
 			engine->PlaySample("superstar", false, true);
 
 			vx = fGlidingSpeed * fGlideDirection;
-			nGraphicState = SIDEATTACK;
+			nGraphicState = MOVE2;
 			fBehaviourTimer += fElapsedTime;
 
 			if (fBehaviourTimer >= fGlidingTime || px <= cfMinPosX || px >= cfMaxPosX)
@@ -86,7 +86,7 @@ void cDynamicCreatureFrosty::Behaviour(float fElapsedTime, float playerX, float 
 		case AI_ICECUBE:
 		{
 			vx = 0.0f; vy = 0.0f;
-			nGraphicState = UPATTACK;
+			nGraphicState = MOVE1;
 
 			// Frosty can't turn around if kirbo jump over his back
 			if (fBehaviourTimer == 0.0f)
@@ -121,7 +121,7 @@ void cDynamicCreatureFrosty::Behaviour(float fElapsedTime, float playerX, float 
 		case AI_ICEBLOW:
 		{
 			vx = 0.0f; vy = 0.0f;
-			nGraphicState = DOWNATTACK;
+			nGraphicState = MOVE3;
 
 			fBehaviourTimer += fElapsedTime;
 

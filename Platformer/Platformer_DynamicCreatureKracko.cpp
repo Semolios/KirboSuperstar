@@ -124,7 +124,7 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 
 			fBehaviourTimer += fElapsedTime;
 
-			nGraphicState = DOWNATTACK;
+			nGraphicState = MOVE3;
 			nGraphicCounter = 0;
 
 			if (fBehaviourTimer <= fAimingTime)
@@ -241,7 +241,7 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 				}
 			}
 
-			nGraphicState = DOWNATTACK;
+			nGraphicState = MOVE3;
 			nGraphicCounter = 0;
 
 			if (fBehaviourTimer >= fNumberOfAttacks * fFireTime)
@@ -266,7 +266,7 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 		{
 			vx = 0.0f; vy = 0.0f;
 
-			nGraphicState = DOWNATTACK;
+			nGraphicState = MOVE3;
 			nGraphicCounter = 0;
 
 			if (fBehaviourTimer2 == 0)
