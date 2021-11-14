@@ -230,6 +230,15 @@ private:
 	// Air attacks Behaviour
 	int nAirAttackSide = 0;
 
+	// Up air behaviour
+	float  fPrepareUpAirAttackTime = 0.5f;
+	float fUpAirAOEPosY = -2.0f;
+	float fUpAirAOEDuration = 2.0f;
+
+	int nPrepareUpAirAttackFrame = 0;
+	int nfirstFrameUpAirAttack = 1;
+	int nLastFrameUpAirAttack = 2;
+
 	bool bCanSpawnAOE = true;
 
 public:

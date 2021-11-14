@@ -57,8 +57,6 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 				// One time out of 4, king DDD choose to UP B instead of jumping
 				int chosenJump = rand() % 4;
 
-				chosenJump = 0;
-
 				if (chosenJump == 0)
 					ChangeState(AI_UPB);
 				else
@@ -90,7 +88,7 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 
 				// TODO
 				// debug
-				chosenAttack = 2;
+				chosenAttack = 3;
 
 				if (chosenAttack == 0)
 				{
@@ -109,6 +107,7 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 				}
 				else
 				{
+					// TODO Changer de direction pour faire un backward air des fois
 					ChangeState(AI_JUMPING);
 				}
 			}
@@ -450,6 +449,23 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 		{
 			// TODO
 			nGraphicState = MOVE8;
+			fBehaviourTimer += fElapsedTime;
+
+			if (fBehaviourTimer <= fPrepareUpAirAttackTime)
+			{
+				nGraphicCounter = nPrepareUpAirAttackFrame;
+			}
+			else
+			{
+				LoopAnimation(nfirstFrameUpAirAttack, nLastFrameUpAirAttack);
+
+				if (bCanSpawnAOE)
+				{
+					bCanSpawnAOE = false;
+					engine->AddProjectile(px, py + fUpAirAOEPosY, false, vx, vy, fUpAirAOEDuration, "kingDDDUpAir", true, cnAttacksDmg, false);
+				}
+			}
+
 			ReturnMovingStateIfOnGround(fElapsedTime);
 		}
 		break;
