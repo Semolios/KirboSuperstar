@@ -187,7 +187,7 @@ private:
 
 	bool bCloseFromKirbo = false;
 
-	// Up special attack behaviour
+	// Up special attack Behaviour
 	float fUpBJumpVelX = 3.0f;
 	float fUpBJumpVelY = -23.0f;
 	float fCrouchedDownTime = 0.6f;
@@ -230,14 +230,39 @@ private:
 	// Air attacks Behaviour
 	int nAirAttackSide = 0;
 
-	// Up air behaviour
-	float  fPrepareUpAirAttackTime = 0.5f;
+	// Up air Behaviour
+	float fPrepareUpAirAttackTime = 0.5f;
+	float fUpAirAttackTime = 0.7f;
 	float fUpAirAOEPosY = -2.0f;
 	float fUpAirAOEDuration = 2.0f;
 
 	int nPrepareUpAirAttackFrame = 0;
 	int nfirstFrameUpAirAttack = 1;
 	int nLastFrameUpAirAttack = 2;
+
+	// Forward air Behaviour
+	float fPrepareForwardAirAttackTime = 0.3f;
+	float fForwardAirAttackTime = 0.5f;
+	float fForwardAirAOEPosX = -1.0f;
+
+	int nPrepareForwardAirAttackFrame = 0;
+	int nForwardAirAttackFrame = 1;
+
+	// Backward air Behaviour
+	float fPrepareBackwardAirAttackTime = 0.3f;
+	float fBackwardAirAttackTime = 0.5f;
+	float fBackwardAirAOEPosX = -2.0f;
+
+	int nPrepareBackwardAirAttackFrame = 0;
+	int nBackwardAirAttackFrame = 1;
+
+	// Down air Behaviour
+	float fPrepareDownAirAttackTime = 0.3f;
+	float fDownAirAttackTime = 0.5f;
+	float fDownAirAOEPosY = -2.0f;
+
+	int nPrepareDownAirAttackFrame = 0;
+	int nDownAirAttackFrame = 1;
 
 	bool bCanSpawnAOE = true;
 

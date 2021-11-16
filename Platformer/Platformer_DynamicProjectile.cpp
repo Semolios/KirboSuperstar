@@ -331,11 +331,12 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProject
 	mapProjectiles["downTilt"].push_back(new olc::Sprite("assets/gfx/downTilt.png"));
 
 	mapProjectiles["kingDDDUpSmash"].push_back(new olc::Sprite("assets/gfx/kingDDDUpSmash.png"));
-
 	mapProjectiles["kingDDDLeftSideSmash"].push_back(new olc::Sprite("assets/gfx/kingDDDLeftSideSmash.png"));
 	mapProjectiles["kingDDDRightSideSmash"].push_back(new olc::Sprite("assets/gfx/kingDDDRightSideSmash.png"));
-
 	mapProjectiles["kingDDDDownSmash"].push_back(new olc::Sprite("assets/gfx/kingDDDDownSmash.png"));
+	mapProjectiles["kingDDDForwardAir"].push_back(new olc::Sprite("assets/gfx/kingDDDForwardAir.png"));
+	mapProjectiles["kingDDDBackwardAir"].push_back(new olc::Sprite("assets/gfx/kingDDDBackwardAir.png"));
+	mapProjectiles["kingDDDDownAir"].push_back(new olc::Sprite("assets/gfx/kingDDDDownAir.png"));
 
 	mapProjectiles["spike"].push_back(new olc::Sprite("assets/gfx/spike00.png"));
 	mapProjectiles["spike"].push_back(new olc::Sprite("assets/gfx/spike01.png"));

@@ -86,10 +86,6 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 				// King DDD can either choose to Side SMASH, Down SMASH, Vacuum or Jump.
 				int chosenAttack = rand() % 4;
 
-				// TODO
-				// debug
-				chosenAttack = 3;
-
 				if (chosenAttack == 0)
 				{
 					nSmashSide = nFaceDir;
@@ -107,7 +103,6 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 				}
 				else
 				{
-					// TODO Changer de direction pour faire un backward air des fois
 					ChangeState(AI_JUMPING);
 				}
 			}
@@ -447,7 +442,6 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 		break;
 		case AI_UPAIR:
 		{
-			// TODO
 			nGraphicState = MOVE8;
 			fBehaviourTimer += fElapsedTime;
 
@@ -455,7 +449,7 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 			{
 				nGraphicCounter = nPrepareUpAirAttackFrame;
 			}
-			else
+			else if (fBehaviourTimer <= fPrepareUpAirAttackTime + fUpAirAttackTime)
 			{
 				LoopAnimation(nfirstFrameUpAirAttack, nLastFrameUpAirAttack);
 
@@ -465,28 +459,93 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 					engine->AddProjectile(px, py + fUpAirAOEPosY, false, vx, vy, fUpAirAOEDuration, "kingDDDUpAir", true, cnAttacksDmg, false);
 				}
 			}
+			else
+			{
+				ChangeState(AI_JUMPING);
+			}
 
 			ReturnMovingStateIfOnGround(fElapsedTime);
 		}
 		break;
 		case AI_FORWARDAIR:
 		{
-			// TODO
 			nGraphicState = MOVE9;
+			fBehaviourTimer += fElapsedTime;
+
+			if (fBehaviourTimer <= fPrepareForwardAirAttackTime)
+			{
+				nGraphicCounter = nPrepareForwardAirAttackFrame;
+			}
+			else if (fBehaviourTimer <= fPrepareForwardAirAttackTime + fForwardAirAttackTime)
+			{
+				nGraphicCounter = nForwardAirAttackFrame;
+
+				if (bCanSpawnAOE)
+				{
+					bCanSpawnAOE = false;
+					engine->AddProjectile(px + fForwardAirAOEPosX, py, false, 0.0f, 0.0f, fAOEsDuration, "kingDDDForwardAir", false, cnAttacksDmg, false);
+				}
+			}
+			else
+			{
+				ChangeState(AI_JUMPING);
+			}
 			ReturnMovingStateIfOnGround(fElapsedTime);
 		}
 		break;
 		case AI_BACKWARDAIR:
 		{
-			// TODO
 			nGraphicState = MOVE10;
+			fBehaviourTimer += fElapsedTime;
+
+			if (fBehaviourTimer <= fPrepareBackwardAirAttackTime)
+			{
+				nGraphicCounter = nPrepareBackwardAirAttackFrame;
+			}
+			else if (fBehaviourTimer <= fPrepareBackwardAirAttackTime + fBackwardAirAttackTime)
+			{
+				nGraphicCounter = nBackwardAirAttackFrame;
+
+				if (bCanSpawnAOE)
+				{
+					bCanSpawnAOE = false;
+					engine->AddProjectile(px + fBackwardAirAOEPosX, py, false, 0.0f, 0.0f, fAOEsDuration, "kingDDDBackwardAir", false, cnAttacksDmg, false);
+				}
+			}
+			else
+			{
+				ChangeState(AI_JUMPING);
+			}
 			ReturnMovingStateIfOnGround(fElapsedTime);
 		}
 		break;
 		case AI_DOWNAIR:
 		{
-			// TODO
+			// Only one side is drawn to reduce the spritesheet
+			nFaceDir = 0;
+
 			nGraphicState = MOVE11;
+			fBehaviourTimer += fElapsedTime;
+
+			if (fBehaviourTimer <= fPrepareDownAirAttackTime)
+			{
+				nGraphicCounter = nPrepareDownAirAttackFrame;
+			}
+			else if (fBehaviourTimer <= fPrepareDownAirAttackTime + fDownAirAttackTime)
+			{
+				nGraphicCounter = nDownAirAttackFrame;
+
+				if (bCanSpawnAOE)
+				{
+					bCanSpawnAOE = false;
+					engine->AddProjectile(px, py + fDownAirAOEPosY, false, 0.0f, 0.0f, fAOEsDuration, "kingDDDDownAir", false, cnAttacksDmg, false);
+				}
+			}
+			else
+			{
+				ChangeState(AI_JUMPING);
+			}
+
 			ReturnMovingStateIfOnGround(fElapsedTime);
 		}
 		break;
