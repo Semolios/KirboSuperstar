@@ -590,9 +590,7 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 
 bool cDynamicCreatureKingDDD::IsOneFrameAnimation()
 {
-	return
-		nGraphicState == DAMAGED ||
-		nGraphicState == STANDING;
+	return nGraphicState == DAMAGED || nGraphicState == STANDING;
 }
 
 void cDynamicCreatureKingDDD::ChangeState(AI_STATE state, bool resetBehaviourTimer)
@@ -651,7 +649,8 @@ void cDynamicCreatureKingDDD::SingleAnimation(int firstFrame, int lastFrame)
 
 bool cDynamicCreatureKingDDD::OnGround()
 {
-	return engine->IsSolidTile(level->GetTile(px + cfCollisionLowerLimit, py + fKingDDDHeight)) ||
+	return
+		engine->IsSolidTile(level->GetTile(px + cfCollisionLowerLimit, py + fKingDDDHeight)) ||
 		engine->IsSolidTile(level->GetTile(px + cfCollisionUpperLimit, py + fKingDDDHeight)) ||
 		engine->IsSemiSolidTile(level->GetTile(px + cfCollisionLowerLimit, py + fKingDDDHeight)) ||
 		engine->IsSemiSolidTile(level->GetTile(px + cfCollisionUpperLimit, py + fKingDDDHeight));
