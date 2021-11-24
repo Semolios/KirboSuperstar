@@ -18,10 +18,11 @@ public:
 
 private:
 	const float cfRunSpeed = 3.0f;
-	const float cfJumpSpeed = -10.0f;
+	const float cfJumpSpeed = -12.0f;
 	const float cfRecoverJumpSpeed = -25.0f;
 	const float cfCollisionLowerLimit = 0.1f;
 	const float cfCollisionUpperLimit = 1.9f;
+	const float cfCrossPlatformGap = 0.15f;
 
 	// Boundaries of the UP area
 	const float cfUpAreaLeftPosX = -1.0f;
@@ -283,6 +284,7 @@ private:
 	void LoopAnimation(int firstFrame, int lastFrame);
 	void SingleAnimation(int firstFrame, int lastFrame);
 	bool OnGround();
+	bool OnSemiSolidPlatform();
 	void ReturnMovingStateIfOnGround(float fElapsedTime, bool waitAfterJump = false, float timeToWait = 0.0f, GraphicState graphicState = GraphicState::STANDING);
 	void CheckIfHasFallen();
 	bool KirboIsInUpArea(float playerX, float playerY);
@@ -291,6 +293,7 @@ private:
 	bool KirboIsInDownArea(float playerX, float playerY);
 	bool KirboIsInFrontOfDDD(float playerX, float playerY);
 	bool KirboIsBehindDDD(float playerX, float playerY);
+	void CrossPlatform();
 };
 
 #endif // !DEF_KINGDDD

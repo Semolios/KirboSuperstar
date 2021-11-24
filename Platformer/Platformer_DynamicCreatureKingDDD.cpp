@@ -113,6 +113,12 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 				bHasNotAlreadyJumped = false;
 				ChangeState(AI_JUMPING);
 			}
+
+			// If kirbo is Below, king DDD cross the semi-solid platforms
+			if (OnSemiSolidPlatform() && playerY >= py + fKingDDDHeight)
+			{
+				CrossPlatform();
+			}
 		}
 		break;
 		case AI_JUMPING:
@@ -699,6 +705,13 @@ bool cDynamicCreatureKingDDD::OnGround()
 		engine->IsSemiSolidTile(level->GetTile(px + cfCollisionUpperLimit, py + fKingDDDHeight));
 }
 
+bool cDynamicCreatureKingDDD::OnSemiSolidPlatform()
+{
+	return
+		engine->IsSemiSolidTile(level->GetTile(px + cfCollisionLowerLimit, py + fKingDDDHeight)) ||
+		engine->IsSemiSolidTile(level->GetTile(px + cfCollisionUpperLimit, py + fKingDDDHeight));
+}
+
 void cDynamicCreatureKingDDD::ReturnMovingStateIfOnGround(float fElapsedTime, bool waitAfterJump, float timeToWait, GraphicState graphicState)
 {
 	if (OnGround() && vy >= 0)
@@ -808,4 +821,9 @@ bool cDynamicCreatureKingDDD::KirboIsInFrontOfDDD(float playerX, float playerY)
 bool cDynamicCreatureKingDDD::KirboIsBehindDDD(float playerX, float playerY)
 {
 	return (KirboIsInLeftArea(playerX, playerY) && nFaceDir == 1) || (KirboIsInRightArea(playerX, playerY) && nFaceDir == 0);
+}
+
+void cDynamicCreatureKingDDD::CrossPlatform()
+{
+	py += cfCrossPlatformGap;
 }
