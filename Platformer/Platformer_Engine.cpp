@@ -236,6 +236,22 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	AddSharedSound("tornado", sndTornado, "assets/snd/tornado.wav");
 	AddSharedSound("loudScreaming", sndLoudScreaming, "assets/snd/loudScreaming.wav");
 	AddSharedSound("behold", sndBehold, "assets/snd/behold.wav");
+	AddSharedSound("kingDDDJump", sndKingDDDJump, "assets/snd/kingDDDJump.wav");
+	AddSharedSound("kingDDDUpSmash", sndKingDDDUpSmash, "assets/snd/kingDDDUpSmash.wav");
+	AddSharedSound("kingDDDUpSmashHammer", sndKingDDDUpSmashHammer, "assets/snd/kingDDDUpSmashHammer.wav");
+	AddSharedSound("kingDDDSideSmash", sndKingDDDSideSmash, "assets/snd/kingDDDSideSmash.wav");
+	AddSharedSound("kingDDDDownSmashHammer", sndKingDDDDownSmashHammer, "assets/snd/kingDDDDownSmashHammer.wav");
+	AddSharedSound("kingDDDSideB", sndKingDDDSideB, "assets/snd/kingDDDSideB.wav");
+	AddSharedSound("spikeBallBounce", sndSpikeBallBounce, "assets/snd/spikeBallBounce.wav");
+	AddSharedSound("kingDDDDownBCharge", sndKingDDDDownBCharge, "assets/snd/kingDDDDownBCharge.wav");
+	AddSharedSound("kingDDDDownBPrepare", sndKingDDDDownBPrepare, "assets/snd/kingDDDDownBPrepare.wav");
+	AddSharedSound("kingDDDDownBAttack", sndKingDDDDownBAttack, "assets/snd/kingDDDDownBAttack.wav");
+	AddSharedSound("kingDDDUpBJump", sndKingDDDUpBJump, "assets/snd/kingDDDUpBJump.wav");
+	AddSharedSound("kingDDDUpBLanding", sndKingDDDUpBLanding, "assets/snd/kingDDDUpBLanding.wav");
+	AddSharedSound("kingDDDVacuum", sndKingDDDVacuum, "assets/snd/kingDDDVacuum.wav");
+	AddSharedSound("kingDDDUpAir", sndKingDDDUpAir, "assets/snd/kingDDDUpAir.wav");
+	AddSharedSound("kingDDDAirAtkVoice", sndKingDDDAirAtkVoice, "assets/snd/kingDDDAirAtkVoice.wav");
+	AddSharedSound("kingDDDAirAtkHammer", sndKingDDDAirAtkHammer, "assets/snd/kingDDDAirAtkHammer.wav");
 
 #pragma endregion
 
@@ -645,9 +661,9 @@ bool OneLoneCoder_Platformer::IsSemiSolidTile(wchar_t tile)
 	return tile == '?';
 }
 
-void OneLoneCoder_Platformer::AddProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float fDrag, std::string sound, bool bouncy)
+void OneLoneCoder_Platformer::AddProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float fDrag, std::string sound, bool bouncy, std::string bounceSound)
 {
-	cDynamicProjectile* p = new cDynamicProjectile(ox, oy, bFriend, velx, vely, duration, mapProjectiles[sprite], affectedByGravity, damage, solidVSMap, oneHit, corner, breackableAgainstTiles, fDrag, bouncy);
+	cDynamicProjectile* p = new cDynamicProjectile(ox, oy, bFriend, velx, vely, duration, mapProjectiles[sprite], affectedByGravity, damage, solidVSMap, oneHit, corner, breackableAgainstTiles, fDrag, bouncy, bounceSound);
 	if (sound != "")
 		p->SetSoundEffect(sound);
 	vecProjectiles.push_back(p);

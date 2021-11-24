@@ -92,6 +92,7 @@ private:
 
 	// Standard Behaviour
 	float fBehaviourTimer = 0.0f;
+	float fBehaviourTimer2 = 0.0f;
 	float fWaitingTime = 2.5f;
 	float fKingDDDSemiWidth = 1.0f;
 	float fKingDDDSemiHeight = 1.0f;
@@ -171,6 +172,7 @@ private:
 
 	// Down Special Attack Behaviour
 	float fDownBWalkSpeed = 1.5f;
+	float fDownBChaseTime = 4.0f;
 	float fDownBPrepareTime = 0.5f;
 	float fDownBAttackTime = 1.0f;
 	float fDownBAOEPosX = -2.0f;
@@ -195,6 +197,7 @@ private:
 	float fUpBRightLimit = 3.0f;
 	int nCrouchedDownFrame = 0;
 	int nUpBJumpFrame = 1;
+	bool bPlayLandingSound = true;
 
 	enum JumpSide
 	{

@@ -104,6 +104,22 @@ private:
 	int sndTornado;
 	int sndLoudScreaming;
 	int sndBehold;
+	int sndKingDDDJump;
+	int sndKingDDDUpSmash;
+	int sndKingDDDUpSmashHammer;
+	int sndKingDDDSideSmash;
+	int sndKingDDDDownSmashHammer;
+	int sndKingDDDSideB;
+	int sndSpikeBallBounce;
+	int sndKingDDDDownBCharge;
+	int sndKingDDDDownBPrepare;
+	int sndKingDDDDownBAttack;
+	int sndKingDDDUpBJump;
+	int sndKingDDDUpBLanding;
+	int sndKingDDDVacuum;
+	int sndKingDDDUpAir;
+	int sndKingDDDAirAtkVoice;
+	int sndKingDDDAirAtkHammer;
 
 	// engine Properties
 	cPlayer* player;
@@ -209,7 +225,7 @@ public:
 	bool IsSemiSolidTile(wchar_t tile);
 
 	// Projectiles functions
-	void AddProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, bool breackableAgainstTiles = true, float fDrag = -3.0f, std::string sound = "", bool bouncy = false);
+	void AddProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, bool breackableAgainstTiles = true, float fDrag = -3.0f, std::string sound = "", bool bouncy = false, std::string bounceSound = "");
 	void AddBoomerang(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, std::string sound = "");
 	void AddOrbital(float ox, float oy, bool bFriend, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, float cx = 0.0f, float cy = 0.0f, float angrot = 0.0f, std::string sound = "");
 	

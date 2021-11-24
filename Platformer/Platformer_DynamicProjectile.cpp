@@ -3,7 +3,7 @@
 
 OneLoneCoder_Platformer* cDynamicProjectile::engine = nullptr;
 
-cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float drag, bool bouncy) : cDynamic("projectile")
+cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float drag, bool bouncy, std::string bounceSound) : cDynamic("projectile")
 {
 	fDynWidth = map[0]->width;
 	fDynHeight = map[0]->height;
@@ -26,6 +26,7 @@ cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float v
 	nCornerSpr = corner % 4;
 	fDrag = drag;
 	bBouncy = bouncy;
+	bounceSoundEffect = bounceSound;
 }
 
 cDynamicProjectile::~cDynamicProjectile()
@@ -139,6 +140,9 @@ void cDynamicProjectile::Collision(float fElapsedTime, cLevel* level)
 					}
 					else
 					{
+						if (!bounceSoundEffect.empty())
+							engine->PlaySample(bounceSoundEffect);
+
 						vy = -vy;
 					}
 				}

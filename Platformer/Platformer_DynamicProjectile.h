@@ -11,7 +11,7 @@ class OneLoneCoder_Platformer;
 class cDynamicProjectile : public cDynamic
 {
 public:
-	cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner = 0, bool breackableAgainstTiles = true, float drag = -3.0f, bool bouncy = false);
+	cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner = 0, bool breackableAgainstTiles = true, float drag = -3.0f, bool bouncy = false, std::string bounceSound = "");
 	virtual ~cDynamicProjectile();
 
 protected:
@@ -19,6 +19,7 @@ protected:
 
 	std::vector<olc::Sprite*> mapStates;
 	std::string soundEffect;
+	std::string bounceSoundEffect;
 	float fSpriteX;
 	float fSpriteY;
 	float fDuration;

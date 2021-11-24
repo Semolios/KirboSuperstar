@@ -126,6 +126,7 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 
 			if (bHasNotAlreadyJumped)
 			{
+				engine->PlaySample("kingDDDJump");
 				vy = cfJumpSpeed;
 				bHasNotAlreadyJumped = false;
 			}
@@ -178,6 +179,9 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 				if (bCanSpawnAOE)
 				{
 					bCanSpawnAOE = false;
+
+					engine->PlaySample("kingDDDUpSmash");
+					engine->PlaySample("kingDDDUpSmashHammer");
 					engine->AddProjectile(px + fUpSmashPosX, py + fUpSmashPosY, false, 0.0f, 0.0f, fAOEsDuration, "kingDDDUpSmash", false, cnAttacksDmg, false);
 				}
 				SingleAnimation(nFirstFrameUpSmash, nLastFrameUpSmash);
@@ -205,6 +209,7 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 				{
 					bCanSpawnAOE = false;
 
+					engine->PlaySample("kingDDDSideSmash");
 					if (nSmashSide == 0)
 						engine->AddProjectile(px + fLeftSideSmashPosX, py + fSideSmashPosY, false, 0.0f, 0.0f, fAOEsDuration, "kingDDDLeftSideSmash", false, cnAttacksDmg, false);
 					else
@@ -234,6 +239,8 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 				if (bCanSpawnAOE)
 				{
 					bCanSpawnAOE = false;
+
+					engine->PlaySample("kingDDDDownSmashHammer");
 					engine->AddProjectile(px + fDownSmashPosX, py + fDownSmashPosY, false, 0.0f, 0.0f, fAOEsDuration, "kingDDDDownSmash", false, cnAttacksDmg, false);
 				}
 				SingleAnimation(nFirstFrameDownSmash, nLastFrameDownSmash);
@@ -266,8 +273,10 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 				if (bCanSpawnAOE)
 				{
 					bCanSpawnAOE = false;
+
+					engine->PlaySample("kingDDDSideB");
 					// spawn bouncy spike
-					engine->AddProjectile((nFaceDir == 0 ? fSpikeLeftPX : fSpikeRightPX) + px, py, false, nFaceDir == 0 ? fSpikeLeftVX : fSpikeRightVX, fSpikeVY, fSpikeDuration, "spike", true, cnAttacksDmg, true, true, 0, false, -3.0f, "", true);
+					engine->AddProjectile((nFaceDir == 0 ? fSpikeLeftPX : fSpikeRightPX) + px, py, false, nFaceDir == 0 ? fSpikeLeftVX : fSpikeRightVX, fSpikeVY, fSpikeDuration, "spike", true, cnAttacksDmg, true, true, 0, false, -3.0f, "", true, "spikeBallBounce");
 				}
 			}
 			else
@@ -281,31 +290,41 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 			vx = (playerX < px) ? -fDownBWalkSpeed : fDownBWalkSpeed;
 			nGraphicState = MOVE5;
 
+			fBehaviourTimer += fElapsedTime;
+
 			if (KirboIsInLeftArea(playerX, playerY) || KirboIsInRightArea(playerX, playerY))
 			{
 				bCloseFromKirbo = true;
 			}
 
-			if (!bCloseFromKirbo)
+			if (!bCloseFromKirbo && fBehaviourTimer <= fDownBChaseTime)
 			{
+				engine->PlaySample("kingDDDDownBCharge", false, true);
 				LoopAnimation(nFirstFrameChargeDownB, nLastFrameChargeDownB);
 			}
 			else
 			{
-				vx = 0.0f;
-				fBehaviourTimer += fElapsedTime;
+				engine->StopSample("kingDDDDownBCharge");
 
-				if (fBehaviourTimer <= fDownBPrepareTime)
+				vx = 0.0f;
+				fBehaviourTimer2 += fElapsedTime;
+
+				if (fBehaviourTimer2 <= fDownBPrepareTime)
 				{
+					engine->PlaySample("kingDDDDownBPrepare", false, true);
 					LoopAnimation(nFirstFramePrepareDownB, nLastFramePrepareDownB);
 				}
-				else if (fBehaviourTimer <= fDownBPrepareTime + fDownBAttackTime)
+				else if (fBehaviourTimer2 <= fDownBPrepareTime + fDownBAttackTime)
 				{
 					SingleAnimation(nFirstFrameDownBAttack, nLastFrameDownBAttack);
+
+					engine->StopSample("kingDDDDownBPrepare");
 
 					if (bCanSpawnAOE)
 					{
 						bCanSpawnAOE = false;
+
+						engine->PlaySample("kingDDDDownBAttack");
 						engine->AddProjectile(px + fDownBAOEPosX, py + fDownBAOEPosY, false, 0.0f, 0.0f, fAOEsDuration, "kingDDDDownB", false, cnAttacksDmg, false);
 					}
 				}
@@ -322,9 +341,9 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 			// Only one side is drawn to reduce the spritesheet
 			nFaceDir = 0;
 			nGraphicState = MOVE6;
-			fBehaviourTimer += fElapsedTime;
+			fBehaviourTimer2 += fElapsedTime;
 
-			if (fBehaviourTimer <= fCrouchedDownTime)
+			if (fBehaviourTimer2 <= fCrouchedDownTime)
 			{
 				vx = 0.0f; vy = 0.0f;
 
@@ -341,6 +360,7 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 				{
 					vy = fUpBJumpVelY;
 					bHasNotAlreadyJumped = false;
+					engine->PlaySample("kingDDDUpBJump");
 				}
 				else
 				{
@@ -383,13 +403,17 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 				break;
 				case VACUUM:
 				{
+					engine->PlaySample("kingDDDVacuum", false, true);
 					LoopAnimation(nFirstFrameVacuum, nLastFrameVacuum);
 
 					if (KirboIsInFrontOfDDD(playerX, playerY) && engine->IsKirboAttackable())
 						ChangeVacuumState(KIRBOCAUGHT);
 
 					if (fBehaviourTimer >= fPrepareVacuumTime)
+					{
+						engine->StopSample("kingDDDVacuum");
 						ChangeState(AI_MOVING);
+					}
 				}
 				break;
 				case KIRBOCAUGHT:
@@ -404,6 +428,7 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 					if (engine->CheckIfKirboCollisionWithEnnemy(this))
 					{
 						engine->SetKirboVisible(false);
+						engine->StopSample("kingDDDVacuum");
 						ChangeVacuumState(SWALLOW);
 					}
 				}
@@ -456,6 +481,8 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 				if (bCanSpawnAOE)
 				{
 					bCanSpawnAOE = false;
+
+					engine->PlaySample("kingDDDUpAir");
 					engine->AddProjectile(px, py + fUpAirAOEPosY, false, vx, vy, fUpAirAOEDuration, "kingDDDUpAir", true, cnAttacksDmg, false);
 				}
 			}
@@ -483,6 +510,9 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 				if (bCanSpawnAOE)
 				{
 					bCanSpawnAOE = false;
+
+					engine->PlaySample("kingDDDAirAtkVoice");
+					engine->PlaySample("kingDDDAirAtkHammer");
 					engine->AddProjectile(px + fForwardAirAOEPosX, py, false, 0.0f, 0.0f, fAOEsDuration, "kingDDDForwardAir", false, cnAttacksDmg, false);
 				}
 			}
@@ -509,6 +539,9 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 				if (bCanSpawnAOE)
 				{
 					bCanSpawnAOE = false;
+
+					engine->PlaySample("kingDDDAirAtkVoice");
+					engine->PlaySample("kingDDDAirAtkHammer");
 					engine->AddProjectile(px + fBackwardAirAOEPosX, py, false, 0.0f, 0.0f, fAOEsDuration, "kingDDDBackwardAir", false, cnAttacksDmg, false);
 				}
 			}
@@ -538,6 +571,9 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 				if (bCanSpawnAOE)
 				{
 					bCanSpawnAOE = false;
+
+					engine->PlaySample("kingDDDAirAtkVoice");
+					engine->PlaySample("kingDDDAirAtkHammer");
 					engine->AddProjectile(px, py + fDownAirAOEPosY, false, 0.0f, 0.0f, fAOEsDuration, "kingDDDDownAir", false, cnAttacksDmg, false);
 				}
 			}
@@ -551,6 +587,11 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 		break;
 		case AI_RECOVERY:
 		{
+			// In case king DDD falls while doing down B
+			engine->StopSample("kingDDDDownBCharge");
+			engine->StopSample("kingDDDDownBPrepare");
+			engine->StopSample("kingDDDDownBAttack");
+
 			if (vy <= 0)
 				nGraphicCounter = nJumpingFrame;
 			else
@@ -597,8 +638,10 @@ void cDynamicCreatureKingDDD::ChangeState(AI_STATE state, bool resetBehaviourTim
 {
 	nGraphicCounter = 0;
 	fBehaviourTimer = 0.0f;
+	fBehaviourTimer2 = 0.0f;
 	nAINextState = state;
 	bCanSpawnAOE = true;
+	bPlayLandingSound = true;
 }
 
 void cDynamicCreatureKingDDD::ChangeVacuumState(VACUUMSTATE state)
@@ -671,8 +714,17 @@ void cDynamicCreatureKingDDD::ReturnMovingStateIfOnGround(float fElapsedTime, bo
 			}
 			else
 			{
-				vx = 0.0f;
+				vx = 0.0f; vy = 0.0f;
 				nGraphicState = graphicState;
+
+				// On landing after Up B, the landing sounds occurs
+				if (graphicState == MOVE6 && bPlayLandingSound)
+				{
+					engine->PlaySample("kingDDDSideSmash");
+					engine->PlaySample("kingDDDUpBLanding");
+
+					bPlayLandingSound = false;
+				}
 			}
 		}
 		else
