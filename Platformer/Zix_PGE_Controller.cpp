@@ -96,6 +96,25 @@ bool ControllerManager::IsPluggedIn()
 	return pluggedIn;
 }
 
+bool ControllerManager::AnyButtonPressed()
+{
+	return
+		GetButton(UP).bPressed ||
+		GetButton(DOWN).bPressed ||
+		GetButton(LEFT).bPressed ||
+		GetButton(RIGHT).bPressed ||
+		GetButton(START).bPressed ||
+		GetButton(BACK).bPressed ||
+		GetButton(A).bPressed ||
+		GetButton(B).bPressed ||
+		GetButton(X).bPressed ||
+		GetButton(Y).bPressed ||
+		GetButton(LEFT_SHOULDER).bPressed ||
+		GetButton(RIGHT_SHOULDER).bPressed ||
+		GetButton(LEFT_THUMB).bPressed ||
+		GetButton(RIGHT_THUMB).bPressed;
+}
+
 void ControllerManager::Update(float dt)
 {
 #ifdef _WIN32
@@ -175,4 +194,4 @@ void ControllerManager::Update(float dt)
 		lastButtonState[i] = buttonState[i] = false;
 	}
 #endif
-}
+		}

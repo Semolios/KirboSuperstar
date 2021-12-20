@@ -318,7 +318,7 @@ bool OneLoneCoder_Platformer::GameState_Title(float fElapsedTime)
 
 	titleScreen->Update(this, fElapsedTime);
 
-	if (GetKey(olc::Key::SPACE).bPressed || controller.GetButton(A).bPressed)
+	if (GetKey(olc::Key::SPACE).bPressed || controller.AnyButtonPressed())
 	{
 		olc::SOUND::StopAll();
 		nGameState = GS_SELECTMENU;

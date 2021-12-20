@@ -85,6 +85,8 @@ public:
 	bool IsVibrating();
 	bool IsPluggedIn();
 
+	bool AnyButtonPressed();
+
 private:
 	float NormalizeStickValue(short value);
 };
