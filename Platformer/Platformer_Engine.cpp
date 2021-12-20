@@ -2,7 +2,7 @@
 
 OneLoneCoder_Platformer::OneLoneCoder_Platformer()
 {
-	sAppName = "Tile Based Platform Game";
+	sAppName = "Kirbo Superstar";
 }
 
 bool OneLoneCoder_Platformer::OnUserCreate()
@@ -17,18 +17,18 @@ bool OneLoneCoder_Platformer::OnUserUpdate(float fElapsedTime)
 	{
 		switch (nGameState)
 		{
-			case GS_LOADING:		GameState_Loading(fElapsedTime); break;
-			case GS_TITLE:			GameState_Title(fElapsedTime); break;
-			case GS_MAIN:			GameState_Main(fElapsedTime); break;
-			case GS_TRANSITION:		GameState_Transition(fElapsedTime); break;
-			case GS_LOADLEVEL:		GameState_LoadLevel(fElapsedTime); break;
-			case GS_WORLDMAP:		GameState_WorldMap(fElapsedTime); break;
-			case GS_ENDSCREEN:		GameState_EndScreen(fElapsedTime); break;
-			case GS_PAUSE:			GameState_PauseMenu(fElapsedTime); break;
+			case GS_LOADING:		GameState_Loading(fElapsedTime);	   break;
+			case GS_TITLE:			GameState_Title(fElapsedTime);		   break;
+			case GS_MAIN:			GameState_Main(fElapsedTime);		   break;
+			case GS_TRANSITION:		GameState_Transition(fElapsedTime);    break;
+			case GS_LOADLEVEL:		GameState_LoadLevel(fElapsedTime);     break;
+			case GS_WORLDMAP:		GameState_WorldMap(fElapsedTime);	   break;
+			case GS_ENDSCREEN:		GameState_EndScreen(fElapsedTime);	   break;
+			case GS_PAUSE:			GameState_PauseMenu(fElapsedTime);	   break;
 			case GS_LOADBOSSLEVEL:	GameState_LoadBossLevel(fElapsedTime); break;
-			case GS_SELECTMENU:		GameState_SelectMenu(fElapsedTime); break;
-			case GS_CONTROLS:		GameState_Controls(fElapsedTime); break;
-			case GS_CLOSE:			GameState_Close(fElapsedTime); break;
+			case GS_SELECTMENU:		GameState_SelectMenu(fElapsedTime);    break;
+			case GS_CONTROLS:		GameState_Controls(fElapsedTime);	   break;
+			case GS_CLOSE:			GameState_Close(fElapsedTime);		   break;
 		}
 	}
 
@@ -658,7 +658,7 @@ bool OneLoneCoder_Platformer::IsSolidTile(wchar_t tile)
 bool OneLoneCoder_Platformer::IsSemiSolidTile(wchar_t tile)
 {
 	// List Here all the tiles that are semi solid
-	return tile == '?';
+	return tile == '_';
 }
 
 void OneLoneCoder_Platformer::AddProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float fDrag, std::string sound, bool bouncy, std::string bounceSound)

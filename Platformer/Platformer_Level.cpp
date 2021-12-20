@@ -236,20 +236,20 @@ void cLevel::SelectTile(int startX, int endX, int nVisibleTilesX, int nVisibleTi
 			wchar_t sTileID = GetTile(x + fOffsetX, y + fOffsetY);
 			switch (sTileID)
 			{
-				case L'#': // Solid Block
-					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, engine->GetTilesSprites(), 0 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-					break;
 				case L'G': // Ground Block
 					DrawGroundTile(x, y, fTileOffsetX, fTileOffsetY, fOffsetX, fOffsetY, engine->GetGroundTiles(), sTileID);
 					break;
+				case L'#': // Solid Block
+					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, engine->GetTilesSprites(), 0 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
+					break;
 				case L'B': // Brick Block
+					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, engine->GetTilesSprites(), 1 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
+					break;
+				case L'_': // Semi solid platform
 					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, engine->GetTilesSprites(), 2 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
 					break;
-				case L'?': // Question Block
-					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, engine->GetTilesSprites(), 3 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-					break;
 				case L'o': // Coin
-					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, engine->GetTilesSprites(), 4 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
+					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, engine->GetTilesSprites(), 3 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
 					break;
 				case L'w': // Door
 					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY + (engine->GetTileHeight() - engine->GetDoorSpr()->height) + 5.0f, engine->GetDoorSpr(), 0, 0, engine->GetDoorSpr()->width, engine->GetDoorSpr()->height);
@@ -275,9 +275,9 @@ void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY
 {
 	// Get all tiles around the current tile
 	wchar_t tilesAround[3][3];
-	tilesAround[0][0] = GetTile(x - 1 + fCamOffsetX, y - 1 + fCamOffsetY); tilesAround[0][1] = GetTile(x + 0 + fCamOffsetX, y - 1 + fCamOffsetY);	tilesAround[0][2] = GetTile(x + 1 + fCamOffsetX, y - 1 + fCamOffsetY);
-	tilesAround[1][0] = GetTile(x - 1 + fCamOffsetX, y + 0 + fCamOffsetY); tilesAround[1][1] = tile;												tilesAround[1][2] = GetTile(x + 1 + fCamOffsetX, y + 0 + fCamOffsetY);
-	tilesAround[2][0] = GetTile(x - 1 + fCamOffsetX, y + 1 + fCamOffsetY); tilesAround[2][1] = GetTile(x + 0 + fCamOffsetX, y + 1 + fCamOffsetY);	tilesAround[2][2] = GetTile(x + 1 + fCamOffsetX, y + 1 + fCamOffsetY);
+	tilesAround[0][0] = GetTile(x - 1 + fCamOffsetX, y - 1 + fCamOffsetY); tilesAround[0][1] = GetTile(x + 0 + fCamOffsetX, y - 1 + fCamOffsetY); tilesAround[0][2] = GetTile(x + 1 + fCamOffsetX, y - 1 + fCamOffsetY);
+	tilesAround[1][0] = GetTile(x - 1 + fCamOffsetX, y + 0 + fCamOffsetY); tilesAround[1][1] = tile;											  tilesAround[1][2] = GetTile(x + 1 + fCamOffsetX, y + 0 + fCamOffsetY);
+	tilesAround[2][0] = GetTile(x - 1 + fCamOffsetX, y + 1 + fCamOffsetY); tilesAround[2][1] = GetTile(x + 0 + fCamOffsetX, y + 1 + fCamOffsetY); tilesAround[2][2] = GetTile(x + 1 + fCamOffsetX, y + 1 + fCamOffsetY);
 
 	// Check the 47 configurations
 	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&

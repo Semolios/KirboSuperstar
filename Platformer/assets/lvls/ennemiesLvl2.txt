@@ -1,2 +1,6 @@
 waddleDee,7,6
 waddleDee,11,6
+--bomber,40,7
+--bladeKnight,29,3
+--scarfy,15,2
+--rocky,17,3
