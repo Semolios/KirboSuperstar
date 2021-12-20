@@ -184,8 +184,13 @@ private:
 	olc::Sprite* sprHealthPoint;
 	olc::Sprite* sprBossHealthBar;
 
+	// SplashScreen
+	float fSplashScreenTimer;
+	float fSplashScreenTime = 5.0f;
+
 	enum
 	{
+		GS_SPLASHSCREEN,
 		GS_LOADING,
 		GS_TITLE,
 		GS_MAIN,
@@ -198,13 +203,14 @@ private:
 		GS_SELECTMENU,
 		GS_CONTROLS,
 		GS_CLOSE,
-	} nGameState = GS_LOADING;
+	} nGameState = GS_SPLASHSCREEN;
 
 protected:
 	bool OnUserCreate() override;
 	bool OnUserUpdate(float fElapsedTime) override;
 
 	bool GameState_Transition(float fElapsedTime);
+	bool GameState_SplashScreen(float fElapsedTime);
 	bool GameState_Loading(float fElapsedTime);
 	bool GameState_LoadLevel(float fElapsedTime);
 	bool GameState_Title(float fElapsedTime);

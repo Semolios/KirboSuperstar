@@ -17,6 +17,7 @@ bool OneLoneCoder_Platformer::OnUserUpdate(float fElapsedTime)
 	{
 		switch (nGameState)
 		{
+			case GS_SPLASHSCREEN:	GameState_SplashScreen(fElapsedTime);  break;
 			case GS_LOADING:		GameState_Loading(fElapsedTime);	   break;
 			case GS_TITLE:			GameState_Title(fElapsedTime);		   break;
 			case GS_MAIN:			GameState_Main(fElapsedTime);		   break;
@@ -49,6 +50,18 @@ bool OneLoneCoder_Platformer::GameState_Transition(float fElapsedTime)
 
 	if (GetKey(olc::Key::SPACE).bPressed)
 		nGameState = GS_MAIN;
+
+	return false;
+}
+
+bool OneLoneCoder_Platformer::GameState_SplashScreen(float fElapsedTime)
+{
+	fSplashScreenTimer += fElapsedTime;
+
+	DrawSprite(0, 0, new olc::Sprite("assets/gfx/OLCPixelGameEngineSplashScreen.png"));
+	
+	if (fSplashScreenTimer >= fSplashScreenTime || GetKey(olc::Key::SPACE).bPressed)
+		nGameState = GS_LOADING;
 
 	return false;
 }
