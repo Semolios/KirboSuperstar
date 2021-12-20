@@ -7,6 +7,7 @@ OneLoneCoder_Platformer::OneLoneCoder_Platformer()
 
 bool OneLoneCoder_Platformer::OnUserCreate()
 {
+	controller.Initialize();
 	olc::SOUND::InitialiseAudio();
 	return true;
 }
@@ -15,6 +16,8 @@ bool OneLoneCoder_Platformer::OnUserUpdate(float fElapsedTime)
 {
 	if (fElapsedTime <= 0.15f)
 	{
+		controller.Update(fElapsedTime);
+
 		switch (nGameState)
 		{
 			case GS_SPLASHSCREEN:	GameState_SplashScreen(fElapsedTime);  break;
@@ -48,7 +51,7 @@ bool OneLoneCoder_Platformer::GameState_Transition(float fElapsedTime)
 		case 3: animPlayer.ChangeState("riding_star"); break;
 	}
 
-	if (GetKey(olc::Key::SPACE).bPressed)
+	if (GetKey(olc::Key::SPACE).bPressed || controller.GetButton(A).bPressed)
 		nGameState = GS_MAIN;
 
 	return false;
@@ -60,7 +63,7 @@ bool OneLoneCoder_Platformer::GameState_SplashScreen(float fElapsedTime)
 
 	DrawSprite(0, 0, new olc::Sprite("assets/gfx/OLCPixelGameEngineSplashScreen.png"));
 	
-	if (fSplashScreenTimer >= fSplashScreenTime || GetKey(olc::Key::SPACE).bPressed)
+	if (fSplashScreenTimer >= fSplashScreenTime || GetKey(olc::Key::SPACE).bPressed || controller.GetButton(A).bPressed)
 		nGameState = GS_LOADING;
 
 	return false;
@@ -315,7 +318,7 @@ bool OneLoneCoder_Platformer::GameState_Title(float fElapsedTime)
 
 	titleScreen->Update(this, fElapsedTime);
 
-	if (GetKey(olc::Key::SPACE).bPressed)
+	if (GetKey(olc::Key::SPACE).bPressed || controller.GetButton(A).bPressed)
 	{
 		olc::SOUND::StopAll();
 		nGameState = GS_SELECTMENU;
@@ -549,12 +552,12 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_WorldMap(float fElapsedTime)
 {
-	worldMap->Update(this, fElapsedTime);
+	worldMap->Update(this, fElapsedTime, GetController());
 
-	if (GetKey(olc::Key::SPACE).bPressed)
+	if (GetKey(olc::Key::SPACE).bPressed || controller.GetButton(A).bPressed)
 		nGameState = GS_LOADLEVEL;
 
-	if (GetKey(olc::Key::ESCAPE).bPressed)
+	if (GetKey(olc::Key::ESCAPE).bPressed || controller.GetButton(B).bPressed)
 	{
 		olc::SOUND::StopAll();
 		nGameState = GS_SELECTMENU;
@@ -567,7 +570,7 @@ bool OneLoneCoder_Platformer::GameState_EndScreen(float fElapsedTime)
 {
 	endScreen->Update(this, fElapsedTime);
 
-	if (GetKey(olc::Key::SPACE).bPressed)
+	if (GetKey(olc::Key::SPACE).bPressed || controller.GetButton(A).bPressed)
 		nGameState = GS_TITLE;
 
 	return false;
@@ -575,13 +578,13 @@ bool OneLoneCoder_Platformer::GameState_EndScreen(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_PauseMenu(float fElapsedTime)
 {
-	pauseMenu->Update(this, fElapsedTime);
+	pauseMenu->Update(this, fElapsedTime, GetController());
 
-	if (GetKey(olc::Key::P).bPressed)
+	if (GetKey(olc::Key::P).bPressed || controller.GetButton(START).bPressed)
 	{
 		nGameState = GS_MAIN;
 	}
-	else if (GetKey(olc::Key::SPACE).bPressed)
+	else if (GetKey(olc::Key::SPACE).bPressed || controller.GetButton(A).bPressed)
 	{
 		if (pauseMenu->GetPlayerChoice() == 1)
 			ReturnToWorldMap();
@@ -623,9 +626,9 @@ bool OneLoneCoder_Platformer::GameState_LoadBossLevel(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_SelectMenu(float fElapsedTime)
 {
-	selectMenu->Update(this, fElapsedTime);
+	selectMenu->Update(this, fElapsedTime, GetController());
 
-	if (GetKey(olc::Key::SPACE).bPressed)
+	if (GetKey(olc::Key::SPACE).bPressed || controller.GetButton(A).bPressed)
 	{
 		if (selectMenu->GetPlayerChoice() == 0)
 			ReturnToWorldMap();
@@ -641,7 +644,7 @@ bool OneLoneCoder_Platformer::GameState_Controls(float fElapsedTime)
 {
 	controlsMenu->Update(this, fElapsedTime);
 
-	if (GetKey(olc::Key::SPACE).bPressed)
+	if (GetKey(olc::Key::SPACE).bPressed || controller.GetButton(A).bPressed)
 		nGameState = GS_SELECTMENU;
 
 	return true;
@@ -914,4 +917,9 @@ bool OneLoneCoder_Platformer::CheckIfKirboCollisionWithEnnemy(cDynamic* object)
 bool OneLoneCoder_Platformer::IsKirboAttackable()
 {
 	return player->IsAttackable();
+}
+
+ControllerManager* OneLoneCoder_Platformer::GetController()
+{
+	return &controller;
 }

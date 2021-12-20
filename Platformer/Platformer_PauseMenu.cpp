@@ -6,18 +6,18 @@ cPauseMenu::cPauseMenu(olc::PixelGameEngine* gfx, olc::Sprite* background, olc::
 	sprCursor = cursor;
 }
 
-bool cPauseMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime)
+bool cPauseMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller)
 {
 	gfx->DrawSprite(0, 0, sprBackGround);
 
 	// Handle input
-	if (gfx->GetKey(olc::DOWN).bReleased)
+	if (gfx->GetKey(olc::DOWN).bReleased || controller->GetButton(DOWN).bPressed)
 	{
 		nPlayerChoice++;
 		if (nPlayerChoice >= 2) nPlayerChoice = 0;
 	}
 
-	if (gfx->GetKey(olc::UP).bReleased)
+	if (gfx->GetKey(olc::UP).bReleased || controller->GetButton(UP).bPressed)
 	{
 		nPlayerChoice--;
 		if (nPlayerChoice < 0) nPlayerChoice = 1;

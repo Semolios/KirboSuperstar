@@ -25,7 +25,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 	if (engine->IsFocused() && CanInteract())
 	{
 		// Fly, enter a door
-		if (engine->GetKey(olc::Key::UP).bHeld)
+		if (engine->GetKey(olc::Key::UP).bHeld || engine->GetController()->GetButton(UP).bHeld || engine->GetController()->GetLeftStickY() > 0.5f)
 		{
 			if (!bAttacking && !bVacuuming)
 			{
@@ -39,7 +39,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		}
 
 		// Go down when flying, cross semi solid platform and control camera when onground
-		if (engine->GetKey(olc::Key::DOWN).bHeld)
+		if (engine->GetKey(olc::Key::DOWN).bHeld || engine->GetController()->GetButton(DOWN).bHeld || engine->GetController()->GetLeftStickY() < -0.5f)
 		{
 			if (bFlying)
 				fPlayerVelY = cfPlayerVelY;
@@ -63,7 +63,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		}
 
 		// Go left
-		if (engine->GetKey(olc::Key::LEFT).bHeld)
+		if (engine->GetKey(olc::Key::LEFT).bHeld || engine->GetController()->GetButton(LEFT).bHeld || engine->GetController()->GetLeftStickX() < -0.25f)
 		{
 			if (!bAttacking && !bVacuuming)
 			{
@@ -79,7 +79,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		}
 
 		// Go right
-		if (engine->GetKey(olc::Key::RIGHT).bHeld)
+		if (engine->GetKey(olc::Key::RIGHT).bHeld || engine->GetController()->GetButton(RIGHT).bHeld || engine->GetController()->GetLeftStickX() > 0.25f)
 		{
 			if (!bAttacking && !bVacuuming)
 			{
@@ -95,11 +95,15 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		}
 
 		// Stop kirbo walk sound
-		if ((!engine->GetKey(olc::Key::LEFT).bHeld && !engine->GetKey(olc::Key::RIGHT).bHeld) || !bOnGround)
+		if ((!engine->GetKey(olc::Key::LEFT).bHeld &&
+			 !engine->GetKey(olc::Key::RIGHT).bHeld &&
+			 engine->GetController()->GetLeftStickX() == 0.0f) || !bOnGround)
+		{
 			engine->StopSample("kirboWalk");
+		}
 
 		// Jump, double jump, stop flying
-		if (engine->GetKey(olc::Key::SPACE).bPressed)
+		if (engine->GetKey(olc::Key::SPACE).bPressed || engine->GetController()->GetButton(A).bPressed)
 		{
 			if (bFlying)
 			{
@@ -119,7 +123,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		}
 
 		// The more you hold, the higher you go
-		if (engine->GetKey(olc::Key::SPACE).bHeld)
+		if (engine->GetKey(olc::Key::SPACE).bHeld || engine->GetController()->GetButton(A).bHeld)
 		{
 			if (bChargeJump)
 			{
@@ -144,7 +148,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		}
 
 		// if you release space, jump is cancelled so you can't spam space to glide
-		if (engine->GetKey(olc::Key::SPACE).bReleased)
+		if (engine->GetKey(olc::Key::SPACE).bReleased || engine->GetController()->GetButton(A).bReleased)
 		{
 			if (bChargeJump)
 			{
@@ -159,7 +163,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		}
 
 		// Slap attack
-		if (engine->GetKey(olc::Key::F).bPressed)
+		if (engine->GetKey(olc::Key::F).bPressed || engine->GetController()->GetButton(B).bPressed)
 		{
 			// Can't spam slap, can't slap when player is flying
 			if (!bAttacking && !bFlying)
@@ -173,7 +177,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		}
 
 		// Pause
-		if (engine->GetKey(olc::Key::P).bPressed)
+		if (engine->GetKey(olc::Key::P).bPressed || engine->GetController()->GetButton(START).bPressed)
 		{
 			engine->SetPlayerChoice(0);
 
@@ -185,7 +189,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		}
 
 		// Launch a Jesus Cross
-		if (engine->GetKey(olc::Key::R).bPressed)
+		if (engine->GetKey(olc::Key::R).bPressed || engine->GetController()->GetButton(Y).bPressed)
 		{
 			// Can't spam Launching cross, can't launch when player is flying
 			if (!bAttacking && !bFlying)
@@ -199,7 +203,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		}
 
 		// Vacuum attack
-		if (engine->GetKey(olc::Key::E).bHeld)
+		if (engine->GetKey(olc::Key::E).bHeld || engine->GetController()->GetButton(X).bHeld)
 		{
 			// can't Vacuum when player is attacking, swallowing or flying
 			if (!bFlying && !bSwallowing)
@@ -229,7 +233,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		}
 
 		// Poyo
-		if (engine->GetKey(olc::Key::O).bPressed)
+		if (engine->GetKey(olc::Key::O).bPressed || engine->GetController()->GetRightTrigger())
 		{
 			// Can only poyo on ground
 			if (bOnGround)

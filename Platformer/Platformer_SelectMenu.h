@@ -5,6 +5,7 @@
 
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
+#include "Zix_PGE_Controller.h"
 
 class cSelectMenu
 {
@@ -18,7 +19,7 @@ private:
 	olc::Sprite* sprCursor;
 
 public:
-	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime);
+	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller);
 	int GetPlayerChoice();
 };
 

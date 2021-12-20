@@ -4,6 +4,7 @@
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
 #include "olcPGEX_Sound.h"
+#include "Zix_PGE_Controller.h"
 
 #include "Platformer_Animator.h"
 #include "Platformer_Assets.h"
@@ -188,6 +189,9 @@ private:
 	float fSplashScreenTimer;
 	float fSplashScreenTime = 5.0f;
 
+	// Controller
+	ControllerManager controller;
+
 	enum
 	{
 		GS_SPLASHSCREEN,
@@ -279,6 +283,9 @@ public:
 	void SetKirboPositions(float px, float py);
 	bool CheckIfKirboCollisionWithEnnemy(cDynamic* object);
 	bool IsKirboAttackable();
+
+	// Controller functions
+	ControllerManager* GetController();
 };
 
 #endif // !DEF_ENGINE

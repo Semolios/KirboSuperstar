@@ -6,6 +6,7 @@
 #include "olcPGEX_Graphics2D.h"
 #include "Platformer_Spline.h"
 #include "Platformer_Animator.h"
+#include "Zix_PGE_Controller.h"
 
 class cWorldMap
 {
@@ -24,7 +25,7 @@ private:
 	olc::Sprite* sprBackGround;
 
 public:
-	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime);
+	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller);
 	int GetSelectedLevel();
 	void SetUnlockedLevel(int unlockedLevels);
 };

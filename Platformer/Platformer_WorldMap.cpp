@@ -6,31 +6,31 @@ cWorldMap::cWorldMap(olc::PixelGameEngine* gfx, olc::Sprite* background, cAnimat
 {
 	sprBackGround = background;
 
-	path.AddPoint(0.22f * gfx->ScreenWidth(), 0.75f * gfx->ScreenHeight());	// Beginning level
+	path.AddPoint(0.22f * gfx->ScreenWidth(), 0.75f * gfx->ScreenHeight());	// Forest level
 	path.AddPoint(0.52f * gfx->ScreenWidth(), 0.60f * gfx->ScreenHeight());	// Lake level
 	path.AddPoint(0.70f * gfx->ScreenWidth(), 0.30f * gfx->ScreenHeight());	// Ice level
-	path.AddPoint(0.33f * gfx->ScreenWidth(), 0.50f * gfx->ScreenHeight());	// Forest level
-	path.AddPoint(0.33f * gfx->ScreenWidth(), 0.20f * gfx->ScreenHeight());	// Volcano level
-	path.AddPoint(0.77f * gfx->ScreenWidth(), 0.82f * gfx->ScreenHeight());	// Beach level
+	path.AddPoint(0.33f * gfx->ScreenWidth(), 0.50f * gfx->ScreenHeight());	// Sky level
+	path.AddPoint(0.33f * gfx->ScreenWidth(), 0.20f * gfx->ScreenHeight());	// Halberd level
+	path.AddPoint(0.77f * gfx->ScreenWidth(), 0.82f * gfx->ScreenHeight());	// Fountain of dreams level
 
 	animPlayer = anim;
 }
 
-bool cWorldMap::Update(olc::PixelGameEngine* gfx, float fElapsedTime)
+bool cWorldMap::Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller)
 {
 	gfx->DrawSprite(0, 0, sprBackGround);
 
 	animPlayer->Update(fElapsedTime);
 
 	// Handle input
-	if (gfx->GetKey(olc::RIGHT).bReleased)
+	if (gfx->GetKey(olc::RIGHT).bReleased || controller->GetButton(RIGHT).bPressed)
 	{
 		nSelectedLevel++;
 		if (nSelectedLevel >= nUnlockedLevels)
 			nSelectedLevel = 0;
 	}
 
-	if (gfx->GetKey(olc::LEFT).bReleased)
+	if (gfx->GetKey(olc::LEFT).bReleased || controller->GetButton(LEFT).bPressed)
 	{
 		nSelectedLevel--;
 		if (nSelectedLevel < 0)
