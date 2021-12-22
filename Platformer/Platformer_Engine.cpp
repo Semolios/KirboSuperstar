@@ -73,208 +73,263 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 {
 	srand(time(NULL));
 
-	FillRect(0, 0, ScreenWidth(), ScreenHeight(), olc::WHITE);
-	DrawString(30, 440, "Loading 0%", olc::WHITE, 5);
+	switch (nLoadingState)
+	{
+		case LS_CLEARSCREEN:
+		{
+			UpdateProgressBar("Loading 0%");
 
-#pragma region Assets
+			nLoadingState = LS_LEVELS;
+		}
+		break;
+		case LS_LEVELS:
+		{
+			level = new cLevel();
+			cLevel::engine = this;
+			sprDoor = new olc::Sprite("assets/gfx/door.png");
 
-	cAssets::get().LoadSprites();
-	cAssets::get().LoadItems();
+			level->LoadLevelsList();
+			level->LoadBossLevelsList();
+			level->LoadLevelsEnnemiesList();
+			level->LoadLevelsTilesList();
+			level->LoadLevelsGrdTilesList();
+			level->LoadLevelsBackGroundList();
+			level->LoadLevelsBossBckGrdList();
+			level->LoadLevelsMusics();
+			level->LoadBossLevelsMusics();
 
-#pragma endregion
+			level->InitialiseThreadPool();
 
-#pragma region Loading Levels
+			UpdateProgressBar("Loading 6%");
 
-	level = new cLevel();
-	cLevel::engine = this;
-	sprDoor = new olc::Sprite("assets/gfx/door.png");
+			nLoadingState = LS_ANIMATIONS;
+		}
+		break;
+		case LS_ANIMATIONS:
+		{
+			animPlayer.LoadAnimations();
 
-	level->LoadLevelsList();
-	level->LoadBossLevelsList();
-	level->LoadLevelsEnnemiesList();
-	level->LoadLevelsTilesList();
-	level->LoadLevelsGrdTilesList();
-	level->LoadLevelsBackGroundList();
-	level->LoadLevelsBossBckGrdList();
-	level->LoadLevelsMusics();
-	level->LoadBossLevelsMusics();
+			UpdateProgressBar("Loading 12%");
 
-	level->InitialiseThreadPool();
+			nLoadingState = LS_PROJECTILES;
+		}
+		break;
+		case LS_PROJECTILES:
+		{
+			mapProjectiles = cDynamicProjectile::LoadProjectilesSprites();
 
-#pragma endregion
+			UpdateProgressBar("Loading 13%");
 
-#pragma region Load Animations
+			nLoadingState = LS_TITLE;
+		}
+		break;
+		case LS_TITLE:
+		{
+			sprTitleScreen = new olc::Sprite("assets/gfx/title screen.png");
+			titleScreen = new cTitleScreen(this, sprTitleScreen);
 
-	animPlayer.LoadAnimations();
+			UpdateProgressBar("Loading 18%");
 
-#pragma endregion
+			nLoadingState = LS_WORLDMAP;
+		}
+		break;
+		case LS_WORLDMAP:
+		{
+			sprWorldMap = new olc::Sprite("assets/gfx/WorldMap.png");
+			worldMap = new cWorldMap(this, sprWorldMap, &animPlayer);
+			worldMap->SetUnlockedLevel(level->GetUnlockedLvl());
 
-#pragma region Projectiles sprites
+			UpdateProgressBar("Loading 23%");
 
-	mapProjectiles = cDynamicProjectile::LoadProjectilesSprites();
+			nLoadingState = LS_TRANSITION;
+		}
+		break;
+		case LS_TRANSITION:
+		{
+			sprTransition = new olc::Sprite("assets/gfx/transitionScreen.png");
+			transition = new cTransition(this, sprTransition, &animPlayer);
 
-#pragma endregion
+			UpdateProgressBar("Loading 30%");
 
-#pragma region Title Screen
+			nLoadingState = LS_ENDSCREEN;
+		}
+		break;
+		case LS_ENDSCREEN:
+		{
+			sprEndScreen = new olc::Sprite("assets/gfx/endScreen.png");
+			endScreen = new cEndScreen(this, sprEndScreen);
 
-	sprTitleScreen = new olc::Sprite("assets/gfx/title screen.png");
-	titleScreen = new cTitleScreen(this, sprTitleScreen);
+			UpdateProgressBar("Loading 40%");
 
-#pragma endregion
+			nLoadingState = LS_PAUSEMENU;
+		}
+		break;
+		case LS_PAUSEMENU:
+		{
+			sprPauseMenu = new olc::Sprite("assets/gfx/PauseMenu.png");
+			sprCursor = new olc::Sprite("assets/gfx/cursor.png");
+			pauseMenu = new cPauseMenu(this, sprPauseMenu, sprCursor);
 
-#pragma region World Map
+			UpdateProgressBar("Loading 46%");
 
-	sprWorldMap = new olc::Sprite("assets/gfx/WorldMap.png");
-	worldMap = new cWorldMap(this, sprWorldMap, &animPlayer);
-	worldMap->SetUnlockedLevel(level->GetUnlockedLvl());
+			nLoadingState = LS_SELECTMENU;
+		}
+		break;
+		case LS_SELECTMENU:
+		{
+			sprSelectMenu = new olc::Sprite("assets/gfx/SelectMenu.png");
+			selectMenu = new cSelectMenu(this, sprSelectMenu, sprCursor);
 
-#pragma endregion
+			UpdateProgressBar("Loading 51%");
 
-#pragma region Transition
+			nLoadingState = LS_CONTROLSMENU;
+		}
+		break;
+		case LS_CONTROLSMENU:
+		{
+			sprControlsMenu = new olc::Sprite("assets/gfx/ControlsMenu.png");
+			controlsMenu = new cControlsMenu(this, sprControlsMenu);
 
-	sprTransition = new olc::Sprite("assets/gfx/transitionScreen.png");
-	transition = new cTransition(this, sprTransition, &animPlayer);
+			UpdateProgressBar("Loading 52%");
 
-#pragma endregion
+			nLoadingState = LS_HUD;
+		}
+		break;
+		case LS_HUD:
+		{
+			HUD = new cHUD();
+			sprHealthBar = new olc::Sprite("assets/gfx/emptyHealthBar.png");
+			sprHealthPoint = new olc::Sprite("assets/gfx/healthPoint.png");
+			sprBossHealthBar = new olc::Sprite("assets/gfx/emptyBossHealthBar.png");
 
-#pragma region End Screen
+			UpdateProgressBar("Loading 66%");
 
-	sprEndScreen = new olc::Sprite("assets/gfx/endScreen.png");
-	endScreen = new cEndScreen(this, sprEndScreen);
+			nLoadingState = LS_ENGINEPOINTERS;
+		}
+		break;
+		case LS_ENGINEPOINTERS:
+		{
+			cCamera::engine = this;
+			cDynamicCreature::engine = this;
+			cDynamicCreatureBladeKnight::engine = this;
+			cDynamicCreatureBomber::engine = this;
+			cDynamicCreatureFrosty::engine = this;
+			cDynamicCreatureKingDDD::engine = this;
+			cDynamicCreatureKracko::engine = this;
+			cDynamicCreatureMrShineMrBright::engine = this;
+			cDynamicCreatureRocky::engine = this;
+			cDynamicCreatureSSTierMetaKnight::engine = this;
+			cDynamicCreatureWaddleDee::engine = this;
+			cDynamicCreatureWhispyWood::engine = this;
+			cDynamicProjectile::engine = this;
+			cPlayer::engine = this;
 
-#pragma endregion
+			UpdateProgressBar("Loading 74%");
 
-#pragma region Pause Menu
+			nLoadingState = LS_PLAYER;
+		}
+		break;
+		case LS_PLAYER:
+		{
+			player = new cPlayer(&animPlayer);
 
-	sprPauseMenu = new olc::Sprite("assets/gfx/PauseMenu.png");
-	sprCursor = new olc::Sprite("assets/gfx/cursor.png");
-	pauseMenu = new cPauseMenu(this, sprPauseMenu, sprCursor);
+			UpdateProgressBar("Loading 78%");
 
-#pragma endregion
+			nLoadingState = LS_CAMERA;
+		}
+		break;
+		case LS_CAMERA:
+		{
+			camera = new cCamera();
+			camera->InitialiseThreadPool();
 
-#pragma region Select Menu
+			UpdateProgressBar("Loading 95%");
 
-	sprSelectMenu = new olc::Sprite("assets/gfx/SelectMenu.png");
-	selectMenu = new cSelectMenu(this, sprSelectMenu, sprCursor);
+			nLoadingState = LS_SOUNDS;
+		}
+		break;
+		case LS_SOUNDS:
+		{
+			sndTitleScreen = olc::SOUND::LoadAudioSample("assets/snd/titleScreen.wav");
+			sndWorldMap = olc::SOUND::LoadAudioSample("assets/snd/worldMap.wav");
+			sndBossKilled = olc::SOUND::LoadAudioSample("assets/snd/bossKilled.wav");
+			sndWind = olc::SOUND::LoadAudioSample("assets/snd/wind.wav");
 
-#pragma endregion
+			AddSharedSound("whispyScream", sndWhispyScream, "assets/snd/whispyScream.wav");
+			AddSharedSound("loseLife", sndLoseLife, "assets/snd/loseLife.wav");
+			AddSharedSound("punch", sndPunch, "assets/snd/punch.wav");
+			AddSharedSound("slap", sndSlap, "assets/snd/slap.wav");
+			AddSharedSound("kirboWalk", sndKirboWalk, "assets/snd/kirboWalk.wav");
+			AddSharedSound("kirboFly", sndKirboFly, "assets/snd/kirboFly.wav");
+			AddSharedSound("explosion", sndExplosion, "assets/snd/explosion.wav");
+			AddSharedSound("kirboJump", sndKirboJump, "assets/snd/kirboJump.wav");
+			AddSharedSound("kirboHit", sndKirboHit, "assets/snd/kirboHit.wav");
+			AddSharedSound("beginVacuum", sndKirboBeginVacuum, "assets/snd/kirboBeginVacuum.wav");
+			AddSharedSound("vacuum", sndKirboVacuum, "assets/snd/kirboVacuum.wav");
+			AddSharedSound("swallow", sndKirboSwallow, "assets/snd/kirboSwallow.wav");
+			AddSharedSound("wetSlap", sndWetSlap, "assets/snd/wetSlap.wav");
+			AddSharedSound("earthQuake", sndEarthQuake, "assets/snd/earthQuake.wav");
+			AddSharedSound("blow", sndBlow, "assets/snd/blow.wav");
+			AddSharedSound("inhale", sndInhale, "assets/snd/inhale.wav");
+			AddSharedSound("poyo01", sndPoyo01, "assets/snd/poyo01.wav");
+			AddSharedSound("poyo02", sndPoyo02, "assets/snd/poyo02.wav");
+			AddSharedSound("sunShootingMoon", sndSunShootingMoon, "assets/snd/sunShootingMoon.wav");
+			AddSharedSound("sunShootUp", sndSunShootUp, "assets/snd/sunShootUp.wav");
+			AddSharedSound("beamCharge", sndBeamCharge, "assets/snd/beamCharge.wav");
+			AddSharedSound("beam", sndBeam, "assets/snd/beam.wav");
+			AddSharedSound("volcanoBoom", sndVolcanoBoom, "assets/snd/volcanoBoom.wav");
+			AddSharedSound("iceBlow", sndIceBlow, "assets/snd/iceBlow.wav");
+			AddSharedSound("patpat", sndpatpat, "assets/snd/patpat.wav");
+			AddSharedSound("itemLaunch", sndItemLaunch, "assets/snd/itemLaunch.wav");
+			AddSharedSound("superstar", sndSuperstar, "assets/snd/superstar.wav");
+			AddSharedSound("frostyJump", sndFrostyJump, "assets/snd/frostyJump.wav");
+			AddSharedSound("frostyGroundPound", sndFrostyGroundPound, "assets/snd/frostyGroundPound.wav");
+			AddSharedSound("lightning", sndLightning, "assets/snd/lightning.wav");
+			AddSharedSound("electricity", sndElectricity, "assets/snd/electricity.wav");
+			AddSharedSound("electricity2", sndElectricity2, "assets/snd/electricity2.wav");
+			AddSharedSound("meleeControllerRape", sndMeleeControllerRape, "assets/snd/meleeControllerRape.wav");
+			AddSharedSound("dash", sndDash, "assets/snd/dash.wav");
+			AddSharedSound("hiyayayaya", sndHiyayayaya, "assets/snd/hiyayayaya.wav");
+			AddSharedSound("singleSwordStrike", sndSingleSwordStrike, "assets/snd/singleSwordStrike.wav");
+			AddSharedSound("multipleSwordStrike", sndMultipleSwordStrike, "assets/snd/multipleSwordStrike.wav");
+			AddSharedSound("ha", sndHa, "assets/snd/ha.wav");
+			AddSharedSound("tornado", sndTornado, "assets/snd/tornado.wav");
+			AddSharedSound("loudScreaming", sndLoudScreaming, "assets/snd/loudScreaming.wav");
+			AddSharedSound("behold", sndBehold, "assets/snd/behold.wav");
+			AddSharedSound("kingDDDJump", sndKingDDDJump, "assets/snd/kingDDDJump.wav");
+			AddSharedSound("kingDDDUpSmash", sndKingDDDUpSmash, "assets/snd/kingDDDUpSmash.wav");
+			AddSharedSound("kingDDDUpSmashHammer", sndKingDDDUpSmashHammer, "assets/snd/kingDDDUpSmashHammer.wav");
+			AddSharedSound("kingDDDSideSmash", sndKingDDDSideSmash, "assets/snd/kingDDDSideSmash.wav");
+			AddSharedSound("kingDDDDownSmashHammer", sndKingDDDDownSmashHammer, "assets/snd/kingDDDDownSmashHammer.wav");
+			AddSharedSound("kingDDDSideB", sndKingDDDSideB, "assets/snd/kingDDDSideB.wav");
+			AddSharedSound("spikeBallBounce", sndSpikeBallBounce, "assets/snd/spikeBallBounce.wav");
+			AddSharedSound("kingDDDDownBCharge", sndKingDDDDownBCharge, "assets/snd/kingDDDDownBCharge.wav");
+			AddSharedSound("kingDDDDownBPrepare", sndKingDDDDownBPrepare, "assets/snd/kingDDDDownBPrepare.wav");
+			AddSharedSound("kingDDDDownBAttack", sndKingDDDDownBAttack, "assets/snd/kingDDDDownBAttack.wav");
+			AddSharedSound("kingDDDUpBJump", sndKingDDDUpBJump, "assets/snd/kingDDDUpBJump.wav");
+			AddSharedSound("kingDDDUpBLanding", sndKingDDDUpBLanding, "assets/snd/kingDDDUpBLanding.wav");
+			AddSharedSound("kingDDDVacuum", sndKingDDDVacuum, "assets/snd/kingDDDVacuum.wav");
+			AddSharedSound("kingDDDUpAir", sndKingDDDUpAir, "assets/snd/kingDDDUpAir.wav");
+			AddSharedSound("kingDDDAirAtkVoice", sndKingDDDAirAtkVoice, "assets/snd/kingDDDAirAtkVoice.wav");
+			AddSharedSound("kingDDDAirAtkHammer", sndKingDDDAirAtkHammer, "assets/snd/kingDDDAirAtkHammer.wav");
 
-#pragma region Controls Menu
+			UpdateProgressBar("Loading 99.9999999999999");
 
-	sprControlsMenu = new olc::Sprite("assets/gfx/ControlsMenu.png");
-	controlsMenu = new cControlsMenu(this, sprControlsMenu);
+			nLoadingState = LS_ASSETS;
+		}
+		break;
+		case LS_ASSETS:
+		{
+			cAssets::get().LoadSprites();
+			cAssets::get().LoadItems();
 
-#pragma endregion
+			bLoadFinished = true;
+		}
+		break;
+	}
 
-#pragma region HUD
-
-	HUD = new cHUD();
-	sprHealthBar = new olc::Sprite("assets/gfx/emptyHealthBar.png");
-	sprHealthPoint = new olc::Sprite("assets/gfx/healthPoint.png");
-	sprBossHealthBar = new olc::Sprite("assets/gfx/emptyBossHealthBar.png");
-
-#pragma endregion
-
-#pragma region Static Classes engine initialisation
-
-	cCamera::engine = this;
-	cDynamicCreature::engine = this;
-	cDynamicCreatureBladeKnight::engine = this;
-	cDynamicCreatureBomber::engine = this;
-	cDynamicCreatureFrosty::engine = this;
-	cDynamicCreatureKingDDD::engine = this;
-	cDynamicCreatureKracko::engine = this;
-	cDynamicCreatureMrShineMrBright::engine = this;
-	cDynamicCreatureRocky::engine = this;
-	cDynamicCreatureSSTierMetaKnight::engine = this;
-	cDynamicCreatureWaddleDee::engine = this;
-	cDynamicCreatureWhispyWood::engine = this;
-	cDynamicProjectile::engine = this;
-	cPlayer::engine = this;
-
-#pragma endregion
-
-#pragma region Player
-
-	player = new cPlayer(&animPlayer);
-
-#pragma endregion
-
-#pragma region Camera
-
-	camera = new cCamera();
-	camera->InitialiseThreadPool();
-
-#pragma endregion
-
-#pragma region Sounds
-
-	sndTitleScreen = olc::SOUND::LoadAudioSample("assets/snd/titleScreen.wav");
-	sndWorldMap = olc::SOUND::LoadAudioSample("assets/snd/worldMap.wav");
-	sndBossKilled = olc::SOUND::LoadAudioSample("assets/snd/bossKilled.wav");
-	sndWind = olc::SOUND::LoadAudioSample("assets/snd/wind.wav");
-
-	AddSharedSound("whispyScream", sndWhispyScream, "assets/snd/whispyScream.wav");
-	AddSharedSound("loseLife", sndLoseLife, "assets/snd/loseLife.wav");
-	AddSharedSound("punch", sndPunch, "assets/snd/punch.wav");
-	AddSharedSound("slap", sndSlap, "assets/snd/slap.wav");
-	AddSharedSound("kirboWalk", sndKirboWalk, "assets/snd/kirboWalk.wav");
-	AddSharedSound("kirboFly", sndKirboFly, "assets/snd/kirboFly.wav");
-	AddSharedSound("explosion", sndExplosion, "assets/snd/explosion.wav");
-	AddSharedSound("kirboJump", sndKirboJump, "assets/snd/kirboJump.wav");
-	AddSharedSound("kirboHit", sndKirboHit, "assets/snd/kirboHit.wav");
-	AddSharedSound("beginVacuum", sndKirboBeginVacuum, "assets/snd/kirboBeginVacuum.wav");
-	AddSharedSound("vacuum", sndKirboVacuum, "assets/snd/kirboVacuum.wav");
-	AddSharedSound("swallow", sndKirboSwallow, "assets/snd/kirboSwallow.wav");
-	AddSharedSound("wetSlap", sndWetSlap, "assets/snd/wetSlap.wav");
-	AddSharedSound("earthQuake", sndEarthQuake, "assets/snd/earthQuake.wav");
-	AddSharedSound("blow", sndBlow, "assets/snd/blow.wav");
-	AddSharedSound("inhale", sndInhale, "assets/snd/inhale.wav");
-	AddSharedSound("poyo01", sndPoyo01, "assets/snd/poyo01.wav");
-	AddSharedSound("poyo02", sndPoyo02, "assets/snd/poyo02.wav");
-	AddSharedSound("sunShootingMoon", sndSunShootingMoon, "assets/snd/sunShootingMoon.wav");
-	AddSharedSound("sunShootUp", sndSunShootUp, "assets/snd/sunShootUp.wav");
-	AddSharedSound("beamCharge", sndBeamCharge, "assets/snd/beamCharge.wav");
-	AddSharedSound("beam", sndBeam, "assets/snd/beam.wav");
-	AddSharedSound("volcanoBoom", sndVolcanoBoom, "assets/snd/volcanoBoom.wav");
-	AddSharedSound("iceBlow", sndIceBlow, "assets/snd/iceBlow.wav");
-	AddSharedSound("patpat", sndpatpat, "assets/snd/patpat.wav");
-	AddSharedSound("itemLaunch", sndItemLaunch, "assets/snd/itemLaunch.wav");
-	AddSharedSound("superstar", sndSuperstar, "assets/snd/superstar.wav");
-	AddSharedSound("frostyJump", sndFrostyJump, "assets/snd/frostyJump.wav");
-	AddSharedSound("frostyGroundPound", sndFrostyGroundPound, "assets/snd/frostyGroundPound.wav");
-	AddSharedSound("lightning", sndLightning, "assets/snd/lightning.wav");
-	AddSharedSound("electricity", sndElectricity, "assets/snd/electricity.wav");
-	AddSharedSound("electricity2", sndElectricity2, "assets/snd/electricity2.wav");
-	AddSharedSound("meleeControllerRape", sndMeleeControllerRape, "assets/snd/meleeControllerRape.wav");
-	AddSharedSound("dash", sndDash, "assets/snd/dash.wav");
-	AddSharedSound("hiyayayaya", sndHiyayayaya, "assets/snd/hiyayayaya.wav");
-	AddSharedSound("singleSwordStrike", sndSingleSwordStrike, "assets/snd/singleSwordStrike.wav");
-	AddSharedSound("multipleSwordStrike", sndMultipleSwordStrike, "assets/snd/multipleSwordStrike.wav");
-	AddSharedSound("ha", sndHa, "assets/snd/ha.wav");
-	AddSharedSound("tornado", sndTornado, "assets/snd/tornado.wav");
-	AddSharedSound("loudScreaming", sndLoudScreaming, "assets/snd/loudScreaming.wav");
-	AddSharedSound("behold", sndBehold, "assets/snd/behold.wav");
-	AddSharedSound("kingDDDJump", sndKingDDDJump, "assets/snd/kingDDDJump.wav");
-	AddSharedSound("kingDDDUpSmash", sndKingDDDUpSmash, "assets/snd/kingDDDUpSmash.wav");
-	AddSharedSound("kingDDDUpSmashHammer", sndKingDDDUpSmashHammer, "assets/snd/kingDDDUpSmashHammer.wav");
-	AddSharedSound("kingDDDSideSmash", sndKingDDDSideSmash, "assets/snd/kingDDDSideSmash.wav");
-	AddSharedSound("kingDDDDownSmashHammer", sndKingDDDDownSmashHammer, "assets/snd/kingDDDDownSmashHammer.wav");
-	AddSharedSound("kingDDDSideB", sndKingDDDSideB, "assets/snd/kingDDDSideB.wav");
-	AddSharedSound("spikeBallBounce", sndSpikeBallBounce, "assets/snd/spikeBallBounce.wav");
-	AddSharedSound("kingDDDDownBCharge", sndKingDDDDownBCharge, "assets/snd/kingDDDDownBCharge.wav");
-	AddSharedSound("kingDDDDownBPrepare", sndKingDDDDownBPrepare, "assets/snd/kingDDDDownBPrepare.wav");
-	AddSharedSound("kingDDDDownBAttack", sndKingDDDDownBAttack, "assets/snd/kingDDDDownBAttack.wav");
-	AddSharedSound("kingDDDUpBJump", sndKingDDDUpBJump, "assets/snd/kingDDDUpBJump.wav");
-	AddSharedSound("kingDDDUpBLanding", sndKingDDDUpBLanding, "assets/snd/kingDDDUpBLanding.wav");
-	AddSharedSound("kingDDDVacuum", sndKingDDDVacuum, "assets/snd/kingDDDVacuum.wav");
-	AddSharedSound("kingDDDUpAir", sndKingDDDUpAir, "assets/snd/kingDDDUpAir.wav");
-	AddSharedSound("kingDDDAirAtkVoice", sndKingDDDAirAtkVoice, "assets/snd/kingDDDAirAtkVoice.wav");
-	AddSharedSound("kingDDDAirAtkHammer", sndKingDDDAirAtkHammer, "assets/snd/kingDDDAirAtkHammer.wav");
-
-#pragma endregion
-
-	nGameState = GS_TITLE;
+	if (bLoadFinished)
+		nGameState = GS_TITLE;
 
 	return true;
 }
@@ -920,4 +975,10 @@ bool OneLoneCoder_Platformer::IsKirboAttackable()
 ControllerManager* OneLoneCoder_Platformer::GetController()
 {
 	return &controller;
+}
+
+void OneLoneCoder_Platformer::UpdateProgressBar(std::string loadPercent)
+{
+	Clear(olc::BLACK);
+	DrawString(30, 440, loadPercent, olc::WHITE, 5);
 }

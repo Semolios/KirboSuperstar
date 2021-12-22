@@ -153,7 +153,7 @@ private:
 	olc::Sprite* sprEndScreen;
 	cEndScreen* endScreen;
 
-	// Pause Screen
+	// Pause Menu
 	olc::Sprite* sprPauseMenu;
 	olc::Sprite* sprCursor;
 	cPauseMenu* pauseMenu;
@@ -162,11 +162,11 @@ private:
 	olc::Sprite* sprSelectMenu;
 	cSelectMenu* selectMenu;
 
-	// Controls menu
+	// Controls Menu
 	olc::Sprite* sprControlsMenu;
 	cControlsMenu* controlsMenu;
 
-	// Sprites
+	// Player Sprites
 	const int nTileWidth = 64;
 	const int nTileHeight = 64;
 	cAnimator animPlayer;
@@ -190,6 +190,29 @@ private:
 
 	// Controller
 	ControllerManager controller;
+
+	// Loading Screen
+	enum
+	{
+		LS_CLEARSCREEN,
+		LS_LEVELS,
+		LS_ANIMATIONS,
+		LS_PROJECTILES,
+		LS_TITLE,
+		LS_WORLDMAP,
+		LS_TRANSITION,
+		LS_ENDSCREEN,
+		LS_PAUSEMENU,
+		LS_SELECTMENU,
+		LS_CONTROLSMENU,
+		LS_HUD,
+		LS_ENGINEPOINTERS,
+		LS_PLAYER,
+		LS_CAMERA,
+		LS_SOUNDS,
+		LS_ASSETS,
+	} nLoadingState = LS_CLEARSCREEN;
+	bool bLoadFinished = false;
 
 	enum
 	{
@@ -237,7 +260,7 @@ public:
 	void AddProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, bool breackableAgainstTiles = true, float fDrag = -3.0f, std::string sound = "", bool bouncy = false, std::string bounceSound = "");
 	void AddBoomerang(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, std::string sound = "");
 	void AddOrbital(float ox, float oy, bool bFriend, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, float cx = 0.0f, float cy = 0.0f, float angrot = 0.0f, std::string sound = "");
-	
+
 	// Engine properties/modifications functions
 	float GetTileWidth();
 	float GetTileHeight();
@@ -284,6 +307,9 @@ public:
 
 	// Controller functions
 	ControllerManager* GetController();
+
+	// Loading Screen functions
+	void UpdateProgressBar(std::string loadPercent);
 };
 
 #endif // !DEF_ENGINE
