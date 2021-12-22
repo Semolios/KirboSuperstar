@@ -26,7 +26,9 @@
 #include "Platformer_Transition.h"
 #include "Platformer_WorldMap.h"
 
-#include <cTime> 
+#include <cTime>
+
+#define DEMO
 
 class OneLoneCoder_Platformer : public olc::PixelGameEngine
 {

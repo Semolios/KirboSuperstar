@@ -582,7 +582,10 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			}
 			else if (level->IsLastUnlocked())
 			{
+#ifndef DEMO
 				level->UnlockNewLvl();
+#endif // !DEMO
+
 				worldMap->SetUnlockedLevel(level->GetUnlockedLvl());
 			}
 			ReturnToWorldMap();
