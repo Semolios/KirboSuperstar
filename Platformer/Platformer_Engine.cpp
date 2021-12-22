@@ -62,7 +62,7 @@ bool OneLoneCoder_Platformer::GameState_SplashScreen(float fElapsedTime)
 	fSplashScreenTimer += fElapsedTime;
 
 	DrawSprite(0, 0, new olc::Sprite("assets/gfx/OLCPixelGameEngineSplashScreen.png"));
-	
+
 	if (fSplashScreenTimer >= fSplashScreenTime || GetKey(olc::Key::SPACE).bPressed || controller.GetButton(A).bPressed)
 		nGameState = GS_LOADING;
 
@@ -72,6 +72,9 @@ bool OneLoneCoder_Platformer::GameState_SplashScreen(float fElapsedTime)
 bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 {
 	srand(time(NULL));
+
+	FillRect(0, 0, ScreenWidth(), ScreenHeight(), olc::WHITE);
+	DrawString(30, 440, "Loading 0%", olc::WHITE, 5);
 
 #pragma region Assets
 
@@ -759,11 +762,6 @@ void OneLoneCoder_Platformer::SetGameState(std::string gameState)
 float OneLoneCoder_Platformer::GetDragValue()
 {
 	return cfDrag;
-}
-
-float OneLoneCoder_Platformer::GetGrdDynamicOverlay()
-{
-	return cfGrdDynamicOverlay;
 }
 
 void OneLoneCoder_Platformer::UpdateWinTimer(float fElapsedTime)

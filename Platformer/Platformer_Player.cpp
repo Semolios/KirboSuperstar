@@ -586,7 +586,7 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 			((engine->IsSemiSolidTile(lvl->GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f)) ||
 			  engine->IsSemiSolidTile(lvl->GetTile(fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f))) && fPlayerPosY + 1.0f < (float)((int)fNewPlayerPosY + 1.0f) + 0.1f))
 		{
-			fNewPlayerPosY = (int)fNewPlayerPosY + engine->GetGrdDynamicOverlay(); // Remove this line to create shifting sand
+			fNewPlayerPosY = (int)fNewPlayerPosY + engine->GetGroundDynamicOverlay(); // Remove this line to create shifting sand
 			fPlayerVelY = 0;
 			bOnGround = true;
 			bDoubleJump = true;
