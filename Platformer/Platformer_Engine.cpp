@@ -37,6 +37,10 @@ bool OneLoneCoder_Platformer::OnUserUpdate(float fElapsedTime)
 		}
 	}
 
+#ifdef DEMO
+	DrawString(700, 10, "DEMO V0.0.1");
+#endif // DEMO
+
 	return true;
 }
 
