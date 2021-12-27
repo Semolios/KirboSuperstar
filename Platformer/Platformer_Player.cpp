@@ -517,6 +517,7 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 	float fNewPlayerPosX = fPlayerPosX + fPlayerVelX * fElapsedTime;
 	float fNewPlayerPosY = fPlayerPosY + fPlayerVelY * fElapsedTime;
 
+	// TODO item->GetPowerUp(); coder des classes héritées de cDynamicItem, en fonction de l'item, power up différent
 	// Check for pickups !
 	if (lvl->GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 0.0f) == L'o')
 		lvl->SetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 0.0f, L'.');

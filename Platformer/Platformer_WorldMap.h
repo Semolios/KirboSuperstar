@@ -4,14 +4,13 @@
 #pragma once
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
-#include "Platformer_Spline.h"
 #include "Platformer_Animator.h"
 #include "Zix_PGE_Controller.h"
 
 class cWorldMap
 {
 public:
-	cWorldMap(olc::PixelGameEngine* gfx, olc::Sprite* background, cAnimator* anim);
+	cWorldMap(olc::PixelGameEngine* gfx, olc::Sprite* background, olc::Sprite* lock, cAnimator* anim);
 
 private:
 	const int cnKirboTileWidth = 192;
@@ -21,8 +20,9 @@ private:
 	int nUnlockedLevels = 0;
 
 	static cAnimator* animPlayer;
-	cSpline path;
+	std::vector<olc::vf2d> path;
 	olc::Sprite* sprBackGround;
+	olc::Sprite* sprLock;
 
 public:
 	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller);

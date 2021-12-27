@@ -10,6 +10,7 @@
 #include "Platformer_Assets.h"
 #include "Platformer_Camera.h"
 #include "Platformer_ControlsMenu.h"
+#include "Platformer_CreditsMenu.h"
 #include "Platformer_Dynamic.h"
 #include "Platformer_DynamicCreature.h"
 #include "Platformer_DynamicProjectile.h"
@@ -144,6 +145,7 @@ private:
 
 	// World Map
 	olc::Sprite* sprWorldMap;
+	olc::Sprite* sprLock;
 	cWorldMap* worldMap;
 
 	// Transition Screen
@@ -167,6 +169,10 @@ private:
 	// Controls Menu
 	olc::Sprite* sprControlsMenu;
 	cControlsMenu* controlsMenu;
+
+	// Credits Menu
+	olc::Sprite* sprCreditsMenu;
+	cCreditsMenu* creditsMenu;
 
 	// Player Sprites
 	const int nTileWidth = 64;
@@ -207,6 +213,7 @@ private:
 		LS_PAUSEMENU,
 		LS_SELECTMENU,
 		LS_CONTROLSMENU,
+		LS_CREDITSMENU,
 		LS_HUD,
 		LS_ENGINEPOINTERS,
 		LS_PLAYER,
@@ -230,6 +237,7 @@ private:
 		GS_LOADBOSSLEVEL,
 		GS_SELECTMENU,
 		GS_CONTROLS,
+		GS_CREDITS,
 		GS_CLOSE,
 	} nGameState = GS_SPLASHSCREEN;
 
@@ -249,6 +257,7 @@ protected:
 	bool GameState_LoadBossLevel(float fElapsedTime);
 	bool GameState_SelectMenu(float fElapsedTime);
 	bool GameState_Controls(float fElapsedTime);
+	bool GameState_Credits(float fElapsedTime);
 	bool GameState_Close(float fElapsedTime);
 
 	void LoadLevelProperties();

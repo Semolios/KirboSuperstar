@@ -16,8 +16,8 @@ private:
 	const int cnTileHeight = 64;
 	const float cfStarsRotSpeed = 8.0f;
 
-	const float p1x = 140.0f, p1y = 440.0f;
-	const float p2x = 620.0f, p2y = 440.0f;
+	const float p1x = 120.0f, p1y = 435.0f;
+	const float p2x = 600.0f, p2y = 435.0f;
 
 	olc::Sprite* sprBackGround;
 

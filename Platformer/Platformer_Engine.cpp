@@ -32,6 +32,7 @@ bool OneLoneCoder_Platformer::OnUserUpdate(float fElapsedTime)
 			case GS_LOADBOSSLEVEL:	GameState_LoadBossLevel(fElapsedTime); break;
 			case GS_SELECTMENU:		GameState_SelectMenu(fElapsedTime);    break;
 			case GS_CONTROLS:		GameState_Controls(fElapsedTime);	   break;
+			case GS_CREDITS:		GameState_Credits(fElapsedTime);	   break;
 			case GS_CLOSE:			GameState_Close(fElapsedTime);		   break;
 		}
 	}
@@ -136,7 +137,8 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		case LS_WORLDMAP:
 		{
 			sprWorldMap = new olc::Sprite("assets/gfx/WorldMap.png");
-			worldMap = new cWorldMap(this, sprWorldMap, &animPlayer);
+			sprLock = new olc::Sprite("assets/gfx/Lock.png");
+			worldMap = new cWorldMap(this, sprWorldMap, sprLock, &animPlayer);
 			worldMap->SetUnlockedLevel(level->GetUnlockedLvl());
 
 			UpdateProgressBar("Loading 23%");
@@ -191,6 +193,16 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			controlsMenu = new cControlsMenu(this, sprControlsMenu);
 
 			UpdateProgressBar("Loading 52%");
+
+			nLoadingState = LS_CREDITSMENU;
+		}
+		break;
+		case LS_CREDITSMENU:
+		{
+			sprCreditsMenu = new olc::Sprite("assets/gfx/CreditsMenu.png");
+			creditsMenu = new cCreditsMenu(this, sprCreditsMenu);
+
+			UpdateProgressBar("Loading 58%");
 
 			nLoadingState = LS_HUD;
 		}
@@ -695,6 +707,8 @@ bool OneLoneCoder_Platformer::GameState_SelectMenu(float fElapsedTime)
 			ReturnToWorldMap();
 		else if (selectMenu->GetPlayerChoice() == 1)
 			nGameState = GS_CONTROLS;
+		else if (selectMenu->GetPlayerChoice() == 2)
+			nGameState = GS_CREDITS;
 		else
 			nGameState = GS_CLOSE;
 	}
@@ -705,7 +719,17 @@ bool OneLoneCoder_Platformer::GameState_Controls(float fElapsedTime)
 {
 	controlsMenu->Update(this, fElapsedTime);
 
-	if (GetKey(olc::Key::SPACE).bPressed || controller.GetButton(A).bPressed)
+	if (GetKey(olc::Key::SPACE).bPressed || GetKey(olc::Key::ESCAPE).bPressed || controller.GetButton(A).bPressed || controller.GetButton(B).bPressed)
+		nGameState = GS_SELECTMENU;
+
+	return true;
+}
+
+bool OneLoneCoder_Platformer::GameState_Credits(float fElapsedTime)
+{
+	creditsMenu->Update(this, fElapsedTime);
+
+	if (GetKey(olc::Key::SPACE).bPressed || GetKey(olc::Key::ESCAPE).bPressed || controller.GetButton(A).bPressed || controller.GetButton(B).bPressed)
 		nGameState = GS_SELECTMENU;
 
 	return true;
@@ -815,6 +839,7 @@ void OneLoneCoder_Platformer::SetGameState(std::string gameState)
 	else if (gameState == "GS_LOADBOSSLEVEL")	nGameState = GS_LOADBOSSLEVEL;
 	else if (gameState == "GS_SELECTMENU")		nGameState = GS_SELECTMENU;
 	else if (gameState == "GS_CONTROLS")		nGameState = GS_CONTROLS;
+	else if (gameState == "GS_CREDITS")			nGameState = GS_CREDITS;
 }
 
 float OneLoneCoder_Platformer::GetDragValue()

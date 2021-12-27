@@ -133,7 +133,7 @@ void cAnimator::LoadAnimations()
 
 	mapStates["poyo"].push_back(new olc::Sprite("assets/gfx/poyo00.png"));
 	mapStates["poyo"].push_back(new olc::Sprite("assets/gfx/poyo01.png"));
+	mapStates["poyo"].push_back(new olc::Sprite("assets/gfx/poyo01.png"));
 	mapStates["poyo"].push_back(new olc::Sprite("assets/gfx/poyo02.png"));
 	mapStates["poyo"].push_back(new olc::Sprite("assets/gfx/poyo03.png"));
-	mapStates["poyo"].push_back(new olc::Sprite("assets/gfx/poyo04.png"));
 }
