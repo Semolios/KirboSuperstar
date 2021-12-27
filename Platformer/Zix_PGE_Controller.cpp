@@ -194,4 +194,4 @@ void ControllerManager::Update(float dt)
 		lastButtonState[i] = buttonState[i] = false;
 	}
 #endif
-		}
+}
