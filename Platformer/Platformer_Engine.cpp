@@ -388,7 +388,7 @@ bool OneLoneCoder_Platformer::GameState_Title(float fElapsedTime)
 
 	titleScreen->Update(this, fElapsedTime);
 
-	if (GetKey(olc::Key::SPACE).bPressed || controller.AnyButtonPressed())
+	if (GetAnyKey() || controller.AnyButtonPressed())
 	{
 		olc::SOUND::StopAll();
 		nGameState = GS_SELECTMENU;
@@ -748,6 +748,48 @@ void OneLoneCoder_Platformer::LoadLevelProperties()
 {
 	player->SetPlayerPosX(level->GetInitPlayerPosX());
 	player->SetPlayerPosY(level->GetInitPlayerPosY());
+}
+
+bool OneLoneCoder_Platformer::GetAnyKey()
+{
+	return
+		GetKey(olc::Key::NONE).bPressed ||
+
+		GetKey(olc::Key::A).bPressed || GetKey(olc::Key::B).bPressed || GetKey(olc::Key::C).bPressed || GetKey(olc::Key::D).bPressed ||
+		GetKey(olc::Key::E).bPressed || GetKey(olc::Key::F).bPressed || GetKey(olc::Key::G).bPressed || GetKey(olc::Key::H).bPressed ||
+		GetKey(olc::Key::I).bPressed || GetKey(olc::Key::J).bPressed || GetKey(olc::Key::K).bPressed || GetKey(olc::Key::L).bPressed ||
+		GetKey(olc::Key::M).bPressed || GetKey(olc::Key::N).bPressed || GetKey(olc::Key::O).bPressed || GetKey(olc::Key::P).bPressed ||
+		GetKey(olc::Key::Q).bPressed || GetKey(olc::Key::R).bPressed || GetKey(olc::Key::S).bPressed || GetKey(olc::Key::T).bPressed ||
+		GetKey(olc::Key::U).bPressed || GetKey(olc::Key::V).bPressed || GetKey(olc::Key::W).bPressed || GetKey(olc::Key::X).bPressed ||
+		GetKey(olc::Key::Y).bPressed || GetKey(olc::Key::Z).bPressed ||
+
+		GetKey(olc::Key::K0).bPressed || GetKey(olc::Key::K1).bPressed || GetKey(olc::Key::K2).bPressed || GetKey(olc::Key::K3).bPressed ||
+		GetKey(olc::Key::K4).bPressed || GetKey(olc::Key::K5).bPressed || GetKey(olc::Key::K6).bPressed || GetKey(olc::Key::K7).bPressed ||
+		GetKey(olc::Key::K8).bPressed || GetKey(olc::Key::K9).bPressed ||
+
+		GetKey(olc::Key::F1).bPressed || GetKey(olc::Key::F2).bPressed || GetKey(olc::Key::F3).bPressed || GetKey(olc::Key::F4).bPressed ||
+		GetKey(olc::Key::F5).bPressed || GetKey(olc::Key::F6).bPressed || GetKey(olc::Key::F7).bPressed || GetKey(olc::Key::F8).bPressed ||
+		GetKey(olc::Key::F9).bPressed || GetKey(olc::Key::F10).bPressed || GetKey(olc::Key::F11).bPressed || GetKey(olc::Key::F12).bPressed ||
+
+		GetKey(olc::Key::UP).bPressed || GetKey(olc::Key::DOWN).bPressed || GetKey(olc::Key::LEFT).bPressed || GetKey(olc::Key::RIGHT).bPressed ||
+
+		GetKey(olc::Key::SPACE).bPressed || GetKey(olc::Key::TAB).bPressed || GetKey(olc::Key::SHIFT).bPressed || GetKey(olc::Key::CTRL).bPressed ||
+		GetKey(olc::Key::INS).bPressed || GetKey(olc::Key::DEL).bPressed || GetKey(olc::Key::HOME).bPressed || GetKey(olc::Key::END).bPressed ||
+		GetKey(olc::Key::PGUP).bPressed || GetKey(olc::Key::PGDN).bPressed || GetKey(olc::Key::BACK).bPressed || GetKey(olc::Key::ESCAPE).bPressed ||
+		GetKey(olc::Key::RETURN).bPressed || GetKey(olc::Key::ENTER).bPressed || GetKey(olc::Key::PAUSE).bPressed || GetKey(olc::Key::SCROLL).bPressed ||
+		
+		GetKey(olc::Key::NP0).bPressed || GetKey(olc::Key::NP1).bPressed || GetKey(olc::Key::NP2).bPressed || GetKey(olc::Key::NP3).bPressed ||
+		GetKey(olc::Key::NP4).bPressed || GetKey(olc::Key::NP5).bPressed || GetKey(olc::Key::NP6).bPressed || GetKey(olc::Key::NP7).bPressed ||
+		GetKey(olc::Key::NP8).bPressed || GetKey(olc::Key::NP9).bPressed || GetKey(olc::Key::NP_MUL).bPressed ||
+		
+		GetKey(olc::Key::NP_DIV).bPressed || GetKey(olc::Key::NP_ADD).bPressed || GetKey(olc::Key::NP_SUB).bPressed || GetKey(olc::Key::NP_DECIMAL).bPressed ||
+
+		GetKey(olc::Key::PERIOD).bPressed || GetKey(olc::Key::EQUALS).bPressed || GetKey(olc::Key::COMMA).bPressed || GetKey(olc::Key::MINUS).bPressed ||
+
+		GetKey(olc::Key::OEM_1).bPressed || GetKey(olc::Key::OEM_2).bPressed || GetKey(olc::Key::OEM_3).bPressed || GetKey(olc::Key::OEM_4).bPressed ||
+		GetKey(olc::Key::OEM_5).bPressed || GetKey(olc::Key::OEM_6).bPressed || GetKey(olc::Key::OEM_7).bPressed || GetKey(olc::Key::OEM_8).bPressed ||
+
+		GetKey(olc::Key::CAPS_LOCK).bPressed || GetKey(olc::Key::ENUM_END).bPressed;
 }
 
 bool OneLoneCoder_Platformer::IsSolidTile(wchar_t tile)

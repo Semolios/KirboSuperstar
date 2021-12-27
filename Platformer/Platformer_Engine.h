@@ -29,8 +29,6 @@
 
 #include <cTime>
 
-#define DEMO
-
 class OneLoneCoder_Platformer : public olc::PixelGameEngine
 {
 public:
@@ -263,6 +261,9 @@ protected:
 	void LoadLevelProperties();
 
 public:
+	// Keyboard function
+	bool GetAnyKey();
+
 	// Level detection functions
 	bool IsSolidTile(wchar_t tile);
 	bool IsSemiSolidTile(wchar_t tile);

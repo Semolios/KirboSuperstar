@@ -26,7 +26,7 @@ void cAssets::LoadSprites()
 
 	// Bosses
 	load("whispyWood", "assets/gfx/whispyWood.png");
-#ifdef DEMO
+#ifndef DEMO
 	load("mrShineMrBright", "assets/gfx/mrShineMrBright.png");
 	load("frosty", "assets/gfx/frosty.png");
 	load("kracko", "assets/gfx/kracko.png");

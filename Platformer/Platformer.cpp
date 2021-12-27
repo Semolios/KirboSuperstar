@@ -3,7 +3,7 @@
 int main()
 {
 	OneLoneCoder_Platformer game;
-	if (game.Construct(800, 480, 1, 1, true))
+	if (game.Construct(800, 480, 1, 1, true, true, true))
 		game.Start();
 	return 0;
 }

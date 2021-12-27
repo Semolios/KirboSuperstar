@@ -298,6 +298,9 @@ int main()
 
 #define PGE_VER 216
 
+// TODO retirer en version finale
+#define DEMO
+
 // O------------------------------------------------------------------------------O
 // | COMPILER CONFIGURATION ODDITIES                                              |
 // O------------------------------------------------------------------------------O
