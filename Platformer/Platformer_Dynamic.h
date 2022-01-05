@@ -45,9 +45,6 @@ public:
 	virtual void Update(float fElapsedTime, float playerX, float playerY)
 	{
 	}
-	virtual void OnInteract(cDynamic* player = nullptr)
-	{
-	}
 	virtual void UpdateHitbox(float cameraOffsetX, float cameraOffsetY)
 	{
 	}

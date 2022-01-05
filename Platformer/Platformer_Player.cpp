@@ -517,19 +517,27 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 	float fNewPlayerPosX = fPlayerPosX + fPlayerVelX * fElapsedTime;
 	float fNewPlayerPosY = fPlayerPosY + fPlayerVelY * fElapsedTime;
 
-	// TODO item->GetPowerUp(); coder des classes héritées de cDynamicItem, en fonction de l'item, power up différent
 	// Check for pickups !
-	if (lvl->GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 0.0f) == L'o')
+	if (IsCollectibleItem(lvl->GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 0.0f)))
+	{
+		SelectItem(lvl->GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 0.0f));
 		lvl->SetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 0.0f, L'.');
-
-	if (lvl->GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f) == L'o')
+	}
+	if (IsCollectibleItem(lvl->GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f)))
+	{
+		SelectItem(lvl->GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f));
 		lvl->SetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f, L'.');
-
-	if (lvl->GetTile(fNewPlayerPosX + 1.0f, fNewPlayerPosY + 0.0f) == L'o')
+	}
+	if (IsCollectibleItem(lvl->GetTile(fNewPlayerPosX + 1.0f, fNewPlayerPosY + 0.0f)))
+	{
+		SelectItem(lvl->GetTile(fNewPlayerPosX + 1.0f, fNewPlayerPosY + 0.0f));
 		lvl->SetTile(fNewPlayerPosX + 1.0f, fNewPlayerPosY + 0.0f, L'.');
-
-	if (lvl->GetTile(fNewPlayerPosX + 1.0f, fNewPlayerPosY + 1.0f) == L'o')
+	}
+	if (IsCollectibleItem(lvl->GetTile(fNewPlayerPosX + 1.0f, fNewPlayerPosY + 1.0f)))
+	{
+		SelectItem(lvl->GetTile(fNewPlayerPosX + 1.0f, fNewPlayerPosY + 1.0f));
 		lvl->SetTile(fNewPlayerPosX + 1.0f, fNewPlayerPosY + 1.0f, L'.');
+	}
 
 	// Check hole
 	if (fPlayerPosY > lvl->GetHeight())
@@ -643,6 +651,11 @@ bool cPlayer::IsAttackable()
 	return bIsPlayerAttackable;
 }
 
+bool cPlayer::HasCandyPower()
+{
+	return bHasCandyPower;
+}
+
 void cPlayer::SetAttackable(bool attackable)
 {
 	bIsPlayerAttackable = attackable;
@@ -659,7 +672,16 @@ void cPlayer::UpdateInvulnerability(float fElapsedTime)
 	fInvulnerabilityTimer -= fElapsedTime;
 	if (fInvulnerabilityTimer <= 0.0f)
 	{
+		if (bHasCandyPower)
+		{
+			bHasCandyPower = false;
+			SetAttackable(true);
+			engine->PlayLevelMusic();
+		}
+
 		fInvulnerabilityTimer = 0.0f;
+
+		// For King DeeDeeDee vacuum attack
 		if (!bForceInvisible)
 		{
 			bShowKirbo = true;
@@ -855,13 +877,18 @@ void cPlayer::Vacuum(cDynamicCreature* object, float cameraOffsetX, float camera
 	}
 }
 
-void cPlayer::CheckIfDamaged(cDynamic* object, float cameraOffsetX, float cameraOffsetY)
+void cPlayer::CheckKirboCollisionWithEnemy(cDynamic* object, float cameraOffsetX, float cameraOffsetY)
 {
 	object->UpdateHitbox(cameraOffsetX, cameraOffsetY);
 	UpdateHitbox(cameraOffsetX, cameraOffsetY);
 
 	if (cHitbox::ShapeOverlap_DIAG(object->GetHitbox(), GetHitbox()))
-		Damage(object);
+	{
+		if (!HasCandyPower())
+			Damage(object);
+		else
+			Attack((cDynamicCreature*)object, GetCandyDmg());
+	}
 }
 
 bool cPlayer::CheckIfEnnemyCollision(cDynamic* object, float cameraOffsetX, float cameraOffsetY)
@@ -886,4 +913,46 @@ void cPlayer::SetVisible(bool visible)
 {
 	bShowKirbo = visible;
 	bForceInvisible = !visible;
+}
+
+bool cPlayer::IsCollectibleItem(wchar_t c)
+{
+	return c == L't' || c == L'c' || c == L's' || c == L'd';
+}
+
+void cPlayer::SelectItem(wchar_t item)
+{
+	cItem* pickedItem;
+
+	switch (item)
+	{
+		case L't': pickedItem = new cItemTomato(); break;
+		case L'c': pickedItem = new cItemCandy();  break;
+		//case L's': pickedItem = new cItemCandy();  break;
+		//case L'd': pickedItem = new cItemCandy();  break;
+		default:   pickedItem = new cItem();	   break;
+	}
+
+	pickedItem->PickItem();
+}
+
+void cPlayer::Heal()
+{
+	fHealth = cfMaxHealth;
+}
+
+void cPlayer::SetInvincible(float time)
+{
+	fInvulnerabilityTimer = time;
+	SetAttackable(false);
+}
+
+void cPlayer::SetCandyPower(bool candy)
+{
+	bHasCandyPower = candy;
+}
+
+int cPlayer::GetCandyDmg()
+{
+	return cnCandyPowerDmg;
 }

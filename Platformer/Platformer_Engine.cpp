@@ -238,6 +238,8 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			cDynamicCreatureWaddleDee::engine = this;
 			cDynamicCreatureWhispyWood::engine = this;
 			cDynamicProjectile::engine = this;
+			cItemTomato::engine = this;
+			cItemCandy::engine = this;
 			cPlayer::engine = this;
 
 			UpdateProgressBar("Loading 74%");
@@ -270,6 +272,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			sndWorldMap = olc::SOUND::LoadAudioSample("assets/snd/worldMap.wav");
 			sndBossKilled = olc::SOUND::LoadAudioSample("assets/snd/bossKilled.wav");
 			sndWind = olc::SOUND::LoadAudioSample("assets/snd/wind.wav");
+			sndInvincibility = olc::SOUND::LoadAudioSample("assets/snd/invincibility.wav");
 
 			AddSharedSound("whispyScream", sndWhispyScream, "assets/snd/whispyScream.wav");
 			AddSharedSound("loseLife", sndLoseLife, "assets/snd/loseLife.wav");
@@ -328,6 +331,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			AddSharedSound("kingDDDUpAir", sndKingDDDUpAir, "assets/snd/kingDDDUpAir.wav");
 			AddSharedSound("kingDDDAirAtkVoice", sndKingDDDAirAtkVoice, "assets/snd/kingDDDAirAtkVoice.wav");
 			AddSharedSound("kingDDDAirAtkHammer", sndKingDDDAirAtkHammer, "assets/snd/kingDDDAirAtkHammer.wav");
+			AddSharedSound("itemPicked", sndItemPicked, "assets/snd/itemPicked.wav");
 
 			UpdateProgressBar("Loading 99.9999999999999");
 
@@ -412,6 +416,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// stop music
 		olc::SOUND::StopSample(sndLevelMusic);
 		olc::SOUND::StopSample(sndBossLevelMusic);
+		olc::SOUND::StopSample(sndInvincibility);
 
 		fStopTimebeforeDeadAnim += fElapsedTime;
 
@@ -480,9 +485,9 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		}
 
 		// Check collision with player to damage him
-		if (player->IsAttackable() && !player->IsSwallowing() && !object->IsVacuumed())
+		if ((player->IsAttackable() && !player->IsSwallowing() && !object->IsVacuumed()) || player->HasCandyPower())
 		{
-			player->CheckIfDamaged(object, camera->GetOffsetX(), camera->GetOffsetY());
+			player->CheckKirboCollisionWithEnemy(object, camera->GetOffsetX(), camera->GetOffsetY());
 		}
 	}
 
@@ -519,7 +524,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			{
 				if (player->IsAttackable())
 				{
-					player->CheckIfDamaged(object, camera->GetOffsetX(), camera->GetOffsetY());
+					player->CheckKirboCollisionWithEnemy(object, camera->GetOffsetX(), camera->GetOffsetY());
 				}
 			}
 		}
@@ -781,11 +786,11 @@ bool OneLoneCoder_Platformer::GetAnyKey()
 		GetKey(olc::Key::INS).bPressed || GetKey(olc::Key::DEL).bPressed || GetKey(olc::Key::HOME).bPressed || GetKey(olc::Key::END).bPressed ||
 		GetKey(olc::Key::PGUP).bPressed || GetKey(olc::Key::PGDN).bPressed || GetKey(olc::Key::BACK).bPressed || GetKey(olc::Key::ESCAPE).bPressed ||
 		GetKey(olc::Key::RETURN).bPressed || GetKey(olc::Key::ENTER).bPressed || GetKey(olc::Key::PAUSE).bPressed || GetKey(olc::Key::SCROLL).bPressed ||
-		
+
 		GetKey(olc::Key::NP0).bPressed || GetKey(olc::Key::NP1).bPressed || GetKey(olc::Key::NP2).bPressed || GetKey(olc::Key::NP3).bPressed ||
 		GetKey(olc::Key::NP4).bPressed || GetKey(olc::Key::NP5).bPressed || GetKey(olc::Key::NP6).bPressed || GetKey(olc::Key::NP7).bPressed ||
 		GetKey(olc::Key::NP8).bPressed || GetKey(olc::Key::NP9).bPressed || GetKey(olc::Key::NP_MUL).bPressed ||
-		
+
 		GetKey(olc::Key::NP_DIV).bPressed || GetKey(olc::Key::NP_ADD).bPressed || GetKey(olc::Key::NP_SUB).bPressed || GetKey(olc::Key::NP_DECIMAL).bPressed ||
 
 		GetKey(olc::Key::PERIOD).bPressed || GetKey(olc::Key::EQUALS).bPressed || GetKey(olc::Key::COMMA).bPressed || GetKey(olc::Key::MINUS).bPressed ||
@@ -1005,6 +1010,16 @@ bool OneLoneCoder_Platformer::IsSamplePlaying(std::string name)
 	return olc::SOUND::IsSamplePlaying(sharedSounds[name]);
 }
 
+void OneLoneCoder_Platformer::PlayLevelMusic()
+{
+	olc::SOUND::PlaySample(sndLevelMusic, true);
+}
+
+void OneLoneCoder_Platformer::StopLevelMusic()
+{
+	olc::SOUND::StopSample(sndLevelMusic);
+}
+
 void OneLoneCoder_Platformer::ChangeKirboVelocities(float vx, float vy)
 {
 	player->SetVelocities(vx, vy);
@@ -1044,6 +1059,19 @@ bool OneLoneCoder_Platformer::CheckIfKirboCollisionWithEnnemy(cDynamic* object)
 bool OneLoneCoder_Platformer::IsKirboAttackable()
 {
 	return player->IsAttackable();
+}
+
+void OneLoneCoder_Platformer::HealPlayer()
+{
+	player->Heal();
+}
+
+void OneLoneCoder_Platformer::PlayerGetCandy(float candyTime)
+{
+	olc::SOUND::PlaySample(sndInvincibility);
+
+	player->SetInvincible(candyTime);
+	player->SetCandyPower(true);
 }
 
 ControllerManager* OneLoneCoder_Platformer::GetController()

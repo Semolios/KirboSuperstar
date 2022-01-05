@@ -5,6 +5,9 @@
 #include "Platformer_Animator.h"
 #include "Platformer_Camera.h"
 #include "Platformer_Hitbox.h"
+#include "Platformer_Item.h"
+#include "Platformer_ItemCandy.h"
+#include "Platformer_ItemTomato.h"
 #include "Platformer_Level.h"
 
 class OneLoneCoder_Platformer;
@@ -38,6 +41,7 @@ private:
 	const float cfGoAwayRotationAnimation = 15.0f;		// rotation speed of Kirbo goes away animation
 	const float cfGoAwayTranslationAnimation = 256.0f;	// speed of kirbo in go away animation
 	const float cfInvulnerabilityTickingSpeed = 0.2f;	// Ticking Speed when invulnerable
+	const float cfInvulnerabilityCandy = 30.0f;			// Invulnerability after taking a candy
 	const float cfInvulnerabilityFrame = 4.0f;			// Invulnerability frame after a hit
 	const float cfDamageEjectionVelX = 4.0f;			// horizontal velocity when hit by ennemy
 	const float cfDamageEjectionVelY = 4.0f;			// vertical velocity when hit by ennemy
@@ -47,6 +51,7 @@ private:
 
 	const int cnSlapDmg = 3;							// damages of the slap attack
 	const int cnJesusCrossDmg = 5;						// damages of the jesus cross
+	const int cnCandyPowerDmg = 5;						// Damages when candy power activated
 
 	float fPlayerPosX = 0.0f;
 	float fPlayerPosY = 0.0f;
@@ -86,6 +91,7 @@ private:
 	bool bIsGrabbedByEnnemy = false;
 	bool bForceInvincible = false;
 	bool bForceInvisible = false;
+	bool bHasCandyPower = false;
 
 	cAnimator* animPlayer;
 	cHitbox* hitbox;
@@ -116,6 +122,7 @@ public:
 	bool IsVacuuming();
 	void VacuumEnnemy(cDynamicCreature* object);
 	bool IsAttackable();
+	bool HasCandyPower();
 	void SetAttackable(bool attackable);
 	bool IsSwallowing();
 	void UpdateInvulnerability(float fElapsedTime);
@@ -129,11 +136,19 @@ public:
 	cHitbox* GetHitbox();
 	void Attack(cDynamicCreature* victim, int damage);
 	void Vacuum(cDynamicCreature* object, float cameraOffsetX, float cameraOffsetY);
-	void CheckIfDamaged(cDynamic* object, float cameraOffsetX, float cameraOffsetY);
+	void CheckKirboCollisionWithEnemy(cDynamic* object, float cameraOffsetX, float cameraOffsetY);
 	bool CheckIfEnnemyCollision(cDynamic* object, float cameraOffsetX, float cameraOffsetY);
 	void SetGrabbedByEnnemy(bool grabbed);
 	void ChangeAnimation(std::string animation);
 	void SetVisible(bool visible);
+
+	// Item Pick-up functions
+	bool IsCollectibleItem(wchar_t c);
+	void SelectItem(wchar_t item);
+	void Heal();
+	void SetInvincible(float time);
+	void SetCandyPower(bool candy);
+	int GetCandyDmg();
 };
 
 #endif // !DEF_PLAYER

@@ -19,6 +19,7 @@
 #include "Platformer_EndScreen.h"
 #include "Platformer_Hitbox.h"
 #include "Platformer_HUD.h"
+#include "Platformer_Item.h"
 #include "Platformer_Level.h"
 #include "Platformer_PauseMenu.h"
 #include "Platformer_Player.h"
@@ -61,6 +62,7 @@ private:
 	int sndBossLevelMusic;
 	int sndBossKilled;
 	int sndWind;
+	int sndInvincibility;
 
 	// Sounds shared with other classes
 	std::map<std::string, int> sharedSounds;
@@ -121,6 +123,7 @@ private:
 	int sndKingDDDUpAir;
 	int sndKingDDDAirAtkVoice;
 	int sndKingDDDAirAtkHammer;
+	int sndItemPicked;
 
 	// engine Properties
 	cPlayer* player;
@@ -306,6 +309,8 @@ public:
 	void PlaySample(std::string name, bool loop = false, bool dontPlayIfAlreadyPlaying = false);
 	void StopSample(std::string name);
 	bool IsSamplePlaying(std::string name);
+	void PlayLevelMusic();
+	void StopLevelMusic();
 
 	// Change Player state functions
 	void ChangeKirboVelocities(float vx, float vy);
@@ -316,6 +321,8 @@ public:
 	void SetKirboPositions(float px, float py);
 	bool CheckIfKirboCollisionWithEnnemy(cDynamic* object);
 	bool IsKirboAttackable();
+	void HealPlayer();
+	void PlayerGetCandy(float candyTime);
 
 	// Controller functions
 	ControllerManager* GetController();
