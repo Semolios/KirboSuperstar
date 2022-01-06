@@ -323,6 +323,8 @@ public:
 	bool IsKirboAttackable();
 	void HealPlayer();
 	void PlayerGetCandy(float candyTime);
+	void BuffPlayerDamage();
+	void BuffPlayerDefense();
 
 	// Controller functions
 	ControllerManager* GetController();

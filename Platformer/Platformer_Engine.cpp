@@ -238,8 +238,10 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			cDynamicCreatureWaddleDee::engine = this;
 			cDynamicCreatureWhispyWood::engine = this;
 			cDynamicProjectile::engine = this;
-			cItemTomato::engine = this;
 			cItemCandy::engine = this;
+			cItemDamage::engine = this;
+			cItemDefense::engine = this;
+			cItemTomato::engine = this;
 			cPlayer::engine = this;
 
 			UpdateProgressBar("Loading 74%");
@@ -626,6 +628,10 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	if (bInBossLvl)
 		HUD->BossHealthBar(this, sprBossHealthBar, vecEnnemies);
+	if (player->HasDamageBooster())
+		HUD->DamageBoost(this, GetTilesSprites());
+	if (player->HasDefenseBooster())
+		HUD->DefenseBoost(this, GetTilesSprites());
 
 #pragma endregion
 
@@ -951,6 +957,8 @@ void OneLoneCoder_Platformer::ReturnToWorldMap()
 	WindEffect(0.0f, 0.0f, false);
 	animPlayer.ChangeState("riding_star");
 	nGameState = GS_WORLDMAP;
+	player->SetDamageBooster(1);
+	player->SetDefenseBooster(1);
 }
 
 void OneLoneCoder_Platformer::SetPlayerChoice(int choice)
@@ -1072,6 +1080,16 @@ void OneLoneCoder_Platformer::PlayerGetCandy(float candyTime)
 
 	player->SetInvincible(candyTime);
 	player->SetCandyPower(true);
+}
+
+void OneLoneCoder_Platformer::BuffPlayerDamage()
+{
+	player->SetDamageBooster(2);
+}
+
+void OneLoneCoder_Platformer::BuffPlayerDefense()
+{
+	player->SetDefenseBooster(2);
 }
 
 ControllerManager* OneLoneCoder_Platformer::GetController()

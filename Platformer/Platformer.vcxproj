@@ -176,6 +176,8 @@
     <ClCompile Include="Platformer_HUD.cpp" />
     <ClCompile Include="Platformer_Item.cpp" />
     <ClCompile Include="Platformer_ItemCandy.cpp" />
+    <ClCompile Include="Platformer_ItemDamage.cpp" />
+    <ClCompile Include="Platformer_ItemDefense.cpp" />
     <ClCompile Include="Platformer_ItemTomato.cpp" />
     <ClCompile Include="Platformer_Level.cpp" />
     <ClCompile Include="Platformer_PauseMenu.cpp" />
@@ -219,6 +221,8 @@
     <ClInclude Include="Platformer_HUD.h" />
     <ClInclude Include="Platformer_Item.h" />
     <ClInclude Include="Platformer_ItemCandy.h" />
+    <ClInclude Include="Platformer_ItemDamage.h" />
+    <ClInclude Include="Platformer_ItemDefense.h" />
     <ClInclude Include="Platformer_ItemTomato.h" />
     <ClInclude Include="Platformer_Level.h" />
     <ClInclude Include="Platformer_PauseMenu.h" />

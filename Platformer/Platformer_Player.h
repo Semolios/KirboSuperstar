@@ -7,6 +7,8 @@
 #include "Platformer_Hitbox.h"
 #include "Platformer_Item.h"
 #include "Platformer_ItemCandy.h"
+#include "Platformer_ItemDamage.h"
+#include "Platformer_ItemDefense.h"
 #include "Platformer_ItemTomato.h"
 #include "Platformer_Level.h"
 
@@ -92,6 +94,8 @@ private:
 	bool bForceInvincible = false;
 	bool bForceInvisible = false;
 	bool bHasCandyPower = false;
+	int nDamageBooster = 1;
+	int nDefenseBooster = 1;
 
 	cAnimator* animPlayer;
 	cHitbox* hitbox;
@@ -149,6 +153,10 @@ public:
 	void SetInvincible(float time);
 	void SetCandyPower(bool candy);
 	int GetCandyDmg();
+	void SetDamageBooster(int boost);
+	bool HasDamageBooster();
+	void SetDefenseBooster(int boost);
+	bool HasDefenseBooster();
 };
 
 #endif // !DEF_PLAYER

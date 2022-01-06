@@ -16,24 +16,39 @@ void cHUD::HealthPoints(olc::PixelGameEngine* gfx, olc::Sprite* healthPoint, int
 	for (int i = 0; i < health; i++)
 	{
 		gfx->SetPixelMode(olc::Pixel::ALPHA);
-		gfx->DrawSprite(13 + i * 10, 14, healthPoint);
+		gfx->DrawSprite(nFirstHealthPointPosX + i * (healthPoint->width + 1), nHealthPointPosY, healthPoint);
 		gfx->SetPixelMode(olc::Pixel::NORMAL);
 	}
 }
 
 void cHUD::BossHealthBar(olc::PixelGameEngine* gfx, olc::Sprite* bossHealthBar, std::vector<cDynamicCreature*> vecEnnemies)
-{		
-	// Health points
+{
+	// Health points of All ennemies in the arena
 	int nBossHP = 0;
 	for (auto& dyn : vecEnnemies)
 	{
 		nBossHP += dyn->GetHealth();
 	}
 
-	gfx->FillRect(663 + (100 - (nBossHP)), 30, nBossHP, 25, olc::VERY_DARK_MAGENTA);
+	// Health
+	gfx->FillRect(nBossHealthPosX + (nBossMaxHealth - nBossHP), nBossHealthPosY, nBossHP, nBossHealthHeight, olc::VERY_DARK_MAGENTA);
 
 	// Health bar
 	gfx->SetPixelMode(olc::Pixel::ALPHA);
-	gfx->DrawSprite(650, 0, bossHealthBar);
+	gfx->DrawSprite(nBossHealthBarPosX, nBossHealthBarPosY, bossHealthBar);
+	gfx->SetPixelMode(olc::Pixel::NORMAL);
+}
+
+void cHUD::DamageBoost(olc::PixelGameEngine* gfx, olc::Sprite* tileMapSheet)
+{
+	gfx->SetPixelMode(olc::Pixel::ALPHA);
+	gfx->DrawPartialSprite(nBuffsPosX, 0, tileMapSheet, 0 * nTileWidth, 1 * nTileHeight, nTileWidth, nTileHeight);
+	gfx->SetPixelMode(olc::Pixel::NORMAL);
+}
+
+void cHUD::DefenseBoost(olc::PixelGameEngine* gfx, olc::Sprite* tileMapSheet)
+{
+	gfx->SetPixelMode(olc::Pixel::ALPHA);
+	gfx->DrawPartialSprite(nBuffsPosX + nTileWidth, 0, tileMapSheet, 1 * nTileWidth, 1 * nTileHeight, nTileWidth, nTileHeight);
 	gfx->SetPixelMode(olc::Pixel::NORMAL);
 }

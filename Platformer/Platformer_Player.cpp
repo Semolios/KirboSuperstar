@@ -335,7 +335,7 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 					// must offset the AOE so it goes from kirbo's hand
 					float fProjectilePosX = fPlayerPosX + (fFaceDir > 0.0f ? 1.0f : -(mapProjectiles["slapAOE"][0]->width / engine->GetTileWidth()));
 					float fProjectilePosY = fPlayerPosY - ((mapProjectiles["slapAOE"][0]->height - engine->GetTileHeight()) / (2 * engine->GetTileHeight()));
-					engine->AddProjectile(fProjectilePosX, fProjectilePosY, true, fFaceDir, 0.0f, cfSlapDuration, "slapAOE", false, cnSlapDmg, false, false, 0, true, -3.0f, "slap");
+					engine->AddProjectile(fProjectilePosX, fProjectilePosY, true, fFaceDir, 0.0f, cfSlapDuration, "slapAOE", false, cnSlapDmg * nDamageBooster, false, false, 0, true, -3.0f, "slap");
 					bCanSpawnProjectile = false;
 				}
 			}
@@ -354,7 +354,7 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 			{
 				if (bCanSpawnProjectile)
 				{
-					engine->AddProjectile((fPlayerPosX + fFaceDir), fPlayerPosY - 1.0f, true, cfJesusCrossVelX * fFaceDir, cfJesusCrossVelY, cfJesusCrossDuration, "jesuscross", true, cnJesusCrossDmg, true);
+					engine->AddProjectile((fPlayerPosX + fFaceDir), fPlayerPosY - 1.0f, true, cfJesusCrossVelX * fFaceDir, cfJesusCrossVelY, cfJesusCrossDuration, "jesuscross", true, cnJesusCrossDmg * nDamageBooster, true);
 					bCanSpawnProjectile = false;
 				}
 			}
@@ -547,6 +547,8 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 		fHealth = 0.0f;
 		bDead = true;
 		animPlayer->ChangeState("dead");
+		nDamageBooster = 1;
+		nDefenseBooster = 1;
 	}
 
 	// Collision
@@ -727,12 +729,14 @@ void cPlayer::Damage(cDynamic* object)
 	fInvulnerabilityTimer = cfInvulnerabilityFrame;
 	bPlayerDamaged = true;
 	bIsPlayerAttackable = false;
-	fHealth -= object->GetDamage();
+	fHealth -= round((float)(object->GetDamage() / (float)nDefenseBooster)); // Kirbo can't take 0 damage with defense boost
 
 	if (fHealth <= 0.0f)
 	{
 		bDead = true;
 		animPlayer->ChangeState("dead");
+		nDamageBooster = 1;
+		nDefenseBooster = 1;
 	}
 
 	if (!bDead)
@@ -926,11 +930,11 @@ void cPlayer::SelectItem(wchar_t item)
 
 	switch (item)
 	{
-		case L't': pickedItem = new cItemTomato(); break;
-		case L'c': pickedItem = new cItemCandy();  break;
-		//case L's': pickedItem = new cItemCandy();  break;
-		//case L'd': pickedItem = new cItemCandy();  break;
-		default:   pickedItem = new cItem();	   break;
+		case L't': pickedItem = new cItemTomato();	break;
+		case L'c': pickedItem = new cItemCandy();	break;
+		case L's': pickedItem = new cItemDamage();  break;
+		case L'd': pickedItem = new cItemDefense(); break;
+		default:   pickedItem = new cItem();		break;
 	}
 
 	pickedItem->PickItem();
@@ -955,4 +959,24 @@ void cPlayer::SetCandyPower(bool candy)
 int cPlayer::GetCandyDmg()
 {
 	return cnCandyPowerDmg;
+}
+
+void cPlayer::SetDamageBooster(int boost)
+{
+	nDamageBooster = boost;
+}
+
+bool cPlayer::HasDamageBooster()
+{
+	return nDamageBooster > 1;
+}
+
+void cPlayer::SetDefenseBooster(int boost)
+{
+	nDefenseBooster = boost;
+}
+
+bool cPlayer::HasDefenseBooster()
+{
+	return nDefenseBooster > 1;
 }
