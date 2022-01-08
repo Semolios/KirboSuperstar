@@ -18,6 +18,7 @@
 #include "Platformer_DynamicCreatureSSTierMetaKnight.h"
 #include "Platformer_DynamicCreatureWaddleDee.h"
 #include "Platformer_DynamicCreatureWhispyWood.h"
+#include "Platformer_DynamicMovingPlatform.h"
 
 #include <mutex>
 
@@ -58,6 +59,7 @@ private:
 
 	std::vector<std::string> levels;
 	std::vector<std::string> levelsEnnemies;
+	std::vector<std::string> levelsPlatforms;
 	std::vector<std::string> levelsTiles;
 	std::vector<std::string> levelsMusics;
 	std::vector<std::string> groundTiles;
@@ -131,6 +133,7 @@ public:
 	int GetInitPlayerPosX();
 	int GetInitPlayerPosY();
 	bool PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::string levelName);
+	bool PopulatePlatforms(std::vector<cDynamicMovingPlatform*>& vecPtfm, std::string levelName);
 	bool PopulateBoss(std::vector<cDynamicCreature*>& vecDyns);
 	void DrawTiles(int nVisibleTilesX, int nVisibleTilesY, float fOffsetX, float fOffsetY);
 	void SelectTile(int startX, int endX, int nVisibleTilesX, int nVisibleTilesY, float fOffsetX, float fOffsetY, float fTileOffsetX, float fTileOffsetY);
@@ -142,6 +145,7 @@ public:
 	void LoadLevelsList();
 	void LoadBossLevelsList();
 	void LoadLevelsEnnemiesList();
+	void LoadLevelsPlatformsList();
 	void LoadLevelsTilesList();
 	void LoadLevelsGrdTilesList();
 	void LoadLevelsBackGroundList();
@@ -152,6 +156,7 @@ public:
 	std::string GetLevelName();
 	std::string GetBossLevelName();
 	std::string GetLevelsEnnemiesName();
+	std::string GetLevelsPlatformsName();
 	std::string GetLevelsTilesName();
 	std::string GetLevelsGrdTilesName();
 	std::string GetLevelsBackGroundName();

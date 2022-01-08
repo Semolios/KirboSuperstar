@@ -51,10 +51,20 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 				fPlayerPosY += 0.15;
 			}
 
+			// If player is on Solid Ground, lower the camera
 			if ((engine->IsSolidTile(lvl->GetTile(fPlayerPosX + 0.0f, fPlayerPosY + 1.0f)) ||
 				 engine->IsSolidTile(lvl->GetTile(fPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY + 1.0f))) && bOnGround)
 			{
 				camera->LowerCameraPosition();
+			}
+
+			// Moving platforms collision
+			for (auto& ptfm : engine->GetPlatforms())
+			{
+				if (ptfm->TopCollision(fPlayerPosX + fPlayerCollisionLowerLimit, fPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY + 1.0f))
+				{
+					camera->LowerCameraPosition();
+				}
 			}
 		}
 		else
@@ -592,15 +602,30 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 		// This little trick (fPlayerPosY + 1.0f < (float)((int)fNewPlayerPosY + 1.0f) + 0.1f) checks if the player's feets are above the top of the semi-solid Block.
 		// Otherwise the player is moved to the top of the block when his feets reach the bottom of the block
 		// "fPlayerPosY + 1.0f" is the feets Y position, "(float)((int)fNewPlayerPosY + 1.0f) + 0.1f" takes the top of the block at the feets position and add a 0.1 delta, if the feets are above this delta, the player is moved on top of the block.
-		if (engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f)) ||
+		if (engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosY + 1.0f)) ||
 			engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f)) ||
-			((engine->IsSemiSolidTile(lvl->GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f)) ||
+			((engine->IsSemiSolidTile(lvl->GetTile(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosY + 1.0f)) ||
 			  engine->IsSemiSolidTile(lvl->GetTile(fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f))) && fPlayerPosY + 1.0f < (float)((int)fNewPlayerPosY + 1.0f) + 0.1f))
 		{
 			fNewPlayerPosY = (int)fNewPlayerPosY + engine->GetGroundDynamicOverlay(); // Remove this line to create shifting sand
 			fPlayerVelY = 0;
 			bOnGround = true;
 			bDoubleJump = true;
+		}
+
+		// Moving platforms collision
+		for (auto& ptfm : engine->GetPlatforms())
+		{
+			if (ptfm->TopCollision(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f) ||
+				ptfm->TopCollisionWithLag(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY + 1.0f, fNewPlayerPosY + 1.0f))
+			{
+				fNewPlayerPosY = ptfm->GetPY() - 1.0f;
+				fNewPlayerPosX += ptfm->GetVX() * fElapsedTime;
+				fPlayerVelY = 0;
+				bOnGround = true;
+				bDoubleJump = true;
+				ptfm->TriggerMovement();
+			}
 		}
 	}
 

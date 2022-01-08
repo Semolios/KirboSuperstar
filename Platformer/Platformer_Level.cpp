@@ -149,6 +149,36 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 	return true;
 }
 
+bool cLevel::PopulatePlatforms(std::vector<cDynamicMovingPlatform*>& vecPtfm, std::string levelName)
+{
+	std::wifstream file(levelName);
+
+	if (file)
+	{
+		std::wstring line;
+
+		while (std::getline(file, line))
+		{
+			std::wstring temp;
+			std::vector<std::wstring> parts;
+			std::wstringstream wss(line);
+			while (std::getline(wss, temp, L','))
+			{
+				parts.push_back(temp);
+			}
+
+			// Populate a basic platform
+			if (parts[0] == L"basic")
+			{
+				engine->AddPlatform(std::stoi(parts[1]), std::stoi(parts[2]), "basic");
+			}
+			// TODO
+		}
+	}
+
+	return true;
+}
+
 bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns)
 {
 	cDynamicCreature* mob = nullptr;
@@ -710,6 +740,16 @@ void cLevel::LoadLevelsEnnemiesList()
 	levelsEnnemies.push_back("assets/lvls/ennemiesLvl6.txt");
 }
 
+void cLevel::LoadLevelsPlatformsList()
+{
+	levelsPlatforms.push_back("assets/lvls/platformsLvl1.txt");
+	levelsPlatforms.push_back("assets/lvls/platformsLvl2.txt");
+	levelsPlatforms.push_back("assets/lvls/platformsLvl3.txt");
+	levelsPlatforms.push_back("assets/lvls/platformsLvl4.txt");
+	levelsPlatforms.push_back("assets/lvls/platformsLvl5.txt");
+	levelsPlatforms.push_back("assets/lvls/platformsLvl6.txt");
+}
+
 void cLevel::LoadLevelsTilesList()
 {
 	levelsTiles.push_back("assets/gfx/tilemap00.png");
@@ -783,6 +823,11 @@ std::string cLevel::GetBossLevelName()
 std::string cLevel::GetLevelsEnnemiesName()
 {
 	return levelsEnnemies[nCurrentLevel];
+}
+
+std::string cLevel::GetLevelsPlatformsName()
+{
+	return levelsPlatforms[nCurrentLevel];
 }
 
 std::string cLevel::GetLevelsTilesName()

@@ -96,6 +96,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			level->LoadLevelsList();
 			level->LoadBossLevelsList();
 			level->LoadLevelsEnnemiesList();
+			level->LoadLevelsPlatformsList();
 			level->LoadLevelsTilesList();
 			level->LoadLevelsGrdTilesList();
 			level->LoadLevelsBackGroundList();
@@ -124,6 +125,15 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			mapProjectiles = cDynamicProjectile::LoadProjectilesSprites();
 
 			UpdateProgressBar("Loading 13%");
+
+			nLoadingState = LS_PLATFORMS;
+		}
+		break;
+		case LS_PLATFORMS:
+		{
+			mapPlatforms = cDynamicMovingPlatform::LoadMovingPlatformsSprites();
+
+			UpdateProgressBar("Loading 15%");
 
 			nLoadingState = LS_TITLE;
 		}
@@ -237,6 +247,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			cDynamicCreatureSSTierMetaKnight::engine = this;
 			cDynamicCreatureWaddleDee::engine = this;
 			cDynamicCreatureWhispyWood::engine = this;
+			cDynamicMovingPlatform::engine = this;
 			cDynamicProjectile::engine = this;
 			cItemCandy::engine = this;
 			cItemDamage::engine = this;
@@ -361,6 +372,7 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 	// Destroy all dynamics
 	vecEnnemies.clear();
 	vecProjectiles.clear();
+	vecPlatforms.clear();
 
 	level->SetCurrentLvl(worldMap->GetSelectedLevel());
 	if (level->LoadLevel(level->GetLevelName()))
@@ -368,6 +380,7 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 		LoadLevelProperties();
 
 		level->PopulateEnnemies(vecEnnemies, level->GetLevelsEnnemiesName());
+		level->PopulatePlatforms(vecPlatforms, level->GetLevelsPlatformsName());
 
 		spriteTiles = new olc::Sprite(level->GetLevelsTilesName());
 		sprGrdTiles = new olc::Sprite(level->GetLevelsGrdTilesName());
@@ -532,12 +545,22 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		}
 	}
 
+	for (auto& object : vecPlatforms)
+	{
+		object->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
+	}
+
 	for (auto& object : vecEnnemies)
 	{
 		object->Update(fElapsedTime, player->GetPlayerPosX(), player->GetPlayerPosY());
 	}
 
 	for (auto& object : vecProjectiles)
+	{
+		object->Update(fElapsedTime, player->GetPlayerPosX(), player->GetPlayerPosY());
+	}
+
+	for (auto& object : vecPlatforms)
 	{
 		object->Update(fElapsedTime, player->GetPlayerPosX(), player->GetPlayerPosY());
 	}
@@ -571,6 +594,12 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	// Draw Projectiles
 	for (auto& object : vecProjectiles)
+	{
+		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
+	}	
+
+	// Draw Platforms
+	for (auto& object : vecPlatforms)
 	{
 		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
 	}
@@ -688,6 +717,7 @@ bool OneLoneCoder_Platformer::GameState_LoadBossLevel(float fElapsedTime)
 	// Destroy all dynamics
 	vecEnnemies.clear();
 	vecProjectiles.clear();
+	vecPlatforms.clear();
 
 	if (level->LoadLevel(level->GetBossLevelName()))
 	{
@@ -752,8 +782,16 @@ bool OneLoneCoder_Platformer::GameState_Credits(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_Close(float fElapsedTime)
 {
+	// Destroy all dynamics
+	vecEnnemies.clear();
+	vecProjectiles.clear();
+	vecPlatforms.clear();
+
+	// Stop Audio
 	olc::SOUND::StopAll();
 	olc::SOUND::DestroyAudio();
+
+	// End the olc pixel game Engine
 	olc_Terminate();
 
 	return true;
@@ -841,6 +879,17 @@ void OneLoneCoder_Platformer::AddOrbital(float ox, float oy, bool bFriend, float
 	if (sound != "")
 		p->SetSoundEffect(sound);
 	vecProjectiles.push_back(p);
+}
+
+void OneLoneCoder_Platformer::AddPlatform(float ox, float oy, std::string sprite)
+{
+	cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatform(ox, oy, mapPlatforms[sprite]);
+	vecPlatforms.push_back(ptfm);
+}
+
+std::vector<cDynamicMovingPlatform*> OneLoneCoder_Platformer::GetPlatforms()
+{
+	return vecPlatforms;
 }
 
 float OneLoneCoder_Platformer::GetTileWidth()

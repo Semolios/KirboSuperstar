@@ -53,6 +53,8 @@ public:
 	void SetPosition(float x, float y);
 	float GetPX();
 	float GetPY();
+	float GetVX();
+	float GetVY();
 	int GetDamage();
 	bool IsAttackable();
 	bool IsFriendly();

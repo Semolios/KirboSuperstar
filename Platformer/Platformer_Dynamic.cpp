@@ -26,6 +26,16 @@ float cDynamic::GetPY()
 	return py;
 }
 
+float cDynamic::GetVX()
+{
+	return vx;
+}
+
+float cDynamic::GetVY()
+{
+	return vy;
+}
+
 int cDynamic::GetDamage()
 {
 	return nDamage;

@@ -13,6 +13,7 @@
 #include "Platformer_CreditsMenu.h"
 #include "Platformer_Dynamic.h"
 #include "Platformer_DynamicCreature.h"
+#include "Platformer_DynamicMovingPlatform.h"
 #include "Platformer_DynamicProjectile.h"
 #include "Platformer_DynamicProjectileBoomerang.h"
 #include "Platformer_DynamicProjectileOrbital.h"
@@ -187,6 +188,10 @@ private:
 	std::vector<cDynamicProjectile*> vecProjectiles;
 	std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles;
 
+	// Moving Platforms
+	std::vector<cDynamicMovingPlatform*> vecPlatforms;
+	std::map<std::string, std::vector<olc::Sprite*>> mapPlatforms;
+
 	// HUD
 	cHUD* HUD;
 	olc::Sprite* sprHealthBar;
@@ -207,6 +212,7 @@ private:
 		LS_LEVELS,
 		LS_ANIMATIONS,
 		LS_PROJECTILES,
+		LS_PLATFORMS,
 		LS_TITLE,
 		LS_WORLDMAP,
 		LS_TRANSITION,
@@ -275,6 +281,10 @@ public:
 	void AddProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, bool breackableAgainstTiles = true, float fDrag = -3.0f, std::string sound = "", bool bouncy = false, std::string bounceSound = "");
 	void AddBoomerang(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, std::string sound = "");
 	void AddOrbital(float ox, float oy, bool bFriend, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, float cx = 0.0f, float cy = 0.0f, float angrot = 0.0f, std::string sound = "");
+
+	// Platforms functions
+	void AddPlatform(float ox, float oy, std::string sprite);
+	std::vector<cDynamicMovingPlatform*> GetPlatforms();
 
 	// Engine properties/modifications functions
 	float GetTileWidth();

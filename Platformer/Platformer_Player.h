@@ -4,6 +4,7 @@
 #pragma once
 #include "Platformer_Animator.h"
 #include "Platformer_Camera.h"
+#include "Platformer_DynamicMovingPlatform.h"
 #include "Platformer_Hitbox.h"
 #include "Platformer_Item.h"
 #include "Platformer_ItemCandy.h"
