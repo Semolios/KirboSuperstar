@@ -184,6 +184,18 @@ void cDynamicCreature::Collision(float fElapsedTime)
 				fNewObjectPosY = (int)fNewObjectPosY + engine->GetGroundDynamicOverlay();
 				vy = 0;
 			}
+
+			// Moving platforms collision
+			for (auto& ptfm : engine->GetPlatforms())
+			{
+				if (ptfm->TopCollision(fNewObjectPosX + fBorder, fNewObjectPosX + 1.0f - fBorder, fNewObjectPosY + 1.0f) ||
+					ptfm->TopCollisionWithLag(fNewObjectPosX + fBorder, fNewObjectPosX + 1.0f - fBorder, py + 1.0f, fNewObjectPosY + 1.0f))
+				{
+					fNewObjectPosY = ptfm->GetPY() - 1.0f;
+					fNewObjectPosX += ptfm->GetVX() * fElapsedTime;
+					vy = 0;
+				}
+			}
 		}
 	}
 

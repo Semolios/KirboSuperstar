@@ -37,10 +37,6 @@ bool OneLoneCoder_Platformer::OnUserUpdate(float fElapsedTime)
 		}
 	}
 
-#ifdef DEMO
-	DrawString(700, 10, "DEMO V0.0.1");
-#endif // DEMO
-
 	return true;
 }
 
@@ -345,6 +341,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			AddSharedSound("kingDDDAirAtkVoice", sndKingDDDAirAtkVoice, "assets/snd/kingDDDAirAtkVoice.wav");
 			AddSharedSound("kingDDDAirAtkHammer", sndKingDDDAirAtkHammer, "assets/snd/kingDDDAirAtkHammer.wav");
 			AddSharedSound("itemPicked", sndItemPicked, "assets/snd/itemPicked.wav");
+			AddSharedSound("rockyFall", sndRockyFall, "assets/snd/rockyFall.wav");
 
 			UpdateProgressBar("Loading 99.9999999999999");
 
@@ -354,7 +351,6 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		case LS_ASSETS:
 		{
 			cAssets::get().LoadSprites();
-			cAssets::get().LoadItems();
 
 			bLoadFinished = true;
 		}
@@ -634,9 +630,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			}
 			else if (level->IsLastUnlocked())
 			{
-#ifndef DEMO
 				level->UnlockNewLvl();
-#endif // !DEMO
 
 				worldMap->SetUnlockedLevel(level->GetUnlockedLvl());
 			}

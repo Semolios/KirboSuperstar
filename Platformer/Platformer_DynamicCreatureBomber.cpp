@@ -49,7 +49,14 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 					// Check left wall or hole
 					if (engine->IsSolidTile(level->GetTile(px, py)) || (!engine->IsSolidTile(level->GetTile(px, py)) && !engine->IsSolidTile(level->GetTile(px, py + 1)) && !engine->IsSemiSolidTile(level->GetTile(px, py + 1))))
 					{
-						TurnAround();
+						// Don't check the platforms if the bomber is on ground, or all the bombers will check all platforms
+						for (auto& ptfm : engine->GetPlatforms())
+						{
+							if (!ptfm->TopCollisionOneCorner(px, py + 1.0f))
+							{
+								TurnAround();
+							}
+						}
 					}
 				}
 				else if (vx > 0)
@@ -57,7 +64,14 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 					// Check right wall or hole
 					if (engine->IsSolidTile(level->GetTile(px + 1, py)) || (!engine->IsSolidTile(level->GetTile(px + 1, py)) && !engine->IsSolidTile(level->GetTile(px + 1, py + 1)) && !engine->IsSemiSolidTile(level->GetTile(px + 1, py + 1))))
 					{
-						TurnAround();
+						// Don't check the platforms if the bomber is on ground, or all the bombers will check all platforms
+						for (auto& ptfm : engine->GetPlatforms())
+						{
+							if (!ptfm->TopCollisionOneCorner(px + 1.0f, py + 1.0f))
+							{
+								TurnAround();
+							}
+						}
 					}
 				}
 				else

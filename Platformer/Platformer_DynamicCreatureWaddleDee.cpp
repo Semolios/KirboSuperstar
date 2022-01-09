@@ -40,7 +40,14 @@ void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, flo
 			// Check left wall or hole
 			if (engine->IsSolidTile(level->GetTile(px, py)) || (!engine->IsSolidTile(level->GetTile(px, py)) && !engine->IsSolidTile(level->GetTile(px, py + 1)) && !engine->IsSemiSolidTile(level->GetTile(px, py + 1))))
 			{
-				TurnAround();
+				// Don't check the platforms if the waddle dee is on ground, or all the waddle dees will check all platforms
+				for (auto& ptfm : engine->GetPlatforms())
+				{
+					if (!ptfm->TopCollisionOneCorner(px, py + 1.0f))
+					{
+						TurnAround();
+					}
+				}
 			}
 		}
 		else if (vx > 0)
@@ -48,7 +55,14 @@ void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, flo
 			// Check right wall or hole
 			if (engine->IsSolidTile(level->GetTile(px + 1, py)) || (!engine->IsSolidTile(level->GetTile(px + 1, py)) && !engine->IsSolidTile(level->GetTile(px + 1, py + 1)) && !engine->IsSemiSolidTile(level->GetTile(px + 1, py + 1))))
 			{
-				TurnAround();
+				// Don't check the platforms if the waddle dee is on ground, or all the waddle dees will check all platforms
+				for (auto& ptfm : engine->GetPlatforms())
+				{
+					if (!ptfm->TopCollisionOneCorner(px + 1.0f, py + 1.0f))
+					{
+						TurnAround();
+					}
+				}
 			}
 		}
 		else

@@ -125,6 +125,7 @@ private:
 	int sndKingDDDAirAtkVoice;
 	int sndKingDDDAirAtkHammer;
 	int sndItemPicked;
+	int sndRockyFall;
 
 	// engine Properties
 	cPlayer* player;

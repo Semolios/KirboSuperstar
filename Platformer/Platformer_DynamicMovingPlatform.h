@@ -32,6 +32,7 @@ public:
 	void UpdateHitbox(float cameraOffsetX, float cameraOffsetY) override;
 	bool TopCollision(float leftCornerX, float rightCornerX, float bottomSpriteY);
 	bool TopCollisionWithLag(float leftCornerX, float rightCornerX, float fPlayerPosY, float fNewPlayerPosY);
+	bool TopCollisionOneCorner(float CornerX, float cornerY);
 	static std::map<std::string, std::vector<olc::Sprite*>> LoadMovingPlatformsSprites();
 	void TriggerMovement();
 

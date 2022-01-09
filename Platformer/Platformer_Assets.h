@@ -23,26 +23,14 @@ public:
 	{
 		return m_mapSprites[name];
 	}
-	/*
-	* TODO quand la classe item sera créée
-	*
-	cItem* GetItem(string name)
-	{
-		return m_mapItems[name];
-	}
-	*/
 
 	void LoadSprites();
-	void LoadItems();
 
 private:
 	cAssets();
 	~cAssets();
 
 	std::map<std::string, olc::Sprite*> m_mapSprites;
-
-	// TODO quand la classe item sera créée
-	//std::map<std::string, cItem*> m_mapItems;
 };
 
 #endif // !DEF_ASSETS

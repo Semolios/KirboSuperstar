@@ -43,7 +43,10 @@ void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float p
 			vy = 0;
 
 			if (abs(playerX - px) < 0.5f && playerY > py)
+			{
+				engine->PlaySample("rockyFall");
 				nAINextState = AI_FALLING;
+			}
 		}
 		break;
 		case AI_FALLING:
@@ -56,7 +59,19 @@ void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float p
 				engine->IsSemiSolidTile(level->GetTile(px + cfRockyLowerBoundary, py + 1)) ||
 				engine->IsSemiSolidTile(level->GetTile(px + cfRockyUpperBoundary, py + 1)))
 			{
+				engine->StopSample("rockyFall");
 				nAINextState = AI_LANDING;
+			}
+			else
+			{
+				for (auto& ptfm : engine->GetPlatforms())
+				{
+					if (ptfm->TopCollision(px, px + 1.0f, py + 1.0f))
+					{
+						engine->StopSample("rockyFall");
+						nAINextState = AI_LANDING;
+					}
+				}
 			}
 		}
 		break;

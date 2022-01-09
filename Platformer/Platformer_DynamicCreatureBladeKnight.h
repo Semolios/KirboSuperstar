@@ -62,7 +62,7 @@ public:
 public:
 	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
 
-	bool OnGround();
+	bool TouchGround();
 
 private:
 	void ChangeState(AI_STATE state);

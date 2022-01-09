@@ -108,6 +108,16 @@ bool cDynamicMovingPlatform::TopCollisionWithLag(float leftCornerX, float rightC
 		 (fNewPlayerPosY >= ptfmBotRightCorner.y));
 }
 
+bool cDynamicMovingPlatform::TopCollisionOneCorner(float CornerX, float cornerY)
+{
+	olc::vf2d dynCorner(CornerX, cornerY);
+
+	olc::vf2d ptfmTopLeftCorner(px, py - fHitboxThickness);
+	olc::vf2d ptfmBotRightCorner(px + (fDynWidth / (float)engine->GetTileWidth()), py + fHitboxThickness);
+
+	return (dynCorner.x >= ptfmTopLeftCorner.x) && (dynCorner.x <= ptfmBotRightCorner.x) && (dynCorner.y >= ptfmTopLeftCorner.y) && (dynCorner.y <= ptfmBotRightCorner.y);
+}
+
 std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMovingPlatformsSprites()
 {
 	std::map<std::string, std::vector<olc::Sprite*>> mapPlatforms;
