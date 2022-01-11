@@ -132,6 +132,11 @@ void cDynamicMovingPlatform::TriggerMovement()
 	bTriggered = true;
 }
 
+void cDynamicMovingPlatform::UntriggerMovement()
+{
+	bTriggered = false;
+}
+
 void cDynamicMovingPlatform::UpdateTrajectory(float fElapsedTime)
 {
 	// Depends on the type of platform

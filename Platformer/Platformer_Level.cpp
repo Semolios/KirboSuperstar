@@ -170,7 +170,11 @@ bool cLevel::PopulatePlatforms(std::vector<cDynamicMovingPlatform*>& vecPtfm, st
 			// Populate a basic platform
 			if (parts[0] == L"basic")
 			{
-				engine->AddPlatform(std::stoi(parts[1]), std::stoi(parts[2]), "basic");
+				engine->AddPlatform(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]));
+			}
+			if (parts[0] == L"HorizontalSine")
+			{
+				engine->AddHorizontalSinePtfm(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), std::stoi(parts[4]), std::stoi(parts[5]), parts[6]);
 			}
 			// TODO
 		}

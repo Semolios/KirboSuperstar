@@ -881,6 +881,12 @@ void OneLoneCoder_Platformer::AddPlatform(float ox, float oy, std::string sprite
 	vecPlatforms.push_back(ptfm);
 }
 
+void OneLoneCoder_Platformer::AddHorizontalSinePtfm(float ox, float oy, std::string sprite, float amplitude, float frequency, std::wstring trigger)
+{
+	cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatformHorSine(ox, oy, mapPlatforms[sprite], amplitude, frequency, trigger);
+	vecPlatforms.push_back(ptfm);
+}
+
 std::vector<cDynamicMovingPlatform*> OneLoneCoder_Platformer::GetPlatforms()
 {
 	return vecPlatforms;
@@ -1144,4 +1150,12 @@ void OneLoneCoder_Platformer::UpdateProgressBar(std::string loadPercent)
 {
 	Clear(olc::BLACK);
 	DrawString(30, 440, loadPercent, olc::WHITE, 5);
+}
+
+std::string OneLoneCoder_Platformer::ToStr(std::wstring str)
+{
+	//setup converter
+	using convert_type = std::codecvt_utf8<wchar_t>;
+	std::wstring_convert<convert_type, wchar_t> converter;
+	return converter.to_bytes(str);
 }

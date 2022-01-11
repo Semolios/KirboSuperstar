@@ -35,6 +35,7 @@ public:
 	bool TopCollisionOneCorner(float CornerX, float cornerY);
 	static std::map<std::string, std::vector<olc::Sprite*>> LoadMovingPlatformsSprites();
 	void TriggerMovement();
+	void UntriggerMovement();
 
 	virtual void UpdateTrajectory(float fElapsedTime);
 };
