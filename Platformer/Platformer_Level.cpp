@@ -176,6 +176,10 @@ bool cLevel::PopulatePlatforms(std::vector<cDynamicMovingPlatform*>& vecPtfm, st
 			{
 				engine->AddHorizontalSinePtfm(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), std::stoi(parts[4]), std::stoi(parts[5]), parts[6]);
 			}
+			if (parts[0] == L"VerticalSine")
+			{
+				engine->AddVerticalSinePtfm(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), std::stoi(parts[4]), std::stoi(parts[5]), parts[6]);
+			}
 			// TODO
 		}
 	}

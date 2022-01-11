@@ -15,6 +15,7 @@
 #include "Platformer_DynamicCreature.h"
 #include "Platformer_DynamicMovingPlatform.h"
 #include "Platformer_DynamicMovingPlatformHorSine.h"
+#include "Platformer_DynamicMovingPlatformVerSine.h"
 #include "Platformer_DynamicProjectile.h"
 #include "Platformer_DynamicProjectileBoomerang.h"
 #include "Platformer_DynamicProjectileOrbital.h"
@@ -287,6 +288,7 @@ public:
 	// Platforms functions
 	void AddPlatform(float ox, float oy, std::string sprite);
 	void AddHorizontalSinePtfm(float ox, float oy, std::string sprite, float amplitude, float frequency, std::wstring trigger);
+	void AddVerticalSinePtfm(float ox, float oy, std::string sprite, float amplitude, float frequency, std::wstring trigger);
 	std::vector<cDynamicMovingPlatform*> GetPlatforms();
 
 	// Engine properties/modifications functions

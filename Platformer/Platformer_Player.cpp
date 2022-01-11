@@ -553,11 +553,7 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 	{
 		if (!bDead)
 			engine->PlaySample("kirboHit");
-		fHealth = 0.0f;
-		bDead = true;
-		animPlayer->ChangeState("dead");
-		nDamageBooster = 1;
-		nDefenseBooster = 1;
+		Kill();
 	}
 
 	// Collision
@@ -565,23 +561,13 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 	{
 		if (fNewPlayerPosX <= 1) fNewPlayerPosX = 1; // Prevent from being brutally moved to 0 only when reaching -1
 
-		if (engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.0f)) ||
-			engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + fPlayerCollisionUpperLimit)))
-		{
-			fNewPlayerPosX = (int)fNewPlayerPosX + 1;
-			fPlayerVelX = 0;
-		}
+		CheckLeftWall(lvl, fNewPlayerPosX);
 	}
 	else // Moving Right
 	{
 		if (fNewPlayerPosX >= lvl->GetWidth() - 2) fNewPlayerPosX = lvl->GetWidth() - 2; // Kirbo can't cross the edge of the map
 
-		if (engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.0f)) ||
-			engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + fPlayerCollisionUpperLimit)))
-		{
-			fNewPlayerPosX = (int)fNewPlayerPosX;
-			fPlayerVelX = 0;
-		}
+		CheckRightWall(lvl, fNewPlayerPosX);
 	}
 
 	bOnGround = false;
@@ -589,29 +575,27 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 	{
 		if (fNewPlayerPosY <= 1) fNewPlayerPosY = 1; // Prevent from being brutally moved to 0 only when reaching -1
 
-		if (engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY)) ||
-			engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY)))
+		if (Ceiling(lvl, fNewPlayerPosX, fNewPlayerPosY))
 		{
 			fNewPlayerPosY = (int)fNewPlayerPosY + 1;
 			fPlayerVelY = 0;
+
+			// If a moving platform crush kirbo while flying against ceil: death
+			for (auto& ptfm : engine->GetPlatforms())
+			{
+				if (ptfm->GetVY() < 0 &&
+					(ptfm->TopCollision(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f) ||
+					 ptfm->TopCollisionWithLag(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY + 1.0f, fNewPlayerPosY + 1.0f)))
+				{
+					if (!bDead)
+						engine->PlaySample("kirboHit");
+					Kill();
+				}
+			}
 		}
 	}
 	else // Moving Down
 	{
-		// This little trick (fPlayerPosY + 1.0f < (float)((int)fNewPlayerPosY + 1.0f) + 0.1f) checks if the player's feets are above the top of the semi-solid Block.
-		// Otherwise the player is moved to the top of the block when his feets reach the bottom of the block
-		// "fPlayerPosY + 1.0f" is the feets Y position, "(float)((int)fNewPlayerPosY + 1.0f) + 0.1f" takes the top of the block at the feets position and add a 0.1 delta, if the feets are above this delta, the player is moved on top of the block.
-		if (engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosY + 1.0f)) ||
-			engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f)) ||
-			((engine->IsSemiSolidTile(lvl->GetTile(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosY + 1.0f)) ||
-			  engine->IsSemiSolidTile(lvl->GetTile(fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f))) && fPlayerPosY + 1.0f < (float)((int)fNewPlayerPosY + 1.0f) + 0.1f))
-		{
-			fNewPlayerPosY = (int)fNewPlayerPosY + engine->GetGroundDynamicOverlay(); // Remove this line to create shifting sand
-			fPlayerVelY = 0;
-			bOnGround = true;
-			bDoubleJump = true;
-		}
-
 		// Moving platforms collision
 		for (auto& ptfm : engine->GetPlatforms())
 		{
@@ -624,29 +608,19 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 				// Check if a wall is there
 				if (fNewPlayerPosX < fPlayerPosX)
 				{
-					if (engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.0f)) ||
-						engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + fPlayerCollisionUpperLimit)))
-					{
-						fNewPlayerPosX = (int)fNewPlayerPosX + 1;
-						fPlayerVelX = 0;
-					}
-					else
-					{
-						// TODO Eventuellement détecter les murs mobiles
-					}
+					CheckLeftWall(lvl, fNewPlayerPosX);
 				}
 				if (fNewPlayerPosX > fPlayerPosX)
 				{
-					if (engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.0f)) ||
-						engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + fPlayerCollisionUpperLimit)))
-					{
-						fNewPlayerPosX = (int)fNewPlayerPosX;
-						fPlayerVelX = 0;
-					}
-					else
-					{
-						// TODO Eventuellement détecter les murs mobiles
-					}
+					CheckRightWall(lvl, fNewPlayerPosX);
+				}
+
+				// If kirbo is cruched against a ceil: death
+				if (fNewPlayerPosY < fPlayerPosY && Ceiling(lvl, fNewPlayerPosX, fNewPlayerPosY))
+				{
+					if (!bDead)
+						engine->PlaySample("kirboHit");
+					Kill();
 				}
 
 				fPlayerVelY = 0;
@@ -655,10 +629,68 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 				ptfm->TriggerMovement();
 			}
 		}
+
+		if (SolidFloor(lvl, fNewPlayerPosX, fNewPlayerPosY) || SemiSolidFloor(lvl, fNewPlayerPosX, fNewPlayerPosY))
+		{
+			fNewPlayerPosY = (int)fNewPlayerPosY + engine->GetGroundDynamicOverlay(); // Remove this line to create shifting sand
+			fPlayerVelY = 0;
+			bOnGround = true;
+			bDoubleJump = true;
+		}
 	}
 
 	fPlayerPosX = fNewPlayerPosX;
 	fPlayerPosY = fNewPlayerPosY;
+}
+
+bool cPlayer::SemiSolidFloor(cLevel* lvl, float fNewPlayerPosX, float fNewPlayerPosY)
+{
+	// This little trick (fPlayerPosY + 1.0f < (float)((int)fNewPlayerPosY + 1.0f) + 0.1f) checks if the player's feets are above the top of the semi-solid Block.
+	// Otherwise the player is moved to the top of the block when his feets reach the bottom of the block
+	// "fPlayerPosY + 1.0f" is the feets Y position, "(float)((int)fNewPlayerPosY + 1.0f) + 0.1f" takes the top of the block at the feets position and add a 0.1 delta, 
+	// if the feets are above this delta, the player is moved on top of the block.
+	return (engine->IsSemiSolidTile(lvl->GetTile(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosY + 1.0f)) ||
+			engine->IsSemiSolidTile(lvl->GetTile(fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f))) && fPlayerPosY + 1.0f < (float)((int)fNewPlayerPosY + 1.0f) + 0.1f;
+}
+
+bool cPlayer::SolidFloor(cLevel* lvl, float fNewPlayerPosX, float fNewPlayerPosY)
+{
+	return engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosY + 1.0f)) ||
+		engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f));
+}
+
+bool cPlayer::Ceiling(cLevel* lvl, float fNewPlayerPosX, float fNewPlayerPosY)
+{
+	return engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY)) ||
+		engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY));
+}
+
+void cPlayer::CheckRightWall(cLevel* lvl, float& fNewPlayerPosX)
+{
+	if (engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.0f)) ||
+		engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + fPlayerCollisionUpperLimit)))
+	{
+		fNewPlayerPosX = (int)fNewPlayerPosX;
+		fPlayerVelX = 0;
+	}
+	else
+	{
+		// TODO Eventuellement détecter les murs mobiles
+	}
+}
+
+void cPlayer::CheckLeftWall(cLevel* lvl, float& fNewPlayerPosX)
+{
+	if (engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.0f)) ||
+		engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + fPlayerCollisionUpperLimit)))
+	{
+		fNewPlayerPosX = (int)fNewPlayerPosX + 1;
+		fPlayerVelX = 0;
+	}
+	else
+	{
+		// TODO Eventuellement détecter les murs mobiles
+	}
 }
 
 float cPlayer::GetPlayerPosX()
@@ -786,10 +818,7 @@ void cPlayer::Damage(cDynamic* object)
 
 	if (fHealth <= 0.0f)
 	{
-		bDead = true;
-		animPlayer->ChangeState("dead");
-		nDamageBooster = 1;
-		nDefenseBooster = 1;
+		Kill();
 	}
 
 	if (!bDead)
@@ -806,6 +835,15 @@ void cPlayer::Damage(cDynamic* object)
 			fPlayerVelY = -cfDamageEjectionVelY;
 		}
 	}
+}
+
+void cPlayer::Kill()
+{
+	fHealth = 0.0f;
+	bDead = true;
+	animPlayer->ChangeState("dead");
+	nDamageBooster = 1;
+	nDefenseBooster = 1;
 }
 
 void cPlayer::ResetVariables()

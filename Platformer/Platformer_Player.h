@@ -120,6 +120,11 @@ public:
 	void DecreaseVelocities(float dvx, float dvy);
 	void SetVelocities(float vx, float vy);
 	void Collisions(float fElapsedTime, cLevel* lvl);
+	bool SemiSolidFloor(cLevel* lvl, float fNewPlayerPosX, float fNewPlayerPosY);
+	bool SolidFloor(cLevel* lvl, float fNewPlayerPosX, float fNewPlayerPosY);
+	bool Ceiling(cLevel* lvl, float fNewPlayerPosX, float fNewPlayerPosY);
+	void CheckRightWall(cLevel* lvl, float& fNewPlayerPosX);
+	void CheckLeftWall(cLevel* lvl, float& fNewPlayerPosX);
 	float GetPlayerPosX();
 	float GetPlayerPosY();
 	void SetPlayerPosX(float px);
@@ -134,6 +139,7 @@ public:
 	void DrawKirbo(olc::GFX2D::Transform2D t);
 	float GetHealth();
 	void Damage(cDynamic* object);
+	void Kill();
 	void ResetVariables();
 	void VacuumHitbox(float cameraOffsetX, float cameraOffsetY);
 	cHitbox* GetVacuumHitbox();

@@ -887,6 +887,12 @@ void OneLoneCoder_Platformer::AddHorizontalSinePtfm(float ox, float oy, std::str
 	vecPlatforms.push_back(ptfm);
 }
 
+void OneLoneCoder_Platformer::AddVerticalSinePtfm(float ox, float oy, std::string sprite, float amplitude, float frequency, std::wstring trigger)
+{
+	cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatformVerSine(ox, oy, mapPlatforms[sprite], amplitude, frequency, trigger);
+	vecPlatforms.push_back(ptfm);
+}
+
 std::vector<cDynamicMovingPlatform*> OneLoneCoder_Platformer::GetPlatforms()
 {
 	return vecPlatforms;
