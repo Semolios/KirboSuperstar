@@ -470,6 +470,11 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	if (bWind)
 		player->IncreaseVelocities(fWindDirection * fWindPower * fElapsedTime, 0);
 
+	for (auto& object : vecPlatforms)
+	{
+		object->Update(fElapsedTime, player->GetPlayerPosX(), player->GetPlayerPosY());
+	}
+
 	player->Collisions(fElapsedTime, level);
 
 	camera->SetPositions(player->GetPlayerPosX(), player->GetPlayerPosY());
@@ -552,11 +557,6 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	}
 
 	for (auto& object : vecProjectiles)
-	{
-		object->Update(fElapsedTime, player->GetPlayerPosX(), player->GetPlayerPosY());
-	}
-
-	for (auto& object : vecPlatforms)
 	{
 		object->Update(fElapsedTime, player->GetPlayerPosX(), player->GetPlayerPosY());
 	}
