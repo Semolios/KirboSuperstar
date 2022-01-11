@@ -278,7 +278,6 @@ void cPlayer::Update(float fElapsedTime)
 	if (bAttacking && CanInteract())
 	{
 		fPlayerVelX = 0.0f;
-		fPlayerVelY = 0.0f;
 	}
 	else
 	{
@@ -621,6 +620,35 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 			{
 				fNewPlayerPosY = ptfm->GetPY() - 1.0f;
 				fNewPlayerPosX += ptfm->GetVX() * fElapsedTime;
+
+				// Check if a wall is there
+				if (fNewPlayerPosX < fPlayerPosX)
+				{
+					if (engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.0f)) ||
+						engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + fPlayerCollisionUpperLimit)))
+					{
+						fNewPlayerPosX = (int)fNewPlayerPosX + 1;
+						fPlayerVelX = 0;
+					}
+					else
+					{
+						// TODO Eventuellement détecter les murs mobiles
+					}
+				}
+				if (fNewPlayerPosX > fPlayerPosX)
+				{
+					if (engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.0f)) ||
+						engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + fPlayerCollisionUpperLimit)))
+					{
+						fNewPlayerPosX = (int)fNewPlayerPosX;
+						fPlayerVelX = 0;
+					}
+					else
+					{
+						// TODO Eventuellement détecter les murs mobiles
+					}
+				}
+
 				fPlayerVelY = 0;
 				bOnGround = true;
 				bDoubleJump = true;

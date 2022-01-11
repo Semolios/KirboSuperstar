@@ -17,6 +17,6 @@ void cDynamicMovingPlatformHorSine::UpdateTrajectory(float fElapsedTime)
 	if (!bTriggerable || bTriggered)
 	{
 		fTheta += fElapsedTime;
-		vy = fAmplitude * sinf(fFrequency * fTheta);
+		vx = fAmplitude * sinf(fFrequency * fTheta);
 	}
 }
