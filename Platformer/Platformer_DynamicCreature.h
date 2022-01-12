@@ -78,7 +78,7 @@ public:
 	void DrawSelf(float ox, float oy) override;
 	void Update(float fElapsedTime, float playerX, float playerY) override;
 	void KnockBack(float dx, float dy, float dist);
-	void TurnAround();
+	void TurnBack();
 	void Collision(float fElapsedTime);
 	void UpdateHitbox(float cameraOffsetX, float cameraOffsetY) override;
 	void Vacuumed(bool vaccumedState);

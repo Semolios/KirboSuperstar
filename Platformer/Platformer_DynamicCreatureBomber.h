@@ -37,6 +37,8 @@ public:
 
 public:
 	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
+	bool RightObstacle();
+	bool LeftObstacle();
 };
 
 #endif // !DEF_BOMBER

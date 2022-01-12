@@ -592,10 +592,10 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	for (auto& object : vecProjectiles)
 	{
 		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
-	}	
+	}
 
 	// Draw Platforms
-	for (auto& object : vecPlatforms)
+	for (auto& object : GetClosePlatforms(player->GetPlayerPosX(), player->GetPlayerPosY()))
 	{
 		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
 	}
@@ -893,9 +893,34 @@ void OneLoneCoder_Platformer::AddVerticalSinePtfm(float ox, float oy, std::strin
 	vecPlatforms.push_back(ptfm);
 }
 
+void OneLoneCoder_Platformer::AddHorizontalSinglePtfm(float ox, float oy, std::string sprite, float tx, float vx, std::wstring trigger)
+{
+	cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatformHorSingle(ox, oy, mapPlatforms[sprite], tx, vx, trigger);
+	vecPlatforms.push_back(ptfm);
+}
+
+void OneLoneCoder_Platformer::AddVerticalSinglePtfm(float ox, float oy, std::string sprite, float ty, float vy, std::wstring trigger)
+{
+	cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatformVerSingle(ox, oy, mapPlatforms[sprite], ty, vy, trigger);
+	vecPlatforms.push_back(ptfm);
+}
+
 std::vector<cDynamicMovingPlatform*> OneLoneCoder_Platformer::GetPlatforms()
 {
 	return vecPlatforms;
+}
+
+std::vector<cDynamicMovingPlatform*> OneLoneCoder_Platformer::GetClosePlatforms(float px, float py)
+{
+	std::vector<cDynamicMovingPlatform*> closePtfms;
+	for (auto& ptfm : vecPlatforms)
+	{
+		if (fabs(px - (ptfm->GetPX())) < (((float)ScreenWidth()) / 64.0f) && fabs(py - (ptfm->GetPY())) < (((float)ScreenHeight()) / 64.0f))
+		{
+			closePtfms.push_back(ptfm);
+		}
+	}
+	return closePtfms;
 }
 
 float OneLoneCoder_Platformer::GetTileWidth()

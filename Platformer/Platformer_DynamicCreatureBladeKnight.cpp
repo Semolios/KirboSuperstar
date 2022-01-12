@@ -73,46 +73,35 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 
 #pragma region GO JUMPING STATE
 
+			bool goJumpingState = true;
+			int retflag;
+
 			// If there is an obstacle, he jump
-			if ((vx < 0) && (
-					engine->IsSolidTile(level->GetTile(px - 1, py)) ||
-					engine->IsSolidTile(level->GetTile(px, py)) ||
-					(
-						!engine->IsSolidTile(level->GetTile(px, py)) &&
-						!engine->IsSolidTile(level->GetTile(px, py + 1)) &&
-						!engine->IsSemiSolidTile(level->GetTile(px, py + 1))
-					)
-				)
-			)
+			if (LeftObstacle())
 			{
-				for (auto& ptfm : engine->GetPlatforms())
+				for (auto& ptfm : engine->GetClosePlatforms(px, py))
 				{
-					if (!ptfm->TopCollisionOneCorner(px, py + 1.0f))
+					if (ptfm->TopCollisionOneCorner(px, py + 1.0f) && !LeftWall())
 					{
-						ChangeState(AI_JUMPING);
-						break;
+						goJumpingState = false;
 					}
 				}
+
+				Jump(goJumpingState, retflag);
+				if (retflag == 2) break;
 			}
-			else if ((vx > 0) && (
-					engine->IsSolidTile(level->GetTile(px + 2, py)) || 
-					engine->IsSolidTile(level->GetTile(px + 1, py)) || 
-					(
-						!engine->IsSolidTile(level->GetTile(px + 1, py)) && 
-						!engine->IsSolidTile(level->GetTile(px + 1, py + 1)) && 
-						!engine->IsSemiSolidTile(level->GetTile(px + 1, py + 1))
-					)
-				)
-			)
+			else if (RightObstacle())
 			{
-				for (auto& ptfm : engine->GetPlatforms())
+				for (auto& ptfm : engine->GetClosePlatforms(px, py))
 				{
-					if (!ptfm->TopCollisionOneCorner(px + 1.0f, py + 1.0f))
+					if (ptfm->TopCollisionOneCorner(px + 1.0f, py + 1.0f) && !RightWall())
 					{
-						ChangeState(AI_JUMPING);
-						break;
+						goJumpingState = false;
 					}
 				}
+
+				Jump(goJumpingState, retflag);
+				if (retflag == 2) break;
 			}
 #pragma endregion
 
@@ -161,7 +150,7 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 				}
 				else if (vy >= 0)
 				{
-					for (auto& ptfm : engine->GetPlatforms())
+					for (auto& ptfm : engine->GetClosePlatforms(px, py))
 					{
 						if (ptfm->TopCollision(px, px + 1.0f, py + 1.0f))
 						{
@@ -237,7 +226,7 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 			}
 			else
 			{
-				for (auto& ptfm : engine->GetPlatforms())
+				for (auto& ptfm : engine->GetClosePlatforms(px, py))
 				{
 					if (ptfm->TopCollision(px, px + 1.0f, py + 1.0f))
 					{
@@ -272,6 +261,48 @@ void cDynamicCreatureBladeKnight::Behaviour(float fElapsedTime, float playerX, f
 	}
 
 	nAIState = nAINextState;
+}
+
+void cDynamicCreatureBladeKnight::Jump(bool goJumpingState, int& retflag)
+{
+	retflag = 1;
+	if (goJumpingState)
+	{
+		ChangeState(AI_JUMPING);
+		{
+			retflag = 2; return;
+		};
+	}
+}
+
+bool cDynamicCreatureBladeKnight::RightObstacle()
+{
+	return (vx > 0) && (RightWall() || RightHole());
+}
+
+bool cDynamicCreatureBladeKnight::RightHole()
+{
+	return !engine->IsSolidTile(level->GetTile(px + 1, py)) && !engine->IsSolidTile(level->GetTile(px + 1, py + 1)) && !engine->IsSemiSolidTile(level->GetTile(px + 1, py + 1));
+}
+
+bool cDynamicCreatureBladeKnight::RightWall()
+{
+	return engine->IsSolidTile(level->GetTile(px + 2, py)) || engine->IsSolidTile(level->GetTile(px + 1, py));
+}
+
+bool cDynamicCreatureBladeKnight::LeftObstacle()
+{
+	return (vx < 0) && (LeftWall() || LeftHole());
+}
+
+bool cDynamicCreatureBladeKnight::LeftHole()
+{
+	return !engine->IsSolidTile(level->GetTile(px, py)) && !engine->IsSolidTile(level->GetTile(px, py + 1)) && !engine->IsSemiSolidTile(level->GetTile(px, py + 1));
+}
+
+bool cDynamicCreatureBladeKnight::LeftWall()
+{
+	return engine->IsSolidTile(level->GetTile(px - 1, py)) || engine->IsSolidTile(level->GetTile(px, py));
 }
 
 void cDynamicCreatureBladeKnight::ChangeState(AI_STATE state)

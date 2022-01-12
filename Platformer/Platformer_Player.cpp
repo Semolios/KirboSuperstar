@@ -59,7 +59,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 			}
 
 			// Moving platforms collision
-			for (auto& ptfm : engine->GetPlatforms())
+			for (auto& ptfm : engine->GetClosePlatforms(fPlayerPosX, fPlayerPosY))
 			{
 				if (ptfm->TopCollision(fPlayerPosX + fPlayerCollisionLowerLimit, fPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY + 1.0f))
 				{
@@ -581,7 +581,7 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 			fPlayerVelY = 0;
 
 			// If a moving platform crush kirbo while flying against ceil: death
-			for (auto& ptfm : engine->GetPlatforms())
+			for (auto& ptfm : engine->GetClosePlatforms(fPlayerPosX, fPlayerPosY))
 			{
 				if (ptfm->GetVY() < 0 &&
 					(ptfm->TopCollision(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f) ||
@@ -597,7 +597,7 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 	else // Moving Down
 	{
 		// Moving platforms collision
-		for (auto& ptfm : engine->GetPlatforms())
+		for (auto& ptfm : engine->GetClosePlatforms(fPlayerPosX, fPlayerPosY))
 		{
 			if (ptfm->TopCollision(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f) ||
 				ptfm->TopCollisionWithLag(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY + 1.0f, fNewPlayerPosY + 1.0f))

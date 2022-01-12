@@ -64,7 +64,7 @@ void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float p
 			}
 			else
 			{
-				for (auto& ptfm : engine->GetPlatforms())
+				for (auto& ptfm : engine->GetClosePlatforms(px, py))
 				{
 					if (ptfm->TopCollision(px, px + 1.0f, py + 1.0f))
 					{

@@ -17,7 +17,6 @@ protected:
 	float fTheta = 0.0f;
 	float fAmplitude;
 	float fFrequency;
-	bool bTriggerable;
 };
 
 #endif // !DEF_MOVING_PLATFORM_VERSINE

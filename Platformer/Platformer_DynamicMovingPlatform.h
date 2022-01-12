@@ -21,6 +21,7 @@ protected:
 	float fTimeBetweenFrames = 0.05f;
 	float fTimeCounter = 0.0f;
 	float fHitboxThickness = 0.15f;
+	bool bTriggerable;
 	bool bTriggered = false;
 
 public:

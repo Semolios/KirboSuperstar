@@ -169,7 +169,9 @@
     <ClCompile Include="Platformer_DynamicCreatureWaddleDee.cpp" />
     <ClCompile Include="Platformer_DynamicCreatureWhispyWood.cpp" />
     <ClCompile Include="Platformer_DynamicMovingPlatform.cpp" />
+    <ClCompile Include="Platformer_DynamicMovingPlatformHorSingle.cpp" />
     <ClCompile Include="Platformer_DynamicMovingPlatformVerSine.cpp" />
+    <ClCompile Include="Platformer_DynamicMovingPlatformVerSingle.cpp" />
     <ClCompile Include="Platformer_DynamicProjectile.cpp" />
     <ClCompile Include="Platformer_DynamicProjectileBoomerang.cpp" />
     <ClCompile Include="Platformer_DynamicProjectileOrbital.cpp" />
@@ -217,7 +219,9 @@
     <ClInclude Include="Platformer_DynamicCreatureWaddleDee.h" />
     <ClInclude Include="Platformer_DynamicCreatureWhispyWood.h" />
     <ClInclude Include="Platformer_DynamicMovingPlatform.h" />
+    <ClInclude Include="Platformer_DynamicMovingPlatformHorSingle.h" />
     <ClInclude Include="Platformer_DynamicMovingPlatformVerSine.h" />
+    <ClInclude Include="Platformer_DynamicMovingPlatformVerSingle.h" />
     <ClInclude Include="Platformer_DynamicProjectile.h" />
     <ClInclude Include="Platformer_DynamicProjectileBoomerang.h" />
     <ClInclude Include="Platformer_DynamicProjectileOrbital.h" />

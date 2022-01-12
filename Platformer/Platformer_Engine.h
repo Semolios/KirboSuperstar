@@ -15,7 +15,9 @@
 #include "Platformer_DynamicCreature.h"
 #include "Platformer_DynamicMovingPlatform.h"
 #include "Platformer_DynamicMovingPlatformHorSine.h"
+#include "Platformer_DynamicMovingPlatformHorSingle.h"
 #include "Platformer_DynamicMovingPlatformVerSine.h"
+#include "Platformer_DynamicMovingPlatformVerSingle.h"
 #include "Platformer_DynamicProjectile.h"
 #include "Platformer_DynamicProjectileBoomerang.h"
 #include "Platformer_DynamicProjectileOrbital.h"
@@ -289,7 +291,10 @@ public:
 	void AddPlatform(float ox, float oy, std::string sprite);
 	void AddHorizontalSinePtfm(float ox, float oy, std::string sprite, float amplitude, float frequency, std::wstring trigger);
 	void AddVerticalSinePtfm(float ox, float oy, std::string sprite, float amplitude, float frequency, std::wstring trigger);
+	void AddHorizontalSinglePtfm(float ox, float oy, std::string sprite, float tx, float vx, std::wstring trigger);
+	void AddVerticalSinglePtfm(float ox, float oy, std::string sprite, float ty, float vy, std::wstring trigger);
 	std::vector<cDynamicMovingPlatform*> GetPlatforms();
+	std::vector<cDynamicMovingPlatform*> GetClosePlatforms(float px, float py);
 
 	// Engine properties/modifications functions
 	float GetTileWidth();

@@ -33,36 +33,40 @@ cDynamicCreatureWaddleDee::~cDynamicCreatureWaddleDee()
 
 void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 {
+	bool mustTurnBack = true;
+
 	if (vy == 0)
 	{
 		if (vx < 0)
 		{
-			// Check left wall or hole
-			if (engine->IsSolidTile(level->GetTile(px, py)) || (!engine->IsSolidTile(level->GetTile(px, py)) && !engine->IsSolidTile(level->GetTile(px, py + 1)) && !engine->IsSemiSolidTile(level->GetTile(px, py + 1))))
+			if (LeftObstacle())
 			{
 				// Don't check the platforms if the waddle dee is on ground, or all the waddle dees will check all platforms
-				for (auto& ptfm : engine->GetPlatforms())
+				for (auto& ptfm : engine->GetClosePlatforms(px, py))
 				{
-					if (!ptfm->TopCollisionOneCorner(px, py + 1.0f))
+					if (ptfm->TopCollisionOneCorner(px, py + 1.0f) && !engine->IsSolidTile(level->GetTile(px, py)))
 					{
-						TurnAround();
+						mustTurnBack = false;
 					}
 				}
+				if (mustTurnBack)
+					TurnBack();
 			}
 		}
 		else if (vx > 0)
 		{
-			// Check right wall or hole
-			if (engine->IsSolidTile(level->GetTile(px + 1, py)) || (!engine->IsSolidTile(level->GetTile(px + 1, py)) && !engine->IsSolidTile(level->GetTile(px + 1, py + 1)) && !engine->IsSemiSolidTile(level->GetTile(px + 1, py + 1))))
+			if (RightObstacle())
 			{
 				// Don't check the platforms if the waddle dee is on ground, or all the waddle dees will check all platforms
-				for (auto& ptfm : engine->GetPlatforms())
+				for (auto& ptfm : engine->GetClosePlatforms(px, py))
 				{
-					if (!ptfm->TopCollisionOneCorner(px + 1.0f, py + 1.0f))
+					if (ptfm->TopCollisionOneCorner(px + 1.0f, py + 1.0f) && !engine->IsSolidTile(level->GetTile(px + 1, py)))
 					{
-						TurnAround();
+						mustTurnBack = false;
 					}
 				}
+				if (mustTurnBack)
+					TurnBack();
 			}
 		}
 		else
@@ -70,4 +74,14 @@ void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, flo
 			vx = 1.0f;
 		}
 	}
+}
+
+bool cDynamicCreatureWaddleDee::RightObstacle()
+{
+	return engine->IsSolidTile(level->GetTile(px + 1, py)) || (!engine->IsSolidTile(level->GetTile(px + 1, py)) && !engine->IsSolidTile(level->GetTile(px + 1, py + 1)) && !engine->IsSemiSolidTile(level->GetTile(px + 1, py + 1)));
+}
+
+bool cDynamicCreatureWaddleDee::LeftObstacle()
+{
+	return engine->IsSolidTile(level->GetTile(px, py)) || (!engine->IsSolidTile(level->GetTile(px, py)) && !engine->IsSolidTile(level->GetTile(px, py + 1)) && !engine->IsSemiSolidTile(level->GetTile(px, py + 1)));
 }

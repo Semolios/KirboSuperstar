@@ -126,7 +126,7 @@ void cDynamicCreature::KnockBack(float dx, float dy, float dist)
 	bIsAttackable = false;
 }
 
-void cDynamicCreature::TurnAround()
+void cDynamicCreature::TurnBack()
 {
 	vx = -vx;
 }
@@ -186,7 +186,7 @@ void cDynamicCreature::Collision(float fElapsedTime)
 			}
 
 			// Moving platforms collision
-			for (auto& ptfm : engine->GetPlatforms())
+			for (auto& ptfm : engine->GetClosePlatforms(fNewObjectPosX, fNewObjectPosY))
 			{
 				if (ptfm->TopCollision(fNewObjectPosX + fBorder, fNewObjectPosX + 1.0f - fBorder, fNewObjectPosY + 1.0f) ||
 					ptfm->TopCollisionWithLag(fNewObjectPosX + fBorder, fNewObjectPosX + 1.0f - fBorder, py + 1.0f, fNewObjectPosY + 1.0f))
@@ -199,50 +199,8 @@ void cDynamicCreature::Collision(float fElapsedTime)
 		}
 	}
 
-	float fDynObjectPosX = fNewObjectPosX;
-	float fDynObjectPosY = fNewObjectPosY;
-
-	// Object vs Object collisions
-	// TODO REVOIR CA CAR CA MARCHE PAS CA FAIT DE LA MERDE
-	//for (auto& dyn : vecEnnemies)
-	//{
-	//	if (dyn != object)
-	//	{
-	//		// If the objects are solid then they must not overlap
-	//		if (dyn->bSolidVsDyn && object->bSolidVsDyn)
-	//		{
-	//			// Check if bounding rectangles overlap
-	//			if (fDynObjectPosX < (dyn->px + (dyn->fDynWidth / (float)nTileWidth)) &&
-	//				(fDynObjectPosX + (object->fDynWidth / (float)nTileWidth)) > dyn->px &&
-	//				object->py < (dyn->py + (dyn->fDynHeight / (float)nTileHeight)) &&
-	//				(object->py + (object->fDynHeight / (float)nTileHeight)) > dyn->py)
-	//			{
-	//				// First Check Horizontally - Check Left
-	//				if (object->vx <= 0)
-	//					fDynObjectPosX = dyn->px + (dyn->fDynWidth / (float)nTileWidth);
-	//				else
-	//					fDynObjectPosX = dyn->px - (object->fDynWidth / (float)nTileWidth);
-
-	//				object->TurnAround();
-	//			}
-
-	//			if (fDynObjectPosX < (dyn->px + (dyn->fDynWidth / (float)nTileWidth)) &&
-	//				(fDynObjectPosX + (object->fDynWidth / (float)nTileWidth)) > dyn->px &&
-	//				fDynObjectPosY < (dyn->py + (dyn->fDynHeight / (float)nTileHeight)) &&
-	//				(fDynObjectPosY + (object->fDynHeight / (float)nTileHeight)) > dyn->py)
-	//			{
-	//				// First Check Vertically - Check Top
-	//				if (object->vy <= 0)
-	//					fDynObjectPosY = dyn->py + (dyn->fDynHeight / (float)nTileHeight);
-	//				else
-	//					fDynObjectPosY = dyn->py - (object->fDynHeight / (float)nTileHeight);
-	//			}
-	//		}
-	//	}
-	//}
-
-	px = fDynObjectPosX;
-	py = fDynObjectPosY;
+	px = fNewObjectPosX;
+	py = fNewObjectPosY;
 }
 
 void cDynamicCreature::UpdateHitbox(float cameraOffsetX, float cameraOffsetY)
