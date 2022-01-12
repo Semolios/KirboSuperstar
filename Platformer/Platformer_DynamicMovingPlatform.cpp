@@ -81,7 +81,7 @@ bool cDynamicMovingPlatform::TopCollision(float leftCornerX, float rightCornerX,
 	olc::vf2d ptfmTopLeftCorner(px, py - fHitboxThickness);
 	olc::vf2d ptfmBotRightCorner(px + (fDynWidth / (float)engine->GetTileWidth()), py + fHitboxThickness);
 
-	return
+	return bSolidTop && (
 		((playerLeftCorner.x >= ptfmTopLeftCorner.x) &&
 		 (playerLeftCorner.x <= ptfmBotRightCorner.x) &&
 		 (playerLeftCorner.y >= ptfmTopLeftCorner.y) &&
@@ -89,7 +89,8 @@ bool cDynamicMovingPlatform::TopCollision(float leftCornerX, float rightCornerX,
 		((playerRightCorner.x >= ptfmTopLeftCorner.x) &&
 		 (playerRightCorner.x <= ptfmBotRightCorner.x) &&
 		 (playerRightCorner.y >= ptfmTopLeftCorner.y) &&
-		 (playerRightCorner.y <= ptfmBotRightCorner.y));
+		 (playerRightCorner.y <= ptfmBotRightCorner.y))
+		);
 }
 
 bool cDynamicMovingPlatform::TopCollisionWithLag(float leftCornerX, float rightCornerX, float fPlayerPosY, float fNewPlayerPosY)
@@ -97,7 +98,7 @@ bool cDynamicMovingPlatform::TopCollisionWithLag(float leftCornerX, float rightC
 	olc::vf2d ptfmTopLeftCorner(px, py - fHitboxThickness);
 	olc::vf2d ptfmBotRightCorner(px + (fDynWidth / (float)engine->GetTileWidth()), py + fHitboxThickness);
 
-	return
+	return bSolidTop && (
 		((leftCornerX >= ptfmTopLeftCorner.x) &&
 		 (leftCornerX <= ptfmBotRightCorner.x) &&
 		 (fPlayerPosY <= ptfmTopLeftCorner.y) &&
@@ -105,7 +106,8 @@ bool cDynamicMovingPlatform::TopCollisionWithLag(float leftCornerX, float rightC
 		((rightCornerX >= ptfmTopLeftCorner.x) &&
 		 (rightCornerX <= ptfmBotRightCorner.x) &&
 		 (fPlayerPosY <= ptfmTopLeftCorner.y) &&
-		 (fNewPlayerPosY >= ptfmBotRightCorner.y));
+		 (fNewPlayerPosY >= ptfmBotRightCorner.y))
+		);
 }
 
 bool cDynamicMovingPlatform::TopCollisionOneCorner(float CornerX, float cornerY)

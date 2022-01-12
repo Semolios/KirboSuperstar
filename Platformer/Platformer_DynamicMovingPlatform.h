@@ -24,6 +24,12 @@ protected:
 	bool bTriggerable;
 	bool bTriggered = false;
 
+	// Sides Traversability
+	bool bSolidTop = true;
+	bool bSolidBot = false;
+	bool bSolidLeft = false;
+	bool bSolidRight = false;
+
 public:
 	static OneLoneCoder_Platformer* engine;
 
