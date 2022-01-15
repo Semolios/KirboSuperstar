@@ -12,6 +12,9 @@ public:
 	virtual ~cDynamicWall();
 
 	void Behaviour(float fElapsedTime, float playerX, float playerY);
+	void DrawSwitch(float cameraX, float cameraY);
+
+	static OneLoneCoder_Platformer* engine;
 
 protected:
 	const float cfTriggerDist = 0.5f;

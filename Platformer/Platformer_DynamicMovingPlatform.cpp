@@ -15,6 +15,11 @@ cDynamicMovingPlatform::~cDynamicMovingPlatform()
 	delete hitbox;
 }
 
+void cDynamicMovingPlatform::DrawSwitch(float cameraX, float cameraY)
+{
+	// Only used for walls
+}
+
 void cDynamicMovingPlatform::DrawSelf(float ox, float oy)
 {
 	engine->SetPixelMode(olc::Pixel::ALPHA);

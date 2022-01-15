@@ -128,6 +128,8 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		case LS_PLATFORMS:
 		{
 			mapPlatforms = cDynamicMovingPlatform::LoadMovingPlatformsSprites();
+			sprDoorSwitchOff = new olc::Sprite("assets/gfx/doorSwitchOff.png");
+			sprDoorSwitchOn = new olc::Sprite("assets/gfx/doorSwitchOn.png");
 
 			UpdateProgressBar("Loading 15%");
 
@@ -245,6 +247,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			cDynamicCreatureWhispyWood::engine = this;
 			cDynamicMovingPlatform::engine = this;
 			cDynamicProjectile::engine = this;
+			cDynamicWall::engine = this;
 			cItemCandy::engine = this;
 			cItemDamage::engine = this;
 			cItemDefense::engine = this;
@@ -581,6 +584,11 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	{
 		return ((cDynamicProjectile*)d)->IsRedundant();
 	}), vecProjectiles.end());
+
+	for (auto& object : vecPlatforms)
+	{
+		object->DrawSwitch(camera->GetOffsetX(), camera->GetOffsetY());
+	}
 
 	// Draw Ennemies
 	for (auto& object : vecEnnemies)
@@ -924,6 +932,11 @@ std::vector<cDynamicMovingPlatform*> OneLoneCoder_Platformer::GetClosePlatforms(
 	return closePtfms;
 }
 
+olc::Sprite* OneLoneCoder_Platformer::GetDoorSwitch(bool on)
+{
+	return on ? sprDoorSwitchOn : sprDoorSwitchOff;
+}
+
 float OneLoneCoder_Platformer::GetTileWidth()
 {
 	return (float)nTileWidth;
@@ -1045,6 +1058,11 @@ void OneLoneCoder_Platformer::ReturnToWorldMap()
 void OneLoneCoder_Platformer::SetPlayerChoice(int choice)
 {
 	pauseMenu->SetPlayerChoice(choice);
+}
+
+cCamera* OneLoneCoder_Platformer::GetCamera()
+{
+	return camera;
 }
 
 void OneLoneCoder_Platformer::ActivateShakeEffect(bool activate, int shakeAmplitudeX, int shakeAmplitudeY)

@@ -13,6 +13,8 @@ public:
 	cDynamicMovingPlatform(float ox, float oy, std::vector<olc::Sprite*> map);
 	virtual ~cDynamicMovingPlatform();
 
+	virtual void DrawSwitch(float cameraX, float cameraY);
+
 protected:
 	std::vector<olc::Sprite*> mapStates;
 

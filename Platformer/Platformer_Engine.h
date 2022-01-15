@@ -197,6 +197,8 @@ private:
 	// Moving Platforms
 	std::vector<cDynamicMovingPlatform*> vecPlatforms;
 	std::map<std::string, std::vector<olc::Sprite*>> mapPlatforms;
+	olc::Sprite* sprDoorSwitchOff;
+	olc::Sprite* sprDoorSwitchOn;
 
 	// HUD
 	cHUD* HUD;
@@ -296,6 +298,7 @@ public:
 	void AddVerticalSinglePtfm(float ox, float oy, std::string sprite, float ty, float vy, std::wstring trigger);
 	void AddWall(float ox, float oy, std::string sprite, std::wstring leftSolid, std::wstring rightSolid, std::wstring trigger, float trgX, float trgY);
 	std::vector<cDynamicMovingPlatform*> GetClosePlatforms(float px, float py);
+	olc::Sprite* GetDoorSwitch(bool on);
 
 	// Engine properties/modifications functions
 	float GetTileWidth();
@@ -322,6 +325,7 @@ public:
 	void SetPlayerChoice(int choice);
 
 	// Camera functions
+	cCamera* GetCamera();
 	void ActivateShakeEffect(bool activate, int shakeAmplitudeX = 50, int shakeAmplitudeY = 50);
 	void WindEffect(float direction, float windPower, bool activate);
 
