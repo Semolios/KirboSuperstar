@@ -153,6 +153,17 @@ void cDynamicCreature::Collision(float fElapsedTime)
 				fNewObjectPosX = (int)fNewObjectPosX + 1;
 				vx = 0;
 			}
+
+			// Moving platforms collision
+			for (auto& ptfm : engine->GetClosePlatforms(fNewObjectPosX, fNewObjectPosY))
+			{
+				if (ptfm->RightCollision(fNewObjectPosY, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()), fNewObjectPosX + fBorder) ||
+					ptfm->RightCollisionWithLag(fNewObjectPosY, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()), px, fNewObjectPosX))
+				{
+					fNewObjectPosX = ptfm->GetPX() + ptfm->GetNormalizedWidth();
+					vx = 0;
+				}
+			}
 		}
 		else // Moving Right
 		{
@@ -161,6 +172,17 @@ void cDynamicCreature::Collision(float fElapsedTime)
 			{
 				fNewObjectPosX = (int)fNewObjectPosX;
 				vx = 0;
+			}
+
+			// Moving platforms collision
+			for (auto& ptfm : engine->GetClosePlatforms(fNewObjectPosX, fNewObjectPosY))
+			{
+				if (ptfm->LeftCollision(fNewObjectPosY, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()), fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder)) ||
+					ptfm->LeftCollisionWithLag(fNewObjectPosY, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()), px + (fDynWidth / engine->GetTileWidth()), fNewObjectPosX + (fDynWidth / engine->GetTileWidth())))
+				{
+					fNewObjectPosX = ptfm->GetPX() - (fDynWidth / engine->GetTileWidth());
+					vx = 0;
+				}
 			}
 		}
 
@@ -188,10 +210,10 @@ void cDynamicCreature::Collision(float fElapsedTime)
 			// Moving platforms collision
 			for (auto& ptfm : engine->GetClosePlatforms(fNewObjectPosX, fNewObjectPosY))
 			{
-				if (ptfm->TopCollision(fNewObjectPosX + fBorder, fNewObjectPosX + 1.0f - fBorder, fNewObjectPosY + 1.0f) ||
-					ptfm->TopCollisionWithLag(fNewObjectPosX + fBorder, fNewObjectPosX + 1.0f - fBorder, py + 1.0f, fNewObjectPosY + 1.0f))
+				if (ptfm->TopCollision(fNewObjectPosX + fBorder, fNewObjectPosX + (fDynWidth / engine->GetTileWidth()) - fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight())) ||
+					ptfm->TopCollisionWithLag(fNewObjectPosX + fBorder, fNewObjectPosX + (fDynWidth / engine->GetTileWidth()) - fBorder, py + (fDynHeight / engine->GetTileHeight()), fNewObjectPosY + (fDynHeight / engine->GetTileHeight())))
 				{
-					fNewObjectPosY = ptfm->GetPY() - 1.0f;
+					fNewObjectPosY = ptfm->GetPY() - (fDynHeight / engine->GetTileHeight());
 					fNewObjectPosX += ptfm->GetVX() * fElapsedTime;
 					vy = 0;
 				}

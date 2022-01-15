@@ -11,7 +11,7 @@ public:
 	cDynamicMovingPlatformHorSingle(float ox, float oy, std::vector<olc::Sprite*> map, float tx, float vx, std::wstring trigger);
 	virtual ~cDynamicMovingPlatformHorSingle();
 
-	void UpdateTrajectory(float fElapsedTime);
+	void Behaviour(float fElapsedTime, float playerX, float playerY);
 
 protected:
 	const float cfTargetDelta = 0.1f;

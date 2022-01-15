@@ -52,6 +52,19 @@ void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, flo
 				if (mustTurnBack)
 					TurnBack();
 			}
+			else
+			{
+				mustTurnBack = false;
+				for (auto& ptfm : engine->GetClosePlatforms(px, py))
+				{
+					if (ptfm->RightCollision(py, py + 1.0f, px))
+					{
+						mustTurnBack = true;
+					}
+				}
+				if (mustTurnBack)
+					TurnBack();
+			}
 		}
 		else if (vx > 0)
 		{
@@ -60,9 +73,22 @@ void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, flo
 				// Don't check the platforms if the waddle dee is on ground, or all the waddle dees will check all platforms
 				for (auto& ptfm : engine->GetClosePlatforms(px, py))
 				{
-					if (ptfm->TopCollisionOneCorner(px + 1.0f, py + 1.0f) && !engine->IsSolidTile(level->GetTile(px + 1, py)))
+					if (ptfm->TopCollisionOneCorner(px + 1.0f, py + 1.0f) && !ptfm->LeftCollision(py, py + 1.0f, px + 1.0f) && !engine->IsSolidTile(level->GetTile(px + 1, py)))
 					{
 						mustTurnBack = false;
+					}
+				}
+				if (mustTurnBack)
+					TurnBack();
+			}
+			else
+			{
+				mustTurnBack = false;
+				for (auto& ptfm : engine->GetClosePlatforms(px, py))
+				{
+					if (ptfm->LeftCollision(py, py + 1.0f, px + 1.0f))
+					{
+						mustTurnBack = true;
 					}
 				}
 				if (mustTurnBack)
@@ -78,10 +104,14 @@ void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, flo
 
 bool cDynamicCreatureWaddleDee::RightObstacle()
 {
-	return engine->IsSolidTile(level->GetTile(px + 1, py)) || (!engine->IsSolidTile(level->GetTile(px + 1, py)) && !engine->IsSolidTile(level->GetTile(px + 1, py + 1)) && !engine->IsSemiSolidTile(level->GetTile(px + 1, py + 1)));
+	return
+		engine->IsSolidTile(level->GetTile(px + 1, py)) || // Wall
+		(!engine->IsSolidTile(level->GetTile(px + 1, py)) && !engine->IsSolidTile(level->GetTile(px + 1, py + 1)) && !engine->IsSemiSolidTile(level->GetTile(px + 1, py + 1))); // Hole
 }
 
 bool cDynamicCreatureWaddleDee::LeftObstacle()
 {
-	return engine->IsSolidTile(level->GetTile(px, py)) || (!engine->IsSolidTile(level->GetTile(px, py)) && !engine->IsSolidTile(level->GetTile(px, py + 1)) && !engine->IsSemiSolidTile(level->GetTile(px, py + 1)));
+	return
+		engine->IsSolidTile(level->GetTile(px, py)) || // Wall
+		(!engine->IsSolidTile(level->GetTile(px, py)) && !engine->IsSolidTile(level->GetTile(px, py + 1)) && !engine->IsSemiSolidTile(level->GetTile(px, py + 1))); // Hole
 }

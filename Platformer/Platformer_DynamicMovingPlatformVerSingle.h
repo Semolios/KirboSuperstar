@@ -11,7 +11,7 @@ public:
 	cDynamicMovingPlatformVerSingle(float ox, float oy, std::vector<olc::Sprite*> map, float ty, float vy, std::wstring trigger);
 	virtual ~cDynamicMovingPlatformVerSingle();
 
-	void UpdateTrajectory(float fElapsedTime);
+	void Behaviour(float fElapsedTime, float playerX, float playerY);
 
 protected:
 	const float cfTargetDelta = 0.1f;

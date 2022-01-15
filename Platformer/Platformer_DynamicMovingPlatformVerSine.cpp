@@ -12,7 +12,7 @@ cDynamicMovingPlatformVerSine::~cDynamicMovingPlatformVerSine()
 {
 }
 
-void cDynamicMovingPlatformVerSine::UpdateTrajectory(float fElapsedTime)
+void cDynamicMovingPlatformVerSine::Behaviour(float fElapsedTime, float playerX, float playerY)
 {
 	if (!bTriggerable || bTriggered)
 	{

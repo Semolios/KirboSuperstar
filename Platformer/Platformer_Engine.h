@@ -21,6 +21,7 @@
 #include "Platformer_DynamicProjectile.h"
 #include "Platformer_DynamicProjectileBoomerang.h"
 #include "Platformer_DynamicProjectileOrbital.h"
+#include "Platformer_DynamicWall.h"
 #include "Platformer_EndScreen.h"
 #include "Platformer_Hitbox.h"
 #include "Platformer_HUD.h"
@@ -293,7 +294,7 @@ public:
 	void AddVerticalSinePtfm(float ox, float oy, std::string sprite, float amplitude, float frequency, std::wstring trigger);
 	void AddHorizontalSinglePtfm(float ox, float oy, std::string sprite, float tx, float vx, std::wstring trigger);
 	void AddVerticalSinglePtfm(float ox, float oy, std::string sprite, float ty, float vy, std::wstring trigger);
-	std::vector<cDynamicMovingPlatform*> GetPlatforms();
+	void AddWall(float ox, float oy, std::string sprite, std::wstring leftSolid, std::wstring rightSolid, std::wstring trigger, float trgX, float trgY);
 	std::vector<cDynamicMovingPlatform*> GetClosePlatforms(float px, float py);
 
 	// Engine properties/modifications functions
@@ -332,7 +333,7 @@ public:
 	void PlayLevelMusic();
 	void StopLevelMusic();
 
-	// Change Player state functions
+	// Player functions
 	void ChangeKirboVelocities(float vx, float vy);
 	void SetKirboGrabbed(bool grabbed);
 	void ChangeKirboAnimation(std::string animation);

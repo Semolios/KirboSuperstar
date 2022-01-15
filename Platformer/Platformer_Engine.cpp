@@ -905,9 +905,10 @@ void OneLoneCoder_Platformer::AddVerticalSinglePtfm(float ox, float oy, std::str
 	vecPlatforms.push_back(ptfm);
 }
 
-std::vector<cDynamicMovingPlatform*> OneLoneCoder_Platformer::GetPlatforms()
+void OneLoneCoder_Platformer::AddWall(float ox, float oy, std::string sprite, std::wstring leftSolid, std::wstring rightSolid, std::wstring trigger, float trgX, float trgY)
 {
-	return vecPlatforms;
+	cDynamicMovingPlatform* ptfm = new cDynamicWall(ox, oy, mapPlatforms[sprite], leftSolid, rightSolid, trigger, trgX, trgY);
+	vecPlatforms.push_back(ptfm);
 }
 
 std::vector<cDynamicMovingPlatform*> OneLoneCoder_Platformer::GetClosePlatforms(float px, float py)

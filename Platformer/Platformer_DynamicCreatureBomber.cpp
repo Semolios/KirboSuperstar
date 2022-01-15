@@ -61,6 +61,19 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 						if (mustTurnBack)
 							TurnBack();
 					}
+					else
+					{
+						mustTurnBack = false;
+						for (auto& ptfm : engine->GetClosePlatforms(px, py))
+						{
+							if (ptfm->RightCollision(py, py + 1.0f, px))
+							{
+								mustTurnBack = true;
+							}
+						}
+						if (mustTurnBack)
+							TurnBack();
+					}
 				}
 				else if (vx > 0)
 				{
@@ -69,9 +82,22 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 						// Don't check the platforms if the bomber is on ground, or all the bombers will check all platforms
 						for (auto& ptfm : engine->GetClosePlatforms(px, py))
 						{
-							if (ptfm->TopCollisionOneCorner(px + 1.0f, py + 1.0f) && !engine->IsSolidTile(level->GetTile(px + 1, py)))
+							if (ptfm->TopCollisionOneCorner(px + 1.0f, py + 1.0f) && !ptfm->LeftCollision(py, py + 1.0f, px + 1.0f) && !engine->IsSolidTile(level->GetTile(px + 1, py)))
 							{
 								mustTurnBack = false;
+							}
+						}
+						if (mustTurnBack)
+							TurnBack();
+					}
+					else
+					{
+						mustTurnBack = false;
+						for (auto& ptfm : engine->GetClosePlatforms(px, py))
+						{
+							if (ptfm->LeftCollision(py, py + 1.0f, px + 1.0f))
+							{
+								mustTurnBack = true;
 							}
 						}
 						if (mustTurnBack)

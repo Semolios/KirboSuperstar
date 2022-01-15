@@ -630,6 +630,7 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 			}
 		}
 
+		// Immobile ground collision
 		if (SolidFloor(lvl, fNewPlayerPosX, fNewPlayerPosY) || SemiSolidFloor(lvl, fNewPlayerPosX, fNewPlayerPosY))
 		{
 			fNewPlayerPosY = (int)fNewPlayerPosY + engine->GetGroundDynamicOverlay(); // Remove this line to create shifting sand
@@ -675,7 +676,15 @@ void cPlayer::CheckRightWall(cLevel* lvl, float& fNewPlayerPosX)
 	}
 	else
 	{
-		// TODO Eventuellement détecter les murs mobiles
+		for (auto& ptfm : engine->GetClosePlatforms(fPlayerPosX, fPlayerPosY))
+		{
+			if (ptfm->LeftCollision(fPlayerPosY, fPlayerPosY + 1.0f, fNewPlayerPosX + 1.0f) ||
+				ptfm->LeftCollisionWithLag(fPlayerPosY, fPlayerPosY + 1.0f, fPlayerPosX + 1.0f, fNewPlayerPosX + 1.0f))
+			{
+				fNewPlayerPosX = fPlayerPosX;
+				fPlayerVelX = 0;
+			}
+		}
 	}
 }
 
@@ -689,7 +698,15 @@ void cPlayer::CheckLeftWall(cLevel* lvl, float& fNewPlayerPosX)
 	}
 	else
 	{
-		// TODO Eventuellement détecter les murs mobiles
+		for (auto& ptfm : engine->GetClosePlatforms(fPlayerPosX, fPlayerPosY))
+		{
+			if (ptfm->RightCollision(fPlayerPosY, fPlayerPosY + 1.0f, fNewPlayerPosX) ||
+				ptfm->RightCollisionWithLag(fPlayerPosY, fPlayerPosY + 1.0f, fPlayerPosX, fNewPlayerPosX))
+			{
+				fNewPlayerPosX = fPlayerPosX;
+				fPlayerVelX = 0;
+			}
+		}
 	}
 }
 

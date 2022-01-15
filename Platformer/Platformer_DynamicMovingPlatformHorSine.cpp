@@ -12,7 +12,7 @@ cDynamicMovingPlatformHorSine::~cDynamicMovingPlatformHorSine()
 {
 }
 
-void cDynamicMovingPlatformHorSine::UpdateTrajectory(float fElapsedTime)
+void cDynamicMovingPlatformHorSine::Behaviour(float fElapsedTime, float playerX, float playerY)
 {
 	if (!bTriggerable || bTriggered)
 	{

@@ -12,7 +12,7 @@ cDynamicMovingPlatformHorSingle::~cDynamicMovingPlatformHorSingle()
 {
 }
 
-void cDynamicMovingPlatformHorSingle::UpdateTrajectory(float fElapsedTime)
+void cDynamicMovingPlatformHorSingle::Behaviour(float fElapsedTime, float playerX, float playerY)
 {
 	if (!bTriggerable || bTriggered)
 	{

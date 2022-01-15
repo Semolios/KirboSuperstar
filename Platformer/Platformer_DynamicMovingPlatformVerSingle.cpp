@@ -12,7 +12,7 @@ cDynamicMovingPlatformVerSingle::~cDynamicMovingPlatformVerSingle()
 {
 }
 
-void cDynamicMovingPlatformVerSingle::UpdateTrajectory(float fElapsedTime)
+void cDynamicMovingPlatformVerSingle::Behaviour(float fElapsedTime, float playerX, float playerY)
 {
 	if (!bTriggerable || bTriggered)
 	{

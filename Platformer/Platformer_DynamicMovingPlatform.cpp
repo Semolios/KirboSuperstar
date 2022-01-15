@@ -20,7 +20,7 @@ void cDynamicMovingPlatform::DrawSelf(float ox, float oy)
 	engine->SetPixelMode(olc::Pixel::ALPHA);
 	olc::GFX2D::Transform2D t;
 	t.Translate(-fDynWidth / 2.0f, -fDynHeight / 2.0f);
-	t.Translate((px - ox + ((fDynWidth / 64.0f) / 2.0f)) * 64.0f, (py - oy + ((fDynHeight / 64.0f) / 2.0f)) * 64.0f);
+	t.Translate((px - ox + (GetNormalizedWidth() / 2.0f)) * engine->GetTileWidth(), (py - oy + (GetNormalizedHeight() / 2.0f)) * engine->GetTileHeight());
 	olc::GFX2D::DrawSprite(mapStates[nCurrentFrame], t);
 	engine->SetPixelMode(olc::Pixel::NORMAL);
 }
@@ -42,7 +42,7 @@ void cDynamicMovingPlatform::Update(float fElapsedTime, float playerX, float pla
 		fDynHeight = mapStates[nCurrentFrame]->height;
 	}
 
-	UpdateTrajectory(fElapsedTime);
+	Behaviour(fElapsedTime, playerX, playerY);
 }
 
 void cDynamicMovingPlatform::UpdateHitbox(float cameraOffsetX, float cameraOffsetY)
@@ -120,11 +120,122 @@ bool cDynamicMovingPlatform::TopCollisionOneCorner(float CornerX, float cornerY)
 	return (dynCorner.x >= ptfmTopLeftCorner.x) && (dynCorner.x <= ptfmBotRightCorner.x) && (dynCorner.y >= ptfmTopLeftCorner.y) && (dynCorner.y <= ptfmBotRightCorner.y);
 }
 
+bool cDynamicMovingPlatform::LeftCollision(float topCornerY, float botCornerY, float rightSpriteX)
+{
+	olc::vf2d playerTopCorner(rightSpriteX, topCornerY);
+	olc::vf2d playerBotCorner(rightSpriteX, botCornerY);
+
+	olc::vf2d ptfmTopLeftCorner(px - fHitboxThickness, py);
+	olc::vf2d ptfmBotRightCorner(px + fHitboxThickness, py + (fDynHeight / (float)engine->GetTileHeight()));
+
+	return bSolidLeft && (
+		((playerTopCorner.x >= ptfmTopLeftCorner.x) &&
+		 (playerTopCorner.x <= ptfmBotRightCorner.x) &&
+		 (playerTopCorner.y >= ptfmTopLeftCorner.y) &&
+		 (playerTopCorner.y <= ptfmBotRightCorner.y)) ||
+		((playerBotCorner.x >= ptfmTopLeftCorner.x) &&
+		 (playerBotCorner.x <= ptfmBotRightCorner.x) &&
+		 (playerBotCorner.y >= ptfmTopLeftCorner.y) &&
+		 (playerBotCorner.y <= ptfmBotRightCorner.y))
+		);
+}
+
+bool cDynamicMovingPlatform::LeftCollisionWithLag(float topCornerY, float botCornerY, float fPlayerPosX, float fNewPlayerPosX)
+{
+	olc::vf2d ptfmTopLeftCorner(px - fHitboxThickness, py);
+	olc::vf2d ptfmBotRightCorner(px + fHitboxThickness, py + (fDynHeight / (float)engine->GetTileHeight()));
+
+	return bSolidTop && (
+		((fPlayerPosX <= ptfmTopLeftCorner.x) &&
+		 (fNewPlayerPosX >= ptfmBotRightCorner.x) &&
+		 (topCornerY >= ptfmTopLeftCorner.y) &&
+		 (topCornerY <= ptfmBotRightCorner.y)) ||
+		((fPlayerPosX <= ptfmTopLeftCorner.x) &&
+		 (fNewPlayerPosX >= ptfmBotRightCorner.x) &&
+		 (botCornerY >= ptfmTopLeftCorner.y) &&
+		 (botCornerY <= ptfmBotRightCorner.y))
+		);
+}
+
+bool cDynamicMovingPlatform::LeftCollisionOneCorner(float CornerX, float cornerY)
+{
+	olc::vf2d dynCorner(CornerX, cornerY);
+
+	olc::vf2d ptfmTopLeftCorner(px - fHitboxThickness, py);
+	olc::vf2d ptfmBotRightCorner(px + fHitboxThickness, py + (fDynHeight / (float)engine->GetTileHeight()));
+
+	return (dynCorner.x >= ptfmTopLeftCorner.x) && (dynCorner.x <= ptfmBotRightCorner.x) && (dynCorner.y >= ptfmTopLeftCorner.y) && (dynCorner.y <= ptfmBotRightCorner.y);
+}
+
+bool cDynamicMovingPlatform::RightCollision(float topCornerY, float botCornerY, float leftSpriteX)
+{
+	olc::vf2d playerTopCorner(leftSpriteX, topCornerY);
+	olc::vf2d playerBotCorner(leftSpriteX, botCornerY);
+
+	olc::vf2d ptfmTopLeftCorner(px + (fDynWidth / (float)engine->GetTileWidth()) - fHitboxThickness, py);
+	olc::vf2d ptfmBotRightCorner(px + (fDynWidth / (float)engine->GetTileWidth()) + fHitboxThickness, py + (fDynHeight / (float)engine->GetTileHeight()));
+
+	return bSolidRight && (
+		((playerTopCorner.x >= ptfmTopLeftCorner.x) &&
+		 (playerTopCorner.x <= ptfmBotRightCorner.x) &&
+		 (playerTopCorner.y >= ptfmTopLeftCorner.y) &&
+		 (playerTopCorner.y <= ptfmBotRightCorner.y)) ||
+		((playerBotCorner.x >= ptfmTopLeftCorner.x) &&
+		 (playerBotCorner.x <= ptfmBotRightCorner.x) &&
+		 (playerBotCorner.y >= ptfmTopLeftCorner.y) &&
+		 (playerBotCorner.y <= ptfmBotRightCorner.y))
+		);
+}
+
+bool cDynamicMovingPlatform::RightCollisionWithLag(float topCornerY, float botCornerY, float fPlayerPosX, float fNewPlayerPosX)
+{
+	olc::vf2d ptfmTopLeftCorner(px + (fDynWidth / (float)engine->GetTileWidth()) - fHitboxThickness, py);
+	olc::vf2d ptfmBotRightCorner(px + (fDynWidth / (float)engine->GetTileWidth()) + fHitboxThickness, py + (fDynHeight / (float)engine->GetTileHeight()));
+
+	return bSolidTop && (
+		((fPlayerPosX >= ptfmTopLeftCorner.x) &&
+		 (fNewPlayerPosX <= ptfmBotRightCorner.x) &&
+		 (topCornerY >= ptfmTopLeftCorner.y) &&
+		 (topCornerY <= ptfmBotRightCorner.y)) ||
+		((fPlayerPosX >= ptfmTopLeftCorner.x) &&
+		 (fNewPlayerPosX <= ptfmBotRightCorner.x) &&
+		 (botCornerY >= ptfmTopLeftCorner.y) &&
+		 (botCornerY <= ptfmBotRightCorner.y))
+		);
+}
+
+bool cDynamicMovingPlatform::RightCollisionOneCorner(float CornerX, float cornerY)
+{
+	olc::vf2d dynCorner(CornerX, cornerY);
+
+	olc::vf2d ptfmTopLeftCorner(px + (fDynWidth / (float)engine->GetTileWidth()) - fHitboxThickness, py);
+	olc::vf2d ptfmBotRightCorner(px + (fDynWidth / (float)engine->GetTileWidth()) + fHitboxThickness, py + (fDynHeight / (float)engine->GetTileHeight()));
+
+	return (dynCorner.x >= ptfmTopLeftCorner.x) && (dynCorner.x <= ptfmBotRightCorner.x) && (dynCorner.y >= ptfmTopLeftCorner.y) && (dynCorner.y <= ptfmBotRightCorner.y);
+}
+
+bool cDynamicMovingPlatform::BotCollision(float leftCornerX, float rightCornerX, float topSpriteY)
+{
+	return false;
+}
+
+bool cDynamicMovingPlatform::BotCollisionWithLag(float leftCornerX, float rightCornerX, float fPlayerPosY, float fNewPlayerPosY)
+{
+	return false;
+}
+
+bool cDynamicMovingPlatform::BotCollisionOneCorner(float CornerX, float cornerY)
+{
+	return false;
+}
+
 std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMovingPlatformsSprites()
 {
 	std::map<std::string, std::vector<olc::Sprite*>> mapPlatforms;
 
 	mapPlatforms["basic"].push_back(new olc::Sprite("assets/gfx/basicPlatform.png"));
+
+	mapPlatforms["wall"].push_back(new olc::Sprite("assets/gfx/wall.png"));
 
 	return mapPlatforms;
 }
@@ -139,7 +250,17 @@ void cDynamicMovingPlatform::UntriggerMovement()
 	bTriggered = false;
 }
 
-void cDynamicMovingPlatform::UpdateTrajectory(float fElapsedTime)
+float cDynamicMovingPlatform::GetNormalizedWidth()
+{
+	return fDynWidth / engine->GetTileWidth();
+}
+
+float cDynamicMovingPlatform::GetNormalizedHeight()
+{
+	return fDynHeight / engine->GetTileHeight();
+}
+
+void cDynamicMovingPlatform::Behaviour(float fElapsedTime, float playerX, float playerY)
 {
 	// Depends on the type of platform
 	// 	   EXAMPLE FOR A CIRCULAR MOVEMENT PLATFORM

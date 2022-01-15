@@ -287,7 +287,15 @@ bool cDynamicCreatureBladeKnight::RightHole()
 
 bool cDynamicCreatureBladeKnight::RightWall()
 {
-	return engine->IsSolidTile(level->GetTile(px + 2, py)) || engine->IsSolidTile(level->GetTile(px + 1, py));
+	bool mobileWall = false;
+	for (auto& ptfm : engine->GetClosePlatforms(px, py))
+	{
+		if (ptfm->LeftCollision(py, py + 1, px + 2))
+		{
+			mobileWall = true;
+		}
+	}
+	return engine->IsSolidTile(level->GetTile(px + 2, py)) || engine->IsSolidTile(level->GetTile(px + 1, py)) || mobileWall;
 }
 
 bool cDynamicCreatureBladeKnight::LeftObstacle()
@@ -302,7 +310,15 @@ bool cDynamicCreatureBladeKnight::LeftHole()
 
 bool cDynamicCreatureBladeKnight::LeftWall()
 {
-	return engine->IsSolidTile(level->GetTile(px - 1, py)) || engine->IsSolidTile(level->GetTile(px, py));
+	bool mobileWall = false;
+	for (auto& ptfm : engine->GetClosePlatforms(px, py))
+	{
+		if (ptfm->RightCollision(py, py + 1, px - 1))
+		{
+			mobileWall = true;
+		}
+	}
+	return engine->IsSolidTile(level->GetTile(px - 1, py)) || engine->IsSolidTile(level->GetTile(px, py)) || mobileWall;
 }
 
 void cDynamicCreatureBladeKnight::ChangeState(AI_STATE state)

@@ -175,6 +175,7 @@
     <ClCompile Include="Platformer_DynamicProjectile.cpp" />
     <ClCompile Include="Platformer_DynamicProjectileBoomerang.cpp" />
     <ClCompile Include="Platformer_DynamicProjectileOrbital.cpp" />
+    <ClCompile Include="Platformer_DynamicWall.cpp" />
     <ClCompile Include="Platformer_EndScreen.cpp" />
     <ClCompile Include="Platformer_Engine.cpp" />
     <ClCompile Include="Platformer_HUD.cpp" />
@@ -225,6 +226,7 @@
     <ClInclude Include="Platformer_DynamicProjectile.h" />
     <ClInclude Include="Platformer_DynamicProjectileBoomerang.h" />
     <ClInclude Include="Platformer_DynamicProjectileOrbital.h" />
+    <ClInclude Include="Platformer_DynamicWall.h" />
     <ClInclude Include="Platformer_EndScreen.h" />
     <ClInclude Include="Platformer_Engine.h" />
     <ClInclude Include="Platformer_HUD.h" />

@@ -11,7 +11,7 @@ public:
 	cDynamicMovingPlatformHorSine(float ox, float oy, std::vector<olc::Sprite*> map, float A, float F, std::wstring trigger);
 	virtual ~cDynamicMovingPlatformHorSine();
 
-	void UpdateTrajectory(float fElapsedTime);
+	void Behaviour(float fElapsedTime, float playerX, float playerY);
 
 protected:
 	float fTheta = 0.0f;
