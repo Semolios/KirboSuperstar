@@ -192,6 +192,10 @@ bool cLevel::PopulatePlatforms(std::vector<cDynamicMovingPlatform*>& vecPtfm, st
 			{
 				engine->AddWall(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), parts[4], parts[5], parts[6], std::stoi(parts[7]), std::stoi(parts[8]));
 			}
+			if (parts[0] == L"Ceiling")
+			{
+				engine->AddCeiling(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), parts[4], parts[5]);
+			}
 			// TODO
 		}
 	}

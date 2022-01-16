@@ -194,6 +194,17 @@ void cDynamicCreature::Collision(float fElapsedTime)
 				fNewObjectPosY = (int)fNewObjectPosY + 1;
 				vy = 0;
 			}
+
+			// Moving platforms collision
+			for (auto& ptfm : engine->GetClosePlatforms(fNewObjectPosX, fNewObjectPosY))
+			{
+				if (ptfm->BotCollision(fNewObjectPosX + fBorder, fNewObjectPosX + (fDynWidth / engine->GetTileWidth()) - fBorder, fNewObjectPosY) ||
+					ptfm->BotCollisionWithLag(fNewObjectPosX + fBorder, fNewObjectPosX + (fDynWidth / engine->GetTileWidth()) - fBorder, py, fNewObjectPosY))
+				{
+					fNewObjectPosY = ptfm->GetPY() + ptfm->GetNormalizedHeight();
+					vy = 0;
+				}
+			}
 		}
 		else // Moving Down
 		{

@@ -120,6 +120,12 @@ public:
 	void DecreaseVelocities(float dvx, float dvy);
 	void SetVelocities(float vx, float vy);
 	void Collisions(float fElapsedTime, cLevel* lvl);
+	void CheckSolidFloor(cLevel* lvl, float fNewPlayerPosX, float& fNewPlayerPosY);
+	void CheckDynamicFloor(float& fNewPlayerPosX, float& fNewPlayerPosY, float fElapsedTime, cLevel* lvl);
+	void CheckSolidCeiling(cLevel* lvl, float fNewPlayerPosX, float& fNewPlayerPosY);
+	void CheckDynamicCeiling(float fNewPlayerPosX, float& fNewPlayerPosY, cLevel* lvl);
+	bool DynamicFloor(float fNewPlayerPosX, float fNewPlayerPosY);
+	bool DynamicCeiling(float fNewPlayerPosX, float fNewPlayerPosY);
 	bool SemiSolidFloor(cLevel* lvl, float fNewPlayerPosX, float fNewPlayerPosY);
 	bool SolidFloor(cLevel* lvl, float fNewPlayerPosX, float fNewPlayerPosY);
 	bool Ceiling(cLevel* lvl, float fNewPlayerPosX, float fNewPlayerPosY);

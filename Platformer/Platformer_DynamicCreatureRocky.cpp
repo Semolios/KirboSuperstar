@@ -93,7 +93,7 @@ void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float p
 
 			if (engine->IsSolidTile(level->GetTile(px + cfRockyLowerBoundary, py - 0.01f)) ||
 				engine->IsSolidTile(level->GetTile(px + cfRockyUpperBoundary, py - 0.01f)) ||
-				py < 1)
+				DynamicCeiling() || py < 1)
 			{
 				vy = 0;
 				nAINextState = AI_WAITING;
@@ -103,4 +103,17 @@ void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float p
 	}
 
 	nAIState = nAINextState;
+}
+
+bool cDynamicCreatureRocky::DynamicCeiling()
+{
+	// Moving platforms collision
+	for (auto& ptfm : engine->GetClosePlatforms(px, py))
+	{
+		if (ptfm->BotCollision(px, px + (fDynWidth / engine->GetTileWidth()), py))
+		{
+			return true;
+		}
+	}
+	return false;
 }

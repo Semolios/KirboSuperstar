@@ -32,6 +32,9 @@ protected:
 	bool bSolidLeft = false;
 	bool bSolidRight = false;
 
+	cDynamicMovingPlatform* linkedPtfm;
+	bool bLinkedToPreviousPtfm;
+
 public:
 	static OneLoneCoder_Platformer* engine;
 
@@ -66,6 +69,8 @@ public:
 	float GetNormalizedHeight();
 
 	virtual void Behaviour(float fElapsedTime, float playerX, float playerY);
+	virtual void LinkPtfm(cDynamicMovingPlatform* ptfm);
+	virtual bool IsLinkedToPreviousPtfm();
 };
 
 #endif // !DEF_MOVING_PLATFORM

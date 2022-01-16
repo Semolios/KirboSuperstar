@@ -478,7 +478,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		object->Update(fElapsedTime, player->GetPlayerPosX(), player->GetPlayerPosY());
 	}
 
-	player->Collisions(fElapsedTime, level);
+	if (!player->IsDead())
+		player->Collisions(fElapsedTime, level);
 
 	camera->SetPositions(player->GetPlayerPosX(), player->GetPlayerPosY());
 
@@ -916,6 +917,16 @@ void OneLoneCoder_Platformer::AddVerticalSinglePtfm(float ox, float oy, std::str
 void OneLoneCoder_Platformer::AddWall(float ox, float oy, std::string sprite, std::wstring leftSolid, std::wstring rightSolid, std::wstring trigger, float trgX, float trgY)
 {
 	cDynamicMovingPlatform* ptfm = new cDynamicWall(ox, oy, mapPlatforms[sprite], leftSolid, rightSolid, trigger, trgX, trgY);
+	vecPlatforms.push_back(ptfm);
+}
+
+void OneLoneCoder_Platformer::AddCeiling(float ox, float oy, std::string sprite, std::wstring topSolid, std::wstring linkToPreviousPtfm)
+{
+	cDynamicMovingPlatform* ptfm = new cDynamicCeiling(ox, oy, mapPlatforms[sprite], topSolid, linkToPreviousPtfm);
+	if (ptfm->IsLinkedToPreviousPtfm())
+	{
+		ptfm->LinkPtfm(vecPlatforms.front());
+	}
 	vecPlatforms.push_back(ptfm);
 }
 

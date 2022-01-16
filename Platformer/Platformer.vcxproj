@@ -155,6 +155,7 @@
     <ClCompile Include="Platformer_ControlsMenu.cpp" />
     <ClCompile Include="Platformer_CreditsMenu.cpp" />
     <ClCompile Include="Platformer_Dynamic.cpp" />
+    <ClCompile Include="Platformer_DynamicCeiling.cpp" />
     <ClCompile Include="Platformer_DynamicCreature.cpp" />
     <ClCompile Include="Platformer_DynamicCreatureBladeKnight.cpp" />
     <ClCompile Include="Platformer_DynamicCreatureBomber.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="Platformer_ControlsMenu.h" />
     <ClInclude Include="Platformer_CreditsMenu.h" />
     <ClInclude Include="Platformer_Dynamic.h" />
+    <ClInclude Include="Platformer_DynamicCeiling.h" />
     <ClInclude Include="Platformer_DynamicCreature.h" />
     <ClInclude Include="Platformer_DynamicCreatureBladeKnight.h" />
     <ClInclude Include="Platformer_DynamicCreatureBomber.h" />

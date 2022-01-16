@@ -12,6 +12,7 @@
 #include "Platformer_ControlsMenu.h"
 #include "Platformer_CreditsMenu.h"
 #include "Platformer_Dynamic.h"
+#include "Platformer_DynamicCeiling.h"
 #include "Platformer_DynamicCreature.h"
 #include "Platformer_DynamicMovingPlatform.h"
 #include "Platformer_DynamicMovingPlatformHorSine.h"
@@ -297,6 +298,7 @@ public:
 	void AddHorizontalSinglePtfm(float ox, float oy, std::string sprite, float tx, float vx, std::wstring trigger);
 	void AddVerticalSinglePtfm(float ox, float oy, std::string sprite, float ty, float vy, std::wstring trigger);
 	void AddWall(float ox, float oy, std::string sprite, std::wstring leftSolid, std::wstring rightSolid, std::wstring trigger, float trgX, float trgY);
+	void AddCeiling(float ox, float oy, std::string sprite, std::wstring topSolid, std::wstring linkToPreviousPtfm);
 	std::vector<cDynamicMovingPlatform*> GetClosePlatforms(float px, float py);
 	olc::Sprite* GetDoorSwitch(bool on);
 
