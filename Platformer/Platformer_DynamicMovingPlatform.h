@@ -32,6 +32,9 @@ protected:
 	bool bSolidLeft = false;
 	bool bSolidRight = false;
 
+	float fPrevPosX;
+	float fPrevPosY;
+
 	cDynamicMovingPlatform* linkedPtfm;
 	bool bLinkedToPreviousPtfm;
 
