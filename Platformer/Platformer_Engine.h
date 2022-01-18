@@ -14,6 +14,7 @@
 #include "Platformer_Dynamic.h"
 #include "Platformer_DynamicCeiling.h"
 #include "Platformer_DynamicCreature.h"
+#include "Platformer_DynamicHorizontalCrusher.h"
 #include "Platformer_DynamicMovingPlatform.h"
 #include "Platformer_DynamicMovingPlatformHorSine.h"
 #include "Platformer_DynamicMovingPlatformHorSingle.h"
@@ -132,6 +133,7 @@ private:
 	int sndKingDDDAirAtkHammer;
 	int sndItemPicked;
 	int sndRockyFall;
+	int sndBoom;
 
 	// engine Properties
 	cPlayer* player;
@@ -299,6 +301,7 @@ public:
 	void AddVerticalSinglePtfm(float ox, float oy, std::string sprite, float ty, float vy, std::wstring trigger);
 	void AddWall(float ox, float oy, std::string sprite, std::wstring leftSolid, std::wstring rightSolid, std::wstring trigger, float trgX, float trgY);
 	void AddCeiling(float ox, float oy, std::string sprite, std::wstring topSolid, std::wstring linkToPreviousPtfm);
+	void AddHorizontalCrusher(float ox, float oy, std::string sprite, std::wstring side, float waitTime);
 	std::vector<cDynamicMovingPlatform*> GetClosePlatforms(float px, float py);
 	olc::Sprite* GetDoorSwitch(bool on);
 

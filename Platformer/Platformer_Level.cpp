@@ -196,6 +196,10 @@ bool cLevel::PopulatePlatforms(std::vector<cDynamicMovingPlatform*>& vecPtfm, st
 			{
 				engine->AddCeiling(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), parts[4], parts[5]);
 			}
+			if (parts[0] == L"HorizontalCrusher")
+			{
+				engine->AddHorizontalCrusher(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), parts[4], std::stoi(parts[5]));
+			}
 			// TODO
 		}
 	}

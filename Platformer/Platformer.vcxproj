@@ -155,6 +155,7 @@
     <ClCompile Include="Platformer_ControlsMenu.cpp" />
     <ClCompile Include="Platformer_CreditsMenu.cpp" />
     <ClCompile Include="Platformer_Dynamic.cpp" />
+    <ClCompile Include="Platformer_DynamicBloc.cpp" />
     <ClCompile Include="Platformer_DynamicCeiling.cpp" />
     <ClCompile Include="Platformer_DynamicCreature.cpp" />
     <ClCompile Include="Platformer_DynamicCreatureBladeKnight.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="Platformer_DynamicCreatureSSTierMetaKnight.cpp" />
     <ClCompile Include="Platformer_DynamicCreatureWaddleDee.cpp" />
     <ClCompile Include="Platformer_DynamicCreatureWhispyWood.cpp" />
+    <ClCompile Include="Platformer_DynamicHorizontalCrusher.cpp" />
     <ClCompile Include="Platformer_DynamicMovingPlatform.cpp" />
     <ClCompile Include="Platformer_DynamicMovingPlatformHorSingle.cpp" />
     <ClCompile Include="Platformer_DynamicMovingPlatformVerSine.cpp" />
@@ -207,6 +209,7 @@
     <ClInclude Include="Platformer_ControlsMenu.h" />
     <ClInclude Include="Platformer_CreditsMenu.h" />
     <ClInclude Include="Platformer_Dynamic.h" />
+    <ClInclude Include="Platformer_DynamicBloc.h" />
     <ClInclude Include="Platformer_DynamicCeiling.h" />
     <ClInclude Include="Platformer_DynamicCreature.h" />
     <ClInclude Include="Platformer_DynamicCreatureBladeKnight.h" />
@@ -221,6 +224,7 @@
     <ClInclude Include="Platformer_DynamicCreatureSSTierMetaKnight.h" />
     <ClInclude Include="Platformer_DynamicCreatureWaddleDee.h" />
     <ClInclude Include="Platformer_DynamicCreatureWhispyWood.h" />
+    <ClInclude Include="Platformer_DynamicHorizontalCrusher.h" />
     <ClInclude Include="Platformer_DynamicMovingPlatform.h" />
     <ClInclude Include="Platformer_DynamicMovingPlatformHorSingle.h" />
     <ClInclude Include="Platformer_DynamicMovingPlatformVerSine.h" />

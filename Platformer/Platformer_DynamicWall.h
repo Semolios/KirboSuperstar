@@ -19,7 +19,7 @@ public:
 protected:
 	const float cfTriggerDist = 0.5f;
 	const float cfOpeningSpeed = -2.0f;
-	float originY;
+	float fOriginY;
 	float fTriggerX;
 	float fTriggerY;
 };

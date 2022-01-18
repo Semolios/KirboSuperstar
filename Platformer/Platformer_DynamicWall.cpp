@@ -14,7 +14,7 @@ cDynamicWall::cDynamicWall(float ox, float oy, std::vector<olc::Sprite*> map, st
 	fTriggerX = trgX;
 	fTriggerY = trgY;
 
-	originY = oy;
+	fOriginY = oy;
 }
 
 cDynamicWall::~cDynamicWall()
@@ -38,7 +38,7 @@ void cDynamicWall::Behaviour(float fElapsedTime, float playerX, float playerY)
 
 	if (bTriggered)
 	{
-		if (fabs(py - originY) <= (mapStates[nCurrentFrame]->height / 64.0f))
+		if (fabs(py - fOriginY) <= (mapStates[nCurrentFrame]->height / 64.0f))
 		{
 			vy = cfOpeningSpeed;
 		}

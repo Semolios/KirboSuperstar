@@ -245,6 +245,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			cDynamicCreatureSSTierMetaKnight::engine = this;
 			cDynamicCreatureWaddleDee::engine = this;
 			cDynamicCreatureWhispyWood::engine = this;
+			cDynamicHorizontalCrusher::engine = this;
 			cDynamicMovingPlatform::engine = this;
 			cDynamicProjectile::engine = this;
 			cDynamicWall::engine = this;
@@ -345,6 +346,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			AddSharedSound("kingDDDAirAtkHammer", sndKingDDDAirAtkHammer, "assets/snd/kingDDDAirAtkHammer.wav");
 			AddSharedSound("itemPicked", sndItemPicked, "assets/snd/itemPicked.wav");
 			AddSharedSound("rockyFall", sndRockyFall, "assets/snd/rockyFall.wav");
+			AddSharedSound("boom", sndBoom, "assets/snd/boom.wav");
 
 			UpdateProgressBar("Loading 99.9999999999999");
 
@@ -927,6 +929,12 @@ void OneLoneCoder_Platformer::AddCeiling(float ox, float oy, std::string sprite,
 	{
 		ptfm->LinkPtfm(vecPlatforms.front());
 	}
+	vecPlatforms.push_back(ptfm);
+}
+
+void OneLoneCoder_Platformer::AddHorizontalCrusher(float ox, float oy, std::string sprite, std::wstring side, float waitTime)
+{
+	cDynamicMovingPlatform* ptfm = new cDynamicHorizontalCrusher(ox, oy, mapPlatforms[sprite], side, waitTime);
 	vecPlatforms.push_back(ptfm);
 }
 
