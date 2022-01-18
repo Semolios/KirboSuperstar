@@ -170,6 +170,7 @@
     <ClCompile Include="Platformer_DynamicCreatureSSTierMetaKnight.cpp" />
     <ClCompile Include="Platformer_DynamicCreatureWaddleDee.cpp" />
     <ClCompile Include="Platformer_DynamicCreatureWhispyWood.cpp" />
+    <ClCompile Include="Platformer_DynamicHarmfulBloc.cpp" />
     <ClCompile Include="Platformer_DynamicHorizontalCrusher.cpp" />
     <ClCompile Include="Platformer_DynamicMovingPlatform.cpp" />
     <ClCompile Include="Platformer_DynamicMovingPlatformHorSingle.cpp" />
@@ -225,6 +226,7 @@
     <ClInclude Include="Platformer_DynamicCreatureSSTierMetaKnight.h" />
     <ClInclude Include="Platformer_DynamicCreatureWaddleDee.h" />
     <ClInclude Include="Platformer_DynamicCreatureWhispyWood.h" />
+    <ClInclude Include="Platformer_DynamicHarmfulBloc.h" />
     <ClInclude Include="Platformer_DynamicHorizontalCrusher.h" />
     <ClInclude Include="Platformer_DynamicMovingPlatform.h" />
     <ClInclude Include="Platformer_DynamicMovingPlatformHorSingle.h" />

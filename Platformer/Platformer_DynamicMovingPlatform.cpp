@@ -8,6 +8,7 @@ cDynamicMovingPlatform::cDynamicMovingPlatform(float ox, float oy, std::vector<o
 	px = ox;
 	py = oy;
 	mapStates = map;
+	bFriendly = true;
 }
 
 cDynamicMovingPlatform::~cDynamicMovingPlatform()
@@ -274,6 +275,8 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["ceiling"].push_back(new olc::Sprite("assets/gfx/ceiling.png"));
 
 	mapPlatforms["downCrusher"].push_back(new olc::Sprite("assets/gfx/downCrusher.png"));
+
+	mapPlatforms["spikeBloc"].push_back(new olc::Sprite("assets/gfx/spikeBloc.png"));
 
 	return mapPlatforms;
 }

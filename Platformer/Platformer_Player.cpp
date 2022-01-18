@@ -617,6 +617,8 @@ void cPlayer::CheckDynamicFloor(float& fNewPlayerPosX, float& fNewPlayerPosY, fl
 		if (ptfm->TopCollision(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f) ||
 			ptfm->TopCollisionWithLag(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY + 1.0f, fNewPlayerPosY + 1.0f))
 		{
+			HarmfulBloc(ptfm);
+
 			if (ptfm->GetVY() <= fPlayerVelY)
 			{
 				fNewPlayerPosY = ptfm->GetPY() - 1.0f;
@@ -679,6 +681,8 @@ void cPlayer::CheckDynamicCeiling(float fNewPlayerPosX, float& fNewPlayerPosY, c
 		if (ptfm->BotCollision(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY) ||
 			ptfm->BotCollisionWithLag(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY, fNewPlayerPosY))
 		{
+			HarmfulBloc(ptfm);
+
 			if (ptfm->GetVY() >= fPlayerVelY)
 				fNewPlayerPosY = ptfm->GetPY() + ptfm->GetNormalizedHeight();
 
@@ -780,6 +784,8 @@ void cPlayer::CheckRightWall(cLevel* lvl, float& fNewPlayerPosX)
 				Crushed();
 			}
 
+			HarmfulBloc(ptfm);
+
 			if (ptfm->GetVX() <= fPlayerVelX)
 			{
 				fNewPlayerPosX = ptfm->GetPX() - 1.0f;
@@ -833,11 +839,21 @@ void cPlayer::CheckLeftWall(cLevel* lvl, float& fNewPlayerPosX)
 				Crushed();
 			}
 
+			HarmfulBloc(ptfm);
+
 			if (ptfm->GetVX() >= fPlayerVelX)
 			{
 				fNewPlayerPosX = ptfm->GetPX() + ptfm->GetNormalizedWidth();
 			}
 		}
+	}
+}
+
+void cPlayer::HarmfulBloc(cDynamicMovingPlatform*& ptfm)
+{
+	if (!ptfm->IsFriendly() && bIsPlayerAttackable)
+	{
+		Damage(ptfm);
 	}
 }
 

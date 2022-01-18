@@ -138,6 +138,7 @@ public:
 	bool LeftRightCrushed(cDynamicMovingPlatform*& ptfm);
 	bool DynamicLeftWall(float fNewPlayerPosX);
 	void CheckLeftWall(cLevel* lvl, float& fNewPlayerPosX);
+	void HarmfulBloc(cDynamicMovingPlatform*& ptfm);
 	bool RightLeftCrushed(cDynamicMovingPlatform*& ptfm);
 	bool DynamicRightWall(float fNewPlayerPosX);
 	float GetPlayerPosX();
