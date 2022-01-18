@@ -23,6 +23,7 @@
 #include "Platformer_DynamicProjectile.h"
 #include "Platformer_DynamicProjectileBoomerang.h"
 #include "Platformer_DynamicProjectileOrbital.h"
+#include "Platformer_DynamicVerticalCrusher.h"
 #include "Platformer_DynamicWall.h"
 #include "Platformer_EndScreen.h"
 #include "Platformer_Hitbox.h"
@@ -302,6 +303,7 @@ public:
 	void AddWall(float ox, float oy, std::string sprite, std::wstring leftSolid, std::wstring rightSolid, std::wstring trigger, float trgX, float trgY);
 	void AddCeiling(float ox, float oy, std::string sprite, std::wstring topSolid, std::wstring linkToPreviousPtfm);
 	void AddHorizontalCrusher(float ox, float oy, std::string sprite, std::wstring side, float waitTime);
+	void AddVerticalCrusher(float ox, float oy, std::string sprite, std::wstring side, float waitTime);
 	std::vector<cDynamicMovingPlatform*> GetClosePlatforms(float px, float py);
 	olc::Sprite* GetDoorSwitch(bool on);
 

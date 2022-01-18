@@ -38,7 +38,7 @@ void cDynamicHorizontalCrusher::Behaviour(float fElapsedTime, float playerX, flo
 			if (bRight) vx = cfCrushSpeed;
 			if (bLeft) vx = -cfCrushSpeed;
 
-			if (fabs(px - fOriginX) >= (mapStates[nCurrentFrame]->width / 64.0f))
+			if (fabs(px - fOriginX) >= (mapStates[nCurrentFrame]->width / engine->GetTileWidth()))
 			{
 				float fTargetX = playerX - px;
 				float fTargetY = playerY - py;

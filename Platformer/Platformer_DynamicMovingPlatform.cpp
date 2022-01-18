@@ -273,6 +273,8 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 
 	mapPlatforms["ceiling"].push_back(new olc::Sprite("assets/gfx/ceiling.png"));
 
+	mapPlatforms["downCrusher"].push_back(new olc::Sprite("assets/gfx/downCrusher.png"));
+
 	return mapPlatforms;
 }
 

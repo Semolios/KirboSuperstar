@@ -248,6 +248,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			cDynamicHorizontalCrusher::engine = this;
 			cDynamicMovingPlatform::engine = this;
 			cDynamicProjectile::engine = this;
+			cDynamicVerticalCrusher::engine = this;
 			cDynamicWall::engine = this;
 			cItemCandy::engine = this;
 			cItemDamage::engine = this;
@@ -935,6 +936,12 @@ void OneLoneCoder_Platformer::AddCeiling(float ox, float oy, std::string sprite,
 void OneLoneCoder_Platformer::AddHorizontalCrusher(float ox, float oy, std::string sprite, std::wstring side, float waitTime)
 {
 	cDynamicMovingPlatform* ptfm = new cDynamicHorizontalCrusher(ox, oy, mapPlatforms[sprite], side, waitTime);
+	vecPlatforms.push_back(ptfm);
+}
+
+void OneLoneCoder_Platformer::AddVerticalCrusher(float ox, float oy, std::string sprite, std::wstring side, float waitTime)
+{
+	cDynamicMovingPlatform* ptfm = new cDynamicVerticalCrusher(ox, oy, mapPlatforms[sprite], side, waitTime);
 	vecPlatforms.push_back(ptfm);
 }
 
