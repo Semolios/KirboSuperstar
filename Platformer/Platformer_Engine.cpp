@@ -854,7 +854,12 @@ bool OneLoneCoder_Platformer::GetAnyKey()
 bool OneLoneCoder_Platformer::IsSolidTile(wchar_t tile)
 {
 	// List Here all the tiles that are solid
-	return tile == '#' || tile == 'G' || tile == 'B';
+	return tile == '#' || tile == 'G' || tile == 'B' || tile == 'P' || tile == 'H';
+}
+
+bool OneLoneCoder_Platformer::IsBreakableTile(wchar_t tile)
+{
+	return tile == 'B' || tile == 'P' || tile == 'H';
 }
 
 bool OneLoneCoder_Platformer::IsSemiSolidTile(wchar_t tile)

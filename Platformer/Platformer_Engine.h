@@ -288,6 +288,7 @@ public:
 
 	// Level detection functions
 	bool IsSolidTile(wchar_t tile);
+	bool IsBreakableTile(wchar_t tile);
 	bool IsSemiSolidTile(wchar_t tile);
 
 	// Projectiles functions

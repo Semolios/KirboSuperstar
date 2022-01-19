@@ -18,6 +18,7 @@ protected:
 	const float cfMinGlideVX = 0.1;
 
 	std::vector<olc::Sprite*> mapStates;
+	std::vector<olc::vf2d> crossedTiles;
 	std::string soundEffect;
 	std::string bounceSoundEffect;
 	float fSpriteX;
@@ -41,6 +42,9 @@ public:
 	void DrawSelf(float ox, float oy) override;
 	void Update(float fElapsedTime, float playerX, float playerY) override;
 	void Collision(float fElapsedTime, cLevel* level);
+	void CheckBreakableBlocks(cLevel* level, float fNewObjectPosX, float fBorder, float fNewObjectPosY);
+	void BreakTile(cLevel* level, float tileX, float tileY);
+	void ChangeTile(cLevel* level, float tileX, float tileY, wchar_t t);
 	void UpdateHitbox(float cameraOffsetX, float cameraOffsetY) override;
 	void PlaySoundEffect();
 	static std::map<std::string, std::vector<olc::Sprite*>> LoadProjectilesSprites();

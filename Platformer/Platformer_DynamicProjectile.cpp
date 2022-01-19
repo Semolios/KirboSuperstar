@@ -82,6 +82,9 @@ void cDynamicProjectile::Collision(float fElapsedTime, cLevel* level)
 	if (bAffectedByGravity)
 		vy += engine->GetGravityValue() * fElapsedTime;
 
+	if (bFriendly)
+		CheckBreakableBlocks(level, fNewObjectPosX, fBorder, fNewObjectPosY);
+
 	if (bSolidVsMap)
 	{
 		if (vx <= 0) // Moving Left
@@ -152,6 +155,44 @@ void cDynamicProjectile::Collision(float fElapsedTime, cLevel* level)
 
 	px = fNewObjectPosX;
 	py = fNewObjectPosY;
+}
+
+void cDynamicProjectile::CheckBreakableBlocks(cLevel* level, float fNewObjectPosX, float fBorder, float fNewObjectPosY)
+{
+	// TODO utiliser la hitbox
+	BreakTile(level, fNewObjectPosX + fBorder, fNewObjectPosY + fBorder);
+	BreakTile(level, fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()) - fBorder);
+	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + fBorder);
+	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()) - fBorder);
+
+	BreakTile(level, fNewObjectPosX + fBorder, fNewObjectPosY + ((fDynHeight / engine->GetTileHeight()) / 2.0f));
+	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + ((fDynHeight / engine->GetTileHeight()) / 2.0f));
+	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) / 2.0f), fNewObjectPosY + fBorder);
+	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) / 2.0f), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()) - fBorder);
+}
+
+void cDynamicProjectile::BreakTile(cLevel* level, float tileX, float tileY)
+{
+	for (auto& t : crossedTiles)
+	{
+		std::vector<olc::vf2d>::iterator it;
+		olc::vf2d tile((int)tileX, (int)tileY);
+		it = find(crossedTiles.begin(), crossedTiles.end(), tile);
+		if (it != crossedTiles.end())
+			return;
+	}
+
+	if (level->GetTile(tileX, tileY) == L'H') ChangeTile(level, tileX, tileY, L'x');
+	if (level->GetTile(tileX, tileY) == L'P') ChangeTile(level, tileX, tileY, L'H');
+	if (level->GetTile(tileX, tileY) == L'B') ChangeTile(level, tileX, tileY, L'P');
+}
+
+void cDynamicProjectile::ChangeTile(cLevel* level, float tileX, float tileY, wchar_t t)
+{
+	level->SetTile(tileX, tileY, t);
+	olc::vf2d tile((int)tileX, (int)tileY);
+	crossedTiles.push_back(tile);
+	PlaySoundEffect();
 }
 
 void cDynamicProjectile::UpdateHitbox(float cameraOffsetX, float cameraOffsetY)
