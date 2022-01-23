@@ -29,7 +29,7 @@ private:
 	const float cfMaxPlayerFlyingVelX = 5.0f;			// Maximum player horizontal velocity while flying
 	const float cfMaxPlayerFlyingVelY = 5.0f;			// Maximum player vertical velocity while flying
 	const float cfPlayerAccGrdX = 25.0f;				// Acceleration value when on ground
-	const float cfPlayerAccAirX = 15.0f;				// Acceleration value when in the air
+	const float cfPlayerAccAirX = 28.0f;				// Acceleration value when in the air
 	const float cfJumpAcceleration = -8.0f;				// Jump speed
 	const float cfJumpDecelerationRatio = 1.5f;			// Jump Deceleration while holding jump
 	const float cfSlapSpawnT = 1.0f;					// Number of frames to spawn slap attack

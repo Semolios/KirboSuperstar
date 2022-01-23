@@ -281,12 +281,12 @@ void cPlayer::Update(float fElapsedTime)
 	}
 	else
 	{
+		fPlayerVelX += engine->GetDragValue() * fPlayerVelX * fElapsedTime;
 		if (bOnGround)
 		{
 			bFlying = false;
 			engine->StopSample("kirboFly");
 
-			fPlayerVelX += engine->GetDragValue() * fPlayerVelX * fElapsedTime;
 			if (fabs(fPlayerVelX) < cfMinPlayerVelX)
 			{
 				fPlayerVelX = 0.0f;
