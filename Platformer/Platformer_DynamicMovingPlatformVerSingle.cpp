@@ -1,7 +1,7 @@
 #include "Platformer_DynamicMovingPlatformVerSingle.h"
 
-cDynamicMovingPlatformVerSingle::cDynamicMovingPlatformVerSingle(float ox, float oy, std::vector<olc::Sprite*> map, float ty, float vy, std::wstring trigger)
-	: cDynamicMovingPlatform(ox, oy, map)
+cDynamicMovingPlatformVerSingle::cDynamicMovingPlatformVerSingle(float ox, float oy, std::vector<olc::Sprite*> map, std::wstring iced, float ty, float vy, std::wstring trigger)
+	: cDynamicMovingPlatform(ox, oy, map, iced)
 {
 	fTargetY = ty;
 	fPtfmVelY = vy;

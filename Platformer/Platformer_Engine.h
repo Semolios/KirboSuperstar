@@ -48,7 +48,6 @@ public:
 private:
 	// Constant values
 	const float cfGravity = 20.0f;						// Gravity
-	const float cfDrag = -3.0f;							// Drag
 	const float cfStopTimebeforeDeadAnim = 1.5f;		// Stop time before death animation
 	const float cfTimeBeforeWinAnimation = 2.0f;		// Time before animation begins when kirbo kills the boss
 	const float cfBossKilledAnimation = 4.0f;			// Boss killed animation duration
@@ -297,11 +296,11 @@ public:
 	void AddOrbital(float ox, float oy, bool bFriend, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, float cx = 0.0f, float cy = 0.0f, float angrot = 0.0f, std::string sound = "");
 
 	// Platforms functions
-	void AddPlatform(float ox, float oy, std::string sprite);
-	void AddHorizontalSinePtfm(float ox, float oy, std::string sprite, float amplitude, float frequency, std::wstring trigger);
-	void AddVerticalSinePtfm(float ox, float oy, std::string sprite, float amplitude, float frequency, std::wstring trigger);
-	void AddHorizontalSinglePtfm(float ox, float oy, std::string sprite, float tx, float vx, std::wstring trigger);
-	void AddVerticalSinglePtfm(float ox, float oy, std::string sprite, float ty, float vy, std::wstring trigger);
+	void AddPlatform(float ox, float oy, std::string sprite, std::wstring iced);
+	void AddHorizontalSinePtfm(float ox, float oy, std::string sprite, std::wstring iced, float amplitude, float frequency, std::wstring trigger);
+	void AddVerticalSinePtfm(float ox, float oy, std::string sprite, std::wstring iced, float amplitude, float frequency, std::wstring trigger);
+	void AddHorizontalSinglePtfm(float ox, float oy, std::string sprite, std::wstring iced, float tx, float vx, std::wstring trigger);
+	void AddVerticalSinglePtfm(float ox, float oy, std::string sprite, std::wstring iced, float ty, float vy, std::wstring trigger);
 	void AddWall(float ox, float oy, std::string sprite, std::wstring leftSolid, std::wstring rightSolid, std::wstring trigger, float trgX, float trgY);
 	void AddCeiling(float ox, float oy, std::string sprite, std::wstring topSolid, std::wstring linkToPreviousPtfm);
 	void AddHorizontalCrusher(float ox, float oy, std::string sprite, std::wstring side, float waitTime);
@@ -320,7 +319,6 @@ public:
 	bool IsBossKilled();
 	void SetbBossKilled(bool bossKilled);
 	void SetGameState(std::string gameState);
-	float GetDragValue();
 	void UpdateWinTimer(float fElapsedTime);
 	float GetWinTimer();
 	void ResetVariables();

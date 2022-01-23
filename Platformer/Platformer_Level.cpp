@@ -168,25 +168,25 @@ bool cLevel::PopulatePlatforms(std::vector<cDynamicMovingPlatform*>& vecPtfm, st
 			}
 
 			// Populate a basic platform
-			if (parts[0] == L"basic")
+			if (parts[0] == L"Basic")
 			{
-				engine->AddPlatform(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]));
+				engine->AddPlatform(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), parts[4]);
 			}
 			if (parts[0] == L"HorizontalSine")
 			{
-				engine->AddHorizontalSinePtfm(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), std::stoi(parts[4]), std::stoi(parts[5]), parts[6]);
+				engine->AddHorizontalSinePtfm(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), parts[4], std::stoi(parts[5]), std::stoi(parts[6]), parts[7]);
 			}
 			if (parts[0] == L"VerticalSine")
 			{
-				engine->AddVerticalSinePtfm(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), std::stoi(parts[4]), std::stoi(parts[5]), parts[6]);
+				engine->AddVerticalSinePtfm(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), parts[4], std::stoi(parts[5]), std::stoi(parts[6]), parts[7]);
 			}
 			if (parts[0] == L"HorizontalSingle")
 			{
-				engine->AddHorizontalSinglePtfm(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), std::stoi(parts[4]), std::stoi(parts[5]), parts[6]);
+				engine->AddHorizontalSinglePtfm(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), parts[4], std::stoi(parts[5]), std::stoi(parts[6]), parts[7]);
 			}
 			if (parts[0] == L"VerticalSingle")
 			{
-				engine->AddVerticalSinglePtfm(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), std::stoi(parts[4]), std::stoi(parts[5]), parts[6]);
+				engine->AddVerticalSinglePtfm(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), parts[4], std::stoi(parts[5]), std::stoi(parts[6]), parts[7]);
 			}
 			if (parts[0] == L"Wall")
 			{

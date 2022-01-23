@@ -3,12 +3,13 @@
 
 OneLoneCoder_Platformer* cDynamicMovingPlatform::engine = nullptr;
 
-cDynamicMovingPlatform::cDynamicMovingPlatform(float ox, float oy, std::vector<olc::Sprite*> map) : cDynamic("movingPlatform")
+cDynamicMovingPlatform::cDynamicMovingPlatform(float ox, float oy, std::vector<olc::Sprite*> map, std::wstring iced) : cDynamic("movingPlatform")
 {
 	px = ox;
 	py = oy;
 	mapStates = map;
 	bFriendly = true;
+	bIced = (iced == L"1");
 }
 
 cDynamicMovingPlatform::~cDynamicMovingPlatform()
@@ -270,6 +271,8 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 
 	mapPlatforms["basic"].push_back(new olc::Sprite("assets/gfx/basicPlatform.png"));
 
+	mapPlatforms["ice"].push_back(new olc::Sprite("assets/gfx/icePlatform.png"));
+
 	mapPlatforms["wall"].push_back(new olc::Sprite("assets/gfx/wall.png"));
 
 	mapPlatforms["ceiling"].push_back(new olc::Sprite("assets/gfx/ceiling.png"));
@@ -299,6 +302,11 @@ float cDynamicMovingPlatform::GetNormalizedWidth()
 float cDynamicMovingPlatform::GetNormalizedHeight()
 {
 	return fDynHeight / engine->GetTileHeight();
+}
+
+bool cDynamicMovingPlatform::IsIced()
+{
+	return bIced;
 }
 
 void cDynamicMovingPlatform::Behaviour(float fElapsedTime, float playerX, float playerY)

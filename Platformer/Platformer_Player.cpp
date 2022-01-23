@@ -29,10 +29,10 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		{
 			if (!bAttacking && !bVacuuming)
 			{
-				if (lvl->GetTile(fPlayerPosX + 0.5f, fPlayerPosY + 0.5f) == L'w' && bOnGround)
+				if (lvl->GetTile(fPosX + 0.5f, fPosY + 0.5f) == L'w' && bOnGround)
 					engine->SetGameState("GS_LOADBOSSLEVEL");
 
-				fPlayerVelY = -cfPlayerVelY;
+				fVelY = -cfVelY;
 				bFlying = true;
 				animPlayer->ChangeState("flying");
 			}
@@ -42,26 +42,26 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		if (engine->GetKey(olc::Key::DOWN).bHeld || engine->GetController()->GetButton(DOWN).bHeld || engine->GetController()->GetLeftStickY() < -0.5f)
 		{
 			if (bFlying)
-				fPlayerVelY = cfPlayerVelY;
+				fVelY = cfVelY;
 
 			// If player is on semi solid platform, pass through the platform. cheat a little bit, modify the position of the player to cross it
-			if ((engine->IsSemiSolidTile(lvl->GetTile(fPlayerPosX + 0.0f, fPlayerPosY + 1.0f)) ||
-				 engine->IsSemiSolidTile(lvl->GetTile(fPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY + 1.0f))) && bOnGround)
+			if ((engine->IsSemiSolidTile(lvl->GetTile(fPosX + 0.0f, fPosY + 1.0f)) ||
+				 engine->IsSemiSolidTile(lvl->GetTile(fPosX + fCollisionUpperLimit, fPosY + 1.0f))) && bOnGround)
 			{
-				fPlayerPosY += 0.15;
+				fPosY += 0.15;
 			}
 
 			// If player is on Solid Ground, lower the camera
-			if ((engine->IsSolidTile(lvl->GetTile(fPlayerPosX + 0.0f, fPlayerPosY + 1.0f)) ||
-				 engine->IsSolidTile(lvl->GetTile(fPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY + 1.0f))) && bOnGround)
+			if ((engine->IsSolidTile(lvl->GetTile(fPosX + 0.0f, fPosY + 1.0f)) ||
+				 engine->IsSolidTile(lvl->GetTile(fPosX + fCollisionUpperLimit, fPosY + 1.0f))) && bOnGround)
 			{
 				camera->LowerCameraPosition();
 			}
 
 			// Moving platforms collision
-			for (auto& ptfm : engine->GetClosePlatforms(fPlayerPosX, fPlayerPosY))
+			for (auto& ptfm : engine->GetClosePlatforms(fPosX, fPosY))
 			{
-				if (ptfm->TopCollision(fPlayerPosX + fPlayerCollisionLowerLimit, fPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY + 1.0f))
+				if (ptfm->TopCollision(fPosX + fCollisionLowerLimit, fPosX + fCollisionUpperLimit, fPosY + 1.0f))
 				{
 					camera->LowerCameraPosition();
 				}
@@ -81,9 +81,9 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 				engine->PlaySample("kirboWalk", false, true);
 
 				// Init speed by cfMinPlayerVelX + 0.05 or the player won't move when on ground
-				if (fabs(fPlayerVelX) < cfMinPlayerVelX) fPlayerVelX -= (cfMinPlayerVelX + 0.05f);
+				if (fabs(fVelX) < cfMinVelX) fVelX -= (cfMinVelX + 0.05f);
 
-				fPlayerVelX += (bOnGround ? -cfPlayerAccGrdX : -cfPlayerAccAirX) * fElapsedTime;
+				fVelX += (bOnGround ? -fAccGrdX : -fAccAirX) * fElapsedTime;
 				fFaceDir = -1.0f;
 			}
 		}
@@ -97,9 +97,9 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 				engine->PlaySample("kirboWalk", false, true);
 
 				// Init speed by cfMinPlayerVelX + 0.05 or the player won't move when on ground
-				if (fabs(fPlayerVelX) < cfMinPlayerVelX) fPlayerVelX += (cfMinPlayerVelX + 0.05f);
+				if (fabs(fVelX) < cfMinVelX) fVelX += (cfMinVelX + 0.05f);
 
-				fPlayerVelX += (bOnGround ? cfPlayerAccGrdX : cfPlayerAccAirX) * fElapsedTime;
+				fVelX += (bOnGround ? fAccGrdX : fAccAirX) * fElapsedTime;
 				fFaceDir = 1.0f;
 			}
 		}
@@ -124,7 +124,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 				engine->PlaySample("kirboJump");
 				bChargeJump = true;
 			}
-			else if (bDoubleJump && fPlayerVelY > 0)
+			else if (bDoubleJump && fVelY > 0)
 			{
 				engine->PlaySample("kirboJump");
 				bDoubleJump = false;
@@ -135,24 +135,27 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		// The more you hold, the higher you go
 		if (engine->GetKey(olc::Key::SPACE).bHeld || engine->GetController()->GetButton(A).bHeld)
 		{
-			if (bChargeJump)
+			if (!bAttacking && !bVacuuming)
 			{
-				fJumpTimer += fElapsedTime;
-				fPlayerVelY = cfJumpAcceleration - (cfJumpDecelerationRatio * fJumpTimer * cfJumpAcceleration);
-				if (fJumpTimer >= cfJumpTime)
+				if (bChargeJump)
 				{
-					fJumpTimer = 0.0f;
-					bChargeJump = false;
+					fJumpTimer += fElapsedTime;
+					fVelY = cfJumpAcceleration - (cfJumpDecelerationRatio * fJumpTimer * cfJumpAcceleration);
+					if (fJumpTimer >= cfJumpTime)
+					{
+						fJumpTimer = 0.0f;
+						bChargeJump = false;
+					}
 				}
-			}
-			else if (bChargeDoubleJump)
-			{
-				fJumpTimer += fElapsedTime;
-				fPlayerVelY = cfJumpAcceleration - (cfJumpDecelerationRatio * fJumpTimer * cfJumpAcceleration);
-				if (fJumpTimer >= cfDblJumpTime)
+				else if (bChargeDoubleJump)
 				{
-					fJumpTimer = 0.0f;
-					bChargeDoubleJump = false;
+					fJumpTimer += fElapsedTime;
+					fVelY = cfJumpAcceleration - (cfJumpDecelerationRatio * fJumpTimer * cfJumpAcceleration);
+					if (fJumpTimer >= cfDblJumpTime)
+					{
+						fJumpTimer = 0.0f;
+						bChargeDoubleJump = false;
+					}
 				}
 			}
 		}
@@ -265,31 +268,34 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 
 bool cPlayer::CanInteract()
 {
-	return !bPlayerDamaged && !bDead && !bIsGrabbedByEnnemy && !engine->IsBossKilled();
+	return !bDamaged && !bDead && !bIsGrabbedByEnnemy && !engine->IsBossKilled();
 }
 
 void cPlayer::ApplyGravity(float fElapsedTime)
 {
-	fPlayerVelY += engine->GetGravityValue() * fElapsedTime;
+	fVelY += engine->GetGravityValue() * fElapsedTime;
 }
 
 void cPlayer::Update(float fElapsedTime)
 {
 	if (bAttacking && CanInteract())
 	{
-		fPlayerVelX = 0.0f;
+		if (!bOnIcedGround)
+			fVelX = 0.0f;
+		else
+			fVelX += fDrag * fVelX * fElapsedTime;
 	}
 	else
 	{
-		fPlayerVelX += engine->GetDragValue() * fPlayerVelX * fElapsedTime;
+		fVelX += fDrag * fVelX * fElapsedTime;
 		if (bOnGround)
 		{
 			bFlying = false;
 			engine->StopSample("kirboFly");
 
-			if (fabs(fPlayerVelX) < cfMinPlayerVelX)
+			if (fabs(fVelX) < cfMinVelX)
 			{
-				fPlayerVelX = 0.0f;
+				fVelX = 0.0f;
 
 				if (CanInteract())
 					animPlayer->ChangeState("idle");
@@ -308,7 +314,7 @@ void cPlayer::Update(float fElapsedTime)
 				{
 					engine->StopSample("kirboFly");
 
-					if (fPlayerVelY < 0)
+					if (fVelY < 0)
 						animPlayer->ChangeState("jump");
 					else
 						animPlayer->ChangeState("fall");
@@ -342,9 +348,9 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 				if (bCanSpawnProjectile)
 				{
 					// must offset the AOE so it goes from kirbo's hand
-					float fProjectilePosX = fPlayerPosX + (fFaceDir > 0.0f ? 1.0f : -(mapProjectiles["slapAOE"][0]->width / engine->GetTileWidth()));
-					float fProjectilePosY = fPlayerPosY - ((mapProjectiles["slapAOE"][0]->height - engine->GetTileHeight()) / (2 * engine->GetTileHeight()));
-					engine->AddProjectile(fProjectilePosX, fProjectilePosY, true, fFaceDir, 0.0f, cfSlapDuration, "slapAOE", false, cnSlapDmg * nDamageBooster, false, false, 0, true, -3.0f, "slap");
+					float fProjPosX = fPosX + (fFaceDir > 0.0f ? 1.0f : -(mapProjectiles["slapAOE"][0]->width / engine->GetTileWidth()));
+					float fProjPosY = fPosY - ((mapProjectiles["slapAOE"][0]->height - engine->GetTileHeight()) / (2 * engine->GetTileHeight()));
+					engine->AddProjectile(fProjPosX, fProjPosY, true, fFaceDir, 0.0f, cfSlapDuration, "slapAOE", false, cnSlapDmg * nDmgBoost, false, false, 0, true, -3.0f, "slap");
 					bCanSpawnProjectile = false;
 				}
 			}
@@ -363,7 +369,7 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 			{
 				if (bCanSpawnProjectile)
 				{
-					engine->AddProjectile((fPlayerPosX + fFaceDir), fPlayerPosY - 1.0f, true, cfJesusCrossVelX * fFaceDir, cfJesusCrossVelY, cfJesusCrossDuration, "jesuscross", true, cnJesusCrossDmg * nDamageBooster, true);
+					engine->AddProjectile((fPosX + fFaceDir), fPosY - 1.0f, true, cfJesusCrossVelX * fFaceDir, cfJesusCrossVelY, cfJesusCrossDuration, "jesuscross", true, cnJesusCrossDmg * nDmgBoost, true);
 					bCanSpawnProjectile = false;
 				}
 			}
@@ -403,7 +409,7 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 		}
 	}
 
-	if (bPlayerDamaged && !bDead)
+	if (bDamaged && !bDead)
 	{
 		// calculate elapsed time after damage
 		fAnimationTimer += fElapsedTime;
@@ -413,14 +419,14 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 		if (fAnimationTimer >= animPlayer->mapStates[animPlayer->sCurrentState].size() * animPlayer->fTimeBetweenFrames)
 		{
 			fAnimationTimer = 0.0f;
-			bPlayerDamaged = false;
+			bDamaged = false;
 		}
 	}
 
 	if (bDead)
 	{
-		fPlayerVelX = 0.0f;
-		fPlayerVelY = 0.0f;
+		fVelX = 0.0f;
+		fVelY = 0.0f;
 		StopAnyAttack();
 
 		if (fDeadAnimation == 0.0f)
@@ -455,8 +461,8 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 
 	if (engine->IsBossKilled())
 	{
-		fPlayerVelX = 0.0f;
-		fPlayerVelY = 0.0f;
+		fVelX = 0.0f;
+		fVelY = 0.0f;
 		StopAnyAttack();
 
 		engine->UpdateWinTimer(fElapsedTime);
@@ -490,66 +496,66 @@ void cPlayer::StopAnyAttack()
 
 void cPlayer::ClampVelocities()
 {
-	if (fPlayerVelX > cfMaxPlayerVelX)  fPlayerVelX = cfMaxPlayerVelX;
-	if (fPlayerVelX < -cfMaxPlayerVelX) fPlayerVelX = -cfMaxPlayerVelX;
-	if (fPlayerVelY > cfMaxPlayerVelY)  fPlayerVelY = cfMaxPlayerVelY;
-	if (fPlayerVelY < -cfMaxPlayerVelY) fPlayerVelY = -cfMaxPlayerVelY;
+	if (fVelX > cfMaxVelX)  fVelX = cfMaxVelX;
+	if (fVelX < -cfMaxVelX) fVelX = -cfMaxVelX;
+	if (fVelY > cfMaxVelY)  fVelY = cfMaxVelY;
+	if (fVelY < -cfMaxVelY) fVelY = -cfMaxVelY;
 
 	if (bFlying)
 	{
-		if (fPlayerVelX > cfMaxPlayerFlyingVelX)  fPlayerVelX = cfMaxPlayerFlyingVelX;
-		if (fPlayerVelX < -cfMaxPlayerFlyingVelX) fPlayerVelX = -cfMaxPlayerFlyingVelX;
-		if (fPlayerVelY > cfMaxPlayerFlyingVelY)  fPlayerVelY = cfMaxPlayerFlyingVelY;
+		if (fVelX > cfMaxFlyingVelX)  fVelX = cfMaxFlyingVelX;
+		if (fVelX < -cfMaxFlyingVelX) fVelX = -cfMaxFlyingVelX;
+		if (fVelY > cfMaxFlyingVelY)  fVelY = cfMaxFlyingVelY;
 	}
 }
 
 void cPlayer::IncreaseVelocities(float dvx, float dvy)
 {
-	fPlayerVelX += dvx;
-	fPlayerVelY += dvy;
+	fVelX += dvx;
+	fVelY += dvy;
 }
 
 void cPlayer::DecreaseVelocities(float dvx, float dvy)
 {
-	fPlayerVelX -= dvx;
-	fPlayerVelY -= dvy;
+	fVelX -= dvx;
+	fVelY -= dvy;
 }
 
 void cPlayer::SetVelocities(float vx, float vy)
 {
-	fPlayerVelX = vx;
-	fPlayerVelY = vy;
+	fVelX = vx;
+	fVelY = vy;
 }
 
 void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 {
-	float fNewPlayerPosX = fPlayerPosX + fPlayerVelX * fElapsedTime;
-	float fNewPlayerPosY = fPlayerPosY + fPlayerVelY * fElapsedTime;
+	float fNewPosX = fPosX + fVelX * fElapsedTime;
+	float fNewPosY = fPosY + fVelY * fElapsedTime;
 
 	// Check for pickups !
-	if (IsCollectibleItem(lvl->GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 0.0f)))
+	if (IsCollectibleItem(lvl->GetTile(fNewPosX + 0.0f, fNewPosY + 0.0f)))
 	{
-		SelectItem(lvl->GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 0.0f));
-		lvl->SetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 0.0f, L'.');
+		SelectItem(lvl->GetTile(fNewPosX + 0.0f, fNewPosY + 0.0f));
+		lvl->SetTile(fNewPosX + 0.0f, fNewPosY + 0.0f, L'.');
 	}
-	if (IsCollectibleItem(lvl->GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f)))
+	if (IsCollectibleItem(lvl->GetTile(fNewPosX + 0.0f, fNewPosY + 1.0f)))
 	{
-		SelectItem(lvl->GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f));
-		lvl->SetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY + 1.0f, L'.');
+		SelectItem(lvl->GetTile(fNewPosX + 0.0f, fNewPosY + 1.0f));
+		lvl->SetTile(fNewPosX + 0.0f, fNewPosY + 1.0f, L'.');
 	}
-	if (IsCollectibleItem(lvl->GetTile(fNewPlayerPosX + 1.0f, fNewPlayerPosY + 0.0f)))
+	if (IsCollectibleItem(lvl->GetTile(fNewPosX + 1.0f, fNewPosY + 0.0f)))
 	{
-		SelectItem(lvl->GetTile(fNewPlayerPosX + 1.0f, fNewPlayerPosY + 0.0f));
-		lvl->SetTile(fNewPlayerPosX + 1.0f, fNewPlayerPosY + 0.0f, L'.');
+		SelectItem(lvl->GetTile(fNewPosX + 1.0f, fNewPosY + 0.0f));
+		lvl->SetTile(fNewPosX + 1.0f, fNewPosY + 0.0f, L'.');
 	}
-	if (IsCollectibleItem(lvl->GetTile(fNewPlayerPosX + 1.0f, fNewPlayerPosY + 1.0f)))
+	if (IsCollectibleItem(lvl->GetTile(fNewPosX + 1.0f, fNewPosY + 1.0f)))
 	{
-		SelectItem(lvl->GetTile(fNewPlayerPosX + 1.0f, fNewPlayerPosY + 1.0f));
-		lvl->SetTile(fNewPlayerPosX + 1.0f, fNewPlayerPosY + 1.0f, L'.');
+		SelectItem(lvl->GetTile(fNewPosX + 1.0f, fNewPosY + 1.0f));
+		lvl->SetTile(fNewPosX + 1.0f, fNewPosY + 1.0f, L'.');
 	}
 
 	// Check hole
-	if (fPlayerPosY > lvl->GetHeight())
+	if (fPosY > lvl->GetHeight())
 	{
 		if (!bDead)
 			engine->PlaySample("kirboHit");
@@ -557,41 +563,41 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 	}
 
 	// Collision
-	if (fPlayerVelX <= 0) // Moving Left
+	if (fVelX <= 0) // Moving Left
 	{
-		if (fNewPlayerPosX <= 1) fNewPlayerPosX = 1; // Prevent from being brutally moved to 0 only when reaching -1
+		if (fNewPosX <= 1) fNewPosX = 1; // Prevent from being brutally moved to 0 only when reaching -1
 
-		CheckLeftWall(lvl, fNewPlayerPosX);
-		CheckRightWall(lvl, fNewPlayerPosX);
+		CheckLeftWall(lvl, fNewPosX);
+		CheckRightWall(lvl, fNewPosX);
 	}
 	else // Moving Right
 	{
-		if (fNewPlayerPosX >= lvl->GetWidth() - 2) fNewPlayerPosX = lvl->GetWidth() - 2; // Kirbo can't cross the edge of the map
+		if (fNewPosX >= lvl->GetWidth() - 2) fNewPosX = lvl->GetWidth() - 2; // Kirbo can't cross the edge of the map
 
-		CheckLeftWall(lvl, fNewPlayerPosX);
-		CheckRightWall(lvl, fNewPlayerPosX);
+		CheckLeftWall(lvl, fNewPosX);
+		CheckRightWall(lvl, fNewPosX);
 	}
 
 	bOnGround = false;
-	if (fPlayerVelY <= 0) // Moving Up
+	if (fVelY <= 0) // Moving Up
 	{
-		if (fNewPlayerPosY <= 1) fNewPlayerPosY = 1; // Prevent from being brutally moved to 0 only when reaching -1
+		if (fNewPosY <= 1) fNewPosY = 1; // Prevent from being brutally moved to 0 only when reaching -1
 
-		CheckDynamicCeiling(fNewPlayerPosX, fNewPlayerPosY, lvl);
-		CheckDynamicFloor(fNewPlayerPosX, fNewPlayerPosY, fElapsedTime, lvl);
+		CheckDynamicCeiling(fNewPosX, fNewPosY, lvl);
+		CheckDynamicFloor(fNewPosX, fNewPosY, fElapsedTime, lvl);
 
-		CheckSolidCeiling(lvl, fNewPlayerPosX, fNewPlayerPosY);
+		CheckSolidCeiling(lvl, fNewPosX, fNewPosY);
 	}
 	else // Moving Down
 	{
-		CheckDynamicCeiling(fNewPlayerPosX, fNewPlayerPosY, lvl);
-		CheckDynamicFloor(fNewPlayerPosX, fNewPlayerPosY, fElapsedTime, lvl);
+		CheckDynamicCeiling(fNewPosX, fNewPosY, lvl);
+		CheckDynamicFloor(fNewPosX, fNewPosY, fElapsedTime, lvl);
 
-		CheckSolidFloor(lvl, fNewPlayerPosX, fNewPlayerPosY);
+		CheckSolidFloor(lvl, fNewPosX, fNewPosY);
 	}
 
-	fPlayerPosX = fNewPlayerPosX;
-	fPlayerPosY = fNewPlayerPosY;
+	fPosX = fNewPosX;
+	fPosY = fNewPosY;
 }
 
 void cPlayer::CheckSolidFloor(cLevel* lvl, float fNewPlayerPosX, float& fNewPlayerPosY)
@@ -603,34 +609,49 @@ void cPlayer::CheckSolidFloor(cLevel* lvl, float fNewPlayerPosX, float& fNewPlay
 			Crushed();
 		}
 
+		NormalDrag();
+
 		fNewPlayerPosY = (int)fNewPlayerPosY + engine->GetGroundDynamicOverlay(); // Remove this line to create shifting sand
-		fPlayerVelY = 0;
+		fVelY = 0;
 		bOnGround = true;
 		bDoubleJump = true;
 	}
 }
 
+void cPlayer::NormalDrag()
+{
+	fDrag = cfNormalDrag;
+	fAccGrdX = cfAccGrdX;
+	fAccAirX = cfAccAirX;
+	bOnIcedGround = false;
+}
+
 void cPlayer::CheckDynamicFloor(float& fNewPlayerPosX, float& fNewPlayerPosY, float fElapsedTime, cLevel* lvl)
 {
-	for (auto& ptfm : engine->GetClosePlatforms(fPlayerPosX, fPlayerPosY))
+	for (auto& ptfm : engine->GetClosePlatforms(fPosX, fPosY))
 	{
-		if (ptfm->TopCollision(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f) ||
-			ptfm->TopCollisionWithLag(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY + 1.0f, fNewPlayerPosY + 1.0f))
+		if (ptfm->TopCollision(fNewPlayerPosX + fCollisionLowerLimit, fNewPlayerPosX + fCollisionUpperLimit, fNewPlayerPosY + 1.0f) ||
+			ptfm->TopCollisionWithLag(fNewPlayerPosX + fCollisionLowerLimit, fNewPlayerPosX + fCollisionUpperLimit, fPosY + 1.0f, fNewPlayerPosY + 1.0f))
 		{
 			HarmfulBloc(ptfm);
 
-			if (ptfm->GetVY() <= fPlayerVelY)
+			if (ptfm->IsIced())
+				IcedDrag();
+			else
+				NormalDrag();
+
+			if (ptfm->GetVY() <= fVelY)
 			{
 				fNewPlayerPosY = ptfm->GetPY() - 1.0f;
 				fNewPlayerPosX += ptfm->GetVX() * fElapsedTime;
 			}
 
 			// Check if a wall is there
-			if (fNewPlayerPosX < fPlayerPosX)
+			if (fNewPlayerPosX < fPosX)
 			{
 				CheckLeftWall(lvl, fNewPlayerPosX);
 			}
-			if (fNewPlayerPosX > fPlayerPosX)
+			if (fNewPlayerPosX > fPosX)
 			{
 				CheckRightWall(lvl, fNewPlayerPosX);
 			}
@@ -640,12 +661,20 @@ void cPlayer::CheckDynamicFloor(float& fNewPlayerPosX, float& fNewPlayerPosY, fl
 				Crushed();
 			}
 
-			fPlayerVelY = 0;
+			fVelY = 0;
 			bOnGround = true;
 			bDoubleJump = true;
 			ptfm->TriggerMovement();
 		}
 	}
+}
+
+void cPlayer::IcedDrag()
+{
+	fDrag = cfIcedDrag;
+	fAccGrdX = cfAccIcedGrdX;
+	fAccAirX = cfAccIcedAirX;
+	bOnIcedGround = true;
 }
 
 bool cPlayer::CeilingFloorCrushed(cDynamicMovingPlatform*& ptfm)
@@ -660,13 +689,13 @@ void cPlayer::CheckSolidCeiling(cLevel* lvl, float fNewPlayerPosX, float& fNewPl
 	if (Ceiling(lvl, fNewPlayerPosX, fNewPlayerPosY))
 	{
 		fNewPlayerPosY = (int)fNewPlayerPosY + 1;
-		fPlayerVelY = 0;
+		fVelY = 0;
 
-		for (auto& ptfm : engine->GetClosePlatforms(fPlayerPosX, fPlayerPosY))
+		for (auto& ptfm : engine->GetClosePlatforms(fPosX, fPosY))
 		{
 			if (ptfm->GetVY() < 0 &&
-				(ptfm->TopCollision(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f) ||
-				 ptfm->TopCollisionWithLag(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY + 1.0f, fNewPlayerPosY + 1.0f)))
+				(ptfm->TopCollision(fNewPlayerPosX + fCollisionLowerLimit, fNewPlayerPosX + fCollisionUpperLimit, fNewPlayerPosY + 1.0f) ||
+				 ptfm->TopCollisionWithLag(fNewPlayerPosX + fCollisionLowerLimit, fNewPlayerPosX + fCollisionUpperLimit, fPosY + 1.0f, fNewPlayerPosY + 1.0f)))
 			{
 				Crushed();
 			}
@@ -676,14 +705,14 @@ void cPlayer::CheckSolidCeiling(cLevel* lvl, float fNewPlayerPosX, float& fNewPl
 
 void cPlayer::CheckDynamicCeiling(float fNewPlayerPosX, float& fNewPlayerPosY, cLevel* lvl)
 {
-	for (auto& ptfm : engine->GetClosePlatforms(fPlayerPosX, fPlayerPosY))
+	for (auto& ptfm : engine->GetClosePlatforms(fPosX, fPosY))
 	{
-		if (ptfm->BotCollision(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY) ||
-			ptfm->BotCollisionWithLag(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY, fNewPlayerPosY))
+		if (ptfm->BotCollision(fNewPlayerPosX + fCollisionLowerLimit, fNewPlayerPosX + fCollisionUpperLimit, fNewPlayerPosY) ||
+			ptfm->BotCollisionWithLag(fNewPlayerPosX + fCollisionLowerLimit, fNewPlayerPosX + fCollisionUpperLimit, fPosY, fNewPlayerPosY))
 		{
 			HarmfulBloc(ptfm);
 
-			if (ptfm->GetVY() >= fPlayerVelY)
+			if (ptfm->GetVY() >= fVelY)
 				fNewPlayerPosY = ptfm->GetPY() + ptfm->GetNormalizedHeight();
 
 			if (SolidFloor(lvl, fNewPlayerPosX, fNewPlayerPosY) && ptfm->GetVY() > 0.0f ||
@@ -712,10 +741,10 @@ void cPlayer::Crushed()
 
 bool cPlayer::DynamicFloor(float fNewPlayerPosX, float fNewPlayerPosY)
 {
-	for (auto& ptfm : engine->GetClosePlatforms(fPlayerPosX, fPlayerPosY))
+	for (auto& ptfm : engine->GetClosePlatforms(fPosX, fPosY))
 	{
-		if (ptfm->TopCollision(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f) ||
-			ptfm->TopCollisionWithLag(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY + 1.0f, fNewPlayerPosY + 1.0f))
+		if (ptfm->TopCollision(fNewPlayerPosX + fCollisionLowerLimit, fNewPlayerPosX + fCollisionUpperLimit, fNewPlayerPosY + 1.0f) ||
+			ptfm->TopCollisionWithLag(fNewPlayerPosX + fCollisionLowerLimit, fNewPlayerPosX + fCollisionUpperLimit, fPosY + 1.0f, fNewPlayerPosY + 1.0f))
 		{
 			fCrushingObjVY = ptfm->GetVY();
 			return true;
@@ -726,10 +755,10 @@ bool cPlayer::DynamicFloor(float fNewPlayerPosX, float fNewPlayerPosY)
 
 bool cPlayer::DynamicCeiling(float fNewPlayerPosX, float fNewPlayerPosY)
 {
-	for (auto& ptfm : engine->GetClosePlatforms(fPlayerPosX, fPlayerPosY))
+	for (auto& ptfm : engine->GetClosePlatforms(fPosX, fPosY))
 	{
-		if (ptfm->BotCollision(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY) ||
-			ptfm->BotCollisionWithLag(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosX + fPlayerCollisionUpperLimit, fPlayerPosY, fNewPlayerPosY))
+		if (ptfm->BotCollision(fNewPlayerPosX + fCollisionLowerLimit, fNewPlayerPosX + fCollisionUpperLimit, fNewPlayerPosY) ||
+			ptfm->BotCollisionWithLag(fNewPlayerPosX + fCollisionLowerLimit, fNewPlayerPosX + fCollisionUpperLimit, fPosY, fNewPlayerPosY))
 		{
 			fCrushingObjVY = ptfm->GetVY();
 			return true;
@@ -744,26 +773,26 @@ bool cPlayer::SemiSolidFloor(cLevel* lvl, float fNewPlayerPosX, float fNewPlayer
 	// Otherwise the player is moved to the top of the block when his feets reach the bottom of the block
 	// "fPlayerPosY + 1.0f" is the feets Y position, "(float)((int)fNewPlayerPosY + 1.0f) + 0.1f" takes the top of the block at the feets position and add a 0.1 delta, 
 	// if the feets are above this delta, the player is moved on top of the block.
-	return (engine->IsSemiSolidTile(lvl->GetTile(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosY + 1.0f)) ||
-			engine->IsSemiSolidTile(lvl->GetTile(fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f))) && fPlayerPosY + 1.0f < (float)((int)fNewPlayerPosY + 1.0f) + 0.1f;
+	return (engine->IsSemiSolidTile(lvl->GetTile(fNewPlayerPosX + fCollisionLowerLimit, fNewPlayerPosY + 1.0f)) ||
+			engine->IsSemiSolidTile(lvl->GetTile(fNewPlayerPosX + fCollisionUpperLimit, fNewPlayerPosY + 1.0f))) && fPosY + 1.0f < (float)((int)fNewPlayerPosY + 1.0f) + 0.1f;
 }
 
 bool cPlayer::SolidFloor(cLevel* lvl, float fNewPlayerPosX, float fNewPlayerPosY)
 {
-	return engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + fPlayerCollisionLowerLimit, fNewPlayerPosY + 1.0f)) ||
-		engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY + 1.0f));
+	return engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + fCollisionLowerLimit, fNewPlayerPosY + 1.0f)) ||
+		engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + fCollisionUpperLimit, fNewPlayerPosY + 1.0f));
 }
 
 bool cPlayer::Ceiling(cLevel* lvl, float fNewPlayerPosX, float fNewPlayerPosY)
 {
 	return engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 0.0f, fNewPlayerPosY)) ||
-		engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + fPlayerCollisionUpperLimit, fNewPlayerPosY));
+		engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + fCollisionUpperLimit, fNewPlayerPosY));
 }
 
 void cPlayer::CheckRightWall(cLevel* lvl, float& fNewPlayerPosX)
 {
-	if (engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + 0.0f)) ||
-		engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 1.0f, fPlayerPosY + fPlayerCollisionUpperLimit)))
+	if (engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 1.0f, fPosY + 0.0f)) ||
+		engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 1.0f, fPosY + fCollisionUpperLimit)))
 	{
 		if (DynamicLeftWall(fNewPlayerPosX) && fCrushingObjVX > 0.0f)
 		{
@@ -771,13 +800,13 @@ void cPlayer::CheckRightWall(cLevel* lvl, float& fNewPlayerPosX)
 		}
 
 		fNewPlayerPosX = (int)fNewPlayerPosX;
-		fPlayerVelX = 0;
+		fVelX = 0;
 	}
 
-	for (auto& ptfm : engine->GetClosePlatforms(fPlayerPosX, fPlayerPosY))
+	for (auto& ptfm : engine->GetClosePlatforms(fPosX, fPosY))
 	{
-		if (ptfm->LeftCollision(fPlayerPosY, fPlayerPosY + 1.0f, fNewPlayerPosX + 1.0f) ||
-			ptfm->LeftCollisionWithLag(fPlayerPosY, fPlayerPosY + 1.0f, fPlayerPosX + 1.0f, fNewPlayerPosX + 1.0f))
+		if (ptfm->LeftCollision(fPosY, fPosY + 1.0f, fNewPlayerPosX + 1.0f) ||
+			ptfm->LeftCollisionWithLag(fPosY, fPosY + 1.0f, fPosX + 1.0f, fNewPlayerPosX + 1.0f))
 		{
 			if (DynamicLeftWall(fNewPlayerPosX) && LeftRightCrushed(ptfm))
 			{
@@ -786,7 +815,7 @@ void cPlayer::CheckRightWall(cLevel* lvl, float& fNewPlayerPosX)
 
 			HarmfulBloc(ptfm);
 
-			if (ptfm->GetVX() <= fPlayerVelX)
+			if (ptfm->GetVX() <= fVelX)
 			{
 				fNewPlayerPosX = ptfm->GetPX() - 1.0f;
 			}
@@ -803,10 +832,10 @@ bool cPlayer::LeftRightCrushed(cDynamicMovingPlatform*& ptfm)
 
 bool cPlayer::DynamicLeftWall(float fNewPlayerPosX)
 {
-	for (auto& ptfm : engine->GetClosePlatforms(fPlayerPosX, fPlayerPosY))
+	for (auto& ptfm : engine->GetClosePlatforms(fPosX, fPosY))
 	{
-		if (ptfm->RightCollision(fPlayerPosY, fPlayerPosY + 1.0f, fNewPlayerPosX) ||
-			ptfm->RightCollisionWithLag(fPlayerPosY, fPlayerPosY + 1.0f, fPlayerPosX, fNewPlayerPosX))
+		if (ptfm->RightCollision(fPosY, fPosY + 1.0f, fNewPlayerPosX) ||
+			ptfm->RightCollisionWithLag(fPosY, fPosY + 1.0f, fPosX, fNewPlayerPosX))
 		{
 			fCrushingObjVX = ptfm->GetVX();
 			return true;
@@ -817,8 +846,8 @@ bool cPlayer::DynamicLeftWall(float fNewPlayerPosX)
 
 void cPlayer::CheckLeftWall(cLevel* lvl, float& fNewPlayerPosX)
 {
-	if (engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + 0.0f)) ||
-		engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 0.0f, fPlayerPosY + fPlayerCollisionUpperLimit)))
+	if (engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 0.0f, fPosY + 0.0f)) ||
+		engine->IsSolidTile(lvl->GetTile(fNewPlayerPosX + 0.0f, fPosY + fCollisionUpperLimit)))
 	{
 		if (DynamicRightWall(fNewPlayerPosX) && fCrushingObjVX < 0.0f)
 		{
@@ -826,13 +855,13 @@ void cPlayer::CheckLeftWall(cLevel* lvl, float& fNewPlayerPosX)
 		}
 
 		fNewPlayerPosX = (int)fNewPlayerPosX + 1;
-		fPlayerVelX = 0;
+		fVelX = 0;
 	}
 
-	for (auto& ptfm : engine->GetClosePlatforms(fPlayerPosX, fPlayerPosY))
+	for (auto& ptfm : engine->GetClosePlatforms(fPosX, fPosY))
 	{
-		if (ptfm->RightCollision(fPlayerPosY, fPlayerPosY + 1.0f, fNewPlayerPosX) ||
-			ptfm->RightCollisionWithLag(fPlayerPosY, fPlayerPosY + 1.0f, fPlayerPosX, fNewPlayerPosX))
+		if (ptfm->RightCollision(fPosY, fPosY + 1.0f, fNewPlayerPosX) ||
+			ptfm->RightCollisionWithLag(fPosY, fPosY + 1.0f, fPosX, fNewPlayerPosX))
 		{
 			if (DynamicRightWall(fNewPlayerPosX) && RightLeftCrushed(ptfm))
 			{
@@ -841,7 +870,7 @@ void cPlayer::CheckLeftWall(cLevel* lvl, float& fNewPlayerPosX)
 
 			HarmfulBloc(ptfm);
 
-			if (ptfm->GetVX() >= fPlayerVelX)
+			if (ptfm->GetVX() >= fVelX)
 			{
 				fNewPlayerPosX = ptfm->GetPX() + ptfm->GetNormalizedWidth();
 			}
@@ -851,7 +880,7 @@ void cPlayer::CheckLeftWall(cLevel* lvl, float& fNewPlayerPosX)
 
 void cPlayer::HarmfulBloc(cDynamicMovingPlatform*& ptfm)
 {
-	if (!ptfm->IsFriendly() && bIsPlayerAttackable)
+	if (!ptfm->IsFriendly() && bIsAttackable)
 	{
 		Damage(ptfm);
 	}
@@ -866,10 +895,10 @@ bool cPlayer::RightLeftCrushed(cDynamicMovingPlatform*& ptfm)
 
 bool cPlayer::DynamicRightWall(float fNewPlayerPosX)
 {
-	for (auto& ptfm : engine->GetClosePlatforms(fPlayerPosX, fPlayerPosY))
+	for (auto& ptfm : engine->GetClosePlatforms(fPosX, fPosY))
 	{
-		if (ptfm->LeftCollision(fPlayerPosY, fPlayerPosY + 1.0f, fNewPlayerPosX + 1.0f) ||
-			ptfm->LeftCollisionWithLag(fPlayerPosY, fPlayerPosY + 1.0f, fPlayerPosX + 1.0f, fNewPlayerPosX + 1.0f))
+		if (ptfm->LeftCollision(fPosY, fPosY + 1.0f, fNewPlayerPosX + 1.0f) ||
+			ptfm->LeftCollisionWithLag(fPosY, fPosY + 1.0f, fPosX + 1.0f, fNewPlayerPosX + 1.0f))
 		{
 			fCrushingObjVX = ptfm->GetVX();
 			return true;
@@ -880,22 +909,22 @@ bool cPlayer::DynamicRightWall(float fNewPlayerPosX)
 
 float cPlayer::GetPlayerPosX()
 {
-	return fPlayerPosX;
+	return fPosX;
 }
 
 float cPlayer::GetPlayerPosY()
 {
-	return fPlayerPosY;
+	return fPosY;
 }
 
 void cPlayer::SetPlayerPosX(float px)
 {
-	fPlayerPosX = px;
+	fPosX = px;
 }
 
 void cPlayer::SetPlayerPosY(float py)
 {
-	fPlayerPosY = py;
+	fPosY = py;
 }
 
 bool cPlayer::IsVacuuming()
@@ -920,7 +949,7 @@ void cPlayer::VacuumEnnemy(cDynamicCreature* object)
 
 bool cPlayer::IsAttackable()
 {
-	return bIsPlayerAttackable;
+	return bIsAttackable;
 }
 
 bool cPlayer::HasCandyPower()
@@ -930,7 +959,7 @@ bool cPlayer::HasCandyPower()
 
 void cPlayer::SetAttackable(bool attackable)
 {
-	bIsPlayerAttackable = attackable;
+	bIsAttackable = attackable;
 	bForceInvincible = !attackable;
 }
 
@@ -960,7 +989,7 @@ void cPlayer::UpdateInvulnerability(float fElapsedTime)
 		}
 		if (!bForceInvincible)
 		{
-			bIsPlayerAttackable = true;
+			bIsAttackable = true;
 		}
 	}
 	else
@@ -971,7 +1000,7 @@ void cPlayer::UpdateInvulnerability(float fElapsedTime)
 			fInvulnerabilityTickingTimer -= cfInvulnerabilityTickingSpeed;
 
 			// Start ticking only after damage animation
-			if (!bPlayerDamaged)
+			if (!bDamaged)
 				bShowKirbo = !bShowKirbo;
 		}
 	}
@@ -997,9 +1026,9 @@ void cPlayer::Damage(cDynamic* object)
 	engine->PlaySample("kirboHit");
 	animPlayer->ChangeState("damaged");
 	fInvulnerabilityTimer = cfInvulnerabilityFrame;
-	bPlayerDamaged = true;
-	bIsPlayerAttackable = false;
-	fHealth -= round((float)(object->GetDamage() / (float)nDefenseBooster)); // Kirbo can't take 0 damage with defense boost
+	bDamaged = true;
+	bIsAttackable = false;
+	fHealth -= round((float)(object->GetDamage() / (float)nDefBoost)); // Kirbo can't take 0 damage with defense boost
 
 	if (fHealth <= 0.0f)
 	{
@@ -1009,15 +1038,15 @@ void cPlayer::Damage(cDynamic* object)
 	if (!bDead)
 	{
 		// Knockback the player out of the ennemy
-		if (object->GetPX() < fPlayerPosX)
+		if (object->GetPX() < fPosX)
 		{
-			fPlayerVelX = cfDamageEjectionVelX;
-			fPlayerVelY = -cfDamageEjectionVelY;
+			fVelX = cfDamageEjectionVelX;
+			fVelY = -cfDamageEjectionVelY;
 		}
 		else
 		{
-			fPlayerVelX = -cfDamageEjectionVelX;
-			fPlayerVelY = -cfDamageEjectionVelY;
+			fVelX = -cfDamageEjectionVelX;
+			fVelY = -cfDamageEjectionVelY;
 		}
 	}
 }
@@ -1027,18 +1056,18 @@ void cPlayer::Kill()
 	fHealth = 0.0f;
 	bDead = true;
 	animPlayer->ChangeState("dead");
-	nDamageBooster = 1;
-	nDefenseBooster = 1;
+	nDmgBoost = 1;
+	nDefBoost = 1;
 }
 
 void cPlayer::ResetVariables()
 {
-	fPlayerVelX = 0.0f;
-	fPlayerVelY = 0.0f;
+	fVelX = 0.0f;
+	fVelY = 0.0f;
 	fInvulnerabilityTimer = 0.0f;
 	bDead = false;
 	fDeadAnimation = 0.0f;
-	bPlayerDamaged = false;
+	bDamaged = false;
 	fKirboGoesAwayTimer = 0.0f;
 	fJumpTimer = 0.0f;
 	bIsGrabbedByEnnemy = false;
@@ -1048,8 +1077,8 @@ void cPlayer::ResetVariables()
 void cPlayer::VacuumHitbox(float cameraOffsetX, float cameraOffsetY)
 {
 	vacuumHitbox->SetPos(
-		(fPlayerPosX + (fFaceDir > 0.0f ? 1.75f : -0.75f) - cameraOffsetX) * engine->GetTileWidth(),
-		(fPlayerPosY + 0.5f - cameraOffsetY) * engine->GetTileHeight()
+		(fPosX + (fFaceDir > 0.0f ? 1.75f : -0.75f) - cameraOffsetX) * engine->GetTileWidth(),
+		(fPosY + 0.5f - cameraOffsetY) * engine->GetTileHeight()
 	); // 1 block ahead the player's looking direction
 	vacuumHitbox->SetAngle(0.0f);
 	vacuumHitbox->AddPoint(-engine->GetTileWidth() * 1.25f, -engine->GetTileHeight() / (fFaceDir > 0.0f ? 2.0f : 1.0f));
@@ -1081,8 +1110,8 @@ cHitbox* cPlayer::GetVacuumHitbox()
 void cPlayer::UpdateHitbox(float cameraOffsetX, float cameraOffsetY)
 {
 	hitbox->SetPos(
-		(fPlayerPosX + 0.5f - cameraOffsetX) * engine->GetTileWidth(),
-		(fPlayerPosY + 0.5f - cameraOffsetY) * engine->GetTileHeight()
+		(fPosX + 0.5f - cameraOffsetX) * engine->GetTileWidth(),
+		(fPosY + 0.5f - cameraOffsetY) * engine->GetTileHeight()
 	); // Center of the player
 	hitbox->SetAngle(0.0f);
 	hitbox->AddPoint(-engine->GetTileWidth() / 2.2f, -engine->GetTileHeight() / 2.2f);	// little reduction of the player hitbox to allow a little overlap with attack
@@ -1122,8 +1151,8 @@ void cPlayer::Attack(cDynamicCreature* victim, int damage)
 		victim->TakeDamage(damage);
 
 		// Knock victim back
-		float tx = victim->GetPX() - fPlayerPosX;
-		float ty = victim->GetPY() - fPlayerPosY;
+		float tx = victim->GetPX() - fPosX;
+		float ty = victim->GetPY() - fPosY;
 		float d = sqrtf(tx * tx + ty * ty);
 		if (d < 1) d = 1.0f;
 
@@ -1239,20 +1268,20 @@ int cPlayer::GetCandyDmg()
 
 void cPlayer::SetDamageBooster(int boost)
 {
-	nDamageBooster = boost;
+	nDmgBoost = boost;
 }
 
 bool cPlayer::HasDamageBooster()
 {
-	return nDamageBooster > 1;
+	return nDmgBoost > 1;
 }
 
 void cPlayer::SetDefenseBooster(int boost)
 {
-	nDefenseBooster = boost;
+	nDefBoost = boost;
 }
 
 bool cPlayer::HasDefenseBooster()
 {
-	return nDefenseBooster > 1;
+	return nDefBoost > 1;
 }

@@ -1,7 +1,7 @@
 #include "Platformer_DynamicCeiling.h"
 
 cDynamicCeiling::cDynamicCeiling(float ox, float oy, std::vector<olc::Sprite*> map, std::wstring topSolid, std::wstring linkToPreviousPlatform)
-	: cDynamicMovingPlatform(ox, oy, map)
+	: cDynamicMovingPlatform(ox, oy, map, L"0")
 {
 	bSolidBot = true;
 	bSolidTop = (topSolid == L"1");

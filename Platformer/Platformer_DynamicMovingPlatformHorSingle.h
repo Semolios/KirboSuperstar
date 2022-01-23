@@ -8,7 +8,7 @@
 class cDynamicMovingPlatformHorSingle : public cDynamicMovingPlatform
 {
 public:
-	cDynamicMovingPlatformHorSingle(float ox, float oy, std::vector<olc::Sprite*> map, float tx, float vx, std::wstring trigger);
+	cDynamicMovingPlatformHorSingle(float ox, float oy, std::vector<olc::Sprite*> map, std::wstring iced, float tx, float vx, std::wstring trigger);
 	virtual ~cDynamicMovingPlatformHorSingle();
 
 	void Behaviour(float fElapsedTime, float playerX, float playerY);

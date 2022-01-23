@@ -22,14 +22,16 @@ public:
 
 private:
 	const float cfMaxHealth = 10.0f;					// Max Kirbo health
-	const float cfPlayerVelY = 5.0f;					// Up and Down velocities
-	const float cfMinPlayerVelX = 1.0f;					// Minimum player horizontal velocity
-	const float cfMaxPlayerVelX = 7.0f;					// Maximum player horizontal velocity
-	const float cfMaxPlayerVelY = 100.0f;				// Maximum player vertical velocity
-	const float cfMaxPlayerFlyingVelX = 5.0f;			// Maximum player horizontal velocity while flying
-	const float cfMaxPlayerFlyingVelY = 5.0f;			// Maximum player vertical velocity while flying
-	const float cfPlayerAccGrdX = 25.0f;				// Acceleration value when on ground
-	const float cfPlayerAccAirX = 28.0f;				// Acceleration value when in the air
+	const float cfVelY = 5.0f;							// Up and Down velocities
+	const float cfMinVelX = 1.0f;						// Minimum player horizontal velocity
+	const float cfMaxVelX = 7.0f;						// Maximum player horizontal velocity
+	const float cfMaxVelY = 100.0f;						// Maximum player vertical velocity
+	const float cfMaxFlyingVelX = 5.0f;					// Maximum player horizontal velocity while flying
+	const float cfMaxFlyingVelY = 5.0f;					// Maximum player vertical velocity while flying
+	const float cfAccGrdX = 25.0f;						// Acceleration value when on ground
+	const float cfAccAirX = 28.0f;						// Acceleration value when in the air
+	const float cfAccIcedGrdX = 8.0f;					// Acceleration value when on iced ground
+	const float cfAccIcedAirX = 10.0f;					// Acceleration value when in the air after walking on iced platform
 	const float cfJumpAcceleration = -8.0f;				// Jump speed
 	const float cfJumpDecelerationRatio = 1.5f;			// Jump Deceleration while holding jump
 	const float cfSlapSpawnT = 1.0f;					// Number of frames to spawn slap attack
@@ -51,15 +53,17 @@ private:
 	const float cfJumpTime = 0.75f;						// The more you hold, the more kirbo jump high
 	const float cfDblJumpTime = 0.5f;					// idem for double jump
 	const float cfKnockBackDuration = 0.3f;				// Ennemies Knock back duration
+	const float cfNormalDrag = -3.0f;					// Drag Value on normal ground
+	const float cfIcedDrag = -0.5f;						// Drag Value on iced ground
 
 	const int cnSlapDmg = 3;							// damages of the slap attack
 	const int cnJesusCrossDmg = 5;						// damages of the jesus cross
 	const int cnCandyPowerDmg = 5;						// Damages when candy power activated
 
-	float fPlayerPosX = 0.0f;
-	float fPlayerPosY = 0.0f;
-	float fPlayerVelX = 0.0f;
-	float fPlayerVelY = 0.0f;
+	float fPosX = 0.0f;
+	float fPosY = 0.0f;
+	float fVelX = 0.0f;
+	float fVelY = 0.0f;
 	float fAnimationTimer = 0.0f;
 	float fInvulnerabilityTimer = 0.0f;
 	float fFaceDir = 1.0f;
@@ -69,13 +73,17 @@ private:
 	float fKirboGoesAwayTimer = 0.0f;
 	float fWindDirection = 1.0f;
 	float fWindPower = 25.0f;
-	float fPlayerCollisionUpperLimit = 0.9f;
-	float fPlayerCollisionLowerLimit = 0.1f;
+	float fCollisionUpperLimit = 0.9f;
+	float fCollisionLowerLimit = 0.1f;
 	float fSwallowDistance = 0.1f;
 	float fJumpTimer = 0.0f;
 	float fCrushingObjVX = 0.0f;
 	float fCrushingObjVY = 0.0f;
+	float fDrag = -3.0f;
+	float fAccGrdX = 25.0f;
+	float fAccAirX = 28.0f;
 	bool bOnGround = false;
+	bool bOnIcedGround = false;
 	bool bDoubleJump = false;
 	bool bChargeJump = false;
 	bool bChargeDoubleJump = false;
@@ -84,8 +92,8 @@ private:
 	bool bVacuuming = false;
 	bool bLaunchingJesusCross = false;
 	bool bCanSpawnProjectile = false;
-	bool bPlayerDamaged = false;
-	bool bIsPlayerAttackable = true;
+	bool bDamaged = false;
+	bool bIsAttackable = true;
 	bool bFlying = false;
 	bool bShowKirbo = true;
 	bool bDead = false;
@@ -97,8 +105,8 @@ private:
 	bool bForceInvincible = false;
 	bool bForceInvisible = false;
 	bool bHasCandyPower = false;
-	int nDamageBooster = 1;
-	int nDefenseBooster = 1;
+	int nDmgBoost = 1;
+	int nDefBoost = 1;
 
 	cAnimator* animPlayer;
 	cHitbox* hitbox;
@@ -123,7 +131,9 @@ public:
 	void SetVelocities(float vx, float vy);
 	void Collisions(float fElapsedTime, cLevel* lvl);
 	void CheckSolidFloor(cLevel* lvl, float fNewPlayerPosX, float& fNewPlayerPosY);
+	void NormalDrag();
 	void CheckDynamicFloor(float& fNewPlayerPosX, float& fNewPlayerPosY, float fElapsedTime, cLevel* lvl);
+	void IcedDrag();
 	bool CeilingFloorCrushed(cDynamicMovingPlatform*& ptfm);
 	void CheckSolidCeiling(cLevel* lvl, float fNewPlayerPosX, float& fNewPlayerPosY);
 	void CheckDynamicCeiling(float fNewPlayerPosX, float& fNewPlayerPosY, cLevel* lvl);

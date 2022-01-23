@@ -8,7 +8,7 @@
 class cDynamicMovingPlatformVerSine : public cDynamicMovingPlatform
 {
 public:
-	cDynamicMovingPlatformVerSine(float ox, float oy, std::vector<olc::Sprite*> map, float A, float F, std::wstring trigger);
+	cDynamicMovingPlatformVerSine(float ox, float oy, std::vector<olc::Sprite*> map, std::wstring iced, float A, float F, std::wstring trigger);
 	virtual ~cDynamicMovingPlatformVerSine();
 
 	void Behaviour(float fElapsedTime, float playerX, float playerY);

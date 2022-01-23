@@ -10,7 +10,7 @@ class OneLoneCoder_Platformer;
 class cDynamicMovingPlatform : public cDynamic
 {
 public:
-	cDynamicMovingPlatform(float ox, float oy, std::vector<olc::Sprite*> map);
+	cDynamicMovingPlatform(float ox, float oy, std::vector<olc::Sprite*> map, std::wstring iced);
 	virtual ~cDynamicMovingPlatform();
 
 	virtual void DrawSwitch(float cameraX, float cameraY);
@@ -25,6 +25,7 @@ protected:
 	float fHitboxThickness = 0.15f;
 	bool bTriggerable;
 	bool bTriggered = false;
+	bool bIced = false;
 
 	// Sides Traversability
 	bool bSolidTop = true;
@@ -70,6 +71,8 @@ public:
 
 	float GetNormalizedWidth();
 	float GetNormalizedHeight();
+
+	bool IsIced();
 
 	virtual void Behaviour(float fElapsedTime, float playerX, float playerY);
 	virtual void LinkPtfm(cDynamicMovingPlatform* ptfm);

@@ -892,33 +892,33 @@ void OneLoneCoder_Platformer::AddOrbital(float ox, float oy, bool bFriend, float
 	vecProjectiles.push_back(p);
 }
 
-void OneLoneCoder_Platformer::AddPlatform(float ox, float oy, std::string sprite)
+void OneLoneCoder_Platformer::AddPlatform(float ox, float oy, std::string sprite, std::wstring iced)
 {
-	cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatform(ox, oy, mapPlatforms[sprite]);
+	cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatform(ox, oy, mapPlatforms[sprite], iced);
 	vecPlatforms.push_back(ptfm);
 }
 
-void OneLoneCoder_Platformer::AddHorizontalSinePtfm(float ox, float oy, std::string sprite, float amplitude, float frequency, std::wstring trigger)
+void OneLoneCoder_Platformer::AddHorizontalSinePtfm(float ox, float oy, std::string sprite, std::wstring iced, float amplitude, float frequency, std::wstring trigger)
 {
-	cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatformHorSine(ox, oy, mapPlatforms[sprite], amplitude, frequency, trigger);
+	cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatformHorSine(ox, oy, mapPlatforms[sprite], iced, amplitude, frequency, trigger);
 	vecPlatforms.push_back(ptfm);
 }
 
-void OneLoneCoder_Platformer::AddVerticalSinePtfm(float ox, float oy, std::string sprite, float amplitude, float frequency, std::wstring trigger)
+void OneLoneCoder_Platformer::AddVerticalSinePtfm(float ox, float oy, std::string sprite, std::wstring iced, float amplitude, float frequency, std::wstring trigger)
 {
-	cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatformVerSine(ox, oy, mapPlatforms[sprite], amplitude, frequency, trigger);
+	cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatformVerSine(ox, oy, mapPlatforms[sprite], iced, amplitude, frequency, trigger);
 	vecPlatforms.push_back(ptfm);
 }
 
-void OneLoneCoder_Platformer::AddHorizontalSinglePtfm(float ox, float oy, std::string sprite, float tx, float vx, std::wstring trigger)
+void OneLoneCoder_Platformer::AddHorizontalSinglePtfm(float ox, float oy, std::string sprite, std::wstring iced, float tx, float vx, std::wstring trigger)
 {
-	cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatformHorSingle(ox, oy, mapPlatforms[sprite], tx, vx, trigger);
+	cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatformHorSingle(ox, oy, mapPlatforms[sprite], iced, tx, vx, trigger);
 	vecPlatforms.push_back(ptfm);
 }
 
-void OneLoneCoder_Platformer::AddVerticalSinglePtfm(float ox, float oy, std::string sprite, float ty, float vy, std::wstring trigger)
+void OneLoneCoder_Platformer::AddVerticalSinglePtfm(float ox, float oy, std::string sprite, std::wstring iced, float ty, float vy, std::wstring trigger)
 {
-	cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatformVerSingle(ox, oy, mapPlatforms[sprite], ty, vy, trigger);
+	cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatformVerSingle(ox, oy, mapPlatforms[sprite], iced, ty, vy, trigger);
 	vecPlatforms.push_back(ptfm);
 }
 
@@ -1028,11 +1028,6 @@ void OneLoneCoder_Platformer::SetGameState(std::string gameState)
 	else if (gameState == "GS_SELECTMENU")		nGameState = GS_SELECTMENU;
 	else if (gameState == "GS_CONTROLS")		nGameState = GS_CONTROLS;
 	else if (gameState == "GS_CREDITS")			nGameState = GS_CREDITS;
-}
-
-float OneLoneCoder_Platformer::GetDragValue()
-{
-	return cfDrag;
 }
 
 void OneLoneCoder_Platformer::UpdateWinTimer(float fElapsedTime)

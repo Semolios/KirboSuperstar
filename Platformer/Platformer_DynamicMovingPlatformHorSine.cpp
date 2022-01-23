@@ -1,7 +1,7 @@
 #include "Platformer_DynamicMovingPlatformHorSine.h"
 
-cDynamicMovingPlatformHorSine::cDynamicMovingPlatformHorSine(float ox, float oy, std::vector<olc::Sprite*> map, float A, float F, std::wstring trigger)
-	: cDynamicMovingPlatform(ox, oy, map)
+cDynamicMovingPlatformHorSine::cDynamicMovingPlatformHorSine(float ox, float oy, std::vector<olc::Sprite*> map, std::wstring iced, float A, float F, std::wstring trigger)
+	: cDynamicMovingPlatform(ox, oy, map, iced)
 {
 	fAmplitude = A;
 	fFrequency = F;

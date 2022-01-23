@@ -4,7 +4,7 @@
 OneLoneCoder_Platformer* cDynamicWall::engine = nullptr;
 
 cDynamicWall::cDynamicWall(float ox, float oy, std::vector<olc::Sprite*> map, std::wstring leftSolid, std::wstring rightSolid, std::wstring trigger, float trgX, float trgY)
-	: cDynamicMovingPlatform(ox, oy, map)
+	: cDynamicMovingPlatform(ox, oy, map, L"0")
 {
 	bSolidTop = false;
 	bSolidLeft = (leftSolid == L"1");
