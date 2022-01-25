@@ -92,7 +92,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			level->LoadLevelsList();
 			level->LoadBossLevelsList();
 			level->LoadLevelsEnnemiesList();
-			level->LoadLevelsPlatformsList();
+			level->LoadLevelsMechanismsList();
 			level->LoadLevelsTilesList();
 			level->LoadLevelsGrdTilesList();
 			level->LoadLevelsBackGroundList();
@@ -122,16 +122,17 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 			UpdateProgressBar("Loading 13%");
 
-			nLoadingState = LS_PLATFORMS;
+			nLoadingState = LS_MECHANISMS;
 		}
 		break;
-		case LS_PLATFORMS:
+		case LS_MECHANISMS:
 		{
 			mapPlatforms = cDynamicMovingPlatform::LoadMovingPlatformsSprites();
 			sprDoorSwitchOff = new olc::Sprite("assets/gfx/doorSwitchOff.png");
 			sprDoorSwitchOn = new olc::Sprite("assets/gfx/doorSwitchOn.png");
+			mapWinds = cDynamicWind::LoadWindSprites();
 
-			UpdateProgressBar("Loading 15%");
+			UpdateProgressBar("Loading 16%");
 
 			nLoadingState = LS_TITLE;
 		}
@@ -141,7 +142,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			sprTitleScreen = new olc::Sprite("assets/gfx/title screen.png");
 			titleScreen = new cTitleScreen(this, sprTitleScreen);
 
-			UpdateProgressBar("Loading 18%");
+			UpdateProgressBar("Loading 20%");
 
 			nLoadingState = LS_WORLDMAP;
 		}
@@ -250,6 +251,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			cDynamicProjectile::engine = this;
 			cDynamicVerticalCrusher::engine = this;
 			cDynamicWall::engine = this;
+			cDynamicWind::engine = this;
 			cItemCandy::engine = this;
 			cItemDamage::engine = this;
 			cItemDefense::engine = this;
@@ -371,10 +373,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 {
-	// Destroy all dynamics
-	vecEnnemies.clear();
-	vecProjectiles.clear();
-	vecPlatforms.clear();
+	DestroyAllDynamics();
 
 	level->SetCurrentLvl(worldMap->GetSelectedLevel());
 	if (level->LoadLevel(level->GetLevelName()))
@@ -382,7 +381,7 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 		LoadLevelProperties();
 
 		level->PopulateEnnemies(vecEnnemies, level->GetLevelsEnnemiesName());
-		level->PopulatePlatforms(vecPlatforms, level->GetLevelsPlatformsName());
+		level->PopulateMechanisms(level->GetLevelsMechanismsName());
 
 		spriteTiles = new olc::Sprite(level->GetLevelsTilesName());
 		sprGrdTiles = new olc::Sprite(level->GetLevelsGrdTilesName());
@@ -558,12 +557,22 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		object->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
 	}
 
+	for (auto& object : vecWinds)
+	{
+		object->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
+	}
+
 	for (auto& object : vecEnnemies)
 	{
 		object->Update(fElapsedTime, player->GetPlayerPosX(), player->GetPlayerPosY());
 	}
 
 	for (auto& object : vecProjectiles)
+	{
+		object->Update(fElapsedTime, player->GetPlayerPosX(), player->GetPlayerPosY());
+	}
+
+	for (auto& object : vecWinds)
 	{
 		object->Update(fElapsedTime, player->GetPlayerPosX(), player->GetPlayerPosY());
 	}
@@ -589,6 +598,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		return ((cDynamicProjectile*)d)->IsRedundant();
 	}), vecProjectiles.end());
 
+	// Draw walls switches
 	for (auto& object : vecPlatforms)
 	{
 		object->DrawSwitch(camera->GetOffsetX(), camera->GetOffsetY());
@@ -608,6 +618,12 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	// Draw Platforms
 	for (auto& object : GetClosePlatforms(player->GetPlayerPosX(), player->GetPlayerPosY()))
+	{
+		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
+	}
+
+	// Draw Wind
+	for (auto& object : GetCloseWinds(player->GetPlayerPosX(), player->GetPlayerPosY()))
 	{
 		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
 	}
@@ -720,10 +736,7 @@ bool OneLoneCoder_Platformer::GameState_PauseMenu(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_LoadBossLevel(float fElapsedTime)
 {
-	// Destroy all dynamics
-	vecEnnemies.clear();
-	vecProjectiles.clear();
-	vecPlatforms.clear();
+	DestroyAllDynamics();
 
 	if (level->LoadLevel(level->GetBossLevelName()))
 	{
@@ -788,10 +801,7 @@ bool OneLoneCoder_Platformer::GameState_Credits(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_Close(float fElapsedTime)
 {
-	// Destroy all dynamics
-	vecEnnemies.clear();
-	vecProjectiles.clear();
-	vecPlatforms.clear();
+	DestroyAllDynamics();
 
 	// Stop Audio
 	olc::SOUND::StopAll();
@@ -801,6 +811,14 @@ bool OneLoneCoder_Platformer::GameState_Close(float fElapsedTime)
 	olc_Terminate();
 
 	return true;
+}
+
+void OneLoneCoder_Platformer::DestroyAllDynamics()
+{
+	vecEnnemies.clear();
+	vecProjectiles.clear();
+	vecPlatforms.clear();
+	vecWinds.clear();
 }
 
 void OneLoneCoder_Platformer::LoadLevelProperties()
@@ -972,6 +990,25 @@ std::vector<cDynamicMovingPlatform*> OneLoneCoder_Platformer::GetClosePlatforms(
 olc::Sprite* OneLoneCoder_Platformer::GetDoorSwitch(bool on)
 {
 	return on ? sprDoorSwitchOn : sprDoorSwitchOff;
+}
+
+void OneLoneCoder_Platformer::AddWind(float ox, float oy, std::string sprite, std::wstring direction, float power)
+{
+	cDynamicWind* wind = new cDynamicWind(ox, oy, mapWinds[sprite], direction, power);
+	vecWinds.push_back(wind);
+}
+
+std::vector<cDynamicWind*> OneLoneCoder_Platformer::GetCloseWinds(float px, float py)
+{
+	std::vector<cDynamicWind*> closeWinds;
+	for (auto& wind : vecWinds)
+	{
+		if (fabs(px - (wind->GetPX())) < (((float)ScreenWidth()) / 64.0f) && fabs(py - (wind->GetPY())) < (((float)ScreenHeight()) / 64.0f))
+		{
+			closeWinds.push_back(wind);
+		}
+	}
+	return closeWinds;
 }
 
 float OneLoneCoder_Platformer::GetTileWidth()

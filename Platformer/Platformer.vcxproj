@@ -172,6 +172,7 @@
     <ClCompile Include="Platformer_DynamicCreatureWhispyWood.cpp" />
     <ClCompile Include="Platformer_DynamicHarmfulBloc.cpp" />
     <ClCompile Include="Platformer_DynamicHorizontalCrusher.cpp" />
+    <ClCompile Include="Platformer_DynamicWind.cpp" />
     <ClCompile Include="Platformer_DynamicMovingPlatform.cpp" />
     <ClCompile Include="Platformer_DynamicMovingPlatformHorSingle.cpp" />
     <ClCompile Include="Platformer_DynamicMovingPlatformVerSine.cpp" />
@@ -228,6 +229,7 @@
     <ClInclude Include="Platformer_DynamicCreatureWhispyWood.h" />
     <ClInclude Include="Platformer_DynamicHarmfulBloc.h" />
     <ClInclude Include="Platformer_DynamicHorizontalCrusher.h" />
+    <ClInclude Include="Platformer_DynamicWind.h" />
     <ClInclude Include="Platformer_DynamicMovingPlatform.h" />
     <ClInclude Include="Platformer_DynamicMovingPlatformHorSingle.h" />
     <ClInclude Include="Platformer_DynamicMovingPlatformVerSine.h" />

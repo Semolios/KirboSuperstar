@@ -149,7 +149,7 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 	return true;
 }
 
-bool cLevel::PopulatePlatforms(std::vector<cDynamicMovingPlatform*>& vecPtfm, std::string levelName)
+bool cLevel::PopulateMechanisms(std::string levelName)
 {
 	std::wifstream file(levelName);
 
@@ -208,7 +208,10 @@ bool cLevel::PopulatePlatforms(std::vector<cDynamicMovingPlatform*>& vecPtfm, st
 			{
 				engine->AddHarmfulBloc(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), std::stoi(parts[4]));
 			}
-			// TODO
+			if (parts[0] == L"Wind")
+			{
+				engine->AddWind(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), parts[4], std::stoi(parts[5]));
+			}
 		}
 	}
 
@@ -783,14 +786,14 @@ void cLevel::LoadLevelsEnnemiesList()
 	levelsEnnemies.push_back("assets/lvls/ennemiesLvl6.txt");
 }
 
-void cLevel::LoadLevelsPlatformsList()
+void cLevel::LoadLevelsMechanismsList()
 {
-	levelsPlatforms.push_back("assets/lvls/platformsLvl1.txt");
-	levelsPlatforms.push_back("assets/lvls/platformsLvl2.txt");
-	levelsPlatforms.push_back("assets/lvls/platformsLvl3.txt");
-	levelsPlatforms.push_back("assets/lvls/platformsLvl4.txt");
-	levelsPlatforms.push_back("assets/lvls/platformsLvl5.txt");
-	levelsPlatforms.push_back("assets/lvls/platformsLvl6.txt");
+	levelsMechanisms.push_back("assets/lvls/mechanismsLvl1.txt");
+	levelsMechanisms.push_back("assets/lvls/mechanismsLvl2.txt");
+	levelsMechanisms.push_back("assets/lvls/mechanismsLvl3.txt");
+	levelsMechanisms.push_back("assets/lvls/mechanismsLvl4.txt");
+	levelsMechanisms.push_back("assets/lvls/mechanismsLvl5.txt");
+	levelsMechanisms.push_back("assets/lvls/mechanismsLvl6.txt");
 }
 
 void cLevel::LoadLevelsTilesList()
@@ -868,9 +871,9 @@ std::string cLevel::GetLevelsEnnemiesName()
 	return levelsEnnemies[nCurrentLevel];
 }
 
-std::string cLevel::GetLevelsPlatformsName()
+std::string cLevel::GetLevelsMechanismsName()
 {
-	return levelsPlatforms[nCurrentLevel];
+	return levelsMechanisms[nCurrentLevel];
 }
 
 std::string cLevel::GetLevelsTilesName()

@@ -26,6 +26,7 @@
 #include "Platformer_DynamicProjectileOrbital.h"
 #include "Platformer_DynamicVerticalCrusher.h"
 #include "Platformer_DynamicWall.h"
+#include "Platformer_DynamicWind.h"
 #include "Platformer_EndScreen.h"
 #include "Platformer_Hitbox.h"
 #include "Platformer_HUD.h"
@@ -204,6 +205,10 @@ private:
 	olc::Sprite* sprDoorSwitchOff;
 	olc::Sprite* sprDoorSwitchOn;
 
+	// Winds
+	std::vector<cDynamicWind*> vecWinds;
+	std::map<std::string, std::vector<olc::Sprite*>> mapWinds;
+
 	// HUD
 	cHUD* HUD;
 	olc::Sprite* sprHealthBar;
@@ -224,7 +229,7 @@ private:
 		LS_LEVELS,
 		LS_ANIMATIONS,
 		LS_PROJECTILES,
-		LS_PLATFORMS,
+		LS_MECHANISMS,
 		LS_TITLE,
 		LS_WORLDMAP,
 		LS_TRANSITION,
@@ -279,6 +284,7 @@ protected:
 	bool GameState_Credits(float fElapsedTime);
 	bool GameState_Close(float fElapsedTime);
 
+	void DestroyAllDynamics();
 	void LoadLevelProperties();
 
 public:
@@ -308,6 +314,10 @@ public:
 	void AddHarmfulBloc(float ox, float oy, std::string sprite, float dmg);
 	std::vector<cDynamicMovingPlatform*> GetClosePlatforms(float px, float py);
 	olc::Sprite* GetDoorSwitch(bool on);
+
+	// Winds functions
+	void AddWind(float ox, float oy, std::string sprite, std::wstring direction, float power);
+	std::vector<cDynamicWind*> GetCloseWinds(float px, float py);
 
 	// Engine properties/modifications functions
 	float GetTileWidth();

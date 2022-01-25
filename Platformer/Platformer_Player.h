@@ -25,7 +25,7 @@ private:
 	const float cfVelY = 5.0f;							// Up and Down velocities
 	const float cfMinVelX = 1.0f;						// Minimum player horizontal velocity
 	const float cfMaxVelX = 7.0f;						// Maximum player horizontal velocity
-	const float cfMaxVelY = 100.0f;						// Maximum player vertical velocity
+	const float cfMaxVelY = 25.0f;						// Maximum player vertical velocity
 	const float cfMaxFlyingVelX = 5.0f;					// Maximum player horizontal velocity while flying
 	const float cfMaxFlyingVelY = 5.0f;					// Maximum player vertical velocity while flying
 	const float cfAccGrdX = 25.0f;						// Acceleration value when on ground
@@ -130,6 +130,8 @@ public:
 	void DecreaseVelocities(float dvx, float dvy);
 	void SetVelocities(float vx, float vy);
 	void Collisions(float fElapsedTime, cLevel* lvl);
+	void CheckHole(cLevel* lvl);
+	void CheckPickUp(cLevel* lvl, float fNewPosX, float fNewPosY);
 	void CheckSolidFloor(cLevel* lvl, float fNewPlayerPosX, float& fNewPlayerPosY);
 	void NormalDrag();
 	void CheckDynamicFloor(float& fNewPlayerPosX, float& fNewPlayerPosY, float fElapsedTime, cLevel* lvl);

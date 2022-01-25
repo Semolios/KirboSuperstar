@@ -529,41 +529,32 @@ void cPlayer::SetVelocities(float vx, float vy)
 
 void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 {
-	float fNewPosX = fPosX + fVelX * fElapsedTime;
-	float fNewPosY = fPosY + fVelY * fElapsedTime;
+	float fNewVelX = fVelX;
+	float fNewVelY = fVelY;
 
-	// Check for pickups !
-	if (IsCollectibleItem(lvl->GetTile(fNewPosX + 0.0f, fNewPosY + 0.0f)))
+	for (auto& wind : engine->GetCloseWinds(fPosX, fPosY))
 	{
-		SelectItem(lvl->GetTile(fNewPosX + 0.0f, fNewPosY + 0.0f));
-		lvl->SetTile(fNewPosX + 0.0f, fNewPosY + 0.0f, L'.');
-	}
-	if (IsCollectibleItem(lvl->GetTile(fNewPosX + 0.0f, fNewPosY + 1.0f)))
-	{
-		SelectItem(lvl->GetTile(fNewPosX + 0.0f, fNewPosY + 1.0f));
-		lvl->SetTile(fNewPosX + 0.0f, fNewPosY + 1.0f, L'.');
-	}
-	if (IsCollectibleItem(lvl->GetTile(fNewPosX + 1.0f, fNewPosY + 0.0f)))
-	{
-		SelectItem(lvl->GetTile(fNewPosX + 1.0f, fNewPosY + 0.0f));
-		lvl->SetTile(fNewPosX + 1.0f, fNewPosY + 0.0f, L'.');
-	}
-	if (IsCollectibleItem(lvl->GetTile(fNewPosX + 1.0f, fNewPosY + 1.0f)))
-	{
-		SelectItem(lvl->GetTile(fNewPosX + 1.0f, fNewPosY + 1.0f));
-		lvl->SetTile(fNewPosX + 1.0f, fNewPosY + 1.0f, L'.');
+		if (cHitbox::ShapeOverlap_DIAG(hitbox, wind->GetHitbox()))
+		{
+			if (wind->GetDirection() == "up")    fNewVelY = fVelY - wind->GetPower();
+			if (wind->GetDirection() == "down")  fNewVelY = fVelY + wind->GetPower();
+			if (wind->GetDirection() == "left")  fNewVelX = fVelX - wind->GetPower();
+			if (wind->GetDirection() == "right") fNewVelX = fVelX + wind->GetPower();
+		}
 	}
 
-	// Check hole
-	if (fPosY > lvl->GetHeight())
-	{
-		if (!bDead)
-			engine->PlaySample("kirboHit");
-		Kill();
-	}
+	float fNewPosX = fPosX + fNewVelX * fElapsedTime;
+	float fNewPosY = fPosY + fNewVelY * fElapsedTime;
+
+	CheckPickUp(lvl, fNewPosX + 0.0f, fNewPosY + 0.0f);
+	CheckPickUp(lvl, fNewPosX + 0.0f, fNewPosY + 1.0f);
+	CheckPickUp(lvl, fNewPosX + 1.0f, fNewPosY + 0.0f);
+	CheckPickUp(lvl, fNewPosX + 1.0f, fNewPosY + 1.0f);
+
+	CheckHole(lvl);
 
 	// Collision
-	if (fVelX <= 0) // Moving Left
+	if (fNewVelX <= 0) // Moving Left
 	{
 		if (fNewPosX <= 1) fNewPosX = 1; // Prevent from being brutally moved to 0 only when reaching -1
 
@@ -579,7 +570,7 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 	}
 
 	bOnGround = false;
-	if (fVelY <= 0) // Moving Up
+	if (fNewVelY <= 0) // Moving Up
 	{
 		if (fNewPosY <= 1) fNewPosY = 1; // Prevent from being brutally moved to 0 only when reaching -1
 
@@ -598,6 +589,25 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 
 	fPosX = fNewPosX;
 	fPosY = fNewPosY;
+}
+
+void cPlayer::CheckHole(cLevel* lvl)
+{
+	if (fPosY > lvl->GetHeight())
+	{
+		if (!bDead)
+			engine->PlaySample("kirboHit");
+		Kill();
+	}
+}
+
+void cPlayer::CheckPickUp(cLevel* lvl, float fNewPosX, float fNewPosY)
+{
+	if (IsCollectibleItem(lvl->GetTile(fNewPosX, fNewPosY)))
+	{
+		SelectItem(lvl->GetTile(fNewPosX, fNewPosY));
+		lvl->SetTile(fNewPosX, fNewPosY, L'.');
+	}
 }
 
 void cPlayer::CheckSolidFloor(cLevel* lvl, float fNewPlayerPosX, float& fNewPlayerPosY)
