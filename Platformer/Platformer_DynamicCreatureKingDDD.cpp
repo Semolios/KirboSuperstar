@@ -431,7 +431,7 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 					engine->ChangeKirboAnimation("damaged");
 					engine->SetKirboAttackable(false);
 
-					if (engine->CheckIfKirboCollisionWithEnnemy(this))
+					if (engine->KirboCollisionWithEnnemy(this))
 					{
 						engine->SetKirboVisible(false);
 						engine->StopSample("kingDDDVacuum");

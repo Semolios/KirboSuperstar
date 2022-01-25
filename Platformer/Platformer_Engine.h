@@ -362,7 +362,7 @@ public:
 	void SetKirboVisible(bool visible);
 	void SetKirboAttackable(bool attackable);
 	void SetKirboPositions(float px, float py);
-	bool CheckIfKirboCollisionWithEnnemy(cDynamic* object);
+	bool KirboCollisionWithEnnemy(cDynamic* object);
 	bool IsKirboAttackable();
 	void HealPlayer();
 	void PlayerGetCandy(float candyTime);

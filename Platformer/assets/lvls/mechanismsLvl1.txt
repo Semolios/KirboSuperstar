@@ -1,4 +1,4 @@
---Basic,4,9,basic,0
+VerticalSine,4,4,basic,0,30,20,0
 Wind,7,8,up,up,4
 Wind,12,7,down,down,4
 Wind,12,3,down,down,4

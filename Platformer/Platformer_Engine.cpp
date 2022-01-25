@@ -90,15 +90,15 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			sprDoor = new olc::Sprite("assets/gfx/door.png");
 
 			level->LoadLevelsList();
-			level->LoadBossLevelsList();
-			level->LoadLevelsEnnemiesList();
-			level->LoadLevelsMechanismsList();
-			level->LoadLevelsTilesList();
-			level->LoadLevelsGrdTilesList();
-			level->LoadLevelsBackGroundList();
-			level->LoadLevelsBossBckGrdList();
-			level->LoadLevelsMusics();
-			level->LoadBossLevelsMusics();
+			level->LoadBossesList();
+			level->LoadEnnemiesList();
+			level->LoadMechanismsList();
+			level->LoadSpecialTilesList();
+			level->LoadGroundTilesList();
+			level->LoadBackGroundsList();
+			level->LoadBossesBackGroundsList();
+			level->LoadMusicsList();
+			level->LoadBossesMusicsList();
 
 			level->InitialiseThreadPool();
 
@@ -376,17 +376,17 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 	DestroyAllDynamics();
 
 	level->SetCurrentLvl(worldMap->GetSelectedLevel());
-	if (level->LoadLevel(level->GetLevelName()))
+	if (level->LoadLevel(level->GetName()))
 	{
 		LoadLevelProperties();
 
-		level->PopulateEnnemies(vecEnnemies, level->GetLevelsEnnemiesName());
-		level->PopulateMechanisms(level->GetLevelsMechanismsName());
+		level->PopulateEnnemies(vecEnnemies, level->GetEnnemies());
+		level->PopulateMechanisms(level->GetMechanisms());
 
-		spriteTiles = new olc::Sprite(level->GetLevelsTilesName());
-		sprGrdTiles = new olc::Sprite(level->GetLevelsGrdTilesName());
-		sprBackground = new olc::Sprite(level->GetLevelsBackGroundName());
-		sndLevelMusic = olc::SOUND::LoadAudioSample(level->GetLevelsMusicsName());
+		spriteTiles = new olc::Sprite(level->GetSpecialTiles());
+		sprGrdTiles = new olc::Sprite(level->GetGroundTiles());
+		sprBackground = new olc::Sprite(level->GetBackGround());
+		sndLevelMusic = olc::SOUND::LoadAudioSample(level->GetMusic());
 	}
 
 	// Reset variables when level is loading
@@ -450,7 +450,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		return true;
 	}
 
-	camera->ClampCameraOffset();
+	camera->ClampOffset();
 
 	player->ApplyGravity(fElapsedTime);
 
@@ -477,13 +477,13 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	for (auto& object : vecPlatforms)
 	{
-		object->Update(fElapsedTime, player->GetPlayerPosX(), player->GetPlayerPosY());
+		object->Update(fElapsedTime, player->GetPosX(), player->GetPosY());
 	}
 
 	if (!player->IsDead())
 		player->Collisions(fElapsedTime, level);
 
-	camera->SetPositions(player->GetPlayerPosX(), player->GetPlayerPosY());
+	camera->SetPositions(player->GetPosX(), player->GetPosY());
 
 	camera->DrawLevel(level, fElapsedTime);
 
@@ -509,7 +509,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// Check collision with player to damage him
 		if ((player->IsAttackable() && !player->IsSwallowing() && !object->IsVacuumed()) || player->HasCandyPower())
 		{
-			player->CheckKirboCollisionWithEnemy(object, camera->GetOffsetX(), camera->GetOffsetY());
+			player->EnemyCollision(object, camera->GetOffsetX(), camera->GetOffsetY());
 		}
 	}
 
@@ -546,7 +546,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			{
 				if (player->IsAttackable())
 				{
-					player->CheckKirboCollisionWithEnemy(object, camera->GetOffsetX(), camera->GetOffsetY());
+					player->EnemyCollision(object, camera->GetOffsetX(), camera->GetOffsetY());
 				}
 			}
 		}
@@ -564,17 +564,17 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	for (auto& object : vecEnnemies)
 	{
-		object->Update(fElapsedTime, player->GetPlayerPosX(), player->GetPlayerPosY());
+		object->Update(fElapsedTime, player->GetPosX(), player->GetPosY());
 	}
 
 	for (auto& object : vecProjectiles)
 	{
-		object->Update(fElapsedTime, player->GetPlayerPosX(), player->GetPlayerPosY());
+		object->Update(fElapsedTime, player->GetPosX(), player->GetPosY());
 	}
 
 	for (auto& object : vecWinds)
 	{
-		object->Update(fElapsedTime, player->GetPlayerPosX(), player->GetPlayerPosY());
+		object->Update(fElapsedTime, player->GetPosX(), player->GetPosY());
 	}
 
 	// Remove dead ennemies
@@ -617,13 +617,13 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	}
 
 	// Draw Platforms
-	for (auto& object : GetClosePlatforms(player->GetPlayerPosX(), player->GetPlayerPosY()))
+	for (auto& object : GetClosePlatforms(player->GetPosX(), player->GetPosY()))
 	{
 		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
 	}
 
 	// Draw Wind
-	for (auto& object : GetCloseWinds(player->GetPlayerPosX(), player->GetPlayerPosY()))
+	for (auto& object : GetCloseWinds(player->GetPosX(), player->GetPosY()))
 	{
 		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
 	}
@@ -669,7 +669,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	}
 
 	player->UpdateInvulnerability(fElapsedTime);
-	t.Translate((player->GetPlayerPosX() - camera->GetOffsetX()) * nTileWidth + (nTileWidth / 2), (player->GetPlayerPosY() - camera->GetOffsetY()) * nTileHeight + (nTileHeight / 2));
+	t.Translate((player->GetPosX() - camera->GetOffsetX()) * nTileWidth + (nTileWidth / 2), (player->GetPosY() - camera->GetOffsetY()) * nTileHeight + (nTileHeight / 2));
 	player->DrawKirbo(t);
 
 #pragma region HUD
@@ -738,14 +738,14 @@ bool OneLoneCoder_Platformer::GameState_LoadBossLevel(float fElapsedTime)
 {
 	DestroyAllDynamics();
 
-	if (level->LoadLevel(level->GetBossLevelName()))
+	if (level->LoadLevel(level->GetBoss()))
 	{
 		LoadLevelProperties();
 
 		level->PopulateBoss(vecEnnemies);
 
-		sprBackground = new olc::Sprite(level->GetLevelsBossBckGrdName());
-		sndBossLevelMusic = olc::SOUND::LoadAudioSample(level->GetBossLevelsMusicsName());
+		sprBackground = new olc::Sprite(level->GetBossBackGround());
+		sndBossLevelMusic = olc::SOUND::LoadAudioSample(level->GetBossMusic());
 	}
 
 	// Reset variables when level is loading
@@ -823,8 +823,7 @@ void OneLoneCoder_Platformer::DestroyAllDynamics()
 
 void OneLoneCoder_Platformer::LoadLevelProperties()
 {
-	player->SetPlayerPosX(level->GetInitPlayerPosX());
-	player->SetPlayerPosY(level->GetInitPlayerPosY());
+	SetKirboPositions(level->GetInitPlayerPosX(), level->GetInitPlayerPosY());
 }
 
 bool OneLoneCoder_Platformer::GetAnyKey()
@@ -1223,13 +1222,13 @@ void OneLoneCoder_Platformer::SetKirboAttackable(bool attackable)
 
 void OneLoneCoder_Platformer::SetKirboPositions(float px, float py)
 {
-	player->SetPlayerPosX(px);
-	player->SetPlayerPosY(py);
+	player->SetPosX(px);
+	player->SetPosY(py);
 }
 
-bool OneLoneCoder_Platformer::CheckIfKirboCollisionWithEnnemy(cDynamic* object)
+bool OneLoneCoder_Platformer::KirboCollisionWithEnnemy(cDynamic* object)
 {
-	return player->CheckIfEnnemyCollision(object, camera->GetOffsetX(), camera->GetOffsetY());
+	return player->EnemyTouched(object, camera->GetOffsetX(), camera->GetOffsetY());
 }
 
 bool OneLoneCoder_Platformer::IsKirboAttackable()

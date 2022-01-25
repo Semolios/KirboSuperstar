@@ -766,47 +766,47 @@ void cLevel::LoadLevelsList()
 	levels.push_back("assets/lvls/lvl6.txt");
 }
 
-void cLevel::LoadBossLevelsList()
+void cLevel::LoadBossesList()
 {
-	bossLevels.push_back("assets/lvls/Bosslvl1.txt");
-	bossLevels.push_back("assets/lvls/Bosslvl2.txt");
-	bossLevels.push_back("assets/lvls/Bosslvl3.txt");
-	bossLevels.push_back("assets/lvls/Bosslvl4.txt");
-	bossLevels.push_back("assets/lvls/Bosslvl5.txt");
-	bossLevels.push_back("assets/lvls/Bosslvl6.txt");
+	bosses.push_back("assets/lvls/Bosslvl1.txt");
+	bosses.push_back("assets/lvls/Bosslvl2.txt");
+	bosses.push_back("assets/lvls/Bosslvl3.txt");
+	bosses.push_back("assets/lvls/Bosslvl4.txt");
+	bosses.push_back("assets/lvls/Bosslvl5.txt");
+	bosses.push_back("assets/lvls/Bosslvl6.txt");
 }
 
-void cLevel::LoadLevelsEnnemiesList()
+void cLevel::LoadEnnemiesList()
 {
-	levelsEnnemies.push_back("assets/lvls/ennemiesLvl1.txt");
-	levelsEnnemies.push_back("assets/lvls/ennemiesLvl2.txt");
-	levelsEnnemies.push_back("assets/lvls/ennemiesLvl3.txt");
-	levelsEnnemies.push_back("assets/lvls/ennemiesLvl4.txt");
-	levelsEnnemies.push_back("assets/lvls/ennemiesLvl5.txt");
-	levelsEnnemies.push_back("assets/lvls/ennemiesLvl6.txt");
+	ennemies.push_back("assets/lvls/ennemiesLvl1.txt");
+	ennemies.push_back("assets/lvls/ennemiesLvl2.txt");
+	ennemies.push_back("assets/lvls/ennemiesLvl3.txt");
+	ennemies.push_back("assets/lvls/ennemiesLvl4.txt");
+	ennemies.push_back("assets/lvls/ennemiesLvl5.txt");
+	ennemies.push_back("assets/lvls/ennemiesLvl6.txt");
 }
 
-void cLevel::LoadLevelsMechanismsList()
+void cLevel::LoadMechanismsList()
 {
-	levelsMechanisms.push_back("assets/lvls/mechanismsLvl1.txt");
-	levelsMechanisms.push_back("assets/lvls/mechanismsLvl2.txt");
-	levelsMechanisms.push_back("assets/lvls/mechanismsLvl3.txt");
-	levelsMechanisms.push_back("assets/lvls/mechanismsLvl4.txt");
-	levelsMechanisms.push_back("assets/lvls/mechanismsLvl5.txt");
-	levelsMechanisms.push_back("assets/lvls/mechanismsLvl6.txt");
+	mechanisms.push_back("assets/lvls/mechanismsLvl1.txt");
+	mechanisms.push_back("assets/lvls/mechanismsLvl2.txt");
+	mechanisms.push_back("assets/lvls/mechanismsLvl3.txt");
+	mechanisms.push_back("assets/lvls/mechanismsLvl4.txt");
+	mechanisms.push_back("assets/lvls/mechanismsLvl5.txt");
+	mechanisms.push_back("assets/lvls/mechanismsLvl6.txt");
 }
 
-void cLevel::LoadLevelsTilesList()
+void cLevel::LoadSpecialTilesList()
 {
-	levelsTiles.push_back("assets/gfx/tilemap00.png");
-	levelsTiles.push_back("assets/gfx/tilemap01.png");
-	levelsTiles.push_back("assets/gfx/tilemap02.png");
-	levelsTiles.push_back("assets/gfx/tilemap03.png");
-	levelsTiles.push_back("assets/gfx/tilemap04.png");
-	levelsTiles.push_back("assets/gfx/tilemap05.png");
+	specialTiles.push_back("assets/gfx/tilemap00.png");
+	specialTiles.push_back("assets/gfx/tilemap01.png");
+	specialTiles.push_back("assets/gfx/tilemap02.png");
+	specialTiles.push_back("assets/gfx/tilemap03.png");
+	specialTiles.push_back("assets/gfx/tilemap04.png");
+	specialTiles.push_back("assets/gfx/tilemap05.png");
 }
 
-void cLevel::LoadLevelsGrdTilesList()
+void cLevel::LoadGroundTilesList()
 {
 	groundTiles.push_back("assets/gfx/grdTileMap00.png");
 	groundTiles.push_back("assets/gfx/grdTileMap01.png");
@@ -816,94 +816,94 @@ void cLevel::LoadLevelsGrdTilesList()
 	groundTiles.push_back("assets/gfx/grdTileMap05.png");
 }
 
-void cLevel::LoadLevelsBackGroundList()
+void cLevel::LoadBackGroundsList()
 {
-	levelsBackgrounds.push_back("assets/gfx/BckGrd00.png");
-	levelsBackgrounds.push_back("assets/gfx/BckGrd01.png");
-	levelsBackgrounds.push_back("assets/gfx/BckGrd02.png");
-	levelsBackgrounds.push_back("assets/gfx/BckGrd03.png");
-	levelsBackgrounds.push_back("assets/gfx/BckGrd04.png");
-	levelsBackgrounds.push_back("assets/gfx/BckGrd05.png");
+	backgrounds.push_back("assets/gfx/BckGrd00.png");
+	backgrounds.push_back("assets/gfx/BckGrd01.png");
+	backgrounds.push_back("assets/gfx/BckGrd02.png");
+	backgrounds.push_back("assets/gfx/BckGrd03.png");
+	backgrounds.push_back("assets/gfx/BckGrd04.png");
+	backgrounds.push_back("assets/gfx/BckGrd05.png");
 }
 
-void cLevel::LoadLevelsBossBckGrdList()
+void cLevel::LoadBossesBackGroundsList()
 {
-	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd00.png");
-	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd01.png");
-	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd02.png");
-	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd03.png");
-	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd04.png");
-	bossLevelsBackgrounds.push_back("assets/gfx/BossBckGrd05.png");
+	bossesBackgrounds.push_back("assets/gfx/BossBckGrd00.png");
+	bossesBackgrounds.push_back("assets/gfx/BossBckGrd01.png");
+	bossesBackgrounds.push_back("assets/gfx/BossBckGrd02.png");
+	bossesBackgrounds.push_back("assets/gfx/BossBckGrd03.png");
+	bossesBackgrounds.push_back("assets/gfx/BossBckGrd04.png");
+	bossesBackgrounds.push_back("assets/gfx/BossBckGrd05.png");
 }
 
-void cLevel::LoadLevelsMusics()
+void cLevel::LoadMusicsList()
 {
-	levelsMusics.push_back("assets/snd/lvl00.wav");
-	levelsMusics.push_back("assets/snd/lvl01.wav");
-	levelsMusics.push_back("assets/snd/lvl02.wav");
-	levelsMusics.push_back("assets/snd/lvl03.wav");
-	levelsMusics.push_back("assets/snd/lvl04.wav");
-	levelsMusics.push_back("assets/snd/lvl05.wav");
+	musics.push_back("assets/snd/lvl00.wav");
+	musics.push_back("assets/snd/lvl01.wav");
+	musics.push_back("assets/snd/lvl02.wav");
+	musics.push_back("assets/snd/lvl03.wav");
+	musics.push_back("assets/snd/lvl04.wav");
+	musics.push_back("assets/snd/lvl05.wav");
 }
 
-void cLevel::LoadBossLevelsMusics()
+void cLevel::LoadBossesMusicsList()
 {
-	bossLevelsMusics.push_back("assets/snd/bossLvl00.wav");
-	bossLevelsMusics.push_back("assets/snd/bossLvl01.wav");
-	bossLevelsMusics.push_back("assets/snd/bossLvl02.wav");
-	bossLevelsMusics.push_back("assets/snd/bossLvl01.wav"); // the music is the same for "Mr Shine and Mr Bright" and "Kracko"
-	bossLevelsMusics.push_back("assets/snd/bossLvl04.wav");
-	bossLevelsMusics.push_back("assets/snd/bossLvl05.wav");
+	bossesMusics.push_back("assets/snd/bossLvl00.wav");
+	bossesMusics.push_back("assets/snd/bossLvl01.wav");
+	bossesMusics.push_back("assets/snd/bossLvl02.wav");
+	bossesMusics.push_back("assets/snd/bossLvl01.wav"); // the music is the same for "Mr Shine and Mr Bright" and "Kracko"
+	bossesMusics.push_back("assets/snd/bossLvl04.wav");
+	bossesMusics.push_back("assets/snd/bossLvl05.wav");
 }
 
-std::string cLevel::GetLevelName()
+std::string cLevel::GetName()
 {
 	return levels[nCurrentLevel];
 }
 
-std::string cLevel::GetBossLevelName()
+std::string cLevel::GetBoss()
 {
-	return bossLevels[nCurrentLevel];
+	return bosses[nCurrentLevel];
 }
 
-std::string cLevel::GetLevelsEnnemiesName()
+std::string cLevel::GetEnnemies()
 {
-	return levelsEnnemies[nCurrentLevel];
+	return ennemies[nCurrentLevel];
 }
 
-std::string cLevel::GetLevelsMechanismsName()
+std::string cLevel::GetMechanisms()
 {
-	return levelsMechanisms[nCurrentLevel];
+	return mechanisms[nCurrentLevel];
 }
 
-std::string cLevel::GetLevelsTilesName()
+std::string cLevel::GetSpecialTiles()
 {
-	return levelsTiles[nCurrentLevel];
+	return specialTiles[nCurrentLevel];
 }
 
-std::string cLevel::GetLevelsGrdTilesName()
+std::string cLevel::GetGroundTiles()
 {
 	return groundTiles[nCurrentLevel];
 }
 
-std::string cLevel::GetLevelsBackGroundName()
+std::string cLevel::GetBackGround()
 {
-	return levelsBackgrounds[nCurrentLevel];
+	return backgrounds[nCurrentLevel];
 }
 
-std::string cLevel::GetLevelsBossBckGrdName()
+std::string cLevel::GetBossBackGround()
 {
-	return bossLevelsBackgrounds[nCurrentLevel];
+	return bossesBackgrounds[nCurrentLevel];
 }
 
-std::string cLevel::GetLevelsMusicsName()
+std::string cLevel::GetMusic()
 {
-	return levelsMusics[nCurrentLevel];
+	return musics[nCurrentLevel];
 }
 
-std::string cLevel::GetBossLevelsMusicsName()
+std::string cLevel::GetBossMusic()
 {
-	return bossLevelsMusics[nCurrentLevel];
+	return bossesMusics[nCurrentLevel];
 }
 
 int cLevel::GetCurrentLvl()

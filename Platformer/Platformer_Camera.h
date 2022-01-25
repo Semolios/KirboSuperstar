@@ -18,17 +18,17 @@ public:
 	cCamera();
 
 private:
-	const float cfCameraLowerPos = 1.0f / 4.0f;			// Lower position for the camera (when the player is not pushing down)
-	const float cfCameraUpperPos = 2.0f / 3.0f;			// Upper position for the camera (when the player holds down when on ground)
-
-	const float cfCameraMoveSpeed = 0.02f;
+	const float cfLowerPos = 1.0f / 4.0f;			// Lower position for the camera (when the player is not pushing down)
+	const float cfUpperPos = 2.0f / 3.0f;			// Upper position for the camera (when the player holds down when on ground)
+	const float cfMoveSpeed = 0.02f;
 	const float cfShakeAttenuation = 1000.0f;
 	const float cfShakeEffectChangeFrequency = 0.07f;
+
 	float fOffsetX;
 	float fOffsetY;
-	float fCameraLookingDown = 2.0f / 3.0f;
-	float fCameraPosX = 0.0f;
-	float fCameraPosY = 0.0f;
+	float fLookingDownPos = 2.0f / 3.0f;
+	float fPosX = 0.0f;
+	float fPosY = 0.0f;
 	float fShakeTimerChange = 0.0f;
 	float fShakeEffectX;
 	float fShakeEffectY;
@@ -86,15 +86,15 @@ public:
 	static OneLoneCoder_Platformer* engine;
 
 public:
-	void ClampCameraOffset();
+	void ClampOffset();
 	void SetPositions(float fPlayerPosX, float fPlayerPosY);
 	void DrawLevel(cLevel* level, float fElapsedTime);
 	void DrawBackground(cLevel* level);
 	void DrawBackgroundThread(int x, int y, float fBckgrdoffX, float fBckgrdoffY, int w, int h);
 	float GetOffsetX();
 	float GetOffsetY();
-	void LowerCameraPosition();
-	void RaiseCameraPosition();
+	void LowerPosition();
+	void RaisePosition();
 	void SetShake(bool shake);
 	void ActivateShakeEffect(bool activate, int shakeAmplitudeX = 50, int shakeAmplitudeY = 50);
 	void InitialiseThreadPool();

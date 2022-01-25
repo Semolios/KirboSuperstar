@@ -7,16 +7,16 @@ cCamera::cCamera()
 {
 }
 
-void cCamera::ClampCameraOffset()
+void cCamera::ClampOffset()
 {
-	if (fCameraLookingDown <= cfCameraLowerPos) fCameraLookingDown = cfCameraLowerPos;
-	if (fCameraLookingDown >= cfCameraUpperPos) fCameraLookingDown = cfCameraUpperPos;
+	if (fLookingDownPos <= cfLowerPos) fLookingDownPos = cfLowerPos;
+	if (fLookingDownPos >= cfUpperPos) fLookingDownPos = cfUpperPos;
 }
 
 void cCamera::SetPositions(float fPlayerPosX, float fPlayerPosY)
 {
-	fCameraPosX = fPlayerPosX;
-	fCameraPosY = fPlayerPosY;
+	fPosX = fPlayerPosX;
+	fPosY = fPlayerPosY;
 }
 
 void cCamera::DrawLevel(cLevel* level, float fElapsedTime)
@@ -25,8 +25,8 @@ void cCamera::DrawLevel(cLevel* level, float fElapsedTime)
 	int nVisibleTilesY = engine->ScreenHeight() / engine->GetTileHeight();
 
 	// Calculate Top-Left most visible tile
-	fOffsetX = fCameraPosX - (float)nVisibleTilesX / 2.0f;
-	fOffsetY = fCameraPosY - (float)nVisibleTilesY * fCameraLookingDown;
+	fOffsetX = fPosX - (float)nVisibleTilesX / 2.0f;
+	fOffsetY = fPosY - (float)nVisibleTilesY * fLookingDownPos;
 
 	// Clamp camera to game boundaries
 	if (fOffsetX < 1) fOffsetX = 1;
@@ -83,14 +83,14 @@ float cCamera::GetOffsetY()
 	return fOffsetY;
 }
 
-void cCamera::LowerCameraPosition()
+void cCamera::LowerPosition()
 {
-	fCameraLookingDown -= cfCameraMoveSpeed;
+	fLookingDownPos -= cfMoveSpeed;
 }
 
-void cCamera::RaiseCameraPosition()
+void cCamera::RaisePosition()
 {
-	fCameraLookingDown += cfCameraMoveSpeed;
+	fLookingDownPos += cfMoveSpeed;
 }
 
 void cCamera::SetShake(bool shake)
