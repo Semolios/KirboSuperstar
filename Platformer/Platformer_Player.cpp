@@ -31,7 +31,6 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 			{
 				if (IsEnteringDoor(lvl))
 				{
-					engine->PlaySample("enterDoor");
 					animPlayer->ChangeState("enterDoor");
 					bInteracting = true;
 					bBreakDoor = true;
@@ -437,16 +436,20 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 		// Break door animation
 		if (bBreakDoor)
 		{
-			// Spawn door pieces
-			if (bCanSpawnProjectile)
+
+			if (fAnimationTimer >= cfBrokenDoorFrame * animPlayer->fTimeBetweenFrames)
 			{
-				float debrisDuration = animPlayer->mapStates[animPlayer->sCurrentState].size() * animPlayer->fTimeBetweenFrames;
+				if (bCanSpawnProjectile)
+				{
+					engine->PlaySample("enterDoor");
+					float debrisDuration = animPlayer->mapStates[animPlayer->sCurrentState].size() * animPlayer->fTimeBetweenFrames;
 
-				engine->AddProjectile(fPosX, fPosY, true, -6.0f, -6.0f, debrisDuration, "doorDebris", true, 0, false);
-				engine->AddProjectile(fPosX, fPosY, true, +3.0f, -9.0f, debrisDuration, "doorDebris", true, 0, false);
-				engine->AddProjectile(fPosX, fPosY, true, +9.0f, -3.0f, debrisDuration, "doorDebris", true, 0, false);
+					engine->AddProjectile(fPosX, fPosY, true, -6.0f, -6.0f, debrisDuration, "doorDebris1", true, 0, false);
+					engine->AddProjectile(fPosX, fPosY, true, +3.0f, -9.0f, debrisDuration, "doorDebris2", true, 0, false);
+					engine->AddProjectile(fPosX, fPosY, true, +9.0f, -3.0f, debrisDuration, "doorDebris3", true, 0, false);
 
-				bCanSpawnProjectile = false;
+					bCanSpawnProjectile = false;
+				}
 			}
 		}
 

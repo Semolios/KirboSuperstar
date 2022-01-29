@@ -55,6 +55,7 @@ private:
 	const float cfKnockBackDuration = 0.3f;				// Ennemies Knock back duration
 	const float cfNormalDrag = -3.0f;					// Drag Value on normal ground
 	const float cfIcedDrag = -0.5f;						// Drag Value on iced ground
+	const float cfBrokenDoorFrame = 3.0f;				// Number of frames to break door
 
 	const int cnSlapDmg = 3;							// damages of the slap attack
 	const int cnJesusCrossDmg = 5;						// damages of the jesus cross
