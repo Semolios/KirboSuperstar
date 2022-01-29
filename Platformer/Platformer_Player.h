@@ -87,7 +87,7 @@ private:
 	bool bDoubleJump = false;
 	bool bChargeJump = false;
 	bool bChargeDoubleJump = false;
-	bool bAttacking = false;
+	bool bInteracting = false;
 	bool bSlapping = false;
 	bool bVacuuming = false;
 	bool bLaunchingJesusCross = false;
@@ -101,6 +101,7 @@ private:
 	bool bWind = false;
 	bool bSwallowSound = false;
 	bool bPoyo = false;
+	bool bBreakDoor = false;
 	bool bIsGrabbedByEnnemy = false;
 	bool bForceInvincible = false;
 	bool bForceInvisible = false;
@@ -119,11 +120,15 @@ public:
 	void InitialiseKirboHealth();
 	bool IsDead();
 	void HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl);
+	bool IsEnteringDoor(cLevel* lvl);
+	void EnterDoor(cLevel* lvl);
+	void EnterTP();
+	void Teleport(float px, float py);
 	bool CanInteract();
 	void ApplyGravity(float fElapsedTime);
 	void Update(float fElapsedTime);
 	float GetFaceDir();
-	void OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t, std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles);
+	void OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t, std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles, cLevel* lvl);
 	void StopAnyAttack();
 	void ClampVelocities();
 	void IncreaseVelocities(float dvx, float dvy);
@@ -132,7 +137,7 @@ public:
 	void Collisions(float fElapsedTime, cLevel* lvl);
 	void CheckHole(cLevel* lvl);
 	void CheckPickUp(cLevel* lvl, float fNewPosX, float fNewPosY);
-	void CheckSolidFloor(cLevel* lvl, float fNewPosX, float & fNewPosY);
+	void CheckSolidFloor(cLevel* lvl, float fNewPosX, float& fNewPosY);
 	void NormalDrag();
 	void CheckDynamicFloor(float& fNewPosX, float& fNewPosY, float fElapsedTime, cLevel* lvl);
 	void IcedDrag();

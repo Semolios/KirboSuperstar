@@ -24,6 +24,7 @@
 #include "Platformer_DynamicProjectile.h"
 #include "Platformer_DynamicProjectileBoomerang.h"
 #include "Platformer_DynamicProjectileOrbital.h"
+#include "Platformer_DynamicTeleport.h"
 #include "Platformer_DynamicVerticalCrusher.h"
 #include "Platformer_DynamicWall.h"
 #include "Platformer_DynamicWind.h"
@@ -136,6 +137,7 @@ private:
 	int sndItemPicked;
 	int sndRockyFall;
 	int sndBoom;
+	int sndEnterDoor;
 
 	// engine Properties
 	cPlayer* player;
@@ -208,6 +210,10 @@ private:
 	// Winds
 	std::vector<cDynamicWind*> vecWinds;
 	std::map<std::string, std::vector<olc::Sprite*>> mapWinds;
+
+	// Teleports
+	std::vector<cDynamicTeleport*> vecTeleports;
+	std::map<std::string, std::vector<olc::Sprite*>> mapTeleports;
 
 	// HUD
 	cHUD* HUD;
@@ -318,6 +324,11 @@ public:
 	// Winds functions
 	void AddWind(float ox, float oy, std::string sprite, std::wstring direction, float power);
 	std::vector<cDynamicWind*> GetCloseWinds(float px, float py);
+
+	// Teleports functions
+	void AddTeleport(float ax, float ay, float bx, float by, std::string sprite);
+	std::vector<cDynamicTeleport*> GetCloseTeleport(float px, float py);
+	std::vector<cDynamicTeleport*> GetCloseTeleportDest(float px, float py);
 
 	// Engine properties/modifications functions
 	float GetTileWidth();

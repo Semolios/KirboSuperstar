@@ -136,4 +136,10 @@ void cAnimator::LoadAnimations()
 	mapStates["poyo"].push_back(new olc::Sprite("assets/gfx/poyo01.png"));
 	mapStates["poyo"].push_back(new olc::Sprite("assets/gfx/poyo02.png"));
 	mapStates["poyo"].push_back(new olc::Sprite("assets/gfx/poyo03.png"));
+
+	mapStates["enterDoor"].push_back(new olc::Sprite("assets/gfx/kirboEnterDoor00.png"));
+	mapStates["enterDoor"].push_back(new olc::Sprite("assets/gfx/kirboEnterDoor01.png"));
+	mapStates["enterDoor"].push_back(new olc::Sprite("assets/gfx/kirboEnterDoor02.png"));
+	mapStates["enterDoor"].push_back(new olc::Sprite("assets/gfx/kirboEnterDoor03.png"));
+	mapStates["enterDoor"].push_back(new olc::Sprite("assets/gfx/kirboEnterDoor04.png"));
 }

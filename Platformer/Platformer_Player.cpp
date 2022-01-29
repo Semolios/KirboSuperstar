@@ -27,14 +27,25 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		// Fly, enter a door
 		if (engine->GetKey(olc::Key::UP).bHeld || engine->GetController()->GetButton(UP).bHeld || engine->GetController()->GetLeftStickY() > 0.5f)
 		{
-			if (!bAttacking && !bVacuuming)
+			if (!bInteracting && !bVacuuming)
 			{
-				if (lvl->GetTile(fPosX + 0.5f, fPosY + 0.5f) == L'w' && bOnGround)
-					engine->SetGameState("GS_LOADBOSSLEVEL");
+				if (IsEnteringDoor(lvl))
+				{
+					engine->PlaySample("enterDoor");
+					animPlayer->ChangeState("enterDoor");
+					bInteracting = true;
+					bBreakDoor = true;
+					fAnimationTimer = 0.0f;
+					bCanSpawnProjectile = true;
+					SetAttackable(false);
+				}
 
-				fVelY = -cfVelY;
-				bFlying = true;
-				animPlayer->ChangeState("flying");
+				if (!bBreakDoor)
+				{
+					fVelY = -cfVelY;
+					bFlying = true;
+					animPlayer->ChangeState("flying");
+				}
 			}
 		}
 
@@ -75,7 +86,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		// Go left
 		if (engine->GetKey(olc::Key::LEFT).bHeld || engine->GetController()->GetButton(LEFT).bHeld || engine->GetController()->GetLeftStickX() < -0.25f)
 		{
-			if (!bAttacking && !bVacuuming)
+			if (!bInteracting && !bVacuuming)
 			{
 				// Init walking sound
 				engine->PlaySample("kirboWalk", false, true);
@@ -91,7 +102,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		// Go right
 		if (engine->GetKey(olc::Key::RIGHT).bHeld || engine->GetController()->GetButton(RIGHT).bHeld || engine->GetController()->GetLeftStickX() > 0.25f)
 		{
-			if (!bAttacking && !bVacuuming)
+			if (!bInteracting && !bVacuuming)
 			{
 				// Init walking sound
 				engine->PlaySample("kirboWalk", false, true);
@@ -135,7 +146,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		// The more you hold, the higher you go
 		if (engine->GetKey(olc::Key::SPACE).bHeld || engine->GetController()->GetButton(A).bHeld)
 		{
-			if (!bAttacking && !bVacuuming)
+			if (!bInteracting && !bVacuuming)
 			{
 				if (bChargeJump)
 				{
@@ -179,10 +190,10 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		if (engine->GetKey(olc::Key::F).bPressed || engine->GetController()->GetButton(B).bPressed)
 		{
 			// Can't spam slap, can't slap when player is flying
-			if (!bAttacking && !bFlying)
+			if (!bInteracting && !bFlying)
 			{
 				animPlayer->ChangeState("slap");
-				bAttacking = true;
+				bInteracting = true;
 				bSlapping = true;
 				bCanSpawnProjectile = true;
 				fAnimationTimer = 0.0f;
@@ -205,10 +216,10 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		if (engine->GetKey(olc::Key::R).bPressed || engine->GetController()->GetButton(Y).bPressed)
 		{
 			// Can't spam Launching cross, can't launch when player is flying
-			if (!bAttacking && !bFlying)
+			if (!bInteracting && !bFlying)
 			{
 				animPlayer->ChangeState("jesus_christ");
-				bAttacking = true;
+				bInteracting = true;
 				bLaunchingJesusCross = true;
 				bCanSpawnProjectile = true;
 				fAnimationTimer = 0.0f;
@@ -221,14 +232,14 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 			// can't Vacuum when player is attacking, swallowing or flying
 			if (!bFlying && !bSwallowing)
 			{
-				if (!bVacuuming && !bAttacking)
+				if (!bVacuuming && !bInteracting)
 				{
 					engine->PlaySample("beginVacuum");
 					animPlayer->ChangeState("begin_vacuum");
 					bVacuuming = true;
 					fAnimationTimer = 0.0f;
 				}
-				bAttacking = true;
+				bInteracting = true;
 			}
 			else
 			{
@@ -258,12 +269,70 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 				if (poyo == 1) engine->PlaySample("poyo02");
 
 				animPlayer->ChangeState("poyo");
-				bAttacking = true;
+				bInteracting = true;
 				bPoyo = true;
 				fAnimationTimer = 0.0f;
 			}
 		}
 	}
+}
+
+bool cPlayer::IsEnteringDoor(cLevel* lvl)
+{
+	if (lvl->GetTile(fPosX + 0.5f, fPosY + 0.5f) == L'w' && bOnGround)
+		return true;
+
+	for (auto& TP : engine->GetCloseTeleport(fPosX, fPosY))
+	{
+		if (cHitbox::ShapeOverlap_DIAG(hitbox, TP->GetHitbox()))
+			return true;
+	}
+
+	for (auto& TP : engine->GetCloseTeleportDest(fPosX, fPosY))
+	{
+		if (cHitbox::ShapeOverlap_DIAG(hitbox, TP->GetDestHitbox()))
+			return true;
+	}
+
+	return false;
+}
+
+void cPlayer::EnterDoor(cLevel* lvl)
+{
+	if (lvl->GetTile(fPosX + 0.5f, fPosY + 0.5f) == L'w')
+	{
+		SetAttackable(true);
+		engine->SetGameState("GS_LOADBOSSLEVEL");
+	}
+
+	EnterTP();
+}
+
+void cPlayer::EnterTP()
+{
+	for (auto& TP : engine->GetCloseTeleport(fPosX, fPosY))
+	{
+		if (cHitbox::ShapeOverlap_DIAG(hitbox, TP->GetHitbox()))
+		{
+			Teleport(TP->GetDestX(), TP->GetDestY());
+		}
+	}
+
+	for (auto& TP : engine->GetCloseTeleportDest(fPosX, fPosY))
+	{
+		if (cHitbox::ShapeOverlap_DIAG(hitbox, TP->GetDestHitbox()))
+		{
+			Teleport(TP->GetPX(), TP->GetPY());
+		}
+	}
+}
+
+void cPlayer::Teleport(float px, float py)
+{
+	fPosX = px;
+	fPosY = py;
+	animPlayer->ChangeState("fall");
+	SetAttackable(true);
 }
 
 bool cPlayer::CanInteract()
@@ -278,12 +347,15 @@ void cPlayer::ApplyGravity(float fElapsedTime)
 
 void cPlayer::Update(float fElapsedTime)
 {
-	if (bAttacking && CanInteract())
+	if (bInteracting && CanInteract())
 	{
 		if (!bOnIcedGround)
 			fVelX = 0.0f;
 		else
 			fVelX += fDrag * fVelX * fElapsedTime;
+
+		if (bBreakDoor)
+			fVelY = 0.0f;
 	}
 	else
 	{
@@ -333,9 +405,9 @@ float cPlayer::GetFaceDir()
 	return fFaceDir;
 }
 
-void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t, std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles)
+void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t, std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles, cLevel* lvl)
 {
-	if (bAttacking && !bDead)
+	if (bInteracting && !bDead)
 	{
 		// calculate elapsed time during attack
 		fAnimationTimer += fElapsedTime;
@@ -360,6 +432,22 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 		if (bPoyo)
 		{
 			// Poyo
+		}
+
+		// Break door animation
+		if (bBreakDoor)
+		{
+			// Spawn door pieces
+			if (bCanSpawnProjectile)
+			{
+				float debrisDuration = animPlayer->mapStates[animPlayer->sCurrentState].size() * animPlayer->fTimeBetweenFrames;
+
+				engine->AddProjectile(fPosX, fPosY, true, -6.0f, -6.0f, debrisDuration, "doorDebris", true, 0, false);
+				engine->AddProjectile(fPosX, fPosY, true, +3.0f, -9.0f, debrisDuration, "doorDebris", true, 0, false);
+				engine->AddProjectile(fPosX, fPosY, true, +9.0f, -3.0f, debrisDuration, "doorDebris", true, 0, false);
+
+				bCanSpawnProjectile = false;
+			}
 		}
 
 		// Launch a Jesus Cross
@@ -401,10 +489,12 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 			animPlayer->ChangeState("swallow");
 		}
 
-		// Stop the attack when it's finished
+		// Stop the action when it's finished
 		if (fAnimationTimer >= animPlayer->mapStates[animPlayer->sCurrentState].size() * animPlayer->fTimeBetweenFrames)
 		{
 			fAnimationTimer = 0.0f;
+			if (bBreakDoor)
+				EnterDoor(lvl);
 			StopAnyAttack();
 		}
 	}
@@ -487,11 +577,12 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 
 void cPlayer::StopAnyAttack()
 {
-	bAttacking = false;
+	bInteracting = false;
 	bSlapping = false;
 	bLaunchingJesusCross = false;
 	bSwallowing = false;
 	bPoyo = false;
+	bBreakDoor = false;
 }
 
 void cPlayer::ClampVelocities()
@@ -610,7 +701,7 @@ void cPlayer::CheckPickUp(cLevel* lvl, float fNewPosX, float fNewPosY)
 	}
 }
 
-void cPlayer::CheckSolidFloor(cLevel* lvl, float fNewPosX, float & fNewPosY)
+void cPlayer::CheckSolidFloor(cLevel* lvl, float fNewPosX, float& fNewPosY)
 {
 	if (SolidFloor(lvl, fNewPosX, fNewPosY) || SemiSolidFloor(lvl, fNewPosX, fNewPosY))
 	{
@@ -953,7 +1044,7 @@ void cPlayer::VacuumEnnemy(cDynamicCreature* object)
 	{
 		bSwallowing = true;
 		bSwallowSound = true;
-		bAttacking = true;
+		bInteracting = true;
 	}
 }
 

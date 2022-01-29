@@ -131,6 +131,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			sprDoorSwitchOff = new olc::Sprite("assets/gfx/doorSwitchOff.png");
 			sprDoorSwitchOn = new olc::Sprite("assets/gfx/doorSwitchOn.png");
 			mapWinds = cDynamicWind::LoadWindSprites();
+			mapTeleports = cDynamicTeleport::LoadTeleportsSprites();
 
 			UpdateProgressBar("Loading 16%");
 
@@ -249,6 +250,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			cDynamicHorizontalCrusher::engine = this;
 			cDynamicMovingPlatform::engine = this;
 			cDynamicProjectile::engine = this;
+			cDynamicTeleport::engine = this;
 			cDynamicVerticalCrusher::engine = this;
 			cDynamicWall::engine = this;
 			cDynamicWind::engine = this;
@@ -350,6 +352,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			AddSharedSound("itemPicked", sndItemPicked, "assets/snd/itemPicked.wav");
 			AddSharedSound("rockyFall", sndRockyFall, "assets/snd/rockyFall.wav");
 			AddSharedSound("boom", sndBoom, "assets/snd/boom.wav");
+			AddSharedSound("enterDoor", sndEnterDoor, "assets/snd/enterDoor.wav");
 
 			UpdateProgressBar("Loading 99.9999999999999");
 
@@ -461,7 +464,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	t.Translate(((float)-nTileWidth / 2.0f) - cnSpriteOffsetX, ((float)-nTileWidth / 2.0f) - cnSpriteOffsetY);
 	t.Scale(player->GetFaceDir() * 1.0f, 1.0f);
 
-	player->OneCycleAnimations(fElapsedTime, &t, mapProjectiles);
+	player->OneCycleAnimations(fElapsedTime, &t, mapProjectiles, level);
 	// Handle State Change
 	if (bBreakLoop)
 	{
@@ -562,6 +565,16 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		object->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
 	}
 
+	for (auto& object : vecTeleports)
+	{
+		object->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
+	}
+
+	for (auto& object : vecTeleports)
+	{
+		object->UpdateDestHitbox(camera->GetOffsetX(), camera->GetOffsetY());
+	}
+
 	for (auto& object : vecEnnemies)
 	{
 		object->Update(fElapsedTime, player->GetPosX(), player->GetPosY());
@@ -573,6 +586,11 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	}
 
 	for (auto& object : vecWinds)
+	{
+		object->Update(fElapsedTime, player->GetPosX(), player->GetPosY());
+	}
+
+	for (auto& object : vecTeleports)
 	{
 		object->Update(fElapsedTime, player->GetPosX(), player->GetPosY());
 	}
@@ -626,6 +644,16 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	for (auto& object : GetCloseWinds(player->GetPosX(), player->GetPosY()))
 	{
 		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
+	}
+
+	// Draw Teleports
+	for (auto& object : GetCloseTeleport(player->GetPosX(), player->GetPosY()))
+	{
+		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
+	}
+	for (auto& object : GetCloseTeleportDest(player->GetPosX(), player->GetPosY()))
+	{
+		object->DrawDest(camera->GetOffsetX(), camera->GetOffsetY());
 	}
 
 	if (bInBossLvl && vecEnnemies.empty() && !player->IsDead())
@@ -819,6 +847,7 @@ void OneLoneCoder_Platformer::DestroyAllDynamics()
 	vecProjectiles.clear();
 	vecPlatforms.clear();
 	vecWinds.clear();
+	vecTeleports.clear();
 }
 
 void OneLoneCoder_Platformer::LoadLevelProperties()
@@ -1008,6 +1037,38 @@ std::vector<cDynamicWind*> OneLoneCoder_Platformer::GetCloseWinds(float px, floa
 		}
 	}
 	return closeWinds;
+}
+
+void OneLoneCoder_Platformer::AddTeleport(float ax, float ay, float bx, float by, std::string sprite)
+{
+	cDynamicTeleport* tp = new cDynamicTeleport(ax, ay, bx, by, mapTeleports[sprite]);
+	vecTeleports.push_back(tp);
+}
+
+std::vector<cDynamicTeleport*> OneLoneCoder_Platformer::GetCloseTeleport(float px, float py)
+{
+	std::vector<cDynamicTeleport*> closeTeleports;
+	for (auto& tp : vecTeleports)
+	{
+		if (fabs(px - (tp->GetPX())) < (((float)ScreenWidth()) / 64.0f) && fabs(py - (tp->GetPY())) < (((float)ScreenHeight()) / 64.0f))
+		{
+			closeTeleports.push_back(tp);
+		}
+	}
+	return closeTeleports;
+}
+
+std::vector<cDynamicTeleport*> OneLoneCoder_Platformer::GetCloseTeleportDest(float px, float py)
+{
+	std::vector<cDynamicTeleport*> closeTeleports;
+	for (auto& tp : vecTeleports)
+	{
+		if (fabs(px - (tp->GetDestX())) < (((float)ScreenWidth()) / 64.0f) && fabs(py - (tp->GetDestY())) < (((float)ScreenHeight()) / 64.0f))
+		{
+			closeTeleports.push_back(tp);
+		}
+	}
+	return closeTeleports;
 }
 
 float OneLoneCoder_Platformer::GetTileWidth()

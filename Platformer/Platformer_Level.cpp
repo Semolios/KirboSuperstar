@@ -212,6 +212,10 @@ bool cLevel::PopulateMechanisms(std::string levelName)
 			{
 				engine->AddWind(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), parts[4], std::stoi(parts[5]));
 			}
+			if (parts[0] == L"Teleport")
+			{
+				engine->AddTeleport(std::stoi(parts[1]), std::stoi(parts[2]), std::stoi(parts[3]), std::stoi(parts[4]), engine->ToStr(parts[5]));
+			}
 		}
 	}
 

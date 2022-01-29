@@ -19,6 +19,7 @@
 #include "Platformer_DynamicCreatureWaddleDee.h"
 #include "Platformer_DynamicCreatureWhispyWood.h"
 #include "Platformer_DynamicMovingPlatform.h"
+#include "Platformer_DynamicTeleport.h"
 #include "Platformer_DynamicWind.h"
 
 #include <mutex>
