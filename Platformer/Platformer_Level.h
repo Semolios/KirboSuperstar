@@ -57,7 +57,7 @@ private:
 	int nInitPlayerPosX = 0;
 	int nInitPlayerPosY = 0;
 	int nCurrentLevel = 0;
-	int nUnlockedLevel = 6; // TODO PENSER A REMETTRE A 1 A LA FIN
+	int nUnlockedLevel = 1; // TODO PENSER A REMETTRE A 1 A LA FIN
 
 	std::vector<std::string> levels;
 	std::vector<std::string> ennemies;

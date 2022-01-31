@@ -6,6 +6,15 @@ OneLoneCoder_Platformer* cLevel::engine = nullptr;
 
 cLevel::cLevel()
 {
+	std::wifstream file("assets/lvls/save.txt");
+	if (file)
+	{
+		std::wstring line;
+		while (std::getline(file, line))
+		{
+			nUnlockedLevel = std::stoi(line);
+		}
+	}
 }
 
 bool cLevel::LoadLevel(std::string levelName)
@@ -928,6 +937,11 @@ int cLevel::GetUnlockedLvl()
 void cLevel::UnlockNewLvl()
 {
 	nUnlockedLevel++;
+
+	std::ofstream save;
+	save.open("assets/lvls/save.txt", std::ofstream::trunc);
+	save << nUnlockedLevel;
+	save.close();
 }
 
 bool cLevel::IsLastOfGame()
