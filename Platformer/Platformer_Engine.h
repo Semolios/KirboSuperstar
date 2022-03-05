@@ -74,6 +74,7 @@ private:
 	int sndBossKilled;
 	int sndWind;
 	int sndInvincibility;
+	int sndMenu;
 
 	// Sounds shared with other classes
 	std::map<std::string, int> sharedSounds;
@@ -138,6 +139,7 @@ private:
 	int sndRockyFall;
 	int sndBoom;
 	int sndEnterDoor;
+	int sndMenuBip;
 
 	// engine Properties
 	cPlayer* player;
@@ -183,7 +185,24 @@ private:
 
 	// Controls Menu
 	olc::Sprite* sprControlsMenu;
+	olc::Sprite* sprMenuBar;
+	olc::Sprite* sprUnselQuit;
+	olc::Sprite* sprSelQuit;
+	olc::Sprite* sprUnselDefault;
+	olc::Sprite* sprSelDefault;
 	cControlsMenu* controlsMenu;
+	std::map<std::string, olc::Key> savedControls;
+	// --- Controller Sprites
+	olc::Sprite* sprX;
+	olc::Sprite* sprY;
+	olc::Sprite* sprB;
+	olc::Sprite* sprPause;
+	olc::Sprite* sprUp;
+	olc::Sprite* sprDown;
+	olc::Sprite* sprLeft;
+	olc::Sprite* sprRight;
+	olc::Sprite* sprA;
+	olc::Sprite* sprRBump;
 
 	// Credits Menu
 	olc::Sprite* sprCreditsMenu;
@@ -296,6 +315,7 @@ protected:
 public:
 	// Keyboard function
 	bool GetAnyKey();
+	olc::Key GetFirstKeyPressed();
 
 	// Level detection functions
 	bool IsSolidTile(wchar_t tile);
@@ -349,6 +369,7 @@ public:
 	olc::Sprite* GetGroundTiles();
 	olc::Sprite* GetDoorSpr();
 	void ReturnToWorldMap();
+	void GoToControlsMenu();
 
 	// Pause menu functions
 	void SetPlayerChoice(int choice);
@@ -385,6 +406,12 @@ public:
 
 	// Loading Screen functions
 	void UpdateProgressBar(std::string loadPercent);
+
+	// Controls menu functions
+	void ApplyControls();
+	olc::Key ToOlcKey(std::string key);
+	std::string olcKeyToStr(olc::Key key);
+	olc::Key GetSavedControls(std::string control);
 
 	// Other
 	std::string ToStr(std::wstring str);

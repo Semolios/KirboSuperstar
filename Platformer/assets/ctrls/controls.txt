@@ -1,0 +1,10 @@
+vacuum=shift
+launchJesusCross=z
+slapAttack=d
+jump=space
+pause=p
+flyOrEnterDoor=up
+down=down
+moveLeft=left
+moveRight=right
+poyo=o

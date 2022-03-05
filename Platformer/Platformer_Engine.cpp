@@ -204,7 +204,42 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		case LS_CONTROLSMENU:
 		{
 			sprControlsMenu = new olc::Sprite("assets/gfx/ControlsMenu.png");
-			controlsMenu = new cControlsMenu(this, sprControlsMenu);
+			sprMenuBar = new olc::Sprite("assets/gfx/MenuBar.png");
+			sprUnselQuit = new olc::Sprite("assets/gfx/unselQuit.png");
+			sprSelQuit = new olc::Sprite("assets/gfx/selQuit.png");
+			sprUnselDefault = new olc::Sprite("assets/gfx/unselDefault.png");
+			sprSelDefault = new olc::Sprite("assets/gfx/selDefault.png");
+			// Controller sprites
+			sprX = new olc::Sprite("assets/gfx/XBtn.png");
+			sprY = new olc::Sprite("assets/gfx/YBtn.png");
+			sprB = new olc::Sprite("assets/gfx/BBtn.png");
+			sprPause = new olc::Sprite("assets/gfx/PauseBtn.png");
+			sprUp = new olc::Sprite("assets/gfx/UpBtn.png");
+			sprDown = new olc::Sprite("assets/gfx/DownBtn.png");
+			sprLeft = new olc::Sprite("assets/gfx/LeftBtn.png");
+			sprRight = new olc::Sprite("assets/gfx/RightBtn.png");
+			sprA = new olc::Sprite("assets/gfx/ABtn.png");
+			sprRBump = new olc::Sprite("assets/gfx/RBumpBtn.png");
+
+			controlsMenu = new cControlsMenu(this,
+											 sprControlsMenu,
+											 sprMenuBar,
+											 sprUnselQuit,
+											 sprSelQuit,
+											 sprUnselDefault,
+											 sprSelDefault,
+											 sprX,
+											 sprY,
+											 sprB,
+											 sprPause,
+											 sprUp,
+											 sprDown,
+											 sprLeft,
+											 sprRight,
+											 sprA,
+											 sprRBump);
+
+			ApplyControls();
 
 			UpdateProgressBar("Loading 52%");
 
@@ -236,6 +271,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		case LS_ENGINEPOINTERS:
 		{
 			cCamera::engine = this;
+			cControlsMenu::engine = this;
 			cDynamicCreature::engine = this;
 			cDynamicCreatureBladeKnight::engine = this;
 			cDynamicCreatureBomber::engine = this;
@@ -291,6 +327,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			sndBossKilled = olc::SOUND::LoadAudioSample("assets/snd/bossKilled.wav");
 			sndWind = olc::SOUND::LoadAudioSample("assets/snd/wind.wav");
 			sndInvincibility = olc::SOUND::LoadAudioSample("assets/snd/invincibility.wav");
+			sndMenu = olc::SOUND::LoadAudioSample("assets/snd/menus.wav");
 
 			AddSharedSound("whispyScream", sndWhispyScream, "assets/snd/whispyScream.wav");
 			AddSharedSound("loseLife", sndLoseLife, "assets/snd/loseLife.wav");
@@ -353,6 +390,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			AddSharedSound("rockyFall", sndRockyFall, "assets/snd/rockyFall.wav");
 			AddSharedSound("boom", sndBoom, "assets/snd/boom.wav");
 			AddSharedSound("enterDoor", sndEnterDoor, "assets/snd/enterDoor.wav");
+			AddSharedSound("menuBip", sndMenuBip, "assets/snd/menuBip.wav");
 
 			UpdateProgressBar("Loading 99.9999999999999");
 
@@ -798,7 +836,7 @@ bool OneLoneCoder_Platformer::GameState_SelectMenu(float fElapsedTime)
 		if (selectMenu->GetPlayerChoice() == 0)
 			ReturnToWorldMap();
 		else if (selectMenu->GetPlayerChoice() == 1)
-			nGameState = GS_CONTROLS;
+			GoToControlsMenu();
 		else if (selectMenu->GetPlayerChoice() == 2)
 			nGameState = GS_CREDITS;
 		else
@@ -809,10 +847,19 @@ bool OneLoneCoder_Platformer::GameState_SelectMenu(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_Controls(float fElapsedTime)
 {
-	controlsMenu->Update(this, fElapsedTime);
+	controlsMenu->Update(this, fElapsedTime, GetController());
 
-	if (GetKey(olc::Key::SPACE).bPressed || GetKey(olc::Key::ESCAPE).bPressed || controller.GetButton(A).bPressed || controller.GetButton(B).bPressed)
-		nGameState = GS_SELECTMENU;
+	if (GetKey(olc::Key::SPACE).bPressed || controller.GetButton(A).bPressed)
+	{
+		if (controlsMenu->GetSelectedItem() == 11)
+		{
+			controlsMenu->UpdateSavedControls();
+			controlsMenu->SetSelectedItem(0);
+			ApplyControls();
+			olc::SOUND::StopAll();
+			nGameState = GS_SELECTMENU;
+		}
+	}
 
 	return true;
 }
@@ -895,6 +942,118 @@ bool OneLoneCoder_Platformer::GetAnyKey()
 		GetKey(olc::Key::OEM_5).bPressed || GetKey(olc::Key::OEM_6).bPressed || GetKey(olc::Key::OEM_7).bPressed || GetKey(olc::Key::OEM_8).bPressed ||
 
 		GetKey(olc::Key::CAPS_LOCK).bPressed || GetKey(olc::Key::ENUM_END).bPressed;
+}
+
+olc::Key OneLoneCoder_Platformer::GetFirstKeyPressed()
+{
+	if (GetKey(olc::Key::NONE).bPressed) return olc::Key::NONE;
+
+	if (GetKey(olc::Key::A).bPressed) return olc::Key::A;
+	if (GetKey(olc::Key::B).bPressed) return olc::Key::B;
+	if (GetKey(olc::Key::C).bPressed) return olc::Key::C;
+	if (GetKey(olc::Key::D).bPressed) return olc::Key::D;
+	if (GetKey(olc::Key::E).bPressed) return olc::Key::E;
+	if (GetKey(olc::Key::F).bPressed) return olc::Key::F;
+	if (GetKey(olc::Key::G).bPressed) return olc::Key::G;
+	if (GetKey(olc::Key::H).bPressed) return olc::Key::H;
+	if (GetKey(olc::Key::I).bPressed) return olc::Key::I;
+	if (GetKey(olc::Key::J).bPressed) return olc::Key::J;
+	if (GetKey(olc::Key::K).bPressed) return olc::Key::K;
+	if (GetKey(olc::Key::L).bPressed) return olc::Key::L;
+	if (GetKey(olc::Key::M).bPressed) return olc::Key::M;
+	if (GetKey(olc::Key::N).bPressed) return olc::Key::N;
+	if (GetKey(olc::Key::O).bPressed) return olc::Key::O;
+	if (GetKey(olc::Key::P).bPressed) return olc::Key::P;
+	if (GetKey(olc::Key::Q).bPressed) return olc::Key::Q;
+	if (GetKey(olc::Key::R).bPressed) return olc::Key::R;
+	if (GetKey(olc::Key::S).bPressed) return olc::Key::S;
+	if (GetKey(olc::Key::T).bPressed) return olc::Key::T;
+	if (GetKey(olc::Key::U).bPressed) return olc::Key::U;
+	if (GetKey(olc::Key::V).bPressed) return olc::Key::V;
+	if (GetKey(olc::Key::W).bPressed) return olc::Key::W;
+	if (GetKey(olc::Key::X).bPressed) return olc::Key::X;
+	if (GetKey(olc::Key::Y).bPressed) return olc::Key::Y;
+	if (GetKey(olc::Key::Z).bPressed) return olc::Key::Z;
+
+	if (GetKey(olc::Key::K0).bPressed) return olc::Key::K0;
+	if (GetKey(olc::Key::K1).bPressed) return olc::Key::K1;
+	if (GetKey(olc::Key::K2).bPressed) return olc::Key::K2;
+	if (GetKey(olc::Key::K3).bPressed) return olc::Key::K3;
+	if (GetKey(olc::Key::K4).bPressed) return olc::Key::K4;
+	if (GetKey(olc::Key::K5).bPressed) return olc::Key::K5;
+	if (GetKey(olc::Key::K6).bPressed) return olc::Key::K6;
+	if (GetKey(olc::Key::K7).bPressed) return olc::Key::K7;
+	if (GetKey(olc::Key::K8).bPressed) return olc::Key::K8;
+	if (GetKey(olc::Key::K9).bPressed) return olc::Key::K9;
+
+	if (GetKey(olc::Key::F1).bPressed)  return olc::Key::F1;
+	if (GetKey(olc::Key::F2).bPressed)  return olc::Key::F2;
+	if (GetKey(olc::Key::F3).bPressed)  return olc::Key::F3;
+	if (GetKey(olc::Key::F4).bPressed)  return olc::Key::F4;
+	if (GetKey(olc::Key::F5).bPressed)  return olc::Key::F5;
+	if (GetKey(olc::Key::F6).bPressed)  return olc::Key::F6;
+	if (GetKey(olc::Key::F7).bPressed)  return olc::Key::F7;
+	if (GetKey(olc::Key::F8).bPressed)  return olc::Key::F8;
+	if (GetKey(olc::Key::F9).bPressed)  return olc::Key::F9;
+	if (GetKey(olc::Key::F10).bPressed) return olc::Key::F10;
+	if (GetKey(olc::Key::F11).bPressed) return olc::Key::F11;
+	if (GetKey(olc::Key::F12).bPressed) return olc::Key::F12;
+
+	if (GetKey(olc::Key::UP).bPressed)    return olc::Key::UP;
+	if (GetKey(olc::Key::DOWN).bPressed)  return olc::Key::DOWN;
+	if (GetKey(olc::Key::LEFT).bPressed)  return olc::Key::LEFT;
+	if (GetKey(olc::Key::RIGHT).bPressed) return olc::Key::RIGHT;
+
+	if (GetKey(olc::Key::SPACE).bPressed)  return olc::Key::SPACE;
+	if (GetKey(olc::Key::TAB).bPressed)    return olc::Key::TAB;
+	if (GetKey(olc::Key::SHIFT).bPressed)  return olc::Key::SHIFT;
+	if (GetKey(olc::Key::CTRL).bPressed)   return olc::Key::CTRL;
+	if (GetKey(olc::Key::INS).bPressed)    return olc::Key::INS;
+	if (GetKey(olc::Key::DEL).bPressed)    return olc::Key::DEL;
+	if (GetKey(olc::Key::HOME).bPressed)   return olc::Key::HOME;
+	if (GetKey(olc::Key::END).bPressed)    return olc::Key::END;
+	if (GetKey(olc::Key::PGUP).bPressed)   return olc::Key::PGUP;
+	if (GetKey(olc::Key::PGDN).bPressed)   return olc::Key::PGDN;
+	if (GetKey(olc::Key::BACK).bPressed)   return olc::Key::BACK;
+	if (GetKey(olc::Key::ESCAPE).bPressed) return olc::Key::ESCAPE;
+	if (GetKey(olc::Key::RETURN).bPressed) return olc::Key::RETURN;
+	if (GetKey(olc::Key::ENTER).bPressed)  return olc::Key::ENTER;
+	if (GetKey(olc::Key::PAUSE).bPressed)  return olc::Key::PAUSE;
+	if (GetKey(olc::Key::SCROLL).bPressed) return olc::Key::SCROLL;
+
+	if (GetKey(olc::Key::NP0).bPressed) return olc::Key::NP0;
+	if (GetKey(olc::Key::NP1).bPressed) return olc::Key::NP1;
+	if (GetKey(olc::Key::NP2).bPressed) return olc::Key::NP2;
+	if (GetKey(olc::Key::NP3).bPressed) return olc::Key::NP3;
+	if (GetKey(olc::Key::NP4).bPressed) return olc::Key::NP4;
+	if (GetKey(olc::Key::NP5).bPressed) return olc::Key::NP5;
+	if (GetKey(olc::Key::NP6).bPressed) return olc::Key::NP6;
+	if (GetKey(olc::Key::NP7).bPressed) return olc::Key::NP7;
+	if (GetKey(olc::Key::NP8).bPressed) return olc::Key::NP8;
+	if (GetKey(olc::Key::NP9).bPressed) return olc::Key::NP9;
+
+	if (GetKey(olc::Key::NP_MUL).bPressed)	   return olc::Key::NP_MUL;
+	if (GetKey(olc::Key::NP_DIV).bPressed)	   return olc::Key::NP_DIV;
+	if (GetKey(olc::Key::NP_ADD).bPressed)	   return olc::Key::NP_ADD;
+	if (GetKey(olc::Key::NP_SUB).bPressed)	   return olc::Key::NP_SUB;
+	if (GetKey(olc::Key::NP_DECIMAL).bPressed) return olc::Key::NP_DECIMAL;
+
+	if (GetKey(olc::Key::PERIOD).bPressed) return olc::Key::PERIOD;
+	if (GetKey(olc::Key::EQUALS).bPressed) return olc::Key::EQUALS;
+	if (GetKey(olc::Key::COMMA).bPressed)  return olc::Key::COMMA;
+	if (GetKey(olc::Key::MINUS).bPressed)  return olc::Key::MINUS;
+
+	if (GetKey(olc::Key::OEM_1).bPressed) return olc::Key::OEM_1;
+	if (GetKey(olc::Key::OEM_2).bPressed) return olc::Key::OEM_2;
+	if (GetKey(olc::Key::OEM_3).bPressed) return olc::Key::OEM_3;
+	if (GetKey(olc::Key::OEM_4).bPressed) return olc::Key::OEM_4;
+	if (GetKey(olc::Key::OEM_5).bPressed) return olc::Key::OEM_5;
+	if (GetKey(olc::Key::OEM_6).bPressed) return olc::Key::OEM_6;
+	if (GetKey(olc::Key::OEM_7).bPressed) return olc::Key::OEM_7;
+	if (GetKey(olc::Key::OEM_8).bPressed) return olc::Key::OEM_8;
+
+	if (GetKey(olc::Key::CAPS_LOCK).bPressed) return olc::Key::CAPS_LOCK;
+	if (GetKey(olc::Key::ENUM_END).bPressed)  return olc::Key::ENUM_END;
 }
 
 bool OneLoneCoder_Platformer::IsSolidTile(wchar_t tile)
@@ -1184,6 +1343,13 @@ void OneLoneCoder_Platformer::ReturnToWorldMap()
 	player->SetDefenseBooster(1);
 }
 
+void OneLoneCoder_Platformer::GoToControlsMenu()
+{
+	olc::SOUND::StopAll();
+	olc::SOUND::PlaySample(sndMenu, true);
+	nGameState = GS_CONTROLS;
+}
+
 void OneLoneCoder_Platformer::SetPlayerChoice(int choice)
 {
 	pauseMenu->SetPlayerChoice(choice);
@@ -1329,6 +1495,266 @@ void OneLoneCoder_Platformer::UpdateProgressBar(std::string loadPercent)
 {
 	Clear(olc::BLACK);
 	DrawString(30, 440, loadPercent, olc::WHITE, 5);
+}
+
+void OneLoneCoder_Platformer::ApplyControls()
+{
+	std::wifstream file("assets/ctrls/controls.txt");
+
+	if (file)
+	{
+		std::wstring line;
+
+		while (std::getline(file, line))
+		{
+			std::wstring temp;
+			std::vector<std::wstring> parts;
+			std::wstringstream wss(line);
+			while (std::getline(wss, temp, L'='))
+			{
+				parts.push_back(temp);
+			}
+
+			savedControls[ToStr(parts[0])] = ToOlcKey(ToStr(parts[1]));
+		}
+	}
+}
+
+olc::Key OneLoneCoder_Platformer::ToOlcKey(std::string key)
+{
+	olc::Key k;
+
+	if (key == "none") k = olc::Key::NONE;
+
+	if (key == "a") k = olc::Key::A;
+	if (key == "b") k = olc::Key::B;
+	if (key == "c") k = olc::Key::C;
+	if (key == "d") k = olc::Key::D;
+	if (key == "e") k = olc::Key::E;
+	if (key == "f") k = olc::Key::F;
+	if (key == "g") k = olc::Key::G;
+	if (key == "h") k = olc::Key::H;
+	if (key == "i") k = olc::Key::I;
+	if (key == "j") k = olc::Key::J;
+	if (key == "k") k = olc::Key::K;
+	if (key == "l") k = olc::Key::L;
+	if (key == "m") k = olc::Key::M;
+	if (key == "n") k = olc::Key::N;
+	if (key == "o") k = olc::Key::O;
+	if (key == "p") k = olc::Key::P;
+	if (key == "q") k = olc::Key::Q;
+	if (key == "r") k = olc::Key::R;
+	if (key == "s") k = olc::Key::S;
+	if (key == "t") k = olc::Key::T;
+	if (key == "u") k = olc::Key::U;
+	if (key == "v") k = olc::Key::V;
+	if (key == "w") k = olc::Key::W;
+	if (key == "x") k = olc::Key::X;
+	if (key == "y") k = olc::Key::Y;
+	if (key == "z") k = olc::Key::Z;
+
+	if (key == "k0") k = olc::Key::K0;
+	if (key == "k1") k = olc::Key::K1;
+	if (key == "k2") k = olc::Key::K2;
+	if (key == "k3") k = olc::Key::K3;
+	if (key == "k4") k = olc::Key::K4;
+	if (key == "k5") k = olc::Key::K5;
+	if (key == "k6") k = olc::Key::K6;
+	if (key == "k7") k = olc::Key::K7;
+	if (key == "k8") k = olc::Key::K8;
+	if (key == "k9") k = olc::Key::K9;
+
+	if (key == "f1")  k = olc::Key::F1;
+	if (key == "f2")  k = olc::Key::F2;
+	if (key == "f3")  k = olc::Key::F3;
+	if (key == "f4")  k = olc::Key::F4;
+	if (key == "f5")  k = olc::Key::F5;
+	if (key == "f6")  k = olc::Key::F6;
+	if (key == "f7")  k = olc::Key::F7;
+	if (key == "f8")  k = olc::Key::F8;
+	if (key == "f9")  k = olc::Key::F9;
+	if (key == "f10") k = olc::Key::F10;
+	if (key == "f11") k = olc::Key::F11;
+	if (key == "f12") k = olc::Key::F12;
+
+	if (key == "up")	k = olc::Key::UP;
+	if (key == "down")  k = olc::Key::DOWN;
+	if (key == "left")  k = olc::Key::LEFT;
+	if (key == "right") k = olc::Key::RIGHT;
+
+	if (key == "space")  k = olc::Key::SPACE;
+	if (key == "tab")	 k = olc::Key::TAB;
+	if (key == "shift")  k = olc::Key::SHIFT;
+	if (key == "ctrl")	 k = olc::Key::CTRL;
+	if (key == "ins")	 k = olc::Key::INS;
+	if (key == "del")	 k = olc::Key::DEL;
+	if (key == "home")	 k = olc::Key::HOME;
+	if (key == "end")	 k = olc::Key::END;
+	if (key == "pgup")	 k = olc::Key::PGUP;
+	if (key == "pgdn")	 k = olc::Key::PGDN;
+	if (key == "back")	 k = olc::Key::BACK;
+	if (key == "escape") k = olc::Key::ESCAPE;
+	if (key == "return") k = olc::Key::RETURN;
+	if (key == "enter")  k = olc::Key::ENTER;
+	if (key == "pause")  k = olc::Key::PAUSE;
+	if (key == "scroll") k = olc::Key::SCROLL;
+
+	if (key == "np0") k = olc::Key::NP0;
+	if (key == "np1") k = olc::Key::NP1;
+	if (key == "np2") k = olc::Key::NP2;
+	if (key == "np3") k = olc::Key::NP3;
+	if (key == "np4") k = olc::Key::NP4;
+	if (key == "np5") k = olc::Key::NP5;
+	if (key == "np6") k = olc::Key::NP6;
+	if (key == "np7") k = olc::Key::NP7;
+	if (key == "np8") k = olc::Key::NP8;
+	if (key == "np9") k = olc::Key::NP9;
+
+	if (key == "np_mul")	 k = olc::Key::NP_MUL;
+	if (key == "np_div")	 k = olc::Key::NP_DIV;
+	if (key == "np_add")	 k = olc::Key::NP_ADD;
+	if (key == "np_sub")	 k = olc::Key::NP_SUB;
+	if (key == "np_decimal") k = olc::Key::NP_DECIMAL;
+
+	if (key == "period") k = olc::Key::PERIOD;
+	if (key == "equals") k = olc::Key::EQUALS;
+	if (key == "comma")  k = olc::Key::COMMA;
+	if (key == "minus")  k = olc::Key::MINUS;
+
+	if (key == "oem_1") k = olc::Key::OEM_1;
+	if (key == "oem_2") k = olc::Key::OEM_2;
+	if (key == "oem_3") k = olc::Key::OEM_3;
+	if (key == "oem_4") k = olc::Key::OEM_4;
+	if (key == "oem_5") k = olc::Key::OEM_5;
+	if (key == "oem_6") k = olc::Key::OEM_6;
+	if (key == "oem_7") k = olc::Key::OEM_7;
+	if (key == "oem_8") k = olc::Key::OEM_8;
+
+	if (key == "caps_lock") k = olc::Key::CAPS_LOCK;
+	if (key == "enum_end")  k = olc::Key::ENUM_END;
+
+	return k;
+}
+
+std::string OneLoneCoder_Platformer::olcKeyToStr(olc::Key key)
+{
+	std::string str;
+
+	if (key == olc::Key::NONE) str = "none";
+
+	if (key == olc::Key::A) str = "a";
+	if (key == olc::Key::B) str = "b";
+	if (key == olc::Key::C) str = "c";
+	if (key == olc::Key::D) str = "d";
+	if (key == olc::Key::E) str = "e";
+	if (key == olc::Key::F) str = "f";
+	if (key == olc::Key::G) str = "g";
+	if (key == olc::Key::H) str = "h";
+	if (key == olc::Key::I) str = "i";
+	if (key == olc::Key::J) str = "j";
+	if (key == olc::Key::K) str = "k";
+	if (key == olc::Key::L) str = "l";
+	if (key == olc::Key::M) str = "m";
+	if (key == olc::Key::N) str = "n";
+	if (key == olc::Key::O) str = "o";
+	if (key == olc::Key::P) str = "p";
+	if (key == olc::Key::Q) str = "q";
+	if (key == olc::Key::R) str = "r";
+	if (key == olc::Key::S) str = "s";
+	if (key == olc::Key::T) str = "t";
+	if (key == olc::Key::U) str = "u";
+	if (key == olc::Key::V) str = "v";
+	if (key == olc::Key::W) str = "w";
+	if (key == olc::Key::X) str = "x";
+	if (key == olc::Key::Y) str = "y";
+	if (key == olc::Key::Z) str = "z";
+
+	if (key == olc::Key::K0) str = "k0";
+	if (key == olc::Key::K1) str = "k1";
+	if (key == olc::Key::K2) str = "k2";
+	if (key == olc::Key::K3) str = "k3";
+	if (key == olc::Key::K4) str = "k4";
+	if (key == olc::Key::K5) str = "k5";
+	if (key == olc::Key::K6) str = "k6";
+	if (key == olc::Key::K7) str = "k7";
+	if (key == olc::Key::K8) str = "k8";
+	if (key == olc::Key::K9) str = "k9";
+
+	if (key == olc::Key::F1)  str = "f1";
+	if (key == olc::Key::F2)  str = "f2";
+	if (key == olc::Key::F3)  str = "f3";
+	if (key == olc::Key::F4)  str = "f4";
+	if (key == olc::Key::F5)  str = "f5";
+	if (key == olc::Key::F6)  str = "f6";
+	if (key == olc::Key::F7)  str = "f7";
+	if (key == olc::Key::F8)  str = "f8";
+	if (key == olc::Key::F9)  str = "f9";
+	if (key == olc::Key::F10) str = "f10";
+	if (key == olc::Key::F11) str = "f11";
+	if (key == olc::Key::F12) str = "f12";
+
+	if (key == olc::Key::UP)    str = "up";
+	if (key == olc::Key::DOWN)  str = "down";
+	if (key == olc::Key::LEFT)  str = "left";
+	if (key == olc::Key::RIGHT) str = "right";
+
+	if (key == olc::Key::SPACE)	 str = "space";
+	if (key == olc::Key::TAB)	 str = "tab";
+	if (key == olc::Key::SHIFT)	 str = "shift";
+	if (key == olc::Key::CTRL)	 str = "ctrl";
+	if (key == olc::Key::INS)	 str = "ins";
+	if (key == olc::Key::DEL)	 str = "del";
+	if (key == olc::Key::HOME)	 str = "home";
+	if (key == olc::Key::END)	 str = "end";
+	if (key == olc::Key::PGUP)	 str = "pgup";
+	if (key == olc::Key::PGDN)	 str = "pgdn";
+	if (key == olc::Key::BACK)	 str = "back";
+	if (key == olc::Key::ESCAPE) str = "escape";
+	if (key == olc::Key::RETURN) str = "return";
+	if (key == olc::Key::ENTER)  str = "enter";
+	if (key == olc::Key::PAUSE)  str = "pause";
+	if (key == olc::Key::SCROLL) str = "scroll";
+
+	if (key == olc::Key::NP0) str = "np0";
+	if (key == olc::Key::NP1) str = "np1";
+	if (key == olc::Key::NP2) str = "np2";
+	if (key == olc::Key::NP3) str = "np3";
+	if (key == olc::Key::NP4) str = "np4";
+	if (key == olc::Key::NP5) str = "np5";
+	if (key == olc::Key::NP6) str = "np6";
+	if (key == olc::Key::NP7) str = "np7";
+	if (key == olc::Key::NP8) str = "np8";
+	if (key == olc::Key::NP9) str = "np9";
+
+	if (key == olc::Key::NP_MUL)	 str = "np_mul";
+	if (key == olc::Key::NP_DIV)	 str = "np_div";
+	if (key == olc::Key::NP_ADD)	 str = "np_add";
+	if (key == olc::Key::NP_SUB)	 str = "np_sub";
+	if (key == olc::Key::NP_DECIMAL) str = "np_decimal";
+
+	if (key == olc::Key::PERIOD) str = "period";
+	if (key == olc::Key::EQUALS) str = "equals";
+	if (key == olc::Key::COMMA)  str = "comma";
+	if (key == olc::Key::MINUS)  str = "minus";
+
+	if (key == olc::Key::OEM_1) str = "oem_1";
+	if (key == olc::Key::OEM_2) str = "oem_2";
+	if (key == olc::Key::OEM_3) str = "oem_3";
+	if (key == olc::Key::OEM_4) str = "oem_4";
+	if (key == olc::Key::OEM_5) str = "oem_5";
+	if (key == olc::Key::OEM_6) str = "oem_6";
+	if (key == olc::Key::OEM_7) str = "oem_7";
+	if (key == olc::Key::OEM_8) str = "oem_8";
+
+	if (key == olc::Key::CAPS_LOCK) str = "caps_lock";
+	if (key == olc::Key::ENUM_END)  str = "enum_end";
+
+	return str;
+}
+
+olc::Key OneLoneCoder_Platformer::GetSavedControls(std::string control)
+{
+	return savedControls[control];
 }
 
 std::string OneLoneCoder_Platformer::ToStr(std::wstring str)
