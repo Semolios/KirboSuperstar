@@ -1,4 +1,7 @@
 #include "Platformer_PauseMenu.h"
+#include "Platformer_Engine.h"
+
+OneLoneCoder_Platformer* cPauseMenu::engine = nullptr;
 
 cPauseMenu::cPauseMenu(olc::PixelGameEngine* gfx, olc::Sprite* background, olc::Sprite* cursor)
 {
@@ -13,12 +16,14 @@ bool cPauseMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Controlle
 	// Handle input
 	if (gfx->GetKey(olc::DOWN).bReleased || controller->GetButton(DOWN).bPressed)
 	{
+		engine->PlaySample("menuBip");
 		nPlayerChoice++;
 		if (nPlayerChoice >= 2) nPlayerChoice = 0;
 	}
 
 	if (gfx->GetKey(olc::UP).bReleased || controller->GetButton(UP).bPressed)
 	{
+		engine->PlaySample("menuBip");
 		nPlayerChoice--;
 		if (nPlayerChoice < 0) nPlayerChoice = 1;
 	}

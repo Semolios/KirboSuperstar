@@ -7,6 +7,8 @@
 #include "olcPGEX_Graphics2D.h"
 #include "Zix_PGE_Controller.h"
 
+class OneLoneCoder_Platformer;
+
 class cPauseMenu
 {
 public:
@@ -19,6 +21,8 @@ private:
 	olc::Sprite* sprCursor;
 
 public:
+	static OneLoneCoder_Platformer* engine;
+
 	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller);
 	int GetPlayerChoice();
 	void SetPlayerChoice(int choice);

@@ -1,4 +1,7 @@
 #include "Platformer_SelectMenu.h"
+#include "Platformer_Engine.h"
+
+OneLoneCoder_Platformer* cSelectMenu::engine = nullptr;
 
 cSelectMenu::cSelectMenu(olc::PixelGameEngine* gfx, olc::Sprite* background, olc::Sprite* cursor)
 {
@@ -13,12 +16,14 @@ bool cSelectMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Controll
 	// Handle input
 	if (gfx->GetKey(olc::DOWN).bReleased || controller->GetButton(DOWN).bPressed)
 	{
+		engine->PlaySample("menuBip");
 		nPlayerChoice++;
 		if (nPlayerChoice > 3) nPlayerChoice = 0;
 	}
 
 	if (gfx->GetKey(olc::UP).bReleased || controller->GetButton(UP).bPressed)
 	{
+		engine->PlaySample("menuBip");
 		nPlayerChoice--;
 		if (nPlayerChoice < 0) nPlayerChoice = 3;
 	}

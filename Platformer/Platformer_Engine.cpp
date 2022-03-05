@@ -294,7 +294,9 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			cItemDamage::engine = this;
 			cItemDefense::engine = this;
 			cItemTomato::engine = this;
+			cPauseMenu::engine = this;
 			cPlayer::engine = this;
+			cSelectMenu::engine = this;
 
 			UpdateProgressBar("Loading 74%");
 
