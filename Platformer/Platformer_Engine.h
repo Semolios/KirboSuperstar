@@ -33,11 +33,11 @@
 #include "Platformer_HUD.h"
 #include "Platformer_Item.h"
 #include "Platformer_Level.h"
+#include "Platformer_LevelStart.h"
 #include "Platformer_PauseMenu.h"
 #include "Platformer_Player.h"
 #include "Platformer_SelectMenu.h"
 #include "Platformer_TitleScreen.h"
-#include "Platformer_Transition.h"
 #include "Platformer_WorldMap.h"
 
 #include <cTime>
@@ -75,6 +75,7 @@ private:
 	int sndWind;
 	int sndInvincibility;
 	int sndMenu;
+	int sndTransition;
 
 	// Sounds shared with other classes
 	std::map<std::string, int> sharedSounds;
@@ -165,10 +166,10 @@ private:
 	olc::Sprite* sprLock;
 	cWorldMap* worldMap;
 
-	// Transition Screen
-	olc::Sprite* sprTransition;
-	cTransition* transition;
-	int transitionAnim = 0;
+	// Level Start Screen
+	olc::Sprite* sprLevelStart;
+	cLevelStart* levelStart;
+	int levelStartAnim = 0;
 
 	// End Screen
 	olc::Sprite* sprEndScreen;
@@ -247,6 +248,12 @@ private:
 	// Controller
 	ControllerManager controller;
 
+	// Transition
+	float fTransitionTimer;
+	float fTransitionTime = 0.5f;
+	bool bPlayTransitionSound = false;
+	std::string sNextState;
+
 	// Loading Screen
 	enum
 	{
@@ -257,7 +264,7 @@ private:
 		LS_MECHANISMS,
 		LS_TITLE,
 		LS_WORLDMAP,
-		LS_TRANSITION,
+		LS_LEVELSTART,
 		LS_ENDSCREEN,
 		LS_PAUSEMENU,
 		LS_SELECTMENU,
@@ -278,7 +285,7 @@ private:
 		GS_LOADING,
 		GS_TITLE,
 		GS_MAIN,
-		GS_TRANSITION,
+		GS_LEVELSTART,
 		GS_LOADLEVEL,
 		GS_WORLDMAP,
 		GS_ENDSCREEN,
@@ -288,13 +295,14 @@ private:
 		GS_CONTROLS,
 		GS_CREDITS,
 		GS_CLOSE,
+		GS_TRANSITION,
 	} nGameState = GS_SPLASHSCREEN;
 
 protected:
 	bool OnUserCreate() override;
 	bool OnUserUpdate(float fElapsedTime) override;
 
-	bool GameState_Transition(float fElapsedTime);
+	bool GameState_LevelStart(float fElapsedTime);
 	bool GameState_SplashScreen(float fElapsedTime);
 	bool GameState_Loading(float fElapsedTime);
 	bool GameState_LoadLevel(float fElapsedTime);
@@ -308,6 +316,7 @@ protected:
 	bool GameState_Controls(float fElapsedTime);
 	bool GameState_Credits(float fElapsedTime);
 	bool GameState_Close(float fElapsedTime);
+	bool GameState_Transition(float fElapsedTime);
 
 	void DestroyAllDynamics();
 	void LoadLevelProperties();
@@ -412,6 +421,9 @@ public:
 	olc::Key ToOlcKey(std::string key);
 	std::string olcKeyToStr(olc::Key key);
 	olc::Key GetSavedControls(std::string control);
+
+	// Transition function
+	void TransitionTo(std::string newState, bool playTransitionSound);
 
 	// Other
 	std::string ToStr(std::wstring str);

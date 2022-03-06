@@ -1,14 +1,14 @@
-#include "Platformer_Transition.h"
+#include "Platformer_LevelStart.h"
 
-cAnimator* cTransition::animPlayer = nullptr;
+cAnimator* cLevelStart::animPlayer = nullptr;
 
-cTransition::cTransition(olc::PixelGameEngine* gfx, olc::Sprite* background, cAnimator* anim)
+cLevelStart::cLevelStart(olc::PixelGameEngine* gfx, olc::Sprite* background, cAnimator* anim)
 {
 	sprBackGround = background;
 	animPlayer = anim;
 }
 
-bool cTransition::Update(olc::PixelGameEngine* gfx, float fElapsedTime)
+bool cLevelStart::Update(olc::PixelGameEngine* gfx, float fElapsedTime)
 {
 	gfx->DrawSprite(0, 0, sprBackGround);
 

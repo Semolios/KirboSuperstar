@@ -197,7 +197,7 @@
     <ClCompile Include="Platformer_Player.cpp" />
     <ClCompile Include="Platformer_Hitbox.cpp" />
     <ClCompile Include="Platformer_SelectMenu.cpp" />
-    <ClCompile Include="Platformer_Transition.cpp" />
+    <ClCompile Include="Platformer_LevelStart.cpp" />
     <ClCompile Include="Platformer_Spline.cpp" />
     <ClCompile Include="Platformer_TitleScreen.cpp" />
     <ClCompile Include="Platformer_WorldMap.cpp" />
@@ -255,7 +255,7 @@
     <ClInclude Include="Platformer_Player.h" />
     <ClInclude Include="Platformer_Hitbox.h" />
     <ClInclude Include="Platformer_SelectMenu.h" />
-    <ClInclude Include="Platformer_Transition.h" />
+    <ClInclude Include="Platformer_LevelStart.h" />
     <ClInclude Include="Platformer_Spline.h" />
     <ClInclude Include="Platformer_TitleScreen.h" />
     <ClInclude Include="Platformer_WorldMap.h" />

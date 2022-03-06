@@ -33,7 +33,7 @@
     <ClCompile Include="Platformer_Spline.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Platformer_Transition.cpp">
+    <ClCompile Include="Platformer_LevelStart.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Platformer_Level.cpp">
@@ -200,7 +200,7 @@
     <ClInclude Include="Platformer_Spline.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Platformer_Transition.h">
+    <ClInclude Include="Platformer_LevelStart.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Platformer_Level.h">

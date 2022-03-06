@@ -1,15 +1,15 @@
-#ifndef DEF_TRANSITION
-#define DEF_TRANSITION
+#ifndef DEF_LEVELSTART
+#define DEF_LEVELSTART
 
 #pragma once
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
 #include "Platformer_Animator.h"
 
-class cTransition
+class cLevelStart
 {
 public:
-	cTransition(olc::PixelGameEngine* gfx, olc::Sprite* background, cAnimator* anim);
+	cLevelStart(olc::PixelGameEngine* gfx, olc::Sprite* background, cAnimator* anim);
 
 private:
 	static cAnimator* animPlayer;
@@ -19,4 +19,4 @@ public:
 	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime);
 };
 
-#endif // !DEF_TRANSITION
+#endif // !DEF_LEVELSTART

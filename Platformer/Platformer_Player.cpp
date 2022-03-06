@@ -206,7 +206,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 
 			// You can't use pause when you are hit.
 			// like you can't pause when you jump in mario sunshine so you can't leave the level when you are falling
-			engine->SetGameState("GS_PAUSE");
+			engine->TransitionTo("GS_PAUSE", true);
 			engine->BreakLoop();
 			return;
 		}
