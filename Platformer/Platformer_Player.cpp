@@ -309,6 +309,7 @@ void cPlayer::EnterDoor(cLevel* lvl)
 
 void cPlayer::EnterTP()
 {
+	// TODO ajouter le fondu en blanc
 	for (auto& TP : engine->GetCloseTeleport(fPosX, fPosY))
 	{
 		if (cHitbox::ShapeOverlap_DIAG(hitbox, TP->GetHitbox()))

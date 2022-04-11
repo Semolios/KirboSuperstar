@@ -25,6 +25,7 @@ public:
 	}
 
 	void LoadSprites();
+	void LoadFont();
 
 private:
 	cAssets();

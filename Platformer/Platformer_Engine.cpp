@@ -79,6 +79,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 	{
 		case LS_CLEARSCREEN:
 		{
+			cAssets::get().LoadFont();
 			UpdateProgressBar("Loading 0%");
 
 			nLoadingState = LS_LEVELS;
@@ -396,7 +397,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			AddSharedSound("enterDoor", sndEnterDoor, "assets/snd/enterDoor.wav");
 			AddSharedSound("menuBip", sndMenuBip, "assets/snd/menuBip.wav");
 
-			UpdateProgressBar("Loading 99.9999999999999");
+			UpdateProgressBar("Loading 99.99999999999999999999999999999");
 
 			nLoadingState = LS_ASSETS;
 		}
@@ -1524,8 +1525,12 @@ ControllerManager* OneLoneCoder_Platformer::GetController()
 
 void OneLoneCoder_Platformer::UpdateProgressBar(std::string loadPercent)
 {
-	Clear(olc::BLACK);
-	DrawString(30, 440, loadPercent, olc::WHITE, 5);
+	SetPixelMode(olc::Pixel::ALPHA);
+
+	Clear(olc::DARK_GREY);
+	DrawKirboString(30, 440, loadPercent, 2);
+
+	SetPixelMode(olc::Pixel::NORMAL);
 }
 
 void OneLoneCoder_Platformer::ApplyControls()
@@ -1788,17 +1793,41 @@ olc::Key OneLoneCoder_Platformer::GetSavedControls(std::string control)
 	return savedControls[control];
 }
 
+void OneLoneCoder_Platformer::TransitionTo(std::string newState, bool playTransitionSound)
+{
+	bPlayTransitionSound = playTransitionSound;
+	sNextState = newState;
+	nGameState = GS_TRANSITION;
+}
+
+void OneLoneCoder_Platformer::DrawKirboString(int x, int y, std::string text, int scale, bool centered)
+{
+	int pos = 0;
+	int textWidth = 0;
+
+	if (centered)
+	{
+		for (std::string::iterator it = text.begin(); it != text.end(); ++it)
+		{
+			std::string chr(1, toupper(*it));
+			textWidth += 13 * scale;
+		}
+	}
+
+	for (std::string::iterator it = text.begin(); it != text.end(); ++it)
+	{
+		std::string chr(1, toupper(*it));
+		if (chr != " ")
+			DrawSprite(x + pos * 13 * scale - (textWidth / 2), y, cAssets::get().GetSprite(chr), scale);
+
+		++pos;
+	};
+}
+
 std::string OneLoneCoder_Platformer::ToStr(std::wstring str)
 {
 	//setup converter
 	using convert_type = std::codecvt_utf8<wchar_t>;
 	std::wstring_convert<convert_type, wchar_t> converter;
 	return converter.to_bytes(str);
-}
-
-void OneLoneCoder_Platformer::TransitionTo(std::string newState, bool playTransitionSound)
-{
-	bPlayTransitionSound = playTransitionSound;
-	sNextState = newState;
-	nGameState = GS_TRANSITION;
 }

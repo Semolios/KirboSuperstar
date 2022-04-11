@@ -29,10 +29,12 @@ bool cSelectMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Controll
 	}
 
 	// Draw choices and cursor
-	gfx->DrawString(160, 30, "Play", olc::WHITE, 5);
-	gfx->DrawString(160, 70, "Controls", olc::WHITE, 5);
-	gfx->DrawString(160, 110, "Credits", olc::WHITE, 5);
-	gfx->DrawString(160, 150, "Quit", olc::WHITE, 5);
+	gfx->SetPixelMode(olc::Pixel::ALPHA);
+
+	engine->DrawKirboString(160, 30, "Play", 2);
+	engine->DrawKirboString(160, 70, "Controls", 2);
+	engine->DrawKirboString(160, 110, "Credits", 2);
+	engine->DrawKirboString(160, 150, "Quit", 2);
 
 	int ncursorY;
 	if (nPlayerChoice == 0) ncursorY = 32;
@@ -40,7 +42,6 @@ bool cSelectMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Controll
 	if (nPlayerChoice == 2) ncursorY = 112;
 	if (nPlayerChoice == 3) ncursorY = 152;
 
-	gfx->SetPixelMode(olc::Pixel::ALPHA);
 	gfx->DrawSprite(120, ncursorY, sprCursor);
 	gfx->SetPixelMode(olc::Pixel::NORMAL);
 

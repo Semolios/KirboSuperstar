@@ -153,32 +153,32 @@ bool cControlsMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Contro
 	}
 
 	// controls names
-	gfx->DrawString(nTextX + ((nSelectedItem == 0) ? nIsSelected : nIsnotSelected), nTextY + 0 * nSpacingY, "Vacuum");
-	gfx->DrawString(nTextX + ((nSelectedItem == 1) ? nIsSelected : nIsnotSelected), nTextY + 1 * nSpacingY, "Launch Jesus Cross");
-	gfx->DrawString(nTextX + ((nSelectedItem == 2) ? nIsSelected : nIsnotSelected), nTextY + 2 * nSpacingY, "Slap Attack");
-	gfx->DrawString(nTextX + ((nSelectedItem == 3) ? nIsSelected : nIsnotSelected), nTextY + 3 * nSpacingY, "Jump");
-	gfx->DrawString(nTextX + ((nSelectedItem == 4) ? nIsSelected : nIsnotSelected), nTextY + 4 * nSpacingY, "Pause");
-	gfx->DrawString(nTextX + ((nSelectedItem == 5) ? nIsSelected : nIsnotSelected), nTextY + 5 * nSpacingY, "Fly Or Enter Door");
-	gfx->DrawString(nTextX + ((nSelectedItem == 6) ? nIsSelected : nIsnotSelected), nTextY + 6 * nSpacingY, "Down");
-	gfx->DrawString(nTextX + ((nSelectedItem == 7) ? nIsSelected : nIsnotSelected), nTextY + 7 * nSpacingY, "MoveLeft");
-	gfx->DrawString(nTextX + ((nSelectedItem == 8) ? nIsSelected : nIsnotSelected), nTextY + 8 * nSpacingY, "MoveRight");
-	gfx->DrawString(nTextX + ((nSelectedItem == 9) ? nIsSelected : nIsnotSelected), nTextY + 9 * nSpacingY, "Poyo");
+	engine->DrawKirboString(nTextX + ((nSelectedItem == 0) ? nIsSelected : nIsnotSelected), nTextY + 0 * nSpacingY - nCommandTextOutput, "Vacuum");
+	engine->DrawKirboString(nTextX + ((nSelectedItem == 1) ? nIsSelected : nIsnotSelected), nTextY + 1 * nSpacingY - nCommandTextOutput, "Jesus Cross");
+	engine->DrawKirboString(nTextX + ((nSelectedItem == 2) ? nIsSelected : nIsnotSelected), nTextY + 2 * nSpacingY - nCommandTextOutput, "Slap Attack");
+	engine->DrawKirboString(nTextX + ((nSelectedItem == 3) ? nIsSelected : nIsnotSelected), nTextY + 3 * nSpacingY - nCommandTextOutput, "Jump");
+	engine->DrawKirboString(nTextX + ((nSelectedItem == 4) ? nIsSelected : nIsnotSelected), nTextY + 4 * nSpacingY - nCommandTextOutput, "Pause");
+	engine->DrawKirboString(nTextX + ((nSelectedItem == 5) ? nIsSelected : nIsnotSelected), nTextY + 5 * nSpacingY - nCommandTextOutput, "Fly Or Enter Door");
+	engine->DrawKirboString(nTextX + ((nSelectedItem == 6) ? nIsSelected : nIsnotSelected), nTextY + 6 * nSpacingY - nCommandTextOutput, "Down");
+	engine->DrawKirboString(nTextX + ((nSelectedItem == 7) ? nIsSelected : nIsnotSelected), nTextY + 7 * nSpacingY - nCommandTextOutput, "MoveLeft");
+	engine->DrawKirboString(nTextX + ((nSelectedItem == 8) ? nIsSelected : nIsnotSelected), nTextY + 8 * nSpacingY - nCommandTextOutput, "MoveRight");
+	engine->DrawKirboString(nTextX + ((nSelectedItem == 9) ? nIsSelected : nIsnotSelected), nTextY + 9 * nSpacingY - nCommandTextOutput, "Poyo");
 
-	gfx->DrawString(nKeyTextX, nTextY - nSpacingY, "Keyboard");
+	engine->DrawKirboString(nKeyTextX, nTextY - nSpacingY, "Keyboard", 1, true);
 
 	// controls keys
-	gfx->DrawString(nKeyTextX + ((nSelectedItem == 0) ? nIsSelected : nIsnotSelected), nTextY + 0 * nSpacingY, (bModify && nSelectedItem == 0) ? "Enter a new key" : engine->olcKeyToStr(tempControls["vacuum"]));
-	gfx->DrawString(nKeyTextX + ((nSelectedItem == 1) ? nIsSelected : nIsnotSelected), nTextY + 1 * nSpacingY, (bModify && nSelectedItem == 1) ? "Enter a new key" : engine->olcKeyToStr(tempControls["launchJesusCross"]));
-	gfx->DrawString(nKeyTextX + ((nSelectedItem == 2) ? nIsSelected : nIsnotSelected), nTextY + 2 * nSpacingY, (bModify && nSelectedItem == 2) ? "Enter a new key" : engine->olcKeyToStr(tempControls["slapAttack"]));
-	gfx->DrawString(nKeyTextX + ((nSelectedItem == 3) ? nIsSelected : nIsnotSelected), nTextY + 3 * nSpacingY, (bModify && nSelectedItem == 3) ? "Enter a new key" : engine->olcKeyToStr(tempControls["jump"]));
-	gfx->DrawString(nKeyTextX + ((nSelectedItem == 4) ? nIsSelected : nIsnotSelected), nTextY + 4 * nSpacingY, (bModify && nSelectedItem == 4) ? "Enter a new key" : engine->olcKeyToStr(tempControls["pause"]));
-	gfx->DrawString(nKeyTextX + ((nSelectedItem == 5) ? nIsSelected : nIsnotSelected), nTextY + 5 * nSpacingY, (bModify && nSelectedItem == 5) ? "Enter a new key" : engine->olcKeyToStr(tempControls["flyOrEnterDoor"]));
-	gfx->DrawString(nKeyTextX + ((nSelectedItem == 6) ? nIsSelected : nIsnotSelected), nTextY + 6 * nSpacingY, (bModify && nSelectedItem == 6) ? "Enter a new key" : engine->olcKeyToStr(tempControls["down"]));
-	gfx->DrawString(nKeyTextX + ((nSelectedItem == 7) ? nIsSelected : nIsnotSelected), nTextY + 7 * nSpacingY, (bModify && nSelectedItem == 7) ? "Enter a new key" : engine->olcKeyToStr(tempControls["moveLeft"]));
-	gfx->DrawString(nKeyTextX + ((nSelectedItem == 8) ? nIsSelected : nIsnotSelected), nTextY + 8 * nSpacingY, (bModify && nSelectedItem == 8) ? "Enter a new key" : engine->olcKeyToStr(tempControls["moveRight"]));
-	gfx->DrawString(nKeyTextX + ((nSelectedItem == 9) ? nIsSelected : nIsnotSelected), nTextY + 9 * nSpacingY, (bModify && nSelectedItem == 9) ? "Enter a new key" : engine->olcKeyToStr(tempControls["poyo"]));
+	engine->DrawKirboString(nKeyTextX + ((nSelectedItem == 0) ? nIsSelected : nIsnotSelected), nTextY + 0 * nSpacingY, (bModify && nSelectedItem == 0) ? "Enter a new key" : engine->olcKeyToStr(tempControls["vacuum"]), 1, true);
+	engine->DrawKirboString(nKeyTextX + ((nSelectedItem == 1) ? nIsSelected : nIsnotSelected), nTextY + 1 * nSpacingY, (bModify && nSelectedItem == 1) ? "Enter a new key" : engine->olcKeyToStr(tempControls["launchJesusCross"]), 1, true);
+	engine->DrawKirboString(nKeyTextX + ((nSelectedItem == 2) ? nIsSelected : nIsnotSelected), nTextY + 2 * nSpacingY, (bModify && nSelectedItem == 2) ? "Enter a new key" : engine->olcKeyToStr(tempControls["slapAttack"]), 1, true);
+	engine->DrawKirboString(nKeyTextX + ((nSelectedItem == 3) ? nIsSelected : nIsnotSelected), nTextY + 3 * nSpacingY, (bModify && nSelectedItem == 3) ? "Enter a new key" : engine->olcKeyToStr(tempControls["jump"]), 1, true);
+	engine->DrawKirboString(nKeyTextX + ((nSelectedItem == 4) ? nIsSelected : nIsnotSelected), nTextY + 4 * nSpacingY, (bModify && nSelectedItem == 4) ? "Enter a new key" : engine->olcKeyToStr(tempControls["pause"]), 1, true);
+	engine->DrawKirboString(nKeyTextX + ((nSelectedItem == 5) ? nIsSelected : nIsnotSelected), nTextY + 5 * nSpacingY, (bModify && nSelectedItem == 5) ? "Enter a new key" : engine->olcKeyToStr(tempControls["flyOrEnterDoor"]), 1, true);
+	engine->DrawKirboString(nKeyTextX + ((nSelectedItem == 6) ? nIsSelected : nIsnotSelected), nTextY + 6 * nSpacingY, (bModify && nSelectedItem == 6) ? "Enter a new key" : engine->olcKeyToStr(tempControls["down"]), 1, true);
+	engine->DrawKirboString(nKeyTextX + ((nSelectedItem == 7) ? nIsSelected : nIsnotSelected), nTextY + 7 * nSpacingY, (bModify && nSelectedItem == 7) ? "Enter a new key" : engine->olcKeyToStr(tempControls["moveLeft"]), 1, true);
+	engine->DrawKirboString(nKeyTextX + ((nSelectedItem == 8) ? nIsSelected : nIsnotSelected), nTextY + 8 * nSpacingY, (bModify && nSelectedItem == 8) ? "Enter a new key" : engine->olcKeyToStr(tempControls["moveRight"]), 1, true);
+	engine->DrawKirboString(nKeyTextX + ((nSelectedItem == 9) ? nIsSelected : nIsnotSelected), nTextY + 9 * nSpacingY, (bModify && nSelectedItem == 9) ? "Enter a new key" : engine->olcKeyToStr(tempControls["poyo"]), 1, true);
 
-	gfx->DrawString(nControllerTextX, nTextY - nSpacingY, "Controller (unchanging)");
+	engine->DrawKirboString(nControllerTextX, nTextY - nSpacingY, "Controller (fixed)", 1, true);
 
 	// controller buttons
 	gfx->DrawSprite(nButtonsTextX + ((nSelectedItem == 0) ? nIsSelected : nIsnotSelected), nButtonsTextY + 0 * nSpacingY, sprX);

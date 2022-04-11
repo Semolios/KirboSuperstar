@@ -29,10 +29,11 @@ bool cPauseMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Controlle
 	}
 
 	// Draw choices and cursor
-	gfx->DrawString(160, 370, "Continue", olc::WHITE, 5);
-	gfx->DrawString(160, 410, "Return to map", olc::WHITE, 5);
-
 	gfx->SetPixelMode(olc::Pixel::ALPHA);
+
+	engine->DrawKirboString(160, 370, "Continue", 2);
+	engine->DrawKirboString(160, 410, "Return to map", 2);
+
 	gfx->DrawSprite(120, nPlayerChoice == 0 ? 372 : 412, sprCursor);
 	gfx->SetPixelMode(olc::Pixel::NORMAL);
 

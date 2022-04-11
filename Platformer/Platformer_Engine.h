@@ -425,6 +425,9 @@ public:
 	// Transition function
 	void TransitionTo(std::string newState, bool playTransitionSound);
 
+	//	Font functions
+	void DrawKirboString(int x, int y, std::string text, int scale = 1, bool centered = false);
+
 	// Other
 	std::string ToStr(std::wstring str);
 };
