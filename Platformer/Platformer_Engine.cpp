@@ -333,6 +333,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			sndInvincibility = olc::SOUND::LoadAudioSample("assets/snd/invincibility.wav");
 			sndMenu = olc::SOUND::LoadAudioSample("assets/snd/menus.wav");
 			sndTransition = olc::SOUND::LoadAudioSample("assets/snd/transition.wav");
+			sndEndScreen = olc::SOUND::LoadAudioSample("assets/snd/endScreen.wav");
 
 			AddSharedSound("whispyScream", sndWhispyScream, "assets/snd/whispyScream.wav");
 			AddSharedSound("loseLife", sndLoseLife, "assets/snd/loseLife.wav");
@@ -780,8 +781,23 @@ bool OneLoneCoder_Platformer::GameState_EndScreen(float fElapsedTime)
 {
 	endScreen->Update(this, fElapsedTime);
 
+	if (bPlayMusic)
+	{
+		bPlayMusic = false;
+		olc::SOUND::PlaySample(sndEndScreen);
+	}
+
+	SetPixelMode(olc::Pixel::ALPHA);
+	DrawKirboString(400, 400, "Thank you for playing", 2, true);
+	DrawKirboString(400, 432, "Kirbo Superstar", 2, true);
+	SetPixelMode(olc::Pixel::NORMAL);
+
 	if (GetKey(olc::Key::SPACE).bPressed || controller.GetButton(A).bPressed)
+	{
+		olc::SOUND::StopAll();
+		bPlayMusic = true;
 		TransitionTo("GS_TITLE", true);
+	}
 
 	return false;
 }

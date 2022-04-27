@@ -76,6 +76,7 @@ private:
 	int sndInvincibility;
 	int sndMenu;
 	int sndTransition;
+	int sndEndScreen;
 
 	// Sounds shared with other classes
 	std::map<std::string, int> sharedSounds;
@@ -174,6 +175,7 @@ private:
 	// End Screen
 	olc::Sprite* sprEndScreen;
 	cEndScreen* endScreen;
+	bool bPlayMusic = true;
 
 	// Pause Menu
 	olc::Sprite* sprPauseMenu;
