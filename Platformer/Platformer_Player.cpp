@@ -437,7 +437,6 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 		// Break door animation
 		if (bBreakDoor)
 		{
-
 			if (fAnimationTimer >= cfBrokenDoorFrame * animPlayer->fTimeBetweenFrames)
 			{
 				if (bCanSpawnProjectile)

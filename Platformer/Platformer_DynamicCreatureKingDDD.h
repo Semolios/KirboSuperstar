@@ -58,17 +58,17 @@ private:
 	const float cfSmashChargeTimeMiHp = 0.7f;
 	const float cfSmashChargeTimeLoHp = 0.6f;
 
-	const float cfWaitAfterSmashTimeMaxHp = 1.0f;
-	const float cfWaitAfterSmashTimeHiHp = 0.95f;
-	const float cfWaitAfterSmashTimeMiHp = 0.9f;
-	const float cfWaitAfterSmashTimeLoHp = 0.8f;
+	const float cfWaitAfterSmashTimeMaxHp = 1.2f;
+	const float cfWaitAfterSmashTimeHiHp = 1.15f;
+	const float cfWaitAfterSmashTimeMiHp = 1.1f;
+	const float cfWaitAfterSmashTimeLoHp = 1.0f;
 
 	const int cnHiHP = 70;
 	const int cnMiHP = 50;
 	const int cnLoHP = 30;
 
 	const int cnNumberOfAttack = 5;
-	const int cnAttacksDmg = 4;
+	const int cnAttacksDmg = 3;
 
 	enum AI_STATE
 	{
@@ -155,7 +155,7 @@ private:
 	float fSpikeRightPX = 3.0f;
 	float fSpikeLeftVX = -3.0f;
 	float fSpikeRightVX = 3.0f;
-	float fSpikeVY = -6.0f;
+	float fSpikeVY = -5.0f;
 	float fSpikeDuration = 2.0f;
 	float fSideBSearchSpikeTime = 0.65f;
 	float fSideBSpikeFoundTime = 0.35f;
@@ -208,7 +208,7 @@ private:
 	} nJumpSide;
 
 	// Vacuum Behaviour
-	float fPrepareVacuumTime = 1.0f;
+	float fPrepareVacuumTime = 1.1f;
 	float fVacuumTime = 2.0f;
 	float fSwallowKirboTime = 1.0f;
 	float fSpitKirboTime = 1.0f;

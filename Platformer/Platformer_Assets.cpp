@@ -27,11 +27,10 @@ void cAssets::LoadSprites()
 	// Bosses
 	load("whispyWood", "assets/gfx/whispyWood.png");
 	load("mrShineMrBright", "assets/gfx/mrShineMrBright.png");
-	// TODO: penser à décommenter à la fin
-	//load("frosty", "assets/gfx/frosty.png");
-	//load("kracko", "assets/gfx/kracko.png");
-	//load("SSTierMetaKnight", "assets/gfx/SSTierMetaKnight.png");
-	//load("kingDDD", "assets/gfx/kingDDD.png");
+	load("frosty", "assets/gfx/frosty.png");
+	load("kracko", "assets/gfx/kracko.png");
+	load("SSTierMetaKnight", "assets/gfx/SSTierMetaKnight.png");
+	load("kingDDD", "assets/gfx/kingDDD.png");
 }
 
 void cAssets::LoadFont()

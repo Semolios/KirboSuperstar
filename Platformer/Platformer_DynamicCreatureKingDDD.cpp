@@ -18,7 +18,7 @@ cDynamicCreatureKingDDD::cDynamicCreatureKingDDD(cLevel* l) : cDynamicCreature("
 	level = l;
 	bSolidVsMap = true;
 	bAffectedByGravity = true;
-	nDamage = 4;
+	nDamage = 3;
 	bCanBehaveWhileAttacked = true;
 }
 

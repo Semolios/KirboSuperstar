@@ -91,7 +91,6 @@ void cAnimator::LoadAnimations()
 	mapStates["jesus_christ"].push_back(new olc::Sprite("assets/gfx/kirbolaunchingcross00.png"));
 	mapStates["jesus_christ"].push_back(new olc::Sprite("assets/gfx/kirbolaunchingcross01.png"));
 	mapStates["jesus_christ"].push_back(new olc::Sprite("assets/gfx/kirbolaunchingcross02.png"));
-	mapStates["jesus_christ"].push_back(new olc::Sprite("assets/gfx/kirbolaunchingcross02.png"));
 	mapStates["jesus_christ"].push_back(new olc::Sprite("assets/gfx/kirbolaunchingcross03.png"));
 	mapStates["jesus_christ"].push_back(new olc::Sprite("assets/gfx/kirbolaunchingcross04.png"));
 	mapStates["jesus_christ"].push_back(new olc::Sprite("assets/gfx/kirbolaunchingcross04.png"));

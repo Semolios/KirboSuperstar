@@ -35,7 +35,6 @@ private:
 	const int cnMiHP = 50;
 	const int cnLoHP = 30;
 
-	// TODO
 	enum AI_STATE
 	{
 		AI_IDLE = 0,
