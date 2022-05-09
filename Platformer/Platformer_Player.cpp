@@ -309,7 +309,6 @@ void cPlayer::EnterDoor(cLevel* lvl)
 
 void cPlayer::EnterTP()
 {
-	// TODO ajouter le fondu en blanc
 	for (auto& TP : engine->GetCloseTeleport(fPosX, fPosY))
 	{
 		if (cHitbox::ShapeOverlap_DIAG(hitbox, TP->GetHitbox()))
@@ -329,10 +328,12 @@ void cPlayer::EnterTP()
 
 void cPlayer::Teleport(float px, float py)
 {
-	fPosX = px;
-	fPosY = py;
-	animPlayer->ChangeState("fall");
+	fTPX = px;
+	fTPY = py;
 	SetAttackable(true);
+	bChangePos = true;
+
+	engine->TransitionTo("GS_MAIN", true);
 }
 
 bool cPlayer::CanInteract()
@@ -493,12 +494,15 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 		}
 
 		// Stop the action when it's finished
-		if (fAnimationTimer >= animPlayer->mapStates[animPlayer->sCurrentState].size() * animPlayer->fTimeBetweenFrames)
+		float endAnimationTime = animPlayer->mapStates[animPlayer->sCurrentState].size() * animPlayer->fTimeBetweenFrames;
+		if (bBreakDoor)
+			endAnimationTime -= animPlayer->fTimeBetweenFrames;
+		if (fAnimationTimer >= endAnimationTime)
 		{
 			fAnimationTimer = 0.0f;
 			if (bBreakDoor)
 				EnterDoor(lvl);
-			StopAnyAttack();
+			StopAnyAction();
 		}
 	}
 
@@ -507,7 +511,7 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 		// calculate elapsed time after damage
 		fAnimationTimer += fElapsedTime;
 		bFlying = false;
-		StopAnyAttack();
+		StopAnyAction();
 
 		if (fAnimationTimer >= animPlayer->mapStates[animPlayer->sCurrentState].size() * animPlayer->fTimeBetweenFrames)
 		{
@@ -520,7 +524,7 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 	{
 		fVelX = 0.0f;
 		fVelY = 0.0f;
-		StopAnyAttack();
+		StopAnyAction();
 
 		if (fDeadAnimation == 0.0f)
 			engine->PlaySample("loseLife");
@@ -556,7 +560,7 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 	{
 		fVelX = 0.0f;
 		fVelY = 0.0f;
-		StopAnyAttack();
+		StopAnyAction();
 
 		engine->UpdateWinTimer(fElapsedTime);
 
@@ -578,7 +582,7 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 	}
 }
 
-void cPlayer::StopAnyAttack()
+void cPlayer::StopAnyAction()
 {
 	bInteracting = false;
 	bSlapping = false;
@@ -1175,7 +1179,7 @@ void cPlayer::ResetVariables()
 	fKirboGoesAwayTimer = 0.0f;
 	fJumpTimer = 0.0f;
 	bIsGrabbedByEnnemy = false;
-	StopAnyAttack();
+	StopAnyAction();
 }
 
 void cPlayer::VacuumHitbox(float cameraOffsetX, float cameraOffsetY)
@@ -1323,6 +1327,16 @@ void cPlayer::SetVisible(bool visible)
 {
 	bShowKirbo = visible;
 	bForceInvisible = !visible;
+}
+
+void cPlayer::ChangePosAfterTP()
+{
+	if (bChangePos)
+	{
+		fPosX = fTPX;
+		fPosY = fTPY;
+		bChangePos = false;
+	}
 }
 
 bool cPlayer::IsCollectibleItem(wchar_t c)

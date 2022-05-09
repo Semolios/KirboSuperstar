@@ -63,6 +63,8 @@ private:
 
 	float fPosX = 0.0f;
 	float fPosY = 0.0f;
+	float fTPX = 0.0f;
+	float fTPY = 0.0f;
 	float fVelX = 0.0f;
 	float fVelY = 0.0f;
 	float fAnimationTimer = 0.0f;
@@ -103,6 +105,7 @@ private:
 	bool bSwallowSound = false;
 	bool bPoyo = false;
 	bool bBreakDoor = false;
+	bool bChangePos = false;
 	bool bIsGrabbedByEnnemy = false;
 	bool bForceInvincible = false;
 	bool bForceInvisible = false;
@@ -130,7 +133,7 @@ public:
 	void Update(float fElapsedTime);
 	float GetFaceDir();
 	void OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t, std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles, cLevel* lvl);
-	void StopAnyAttack();
+	void StopAnyAction();
 	void ClampVelocities();
 	void IncreaseVelocities(float dvx, float dvy);
 	void DecreaseVelocities(float dvx, float dvy);
@@ -186,6 +189,7 @@ public:
 	void SetGrabbedByEnnemy(bool grabbed);
 	void ChangeAnimation(std::string animation);
 	void SetVisible(bool visible);
+	void ChangePosAfterTP();
 
 	// Item Pick-up functions
 	bool IsCollectibleItem(wchar_t c);

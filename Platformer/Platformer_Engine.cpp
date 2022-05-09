@@ -744,6 +744,9 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	t.Translate((player->GetPosX() - camera->GetOffsetX()) * nTileWidth + (nTileWidth / 2), (player->GetPosY() - camera->GetOffsetY()) * nTileHeight + (nTileHeight / 2));
 	player->DrawKirbo(t);
 
+	// Don't move kirbo before the white fading is finished
+	player->ChangePosAfterTP();
+
 #pragma region HUD
 
 	HUD->HealthBar(this, sprHealthBar);
