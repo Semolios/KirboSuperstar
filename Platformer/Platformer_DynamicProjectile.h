@@ -42,6 +42,11 @@ public:
 	void DrawSelf(float ox, float oy) override;
 	void Update(float fElapsedTime, float playerX, float playerY) override;
 	void Collision(float fElapsedTime, cLevel* level);
+	void SideCollision();
+	void LeftCollision(cLevel* level, float fNewObjectPosX, float fBorder);
+	void RightCollision(cLevel* level, float fNewObjectPosX, float fBorder);
+	void TopCollision(cLevel* level, float fNewObjectPosX, float fBorder, float fNewObjectPosY);
+	void BottomCollision(cLevel* level, float fNewObjectPosX, float fBorder, float fNewObjectPosY, float fElapsedTime);
 	void CheckBreakableBlocks(cLevel* level, float fNewObjectPosX, float fBorder, float fNewObjectPosY);
 	void BreakTile(cLevel* level, float tileX, float tileY);
 	void ChangeTile(cLevel* level, float tileX, float tileY, wchar_t t);

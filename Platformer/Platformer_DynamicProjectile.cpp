@@ -89,72 +89,94 @@ void cDynamicProjectile::Collision(float fElapsedTime, cLevel* level)
 	{
 		if (vx <= 0) // Moving Left
 		{
-			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, py + fBorder)) ||
-				engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, py + (fDynHeight / engine->GetTileHeight()) - fBorder)))
-			{
-				if (bBreaksAgainstTiles)
-					bRedundant = true;
-				else
-					vx = 0.0f;
-			}
+			LeftCollision(level, fNewObjectPosX, fBorder);
 		}
 		else // Moving Right
 		{
-			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + fBorder)) ||
-				engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + (fDynHeight / engine->GetTileHeight()) - fBorder)))
-			{
-				if (bBreaksAgainstTiles)
-					bRedundant = true;
-				else
-					vx = 0.0f;
-			}
+			RightCollision(level, fNewObjectPosX, fBorder);
 		}
 
 		if (vy <= 0) // Moving Up
 		{
-			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY)) ||
-				engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY)))
-			{
-				if (bBreaksAgainstTiles)
-					bRedundant = true;
-				else
-					vy = 0.0f;
-			}
+			TopCollision(level, fNewObjectPosX, fBorder, fNewObjectPosY);
 		}
 		else // Moving Down
 		{
-			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
-				engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
-				engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
-				engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))))
-			{
-				if (bBreaksAgainstTiles && !bBouncy)
-				{
-					bRedundant = true;
-				}
-				else
-				{
-					if (!bBouncy)
-					{
-						vy = 0.0f;
-
-						vx += fDrag * vx * fElapsedTime;
-						if (fabs(vx) < cfMinGlideVX) vx = 0.0f;
-					}
-					else
-					{
-						if (!bounceSoundEffect.empty())
-							engine->PlaySample(bounceSoundEffect);
-
-						vy = -vy;
-					}
-				}
-			}
+			BottomCollision(level, fNewObjectPosX, fBorder, fNewObjectPosY, fElapsedTime);
 		}
 	}
 
 	px = fNewObjectPosX;
 	py = fNewObjectPosY;
+}
+
+void cDynamicProjectile::SideCollision()
+{
+	if (bBreaksAgainstTiles)
+		bRedundant = true;
+	else if (!bBouncy)
+		vx = 0.0f;
+	else
+		vx = -vx;
+}
+
+void cDynamicProjectile::LeftCollision(cLevel* level, float fNewObjectPosX, float fBorder)
+{
+	if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, py + ((fDynHeight / engine->GetTileHeight()) / 2.0f))))
+	{
+		SideCollision();
+	}
+}
+
+void cDynamicProjectile::RightCollision(cLevel* level, float fNewObjectPosX, float fBorder)
+{
+	if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + ((fDynHeight / engine->GetTileHeight()) / 2.0f))))
+	{
+		SideCollision();
+	}
+}
+
+void cDynamicProjectile::TopCollision(cLevel* level, float fNewObjectPosX, float fBorder, float fNewObjectPosY)
+{
+	if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY)) ||
+		engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY)))
+	{
+		if (bBreaksAgainstTiles)
+			bRedundant = true;
+		else
+			vy = 0.0f;
+	}
+}
+
+void cDynamicProjectile::BottomCollision(cLevel* level, float fNewObjectPosX, float fBorder, float fNewObjectPosY, float fElapsedTime)
+{
+	if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
+		engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
+		engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
+		engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))))
+	{
+		if (bBreaksAgainstTiles && !bBouncy)
+		{
+			bRedundant = true;
+		}
+		else
+		{
+			if (!bBouncy)
+			{
+				vy = 0.0f;
+
+				vx += fDrag * vx * fElapsedTime;
+				if (fabs(vx) < cfMinGlideVX) vx = 0.0f;
+			}
+			else
+			{
+				if (!bounceSoundEffect.empty())
+					engine->PlaySample(bounceSoundEffect);
+
+				vy = -vy;
+			}
+		}
+	}
 }
 
 void cDynamicProjectile::CheckBreakableBlocks(cLevel* level, float fNewObjectPosX, float fBorder, float fNewObjectPosY)
@@ -397,7 +419,7 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProject
 	mapProjectiles["doorDebris1"].push_back(new olc::Sprite("assets/gfx/doorDebris1.png"));
 
 	mapProjectiles["doorDebris2"].push_back(new olc::Sprite("assets/gfx/doorDebris2.png"));
-	
+
 	mapProjectiles["doorDebris3"].push_back(new olc::Sprite("assets/gfx/doorDebris3.png"));
 
 	// Invisibles Projectiles (these ones are invisible because they are included in the ennemies animations
