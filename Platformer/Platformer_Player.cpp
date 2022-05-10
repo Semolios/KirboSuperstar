@@ -445,9 +445,9 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 					engine->PlaySample("enterDoor");
 					float debrisDuration = animPlayer->mapStates[animPlayer->sCurrentState].size() * animPlayer->fTimeBetweenFrames;
 
-					engine->AddProjectile(fPosX, fPosY, true, -6.0f, -6.0f, debrisDuration, "doorDebris1", true, 0, false);
-					engine->AddProjectile(fPosX, fPosY, true, +3.0f, -9.0f, debrisDuration, "doorDebris2", true, 0, false);
-					engine->AddProjectile(fPosX, fPosY, true, +9.0f, -3.0f, debrisDuration, "doorDebris3", true, 0, false);
+					engine->AddProjectile(fPosX, fPosY, true, -6.0f, -6.0f, debrisDuration, "doorDebris1", true, 0, false, true, 0, false, 0.0f, "", false, "", true);
+					engine->AddProjectile(fPosX, fPosY, true, +3.0f, -9.0f, debrisDuration, "doorDebris2", true, 0, false, true, 0, false, 0.0f, "", false, "", true);
+					engine->AddProjectile(fPosX, fPosY, true, +9.0f, -3.0f, debrisDuration, "doorDebris3", true, 0, false, true, 0, false, 0.0f, "", false, "", true);
 
 					bCanSpawnProjectile = false;
 				}

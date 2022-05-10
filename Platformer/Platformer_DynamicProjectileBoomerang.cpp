@@ -1,6 +1,7 @@
 #include "Platformer_DynamicProjectileBoomerang.h"
 
-cDynamicProjectileBoomerang::cDynamicProjectileBoomerang(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, int damage, bool solidVSMap, bool oneHit, int corner) : cDynamicProjectile(ox, oy, bFriend, velx, vely, duration, map, false, damage, solidVSMap, oneHit, corner)
+cDynamicProjectileBoomerang::cDynamicProjectileBoomerang(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, int damage, bool solidVSMap, bool oneHit, int corner, bool scenery) 
+	: cDynamicProjectile(ox, oy, bFriend, velx, vely, duration, map, false, damage, solidVSMap, oneHit, corner, true, 0.0f, false, "", scenery)
 {
 	fInitPosX = ox;
 	fInitPosY = oy;

@@ -3,7 +3,7 @@
 
 OneLoneCoder_Platformer* cDynamicProjectile::engine = nullptr;
 
-cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float drag, bool bouncy, std::string bounceSound) : cDynamic("projectile")
+cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float drag, bool bouncy, std::string bounceSound, bool scenery) : cDynamic("projectile")
 {
 	fDynWidth = map[0]->width;
 	fDynHeight = map[0]->height;
@@ -27,6 +27,7 @@ cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float v
 	fDrag = drag;
 	bBouncy = bouncy;
 	bounceSoundEffect = bounceSound;
+	bScenery = scenery;
 }
 
 cDynamicProjectile::~cDynamicProjectile()
@@ -473,6 +474,11 @@ void cDynamicProjectile::SetBreakableAgainstTiles(bool breakable)
 void cDynamicProjectile::SetDrag(float drag)
 {
 	fDrag = drag;
+}
+
+bool cDynamicProjectile::IsScenery()
+{
+	return bScenery;
 }
 
 void cDynamicProjectile::UpdateTrajectory(float fElapsedTime)

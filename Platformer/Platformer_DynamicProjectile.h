@@ -11,7 +11,7 @@ class OneLoneCoder_Platformer;
 class cDynamicProjectile : public cDynamic
 {
 public:
-	cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner = 0, bool breackableAgainstTiles = true, float drag = -3.0f, bool bouncy = false, std::string bounceSound = "");
+	cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner = 0, bool breackableAgainstTiles = true, float drag = -3.0f, bool bouncy = false, std::string bounceSound = "", bool scenery = false);
 	virtual ~cDynamicProjectile();
 
 protected:
@@ -29,6 +29,7 @@ protected:
 	bool bRedundant;
 	bool bBreaksAgainstTiles;
 	bool bBouncy;
+	bool bScenery;
 
 	// animation
 	int nCurrentFrame = 0;
@@ -62,6 +63,7 @@ public:
 	bool BreaksAgainstTiles();
 	void SetBreakableAgainstTiles(bool breakable);
 	void SetDrag(float drag);
+	bool IsScenery();
 
 	virtual void UpdateTrajectory(float fElapsedTime);
 };

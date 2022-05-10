@@ -578,7 +578,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		object->Collision(fElapsedTime, level);
 
 		// check if a Projectile hits a creature
-		if (!object->IsRedundant())
+		if (!object->IsRedundant() && !object->IsScenery())
 		{
 			if (object->IsFriendly())
 			{
@@ -1135,25 +1135,25 @@ bool OneLoneCoder_Platformer::IsSemiSolidTile(wchar_t tile)
 	return tile == '_';
 }
 
-void OneLoneCoder_Platformer::AddProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float fDrag, std::string sound, bool bouncy, std::string bounceSound)
+void OneLoneCoder_Platformer::AddProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float fDrag, std::string sound, bool bouncy, std::string bounceSound, bool scenery)
 {
-	cDynamicProjectile* p = new cDynamicProjectile(ox, oy, bFriend, velx, vely, duration, mapProjectiles[sprite], affectedByGravity, damage, solidVSMap, oneHit, corner, breackableAgainstTiles, fDrag, bouncy, bounceSound);
+	cDynamicProjectile* p = new cDynamicProjectile(ox, oy, bFriend, velx, vely, duration, mapProjectiles[sprite], affectedByGravity, damage, solidVSMap, oneHit, corner, breackableAgainstTiles, fDrag, bouncy, bounceSound, scenery);
 	if (sound != "")
 		p->SetSoundEffect(sound);
 	vecProjectiles.push_back(p);
 }
 
-void OneLoneCoder_Platformer::AddBoomerang(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit, int corner, std::string sound)
+void OneLoneCoder_Platformer::AddBoomerang(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit, int corner, std::string sound, bool scenery)
 {
-	cDynamicProjectile* p = new cDynamicProjectileBoomerang(ox, oy, bFriend, velx, vely, duration, mapProjectiles[sprite], damage, solidVSMap, oneHit, corner);
+	cDynamicProjectile* p = new cDynamicProjectileBoomerang(ox, oy, bFriend, velx, vely, duration, mapProjectiles[sprite], damage, solidVSMap, oneHit, corner, scenery);
 	if (sound != "")
 		p->SetSoundEffect(sound);
 	vecProjectiles.push_back(p);
 }
 
-void OneLoneCoder_Platformer::AddOrbital(float ox, float oy, bool bFriend, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit, int corner, float cx, float cy, float angrot, std::string sound)
+void OneLoneCoder_Platformer::AddOrbital(float ox, float oy, bool bFriend, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit, int corner, float cx, float cy, float angrot, std::string sound, bool scenery)
 {
-	cDynamicProjectile* p = new cDynamicProjectileOrbital(ox, oy, bFriend, duration, mapProjectiles[sprite], damage, solidVSMap, oneHit, corner, cx, cy, angrot);
+	cDynamicProjectile* p = new cDynamicProjectileOrbital(ox, oy, bFriend, duration, mapProjectiles[sprite], damage, solidVSMap, oneHit, corner, cx, cy, angrot, scenery);
 	if (sound != "")
 		p->SetSoundEffect(sound);
 	vecProjectiles.push_back(p);

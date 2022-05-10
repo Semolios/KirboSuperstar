@@ -1,6 +1,7 @@
 #include "Platformer_DynamicProjectileOrbital.h"
 
-cDynamicProjectileOrbital::cDynamicProjectileOrbital(float ox, float oy, bool bFriend, float duration, std::vector<olc::Sprite*> map, int damage, bool solidVSMap, bool oneHit, int corner, float cx, float cy, float angrot) : cDynamicProjectile(ox, oy, bFriend, 0.0f, 0.0f, duration, map, false, damage, solidVSMap, oneHit, corner)
+cDynamicProjectileOrbital::cDynamicProjectileOrbital(float ox, float oy, bool bFriend, float duration, std::vector<olc::Sprite*> map, int damage, bool solidVSMap, bool oneHit, int corner, float cx, float cy, float angrot, bool scenery) 
+	: cDynamicProjectile(ox, oy, bFriend, 0.0f, 0.0f, duration, map, false, damage, solidVSMap, oneHit, corner, false, 0.0f, false, "", scenery)
 {
 	fCenterX = cx;
 	fCenterY = cy;
