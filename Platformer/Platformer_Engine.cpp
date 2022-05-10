@@ -47,11 +47,23 @@ bool OneLoneCoder_Platformer::GameState_LevelStart(float fElapsedTime)
 
 	switch (levelStartAnim)
 	{
-		case 0: animPlayer.ChangeState("idle"); break;
-		case 1: animPlayer.ChangeState("run"); break;
-		case 2: animPlayer.ChangeState("jump"); break;
+		case 0: animPlayer.ChangeState("idle");		   break;
+		case 1: animPlayer.ChangeState("run");		   break;
+		case 2: animPlayer.ChangeState("jump");		   break;
 		case 3: animPlayer.ChangeState("riding_star"); break;
 	}
+
+	SetPixelMode(olc::Pixel::ALPHA);
+	switch (worldMap->GetSelectedLevel())
+	{
+		case 0: DrawKirboString(50, 400, "green green", 2);		   break;
+		case 1: DrawKirboString(50, 400, "grass land", 2);		   break;
+		case 2: DrawKirboString(50, 400, "iceberg", 2);			   break;
+		case 3: DrawKirboString(50, 400, "cloudy park", 2);		   break;
+		case 4: DrawKirboString(50, 400, "halberd", 2);			   break;
+		case 5: DrawKirboString(50, 400, "fountain of dreams", 2); break;
+	}
+	SetPixelMode(olc::Pixel::NORMAL);
 
 	if (GetKey(olc::Key::SPACE).bPressed || controller.GetButton(A).bPressed)
 		TransitionTo("GS_MAIN", true);
