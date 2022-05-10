@@ -1308,7 +1308,6 @@ void cPlayer::EnemyCollision(cDynamic* object, float cameraOffsetX, float camera
 bool cPlayer::EnemyTouched(cDynamic* object, float cameraOffsetX, float cameraOffsetY)
 {
 	object->UpdateHitbox(cameraOffsetX, cameraOffsetY);
-	UpdateHitbox(cameraOffsetX, cameraOffsetY);
 
 	return cHitbox::ShapeOverlap_DIAG(object->GetHitbox(), GetHitbox());
 }

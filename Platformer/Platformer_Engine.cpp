@@ -546,6 +546,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	camera->DrawLevel(level, fElapsedTime);
 
+	player->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
+
 	// Ennemies
 	for (auto& object : vecEnnemies)
 	{
@@ -678,6 +680,16 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		object->DrawSwitch(camera->GetOffsetX(), camera->GetOffsetY());
 	}
 
+	// Draw Teleports
+	for (auto& object : GetCloseTeleport(player->GetPosX(), player->GetPosY()))
+	{
+		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
+	}
+	for (auto& object : GetCloseTeleportDest(player->GetPosX(), player->GetPosY()))
+	{
+		object->DrawDest(camera->GetOffsetX(), camera->GetOffsetY());
+	}
+
 	// Draw Ennemies
 	for (auto& object : vecEnnemies)
 	{
@@ -700,16 +712,6 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	for (auto& object : GetCloseWinds(player->GetPosX(), player->GetPosY()))
 	{
 		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
-	}
-
-	// Draw Teleports
-	for (auto& object : GetCloseTeleport(player->GetPosX(), player->GetPosY()))
-	{
-		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
-	}
-	for (auto& object : GetCloseTeleportDest(player->GetPosX(), player->GetPosY()))
-	{
-		object->DrawDest(camera->GetOffsetX(), camera->GetOffsetY());
 	}
 
 	if (bInBossLvl && vecEnnemies.empty() && !player->IsDead())
