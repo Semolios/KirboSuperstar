@@ -74,7 +74,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 			{
 				rootSpawnX = playerX;
 				engine->PlaySample("earthQuake");
-				engine->AddProjectile(playerX, cfGroundPosition, true, 0.0f, 0.0f, fRootSpawnTime, "movingGround", false, 0, false, false);
+				engine->AddProjectile(playerX, cfGroundPosition, true, 0.0f, 0.0f, fRootSpawnTime, "movingGround", false, 0, false, false, 0, false, 0.0f, "", false, "", true);
 				bCantSpawnAOE = true;
 			}
 

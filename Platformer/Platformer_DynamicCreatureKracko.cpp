@@ -118,7 +118,7 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 
 			if (fBehaviourTimer == 0.0f)
 			{
-				engine->AddProjectile(px + cfMiddleOfKracko, py + cfMiddleOfKracko, false, 0.0f, 0.0f, fAimingTime + fFireTime, "chargeLightning", false, 0, false);
+				engine->AddProjectile(px + cfMiddleOfKracko, py + cfMiddleOfKracko, true, 0.0f, 0.0f, fAimingTime + fFireTime, "chargeLightning", false, 0, false, false, 0, false, 0.0f, "", false, "", true);
 				engine->PlaySample("electricity");
 			}
 
@@ -130,13 +130,13 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 			if (fBehaviourTimer <= fAimingTime)
 			{
 				// during aiming time, a target spawn on kirbo to indicate the player to move
-				engine->AddProjectile(playerX, playerY, true, 0.0f, 0.0f, 0.05f, "aim", false, 0, false);
+				engine->AddProjectile(playerX, playerY, true, 0.0f, 0.0f, 0.05f, "aim", false, 0, false, false, 0, false, 0.0f, "", false, "", true);
 				fPlayerPosX = playerX;
 				fPlayerPosY = playerY;
 			}
 			else if (fBehaviourTimer <= fAimingTime + fFireTime)
 			{
-				engine->AddProjectile(fPlayerPosX, fPlayerPosY, true, 0.0f, 0.0f, 0.05f, "aim", false, 0, false);
+				engine->AddProjectile(fPlayerPosX, fPlayerPosY, true, 0.0f, 0.0f, 0.05f, "aim", false, 0, false, false, 0, false, 0.0f, "", false, "", true);
 			}
 			else
 			{
