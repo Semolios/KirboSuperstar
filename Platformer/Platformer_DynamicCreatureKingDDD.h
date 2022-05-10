@@ -70,6 +70,8 @@ private:
 	const int cnNumberOfAttack = 5;
 	const int cnAttacksDmg = 3;
 
+	const int cnShakeAmplitude = 50;
+
 	enum AI_STATE
 	{
 		AI_IDLE = 0,

@@ -722,6 +722,7 @@ void cDynamicCreatureKingDDD::ReturnMovingStateIfOnGround(float fElapsedTime, bo
 
 			if (fBehaviourTimer >= timeToWait)
 			{
+				engine->ActivateShakeEffect(false);
 				bHasNotAlreadyJumped = true;
 				ChangeState(AI_MOVING);
 			}
@@ -733,6 +734,7 @@ void cDynamicCreatureKingDDD::ReturnMovingStateIfOnGround(float fElapsedTime, bo
 				// On landing after Up B, the landing sounds occurs
 				if (graphicState == MOVE6 && bPlayLandingSound)
 				{
+					engine->ActivateShakeEffect(true, cnShakeAmplitude, cnShakeAmplitude);
 					engine->PlaySample("kingDDDSideSmash");
 					engine->PlaySample("kingDDDUpBLanding");
 
