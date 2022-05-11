@@ -33,6 +33,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 				{
 					animPlayer->ChangeState("enterDoor");
 					bInteracting = true;
+					bFlying = false;
 					bBreakDoor = true;
 					fAnimationTimer = 0.0f;
 					bCanSpawnProjectile = true;
