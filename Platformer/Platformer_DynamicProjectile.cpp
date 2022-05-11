@@ -263,6 +263,12 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProject
 
 	mapProjectiles["slapAOE"].push_back(new olc::Sprite("assets/gfx/slapAOE.png"));
 
+	mapProjectiles["kirboFart"].push_back(new olc::Sprite("assets/gfx/kirboFart00.png"));
+	mapProjectiles["kirboFart"].push_back(new olc::Sprite("assets/gfx/kirboFart01.png"));
+	mapProjectiles["kirboFart"].push_back(new olc::Sprite("assets/gfx/kirboFart02.png"));
+	mapProjectiles["kirboFart"].push_back(new olc::Sprite("assets/gfx/kirboFart03.png"));
+	mapProjectiles["kirboFart"].push_back(new olc::Sprite("assets/gfx/kirboFart04.png"));
+
 	mapProjectiles["swordDownAOE"].push_back(new olc::Sprite("assets/gfx/swordDownAOE00.png"));
 	mapProjectiles["swordDownAOE"].push_back(new olc::Sprite("assets/gfx/swordDownAOE01.png"));
 	mapProjectiles["swordDownAOE"].push_back(new olc::Sprite("assets/gfx/swordDownAOE02.png"));

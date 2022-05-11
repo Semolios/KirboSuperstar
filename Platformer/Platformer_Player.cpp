@@ -131,12 +131,12 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 			}
 			else if (bOnGround)
 			{
-				engine->PlaySample("kirboJump");
+				Jump();
 				bChargeJump = true;
 			}
 			else if (bDoubleJump && fVelY > 0)
 			{
-				engine->PlaySample("kirboJump");
+				Jump();
 				bDoubleJump = false;
 				bChargeDoubleJump = true;
 			}
@@ -274,6 +274,12 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 			}
 		}
 	}
+}
+
+void cPlayer::Jump()
+{
+	engine->PlaySample("kirboJump");
+	engine->AddProjectile(fPosX, fPosY, true, 0.0f, 0.1f, cfFartDuration, "kirboFart", false, 0, false, false, 0, false, 0.0f, "", false, "", true);
 }
 
 bool cPlayer::IsEnteringDoor(cLevel* lvl)

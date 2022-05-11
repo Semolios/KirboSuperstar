@@ -13,7 +13,7 @@ public:
 public:
 	std::string sCurrentState;
 	int nCurrentFrame = 0;
-	float fTimeBetweenFrames = 0.08f;
+	float fTimeBetweenFrames = 0.033f;
 	float fTimeCounter = 0.0f;
 
 	void ChangeState(std::string s);

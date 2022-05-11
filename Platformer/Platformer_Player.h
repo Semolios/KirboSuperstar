@@ -34,13 +34,13 @@ private:
 	const float cfAccIcedAirX = 10.0f;					// Acceleration value when in the air after walking on iced platform
 	const float cfJumpAcceleration = -8.0f;				// Jump speed
 	const float cfJumpDecelerationRatio = 1.5f;			// Jump Deceleration while holding jump
-	const float cfSlapSpawnT = 1.0f;					// Number of frames to spawn slap attack
+	const float cfSlapSpawnT = 2.0f;					// Number of frames to spawn slap attack
 	const float cfSlapDuration = 0.1f;					// duration of the slap AOE
-	const float cfJesusCrossSpawnT = 7.0f;				// Number of frames to spawn jesus cross
+	const float cfJesusCrossSpawnT = 12.0f;				// Number of frames to spawn jesus cross
 	const float cfJesusCrossVelX = 10.0f;				// X Velocity of the jesus cross
 	const float cfJesusCrossVelY = -10.0f;				// Y Velocity of the jesus cross
 	const float cfJesusCrossDuration = 10.0f;			// Duration of the jesus cross
-	const float cfVacuumAnimT = 2.0f;					// Number of frames when vacuum animation change to begin vacuum to vacuum
+	const float cfVacuumAnimT = 4.0f;					// Number of frames when vacuum animation change to begin vacuum to vacuum
 	const float cfDeadRotationAnimation = 15.0f;		// rotation speed of dead animation
 	const float cfDeadAnimation = 4.0f;					// Duration of the dead animation
 	const float cfGoAwayRotationAnimation = 15.0f;		// rotation speed of Kirbo goes away animation
@@ -55,7 +55,8 @@ private:
 	const float cfKnockBackDuration = 0.3f;				// Ennemies Knock back duration
 	const float cfNormalDrag = -3.0f;					// Drag Value on normal ground
 	const float cfIcedDrag = -0.5f;						// Drag Value on iced ground
-	const float cfBrokenDoorFrame = 3.0f;				// Number of frames to break door
+	const float cfBrokenDoorFrame = 6.0f;				// Number of frames to break door
+	const float cfFartDuration = 0.25f;					// Duration of the fart animation
 
 	const int cnSlapDmg = 3;							// damages of the slap attack
 	const int cnJesusCrossDmg = 5;						// damages of the jesus cross
@@ -124,6 +125,7 @@ public:
 	void InitialiseKirboHealth();
 	bool IsDead();
 	void HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl);
+	void Jump();
 	bool IsEnteringDoor(cLevel* lvl);
 	void EnterDoor(cLevel* lvl);
 	void EnterTP();

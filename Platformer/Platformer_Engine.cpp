@@ -49,7 +49,7 @@ bool OneLoneCoder_Platformer::GameState_LevelStart(float fElapsedTime)
 	{
 		case 0: animPlayer.ChangeState("idle");		   break;
 		case 1: animPlayer.ChangeState("run");		   break;
-		case 2: animPlayer.ChangeState("jump");		   break;
+		case 2: animPlayer.ChangeState("flying");	   break;
 		case 3: animPlayer.ChangeState("riding_star"); break;
 	}
 
