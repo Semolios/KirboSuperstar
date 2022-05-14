@@ -179,51 +179,51 @@ bool cLevel::PopulateMechanisms(std::string levelName)
 			// Populate a basic platform
 			if (parts[0] == L"Basic")
 			{
-				engine->AddPlatform(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), parts[4]);
+				engine->AddPlatform(std::stof(parts[1]), std::stof(parts[2]), engine->ToStr(parts[3]), parts[4]);
 			}
 			if (parts[0] == L"HorizontalSine")
 			{
-				engine->AddHorizontalSinePtfm(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), parts[4], std::stoi(parts[5]), std::stoi(parts[6]), parts[7]);
+				engine->AddHorizontalSinePtfm(std::stof(parts[1]), std::stof(parts[2]), engine->ToStr(parts[3]), parts[4], std::stof(parts[5]), std::stof(parts[6]), parts[7]);
 			}
 			if (parts[0] == L"VerticalSine")
 			{
-				engine->AddVerticalSinePtfm(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), parts[4], std::stoi(parts[5]), std::stoi(parts[6]), parts[7]);
+				engine->AddVerticalSinePtfm(std::stof(parts[1]), std::stof(parts[2]), engine->ToStr(parts[3]), parts[4], std::stof(parts[5]), std::stof(parts[6]), parts[7]);
 			}
 			if (parts[0] == L"HorizontalSingle")
 			{
-				engine->AddHorizontalSinglePtfm(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), parts[4], std::stoi(parts[5]), std::stoi(parts[6]), parts[7]);
+				engine->AddHorizontalSinglePtfm(std::stof(parts[1]), std::stof(parts[2]), engine->ToStr(parts[3]), parts[4], std::stof(parts[5]), std::stof(parts[6]), parts[7]);
 			}
 			if (parts[0] == L"VerticalSingle")
 			{
-				engine->AddVerticalSinglePtfm(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), parts[4], std::stoi(parts[5]), std::stoi(parts[6]), parts[7]);
+				engine->AddVerticalSinglePtfm(std::stof(parts[1]), std::stof(parts[2]), engine->ToStr(parts[3]), parts[4], std::stof(parts[5]), std::stof(parts[6]), parts[7]);
 			}
 			if (parts[0] == L"Wall")
 			{
-				engine->AddWall(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), parts[4], parts[5], parts[6], std::stoi(parts[7]), std::stoi(parts[8]));
+				engine->AddWall(std::stof(parts[1]), std::stof(parts[2]), engine->ToStr(parts[3]), parts[4], parts[5], parts[6], std::stof(parts[7]), std::stof(parts[8]));
 			}
 			if (parts[0] == L"Ceiling")
 			{
-				engine->AddCeiling(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), parts[4], parts[5]);
+				engine->AddCeiling(std::stof(parts[1]), std::stof(parts[2]), engine->ToStr(parts[3]), parts[4], parts[5]);
 			}
 			if (parts[0] == L"HorizontalCrusher")
 			{
-				engine->AddHorizontalCrusher(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), parts[4], std::stoi(parts[5]));
+				engine->AddHorizontalCrusher(std::stof(parts[1]), std::stof(parts[2]), engine->ToStr(parts[3]), parts[4], std::stof(parts[5]));
 			}
 			if (parts[0] == L"VerticalCrusher")
 			{
-				engine->AddVerticalCrusher(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), parts[4], std::stoi(parts[5]));
+				engine->AddVerticalCrusher(std::stof(parts[1]), std::stof(parts[2]), engine->ToStr(parts[3]), parts[4], std::stof(parts[5]));
 			}
 			if (parts[0] == L"HarmfulBloc")
 			{
-				engine->AddHarmfulBloc(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), std::stoi(parts[4]));
+				engine->AddHarmfulBloc(std::stof(parts[1]), std::stof(parts[2]), engine->ToStr(parts[3]), std::stof(parts[4]));
 			}
 			if (parts[0] == L"Wind")
 			{
-				engine->AddWind(std::stoi(parts[1]), std::stoi(parts[2]), engine->ToStr(parts[3]), parts[4], std::stoi(parts[5]));
+				engine->AddWind(std::stof(parts[1]), std::stof(parts[2]), engine->ToStr(parts[3]), parts[4], std::stof(parts[5]));
 			}
 			if (parts[0] == L"Teleport")
 			{
-				engine->AddTeleport(std::stoi(parts[1]), std::stoi(parts[2]), std::stoi(parts[3]), std::stoi(parts[4]), engine->ToStr(parts[5]));
+				engine->AddTeleport(std::stof(parts[1]), std::stof(parts[2]), std::stof(parts[3]), std::stof(parts[4]), engine->ToStr(parts[5]));
 			}
 		}
 	}
