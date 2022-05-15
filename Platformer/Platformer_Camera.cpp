@@ -4,8 +4,7 @@
 OneLoneCoder_Platformer* cCamera::engine = nullptr;
 
 cCamera::cCamera()
-{
-}
+{}
 
 void cCamera::ClampOffset()
 {
@@ -21,8 +20,13 @@ void cCamera::SetPositions(float fPlayerPosX, float fPlayerPosY)
 
 void cCamera::DrawLevel(cLevel* level, float fElapsedTime)
 {
-	int nVisibleTilesX = engine->ScreenWidth() / engine->GetTileWidth();
-	int nVisibleTilesY = engine->ScreenHeight() / engine->GetTileHeight();
+	level->DrawTiles(nVisibleTilesX, nVisibleTilesY, fOffsetX, fOffsetY);
+}
+
+void cCamera::CalculateFOV(cLevel* level)
+{
+	nVisibleTilesX = engine->ScreenWidth() / engine->GetTileWidth();
+	nVisibleTilesY = engine->ScreenHeight() / engine->GetTileHeight();
 
 	// Calculate Top-Left most visible tile
 	fOffsetX = fPosX - (float)nVisibleTilesX / 2.0f;
@@ -42,11 +46,6 @@ void cCamera::DrawLevel(cLevel* level, float fElapsedTime)
 		fOffsetX += fShakeEffectX;
 		fOffsetY += fShakeEffectY;
 	}
-
-	// Draw Level background
-	DrawBackground(level);
-
-	level->DrawTiles(nVisibleTilesX, nVisibleTilesY, fOffsetX, fOffsetY);
 }
 
 void cCamera::DrawBackground(cLevel* level)

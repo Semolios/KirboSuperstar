@@ -34,6 +34,8 @@ private:
 	float fShakeEffectY;
 	int nShakeAmplitudeX;
 	int nShakeAmplitudeY;
+	int nVisibleTilesX;
+	int nVisibleTilesY;
 	bool bShake = false;
 
 	struct WorkerThread
@@ -89,6 +91,7 @@ public:
 	void ClampOffset();
 	void SetPositions(float fPlayerPosX, float fPlayerPosY);
 	void DrawLevel(cLevel* level, float fElapsedTime);
+	void CalculateFOV(cLevel* level);
 	void DrawBackground(cLevel* level);
 	void DrawBackgroundThread(int x, int y, float fBckgrdoffX, float fBckgrdoffY, int w, int h);
 	float GetOffsetX();

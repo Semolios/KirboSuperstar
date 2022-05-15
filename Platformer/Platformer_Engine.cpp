@@ -544,7 +544,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	camera->SetPositions(player->GetPosX(), player->GetPosY());
 
-	camera->DrawLevel(level, fElapsedTime);
+	camera->CalculateFOV(level);
+	camera->DrawBackground(level);
 
 	player->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
 
@@ -690,18 +691,6 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		object->DrawDest(camera->GetOffsetX(), camera->GetOffsetY());
 	}
 
-	// Draw Ennemies
-	for (auto& object : vecEnnemies)
-	{
-		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
-	}
-
-	// Draw Projectiles
-	for (auto& object : vecProjectiles)
-	{
-		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
-	}
-
 	// Draw Platforms
 	for (auto& object : GetClosePlatforms(player->GetPosX(), player->GetPosY()))
 	{
@@ -710,6 +699,20 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	// Draw Wind
 	for (auto& object : GetCloseWinds(player->GetPosX(), player->GetPosY()))
+	{
+		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
+	}
+
+	camera->DrawLevel(level, fElapsedTime);
+
+	// Draw Ennemies
+	for (auto& object : vecEnnemies)
+	{
+		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
+	}
+
+	// Draw Projectiles
+	for (auto& object : vecProjectiles)
 	{
 		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
 	}
