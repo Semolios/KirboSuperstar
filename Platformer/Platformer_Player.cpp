@@ -750,8 +750,8 @@ void cPlayer::CheckDynamicFloor(float& fNewPosX, float& fNewPosY, float fElapsed
 {
 	for (auto& ptfm : engine->GetClosePlatforms(fPosX, fPosY))
 	{
-		if (ptfm->TopCollision(fNewPosX + fCollisionLowerLimit, fNewPosX + fCollisionUpperLimit, fNewPosY + 1.0f) ||
-			ptfm->TopCollisionWithLag(fNewPosX + fCollisionLowerLimit, fNewPosX + fCollisionUpperLimit, fPosY + 1.0f, fNewPosY + 1.0f))
+		if (ptfm->TopCollision(fNewPosX + fCollisionLowerLimit, fNewPosX + fCollisionUpperLimit, fNewPosY + 0.8f) ||
+			ptfm->TopCollisionWithLag(fNewPosX + fCollisionLowerLimit, fNewPosX + fCollisionUpperLimit, fPosY + 0.8f, fNewPosY + 0.8f))
 		{
 			HarmfulBloc(ptfm);
 
@@ -762,7 +762,7 @@ void cPlayer::CheckDynamicFloor(float& fNewPosX, float& fNewPosY, float fElapsed
 
 			if (!bChargeDoubleJump && !bChargeJump && !bUsingFlyCmd || (ptfm->GetVY() <= 0.0f && ptfm->GetVY() < fVelY))
 			{
-				fNewPosY = ptfm->GetPY() - 1.0f;
+				fNewPosY = ptfm->GetPY() - 0.8f;
 				fNewPosX += ptfm->GetVX() * fElapsedTime;
 			}
 
