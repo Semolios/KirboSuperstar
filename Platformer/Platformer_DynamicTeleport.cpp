@@ -135,6 +135,11 @@ cHitbox* cDynamicTeleport::GetDestHitbox()
 	return destHitbox;
 }
 
+olc::Sprite* cDynamicTeleport::GetCurrentSprite()
+{
+	return mapStates[nCurrentFrame];
+}
+
 std::map<std::string, std::vector<olc::Sprite*>> cDynamicTeleport::LoadTeleportsSprites()
 {
 	std::map<std::string, std::vector<olc::Sprite*>> mapTeleports;

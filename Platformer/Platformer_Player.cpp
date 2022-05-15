@@ -27,6 +27,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 		// Fly, enter a door
 		if (engine->GetKey(engine->GetSavedControls("flyOrEnterDoor")).bHeld || engine->GetController()->GetButton(UP).bHeld || engine->GetController()->GetLeftStickY() > 0.5f)
 		{
+			bUsingFlyCmd = true;
 			if (!bInteracting && !bVacuuming)
 			{
 				if (IsEnteringDoor(lvl))
@@ -47,6 +48,10 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 					animPlayer->ChangeState("flying");
 				}
 			}
+		}
+		else
+		{
+			bUsingFlyCmd = false;
 		}
 
 		// Go down when flying, cross semi solid platform and control camera when onground
@@ -755,7 +760,7 @@ void cPlayer::CheckDynamicFloor(float& fNewPosX, float& fNewPosY, float fElapsed
 			else
 				NormalDrag();
 
-			if (ptfm->GetVY() <= fVelY)
+			if (!bChargeDoubleJump && !bChargeJump && !bUsingFlyCmd || (ptfm->GetVY() <= 0.0f && ptfm->GetVY() < fVelY))
 			{
 				fNewPosY = ptfm->GetPY() - 1.0f;
 				fNewPosX += ptfm->GetVX() * fElapsedTime;

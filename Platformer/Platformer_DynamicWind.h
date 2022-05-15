@@ -34,6 +34,8 @@ public:
 	std::string GetDirection();
 	float GetPower();
 
+	olc::Sprite* GetCurrentSprite();
+
 	static std::map<std::string, std::vector<olc::Sprite*>> LoadWindSprites();
 };
 

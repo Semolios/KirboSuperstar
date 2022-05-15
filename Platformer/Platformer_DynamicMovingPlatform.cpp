@@ -309,6 +309,11 @@ bool cDynamicMovingPlatform::IsIced()
 	return bIced;
 }
 
+olc::Sprite* cDynamicMovingPlatform::GetCurrentSprite()
+{
+	return mapStates[nCurrentFrame];
+}
+
 void cDynamicMovingPlatform::Behaviour(float fElapsedTime, float playerX, float playerY)
 {
 	// Depends on the type of platform

@@ -111,6 +111,7 @@ private:
 	bool bForceInvincible = false;
 	bool bForceInvisible = false;
 	bool bHasCandyPower = false;
+	bool bUsingFlyCmd = false;
 	int nDmgBoost = 1;
 	int nDefBoost = 1;
 

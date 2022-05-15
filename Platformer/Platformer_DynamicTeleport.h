@@ -43,6 +43,8 @@ public:
 
 	cHitbox* GetDestHitbox();
 
+	olc::Sprite* GetCurrentSprite();
+
 	static std::map<std::string, std::vector<olc::Sprite*>> LoadTeleportsSprites();
 };
 

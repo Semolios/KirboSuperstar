@@ -75,6 +75,8 @@ public:
 
 	bool IsIced();
 
+	olc::Sprite* GetCurrentSprite();
+
 	virtual void Behaviour(float fElapsedTime, float playerX, float playerY);
 	virtual void LinkPtfm(cDynamicMovingPlatform* ptfm);
 	virtual bool IsLinkedToPreviousPtfm();

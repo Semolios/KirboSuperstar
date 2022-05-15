@@ -81,6 +81,11 @@ float cDynamicWind::GetPower()
 	return fPower;
 }
 
+olc::Sprite* cDynamicWind::GetCurrentSprite()
+{
+	return mapStates[nCurrentFrame];
+}
+
 std::map<std::string, std::vector<olc::Sprite*>> cDynamicWind::LoadWindSprites()
 {
 	std::map<std::string, std::vector<olc::Sprite*>> mapWinds;
