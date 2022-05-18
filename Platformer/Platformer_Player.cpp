@@ -937,7 +937,10 @@ void cPlayer::CheckRightWall(cLevel* lvl, float& fNewPosX)
 
 			if (ptfm->GetVX() <= fVelX)
 			{
-				fNewPosX = ptfm->GetPX() - 1.0f;
+				if (ptfm->GetVX() != 0.0f)
+					fNewPosX = ptfm->GetPX() - 1.0f;
+				else
+					fNewPosX = fPosX;
 			}
 		}
 	}
@@ -992,7 +995,10 @@ void cPlayer::CheckLeftWall(cLevel* lvl, float& fNewPosX)
 
 			if (ptfm->GetVX() >= fVelX)
 			{
-				fNewPosX = ptfm->GetPX() + ptfm->GetNormalizedWidth();
+				if (ptfm->GetVX() != 0.0f)
+					fNewPosX = ptfm->GetPX() + ptfm->GetNormalizedWidth();
+				else
+					fNewPosX = fPosX;
 			}
 		}
 	}
