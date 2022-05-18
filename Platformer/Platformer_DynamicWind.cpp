@@ -92,7 +92,10 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicWind::LoadWindSprites()
 
 	mapWinds["up"].push_back(new olc::Sprite("assets/gfx/upWind.png"));
 
-	mapWinds["down"].push_back(new olc::Sprite("assets/gfx/downWind.png"));
+	mapWinds["down"].push_back(new olc::Sprite("assets/gfx/downWind00.png"));
+	mapWinds["down"].push_back(new olc::Sprite("assets/gfx/downWind01.png"));
+	mapWinds["down"].push_back(new olc::Sprite("assets/gfx/downWind02.png"));
+	mapWinds["down"].push_back(new olc::Sprite("assets/gfx/downWind03.png"));
 
 	return mapWinds;
 }

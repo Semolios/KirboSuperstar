@@ -269,17 +269,31 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 {
 	std::map<std::string, std::vector<olc::Sprite*>> mapPlatforms;
 
+#pragma region Platforms and walls
 	mapPlatforms["basic"].push_back(new olc::Sprite("assets/gfx/basicPlatform.png"));
 
 	mapPlatforms["ice"].push_back(new olc::Sprite("assets/gfx/icePlatform.png"));
 
 	mapPlatforms["wall"].push_back(new olc::Sprite("assets/gfx/wall.png"));
 
+	mapPlatforms["toLeft"].push_back(new olc::Sprite("assets/gfx/toLeft.png"));
+	mapPlatforms["toRight"].push_back(new olc::Sprite("assets/gfx/toRight.png"));
+
 	mapPlatforms["ceiling"].push_back(new olc::Sprite("assets/gfx/ceiling.png"));
+#pragma endregion
 
+#pragma region Crushers
 	mapPlatforms["downCrusher"].push_back(new olc::Sprite("assets/gfx/downCrusher.png"));
+#pragma endregion
 
-	mapPlatforms["spikeBloc"].push_back(new olc::Sprite("assets/gfx/spikeBloc.png"));
+#pragma region HarmfulBlocs
+	mapPlatforms["spikeBall"].push_back(new olc::Sprite("assets/gfx/spikeBall.png"));
+
+	mapPlatforms["spikeDown"].push_back(new olc::Sprite("assets/gfx/spikeDown.png"));
+	mapPlatforms["spikeUp"].push_back(new olc::Sprite("assets/gfx/spikeUp.png"));
+	mapPlatforms["spikeLeft"].push_back(new olc::Sprite("assets/gfx/spikeLeft.png"));
+	mapPlatforms["spikeRight"].push_back(new olc::Sprite("assets/gfx/spikeRight.png"));
+#pragma endregion
 
 	return mapPlatforms;
 }

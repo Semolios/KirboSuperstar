@@ -163,6 +163,10 @@ void cAnimator::LoadAnimations()
 	mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed00.png"));
 	mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed00.png"));
 	mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed00.png"));
+	mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed00.png"));
+	mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed00.png"));
+	mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed00.png"));
+	mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed00.png"));
 	mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed01.png"));
 	mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed01.png"));
 	mapStates["boss_killed"].push_back(new olc::Sprite("assets/gfx/boss_killed02.png"));

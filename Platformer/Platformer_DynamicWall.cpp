@@ -18,8 +18,7 @@ cDynamicWall::cDynamicWall(float ox, float oy, std::vector<olc::Sprite*> map, st
 }
 
 cDynamicWall::~cDynamicWall()
-{
-}
+{}
 
 void cDynamicWall::Behaviour(float fElapsedTime, float playerX, float playerY)
 {
@@ -51,17 +50,20 @@ void cDynamicWall::Behaviour(float fElapsedTime, float playerX, float playerY)
 
 void cDynamicWall::DrawSwitch(float cameraX, float cameraY)
 {
-	float fTargetX = cameraX - fTriggerX;
-	float fTargetY = cameraY - fTriggerY;
-	float fDistance = sqrtf(fTargetX * fTargetX + fTargetY * fTargetY);
-
-	if (fDistance <= engine->ScreenWidth() / engine->GetTileWidth())
+	if (bTriggerable)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
-		olc::GFX2D::Transform2D t;
-		t.Translate(-engine->GetTileWidth() / 2.0f, -engine->GetTileHeight() / 2.0f);
-		t.Translate((fTriggerX - cameraX + 0.5f) * engine->GetTileWidth(), (fTriggerY - cameraY + 0.7f) * engine->GetTileHeight());
-		olc::GFX2D::DrawSprite(engine->GetDoorSwitch(bTriggered), t);
-		engine->SetPixelMode(olc::Pixel::NORMAL);
+		float fTargetX = cameraX - fTriggerX;
+		float fTargetY = cameraY - fTriggerY;
+		float fDistance = sqrtf(fTargetX * fTargetX + fTargetY * fTargetY);
+
+		if (fDistance <= engine->ScreenWidth() / engine->GetTileWidth())
+		{
+			engine->SetPixelMode(olc::Pixel::ALPHA);
+			olc::GFX2D::Transform2D t;
+			t.Translate(-engine->GetTileWidth() / 2.0f, -engine->GetTileHeight() / 2.0f);
+			t.Translate((fTriggerX - cameraX + 0.5f) * engine->GetTileWidth(), (fTriggerY - cameraY + 0.7f) * engine->GetTileHeight());
+			olc::GFX2D::DrawSprite(engine->GetDoorSwitch(bTriggered), t);
+			engine->SetPixelMode(olc::Pixel::NORMAL);
+		}
 	}
 }
