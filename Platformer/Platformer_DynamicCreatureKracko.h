@@ -50,7 +50,7 @@ private:
 	const int cnLoHP = 30;
 
 	const int cnNumberOfAttack = 5;
-	const int cnAttacksDmg = 4;
+	const int cnAttacksDmg = 3;
 
 	enum AI_STATE
 	{

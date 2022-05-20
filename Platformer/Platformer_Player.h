@@ -38,7 +38,7 @@ private:
 	const float cfSlapDuration = 0.1f;					// duration of the slap AOE
 	const float cfJesusCrossSpawnT = 12.0f;				// Number of frames to spawn jesus cross
 	const float cfJesusCrossVelX = 10.0f;				// X Velocity of the jesus cross
-	const float cfJesusCrossVelY = -10.0f;				// Y Velocity of the jesus cross
+	const float cfJesusCrossVelY = -7.0f;				// Y Velocity of the jesus cross
 	const float cfJesusCrossDuration = 10.0f;			// Duration of the jesus cross
 	const float cfVacuumAnimT = 4.0f;					// Number of frames when vacuum animation change to begin vacuum to vacuum
 	const float cfDeadRotationAnimation = 15.0f;		// rotation speed of dead animation
@@ -59,7 +59,7 @@ private:
 	const float cfFartDuration = 0.25f;					// Duration of the fart animation
 
 	const int cnSlapDmg = 3;							// damages of the slap attack
-	const int cnJesusCrossDmg = 5;						// damages of the jesus cross
+	const int cnJesusCrossDmg = 1;						// damages of the jesus cross
 	const int cnCandyPowerDmg = 5;						// Damages when candy power activated
 
 	float fPosX = 0.0f;
