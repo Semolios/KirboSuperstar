@@ -9,8 +9,8 @@ cDynamicCreatureScarfy::cDynamicCreatureScarfy(cLevel* l) : cDynamicCreature("sc
 	fSpriteOffsetX = 0.0f;
 	fSpriteOffsetY = 0.0f;
 	bFriendly = false;
-	nHealth = 10;
-	nHealthMax = 10;
+	nHealth = 6;
+	nHealthMax = 6;
 	level = l;
 	vx = 0;	// initialize the speed so the scarfy waits for kirbo
 	bSolidVsMap = true;

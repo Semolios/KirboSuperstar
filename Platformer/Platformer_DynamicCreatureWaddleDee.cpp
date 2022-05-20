@@ -13,8 +13,8 @@ cDynamicCreatureWaddleDee::cDynamicCreatureWaddleDee(cLevel* l) : cDynamicCreatu
 	fSpriteOffsetX = 0.0f;
 	fSpriteOffsetY = 0.0f;
 	bFriendly = false;
-	nHealth = 10;
-	nHealthMax = 10;
+	nHealth = 1;
+	nHealthMax = 1;
 	level = l;
 	vx = -1;	// initialize the speed so the waddle dee goes left first
 	fInitSpeed = -1;

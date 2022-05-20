@@ -13,8 +13,8 @@ cDynamicCreatureRocky::cDynamicCreatureRocky(cLevel* l) : cDynamicCreature("rock
 	fSpriteOffsetX = 0.0f;
 	fSpriteOffsetY = 0.0f;
 	bFriendly = false;
-	nHealth = 10;
-	nHealthMax = 10;
+	nHealth = 9;
+	nHealthMax = 9;
 	level = l;
 	vx = 0;	// initialize the speed so the waddle dee goes left first
 	fInitSpeed = 0;
