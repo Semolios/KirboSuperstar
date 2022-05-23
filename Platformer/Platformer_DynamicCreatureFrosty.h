@@ -102,7 +102,7 @@ private:
 	// Iceblow behaviour
 	float fWaitBeforeBlow = 1.5f;
 	float fBlowTime = 2.0f;
-	float fWindOffsetX = -1.0f;
+	float fWindOffsetX = -2.0f;
 	int nWindDmg = 4;
 
 	// Jumping behaviour
