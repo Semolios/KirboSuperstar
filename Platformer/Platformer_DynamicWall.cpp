@@ -18,7 +18,8 @@ cDynamicWall::cDynamicWall(float ox, float oy, std::vector<olc::Sprite*> map, st
 }
 
 cDynamicWall::~cDynamicWall()
-{}
+{
+}
 
 void cDynamicWall::Behaviour(float fElapsedTime, float playerX, float playerY)
 {
@@ -32,6 +33,24 @@ void cDynamicWall::Behaviour(float fElapsedTime, float playerX, float playerY)
 		if (fDistance <= cfTriggerDist)
 		{
 			bTriggered = true;
+
+			if (bSwitchSound)
+			{
+				engine->PlaySample("menuBip");
+				bSwitchSound = false;
+			}
+
+			if (bGateOpenningSound)
+			{
+				if (fabs(playerX - (GetPX())) < ((((float)engine->ScreenWidth()) / 64.0f) * 1.5f) && fabs(playerY - (GetPY())) < ((((float)engine->ScreenHeight()) / 64.0f) * 1.5f) ||
+					fabs(playerX - (GetPX() + GetCurrentSprite()->width / 64.0f)) < ((((float)engine->ScreenWidth()) / 64.0f) * 1.5f) && fabs(playerY - (GetPY())) < ((((float)engine->ScreenHeight()) / 64.0f) * 1.5f) ||
+					fabs(playerX - (GetPX())) < ((((float)engine->ScreenWidth()) / 64.0f) * 1.5f) && fabs(playerY - (GetPY() + GetCurrentSprite()->height / 64.0f)) < ((((float)engine->ScreenHeight()) / 64.0f) * 1.5f) ||
+					fabs(playerX - (GetPX() + GetCurrentSprite()->width / 64.0f)) < ((((float)engine->ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (GetPY() + GetCurrentSprite()->height / 64.0f)) < ((((float)engine->ScreenHeight()) / 64.0f) * 1.5f))
+				{
+					engine->PlaySample("gateOpening");
+					bGateOpenningSound = false;
+				}
+			}
 		}
 	}
 
@@ -43,6 +62,12 @@ void cDynamicWall::Behaviour(float fElapsedTime, float playerX, float playerY)
 		}
 		else
 		{
+			if (bGateOpennedSound)
+			{
+				engine->StopSample("gateOpening");
+				engine->PlaySample("gateOpened");
+				bGateOpennedSound = false;
+			}
 			vy = 0.0f;
 		}
 	}

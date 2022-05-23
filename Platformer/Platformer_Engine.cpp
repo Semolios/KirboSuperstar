@@ -409,6 +409,8 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			AddSharedSound("boom", sndBoom, "assets/snd/boom.wav");
 			AddSharedSound("enterDoor", sndEnterDoor, "assets/snd/enterDoor.wav");
 			AddSharedSound("menuBip", sndMenuBip, "assets/snd/menuBip.wav");
+			AddSharedSound("gateOpening", sndGateOpening, "assets/snd/gateOpening.wav");
+			AddSharedSound("gateOpened", sndGateOpened, "assets/snd/gateOpened.wav");
 
 			UpdateProgressBar("Loading 99.99999999999999999999999999999");
 

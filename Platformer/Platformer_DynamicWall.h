@@ -22,6 +22,9 @@ protected:
 	float fOriginY;
 	float fTriggerX;
 	float fTriggerY;
+	bool bSwitchSound = true;
+	bool bGateOpenningSound = true;
+	bool bGateOpennedSound = true;
 };
 
 #endif //DEF_WALL

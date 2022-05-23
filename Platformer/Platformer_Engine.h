@@ -142,6 +142,8 @@ private:
 	int sndBoom;
 	int sndEnterDoor;
 	int sndMenuBip;
+	int sndGateOpening;
+	int sndGateOpened;
 
 	// engine Properties
 	cPlayer* player;
