@@ -117,7 +117,16 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 
 				fVelX += (bOnGround ? fAccGrdX : fAccAirX) * fElapsedTime;
 				fFaceDir = 1.0f;
+				bRunningRight = true;
 			}
+			else
+			{
+				bRunningRight = false;
+			}
+		}
+		else
+		{
+			bRunningRight = false;
 		}
 
 		// Stop kirbo walk sound
@@ -650,6 +659,17 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl)
 			if (wind->GetDirection() == "down")  fNewVelY = fVelY + wind->GetPower();
 			if (wind->GetDirection() == "left")  fNewVelX = fVelX - wind->GetPower();
 			if (wind->GetDirection() == "right") fNewVelX = fVelX + wind->GetPower();
+		}
+	}
+
+	// Permanent wind in Halberd level
+	if (lvl->GetCurrentLvl() == 4 && !bBreakDoor && !engine->IsInBossLevel())
+	{
+		fNewVelX = fVelX - cfHalberdWindForce;
+
+		if (bRunningRight && fNewVelX <= 0.0f)
+		{
+			fNewVelX = 0.1f;
 		}
 	}
 

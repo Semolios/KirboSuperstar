@@ -428,6 +428,8 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProject
 	mapProjectiles["doorDebris2"].push_back(new olc::Sprite("assets/gfx/doorDebris2.png"));
 
 	mapProjectiles["doorDebris3"].push_back(new olc::Sprite("assets/gfx/doorDebris3.png"));
+	
+	mapProjectiles["halberdCloud"].push_back(new olc::Sprite("assets/gfx/halberdCloud.png"));
 
 	// Invisibles Projectiles (these ones are invisible because they are included in the ennemies animations
 	mapProjectiles["SSTierMKHiyayaAOE"].push_back(new olc::Sprite("assets/gfx/SSTierMKHiyayaAOE.png"));

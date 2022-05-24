@@ -461,6 +461,12 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 	olc::SOUND::StopAll();
 	olc::SOUND::PlaySample(sndLevelMusic, true);
 
+	// Permanent wind in Halberd level
+	if (worldMap->GetSelectedLevel() == 4)
+	{
+		ActivateShakeEffect(true, 20, 20);
+	}
+
 	TransitionTo("GS_LEVELSTART", true);
 
 	return true;
@@ -550,6 +556,20 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	camera->DrawBackground(level);
 
 	player->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
+
+	// On Halberd, spawn some clouds to indicate the ship is moving
+	if (level->GetCurrentLvl() == 4 && !bInBossLvl)
+	{
+		cfHalberdCloudSpawnTimer += fElapsedTime;
+		if (cfHalberdCloudSpawnTimer >= cfHalberdCloudSpawnTime)
+		{
+			cfHalberdCloudSpawnTimer = 0.0f;
+			float fCloudX = camera->GetOffsetX() + (ScreenWidth() / 64.0f);
+			float fCloudY = camera->GetOffsetY() + ((float)(rand() % cnCloudPosXRange) / 10.0f);
+
+			AddProjectile(fCloudX, fCloudY, true, cfHalberdCloudVelX, 0.0f, 1.0f, "halberdCloud", false, 0, false, false, 0, false, 0.0f, "", false, "", true);
+		}
+	}
 
 	// Ennemies
 	for (auto& object : vecEnnemies)

@@ -57,6 +57,7 @@ private:
 	const float cfIcedDrag = -0.5f;						// Drag Value on iced ground
 	const float cfBrokenDoorFrame = 6.0f;				// Number of frames to break door
 	const float cfFartDuration = 0.25f;					// Duration of the fart animation
+	const float cfHalberdWindForce = 2.0f;				// Force of the wind effect on Halberd
 
 	const int cnSlapDmg = 3;							// damages of the slap attack
 	const int cnJesusCrossDmg = 1;						// damages of the jesus cross
@@ -112,6 +113,7 @@ private:
 	bool bForceInvisible = false;
 	bool bHasCandyPower = false;
 	bool bUsingFlyCmd = false;
+	bool bRunningRight = false;
 	int nDmgBoost = 1;
 	int nDefBoost = 1;
 
