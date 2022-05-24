@@ -58,6 +58,7 @@ private:
 	const float cfBrokenDoorFrame = 6.0f;				// Number of frames to break door
 	const float cfFartDuration = 0.25f;					// Duration of the fart animation
 	const float cfHalberdWindForce = 2.0f;				// Force of the wind effect on Halberd
+	const float cfVacuumInvincibleFrame = 0.5f;			// a little invincibility frame when vacuuming
 
 	const int cnSlapDmg = 3;							// damages of the slap attack
 	const int cnJesusCrossDmg = 1;						// damages of the jesus cross
@@ -114,6 +115,8 @@ private:
 	bool bHasCandyPower = false;
 	bool bUsingFlyCmd = false;
 	bool bRunningRight = false;
+	bool bInvincibleBlink = true;
+	bool bVacuumInvincible = false;
 	int nDmgBoost = 1;
 	int nDefBoost = 1;
 
@@ -200,7 +203,7 @@ public:
 	bool IsCollectibleItem(wchar_t c);
 	void SelectItem(wchar_t item);
 	void Heal();
-	void SetInvincible(float time);
+	void SetInvincible(float time, bool blink = true);
 	void SetCandyPower(bool candy);
 	int GetCandyDmg();
 	void SetDamageBooster(int boost);

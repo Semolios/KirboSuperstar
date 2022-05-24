@@ -266,6 +266,8 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 			{
 				engine->StopSample("beginVacuum");
 				engine->StopSample("vacuum");
+				SetInvincible(cfVacuumInvincibleFrame, false);
+				bVacuumInvincible = true;
 			}
 			bVacuuming = false;
 		}
@@ -520,6 +522,12 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 			endAnimationTime -= animPlayer->fTimeBetweenFrames;
 		if (fAnimationTimer >= endAnimationTime)
 		{
+			if (bSwallowing)
+			{
+				SetInvincible(cfVacuumInvincibleFrame, false);
+				bVacuumInvincible = true;
+			}
+
 			fAnimationTimer = 0.0f;
 			if (bBreakDoor)
 				EnterDoor(lvl);
@@ -1119,10 +1127,15 @@ void cPlayer::UpdateInvulnerability(float fElapsedTime)
 	fInvulnerabilityTimer -= fElapsedTime;
 	if (fInvulnerabilityTimer <= 0.0f)
 	{
+		if (bVacuumInvincible || bHasCandyPower)
+		{
+			SetAttackable(true);
+			bVacuumInvincible = false;
+		}
+
 		if (bHasCandyPower)
 		{
 			bHasCandyPower = false;
-			SetAttackable(true);
 			engine->PlayLevelMusic();
 		}
 
@@ -1137,17 +1150,22 @@ void cPlayer::UpdateInvulnerability(float fElapsedTime)
 		{
 			bIsAttackable = true;
 		}
+
+		bInvincibleBlink = true;
 	}
 	else
 	{
-		fInvulnerabilityTickingTimer += fElapsedTime;
-		if (fInvulnerabilityTickingTimer >= cfInvulnerabilityTickingSpeed)
+		if (bInvincibleBlink)
 		{
-			fInvulnerabilityTickingTimer -= cfInvulnerabilityTickingSpeed;
+			fInvulnerabilityTickingTimer += fElapsedTime;
+			if (fInvulnerabilityTickingTimer >= cfInvulnerabilityTickingSpeed)
+			{
+				fInvulnerabilityTickingTimer -= cfInvulnerabilityTickingSpeed;
 
-			// Start ticking only after damage animation
-			if (!bDamaged)
-				bShowKirbo = !bShowKirbo;
+				// Start ticking only after damage animation
+				if (!bDamaged)
+					bShowKirbo = !bShowKirbo;
+			}
 		}
 	}
 }
@@ -1402,9 +1420,10 @@ void cPlayer::Heal()
 	fHealth = cfMaxHealth;
 }
 
-void cPlayer::SetInvincible(float time)
+void cPlayer::SetInvincible(float time, bool blink)
 {
 	fInvulnerabilityTimer = time;
+	bInvincibleBlink = blink;
 	SetAttackable(false);
 }
 
