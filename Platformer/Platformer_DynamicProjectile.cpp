@@ -83,7 +83,7 @@ void cDynamicProjectile::Collision(float fElapsedTime, cLevel* level)
 	if (bAffectedByGravity)
 		vy += engine->GetGravityValue() * fElapsedTime;
 
-	if (bFriendly)
+	if (bFriendly && !bScenery)
 		CheckBreakableBlocks(level, fNewObjectPosX, fBorder, fNewObjectPosY);
 
 	if (bSolidVsMap)
