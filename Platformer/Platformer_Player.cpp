@@ -1424,6 +1424,7 @@ void cPlayer::MaxHeal()
 void cPlayer::Heal(int hp)
 {
 	fHealth += hp;
+	if (fHealth >= cfMaxHealth) fHealth = cfMaxHealth;
 }
 
 void cPlayer::SetInvincible(float time, bool blink)
