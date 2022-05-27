@@ -21,8 +21,6 @@ protected:
 	std::vector<olc::vf2d> crossedTiles;
 	std::string soundEffect;
 	std::string bounceSoundEffect;
-	float fSpriteX;
-	float fSpriteY;
 	float fDuration;
 	float fDrag;
 	bool bOneHit;
