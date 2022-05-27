@@ -1396,7 +1396,7 @@ void cPlayer::ChangePosAfterTP()
 
 bool cPlayer::IsCollectibleItem(wchar_t c)
 {
-	return c == L't' || c == L'c' || c == L's' || c == L'd';
+	return c == L't' || c == L'c' || c == L's' || c == L'd' || c == L'x';
 }
 
 void cPlayer::SelectItem(wchar_t item)
@@ -1405,19 +1405,25 @@ void cPlayer::SelectItem(wchar_t item)
 
 	switch (item)
 	{
-		case L't': pickedItem = new cItemTomato();	break;
-		case L'c': pickedItem = new cItemCandy();	break;
-		case L's': pickedItem = new cItemDamage();  break;
-		case L'd': pickedItem = new cItemDefense(); break;
-		default:   pickedItem = new cItem();		break;
+		case L'c': pickedItem = new cItemCandy();	  break;
+		case L's': pickedItem = new cItemDamage();	  break;
+		case L'd': pickedItem = new cItemDefense();   break;
+		case L'x': pickedItem = new cItemMinorHeal(); break;
+		case L't': pickedItem = new cItemTomato();	  break;
+		default:   pickedItem = new cItem();		  break;
 	}
 
 	pickedItem->PickItem();
 }
 
-void cPlayer::Heal()
+void cPlayer::MaxHeal()
 {
 	fHealth = cfMaxHealth;
+}
+
+void cPlayer::Heal(int hp)
+{
+	fHealth += hp;
 }
 
 void cPlayer::SetInvincible(float time, bool blink)

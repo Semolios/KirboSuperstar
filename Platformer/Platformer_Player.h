@@ -10,6 +10,7 @@
 #include "Platformer_ItemCandy.h"
 #include "Platformer_ItemDamage.h"
 #include "Platformer_ItemDefense.h"
+#include "Platformer_ItemMinorHeal.h"
 #include "Platformer_ItemTomato.h"
 #include "Platformer_Level.h"
 
@@ -202,7 +203,8 @@ public:
 	// Item Pick-up functions
 	bool IsCollectibleItem(wchar_t c);
 	void SelectItem(wchar_t item);
-	void Heal();
+	void MaxHeal();
+	void Heal(int hp);
 	void SetInvincible(float time, bool blink = true);
 	void SetCandyPower(bool candy);
 	int GetCandyDmg();

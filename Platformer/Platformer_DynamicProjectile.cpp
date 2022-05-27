@@ -183,15 +183,39 @@ void cDynamicProjectile::BottomCollision(cLevel* level, float fNewObjectPosX, fl
 void cDynamicProjectile::CheckBreakableBlocks(cLevel* level, float fNewObjectPosX, float fBorder, float fNewObjectPosY)
 {
 	// TODO utiliser la hitbox
+
+	//
+	// x-----x
+	// |     |
+	// |     |
+	// |     |
+	// x-----x
+	//
 	BreakTile(level, fNewObjectPosX + fBorder, fNewObjectPosY + fBorder);
 	BreakTile(level, fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()) - fBorder);
 	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + fBorder);
 	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()) - fBorder);
 
+	//
+	//  --x-- 
+	// |     |
+	// x     x
+	// |     |
+	//  --x-- 
+	//
 	BreakTile(level, fNewObjectPosX + fBorder, fNewObjectPosY + ((fDynHeight / engine->GetTileHeight()) / 2.0f));
 	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + ((fDynHeight / engine->GetTileHeight()) / 2.0f));
 	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) / 2.0f), fNewObjectPosY + fBorder);
 	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) / 2.0f), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()) - fBorder);
+
+	//
+	//  ----- 
+	// |     |
+	// |  x  |
+	// |     |
+	//  ----- 
+	//
+	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) / 2.0f), fNewObjectPosY + ((fDynHeight / engine->GetTileHeight()) / 2.0f));
 }
 
 void cDynamicProjectile::BreakTile(cLevel* level, float tileX, float tileY)
@@ -428,7 +452,7 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProject
 	mapProjectiles["doorDebris2"].push_back(new olc::Sprite("assets/gfx/doorDebris2.png"));
 
 	mapProjectiles["doorDebris3"].push_back(new olc::Sprite("assets/gfx/doorDebris3.png"));
-	
+
 	mapProjectiles["halberdCloud"].push_back(new olc::Sprite("assets/gfx/halberdCloud.png"));
 
 	// Invisibles Projectiles (these ones are invisible because they are included in the ennemies animations

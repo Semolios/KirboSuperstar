@@ -307,6 +307,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			cItemCandy::engine = this;
 			cItemDamage::engine = this;
 			cItemDefense::engine = this;
+			cItemMinorHeal::engine = this;
 			cItemTomato::engine = this;
 			cPauseMenu::engine = this;
 			cPlayer::engine = this;
@@ -1581,9 +1582,14 @@ bool OneLoneCoder_Platformer::IsKirboAttackable()
 	return player->IsAttackable();
 }
 
-void OneLoneCoder_Platformer::HealPlayer()
+void OneLoneCoder_Platformer::MaxHealPlayer()
 {
-	player->Heal();
+	player->MaxHeal();
+}
+
+void OneLoneCoder_Platformer::HealPlayer(int hp)
+{
+	player->Heal(hp);
 }
 
 void OneLoneCoder_Platformer::PlayerGetCandy(float candyTime)

@@ -348,7 +348,7 @@ void cLevel::SelectTile(int startX, int endX, int nVisibleTilesX, int nVisibleTi
 				case L'H': // Heavily damaged Block
 					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, engine->GetTilesSprites(), 3 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
 					break;
-				case L'x': // Broken Block
+				case L'x': // Minor heal item
 					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, engine->GetTilesSprites(), 4 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
 					break;
 				case L'w': // Door

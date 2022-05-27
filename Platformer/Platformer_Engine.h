@@ -413,7 +413,8 @@ public:
 	void SetKirboPositions(float px, float py);
 	bool KirboCollisionWithEnnemy(cDynamic* object);
 	bool IsKirboAttackable();
-	void HealPlayer();
+	void MaxHealPlayer();
+	void HealPlayer(int hp);
 	void PlayerGetCandy(float candyTime);
 	void BuffPlayerDamage();
 	void BuffPlayerDefense();

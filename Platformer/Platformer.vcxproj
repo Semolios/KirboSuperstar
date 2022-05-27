@@ -190,6 +190,7 @@
     <ClCompile Include="Platformer_ItemCandy.cpp" />
     <ClCompile Include="Platformer_ItemDamage.cpp" />
     <ClCompile Include="Platformer_ItemDefense.cpp" />
+    <ClCompile Include="Platformer_ItemMinorHeal.cpp" />
     <ClCompile Include="Platformer_ItemTomato.cpp" />
     <ClCompile Include="Platformer_Level.cpp" />
     <ClCompile Include="Platformer_DynamicMovingPlatformHorSine.cpp" />
@@ -248,6 +249,7 @@
     <ClInclude Include="Platformer_ItemCandy.h" />
     <ClInclude Include="Platformer_ItemDamage.h" />
     <ClInclude Include="Platformer_ItemDefense.h" />
+    <ClInclude Include="Platformer_ItemMinorHeal.h" />
     <ClInclude Include="Platformer_ItemTomato.h" />
     <ClInclude Include="Platformer_Level.h" />
     <ClInclude Include="Platformer_DynamicMovingPlatformHorSine.h" />

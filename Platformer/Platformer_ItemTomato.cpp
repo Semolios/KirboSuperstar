@@ -14,5 +14,5 @@ cItemTomato::~cItemTomato()
 void cItemTomato::PickItem()
 {
 	engine->PlaySample("itemPicked");
-	engine->HealPlayer();
+	engine->MaxHealPlayer();
 }
