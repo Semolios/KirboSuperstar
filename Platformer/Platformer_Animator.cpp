@@ -223,4 +223,7 @@ void cAnimator::LoadAnimations()
 	mapStates["enterDoor"].push_back(new olc::Sprite("assets/gfx/kirboEnterDoor04.png"));
 	mapStates["enterDoor"].push_back(new olc::Sprite("assets/gfx/kirboEnterDoor04.png"));
 	mapStates["enterDoor"].push_back(new olc::Sprite("assets/gfx/kirboEnterDoor04.png"));
+
+	mapStates["joy"].push_back(new olc::Sprite("assets/gfx/kirboJoy00.png"));
+	mapStates["joy"].push_back(new olc::Sprite("assets/gfx/kirboJoy01.png"));
 }

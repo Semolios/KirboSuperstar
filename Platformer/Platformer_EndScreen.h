@@ -4,13 +4,15 @@
 #pragma once
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
+#include "Platformer_Animator.h"
 
 class cEndScreen
 {
 public:
-	cEndScreen(olc::PixelGameEngine* gfx, olc::Sprite* background);
+	cEndScreen(olc::PixelGameEngine* gfx, olc::Sprite* background, cAnimator* anim);
 
 private:
+	static cAnimator* animPlayer;
 	olc::Sprite* sprBackGround;
 
 public:

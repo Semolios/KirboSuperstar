@@ -187,7 +187,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		case LS_ENDSCREEN:
 		{
 			sprEndScreen = new olc::Sprite("assets/gfx/endScreen.png");
-			endScreen = new cEndScreen(this, sprEndScreen);
+			endScreen = new cEndScreen(this, sprEndScreen, &animPlayer);
 
 			UpdateProgressBar("Loading 40%");
 
@@ -834,6 +834,8 @@ bool OneLoneCoder_Platformer::GameState_WorldMap(float fElapsedTime)
 bool OneLoneCoder_Platformer::GameState_EndScreen(float fElapsedTime)
 {
 	endScreen->Update(this, fElapsedTime);
+
+	animPlayer.ChangeState("joy");
 
 	if (bPlayMusic)
 	{
