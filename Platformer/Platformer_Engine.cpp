@@ -558,7 +558,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	player->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
 
-	// On Halberd, spawn some clouds to indicate the ship is moving
+	// On Halberd, spawn some clouds to indicate the ship is moving (sometimes, speedrunner wahoo appears instead)
 	if (level->GetCurrentLvl() == 4 && !bInBossLvl)
 	{
 		cfHalberdCloudSpawnTimer += fElapsedTime;
@@ -569,6 +569,17 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			float fCloudY = camera->GetOffsetY() + ((float)(rand() % cnCloudPosXRange) / 10.0f);
 
 			AddProjectile(fCloudX, fCloudY, true, cfHalberdCloudVelX, 0.0f, 1.0f, "halberdCloud", false, 0, false, false, 0, false, 0.0f, "", false, "", true);
+
+		}
+
+		// Each frame, a random number is generated. If this number % 2 / fElapsedTime is equal to 0 then the event occurs
+		int useRangedAttack = rand() % (int)(2 / fElapsedTime);
+		if (useRangedAttack == 0)
+		{
+			float fWahooX = camera->GetOffsetX() + (ScreenWidth() / 64.0f);
+			float fWahooY = camera->GetOffsetY() + ((float)(rand() % cnWahooPosXRange) / 10.0f);
+
+			AddProjectile(fWahooX, fWahooY, true, cfWahooVelX, 0.0f, 1.0f, "speedrunnerWahoo", false, 0, false, false, 0, false, 0.0f, "", false, "", true);
 		}
 	}
 
