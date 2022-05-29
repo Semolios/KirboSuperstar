@@ -113,3 +113,50 @@ void cCamera::InitialiseThreadPool()
 		workers[i].thread = std::thread(&WorkerThread::DrawBackground, &workers[i]);
 	}
 }
+
+void cCamera::SpawnSceneries(cLevel* level, float fElapsedTime)
+{
+#pragma region Iceberg
+
+	if (level->GetCurrentLvl() == 2 && !engine->IsInBossLevel())
+	{
+		float fSnowX = GetOffsetX() + ((float)(rand() % cnObjectPosXRange) / 10.0f) - 4.0f;
+		float fSnowY = GetOffsetY();
+
+		engine->AddProjectile(fSnowX, fSnowY, true, cfSnowVelX, cfSnowVelY, 1.0f, "snow", false, 0, false, false, 0, false, 0.0f, "", false, "", true);
+
+		fSnowX = GetOffsetX() + ((float)(rand() % cnObjectPosXRange) / 10.0f) - 4.0f;
+		fSnowY = GetOffsetY() + (engine->ScreenHeight() / 64.0f);
+
+		engine->AddProjectile(fSnowX, fSnowY, true, cfSnowVelX, cfSnowVelY, 1.0f, "snow", false, 0, false, false, 0, false, 0.0f, "", false, "", true);
+	}
+
+#pragma endregion
+
+#pragma region Halberd
+
+	if (level->GetCurrentLvl() == 4 && !engine->IsInBossLevel())
+	{
+		cfHalberdCloudSpawnTimer += fElapsedTime;
+		if (cfHalberdCloudSpawnTimer >= cfHalberdCloudSpawnTime)
+		{
+			cfHalberdCloudSpawnTimer = 0.0f;
+			float fCloudX = GetOffsetX() + (engine->ScreenWidth() / 64.0f);
+			float fCloudY = GetOffsetY() + ((float)(rand() % cnObjectPosYRange) / 10.0f);
+
+			engine->AddProjectile(fCloudX, fCloudY, true, cfHalberdCloudVelX, 0.0f, 1.0f, "halberdCloud", false, 0, false, false, 0, false, 0.0f, "", false, "", true);
+		}
+
+		// Each frame, a random number is generated. If this number % 2 / fElapsedTime is equal to 0 then the event occurs
+		int useRangedAttack = rand() % (int)(2 / fElapsedTime);
+		if (useRangedAttack == 0)
+		{
+			float fWahooX = GetOffsetX() + (engine->ScreenWidth() / 64.0f);
+			float fWahooY = GetOffsetY() + ((float)(rand() % cnObjectPosYRange) / 10.0f);
+
+			engine->AddProjectile(fWahooX, fWahooY, true, cfWahooVelX, 0.0f, 1.0f, "speedrunnerWahoo", false, 0, false, false, 0, false, 0.0f, "", false, "", true);
+		}
+	}
+
+#pragma endregion
+}

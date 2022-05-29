@@ -963,7 +963,7 @@ void cPlayer::CheckRightWall(cLevel* lvl, float& fNewPosX)
 
 			HarmfulBloc(ptfm);
 
-			if (ptfm->GetVX() <= fVelX)
+			if (ptfm->GetVX() <= fVelX || fVelX == 0)
 			{
 				if (ptfm->GetVX() != 0.0f)
 					fNewPosX = ptfm->GetPX() - 1.0f;
@@ -1021,7 +1021,7 @@ void cPlayer::CheckLeftWall(cLevel* lvl, float& fNewPosX)
 
 			HarmfulBloc(ptfm);
 
-			if (ptfm->GetVX() >= fVelX)
+			if (ptfm->GetVX() >= fVelX || fVelX == 0)
 			{
 				if (ptfm->GetVX() != 0.0f)
 					fNewPosX = ptfm->GetPX() + ptfm->GetNormalizedWidth();

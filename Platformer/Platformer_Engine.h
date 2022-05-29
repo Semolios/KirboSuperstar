@@ -224,12 +224,6 @@ private:
 	// Projectiles
 	std::vector<cDynamicProjectile*> vecProjectiles;
 	std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles;
-	const int cnCloudPosXRange = 75;
-	const int cnWahooPosXRange = 75;
-	const float cfHalberdCloudVelX = -40.0f;
-	const float cfWahooVelX = -70.0f;
-	const float cfHalberdCloudSpawnTime = 0.125f;
-	float cfHalberdCloudSpawnTimer;
 
 	// Moving Platforms
 	std::vector<cDynamicMovingPlatform*> vecPlatforms;

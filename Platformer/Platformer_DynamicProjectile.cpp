@@ -182,8 +182,6 @@ void cDynamicProjectile::BottomCollision(cLevel* level, float fNewObjectPosX, fl
 
 void cDynamicProjectile::CheckBreakableBlocks(cLevel* level, float fNewObjectPosX, float fBorder, float fNewObjectPosY)
 {
-	// TODO utiliser la hitbox
-
 	//
 	// x-----x
 	// |     |
@@ -195,7 +193,6 @@ void cDynamicProjectile::CheckBreakableBlocks(cLevel* level, float fNewObjectPos
 	BreakTile(level, fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()) - fBorder);
 	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + fBorder);
 	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()) - fBorder);
-
 	//
 	//  --x-- 
 	// |     |
@@ -207,7 +204,6 @@ void cDynamicProjectile::CheckBreakableBlocks(cLevel* level, float fNewObjectPos
 	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + ((fDynHeight / engine->GetTileHeight()) / 2.0f));
 	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) / 2.0f), fNewObjectPosY + fBorder);
 	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) / 2.0f), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()) - fBorder);
-
 	//
 	//  ----- 
 	// |     |
@@ -456,6 +452,8 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProject
 	mapProjectiles["halberdCloud"].push_back(new olc::Sprite("assets/gfx/halberdCloud.png"));
 	
 	mapProjectiles["speedrunnerWahoo"].push_back(new olc::Sprite("assets/gfx/speedrunnerWahoo.png"));
+	
+	mapProjectiles["snow"].push_back(new olc::Sprite("assets/gfx/snow.png"));
 
 	// Invisibles Projectiles (these ones are invisible because they are included in the ennemies animations
 	mapProjectiles["SSTierMKHiyayaAOE"].push_back(new olc::Sprite("assets/gfx/SSTierMKHiyayaAOE.png"));
