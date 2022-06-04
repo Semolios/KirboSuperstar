@@ -146,5 +146,7 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicTeleport::LoadTeleports
 
 	mapTeleports["door"].push_back(new olc::Sprite("assets/gfx/door.png"));
 
+	mapTeleports["iceDoor"].push_back(new olc::Sprite("assets/gfx/iceDoor.png"));
+
 	return mapTeleports;
 }

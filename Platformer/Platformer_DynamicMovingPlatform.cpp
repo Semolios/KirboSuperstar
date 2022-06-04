@@ -150,7 +150,6 @@ bool cDynamicMovingPlatform::LeftCollisionWithLag(float topCornerY, float botCor
 	olc::vf2d prevPtfmTopLeftCorner(fPrevPosX - fHitboxThickness, fPrevPosY);
 	olc::vf2d prevPtfmBotRightCorner(fPrevPosX + fHitboxThickness, fPrevPosY + (fDynHeight / (float)engine->GetTileHeight()));
 
-	// TODO TESTER AVEC LES CRUSHERS
 	return bSolidLeft && (
 		// playerPX is left to the platform and newPlayerPY is right to the platform
 		((fPlayerPosX <= ptfmTopLeftCorner.x) && (fNewPlayerPosX >= ptfmBotRightCorner.x) && (topCornerY >= ptfmTopLeftCorner.y) && (topCornerY <= ptfmBotRightCorner.y)) ||
@@ -196,7 +195,6 @@ bool cDynamicMovingPlatform::RightCollisionWithLag(float topCornerY, float botCo
 	olc::vf2d prevPtfmTopLeftCorner(fPrevPosX + (fDynWidth / (float)engine->GetTileWidth()) - fHitboxThickness, fPrevPosY);
 	olc::vf2d prevPtfmBotRightCorner(fPrevPosX + (fDynWidth / (float)engine->GetTileWidth()) + fHitboxThickness, fPrevPosY + (fDynHeight / (float)engine->GetTileHeight()));
 
-	// TODO TESTER AVEC LES CRUSHERS
 	return bSolidRight && (
 		// playerPX is right to the platform and newPlayerPY is left to the platform
 		((fPlayerPosX >= ptfmTopLeftCorner.x) && (fNewPlayerPosX <= ptfmBotRightCorner.x) && (topCornerY >= ptfmTopLeftCorner.y) && (topCornerY <= ptfmBotRightCorner.y)) ||
@@ -271,10 +269,13 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 
 #pragma region Platforms and walls
 	mapPlatforms["basic"].push_back(new olc::Sprite("assets/gfx/basicPlatform.png"));
+	mapPlatforms["iceBasic"].push_back(new olc::Sprite("assets/gfx/iceBasicPlatform.png"));
 
 	mapPlatforms["ice"].push_back(new olc::Sprite("assets/gfx/icePlatform.png"));
 
 	mapPlatforms["wall"].push_back(new olc::Sprite("assets/gfx/wall.png"));
+
+	mapPlatforms["iceWall"].push_back(new olc::Sprite("assets/gfx/iceWall.png"));
 
 	mapPlatforms["toLeft"].push_back(new olc::Sprite("assets/gfx/toLeft.png"));
 	mapPlatforms["toRight"].push_back(new olc::Sprite("assets/gfx/toRight.png"));
@@ -293,6 +294,11 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["spikeUp"].push_back(new olc::Sprite("assets/gfx/spikeUp.png"));
 	mapPlatforms["spikeLeft"].push_back(new olc::Sprite("assets/gfx/spikeLeft.png"));
 	mapPlatforms["spikeRight"].push_back(new olc::Sprite("assets/gfx/spikeRight.png"));
+
+	mapPlatforms["stalactite"].push_back(new olc::Sprite("assets/gfx/stalactite.png"));
+	mapPlatforms["stalacleftite"].push_back(new olc::Sprite("assets/gfx/stalacleftite.png"));
+	mapPlatforms["stalagmite"].push_back(new olc::Sprite("assets/gfx/stalagmite.png"));
+	mapPlatforms["stalacrightite"].push_back(new olc::Sprite("assets/gfx/stalacrightite.png"));
 #pragma endregion
 
 	return mapPlatforms;
