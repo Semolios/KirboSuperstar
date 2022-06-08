@@ -17,20 +17,23 @@ void cAssets::LoadSprites()
 	};
 
 	// Ennemies
-	load("bomber", "assets/gfx/bomber.png");
-	load("brontoBurt", "assets/gfx/brontoBurt.png");
-	load("waddleDee", "assets/gfx/waddleDee.png");
-	load("rocky", "assets/gfx/rocky.png");
-	load("scarfy", "assets/gfx/scarfy.png");
-	load("bladeKnight", "assets/gfx/bladeKnight.png");
+	std::thread t1(load, "bomber", "assets/gfx/bomber.png");
+	std::thread t2(load, "brontoBurt", "assets/gfx/brontoBurt.png");
+	std::thread t3(load, "waddleDee", "assets/gfx/waddleDee.png");
+	std::thread t4(load, "rocky", "assets/gfx/rocky.png");
+	std::thread t5(load, "scarfy", "assets/gfx/scarfy.png");
+	std::thread t6(load, "bladeKnight", "assets/gfx/bladeKnight.png");
 
 	// Bosses
-	load("whispyWood", "assets/gfx/whispyWood.png");
-	load("mrShineMrBright", "assets/gfx/mrShineMrBright.png");
-	load("frosty", "assets/gfx/frosty.png");
-	load("kracko", "assets/gfx/kracko.png");
-	load("SSTierMetaKnight", "assets/gfx/SSTierMetaKnight.png");
-	load("kingDDD", "assets/gfx/kingDDD.png");
+	std::thread t7(load, "whispyWood", "assets/gfx/whispyWood.png");
+	std::thread t8(load, "mrShineMrBright", "assets/gfx/mrShineMrBright.png");
+	std::thread t9(load, "frosty", "assets/gfx/frosty.png");
+	std::thread t10(load, "kracko", "assets/gfx/kracko.png");
+	std::thread t11(load, "SSTierMetaKnight", "assets/gfx/SSTierMetaKnight.png");
+	std::thread t12(load, "kingDDD", "assets/gfx/kingDDD.png");
+
+	t1.join(); t2.join(); t3.join(); t4.join(); t5.join(); t6.join();
+	t7.join(); t8.join(); t9.join(); t10.join(); t11.join(); t12.join();
 }
 
 void cAssets::LoadFont()
