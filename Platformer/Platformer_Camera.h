@@ -30,7 +30,7 @@ private:
 	const int cnObjectPosXRange = 205;			  // a factor to spawn randomly object on the top of the screen
 	const int cnObjectPosYRange = 75;			  // a factor to spawn randomly object on the right of the screen
 
-	float cfHalberdCloudSpawnTimer;
+	float fHalberdCloudSpawnTimer = 0.0f;
 	float fOffsetX;
 	float fOffsetY;
 	float fLookingDownPos = 2.0f / 3.0f;

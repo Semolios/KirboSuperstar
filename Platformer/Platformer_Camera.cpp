@@ -137,10 +137,10 @@ void cCamera::SpawnSceneries(cLevel* level, float fElapsedTime)
 
 	if (level->GetCurrentLvl() == 4 && !engine->IsInBossLevel())
 	{
-		cfHalberdCloudSpawnTimer += fElapsedTime;
-		if (cfHalberdCloudSpawnTimer >= cfHalberdCloudSpawnTime)
+		fHalberdCloudSpawnTimer += fElapsedTime;
+		if (fHalberdCloudSpawnTimer >= cfHalberdCloudSpawnTime)
 		{
-			cfHalberdCloudSpawnTimer = 0.0f;
+			fHalberdCloudSpawnTimer = 0.0f;
 			float fCloudX = GetOffsetX() + (engine->ScreenWidth() / 64.0f);
 			float fCloudY = GetOffsetY() + ((float)(rand() % cnObjectPosYRange) / 10.0f);
 
