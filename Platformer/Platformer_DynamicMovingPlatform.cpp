@@ -270,17 +270,20 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 #pragma region Platforms and walls
 	mapPlatforms["basic"].push_back(new olc::Sprite("assets/gfx/basicPlatform.png"));
 	mapPlatforms["iceBasic"].push_back(new olc::Sprite("assets/gfx/iceBasicPlatform.png"));
+	mapPlatforms["marbleBasic"].push_back(new olc::Sprite("assets/gfx/marbleBasicPlatform.png"));
 
 	mapPlatforms["ice"].push_back(new olc::Sprite("assets/gfx/icePlatform.png"));
 
 	mapPlatforms["wall"].push_back(new olc::Sprite("assets/gfx/wall.png"));
-
 	mapPlatforms["iceWall"].push_back(new olc::Sprite("assets/gfx/iceWall.png"));
+	mapPlatforms["marbleWall"].push_back(new olc::Sprite("assets/gfx/marbleWall.png"));
+	mapPlatforms["marbleWallLong"].push_back(new olc::Sprite("assets/gfx/marbleWallLong.png"));
 
 	mapPlatforms["toLeft"].push_back(new olc::Sprite("assets/gfx/toLeft.png"));
 	mapPlatforms["toRight"].push_back(new olc::Sprite("assets/gfx/toRight.png"));
 
 	mapPlatforms["ceiling"].push_back(new olc::Sprite("assets/gfx/ceiling.png"));
+	mapPlatforms["marbleCeiling"].push_back(new olc::Sprite("assets/gfx/marbleBasicCeiling.png"));
 #pragma endregion
 
 #pragma region Crushers

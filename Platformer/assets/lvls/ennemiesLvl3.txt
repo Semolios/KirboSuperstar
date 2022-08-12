@@ -1,3 +1,4 @@
+--WADDLE DEES
 waddleDee,15,3
 waddleDee,19,3
 waddleDee,38,21
@@ -11,6 +12,7 @@ waddleDee,74,22
 waddleDee,90,22
 waddleDee,154,3
 waddleDee,159,3
+--BRONTO BURTS
 brontoBurt,5.0,3,10
 brontoBurt,5.0,4,15
 brontoBurt,5.0,6,6
@@ -37,6 +39,7 @@ brontoBurt,5.0,153,12
 brontoBurt,5.0,153,18
 brontoBurt,5.0,159,2
 brontoBurt,5.0,190,2
+--BOMBERS
 bomber,2,2
 bomber,13,6
 bomber,13,9
