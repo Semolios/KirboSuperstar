@@ -302,6 +302,10 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["stalacleftite"].push_back(new olc::Sprite("assets/gfx/stalacleftite.png"));
 	mapPlatforms["stalagmite"].push_back(new olc::Sprite("assets/gfx/stalagmite.png"));
 	mapPlatforms["stalacrightite"].push_back(new olc::Sprite("assets/gfx/stalacrightite.png"));
+
+	mapPlatforms["shipFlame"].push_back(new olc::Sprite("assets/gfx/shipFlame00.png"));
+	mapPlatforms["shipFlame"].push_back(new olc::Sprite("assets/gfx/shipFlame01.png"));
+	mapPlatforms["shipFlame"].push_back(new olc::Sprite("assets/gfx/shipFlame02.png"));
 #pragma endregion
 
 	return mapPlatforms;

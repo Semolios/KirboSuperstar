@@ -1,5 +1,4 @@
 --WADDLE DEES
-waddleDee,7,7
 waddleDee,43,5
 waddleDee,49,13
 waddleDee,77,11
@@ -31,7 +30,6 @@ brontoBurt,5.0,181,11
 brontoBurt,5.0,183,2
 brontoBurt,5.0,185,10
 --BOMBERS
-bomber,13,10
 bomber,65,13
 bomber,84,3
 bomber,101,1
