@@ -20,7 +20,7 @@ private:
 	const float cfProjectilesStartTimer = 0.25f;
 	const float cfGroundPosition = 9.0f;
 	const float cfRootPosY = 9.1f;
-	const float cfRootDuration = 0.6f;
+	const float cfRootDuration = 0.396f;
 	const float cfWindDirection = -1.0f;
 	const float cfWindPower = 20.0f;
 	const float cfProjectilesYRangeOffset = -5.0f;

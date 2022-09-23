@@ -31,7 +31,7 @@ protected:
 
 	// animation
 	int nCurrentFrame = 0;
-	float fTimeBetweenFrames = 0.05f;
+	float fTimeBetweenFrames = 0.033f;
 	float fTimeCounter = 0.0f;
 
 public:

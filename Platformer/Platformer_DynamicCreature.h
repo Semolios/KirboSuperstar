@@ -20,7 +20,7 @@ private:
 	const float cfKnockBackDY = 10.0f;
 	const float cfVacuumSpeed = 5.0f;
 	const float cfSwallowableLimit = 0.6f;
-	const float cfExplosionDuration = 0.85f;
+	const float cfExplosionDuration = 0.561f;
 
 protected:
 	olc::Sprite* sSprite;

@@ -57,7 +57,7 @@ private:
 	const float cfNormalDrag = -3.0f;					// Drag Value on normal ground
 	const float cfIcedDrag = -0.5f;						// Drag Value on iced ground
 	const float cfBrokenDoorFrame = 6.0f;				// Number of frames to break door
-	const float cfFartDuration = 0.25f;					// Duration of the fart animation
+	const float cfFartDuration = 0.165f;				// Duration of the fart animation
 	const float cfHalberdWindForce = 2.0f;				// Force of the wind effect on Halberd
 	const float cfVacuumInvincibleFrame = 0.5f;			// a little invincibility frame when vacuuming
 
