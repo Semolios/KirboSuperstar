@@ -465,7 +465,7 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 	// Permanent wind in Halberd level
 	if (worldMap->GetSelectedLevel() == 4)
 	{
-		ActivateShakeEffect(true, 20, 20);
+		ActivateShakeEffect(true, 40, 40);
 	}
 
 	TransitionTo("GS_LEVELSTART", true);
