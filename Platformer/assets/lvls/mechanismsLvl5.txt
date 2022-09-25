@@ -7,9 +7,6 @@ HarmfulBloc,58,8,shipFlame,2
 HarmfulBloc,62,14,shipFlame,2
 HarmfulBloc,65,3,shipFlame,2
 HarmfulBloc,75,12,shipFlame,2
-HarmfulBloc,81,4,shipFlame,2
-HarmfulBloc,87,8,shipFlame,2
-HarmfulBloc,90,13,shipFlame,2
 HarmfulBloc,98,2,shipFlame,2
 HarmfulBloc,99,9,shipFlame,2
 HarmfulBloc,103,11,shipFlame,2

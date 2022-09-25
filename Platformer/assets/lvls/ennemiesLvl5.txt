@@ -2,7 +2,6 @@
 waddleDee,43,5
 waddleDee,49,13
 waddleDee,77,11
-waddleDee,92,12
 waddleDee,101,8
 waddleDee,127,6
 waddleDee,133,11
@@ -31,7 +30,6 @@ brontoBurt,5.0,183,2
 brontoBurt,5.0,185,10
 --BOMBERS
 bomber,65,13
-bomber,84,3
 bomber,101,1
 bomber,106,10
 bomber,137,1
@@ -55,7 +53,6 @@ bladeKnight,19,3
 bladeKnight,34,10
 bladeKnight,59,2
 bladeKnight,62,7
-bladeKnight,90,7
 bladeKnight,113,3
 bladeKnight,117,12
 bladeKnight,119,12
