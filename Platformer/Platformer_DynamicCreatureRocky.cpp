@@ -16,7 +16,7 @@ cDynamicCreatureRocky::cDynamicCreatureRocky(cLevel* l) : cDynamicCreature("rock
 	nHealth = 9;
 	nHealthMax = 9;
 	level = l;
-	vx = 0;	// initialize the speed so the waddle dee goes left first
+	vx = 0;
 	fInitSpeed = 0;
 	bSolidVsMap = true;
 	bSolidVsDynInitValue = true;
@@ -44,8 +44,11 @@ void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float p
 
 			if (abs(playerX - px) < 0.5f && playerY > py)
 			{
-				engine->PlaySample("rockyFall");
-				nAINextState = AI_FALLING;
+				if (!HasObstacleUnder(playerY))
+				{
+					engine->PlaySample("rockyFall");
+					nAINextState = AI_FALLING;
+				}
 			}
 		}
 		break;
@@ -116,4 +119,32 @@ bool cDynamicCreatureRocky::DynamicCeiling()
 		}
 	}
 	return false;
+}
+
+bool cDynamicCreatureRocky::HasObstacleUnder(float playerY)
+{
+	bool isObstacle = false;
+
+	for (int i = ((int)py + 1); i < playerY; i++)
+	{
+		if (engine->IsSolidTile(level->GetTile(px + cfRockyLowerBoundary, i)) ||
+			engine->IsSolidTile(level->GetTile(px + cfRockyUpperBoundary, i)) ||
+			engine->IsSemiSolidTile(level->GetTile(px + cfRockyLowerBoundary, i)) ||
+			engine->IsSemiSolidTile(level->GetTile(px + cfRockyUpperBoundary, i)))
+		{
+			isObstacle = true;
+		}
+		else
+		{
+			for (auto& ptfm : engine->GetClosePlatforms(px, i))
+			{
+				if (ptfm->TopCollision(px, px + 1.0f, i + 1.0f))
+				{
+					isObstacle = true;
+				}
+			}
+		}
+	}
+
+	return isObstacle;
 }

@@ -190,7 +190,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 		break;
 		case AI_GUN:
 		{
-			if (fBehaviourTimer == 0.0f) 
+			if (fBehaviourTimer == 0.0f)
 				engine->PlaySample("sunShootingMoon");
 
 			nGraphicState = MOVE3;

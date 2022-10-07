@@ -16,7 +16,7 @@ cDynamicCreatureBomber::cDynamicCreatureBomber(cLevel* l) : cDynamicCreature("bo
 	nHealth = 1;
 	nHealthMax = 1;
 	level = l;
-	vx = -1;	// initialize the speed so the bomber goes left first
+	vx = -1;
 	fInitSpeed = -1;
 	bSolidVsMap = true;
 	bSolidVsDynInitValue = true;

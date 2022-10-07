@@ -12,7 +12,7 @@ cDynamicCreatureScarfy::cDynamicCreatureScarfy(cLevel* l) : cDynamicCreature("sc
 	nHealth = 6;
 	nHealthMax = 6;
 	level = l;
-	vx = 0;	// initialize the speed so the scarfy waits for kirbo
+	vx = 0;
 	bSolidVsMap = true;
 	bSolidVsDynInitValue = true;
 	bAffectedByGravity = false;

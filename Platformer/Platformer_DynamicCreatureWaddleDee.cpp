@@ -16,7 +16,7 @@ cDynamicCreatureWaddleDee::cDynamicCreatureWaddleDee(cLevel* l) : cDynamicCreatu
 	nHealth = 1;
 	nHealthMax = 1;
 	level = l;
-	vx = -1;	// initialize the speed so the waddle dee goes left first
+	vx = -1;
 	fInitSpeed = -1;
 	bSolidVsMap = true;
 	bSolidVsDynInitValue = true;

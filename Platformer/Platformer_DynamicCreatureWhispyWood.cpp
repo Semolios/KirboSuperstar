@@ -57,7 +57,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 			MapGraphicState(SCREAMING);
 			engine->ActivateShakeEffect(true);
 
-			if (fBehaviourTimer == 0.0f) 
+			if (fBehaviourTimer == 0.0f)
 				engine->PlaySample("whispyScream");
 
 			fBehaviourTimer += fElapsedTime;
@@ -94,7 +94,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 		break;
 		case AI_WIND:
 		{
-			if (fBehaviourTimer == 0.0f) 
+			if (fBehaviourTimer == 0.0f)
 				engine->PlaySample("inhale");
 
 			fBehaviourTimer += fElapsedTime;
