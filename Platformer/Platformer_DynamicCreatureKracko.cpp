@@ -98,8 +98,8 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 			}
 
 			fBehaviourTimer += fElapsedTime;
-			vx = sinf(fBehaviourTimer * pi) * fSwipeAmplitude * fPlungeDirection;
-			vy = sinf(fBehaviourTimer * pi * 2.0f) * fSwipeAmplitude;
+			vx = sinf(fBehaviourTimer * pi * 1.0f - 1.0f) * fSwipeAmplitude * fPlungeDirection;
+			vy = sinf(fBehaviourTimer * pi * 2.0f - 1.0f) * fSwipeAmplitude;
 
 			// Control kracko don't go out of bound
 			if (vx <= 0.0f && px <= cfLBoundOfStage) vx = 0.0f;
