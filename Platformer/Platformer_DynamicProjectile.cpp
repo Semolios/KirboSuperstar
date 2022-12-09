@@ -311,7 +311,6 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProject
 	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion13.png"));
 	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion14.png"));
 	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion15.png"));
-	mapProjectiles["explosion"].push_back(new olc::Sprite("assets/gfx/bossExplosion16.png"));
 
 	mapProjectiles["movingGround"].push_back(new olc::Sprite("assets/gfx/movingGround00.png"));
 	mapProjectiles["movingGround"].push_back(new olc::Sprite("assets/gfx/movingGround01.png"));

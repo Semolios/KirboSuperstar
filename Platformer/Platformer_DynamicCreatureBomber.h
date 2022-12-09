@@ -16,7 +16,7 @@ public:
 
 private:
 	const float cfTriggerDistance = 2.0f;
-	const float cfExplosionDuration = 0.561f;
+	const float cfExplosionDuration = 0.528f;
 	const float cfKnockBackDuration = 0.3f;
 	const int cnExplosionDmg = 5;
 
