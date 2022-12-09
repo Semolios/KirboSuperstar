@@ -252,7 +252,7 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 					engine->PlaySample("tornado");
 
 					engine->ActivateShakeEffect(true, 50, 50);
-					engine->AddProjectile(px - cfMKWidth, py - 2.0f * cfMKWidth, false, 0.0f, 0.0f, fAttackTime, "tornado", false, cnSSTierMKDmg, false);
+					engine->AddProjectile(px - cfTornadoOffsetX, py - cfTornadoOffsetY, false, 0.0f, 0.0f, fAttackTime, "tornado", false, cnSSTierMKDmg, false);
 				}
 			}
 			else
