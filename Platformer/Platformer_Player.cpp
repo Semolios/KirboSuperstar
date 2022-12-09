@@ -328,16 +328,16 @@ void cPlayer::EnterDoor(cLevel* lvl)
 		engine->SetGameState("GS_LOADBOSSLEVEL");
 	}
 
-	EnterTP();
+	EnterTP(lvl);
 }
 
-void cPlayer::EnterTP()
+void cPlayer::EnterTP(cLevel* level)
 {
 	for (auto& TP : engine->GetCloseTeleport(fPosX, fPosY))
 	{
 		if (cHitbox::ShapeOverlap_DIAG(hitbox, TP->GetHitbox()))
 		{
-			Teleport(TP->GetDestX(), TP->GetDestY());
+			Teleport(TP->GetDestX(), TP->GetDestY(), level);
 		}
 	}
 
@@ -345,17 +345,20 @@ void cPlayer::EnterTP()
 	{
 		if (cHitbox::ShapeOverlap_DIAG(hitbox, TP->GetDestHitbox()))
 		{
-			Teleport(TP->GetPX(), TP->GetPY());
+			Teleport(TP->GetPX(), TP->GetPY(), level);
 		}
 	}
 }
 
-void cPlayer::Teleport(float px, float py)
+void cPlayer::Teleport(float px, float py, cLevel* level)
 {
 	fTPX = px;
 	fTPY = py;
 	SetAttackable(true);
 	bChangePos = true;
+
+	// respawn all ennemies of the level
+	engine->RespawnEnnemies(level);
 
 	engine->TransitionTo("GS_MAIN", true);
 }

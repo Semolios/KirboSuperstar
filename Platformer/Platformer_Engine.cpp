@@ -1344,6 +1344,12 @@ std::vector<cDynamicTeleport*> OneLoneCoder_Platformer::GetCloseTeleportDest(flo
 	return closeTeleports;
 }
 
+void OneLoneCoder_Platformer::RespawnEnnemies(cLevel* level)
+{
+	vecEnnemies.clear();
+	level->PopulateEnnemies(vecEnnemies, level->GetEnnemies());
+}
+
 float OneLoneCoder_Platformer::GetTileWidth()
 {
 	return (float)nTileWidth;

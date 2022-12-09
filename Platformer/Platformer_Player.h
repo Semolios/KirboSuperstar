@@ -137,8 +137,8 @@ public:
 	void Jump();
 	bool IsEnteringDoor(cLevel* lvl);
 	void EnterDoor(cLevel* lvl);
-	void EnterTP();
-	void Teleport(float px, float py);
+	void EnterTP(cLevel* level);
+	void Teleport(float px, float py, cLevel* level);
 	bool CanInteract();
 	void ApplyGravity(float fElapsedTime);
 	void Update(float fElapsedTime);

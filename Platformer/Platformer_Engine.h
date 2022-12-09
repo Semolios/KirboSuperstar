@@ -363,6 +363,7 @@ public:
 	void AddTeleport(float ax, float ay, float bx, float by, std::string sprite);
 	std::vector<cDynamicTeleport*> GetCloseTeleport(float px, float py);
 	std::vector<cDynamicTeleport*> GetCloseTeleportDest(float px, float py);
+	void RespawnEnnemies(cLevel* level);
 
 	// Engine properties/modifications functions
 	float GetTileWidth();
