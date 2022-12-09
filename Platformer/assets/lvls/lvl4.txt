@@ -178,9 +178,9 @@ GGGGGGGGGGGGGGGGGGGGGGGGGGG.......GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
 ..GGGGGG..............G...G.......G.G...........................
 ......................G...G.....GGG.G...........................
 GGGGGGGGGGGGGGGGGGGGGGGGGGG.......GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-GGGGGGGGGGGGGGGGGGGGGGGGGGG.......GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+GGGGGGGGGGGGGGGGGGGGGGGGGGG...x...GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
 .GG........................................GGG...............GG.
-.GG...........................x............GGG...............GG.
+.GG........................................GGG...............GG.
 .GG.........GGGGGGG.......GGGGGGGGG......GGGGGGG.............GG.
 .GG...G.....GGGGGGG.......GGGGGGGGG......GGGGGGG.......G.....GG.
 .GG...G................................................G.....GG.

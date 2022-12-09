@@ -25,3 +25,8 @@ HarmfulBloc,129,3,spikeBall,2,1
 HarmfulBloc,129,3.5,spikeBall,2,1
 HarmfulBloc,131.5,3,spikeBall,2,1
 HarmfulBloc,131.5,3.5,spikeBall,2,1
+Scenery,11,2.2,hillYellow
+Scenery,34,8.2,hillRed
+Scenery,93,8.2,hillsRed
+Scenery,178,7.2,hillsRed
+Scenery,210,7.2,hillYellow

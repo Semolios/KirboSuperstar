@@ -788,7 +788,7 @@ void cPlayer::CheckDynamicFloor(float& fNewPosX, float& fNewPosY, float fElapsed
 			else
 				NormalDrag();
 
-			if ((!bChargeDoubleJump && !bChargeJump && !bUsingFlyCmd || (ptfm->GetVY() <= 0.0f && ptfm->GetVY() < fVelY)) && ((cDynamicHarmfulBloc*)ptfm)->IsHarmfulblocTangible())
+			if ((!bChargeDoubleJump && !bChargeJump && !bUsingFlyCmd || (ptfm->GetVY() <= 0.0f && ptfm->GetVY() < fVelY)) && ptfm->IsHarmfulblocTangible())
 			{
 				fNewPosY = ptfm->GetPY() - 0.8f;
 				fNewPosX += ptfm->GetVX() * fElapsedTime;
@@ -809,7 +809,7 @@ void cPlayer::CheckDynamicFloor(float& fNewPosX, float& fNewPosY, float fElapsed
 				Crushed();
 			}
 
-			if (((cDynamicHarmfulBloc*)ptfm)->IsHarmfulblocTangible())
+			if (ptfm->IsHarmfulblocTangible())
 			{
 				fVelY = 0;
 				bOnGround = true;
@@ -863,7 +863,7 @@ void cPlayer::CheckDynamicCeiling(float fNewPosX, float& fNewPosY, cLevel* lvl)
 		{
 			HarmfulBloc(ptfm);
 
-			if ((ptfm->GetVY() >= fVelY) && ((cDynamicHarmfulBloc*)ptfm)->IsHarmfulblocTangible())
+			if ((ptfm->GetVY() >= fVelY) && ptfm->IsHarmfulblocTangible())
 				fNewPosY = ptfm->GetPY() + ptfm->GetNormalizedHeight();
 
 			if (SolidFloor(lvl, fNewPosX, fNewPosY) && ptfm->GetVY() > 0.0f ||
@@ -966,7 +966,7 @@ void cPlayer::CheckRightWall(cLevel* lvl, float& fNewPosX)
 
 			HarmfulBloc(ptfm);
 
-			if ((ptfm->GetVX() <= fVelX || fVelX == 0) && ((cDynamicHarmfulBloc*)ptfm)->IsHarmfulblocTangible())
+			if ((ptfm->GetVX() <= fVelX || fVelX == 0) && ptfm->IsHarmfulblocTangible())
 			{
 				if (ptfm->GetVX() != 0.0f)
 					fNewPosX = ptfm->GetPX() - 1.0f;
@@ -1024,7 +1024,7 @@ void cPlayer::CheckLeftWall(cLevel* lvl, float& fNewPosX)
 
 			HarmfulBloc(ptfm);
 
-			if ((ptfm->GetVX() >= fVelX || fVelX == 0) && ((cDynamicHarmfulBloc*)ptfm)->IsHarmfulblocTangible())
+			if ((ptfm->GetVX() >= fVelX || fVelX == 0) && ptfm->IsHarmfulblocTangible())
 			{
 				if (ptfm->GetVX() != 0.0f)
 					fNewPosX = ptfm->GetPX() + ptfm->GetNormalizedWidth();

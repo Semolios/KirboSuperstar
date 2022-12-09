@@ -342,6 +342,7 @@ public:
 
 	// Platforms functions
 	void AddPlatform(float ox, float oy, std::string sprite, std::wstring iced);
+	void AddScenery(float ox, float oy, std::string sprite);
 	void AddHorizontalSinePtfm(float ox, float oy, std::string sprite, std::wstring iced, float amplitude, float frequency, std::wstring trigger);
 	void AddVerticalSinePtfm(float ox, float oy, std::string sprite, std::wstring iced, float amplitude, float frequency, std::wstring trigger);
 	void AddHorizontalSinglePtfm(float ox, float oy, std::string sprite, std::wstring iced, float tx, float vx, std::wstring trigger);

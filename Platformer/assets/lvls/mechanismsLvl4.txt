@@ -1,5 +1,5 @@
-VerticalSingle,27,179,marbleBasic,0,159,1.0,1
-Ceiling,27,175,marbleCeiling,0,1
+VerticalSingle,27,177,marbleBasic,0,159,1.0,1
+Ceiling,27,173,marbleCeiling,0,1
 Wall,27,130,marbleWall,1,1,1,10,117
 Wall,44,181,marbleWall,1,1,1,4,182
 Wall,54,128,marbleWallLong,1,1,1,15,101
@@ -16,3 +16,4 @@ VerticalCrusher,34,52,downCrusher,down,3.0
 VerticalCrusher,25,47,downCrusher,down,3.0
 VerticalCrusher,31,47,downCrusher,down,3.0
 VerticalCrusher,37,47,downCrusher,down,3.0
+Scenery,33.2,176,upArrow

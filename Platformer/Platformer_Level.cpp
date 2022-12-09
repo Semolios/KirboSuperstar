@@ -225,6 +225,10 @@ bool cLevel::PopulateMechanisms(std::string levelName)
 			{
 				engine->AddTeleport(std::stof(parts[1]), std::stof(parts[2]), std::stof(parts[3]), std::stof(parts[4]), engine->ToStr(parts[5]));
 			}
+			if (parts[0] == L"Scenery")
+			{
+				engine->AddScenery(std::stof(parts[1]), std::stof(parts[2]), engine->ToStr(parts[3]));
+			}
 		}
 	}
 

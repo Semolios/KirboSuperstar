@@ -1183,6 +1183,12 @@ void OneLoneCoder_Platformer::AddPlatform(float ox, float oy, std::string sprite
 	vecPlatforms.push_back(ptfm);
 }
 
+void OneLoneCoder_Platformer::AddScenery(float ox, float oy, std::string sprite)
+{
+	cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatform(ox, oy, mapPlatforms[sprite]);
+	vecPlatforms.push_back(ptfm);
+}
+
 void OneLoneCoder_Platformer::AddHorizontalSinePtfm(float ox, float oy, std::string sprite, std::wstring iced, float amplitude, float frequency, std::wstring trigger)
 {
 	cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatformHorSine(ox, oy, mapPlatforms[sprite], iced, amplitude, frequency, trigger);

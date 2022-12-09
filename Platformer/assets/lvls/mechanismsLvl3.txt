@@ -46,3 +46,9 @@ HarmfulBloc,123,5.25,stalagmite,2,1
 HarmfulBloc,118.8,19.5,stalacrightite,2,1
 HarmfulBloc,133.2,15.5,stalacleftite,2,1
 HarmfulBloc,133.2,24,stalacleftite,2,1
+Scenery,5,27.8,snowman
+Scenery,90,21.8,snowman
+Scenery,31,26.7,snowtree
+Scenery,79,26.7,snowtree
+Scenery,142,26.7,snowtree
+Scenery,116,12.7,snowtree

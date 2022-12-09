@@ -80,3 +80,11 @@ HarmfulBloc,168.5,10.2,poison,10,0
 HarmfulBloc,170.5,10.2,poison,10,0
 HarmfulBloc,172.5,10.2,poison,10,0
 HarmfulBloc,174.5,10.2,poison,10,0
+Scenery,170.8,46,upArrow2
+Scenery,80,28.1,deedeedeeStatue
+Scenery,83,28.1,deedeedeeStatue
+Scenery,86,28.1,deedeedeeStatue
+Scenery,89,28.1,deedeedeeStatue
+Scenery,22,37.2,deathPanel
+Scenery,89,7.2,deathPanel
+Scenery,161,56.2,deathPanel

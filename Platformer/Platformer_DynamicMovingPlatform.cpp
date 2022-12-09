@@ -309,6 +309,13 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["hillsRed"].push_back(new olc::Sprite("assets/gfx/hillsRed.png"));
 
 	mapPlatforms["snowman"].push_back(new olc::Sprite("assets/gfx/snowman.png"));
+	mapPlatforms["snowtree"].push_back(new olc::Sprite("assets/gfx/snowtree.png"));
+
+	mapPlatforms["upArrow"].push_back(new olc::Sprite("assets/gfx/upArrow.png"));
+
+	mapPlatforms["upArrow2"].push_back(new olc::Sprite("assets/gfx/upArrow2.png"));
+	mapPlatforms["deedeedeeStatue"].push_back(new olc::Sprite("assets/gfx/deedeedeeStatue.png"));
+	mapPlatforms["deathPanel"].push_back(new olc::Sprite("assets/gfx/deathPanel.png"));
 #pragma endregion
 
 #pragma region Crushers

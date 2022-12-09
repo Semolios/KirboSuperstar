@@ -1,1 +1,8 @@
 Basic,44,8,basic,0
+Scenery,2,10.2,arrowPanel
+Scenery,14,6.2,tree
+Scenery,126,9.2,tree
+Scenery,35.5,5.2,bush
+Scenery,109,10.2,bush
+Scenery,190,6.2,bush
+Scenery,67,9.75,mojo
