@@ -159,7 +159,7 @@ void cDynamicCreature::Collision(float fElapsedTime)
 			{
 				if ((ptfm->RightCollision(fNewObjectPosY, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()), fNewObjectPosX + fBorder) ||
 					 ptfm->RightCollisionWithLag(fNewObjectPosY, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()), px, fNewObjectPosX)) &&
-					((cDynamicHarmfulBloc*)ptfm)->IsHarmfulblocTangible())
+					ptfm->IsHarmfulblocTangible())
 				{
 					fNewObjectPosX = ptfm->GetPX() + ptfm->GetNormalizedWidth();
 					vx = 0;
@@ -180,7 +180,7 @@ void cDynamicCreature::Collision(float fElapsedTime)
 			{
 				if ((ptfm->LeftCollision(fNewObjectPosY, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()), fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder)) ||
 					 ptfm->LeftCollisionWithLag(fNewObjectPosY, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()), px + (fDynWidth / engine->GetTileWidth()), fNewObjectPosX + (fDynWidth / engine->GetTileWidth()))) &&
-					((cDynamicHarmfulBloc*)ptfm)->IsHarmfulblocTangible())
+					ptfm->IsHarmfulblocTangible())
 				{
 					fNewObjectPosX = ptfm->GetPX() - (fDynWidth / engine->GetTileWidth());
 					vx = 0;
@@ -202,7 +202,7 @@ void cDynamicCreature::Collision(float fElapsedTime)
 			{
 				if ((ptfm->BotCollision(fNewObjectPosX + fBorder, fNewObjectPosX + (fDynWidth / engine->GetTileWidth()) - fBorder, fNewObjectPosY) ||
 					 ptfm->BotCollisionWithLag(fNewObjectPosX + fBorder, fNewObjectPosX + (fDynWidth / engine->GetTileWidth()) - fBorder, py, fNewObjectPosY)) &&
-					((cDynamicHarmfulBloc*)ptfm)->IsHarmfulblocTangible())
+					ptfm->IsHarmfulblocTangible())
 				{
 					fNewObjectPosY = ptfm->GetPY() + ptfm->GetNormalizedHeight();
 					vy = 0;
@@ -226,7 +226,7 @@ void cDynamicCreature::Collision(float fElapsedTime)
 			{
 				if ((ptfm->TopCollision(fNewObjectPosX + fBorder, fNewObjectPosX + (fDynWidth / engine->GetTileWidth()) - fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight())) ||
 					 ptfm->TopCollisionWithLag(fNewObjectPosX + fBorder, fNewObjectPosX + (fDynWidth / engine->GetTileWidth()) - fBorder, py + (fDynHeight / engine->GetTileHeight()), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) &&
-					((cDynamicHarmfulBloc*)ptfm)->IsHarmfulblocTangible())
+					ptfm->IsHarmfulblocTangible())
 				{
 					fNewObjectPosY = ptfm->GetPY() - (fDynHeight / engine->GetTileHeight());
 					fNewObjectPosX += ptfm->GetVX() * fElapsedTime;

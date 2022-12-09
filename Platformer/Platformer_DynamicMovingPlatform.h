@@ -10,7 +10,8 @@ class OneLoneCoder_Platformer;
 class cDynamicMovingPlatform : public cDynamic
 {
 public:
-	cDynamicMovingPlatform(float ox, float oy, std::vector<olc::Sprite*> map, std::wstring iced);
+	cDynamicMovingPlatform(float ox, float oy, std::vector<olc::Sprite*> map, std::wstring iced); // Spawn a normal platform
+	cDynamicMovingPlatform(float ox, float oy, std::vector<olc::Sprite*> map);					  // Spawn a Scenery
 	virtual ~cDynamicMovingPlatform();
 
 	virtual void DrawSwitch(float cameraX, float cameraY);
@@ -33,6 +34,7 @@ protected:
 	bool bSolidBot = false;
 	bool bSolidLeft = false;
 	bool bSolidRight = false;
+	bool bTangible = true;
 
 	float fPrevPosX;
 	float fPrevPosY;
@@ -74,6 +76,7 @@ public:
 	float GetNormalizedHeight();
 
 	bool IsIced();
+	bool IsHarmfulblocTangible();
 
 	olc::Sprite* GetCurrentSprite();
 

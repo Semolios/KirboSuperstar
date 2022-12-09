@@ -12,6 +12,15 @@ cDynamicMovingPlatform::cDynamicMovingPlatform(float ox, float oy, std::vector<o
 	bIced = (iced == L"1");
 }
 
+cDynamicMovingPlatform::cDynamicMovingPlatform(float ox, float oy, std::vector<olc::Sprite*> map) : cDynamic("scenery")
+{
+	px = ox;
+	py = oy;
+	mapStates = map;
+	bFriendly = true;
+	bSolidTop = false;
+}
+
 cDynamicMovingPlatform::~cDynamicMovingPlatform()
 {
 	delete hitbox;
@@ -289,6 +298,19 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["fountainCeiling"].push_back(new olc::Sprite("assets/gfx/fountainBasicCeiling.png"));
 #pragma endregion
 
+#pragma region Sceneries
+	mapPlatforms["arrowPanel"].push_back(new olc::Sprite("assets/gfx/arrowPanel.png"));
+	mapPlatforms["tree"].push_back(new olc::Sprite("assets/gfx/tree.png"));
+	mapPlatforms["bush"].push_back(new olc::Sprite("assets/gfx/bush.png"));
+	mapPlatforms["mojo"].push_back(new olc::Sprite("assets/gfx/mojo.png"));
+
+	mapPlatforms["hillYellow"].push_back(new olc::Sprite("assets/gfx/hillYellow.png"));
+	mapPlatforms["hillRed"].push_back(new olc::Sprite("assets/gfx/hillRed.png"));
+	mapPlatforms["hillsRed"].push_back(new olc::Sprite("assets/gfx/hillsRed.png"));
+
+	mapPlatforms["snowman"].push_back(new olc::Sprite("assets/gfx/snowman.png"));
+#pragma endregion
+
 #pragma region Crushers
 	mapPlatforms["downCrusher"].push_back(new olc::Sprite("assets/gfx/downCrusher.png"));
 	mapPlatforms["fountainCrusher"].push_back(new olc::Sprite("assets/gfx/fountainCrusher.png"));
@@ -359,6 +381,11 @@ float cDynamicMovingPlatform::GetNormalizedHeight()
 bool cDynamicMovingPlatform::IsIced()
 {
 	return bIced;
+}
+
+bool cDynamicMovingPlatform::IsHarmfulblocTangible()
+{
+	return bTangible;
 }
 
 olc::Sprite* cDynamicMovingPlatform::GetCurrentSprite()

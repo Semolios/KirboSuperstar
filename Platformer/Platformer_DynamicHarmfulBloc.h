@@ -7,15 +7,11 @@
 
 class cDynamicHarmfulBloc : public cDynamicBloc
 {
-private:
-	bool bTangible;
-
 public:
-	cDynamicHarmfulBloc(float ox, float oy, std::vector<olc::Sprite*> map, float dmg, std::wstring bTangible);
+	cDynamicHarmfulBloc(float ox, float oy, std::vector<olc::Sprite*> map, float dmg, std::wstring tangible);
 	virtual ~cDynamicHarmfulBloc();
 
 	void Behaviour(float fElapsedTime, float playerX, float playerY);
-	bool IsHarmfulblocTangible();
 };
 
 #endif // !DEF_HARMFULBLOC
