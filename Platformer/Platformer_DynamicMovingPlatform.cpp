@@ -271,6 +271,7 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["basic"].push_back(new olc::Sprite("assets/gfx/basicPlatform.png"));
 	mapPlatforms["iceBasic"].push_back(new olc::Sprite("assets/gfx/iceBasicPlatform.png"));
 	mapPlatforms["marbleBasic"].push_back(new olc::Sprite("assets/gfx/marbleBasicPlatform.png"));
+	mapPlatforms["fountainBasic"].push_back(new olc::Sprite("assets/gfx/fountainBasicPlatform.png"));
 
 	mapPlatforms["ice"].push_back(new olc::Sprite("assets/gfx/icePlatform.png"));
 
@@ -278,16 +279,19 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["iceWall"].push_back(new olc::Sprite("assets/gfx/iceWall.png"));
 	mapPlatforms["marbleWall"].push_back(new olc::Sprite("assets/gfx/marbleWall.png"));
 	mapPlatforms["marbleWallLong"].push_back(new olc::Sprite("assets/gfx/marbleWallLong.png"));
+	mapPlatforms["fountainWall"].push_back(new olc::Sprite("assets/gfx/fountainWall.png"));
 
 	mapPlatforms["toLeft"].push_back(new olc::Sprite("assets/gfx/toLeft.png"));
 	mapPlatforms["toRight"].push_back(new olc::Sprite("assets/gfx/toRight.png"));
 
 	mapPlatforms["ceiling"].push_back(new olc::Sprite("assets/gfx/ceiling.png"));
 	mapPlatforms["marbleCeiling"].push_back(new olc::Sprite("assets/gfx/marbleBasicCeiling.png"));
+	mapPlatforms["fountainCeiling"].push_back(new olc::Sprite("assets/gfx/fountainBasicCeiling.png"));
 #pragma endregion
 
 #pragma region Crushers
 	mapPlatforms["downCrusher"].push_back(new olc::Sprite("assets/gfx/downCrusher.png"));
+	mapPlatforms["fountainCrusher"].push_back(new olc::Sprite("assets/gfx/fountainCrusher.png"));
 #pragma endregion
 
 #pragma region HarmfulBlocs
@@ -306,6 +310,27 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["shipFlame"].push_back(new olc::Sprite("assets/gfx/shipFlame00.png"));
 	mapPlatforms["shipFlame"].push_back(new olc::Sprite("assets/gfx/shipFlame01.png"));
 	mapPlatforms["shipFlame"].push_back(new olc::Sprite("assets/gfx/shipFlame02.png"));
+
+	mapPlatforms["poison"].push_back(new olc::Sprite("assets/gfx/poison00.png"));
+	mapPlatforms["poison"].push_back(new olc::Sprite("assets/gfx/poison00.png"));
+	mapPlatforms["poison"].push_back(new olc::Sprite("assets/gfx/poison01.png"));
+	mapPlatforms["poison"].push_back(new olc::Sprite("assets/gfx/poison01.png"));
+	mapPlatforms["poison"].push_back(new olc::Sprite("assets/gfx/poison02.png"));
+	mapPlatforms["poison"].push_back(new olc::Sprite("assets/gfx/poison02.png"));
+	mapPlatforms["poison"].push_back(new olc::Sprite("assets/gfx/poison03.png"));
+	mapPlatforms["poison"].push_back(new olc::Sprite("assets/gfx/poison03.png"));
+	mapPlatforms["poison"].push_back(new olc::Sprite("assets/gfx/poison04.png"));
+	mapPlatforms["poison"].push_back(new olc::Sprite("assets/gfx/poison04.png"));
+	mapPlatforms["poison"].push_back(new olc::Sprite("assets/gfx/poison05.png"));
+	mapPlatforms["poison"].push_back(new olc::Sprite("assets/gfx/poison05.png"));
+	mapPlatforms["poison"].push_back(new olc::Sprite("assets/gfx/poison06.png"));
+	mapPlatforms["poison"].push_back(new olc::Sprite("assets/gfx/poison06.png"));
+	mapPlatforms["poison"].push_back(new olc::Sprite("assets/gfx/poison07.png"));
+	mapPlatforms["poison"].push_back(new olc::Sprite("assets/gfx/poison07.png"));
+	mapPlatforms["poison"].push_back(new olc::Sprite("assets/gfx/poison08.png"));
+	mapPlatforms["poison"].push_back(new olc::Sprite("assets/gfx/poison08.png"));
+	mapPlatforms["poison"].push_back(new olc::Sprite("assets/gfx/poison09.png"));
+	mapPlatforms["poison"].push_back(new olc::Sprite("assets/gfx/poison09.png"));
 #pragma endregion
 
 	return mapPlatforms;
