@@ -80,6 +80,8 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY)
 
 		if (bCanBehaveWhileAttacked && !bVacuumed && !bBossKilled)
 			Behaviour(fElapsedTime, playerX, playerY, engine);
+		else
+			engine->StopSample("rockyFall");
 
 		if (bVacuumed)
 		{
