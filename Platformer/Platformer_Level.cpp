@@ -215,7 +215,7 @@ bool cLevel::PopulateMechanisms(std::string levelName)
 			}
 			if (parts[0] == L"HarmfulBloc")
 			{
-				engine->AddHarmfulBloc(std::stof(parts[1]), std::stof(parts[2]), engine->ToStr(parts[3]), std::stof(parts[4]));
+				engine->AddHarmfulBloc(std::stof(parts[1]), std::stof(parts[2]), engine->ToStr(parts[3]), std::stof(parts[4]), parts[5]);
 			}
 			if (parts[0] == L"Wind")
 			{

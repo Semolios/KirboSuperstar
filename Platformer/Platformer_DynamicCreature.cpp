@@ -157,8 +157,9 @@ void cDynamicCreature::Collision(float fElapsedTime)
 			// Moving platforms collision
 			for (auto& ptfm : engine->GetClosePlatforms(fNewObjectPosX, fNewObjectPosY))
 			{
-				if (ptfm->RightCollision(fNewObjectPosY, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()), fNewObjectPosX + fBorder) ||
-					ptfm->RightCollisionWithLag(fNewObjectPosY, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()), px, fNewObjectPosX))
+				if ((ptfm->RightCollision(fNewObjectPosY, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()), fNewObjectPosX + fBorder) ||
+					 ptfm->RightCollisionWithLag(fNewObjectPosY, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()), px, fNewObjectPosX)) &&
+					((cDynamicHarmfulBloc*)ptfm)->IsHarmfulblocTangible())
 				{
 					fNewObjectPosX = ptfm->GetPX() + ptfm->GetNormalizedWidth();
 					vx = 0;
@@ -177,8 +178,9 @@ void cDynamicCreature::Collision(float fElapsedTime)
 			// Moving platforms collision
 			for (auto& ptfm : engine->GetClosePlatforms(fNewObjectPosX, fNewObjectPosY))
 			{
-				if (ptfm->LeftCollision(fNewObjectPosY, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()), fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder)) ||
-					ptfm->LeftCollisionWithLag(fNewObjectPosY, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()), px + (fDynWidth / engine->GetTileWidth()), fNewObjectPosX + (fDynWidth / engine->GetTileWidth())))
+				if ((ptfm->LeftCollision(fNewObjectPosY, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()), fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder)) ||
+					 ptfm->LeftCollisionWithLag(fNewObjectPosY, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()), px + (fDynWidth / engine->GetTileWidth()), fNewObjectPosX + (fDynWidth / engine->GetTileWidth()))) &&
+					((cDynamicHarmfulBloc*)ptfm)->IsHarmfulblocTangible())
 				{
 					fNewObjectPosX = ptfm->GetPX() - (fDynWidth / engine->GetTileWidth());
 					vx = 0;
@@ -198,8 +200,9 @@ void cDynamicCreature::Collision(float fElapsedTime)
 			// Moving platforms collision
 			for (auto& ptfm : engine->GetClosePlatforms(fNewObjectPosX, fNewObjectPosY))
 			{
-				if (ptfm->BotCollision(fNewObjectPosX + fBorder, fNewObjectPosX + (fDynWidth / engine->GetTileWidth()) - fBorder, fNewObjectPosY) ||
-					ptfm->BotCollisionWithLag(fNewObjectPosX + fBorder, fNewObjectPosX + (fDynWidth / engine->GetTileWidth()) - fBorder, py, fNewObjectPosY))
+				if ((ptfm->BotCollision(fNewObjectPosX + fBorder, fNewObjectPosX + (fDynWidth / engine->GetTileWidth()) - fBorder, fNewObjectPosY) ||
+					 ptfm->BotCollisionWithLag(fNewObjectPosX + fBorder, fNewObjectPosX + (fDynWidth / engine->GetTileWidth()) - fBorder, py, fNewObjectPosY)) &&
+					((cDynamicHarmfulBloc*)ptfm)->IsHarmfulblocTangible())
 				{
 					fNewObjectPosY = ptfm->GetPY() + ptfm->GetNormalizedHeight();
 					vy = 0;
@@ -221,8 +224,9 @@ void cDynamicCreature::Collision(float fElapsedTime)
 			// Moving platforms collision
 			for (auto& ptfm : engine->GetClosePlatforms(fNewObjectPosX, fNewObjectPosY))
 			{
-				if (ptfm->TopCollision(fNewObjectPosX + fBorder, fNewObjectPosX + (fDynWidth / engine->GetTileWidth()) - fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight())) ||
-					ptfm->TopCollisionWithLag(fNewObjectPosX + fBorder, fNewObjectPosX + (fDynWidth / engine->GetTileWidth()) - fBorder, py + (fDynHeight / engine->GetTileHeight()), fNewObjectPosY + (fDynHeight / engine->GetTileHeight())))
+				if ((ptfm->TopCollision(fNewObjectPosX + fBorder, fNewObjectPosX + (fDynWidth / engine->GetTileWidth()) - fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight())) ||
+					 ptfm->TopCollisionWithLag(fNewObjectPosX + fBorder, fNewObjectPosX + (fDynWidth / engine->GetTileWidth()) - fBorder, py + (fDynHeight / engine->GetTileHeight()), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) &&
+					((cDynamicHarmfulBloc*)ptfm)->IsHarmfulblocTangible())
 				{
 					fNewObjectPosY = ptfm->GetPY() - (fDynHeight / engine->GetTileHeight());
 					fNewObjectPosX += ptfm->GetVX() * fElapsedTime;
@@ -363,7 +367,7 @@ void cDynamicCreature::ExplodeAndDie(float fElapsedTime)
 
 		float centerOfBossX = ((fDynWidth - explosionWidth) / 2.0f) / engine->GetTileWidth();
 		float centerOfBossY = ((fDynHeight - explosionHeight) / 2.0f) / engine->GetTileHeight();
-		engine->AddProjectile(px + centerOfBossX, py + centerOfBossY, true, 0.0f, 0.0f, cfExplosionDuration, "explosion", false, 0, false, false, 0, false, 0.0f, "",false, "", true);
+		engine->AddProjectile(px + centerOfBossX, py + centerOfBossY, true, 0.0f, 0.0f, cfExplosionDuration, "explosion", false, 0, false, false, 0, false, 0.0f, "", false, "", true);
 		engine->PlaySample("explosion");
 
 		bBossExplosionAvailable = false;

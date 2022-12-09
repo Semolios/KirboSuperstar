@@ -350,7 +350,7 @@ public:
 	void AddCeiling(float ox, float oy, std::string sprite, std::wstring topSolid, std::wstring linkToPreviousPtfm);
 	void AddHorizontalCrusher(float ox, float oy, std::string sprite, std::wstring side, float waitTime);
 	void AddVerticalCrusher(float ox, float oy, std::string sprite, std::wstring side, float waitTime);
-	void AddHarmfulBloc(float ox, float oy, std::string sprite, float dmg);
+	void AddHarmfulBloc(float ox, float oy, std::string sprite, float dmg, std::wstring tangible);
 	std::vector<cDynamicMovingPlatform*> GetClosePlatforms(float px, float py);
 	olc::Sprite* GetDoorSwitch(bool on);
 

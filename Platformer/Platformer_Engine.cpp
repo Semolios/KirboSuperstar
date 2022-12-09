@@ -1235,9 +1235,9 @@ void OneLoneCoder_Platformer::AddVerticalCrusher(float ox, float oy, std::string
 	vecPlatforms.push_back(ptfm);
 }
 
-void OneLoneCoder_Platformer::AddHarmfulBloc(float ox, float oy, std::string sprite, float dmg)
+void OneLoneCoder_Platformer::AddHarmfulBloc(float ox, float oy, std::string sprite, float dmg, std::wstring tangible)
 {
-	cDynamicMovingPlatform* ptfm = new cDynamicHarmfulBloc(ox, oy, mapPlatforms[sprite], dmg);
+	cDynamicMovingPlatform* ptfm = new cDynamicHarmfulBloc(ox, oy, mapPlatforms[sprite], dmg, tangible);
 	vecPlatforms.push_back(ptfm);
 }
 
