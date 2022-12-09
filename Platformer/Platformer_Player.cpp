@@ -37,6 +37,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 					bFlying = false;
 					bBreakDoor = true;
 					fAnimationTimer = 0.0f;
+					fWaitBeforeReenterDoor = cfWaitBeforeReenterDoor;
 					bCanSpawnProjectile = true;
 					SetAttackable(false);
 				}
@@ -306,13 +307,13 @@ bool cPlayer::IsEnteringDoor(cLevel* lvl)
 
 	for (auto& TP : engine->GetCloseTeleport(fPosX, fPosY))
 	{
-		if (cHitbox::ShapeOverlap_DIAG(hitbox, TP->GetHitbox()))
+		if (cHitbox::ShapeOverlap_DIAG(hitbox, TP->GetHitbox()) && fWaitBeforeReenterDoor <= 0.0f)
 			return true;
 	}
 
 	for (auto& TP : engine->GetCloseTeleportDest(fPosX, fPosY))
 	{
-		if (cHitbox::ShapeOverlap_DIAG(hitbox, TP->GetDestHitbox()))
+		if (cHitbox::ShapeOverlap_DIAG(hitbox, TP->GetDestHitbox()) && fWaitBeforeReenterDoor <= 0.0f)
 			return true;
 	}
 
@@ -383,6 +384,10 @@ void cPlayer::Update(float fElapsedTime)
 	}
 	else
 	{
+		fWaitBeforeReenterDoor -= fElapsedTime;
+		if (fWaitBeforeReenterDoor <= 0.0f)
+			fWaitBeforeReenterDoor = 0.0f;
+
 		fVelX += fDrag * fVelX * fElapsedTime;
 		if (bOnGround)
 		{

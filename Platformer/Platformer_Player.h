@@ -60,6 +60,7 @@ private:
 	const float cfFartDuration = 0.165f;				// Duration of the fart animation
 	const float cfHalberdWindForce = 2.0f;				// Force of the wind effect on Halberd
 	const float cfVacuumInvincibleFrame = 0.5f;			// a little invincibility frame when vacuuming
+	const float cfWaitBeforeReenterDoor = 0.5f;			// a little time to prevent player from spamming doors
 
 	const int cnSlapDmg = 3;							// damages of the slap attack
 	const int cnJesusCrossDmg = 1;						// damages of the jesus cross
@@ -89,6 +90,7 @@ private:
 	float fDrag = -3.0f;
 	float fAccGrdX = 25.0f;
 	float fAccAirX = 28.0f;
+	float fWaitBeforeReenterDoor = 0.0f;
 	bool bOnGround = false;
 	bool bOnIcedGround = false;
 	bool bDoubleJump = false;
