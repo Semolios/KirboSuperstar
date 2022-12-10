@@ -8,7 +8,7 @@ OneLoneCoder_Platformer::OneLoneCoder_Platformer()
 bool OneLoneCoder_Platformer::OnUserCreate()
 {
 	controller.Initialize();
-	olc::SOUND::InitialiseAudio();
+	waveEngine.InitialiseAudio();
 	return true;
 }
 
@@ -339,79 +339,79 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		break;
 		case LS_SOUNDS:
 		{
-			sndTitleScreen = olc::SOUND::LoadAudioSample("assets/snd/titleScreen.wav");
-			sndWorldMap = olc::SOUND::LoadAudioSample("assets/snd/worldMap.wav");
-			sndBossKilled = olc::SOUND::LoadAudioSample("assets/snd/bossKilled.wav");
-			sndWind = olc::SOUND::LoadAudioSample("assets/snd/wind.wav");
-			sndInvincibility = olc::SOUND::LoadAudioSample("assets/snd/invincibility.wav");
-			sndMenu = olc::SOUND::LoadAudioSample("assets/snd/menus.wav");
-			sndTransition = olc::SOUND::LoadAudioSample("assets/snd/transition.wav");
-			sndEndScreen = olc::SOUND::LoadAudioSample("assets/snd/endScreen.wav");
+			sndTitleScreen.LoadAudioWaveform("assets/snd/titleScreen.wav");
+			sndWorldMap.LoadAudioWaveform("assets/snd/worldMap.wav");
+			sndBossKilled.LoadAudioWaveform("assets/snd/bossKilled.wav");
+			sndWind.LoadAudioWaveform("assets/snd/wind.wav");
+			sndInvincibility.LoadAudioWaveform("assets/snd/invincibility.wav");
+			sndMenu.LoadAudioWaveform("assets/snd/menus.wav");
+			sndTransition.LoadAudioWaveform("assets/snd/transition.wav");
+			sndEndScreen.LoadAudioWaveform("assets/snd/endScreen.wav");
 
-			AddSharedSound("whispyScream", sndWhispyScream, "assets/snd/whispyScream.wav");
-			AddSharedSound("loseLife", sndLoseLife, "assets/snd/loseLife.wav");
-			AddSharedSound("punch", sndPunch, "assets/snd/punch.wav");
-			AddSharedSound("slap", sndSlap, "assets/snd/slap.wav");
-			AddSharedSound("kirboWalk", sndKirboWalk, "assets/snd/kirboWalk.wav");
-			AddSharedSound("kirboFly", sndKirboFly, "assets/snd/kirboFly.wav");
-			AddSharedSound("explosion", sndExplosion, "assets/snd/explosion.wav");
-			AddSharedSound("kirboJump", sndKirboJump, "assets/snd/kirboJump.wav");
-			AddSharedSound("kirboHit", sndKirboHit, "assets/snd/kirboHit.wav");
-			AddSharedSound("beginVacuum", sndKirboBeginVacuum, "assets/snd/kirboBeginVacuum.wav");
-			AddSharedSound("vacuum", sndKirboVacuum, "assets/snd/kirboVacuum.wav");
-			AddSharedSound("swallow", sndKirboSwallow, "assets/snd/kirboSwallow.wav");
-			AddSharedSound("wetSlap", sndWetSlap, "assets/snd/wetSlap.wav");
-			AddSharedSound("earthQuake", sndEarthQuake, "assets/snd/earthQuake.wav");
-			AddSharedSound("blow", sndBlow, "assets/snd/blow.wav");
-			AddSharedSound("inhale", sndInhale, "assets/snd/inhale.wav");
-			AddSharedSound("poyo01", sndPoyo01, "assets/snd/poyo01.wav");
-			AddSharedSound("poyo02", sndPoyo02, "assets/snd/poyo02.wav");
-			AddSharedSound("sunShootingMoon", sndSunShootingMoon, "assets/snd/sunShootingMoon.wav");
-			AddSharedSound("sunShootUp", sndSunShootUp, "assets/snd/sunShootUp.wav");
-			AddSharedSound("beamCharge", sndBeamCharge, "assets/snd/beamCharge.wav");
-			AddSharedSound("beam", sndBeam, "assets/snd/beam.wav");
-			AddSharedSound("volcanoBoom", sndVolcanoBoom, "assets/snd/volcanoBoom.wav");
-			AddSharedSound("iceBlow", sndIceBlow, "assets/snd/iceBlow.wav");
-			AddSharedSound("patpat", sndpatpat, "assets/snd/patpat.wav");
-			AddSharedSound("itemLaunch", sndItemLaunch, "assets/snd/itemLaunch.wav");
-			AddSharedSound("superstar", sndSuperstar, "assets/snd/superstar.wav");
-			AddSharedSound("frostyJump", sndFrostyJump, "assets/snd/frostyJump.wav");
-			AddSharedSound("frostyGroundPound", sndFrostyGroundPound, "assets/snd/frostyGroundPound.wav");
-			AddSharedSound("lightning", sndLightning, "assets/snd/lightning.wav");
-			AddSharedSound("electricity", sndElectricity, "assets/snd/electricity.wav");
-			AddSharedSound("electricity2", sndElectricity2, "assets/snd/electricity2.wav");
-			AddSharedSound("meleeControllerRape", sndMeleeControllerRape, "assets/snd/meleeControllerRape.wav");
-			AddSharedSound("dash", sndDash, "assets/snd/dash.wav");
-			AddSharedSound("hiyayayaya", sndHiyayayaya, "assets/snd/hiyayayaya.wav");
-			AddSharedSound("singleSwordStrike", sndSingleSwordStrike, "assets/snd/singleSwordStrike.wav");
-			AddSharedSound("multipleSwordStrike", sndMultipleSwordStrike, "assets/snd/multipleSwordStrike.wav");
-			AddSharedSound("ha", sndHa, "assets/snd/ha.wav");
-			AddSharedSound("tornado", sndTornado, "assets/snd/tornado.wav");
-			AddSharedSound("loudScreaming", sndLoudScreaming, "assets/snd/loudScreaming.wav");
-			AddSharedSound("behold", sndBehold, "assets/snd/behold.wav");
-			AddSharedSound("kingDDDJump", sndKingDDDJump, "assets/snd/kingDDDJump.wav");
-			AddSharedSound("kingDDDUpSmash", sndKingDDDUpSmash, "assets/snd/kingDDDUpSmash.wav");
-			AddSharedSound("kingDDDUpSmashHammer", sndKingDDDUpSmashHammer, "assets/snd/kingDDDUpSmashHammer.wav");
-			AddSharedSound("kingDDDSideSmash", sndKingDDDSideSmash, "assets/snd/kingDDDSideSmash.wav");
-			AddSharedSound("kingDDDDownSmashHammer", sndKingDDDDownSmashHammer, "assets/snd/kingDDDDownSmashHammer.wav");
-			AddSharedSound("kingDDDSideB", sndKingDDDSideB, "assets/snd/kingDDDSideB.wav");
-			AddSharedSound("spikeBallBounce", sndSpikeBallBounce, "assets/snd/spikeBallBounce.wav");
-			AddSharedSound("kingDDDDownBCharge", sndKingDDDDownBCharge, "assets/snd/kingDDDDownBCharge.wav");
-			AddSharedSound("kingDDDDownBPrepare", sndKingDDDDownBPrepare, "assets/snd/kingDDDDownBPrepare.wav");
-			AddSharedSound("kingDDDDownBAttack", sndKingDDDDownBAttack, "assets/snd/kingDDDDownBAttack.wav");
-			AddSharedSound("kingDDDUpBJump", sndKingDDDUpBJump, "assets/snd/kingDDDUpBJump.wav");
-			AddSharedSound("kingDDDUpBLanding", sndKingDDDUpBLanding, "assets/snd/kingDDDUpBLanding.wav");
-			AddSharedSound("kingDDDVacuum", sndKingDDDVacuum, "assets/snd/kingDDDVacuum.wav");
-			AddSharedSound("kingDDDUpAir", sndKingDDDUpAir, "assets/snd/kingDDDUpAir.wav");
-			AddSharedSound("kingDDDAirAtkVoice", sndKingDDDAirAtkVoice, "assets/snd/kingDDDAirAtkVoice.wav");
-			AddSharedSound("kingDDDAirAtkHammer", sndKingDDDAirAtkHammer, "assets/snd/kingDDDAirAtkHammer.wav");
-			AddSharedSound("itemPicked", sndItemPicked, "assets/snd/itemPicked.wav");
-			AddSharedSound("rockyFall", sndRockyFall, "assets/snd/rockyFall.wav");
-			AddSharedSound("boom", sndBoom, "assets/snd/boom.wav");
-			AddSharedSound("enterDoor", sndEnterDoor, "assets/snd/enterDoor.wav");
-			AddSharedSound("menuBip", sndMenuBip, "assets/snd/menuBip.wav");
-			AddSharedSound("gateOpening", sndGateOpening, "assets/snd/gateOpening.wav");
-			AddSharedSound("gateOpened", sndGateOpened, "assets/snd/gateOpened.wav");
+			AddSharedSound("whispyScream", &sndWhispyScream, "assets/snd/whispyScream.wav");
+			AddSharedSound("loseLife", &sndLoseLife, "assets/snd/loseLife.wav");
+			AddSharedSound("punch", &sndPunch, "assets/snd/punch.wav");
+			AddSharedSound("slap", &sndSlap, "assets/snd/slap.wav");
+			AddSharedSound("kirboWalk", &sndKirboWalk, "assets/snd/kirboWalk.wav");
+			AddSharedSound("kirboFly", &sndKirboFly, "assets/snd/kirboFly.wav");
+			AddSharedSound("explosion", &sndExplosion, "assets/snd/explosion.wav");
+			AddSharedSound("kirboJump", &sndKirboJump, "assets/snd/kirboJump.wav");
+			AddSharedSound("kirboHit", &sndKirboHit, "assets/snd/kirboHit.wav");
+			AddSharedSound("beginVacuum", &sndKirboBeginVacuum, "assets/snd/kirboBeginVacuum.wav");
+			AddSharedSound("vacuum", &sndKirboVacuum, "assets/snd/kirboVacuum.wav");
+			AddSharedSound("swallow", &sndKirboSwallow, "assets/snd/kirboSwallow.wav");
+			AddSharedSound("wetSlap", &sndWetSlap, "assets/snd/wetSlap.wav");
+			AddSharedSound("earthQuake", &sndEarthQuake, "assets/snd/earthQuake.wav");
+			AddSharedSound("blow", &sndBlow, "assets/snd/blow.wav");
+			AddSharedSound("inhale", &sndInhale, "assets/snd/inhale.wav");
+			AddSharedSound("poyo01", &sndPoyo01, "assets/snd/poyo01.wav");
+			AddSharedSound("poyo02", &sndPoyo02, "assets/snd/poyo02.wav");
+			AddSharedSound("sunShootingMoon", &sndSunShootingMoon, "assets/snd/sunShootingMoon.wav");
+			AddSharedSound("sunShootUp", &sndSunShootUp, "assets/snd/sunShootUp.wav");
+			AddSharedSound("beamCharge", &sndBeamCharge, "assets/snd/beamCharge.wav");
+			AddSharedSound("beam", &sndBeam, "assets/snd/beam.wav");
+			AddSharedSound("volcanoBoom", &sndVolcanoBoom, "assets/snd/volcanoBoom.wav");
+			AddSharedSound("iceBlow", &sndIceBlow, "assets/snd/iceBlow.wav");
+			AddSharedSound("patpat", &sndpatpat, "assets/snd/patpat.wav");
+			AddSharedSound("itemLaunch", &sndItemLaunch, "assets/snd/itemLaunch.wav");
+			AddSharedSound("superstar", &sndSuperstar, "assets/snd/superstar.wav");
+			AddSharedSound("frostyJump", &sndFrostyJump, "assets/snd/frostyJump.wav");
+			AddSharedSound("frostyGroundPound", &sndFrostyGroundPound, "assets/snd/frostyGroundPound.wav");
+			AddSharedSound("lightning", &sndLightning, "assets/snd/lightning.wav");
+			AddSharedSound("electricity", &sndElectricity, "assets/snd/electricity.wav");
+			AddSharedSound("electricity2", &sndElectricity2, "assets/snd/electricity2.wav");
+			AddSharedSound("meleeControllerRape", &sndMeleeControllerRape, "assets/snd/meleeControllerRape.wav");
+			AddSharedSound("dash", &sndDash, "assets/snd/dash.wav");
+			AddSharedSound("hiyayayaya", &sndHiyayayaya, "assets/snd/hiyayayaya.wav");
+			AddSharedSound("singleSwordStrike", &sndSingleSwordStrike, "assets/snd/singleSwordStrike.wav");
+			AddSharedSound("multipleSwordStrike", &sndMultipleSwordStrike, "assets/snd/multipleSwordStrike.wav");
+			AddSharedSound("ha", &sndHa, "assets/snd/ha.wav");
+			AddSharedSound("tornado", &sndTornado, "assets/snd/tornado.wav");
+			AddSharedSound("loudScreaming", &sndLoudScreaming, "assets/snd/loudScreaming.wav");
+			AddSharedSound("behold", &sndBehold, "assets/snd/behold.wav");
+			AddSharedSound("kingDDDJump", &sndKingDDDJump, "assets/snd/kingDDDJump.wav");
+			AddSharedSound("kingDDDUpSmash", &sndKingDDDUpSmash, "assets/snd/kingDDDUpSmash.wav");
+			AddSharedSound("kingDDDUpSmashHammer", &sndKingDDDUpSmashHammer, "assets/snd/kingDDDUpSmashHammer.wav");
+			AddSharedSound("kingDDDSideSmash", &sndKingDDDSideSmash, "assets/snd/kingDDDSideSmash.wav");
+			AddSharedSound("kingDDDDownSmashHammer", &sndKingDDDDownSmashHammer, "assets/snd/kingDDDDownSmashHammer.wav");
+			AddSharedSound("kingDDDSideB", &sndKingDDDSideB, "assets/snd/kingDDDSideB.wav");
+			AddSharedSound("spikeBallBounce", &sndSpikeBallBounce, "assets/snd/spikeBallBounce.wav");
+			AddSharedSound("kingDDDDownBCharge", &sndKingDDDDownBCharge, "assets/snd/kingDDDDownBCharge.wav");
+			AddSharedSound("kingDDDDownBPrepare", &sndKingDDDDownBPrepare, "assets/snd/kingDDDDownBPrepare.wav");
+			AddSharedSound("kingDDDDownBAttack", &sndKingDDDDownBAttack, "assets/snd/kingDDDDownBAttack.wav");
+			AddSharedSound("kingDDDUpBJump", &sndKingDDDUpBJump, "assets/snd/kingDDDUpBJump.wav");
+			AddSharedSound("kingDDDUpBLanding", &sndKingDDDUpBLanding, "assets/snd/kingDDDUpBLanding.wav");
+			AddSharedSound("kingDDDVacuum", &sndKingDDDVacuum, "assets/snd/kingDDDVacuum.wav");
+			AddSharedSound("kingDDDUpAir", &sndKingDDDUpAir, "assets/snd/kingDDDUpAir.wav");
+			AddSharedSound("kingDDDAirAtkVoice", &sndKingDDDAirAtkVoice, "assets/snd/kingDDDAirAtkVoice.wav");
+			AddSharedSound("kingDDDAirAtkHammer", &sndKingDDDAirAtkHammer, "assets/snd/kingDDDAirAtkHammer.wav");
+			AddSharedSound("itemPicked", &sndItemPicked, "assets/snd/itemPicked.wav");
+			AddSharedSound("rockyFall", &sndRockyFall, "assets/snd/rockyFall.wav");
+			AddSharedSound("boom", &sndBoom, "assets/snd/boom.wav");
+			AddSharedSound("enterDoor", &sndEnterDoor, "assets/snd/enterDoor.wav");
+			AddSharedSound("menuBip", &sndMenuBip, "assets/snd/menuBip.wav");
+			AddSharedSound("gateOpening", &sndGateOpening, "assets/snd/gateOpening.wav");
+			AddSharedSound("gateOpened", &sndGateOpened, "assets/snd/gateOpened.wav");
 
 			UpdateProgressBar("Loading 99.99999999999999999999999999999");
 
@@ -448,7 +448,7 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 		spriteTiles = new olc::Sprite(level->GetSpecialTiles());
 		sprGrdTiles = new olc::Sprite(level->GetGroundTiles());
 		sprBackground = new olc::Sprite(level->GetBackGround());
-		sndLevelMusic = olc::SOUND::LoadAudioSample(level->GetMusic());
+		sndLevelMusic.LoadAudioWaveform(level->GetMusic());
 	}
 
 	// Reset variables when level is loading
@@ -459,8 +459,8 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 
 	bInBossLvl = false;
 
-	olc::SOUND::StopAll();
-	olc::SOUND::PlaySample(sndLevelMusic, true);
+	waveEngine.StopAll();
+	pwLevelMusic = waveEngine.PlayWaveform(&sndLevelMusic, true);
 
 	// Permanent wind in Halberd level
 	if (worldMap->GetSelectedLevel() == 4)
@@ -475,14 +475,14 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 
 bool OneLoneCoder_Platformer::GameState_Title(float fElapsedTime)
 {
-	if (!olc::SOUND::IsSamplePlaying(sndTitleScreen))
-		olc::SOUND::PlaySample(sndTitleScreen, true);
+	if (!waveEngine.IsWaveformPlaying(&sndTitleScreen))
+		pwTitleScreen = waveEngine.PlayWaveform(&sndTitleScreen, true);
 
 	titleScreen->Update(this, fElapsedTime);
 
 	if (GetAnyKey() || controller.AnyButtonPressed())
 	{
-		olc::SOUND::StopAll();
+		waveEngine.StopAll();
 		TransitionTo("GS_SELECTMENU", true);
 	}
 
@@ -494,13 +494,13 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	// Stop time a while before dead animation
 	if (player->IsDead())
 	{
-		// stop looping kirbo sounds
-		olc::SOUND::StopSample(sndKirboFly);
-		olc::SOUND::StopSample(sndKirboWalk);
 		// stop music
-		olc::SOUND::StopSample(sndLevelMusic);
-		olc::SOUND::StopSample(sndBossLevelMusic);
-		olc::SOUND::StopSample(sndInvincibility);
+		if (waveEngine.IsWaveformPlaying(&sndLevelMusic))
+			waveEngine.StopWaveform(pwLevelMusic);
+		if (waveEngine.IsWaveformPlaying(&sndBossLevelMusic))
+			waveEngine.StopWaveform(pwBossLevelMusic);
+		if (waveEngine.IsWaveformPlaying(&sndInvincibility))
+			waveEngine.StopWaveform(pwInvincibility);
 
 		fStopTimebeforeDeadAnim += fElapsedTime;
 
@@ -744,8 +744,8 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			// do it only once
 			if (!bBossKilled)
 			{
-				olc::SOUND::StopAll();
-				olc::SOUND::PlaySample(sndBossKilled);
+				waveEngine.StopAll();
+				pwBossKilled = waveEngine.PlayWaveform(&sndBossKilled);
 			}
 
 			bBossKilled = true;
@@ -807,7 +807,7 @@ bool OneLoneCoder_Platformer::GameState_WorldMap(float fElapsedTime)
 
 	if (GetKey(olc::Key::ESCAPE).bPressed || controller.GetButton(B).bPressed)
 	{
-		olc::SOUND::StopAll();
+		waveEngine.StopAll();
 		TransitionTo("GS_SELECTMENU", true);
 	}
 
@@ -823,7 +823,7 @@ bool OneLoneCoder_Platformer::GameState_EndScreen(float fElapsedTime)
 	if (bPlayMusic)
 	{
 		bPlayMusic = false;
-		olc::SOUND::PlaySample(sndEndScreen);
+		pwEndScreen = waveEngine.PlayWaveform(&sndEndScreen);
 	}
 
 	SetPixelMode(olc::Pixel::ALPHA);
@@ -833,7 +833,7 @@ bool OneLoneCoder_Platformer::GameState_EndScreen(float fElapsedTime)
 
 	if (GetKey(olc::Key::SPACE).bPressed || controller.GetButton(A).bPressed)
 	{
-		olc::SOUND::StopAll();
+		waveEngine.StopAll();
 		bPlayMusic = true;
 		TransitionTo("GS_TITLE", true);
 	}
@@ -871,7 +871,7 @@ bool OneLoneCoder_Platformer::GameState_LoadBossLevel(float fElapsedTime)
 		level->PopulateBoss(vecEnnemies);
 
 		sprBackground = new olc::Sprite(level->GetBossBackGround());
-		sndBossLevelMusic = olc::SOUND::LoadAudioSample(level->GetBossMusic());
+		sndBossLevelMusic.LoadAudioWaveform(level->GetBossMusic());
 	}
 
 	// Reset variables when level is loading
@@ -879,8 +879,8 @@ bool OneLoneCoder_Platformer::GameState_LoadBossLevel(float fElapsedTime)
 
 	bInBossLvl = true;
 
-	olc::SOUND::StopAll();
-	olc::SOUND::PlaySample(sndBossLevelMusic, true);
+	waveEngine.StopAll();
+	pwBossLevelMusic = waveEngine.PlayWaveform(&sndBossLevelMusic, true);
 
 	TransitionTo("GS_MAIN", false);
 
@@ -916,7 +916,7 @@ bool OneLoneCoder_Platformer::GameState_Controls(float fElapsedTime)
 			controlsMenu->UpdateSavedControls();
 			controlsMenu->SetSelectedItem(0);
 			ApplyControls();
-			olc::SOUND::StopAll();
+			waveEngine.StopAll();
 			TransitionTo("GS_SELECTMENU", true);
 		}
 	}
@@ -939,8 +939,8 @@ bool OneLoneCoder_Platformer::GameState_Close(float fElapsedTime)
 	DestroyAllDynamics();
 
 	// Stop Audio
-	olc::SOUND::StopAll();
-	olc::SOUND::DestroyAudio();
+	waveEngine.StopAll();
+	waveEngine.DestroyAudio();
 
 	// End the olc pixel game Engine
 	olc_Terminate();
@@ -952,7 +952,7 @@ bool OneLoneCoder_Platformer::GameState_Transition(float fElapsedTime)
 {
 	if (bPlayTransitionSound)
 	{
-		olc::SOUND::PlaySample(sndTransition);
+		pwTransition = waveEngine.PlayWaveform(&sndTransition);
 		bPlayTransitionSound = false;
 	}
 
@@ -1461,19 +1461,20 @@ olc::Sprite* OneLoneCoder_Platformer::GetDoorSpr()
 
 void OneLoneCoder_Platformer::ReturnToWorldMap()
 {
-	olc::SOUND::StopAll();
-	olc::SOUND::PlaySample(sndWorldMap, true);
+	waveEngine.StopAll();
+	pwWorldMap = waveEngine.PlayWaveform(&sndWorldMap, true);
 	WindEffect(0.0f, 0.0f, false);
 	animPlayer.ChangeState("riding_star");
 	TransitionTo("GS_WORLDMAP", true);
 	player->SetDamageBooster(1);
 	player->SetDefenseBooster(1);
+	player->SetCandyPower(false);
 }
 
 void OneLoneCoder_Platformer::GoToControlsMenu()
 {
-	olc::SOUND::StopAll();
-	olc::SOUND::PlaySample(sndMenu, true);
+	waveEngine.StopAll();
+	pwMenu = waveEngine.PlayWaveform(&sndMenu, true);
 	TransitionTo("GS_CONTROLS", true);
 }
 
@@ -1510,18 +1511,19 @@ void OneLoneCoder_Platformer::WindEffect(float direction, float windPower, bool 
 
 	if (bWind)
 	{
-		if (!olc::SOUND::IsSamplePlaying(sndWind))
-			olc::SOUND::PlaySample(sndWind, true);
+		if (!waveEngine.IsWaveformPlaying(&sndWind))
+			pwWind = waveEngine.PlayWaveform(&sndWind, true);
 	}
 	else
 	{
-		olc::SOUND::StopSample(sndWind);
+		if (waveEngine.IsWaveformPlaying(&sndWind))
+			waveEngine.StopWaveform(pwWind);
 	}
 }
 
-void OneLoneCoder_Platformer::AddSharedSound(std::string name, int sound, std::string fileName)
+void OneLoneCoder_Platformer::AddSharedSound(std::string name, olc::sound::Wave* sound, std::string fileName)
 {
-	sound = olc::SOUND::LoadAudioSample(fileName);
+	sound->LoadAudioWaveform(fileName);
 	sharedSounds[name] = sound;
 }
 
@@ -1529,34 +1531,37 @@ void OneLoneCoder_Platformer::PlaySample(std::string name, bool loop, bool dontP
 {
 	if (dontPlayIfAlreadyPlaying)
 	{
-		if (!olc::SOUND::IsSamplePlaying(sharedSounds[name]))
-			olc::SOUND::PlaySample(sharedSounds[name]);
+		if (!waveEngine.IsWaveformPlaying(sharedSounds[name]))
+		{
+			sharedPlaying[name] = waveEngine.PlayWaveform(sharedSounds[name]);
+		}
 	}
 	else
 	{
-		olc::SOUND::PlaySample(sharedSounds[name]);
+		sharedPlaying[name] = waveEngine.PlayWaveform(sharedSounds[name]);
 	}
 }
 
 void OneLoneCoder_Platformer::StopSample(std::string name)
 {
-	if (olc::SOUND::IsSamplePlaying(sharedSounds[name]))
-		olc::SOUND::StopSample(sharedSounds[name]);
+	if (waveEngine.IsWaveformPlaying(sharedSounds[name]))
+		waveEngine.StopWaveform(sharedPlaying[name]);
 }
 
 bool OneLoneCoder_Platformer::IsSamplePlaying(std::string name)
 {
-	return olc::SOUND::IsSamplePlaying(sharedSounds[name]);
+	return waveEngine.IsWaveformPlaying(sharedSounds[name]);
 }
 
 void OneLoneCoder_Platformer::PlayLevelMusic()
 {
-	olc::SOUND::PlaySample(sndLevelMusic, true);
+	pwLevelMusic = waveEngine.PlayWaveform(&sndLevelMusic, true);
 }
 
 void OneLoneCoder_Platformer::StopLevelMusic()
 {
-	olc::SOUND::StopSample(sndLevelMusic);
+	if (waveEngine.IsWaveformPlaying(&sndLevelMusic))
+		waveEngine.StopWaveform(pwLevelMusic);
 }
 
 void OneLoneCoder_Platformer::ChangeKirboVelocities(float vx, float vy)
@@ -1612,7 +1617,7 @@ void OneLoneCoder_Platformer::HealPlayer(int hp)
 
 void OneLoneCoder_Platformer::PlayerGetCandy(float candyTime)
 {
-	olc::SOUND::PlaySample(sndInvincibility);
+	pwInvincibility = waveEngine.PlayWaveform(&sndInvincibility);
 
 	player->SetInvincible(candyTime);
 	player->SetCandyPower(true);
@@ -1936,8 +1941,10 @@ void OneLoneCoder_Platformer::DrawKirboString(int x, int y, std::string text, in
 
 std::string OneLoneCoder_Platformer::ToStr(std::wstring str)
 {
-	//setup converter
-	using convert_type = std::codecvt_utf8<wchar_t>;
-	std::wstring_convert<convert_type, wchar_t> converter;
-	return converter.to_bytes(str);
+	std::wstring w(str);
+	std::string result;
+	for (char x : w)
+		result += x;
+
+	return result;
 }

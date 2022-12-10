@@ -183,6 +183,9 @@
     <ClCompile Include="Platformer_ItemMinorHeal.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="olcSoundWaveEngine.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="olcPixelGameEngine.h">
@@ -272,7 +275,7 @@
     <ClInclude Include="Platformer_Hitbox.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="olcPGEX_Sound.h">
+    <ClInclude Include="olcSoundWaveEngine.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Platformer_DynamicCreatureFrosty.h">
