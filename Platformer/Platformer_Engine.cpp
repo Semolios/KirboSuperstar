@@ -101,7 +101,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		{
 			level = new cLevel();
 			cLevel::engine = this;
-			sprDoor = new olc::Sprite("assets/gfx/door.png");
+			sprDoor = new olc::Sprite("assets/gfx/bossDoor.png");
 
 			level->LoadLevelsList();
 			level->LoadBossesList();
