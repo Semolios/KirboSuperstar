@@ -83,7 +83,7 @@ private:
 	float fWindPower = 25.0f;
 	float fCollisionUpperLimit = 0.9f;
 	float fCollisionLowerLimit = 0.1f;
-	float fSwallowDistance = 0.1f;
+	float fSwallowDistance = 0.25f;
 	float fJumpTimer = 0.0f;
 	float fCrushingObjVX = 0.0f;
 	float fCrushingObjVY = 0.0f;
