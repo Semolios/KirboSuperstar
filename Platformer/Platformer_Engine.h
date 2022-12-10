@@ -55,6 +55,7 @@ private:
 	const float cfBossKilledAnimation = 4.0f;			// Boss killed animation duration
 	const float cfGrdDynamicOverlay = 0.08f;			// little gap to give impression the player lightly overlap the platform
 	const float cfHitStopDuration = 0.1f;				// Little hit stop when hitting an ennemy
+	const float cfBossHitStopDuration = 0.5;			// Little hit stop when boss killed
 	const int cnSpriteOffsetX = 64;						// Sprite offset X because kirbo sprites are 192 * 192 pixels
 	const int cnSpriteOffsetY = 64;						// Sprite offset Y because kirbo sprites are 192 * 192 pixels
 
@@ -388,6 +389,7 @@ public:
 	void ReturnToWorldMap();
 	void GoToControlsMenu();
 	void HitStop();
+	void BossHitStop();
 
 	// Pause menu functions
 	void SetPlayerChoice(int choice);

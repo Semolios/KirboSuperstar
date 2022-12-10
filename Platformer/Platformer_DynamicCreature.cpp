@@ -364,6 +364,7 @@ void cDynamicCreature::ExplodeAndDie(float fElapsedTime)
 
 	if (bBossExplosionAvailable)
 	{
+		engine->BossHitStop();
 		float explosionWidth = 142.0f;
 		float explosionHeight = 200.0f;
 

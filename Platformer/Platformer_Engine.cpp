@@ -1482,6 +1482,11 @@ void OneLoneCoder_Platformer::HitStop()
 	fHitStop = cfHitStopDuration;
 }
 
+void OneLoneCoder_Platformer::BossHitStop()
+{
+	fHitStop = cfBossHitStopDuration;
+}
+
 void OneLoneCoder_Platformer::SetPlayerChoice(int choice)
 {
 	pauseMenu->SetPlayerChoice(choice);
