@@ -54,6 +54,7 @@ private:
 	const float cfTimeBeforeWinAnimation = 2.0f;		// Time before animation begins when kirbo kills the boss
 	const float cfBossKilledAnimation = 4.0f;			// Boss killed animation duration
 	const float cfGrdDynamicOverlay = 0.08f;			// little gap to give impression the player lightly overlap the platform
+	const float cfHitStopDuration = 0.1f;				// Little hit stop when hitting an ennemy
 	const int cnSpriteOffsetX = 64;						// Sprite offset X because kirbo sprites are 192 * 192 pixels
 	const int cnSpriteOffsetY = 64;						// Sprite offset Y because kirbo sprites are 192 * 192 pixels
 
@@ -220,6 +221,7 @@ private:
 
 	// Ennemies
 	std::vector<cDynamicCreature*> vecEnnemies;
+	float fHitStop = 0.0f;
 
 	// Projectiles
 	std::vector<cDynamicProjectile*> vecProjectiles;
@@ -385,6 +387,7 @@ public:
 	olc::Sprite* GetDoorSpr();
 	void ReturnToWorldMap();
 	void GoToControlsMenu();
+	void HitStop();
 
 	// Pause menu functions
 	void SetPlayerChoice(int choice);

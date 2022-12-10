@@ -508,6 +508,12 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			return true;
 	}
 
+	if (fHitStop > 0.0f)
+	{
+		fHitStop -= fElapsedTime;
+		return true;
+	}
+
 	animPlayer.Update(fElapsedTime);
 
 	player->HandleInput(fElapsedTime, camera, level);
@@ -1469,6 +1475,11 @@ void OneLoneCoder_Platformer::GoToControlsMenu()
 	olc::SOUND::StopAll();
 	olc::SOUND::PlaySample(sndMenu, true);
 	TransitionTo("GS_CONTROLS", true);
+}
+
+void OneLoneCoder_Platformer::HitStop()
+{
+	fHitStop = cfHitStopDuration;
 }
 
 void OneLoneCoder_Platformer::SetPlayerChoice(int choice)

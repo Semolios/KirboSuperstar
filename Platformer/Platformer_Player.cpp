@@ -1366,9 +1366,14 @@ void cPlayer::EnemyCollision(cDynamic* object, float cameraOffsetX, float camera
 	if (EnemyTouched(object, cameraOffsetX, cameraOffsetY))
 	{
 		if (!HasCandyPower())
+		{
 			Damage(object);
+			engine->HitStop();
+		}
 		else
+		{
 			Attack((cDynamicCreature*)object, GetCandyDmg());
+		}
 	}
 }
 
