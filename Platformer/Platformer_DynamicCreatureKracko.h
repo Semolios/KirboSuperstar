@@ -20,7 +20,8 @@ private:
 	const float pi = 3.14159f;
 
 	const float cfInitPX = 4.0f;
-	const float cfMiddleOfKracko = 1.0f; // 1.0f is not really the middle of kracko but when kirbo is in the middle of kracko he is a t px + 1.0
+	const float cfMiddleOfKrackoX = 1.5f; // 1.5f is not really the middle of kracko but when kirbo is in the middle of kracko he is at px + 1.5
+	const float cfMiddleOfKrackoY = 1.0f; // 1.0f is not really the middle of kracko but when kirbo is in the middle of kracko he is at py + 1.0
 	const float cfKirboIsNearDistance = 3.0f;
 	const float cfLBoundOfStage = 1.0f;
 	const float cfRBoundOfStage = 14.0f;

@@ -51,7 +51,7 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 			if (fBehaviourTimer >= fWaitingTime)
 			{
 				// if kirbo is far away from kracko, he doesn't use the LIGHTNING AROUND or THUNDER STORM,
-				if (abs(px + cfMiddleOfKracko - playerX) > cfKirboIsNearDistance)
+				if (abs(px + cfMiddleOfKrackoX - playerX) > cfKirboIsNearDistance)
 					nChosenAttack = rand() % (cnNumberOfAttack - 2);
 				else
 					nChosenAttack = rand() % cnNumberOfAttack;
@@ -66,7 +66,7 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 		break;
 		case AI_MOVING:
 		{
-			vx = (playerX < px + cfMiddleOfKracko) ? -fMovingSpeed : fMovingSpeed;
+			vx = (playerX < px + cfMiddleOfKrackoX) ? -fMovingSpeed : fMovingSpeed;
 			vy = 0.0f;
 			fBehaviourTimer += fElapsedTime;
 
@@ -118,7 +118,7 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 
 			if (fBehaviourTimer == 0.0f)
 			{
-				engine->AddProjectile(px + cfMiddleOfKracko, py + cfMiddleOfKracko, true, 0.0f, 0.0f, fAimingTime + fFireTime, "chargeLightning", false, 0, false, false, 0, false, 0.0f, "", false, "", true);
+				engine->AddProjectile(px + cfMiddleOfKrackoX, py + cfMiddleOfKrackoY, true, 0.0f, 0.0f, fAimingTime + fFireTime, "chargeLightning", false, 0, false, false, 0, false, 0.0f, "", false, "", true);
 				engine->PlaySample("electricity");
 			}
 
@@ -184,10 +184,10 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 					float a = ((slope * slope) + 1.0f);													   // a factor of the equation to resolve the intersection between the circle and the line
 					float b = ((-2.0f * x) - (2.0f * (slope * slope) * x));								   // b factor of the equation to resolve the intersection between the circle and the line
 					float c = ((x * x) + (slope * slope * x * x) - (radius * radius));					   // c factor of the equation to resolve the intersection between the circle and the line
-					float deltasqrt = sqrtf((b * b) - (4.0f * a * c));									   // b²-4ac
+					float delta = (b * b) - (4.0f * a * c);												   // b²-4ac
 
-					float x1 = (-b + deltasqrt) / (2.0f * a);											   // first solution of the equation
-					float x2 = (-b - deltasqrt) / (2.0f * a);											   // second solution of the equation
+					float x1 = (-b + sqrtf(delta)) / (2.0f * a);										   // first solution of the equation
+					float x2 = (-b - sqrtf(delta)) / (2.0f * a);										   // second solution of the equation
 
 					fLightningX = px + 1.5f >= fPlayerPosX + 0.5f ? std::min(x1, x2) : std::max(x1, x2);   // if kirbo is on the left from kracko, the x coordinate of the intersection is the lowest
 					fLightningY = (slope * fLightningX) + y - (slope * x);
@@ -195,7 +195,7 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 
 				engine->StopSample("electricity");
 
-				engine->AddProjectile(fLightningX - (fLightningSemiWidth / engine->GetTileWidth()), fLightningY - (fLightningSemiHeight / engine->GetTileWidth()), false, fPlayerPosX - (px + cfMiddleOfKracko), fPlayerPosY - (py + cfMiddleOfKracko), fAimingLightningDuration, "lightning", false, cnAttacksDmg, false, false);
+				engine->AddProjectile(fLightningX - (fLightningSemiWidth / engine->GetTileWidth()), fLightningY - (fLightningSemiHeight / engine->GetTileWidth()), false, fPlayerPosX + 0.5f - (px + cfMiddleOfKrackoX), fPlayerPosY + 0.5f - (py + cfMiddleOfKrackoY), fAimingLightningDuration, "lightning", false, cnAttacksDmg, false, false);
 				engine->PlaySample("lightning");
 
 				ChangeState(AI_IDLE);
@@ -208,8 +208,8 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 
 			if (fBehaviourTimer == 0.0f)
 			{
-				fLightningPosX1 = px + cfMiddleOfKracko;
-				fLightningPosX2 = px + cfMiddleOfKracko;
+				fLightningPosX1 = px + cfMiddleOfKrackoX;
+				fLightningPosX2 = px + cfMiddleOfKrackoX;
 				engine->AddProjectile(fLightningPosX1, fGroundPositionY, true, 0.0f, 0.0f, fFireTime, "chargeLightning", false, 0, false);
 				engine->PlaySample("electricity");
 			}
@@ -319,13 +319,13 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 
 void cDynamicCreatureKracko::AimForKirboUnder(float playerX, float playerY)
 {
-	if (playerX >= px + 0.5f && playerX <= px + cfMiddleOfKracko && playerY >= py)
+	if (playerX >= px + 0.5f && playerX <= px + cfMiddleOfKrackoX && playerY >= py)
 	{
 		// Spawn a little lightning under kracko to tell the player something is gonna happen
 		engine->AddProjectile(px + fThunderOffsetX, py + fThunderOffsetY, false, 0.0f, 0.0f, fThunderSpawnTime, "thunderShot", false, cnAttacksDmg, false, false, 0, false);
 		ChangeState(AI_THUNDERUNDER, false);
 	}
-	else if (playerX >= px + 0.5f && playerX <= px + cfMiddleOfKracko && playerY <= py)
+	else if (playerX >= px + 0.5f && playerX <= px + cfMiddleOfKrackoX && playerY <= py)
 	{
 		ChangeState(AI_LIGHTNINGAROUND, false);
 	}
@@ -374,5 +374,5 @@ void cDynamicCreatureKracko::UpdateTimers()
 
 void cDynamicCreatureKracko::LookKirbo(float playerX)
 {
-	nFaceDir = (playerX < px + cfMiddleOfKracko) ? 0 : 1;
+	nFaceDir = (playerX < px + cfMiddleOfKrackoX) ? 0 : 1;
 }
