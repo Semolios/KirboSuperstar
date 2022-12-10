@@ -48,7 +48,7 @@ private:
 	const float cfGoAwayTranslationAnimation = 256.0f;	// speed of kirbo in go away animation
 	const float cfInvulnerabilityTickingSpeed = 0.2f;	// Ticking Speed when invulnerable
 	const float cfInvulnerabilityCandy = 30.0f;			// Invulnerability after taking a candy
-	const float cfInvulnerabilityFrame = 4.0f;			// Invulnerability frame after a hit
+	const float cfInvulnerabilityFrame = 2.0f;			// Invulnerability frame after a hit
 	const float cfDamageEjectionVelX = 4.0f;			// horizontal velocity when hit by ennemy
 	const float cfDamageEjectionVelY = 4.0f;			// vertical velocity when hit by ennemy
 	const float cfJumpTime = 0.75f;						// The more you hold, the more kirbo jump high
