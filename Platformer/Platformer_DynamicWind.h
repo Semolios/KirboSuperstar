@@ -13,6 +13,16 @@ public:
 	cDynamicWind(float ox, float oy, std::vector<olc::Sprite*> map, std::wstring direction, float power);
 	~cDynamicWind();
 
+	static OneLoneCoder_Platformer* engine;
+
+	void DrawSelf(float ox, float oy) override;
+	void Update(float fElapsedTime, float playerX, float playerY) override;
+	void UpdateHitbox(float cameraOffsetX, float cameraOffsetY) override;
+	std::string GetDirection();
+	float GetPower();
+	olc::Sprite* GetCurrentSprite();
+	static std::map<std::string, std::vector<olc::Sprite*>> LoadWindSprites();
+
 protected:
 	std::vector<olc::Sprite*> mapStates;
 
@@ -23,20 +33,6 @@ protected:
 
 	float fPower;
 	std::string sDirection;
-
-public:
-	static OneLoneCoder_Platformer* engine;
-
-	void DrawSelf(float ox, float oy) override;
-	void Update(float fElapsedTime, float playerX, float playerY) override;
-	void UpdateHitbox(float cameraOffsetX, float cameraOffsetY) override;
-
-	std::string GetDirection();
-	float GetPower();
-
-	olc::Sprite* GetCurrentSprite();
-
-	static std::map<std::string, std::vector<olc::Sprite*>> LoadWindSprites();
 };
 
 #endif // !DEF_WIND

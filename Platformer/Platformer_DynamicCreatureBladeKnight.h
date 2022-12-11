@@ -16,6 +16,19 @@ public:
 	cDynamicCreatureBladeKnight(cLevel* l);
 	virtual ~cDynamicCreatureBladeKnight();
 
+	static OneLoneCoder_Platformer* engine;
+
+	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
+
+	void Jump(bool goJumpingState, int& retflag);
+	bool RightObstacle();
+	bool RightHole();
+	bool RightWall();
+	bool LeftObstacle();
+	bool LeftHole();
+	bool LeftWall();
+	bool TouchGround();
+
 private:
 	const float cfFallingAnimationTime = 0.875f;
 	const float cfAttackTime = 1.0f;
@@ -56,22 +69,6 @@ private:
 	bool bCantSpawnAOE1 = false;	// in side attack, blade knight send 2 hits
 	bool bCantSpawnAOE2 = false;	// in side attack, blade knight send 2 hits
 
-public:
-	static OneLoneCoder_Platformer* engine;
-
-public:
-	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
-
-	void Jump(bool goJumpingState, int& retflag);
-	bool RightObstacle();
-	bool RightHole();
-	bool RightWall();
-	bool LeftObstacle();
-	bool LeftHole();
-	bool LeftWall();
-	bool TouchGround();
-
-private:
 	void ChangeState(AI_STATE state);
 };
 

@@ -21,6 +21,92 @@ class cPlayer
 public:
 	cPlayer(cAnimator* animator);
 
+	static OneLoneCoder_Platformer* engine;
+
+	void InitialiseKirboHealth();
+	bool IsDead();
+	void HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl);
+	void Jump();
+	bool IsEnteringDoor(cLevel* lvl);
+	void EnterDoor(cLevel* lvl);
+	void EnterTP(cLevel* level);
+	void Teleport(float px, float py, cLevel* level);
+	bool CanInteract();
+	void ApplyGravity(float fElapsedTime);
+	void Update(float fElapsedTime);
+	float GetFaceDir();
+	void OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t, std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles, cLevel* lvl);
+	void StopAnyAction();
+	void ClampVelocities();
+	void IncreaseVelocities(float dvx, float dvy);
+	void DecreaseVelocities(float dvx, float dvy);
+	void SetVelocities(float vx, float vy);
+	void Collisions(float fElapsedTime, cLevel* lvl);
+	void CheckHole(cLevel* lvl);
+	void CheckPickUp(cLevel* lvl, float fNewPosX, float fNewPosY);
+	void CheckSolidFloor(cLevel* lvl, float fNewPosX, float& fNewPosY);
+	void NormalDrag();
+	void CheckDynamicFloor(float& fNewPosX, float& fNewPosY, float fElapsedTime, cLevel* lvl);
+	void IcedDrag();
+	bool CeilingFloorCrushed(cDynamicMovingPlatform*& ptfm);
+	void CheckSolidCeiling(cLevel* lvl, float fNewPosX, float& fNewPosY);
+	void CheckDynamicCeiling(float fNewPosX, float& fNewPosY, cLevel* lvl);
+	bool FloorCeilingCrushed(cDynamicMovingPlatform*& ptfm);
+	void Crushed();
+	bool DynamicFloor(float fNewPosX, float fNewPosY);
+	bool DynamicCeiling(float fNewPosX, float fNewPosY);
+	bool SemiSolidFloor(cLevel* lvl, float fNewPosX, float fNewPosY);
+	bool SolidFloor(cLevel* lvl, float fNewPosX, float fNewPosY);
+	bool Ceiling(cLevel* lvl, float fNewPosX, float fNewPosY);
+	void CheckRightWall(cLevel* lvl, float& fNewPosX);
+	bool LeftRightCrushed(cDynamicMovingPlatform*& ptfm);
+	bool DynamicLeftWall(float fNewPosX);
+	void CheckLeftWall(cLevel* lvl, float& fNewPosX);
+	void HarmfulBloc(cDynamicMovingPlatform*& ptfm);
+	bool RightLeftCrushed(cDynamicMovingPlatform*& ptfm);
+	bool DynamicRightWall(float fNewPosX);
+	float GetPosX();
+	float GetPosY();
+	void SetPosX(float px);
+	void SetPosY(float py);
+	bool IsVacuuming();
+	void VacuumEnnemy(cDynamicCreature* object);
+	bool IsAttackable();
+	bool HasCandyPower();
+	void SetAttackable(bool attackable);
+	bool IsSwallowing();
+	void UpdateInvulnerability(float fElapsedTime);
+	void DrawKirbo(olc::GFX2D::Transform2D t);
+	float GetHealth();
+	void Damage(cDynamic* object);
+	void Kill();
+	void ResetVariables();
+	void VacuumHitbox(float cameraOffsetX, float cameraOffsetY);
+	cHitbox* GetVacuumHitbox();
+	void UpdateHitbox(float cameraOffsetX, float cameraOffsetY);
+	cHitbox* GetHitbox();
+	void Attack(cDynamicCreature* victim, int damage);
+	void Vacuum(cDynamicCreature* object, float cameraOffsetX, float cameraOffsetY);
+	void EnemyCollision(cDynamic* object, float cameraOffsetX, float cameraOffsetY);
+	bool EnemyTouched(cDynamic* object, float cameraOffsetX, float cameraOffsetY);
+	void SetGrabbedByEnnemy(bool grabbed);
+	void ChangeAnimation(std::string animation);
+	void SetVisible(bool visible);
+	void ChangePosAfterTP();
+
+	// Item Pick-up functions
+	bool IsCollectibleItem(wchar_t c);
+	void SelectItem(wchar_t item);
+	void MaxHeal();
+	void Heal(int hp);
+	void SetInvincible(float time, bool blink = true);
+	void SetCandyPower(bool candy);
+	int GetCandyDmg();
+	void SetDamageBooster(int boost);
+	bool HasDamageBooster();
+	void SetDefenseBooster(int boost);
+	bool HasDefenseBooster();
+
 private:
 	const float cfMaxHealth = 10.0f;					// Max Kirbo health
 	const float cfVelY = 5.0f;							// Up and Down velocities
@@ -126,94 +212,6 @@ private:
 	cAnimator* animPlayer;
 	cHitbox* hitbox;
 	cHitbox* vacuumHitbox;
-
-public:
-	static OneLoneCoder_Platformer* engine;
-
-public:
-	void InitialiseKirboHealth();
-	bool IsDead();
-	void HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl);
-	void Jump();
-	bool IsEnteringDoor(cLevel* lvl);
-	void EnterDoor(cLevel* lvl);
-	void EnterTP(cLevel* level);
-	void Teleport(float px, float py, cLevel* level);
-	bool CanInteract();
-	void ApplyGravity(float fElapsedTime);
-	void Update(float fElapsedTime);
-	float GetFaceDir();
-	void OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t, std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles, cLevel* lvl);
-	void StopAnyAction();
-	void ClampVelocities();
-	void IncreaseVelocities(float dvx, float dvy);
-	void DecreaseVelocities(float dvx, float dvy);
-	void SetVelocities(float vx, float vy);
-	void Collisions(float fElapsedTime, cLevel* lvl);
-	void CheckHole(cLevel* lvl);
-	void CheckPickUp(cLevel* lvl, float fNewPosX, float fNewPosY);
-	void CheckSolidFloor(cLevel* lvl, float fNewPosX, float& fNewPosY);
-	void NormalDrag();
-	void CheckDynamicFloor(float& fNewPosX, float& fNewPosY, float fElapsedTime, cLevel* lvl);
-	void IcedDrag();
-	bool CeilingFloorCrushed(cDynamicMovingPlatform*& ptfm);
-	void CheckSolidCeiling(cLevel* lvl, float fNewPosX, float& fNewPosY);
-	void CheckDynamicCeiling(float fNewPosX, float& fNewPosY, cLevel* lvl);
-	bool FloorCeilingCrushed(cDynamicMovingPlatform*& ptfm);
-	void Crushed();
-	bool DynamicFloor(float fNewPosX, float fNewPosY);
-	bool DynamicCeiling(float fNewPosX, float fNewPosY);
-	bool SemiSolidFloor(cLevel* lvl, float fNewPosX, float fNewPosY);
-	bool SolidFloor(cLevel* lvl, float fNewPosX, float fNewPosY);
-	bool Ceiling(cLevel* lvl, float fNewPosX, float fNewPosY);
-	void CheckRightWall(cLevel* lvl, float& fNewPosX);
-	bool LeftRightCrushed(cDynamicMovingPlatform*& ptfm);
-	bool DynamicLeftWall(float fNewPosX);
-	void CheckLeftWall(cLevel* lvl, float& fNewPosX);
-	void HarmfulBloc(cDynamicMovingPlatform*& ptfm);
-	bool RightLeftCrushed(cDynamicMovingPlatform*& ptfm);
-	bool DynamicRightWall(float fNewPosX);
-	float GetPosX();
-	float GetPosY();
-	void SetPosX(float px);
-	void SetPosY(float py);
-	bool IsVacuuming();
-	void VacuumEnnemy(cDynamicCreature* object);
-	bool IsAttackable();
-	bool HasCandyPower();
-	void SetAttackable(bool attackable);
-	bool IsSwallowing();
-	void UpdateInvulnerability(float fElapsedTime);
-	void DrawKirbo(olc::GFX2D::Transform2D t);
-	float GetHealth();
-	void Damage(cDynamic* object);
-	void Kill();
-	void ResetVariables();
-	void VacuumHitbox(float cameraOffsetX, float cameraOffsetY);
-	cHitbox* GetVacuumHitbox();
-	void UpdateHitbox(float cameraOffsetX, float cameraOffsetY);
-	cHitbox* GetHitbox();
-	void Attack(cDynamicCreature* victim, int damage);
-	void Vacuum(cDynamicCreature* object, float cameraOffsetX, float cameraOffsetY);
-	void EnemyCollision(cDynamic* object, float cameraOffsetX, float cameraOffsetY);
-	bool EnemyTouched(cDynamic* object, float cameraOffsetX, float cameraOffsetY);
-	void SetGrabbedByEnnemy(bool grabbed);
-	void ChangeAnimation(std::string animation);
-	void SetVisible(bool visible);
-	void ChangePosAfterTP();
-
-	// Item Pick-up functions
-	bool IsCollectibleItem(wchar_t c);
-	void SelectItem(wchar_t item);
-	void MaxHeal();
-	void Heal(int hp);
-	void SetInvincible(float time, bool blink = true);
-	void SetCandyPower(bool candy);
-	int GetCandyDmg();
-	void SetDamageBooster(int boost);
-	bool HasDamageBooster();
-	void SetDefenseBooster(int boost);
-	bool HasDefenseBooster();
 };
 
 #endif // !DEF_PLAYER

@@ -13,20 +13,6 @@ public:
 	cDynamicTeleport(float ax, float ay, float bx, float by, std::vector<olc::Sprite*> map);
 	virtual ~cDynamicTeleport();
 
-protected:
-	std::vector<olc::Sprite*> mapStates;
-
-	// animation
-	int nCurrentFrame = 0;
-	float fTimeBetweenFrames = 0.033f;
-	float fTimeCounter = 0.0f;
-
-	float fDestX;
-	float fDestY;
-
-	cHitbox* destHitbox;
-
-public:
 	static OneLoneCoder_Platformer* engine;
 
 	void DrawSelf(float ox, float oy) override;
@@ -46,6 +32,19 @@ public:
 	olc::Sprite* GetCurrentSprite();
 
 	static std::map<std::string, std::vector<olc::Sprite*>> LoadTeleportsSprites();
+
+protected:
+	std::vector<olc::Sprite*> mapStates;
+
+	// animation
+	int nCurrentFrame = 0;
+	float fTimeBetweenFrames = 0.033f;
+	float fTimeCounter = 0.0f;
+
+	float fDestX;
+	float fDestY;
+
+	cHitbox* destHitbox;
 };
 
 #endif // !DEF_TELEPORT

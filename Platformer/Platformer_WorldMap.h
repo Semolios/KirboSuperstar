@@ -12,6 +12,10 @@ class cWorldMap
 public:
 	cWorldMap(olc::PixelGameEngine* gfx, olc::Sprite* background, olc::Sprite* lock, cAnimator* anim);
 
+	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller);
+	int GetSelectedLevel();
+	void SetUnlockedLevel(int unlockedLevels);
+
 private:
 	const int cnKirboTileWidth = 192;
 	const int cnKirboTileHeight = 192;
@@ -23,11 +27,6 @@ private:
 	std::vector<olc::vf2d> path;
 	olc::Sprite* sprBackGround;
 	olc::Sprite* sprLock;
-
-public:
-	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller);
-	int GetSelectedLevel();
-	void SetUnlockedLevel(int unlockedLevels);
 };
 
 #endif // !DEF_WORLD_MAP

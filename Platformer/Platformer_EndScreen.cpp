@@ -22,6 +22,4 @@ bool cEndScreen::Update(olc::PixelGameEngine* gfx, float fElapsedTime)
 	gfx->SetPixelMode(olc::Pixel::NORMAL);
 
 	return false;
-
-	return false;
 }

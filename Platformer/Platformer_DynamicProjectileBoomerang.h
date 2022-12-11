@@ -11,6 +11,8 @@ public:
 	cDynamicProjectileBoomerang(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, int damage, bool solidVSMap, bool oneHit, int corner, bool scenery);
 	~cDynamicProjectileBoomerang();
 
+	void UpdateTrajectory(float fElapsedTime) override;
+
 private:
 	const float cfMinReturnDistance = 0.1f;
 	const float cfMinDurationTime = 0.1f;
@@ -20,9 +22,6 @@ private:
 	float fInitVelX;
 	float fInitVelY;
 	float fTimer;
-
-public:
-	void UpdateTrajectory(float fElapsedTime) override;
 };
 
 #endif // !DEF_BOOMERANG

@@ -452,5 +452,5 @@ void cDynamicCreatureSSTierMetaKnight::LoopAnimation(int firstFrame, int lastFra
 void cDynamicCreatureSSTierMetaKnight::SingleAnimation(int firstFrame, int lastFrame)
 {
 	if (nGraphicCounter < firstFrame) nGraphicCounter = firstFrame;
-	if (nGraphicCounter > lastFrame) nGraphicCounter = lastFrame;
+	if (nGraphicCounter > lastFrame)  nGraphicCounter = lastFrame;
 }

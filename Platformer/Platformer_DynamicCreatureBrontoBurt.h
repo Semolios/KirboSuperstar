@@ -12,14 +12,13 @@ public:
 	cDynamicCreatureBrontoBurt(cLevel* l, float oscillationAmplitude);
 	virtual ~cDynamicCreatureBrontoBurt();
 
+	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
+
 private:
 	const float cfOscillationSpeed = 5.0f; // Bronto burt oscillation speed
 
 	float fTheta;
 	float fOscillationAmplitude;
-
-public:
-	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
 };
 
 #endif // !DEF_BRONTO_BURT

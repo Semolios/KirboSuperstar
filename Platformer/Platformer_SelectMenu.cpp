@@ -31,10 +31,10 @@ bool cSelectMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Controll
 	// Draw choices and cursor
 	gfx->SetPixelMode(olc::Pixel::ALPHA);
 
-	engine->DrawKirboString(160, 30, "Play", 2);
-	engine->DrawKirboString(160, 70, "Controls", 2);
-	engine->DrawKirboString(160, 110, "Credits", 2);
-	engine->DrawKirboString(160, 150, "Quit", 2);
+	engine->DrawKirboString(160, 30,  "Play",	  2);
+	engine->DrawKirboString(160, 70,  "Controls", 2);
+	engine->DrawKirboString(160, 110, "Credits",  2);
+	engine->DrawKirboString(160, 150, "Quit",	  2);
 
 	int ncursorY;
 	if (nPlayerChoice == 0) ncursorY = 32;

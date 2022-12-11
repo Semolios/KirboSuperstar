@@ -14,10 +14,8 @@ public:
 	cDynamicCreatureWaddleDee(cLevel* l);
 	virtual ~cDynamicCreatureWaddleDee();
 
-public:
 	static OneLoneCoder_Platformer* engine;
 
-public:
 	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
 	bool RightObstacle();
 	bool LeftObstacle();

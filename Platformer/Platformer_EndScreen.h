@@ -11,12 +11,11 @@ class cEndScreen
 public:
 	cEndScreen(olc::PixelGameEngine* gfx, olc::Sprite* background, cAnimator* anim);
 
+	bool Update(olc::PixelGameEngine* gfx , float fElapsedTime);
+
 private:
 	static cAnimator* animPlayer;
 	olc::Sprite* sprBackGround;
-
-public:
-	bool Update(olc::PixelGameEngine* gfx , float fElapsedTime);
 };
 
 #endif // !DEF_END_SCREEN

@@ -62,14 +62,14 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl)
 				fVelY = cfVelY;
 
 			// If player is on semi solid platform, pass through the platform. cheat a little bit, modify the position of the player to cross it
-			if ((engine->IsSemiSolidTile(lvl->GetTile(fPosX + 0.0f, fPosY + 1.0f)) ||
+			if ((engine->IsSemiSolidTile(lvl->GetTile(fPosX + 0.0f,					fPosY + 1.0f)) ||
 				 engine->IsSemiSolidTile(lvl->GetTile(fPosX + fCollisionUpperLimit, fPosY + 1.0f))) && bOnGround)
 			{
 				fPosY += 0.15;
 			}
 
 			// If player is on Solid Ground, lower the camera
-			if ((engine->IsSolidTile(lvl->GetTile(fPosX + 0.0f, fPosY + 1.0f)) ||
+			if ((engine->IsSolidTile(lvl->GetTile(fPosX + 0.0f,					fPosY + 1.0f)) ||
 				 engine->IsSolidTile(lvl->GetTile(fPosX + fCollisionUpperLimit, fPosY + 1.0f))) && bOnGround)
 			{
 				camera->LowerPosition();
@@ -839,8 +839,8 @@ void cPlayer::IcedDrag()
 bool cPlayer::CeilingFloorCrushed(cDynamicMovingPlatform*& ptfm)
 {
 	return fCrushingObjVY > 0.0f && ptfm->GetVY() < 0.0f ||
-		fCrushingObjVY > 0.0f && ptfm->GetVY() > 0.0f && fCrushingObjVY > ptfm->GetVY() ||
-		fCrushingObjVY < 0.0f && ptfm->GetVY() < 0.0f && fCrushingObjVY > ptfm->GetVY();
+		   fCrushingObjVY > 0.0f && ptfm->GetVY() > 0.0f && fCrushingObjVY > ptfm->GetVY() ||
+		   fCrushingObjVY < 0.0f && ptfm->GetVY() < 0.0f && fCrushingObjVY > ptfm->GetVY();
 }
 
 void cPlayer::CheckSolidCeiling(cLevel* lvl, float fNewPosX, float& fNewPosY)
@@ -887,8 +887,8 @@ void cPlayer::CheckDynamicCeiling(float fNewPosX, float& fNewPosY, cLevel* lvl)
 bool cPlayer::FloorCeilingCrushed(cDynamicMovingPlatform*& ptfm)
 {
 	return fCrushingObjVY < 0.0f && ptfm->GetVY() > 0.0f ||
-		fCrushingObjVY > 0.0f && ptfm->GetVY() > 0.0f && fCrushingObjVY < ptfm->GetVY() ||
-		fCrushingObjVY < 0.0f && ptfm->GetVY() < 0.0f && fCrushingObjVY < ptfm->GetVY();
+		   fCrushingObjVY > 0.0f && ptfm->GetVY() > 0.0f && fCrushingObjVY < ptfm->GetVY() ||
+		   fCrushingObjVY < 0.0f && ptfm->GetVY() < 0.0f && fCrushingObjVY < ptfm->GetVY();
 }
 
 void cPlayer::Crushed()
@@ -939,18 +939,18 @@ bool cPlayer::SemiSolidFloor(cLevel* lvl, float fNewPosX, float fNewPosY)
 bool cPlayer::SolidFloor(cLevel* lvl, float fNewPosX, float fNewPosY)
 {
 	return engine->IsSolidTile(lvl->GetTile(fNewPosX + fCollisionLowerLimit, fNewPosY + 1.0f)) ||
-		engine->IsSolidTile(lvl->GetTile(fNewPosX + fCollisionUpperLimit, fNewPosY + 1.0f));
+		   engine->IsSolidTile(lvl->GetTile(fNewPosX + fCollisionUpperLimit, fNewPosY + 1.0f));
 }
 
 bool cPlayer::Ceiling(cLevel* lvl, float fNewPosX, float fNewPosY)
 {
-	return engine->IsSolidTile(lvl->GetTile(fNewPosX + 0.0f, fNewPosY)) ||
-		engine->IsSolidTile(lvl->GetTile(fNewPosX + fCollisionUpperLimit, fNewPosY));
+	return engine->IsSolidTile(lvl->GetTile(fNewPosX + 0.0f,				 fNewPosY)) ||
+		   engine->IsSolidTile(lvl->GetTile(fNewPosX + fCollisionUpperLimit, fNewPosY));
 }
 
 void cPlayer::CheckRightWall(cLevel* lvl, float& fNewPosX)
 {
-	if (engine->IsSolidTile(lvl->GetTile(fNewPosX + 1.0f, fPosY + 0.0f)) ||
+	if (engine->IsSolidTile(lvl->GetTile(fNewPosX + 1.0f, fPosY + 0.0f				  )) ||
 		engine->IsSolidTile(lvl->GetTile(fNewPosX + 1.0f, fPosY + fCollisionUpperLimit)))
 	{
 		if (DynamicLeftWall(fNewPosX) && fCrushingObjVX > 0.0f)
@@ -988,8 +988,8 @@ void cPlayer::CheckRightWall(cLevel* lvl, float& fNewPosX)
 bool cPlayer::LeftRightCrushed(cDynamicMovingPlatform*& ptfm)
 {
 	return fCrushingObjVX > 0.0f && ptfm->GetVX() < 0.0f ||
-		fCrushingObjVX > 0.0f && ptfm->GetVX() > 0.0f && fCrushingObjVX > ptfm->GetVX() ||
-		fCrushingObjVX < 0.0f && ptfm->GetVX() < 0.0f && fCrushingObjVX > ptfm->GetVX();
+		   fCrushingObjVX > 0.0f && ptfm->GetVX() > 0.0f && fCrushingObjVX > ptfm->GetVX() ||
+		   fCrushingObjVX < 0.0f && ptfm->GetVX() < 0.0f && fCrushingObjVX > ptfm->GetVX();
 }
 
 bool cPlayer::DynamicLeftWall(float fNewPosX)
@@ -1008,7 +1008,7 @@ bool cPlayer::DynamicLeftWall(float fNewPosX)
 
 void cPlayer::CheckLeftWall(cLevel* lvl, float& fNewPosX)
 {
-	if (engine->IsSolidTile(lvl->GetTile(fNewPosX + 0.0f, fPosY + 0.0f)) ||
+	if (engine->IsSolidTile(lvl->GetTile(fNewPosX + 0.0f, fPosY + 0.0f				  )) ||
 		engine->IsSolidTile(lvl->GetTile(fNewPosX + 0.0f, fPosY + fCollisionUpperLimit)))
 	{
 		if (DynamicRightWall(fNewPosX) && fCrushingObjVX < 0.0f)
@@ -1054,8 +1054,8 @@ void cPlayer::HarmfulBloc(cDynamicMovingPlatform*& ptfm)
 bool cPlayer::RightLeftCrushed(cDynamicMovingPlatform*& ptfm)
 {
 	return fCrushingObjVX > 0.0f && ptfm->GetVX() < 0.0f ||
-		fCrushingObjVX > 0.0f && ptfm->GetVX() > 0.0f && fCrushingObjVX < ptfm->GetVX() ||
-		fCrushingObjVX < 0.0f && ptfm->GetVX() < 0.0f && fCrushingObjVX < ptfm->GetVX();
+		   fCrushingObjVX > 0.0f && ptfm->GetVX() > 0.0f && fCrushingObjVX < ptfm->GetVX() ||
+		   fCrushingObjVX < 0.0f && ptfm->GetVX() < 0.0f && fCrushingObjVX < ptfm->GetVX();
 }
 
 bool cPlayer::DynamicRightWall(float fNewPosX)

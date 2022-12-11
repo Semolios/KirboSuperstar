@@ -16,6 +16,10 @@ public:
 	cDynamicCreatureWhispyWood(cLevel* l);
 	virtual ~cDynamicCreatureWhispyWood();
 
+	static OneLoneCoder_Platformer* engine;
+
+	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
+
 private:
 	const float cfProjectilesStartTimer = 0.25f;
 	const float cfGroundPosition = 9.0f;
@@ -98,13 +102,6 @@ private:
 
 	bool bCantSpawnAOE = false;
 
-public:
-	static OneLoneCoder_Platformer* engine;
-
-public:
-	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
-
-private:
 	void ChangeState(AI_STATE state);
 	void UpdateTimers();
 	void MapGraphicState(MAP_GRAPHIC_STATE mappedState);

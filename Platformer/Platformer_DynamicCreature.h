@@ -14,6 +14,33 @@ public:
 	cDynamicCreature(std::string n, olc::Sprite* sprite, int framesPerSecond);
 	virtual ~cDynamicCreature();
 
+	static OneLoneCoder_Platformer* engine;
+
+	void DrawSelf(float ox, float oy) override;
+	void Update(float fElapsedTime, float playerX, float playerY) override;
+	void KnockBack(float dx, float dy, float dist);
+	void TurnBack();
+	void Collision(float fElapsedTime);
+	void UpdateHitbox(float cameraOffsetX, float cameraOffsetY) override;
+	void Vacuumed(bool vaccumedState);
+	int GetHealth();
+	void TakeDamage(int damage);
+	int GetGraphicCounter();
+	void SetGraphicCounter(int counter);
+	bool IsVacuumable();
+	void SetVacuumable(bool vacuumable);
+	bool IsVacuumed();
+	bool IsSwallowable();
+	void SetSwallowable(bool swallowable);
+	bool IsBoss();
+	void SetBoss(bool boss);
+	bool IsKnockable();
+	void SetKnockable(bool knockable);
+	bool IsDead();
+
+	virtual void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
+	virtual void ExplodeAndDie(float fElapsedTime);
+
 private:
 	// Constant values
 	const float cfKnockBackDX = 10.0f;
@@ -69,36 +96,6 @@ protected:
 		MOVE14,	  // Lines 35-36 of the spritesheet
 		MOVE15,	  // Lines 37-38 of the spritesheet
 	} nGraphicState;
-
-public:
-
-	static OneLoneCoder_Platformer* engine;
-
-public:
-	void DrawSelf(float ox, float oy) override;
-	void Update(float fElapsedTime, float playerX, float playerY) override;
-	void KnockBack(float dx, float dy, float dist);
-	void TurnBack();
-	void Collision(float fElapsedTime);
-	void UpdateHitbox(float cameraOffsetX, float cameraOffsetY) override;
-	void Vacuumed(bool vaccumedState);
-	int GetHealth();
-	void TakeDamage(int damage);
-	int GetGraphicCounter();
-	void SetGraphicCounter(int counter);
-	bool IsVacuumable();
-	void SetVacuumable(bool vacuumable);
-	bool IsVacuumed();
-	bool IsSwallowable();
-	void SetSwallowable(bool swallowable);
-	bool IsBoss();
-	void SetBoss(bool boss);
-	bool IsKnockable();
-	void SetKnockable(bool knockable);
-	bool IsDead();
-
-	virtual void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
-	virtual void ExplodeAndDie(float fElapsedTime);
 };
 
 #endif // !DEF_DYNAMIC_CREATURE

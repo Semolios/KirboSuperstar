@@ -16,6 +16,10 @@ public:
 	cDynamicCreatureFrosty(cLevel* l);
 	virtual ~cDynamicCreatureFrosty();
 
+	static OneLoneCoder_Platformer* engine;
+
+	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
+
 private:
 	const float cfMinPosX = 0.0f;
 	const float cfMaxPosX = 15.0f;
@@ -118,13 +122,6 @@ private:
 
 	bool bCanSpawnAOE = true;
 
-public:
-	static OneLoneCoder_Platformer* engine;
-
-public:
-	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
-
-private:
 	void ChangeState(AI_STATE state);
 	void UpdateTimers();
 	bool OnGround();

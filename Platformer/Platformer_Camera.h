@@ -17,6 +17,23 @@ class cCamera
 public:
 	cCamera();
 
+	static OneLoneCoder_Platformer* engine;
+
+	void ClampOffset();
+	void SetPositions(float fPlayerPosX, float fPlayerPosY);
+	void DrawLevel(cLevel* level, float fElapsedTime);
+	void CalculateFOV(cLevel* level);
+	void DrawBackground(cLevel* level);
+	void DrawBackgroundThread(int x, int y, float fBckgrdoffX, float fBckgrdoffY, int w, int h);
+	float GetOffsetX();
+	float GetOffsetY();
+	void LowerPosition();
+	void RaisePosition();
+	void SetShake(bool shake);
+	void ActivateShakeEffect(bool activate, int shakeAmplitudeX = 50, int shakeAmplitudeY = 50);
+	void InitialiseThreadPool();
+	void SpawnSceneries(cLevel* level, float fElapsedTime);
+
 private:
 	const float cfLowerPos = 1.0f / 4.0f;		  // Lower position for the camera (when the player is not pushing down)
 	const float cfUpperPos = 2.0f / 3.0f;		  // Upper position for the camera (when the player holds down when on ground)
@@ -90,25 +107,6 @@ private:
 	};
 
 	WorkerThread workers[nMaxThreads];
-
-public:
-	static OneLoneCoder_Platformer* engine;
-
-public:
-	void ClampOffset();
-	void SetPositions(float fPlayerPosX, float fPlayerPosY);
-	void DrawLevel(cLevel* level, float fElapsedTime);
-	void CalculateFOV(cLevel* level);
-	void DrawBackground(cLevel* level);
-	void DrawBackgroundThread(int x, int y, float fBckgrdoffX, float fBckgrdoffY, int w, int h);
-	float GetOffsetX();
-	float GetOffsetY();
-	void LowerPosition();
-	void RaisePosition();
-	void SetShake(bool shake);
-	void ActivateShakeEffect(bool activate, int shakeAmplitudeX = 50, int shakeAmplitudeY = 50);
-	void InitialiseThreadPool();
-	void SpawnSceneries(cLevel* level, float fElapsedTime);
 };
 
 #endif // !DEF_CAMERA

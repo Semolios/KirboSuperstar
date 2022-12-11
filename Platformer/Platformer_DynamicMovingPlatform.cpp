@@ -101,7 +101,7 @@ bool cDynamicMovingPlatform::TopCollision(float leftCornerX, float rightCornerX,
 	olc::vf2d ptfmBotRightCorner(px + (fDynWidth / (float)engine->GetTileWidth()), py + fHitboxThickness);
 
 	return bSolidTop && (
-		((playerLeftCorner.x >= ptfmTopLeftCorner.x) && (playerLeftCorner.x <= ptfmBotRightCorner.x) && (playerLeftCorner.y >= ptfmTopLeftCorner.y) && (playerLeftCorner.y <= ptfmBotRightCorner.y)) ||
+		((playerLeftCorner.x  >= ptfmTopLeftCorner.x) && (playerLeftCorner.x  <= ptfmBotRightCorner.x) && (playerLeftCorner.y  >= ptfmTopLeftCorner.y) && (playerLeftCorner.y  <= ptfmBotRightCorner.y)) ||
 		((playerRightCorner.x >= ptfmTopLeftCorner.x) && (playerRightCorner.x <= ptfmBotRightCorner.x) && (playerRightCorner.y >= ptfmTopLeftCorner.y) && (playerRightCorner.y <= ptfmBotRightCorner.y))
 		);
 }
@@ -116,13 +116,13 @@ bool cDynamicMovingPlatform::TopCollisionWithLag(float leftCornerX, float rightC
 
 	return bSolidTop && (
 		// playerPY is above platform and newPlayerPY is below platform
-		((leftCornerX >= ptfmTopLeftCorner.x) && (leftCornerX <= ptfmBotRightCorner.x) && (fPlayerPosY <= ptfmTopLeftCorner.y) && (fNewPlayerPosY >= ptfmBotRightCorner.y)) ||
+		((leftCornerX  >= ptfmTopLeftCorner.x) && (leftCornerX  <= ptfmBotRightCorner.x) && (fPlayerPosY <= ptfmTopLeftCorner.y) && (fNewPlayerPosY >= ptfmBotRightCorner.y)) ||
 		((rightCornerX >= ptfmTopLeftCorner.x) && (rightCornerX <= ptfmBotRightCorner.x) && (fPlayerPosY <= ptfmTopLeftCorner.y) && (fNewPlayerPosY >= ptfmBotRightCorner.y)) ||
 		// playerPY is in the platform and newPlayerPY is below platform
-		((leftCornerX >= ptfmTopLeftCorner.x) && (leftCornerX <= ptfmBotRightCorner.x) && (fPlayerPosY >= ptfmTopLeftCorner.y) && (fPlayerPosY <= ptfmBotRightCorner.y) && (fNewPlayerPosY >= ptfmBotRightCorner.y)) ||
+		((leftCornerX  >= ptfmTopLeftCorner.x) && (leftCornerX  <= ptfmBotRightCorner.x) && (fPlayerPosY >= ptfmTopLeftCorner.y) && (fPlayerPosY <= ptfmBotRightCorner.y) && (fNewPlayerPosY >= ptfmBotRightCorner.y)) ||
 		((rightCornerX >= ptfmTopLeftCorner.x) && (rightCornerX <= ptfmBotRightCorner.x) && (fPlayerPosY >= ptfmTopLeftCorner.y) && (fPlayerPosY <= ptfmBotRightCorner.y) && (fNewPlayerPosY >= ptfmBotRightCorner.y)) ||
 		// playerPY is in the Previous platform position
-		((leftCornerX >= prevPtfmTopLeftCorner.x) && (leftCornerX <= prevPtfmBotRightCorner.x) && (fPlayerPosY >= prevPtfmTopLeftCorner.y) && (fPlayerPosY <= prevPtfmBotRightCorner.y)) ||
+		((leftCornerX  >= prevPtfmTopLeftCorner.x) && (leftCornerX  <= prevPtfmBotRightCorner.x) && (fPlayerPosY >= prevPtfmTopLeftCorner.y) && (fPlayerPosY <= prevPtfmBotRightCorner.y)) ||
 		((rightCornerX >= prevPtfmTopLeftCorner.x) && (rightCornerX <= prevPtfmBotRightCorner.x) && (fPlayerPosY >= prevPtfmTopLeftCorner.y) && (fPlayerPosY <= prevPtfmBotRightCorner.y))
 		);
 }
@@ -236,7 +236,7 @@ bool cDynamicMovingPlatform::BotCollision(float leftCornerX, float rightCornerX,
 	olc::vf2d ptfmBotRightCorner(px + (fDynWidth / (float)engine->GetTileWidth()), py + (fDynHeight / (float)engine->GetTileHeight()) + fHitboxThickness);
 
 	return bSolidBot && (
-		((playerLeftCorner.x >= ptfmTopLeftCorner.x) && (playerLeftCorner.x <= ptfmBotRightCorner.x) && (playerLeftCorner.y >= ptfmTopLeftCorner.y) && (playerLeftCorner.y <= ptfmBotRightCorner.y)) ||
+		((playerLeftCorner.x  >= ptfmTopLeftCorner.x) && (playerLeftCorner.x  <= ptfmBotRightCorner.x) && (playerLeftCorner.y  >= ptfmTopLeftCorner.y) && (playerLeftCorner.y  <= ptfmBotRightCorner.y)) ||
 		((playerRightCorner.x >= ptfmTopLeftCorner.x) && (playerRightCorner.x <= ptfmBotRightCorner.x) && (playerRightCorner.y >= ptfmTopLeftCorner.y) && (playerRightCorner.y <= ptfmBotRightCorner.y))
 		);
 }
@@ -251,13 +251,13 @@ bool cDynamicMovingPlatform::BotCollisionWithLag(float leftCornerX, float rightC
 
 	return bSolidBot && (
 		// playerPY is below platform and newPlayerPY is above platform
-		((leftCornerX >= ptfmTopLeftCorner.x) && (leftCornerX <= ptfmBotRightCorner.x) && (fPlayerPosY >= ptfmBotRightCorner.y) && (fNewPlayerPosY <= ptfmTopLeftCorner.y)) ||
+		((leftCornerX  >= ptfmTopLeftCorner.x) && (leftCornerX  <= ptfmBotRightCorner.x) && (fPlayerPosY >= ptfmBotRightCorner.y) && (fNewPlayerPosY <= ptfmTopLeftCorner.y)) ||
 		((rightCornerX >= ptfmTopLeftCorner.x) && (rightCornerX <= ptfmBotRightCorner.x) && (fPlayerPosY >= ptfmBotRightCorner.y) && (fNewPlayerPosY <= ptfmTopLeftCorner.y)) ||
 		// playerPY is in the platform and newPlayerPY is above platform
-		((leftCornerX >= ptfmTopLeftCorner.x) && (leftCornerX <= ptfmBotRightCorner.x) && (fPlayerPosY >= ptfmTopLeftCorner.y) && (fPlayerPosY <= ptfmBotRightCorner.y) && (fNewPlayerPosY <= ptfmBotRightCorner.y)) ||
+		((leftCornerX  >= ptfmTopLeftCorner.x) && (leftCornerX  <= ptfmBotRightCorner.x) && (fPlayerPosY >= ptfmTopLeftCorner.y) && (fPlayerPosY <= ptfmBotRightCorner.y) && (fNewPlayerPosY <= ptfmBotRightCorner.y)) ||
 		((rightCornerX >= ptfmTopLeftCorner.x) && (rightCornerX <= ptfmBotRightCorner.x) && (fPlayerPosY >= ptfmTopLeftCorner.y) && (fPlayerPosY <= ptfmBotRightCorner.y) && (fNewPlayerPosY <= ptfmBotRightCorner.y)) ||
 		// playerPY is in the Previous platform position
-		((leftCornerX >= prevPtfmTopLeftCorner.x) && (leftCornerX <= prevPtfmBotRightCorner.x) && (fPlayerPosY >= prevPtfmTopLeftCorner.y) && (fPlayerPosY <= prevPtfmBotRightCorner.y)) ||
+		((leftCornerX  >= prevPtfmTopLeftCorner.x) && (leftCornerX  <= prevPtfmBotRightCorner.x) && (fPlayerPosY >= prevPtfmTopLeftCorner.y) && (fPlayerPosY <= prevPtfmBotRightCorner.y)) ||
 		((rightCornerX >= prevPtfmTopLeftCorner.x) && (rightCornerX <= prevPtfmBotRightCorner.x) && (fPlayerPosY >= prevPtfmTopLeftCorner.y) && (fPlayerPosY <= prevPtfmBotRightCorner.y))
 		);
 }

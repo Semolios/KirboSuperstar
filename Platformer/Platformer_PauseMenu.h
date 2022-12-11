@@ -14,18 +14,17 @@ class cPauseMenu
 public:
 	cPauseMenu(olc::PixelGameEngine* gfx, olc::Sprite* background, olc::Sprite* cursor);
 
-private:
-	int nPlayerChoice = 0;
-
-	olc::Sprite* sprBackGround;
-	olc::Sprite* sprCursor;
-
-public:
 	static OneLoneCoder_Platformer* engine;
 
 	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller);
 	int GetPlayerChoice();
 	void SetPlayerChoice(int choice);
+
+private:
+	int nPlayerChoice = 0;
+
+	olc::Sprite* sprBackGround;
+	olc::Sprite* sprCursor;
 };
 
 #endif // !DEF_PAUSE_MENU

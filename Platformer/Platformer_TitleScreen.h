@@ -10,6 +10,9 @@ class cTitleScreen
 public:
 	cTitleScreen(olc::PixelGameEngine* gfx, olc::Sprite* background);
 
+	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime);
+	void DrawNewStar(olc::PixelGameEngine* gfx, float px, float py, float theta);
+
 private:
 	// Constant values
 	const int cnTileWidth = 64;
@@ -23,10 +26,6 @@ private:
 
 	olc::Sprite* sprstars;
 	float fTheta;
-
-public:
-	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime);
-	void DrawNewStar(olc::PixelGameEngine* gfx, float px, float py, float theta);
 };
 
 #endif // !DEF_TITLE_SCREEN

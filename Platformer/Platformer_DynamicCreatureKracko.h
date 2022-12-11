@@ -16,6 +16,11 @@ public:
 	cDynamicCreatureKracko(cLevel* l);
 	virtual ~cDynamicCreatureKracko();
 
+	static OneLoneCoder_Platformer* engine;
+
+	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
+	void AimForKirboUnder(float playerX, float playerY);
+
 private:
 	const float pi = 3.14159f;
 
@@ -127,15 +132,6 @@ private:
 
 	bool bCanSpawnAOE = true;
 
-public:
-	static OneLoneCoder_Platformer* engine;
-
-public:
-	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
-
-	void AimForKirboUnder(float playerX, float playerY);
-
-private:
 	void ChangeState(AI_STATE state, bool resetBehaviourTimer = true);
 	void UpdateTimers();
 	void LookKirbo(float playerX);

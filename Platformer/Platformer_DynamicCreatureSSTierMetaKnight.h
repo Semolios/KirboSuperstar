@@ -16,6 +16,10 @@ public:
 	cDynamicCreatureSSTierMetaKnight(cLevel* l);
 	virtual ~cDynamicCreatureSSTierMetaKnight();
 
+	static OneLoneCoder_Platformer* engine;
+
+	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
+
 private:
 	const float cfMKWidth = 1.0f;
 	const float cfOneSSTierMKFrame = 0.03125f;
@@ -111,13 +115,7 @@ private:
 	float fTimeBetweenDownTilts = 0.125f; // 4 frames
 	int nFirstFrameDownTilt = 1;
 	int nLastFrameDownTilt = 4;
-public:
-	static OneLoneCoder_Platformer* engine;
 
-public:
-	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
-
-private:
 	void ChangeState(AI_STATE state, bool resetBehaviourTimer = true);
 	void UpdateTimers();
 	void LoopAnimation(int firstFrame, int lastFrame);

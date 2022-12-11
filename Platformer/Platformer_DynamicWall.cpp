@@ -42,10 +42,10 @@ void cDynamicWall::Behaviour(float fElapsedTime, float playerX, float playerY)
 
 			if (bGateOpenningSound)
 			{
-				if (fabs(playerX - (GetPX())) < ((((float)engine->ScreenWidth()) / 64.0f) * 1.5f) && fabs(playerY - (GetPY())) < ((((float)engine->ScreenHeight()) / 64.0f) * 1.5f) ||
-					fabs(playerX - (GetPX() + GetCurrentSprite()->width / 64.0f)) < ((((float)engine->ScreenWidth()) / 64.0f) * 1.5f) && fabs(playerY - (GetPY())) < ((((float)engine->ScreenHeight()) / 64.0f) * 1.5f) ||
-					fabs(playerX - (GetPX())) < ((((float)engine->ScreenWidth()) / 64.0f) * 1.5f) && fabs(playerY - (GetPY() + GetCurrentSprite()->height / 64.0f)) < ((((float)engine->ScreenHeight()) / 64.0f) * 1.5f) ||
-					fabs(playerX - (GetPX() + GetCurrentSprite()->width / 64.0f)) < ((((float)engine->ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (GetPY() + GetCurrentSprite()->height / 64.0f)) < ((((float)engine->ScreenHeight()) / 64.0f) * 1.5f))
+				if (fabs(playerX - (GetPX()									   )) < ((((float)engine->ScreenWidth()) / 64.0f) * 1.5f) && fabs(playerY - (GetPY()									 )) < ((((float)engine->ScreenHeight()) / 64.0f) * 1.5f) ||
+					fabs(playerX - (GetPX() + GetCurrentSprite()->width / 64.0f)) < ((((float)engine->ScreenWidth()) / 64.0f) * 1.5f) && fabs(playerY - (GetPY()									 )) < ((((float)engine->ScreenHeight()) / 64.0f) * 1.5f) ||
+					fabs(playerX - (GetPX()									   )) < ((((float)engine->ScreenWidth()) / 64.0f) * 1.5f) && fabs(playerY - (GetPY() + GetCurrentSprite()->height / 64.0f)) < ((((float)engine->ScreenHeight()) / 64.0f) * 1.5f) ||
+					fabs(playerX - (GetPX() + GetCurrentSprite()->width / 64.0f)) < ((((float)engine->ScreenWidth()) / 64.0f) * 1.5f) && fabs(py 	  - (GetPY() + GetCurrentSprite()->height / 64.0f)) < ((((float)engine->ScreenHeight()) / 64.0f) * 1.5f))
 				{
 					engine->PlaySample("gateOpening");
 					bGateOpenningSound = false;

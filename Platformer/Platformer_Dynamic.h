@@ -14,6 +14,27 @@ public:
 	cDynamic(std::string n);
 	virtual ~cDynamic();
 
+	// Virtual methods
+	virtual void DrawSelf(float ox, float oy)
+	{
+	}
+	virtual void Update(float fElapsedTime, float playerX, float playerY)
+	{
+	}
+	virtual void UpdateHitbox(float cameraOffsetX, float cameraOffsetY)
+	{
+	}
+
+	void SetPosition(float x, float y);
+	float GetPX();
+	float GetPY();
+	float GetVX();
+	float GetVY();
+	int GetDamage();
+	bool IsAttackable();
+	bool IsFriendly();
+	cHitbox* GetHitbox();
+
 protected:
 	float fDynWidth;
 	float fDynHeight;
@@ -36,29 +57,6 @@ protected:
 	bool bAffectedByGravity = false;
 	std::string sName;
 	cHitbox* hitbox;
-
-public:
-	// Virtual methods
-	virtual void DrawSelf(float ox, float oy)
-	{
-	}
-	virtual void Update(float fElapsedTime, float playerX, float playerY)
-	{
-	}
-	virtual void UpdateHitbox(float cameraOffsetX, float cameraOffsetY)
-	{
-	}
-
-public:
-	void SetPosition(float x, float y);
-	float GetPX();
-	float GetPY();
-	float GetVX();
-	float GetVY();
-	int GetDamage();
-	bool IsAttackable();
-	bool IsFriendly();
-	cHitbox* GetHitbox();
 };
 
 #endif // !DEF_DYNAMIC

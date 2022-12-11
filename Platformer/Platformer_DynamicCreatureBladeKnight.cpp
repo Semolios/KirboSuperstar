@@ -331,7 +331,7 @@ void cDynamicCreatureBladeKnight::ChangeState(AI_STATE state)
 bool cDynamicCreatureBladeKnight::TouchGround()
 {
 	return engine->IsSolidTile(level->GetTile(px + cfCollisionLowerLimit, py + 1)) ||
-		engine->IsSolidTile(level->GetTile(px + cfCollisionUpperLimit, py + 1)) ||
-		engine->IsSemiSolidTile(level->GetTile(px + cfCollisionLowerLimit, py + 1)) ||
-		engine->IsSemiSolidTile(level->GetTile(px + cfCollisionUpperLimit, py + 1));
+		   engine->IsSolidTile(level->GetTile(px + cfCollisionUpperLimit, py + 1)) ||
+		   engine->IsSemiSolidTile(level->GetTile(px + cfCollisionLowerLimit, py + 1)) ||
+		   engine->IsSemiSolidTile(level->GetTile(px + cfCollisionUpperLimit, py + 1));
 }

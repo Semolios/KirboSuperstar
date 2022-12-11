@@ -104,14 +104,16 @@ void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, flo
 
 bool cDynamicCreatureWaddleDee::RightObstacle()
 {
-	return
-		engine->IsSolidTile(level->GetTile(px + 1, py)) || // Wall
-		(!engine->IsSolidTile(level->GetTile(px + 1, py)) && !engine->IsSolidTile(level->GetTile(px + 1, py + 1)) && !engine->IsSemiSolidTile(level->GetTile(px + 1, py + 1))); // Hole
+	return engine->IsSolidTile(level->GetTile(px + 1, py)) || // Wall
+		   (!engine->IsSolidTile(level->GetTile(px + 1, py + 0)) &&
+			!engine->IsSolidTile(level->GetTile(px + 1, py + 1)) &&
+			!engine->IsSemiSolidTile(level->GetTile(px + 1, py + 1))); // Hole
 }
 
 bool cDynamicCreatureWaddleDee::LeftObstacle()
 {
-	return
-		engine->IsSolidTile(level->GetTile(px, py)) || // Wall
-		(!engine->IsSolidTile(level->GetTile(px, py)) && !engine->IsSolidTile(level->GetTile(px, py + 1)) && !engine->IsSemiSolidTile(level->GetTile(px, py + 1))); // Hole
+	return engine->IsSolidTile(level->GetTile(px, py)) || // Wall
+		   (!engine->IsSolidTile(level->GetTile(px, py + 0)) &&
+			!engine->IsSolidTile(level->GetTile(px, py + 1)) &&
+			!engine->IsSemiSolidTile(level->GetTile(px, py + 1))); // Hole
 }

@@ -204,20 +204,10 @@ void cDynamicCreatureWhispyWood::MapGraphicState(MAP_GRAPHIC_STATE mappedState)
 	// Mapping state is not the same than other ennemies, so i must remap the states from Whispy wood to regular ennemy
 	switch (mappedState)
 	{
-		case IDLE:
-			nGraphicState = STANDING;
-			break;
-		case SCREAMING:
-			nGraphicState = WALKING;
-			break;
-		case DAMAGE:
-			nGraphicState = DAMAGED;
-			break;
-		case PROJECTILES:
-			nGraphicState = JUMPING;
-			break;
-		case BLOW:
-			nGraphicState = MOVE1;
-			break;
+		case IDLE:		  nGraphicState = STANDING; break;
+		case SCREAMING:   nGraphicState = WALKING;	break;
+		case DAMAGE:	  nGraphicState = DAMAGED;	break;
+		case PROJECTILES: nGraphicState = JUMPING;	break;
+		case BLOW:		  nGraphicState = MOVE1;	break;
 	}
 }

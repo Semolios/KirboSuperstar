@@ -14,30 +14,8 @@ public:
 	cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner = 0, bool breackableAgainstTiles = true, float drag = -3.0f, bool bouncy = false, std::string bounceSound = "", bool scenery = false);
 	virtual ~cDynamicProjectile();
 
-protected:
-	const float cfMinGlideVX = 0.1;
-
-	std::vector<olc::Sprite*> mapStates;
-	std::vector<olc::vf2d> crossedTiles;
-	std::string soundEffect;
-	std::string bounceSoundEffect;
-	float fDuration;
-	float fDrag;
-	bool bOneHit;
-	bool bRedundant;
-	bool bBreaksAgainstTiles;
-	bool bBouncy;
-	bool bScenery;
-
-	// animation
-	int nCurrentFrame = 0;
-	float fTimeBetweenFrames = 0.033f;
-	float fTimeCounter = 0.0f;
-
-public:
 	static OneLoneCoder_Platformer* engine;
 
-public:
 	void DrawSelf(float ox, float oy) override;
 	void Update(float fElapsedTime, float playerX, float playerY) override;
 	void Collision(float fElapsedTime, cLevel* level);
@@ -64,6 +42,26 @@ public:
 	bool IsScenery();
 
 	virtual void UpdateTrajectory(float fElapsedTime);
+
+protected:
+	const float cfMinGlideVX = 0.1;
+
+	std::vector<olc::Sprite*> mapStates;
+	std::vector<olc::vf2d> crossedTiles;
+	std::string soundEffect;
+	std::string bounceSoundEffect;
+	float fDuration;
+	float fDrag;
+	bool bOneHit;
+	bool bRedundant;
+	bool bBreaksAgainstTiles;
+	bool bBouncy;
+	bool bScenery;
+
+	// animation
+	int nCurrentFrame = 0;
+	float fTimeBetweenFrames = 0.033f;
+	float fTimeCounter = 0.0f;
 };
 
 #endif // !DEF_PROJECTILE

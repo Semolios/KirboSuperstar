@@ -11,11 +11,10 @@ class cCreditsMenu
 public:
 	cCreditsMenu(olc::PixelGameEngine* gfx, olc::Sprite* background);
 
+	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime);
+
 private:
 	olc::Sprite* sprBackGround;
-
-public:
-	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime);
 };
 
 #endif // !DEF_CREDITS_MENU

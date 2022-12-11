@@ -1262,9 +1262,9 @@ std::vector<cDynamicMovingPlatform*> OneLoneCoder_Platformer::GetClosePlatforms(
 		// -----------------------------------------------------------------
 		// ------ /!\ FPS drops considerably if item is too large /!\ ------
 		// -----------------------------------------------------------------
-		if (fabs(px - (ptfm->GetPX())) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (ptfm->GetPY())) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
-			fabs(px - (ptfm->GetPX() + ptfm->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (ptfm->GetPY())) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
-			fabs(px - (ptfm->GetPX())) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (ptfm->GetPY() + ptfm->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
+		if (fabs(px - (ptfm->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (ptfm->GetPY()										   )) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
+			fabs(px - (ptfm->GetPX() + ptfm->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (ptfm->GetPY()										   )) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
+			fabs(px - (ptfm->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (ptfm->GetPY() + ptfm->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
 			fabs(px - (ptfm->GetPX() + ptfm->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (ptfm->GetPY() + ptfm->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f) * 1.5f))
 		{
 			closePtfms.push_back(ptfm);
@@ -1293,9 +1293,9 @@ std::vector<cDynamicWind*> OneLoneCoder_Platformer::GetCloseWinds(float px, floa
 		// -----------------------------------------------------------------
 		// ------ /!\ FPS drops considerably if item is too large /!\ ------
 		// -----------------------------------------------------------------
-		if (fabs(px - (wind->GetPX())) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (wind->GetPY())) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
-			fabs(px - (wind->GetPX() + wind->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (wind->GetPY())) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
-			fabs(px - (wind->GetPX())) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (wind->GetPY() + wind->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
+		if (fabs(px - (wind->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (wind->GetPY()										   )) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
+			fabs(px - (wind->GetPX() + wind->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (wind->GetPY()										   )) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
+			fabs(px - (wind->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (wind->GetPY() + wind->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
 			fabs(px - (wind->GetPX() + wind->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (wind->GetPY() + wind->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f) * 1.5f))
 		{
 			closeWinds.push_back(wind);
@@ -1319,9 +1319,9 @@ std::vector<cDynamicTeleport*> OneLoneCoder_Platformer::GetCloseTeleport(float p
 		// -----------------------------------------------------------------
 		// ------ /!\ FPS drops considerably if item is too large /!\ ------
 		// -----------------------------------------------------------------
-		if (fabs(px - (tp->GetPX())) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (tp->GetPY())) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
-			fabs(px - (tp->GetPX() + tp->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (tp->GetPY())) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
-			fabs(px - (tp->GetPX())) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (tp->GetPY() + tp->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
+		if (fabs(px - (tp->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (tp->GetPY()										   )) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
+			fabs(px - (tp->GetPX() + tp->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (tp->GetPY()										   )) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
+			fabs(px - (tp->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (tp->GetPY() + tp->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
 			fabs(px - (tp->GetPX() + tp->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (tp->GetPY() + tp->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f) * 1.5f))
 		{
 			closeTeleports.push_back(tp);
@@ -1339,9 +1339,9 @@ std::vector<cDynamicTeleport*> OneLoneCoder_Platformer::GetCloseTeleportDest(flo
 		// -----------------------------------------------------------------
 		// ------ /!\ FPS drops considerably if item is too large /!\ ------
 		// -----------------------------------------------------------------
-		if (fabs(px - (tp->GetDestX())) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (tp->GetDestY())) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
-			fabs(px - (tp->GetDestX() + tp->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (tp->GetDestY())) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
-			fabs(px - (tp->GetDestX())) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (tp->GetDestY() + tp->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
+		if (fabs(px - (tp->GetDestX()										 )) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (tp->GetDestY()										 )) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
+			fabs(px - (tp->GetDestX() + tp->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (tp->GetDestY()										 )) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
+			fabs(px - (tp->GetDestX()										 )) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (tp->GetDestY() + tp->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
 			fabs(px - (tp->GetDestX() + tp->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (tp->GetDestY() + tp->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f) * 1.5f))
 		{
 			closeTeleports.push_back(tp);

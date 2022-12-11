@@ -16,6 +16,10 @@ public:
 	cDynamicCreatureKingDDD(cLevel* l);
 	virtual ~cDynamicCreatureKingDDD();
 
+	static OneLoneCoder_Platformer* engine;
+
+	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
+
 private:
 	const float cfRunSpeed = 3.0f;
 	const float cfJumpSpeed = -12.0f;
@@ -272,13 +276,6 @@ private:
 
 	bool bCanSpawnAOE = true;
 
-public:
-	static OneLoneCoder_Platformer* engine;
-
-public:
-	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
-
-private:
 	bool IsOneFrameAnimation();
 	void ChangeState(AI_STATE state, bool resetBehaviourTimer = true);
 	void ChangeVacuumState(VACUUMSTATE state);

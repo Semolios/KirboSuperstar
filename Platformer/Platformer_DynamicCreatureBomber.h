@@ -14,6 +14,12 @@ public:
 	cDynamicCreatureBomber(cLevel* l);
 	virtual ~cDynamicCreatureBomber();
 
+	static OneLoneCoder_Platformer* engine;
+
+	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
+	bool RightObstacle();
+	bool LeftObstacle();
+
 private:
 	const float cfTriggerDistance = 2.0f;
 	const float cfExplosionDuration = 0.528f;
@@ -31,14 +37,6 @@ private:
 	float fTimer = 0.0f;
 
 	bool bHasExploded = false;
-
-public:
-	static OneLoneCoder_Platformer* engine;
-
-public:
-	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
-	bool RightObstacle();
-	bool LeftObstacle();
 };
 
 #endif // !DEF_BOMBER

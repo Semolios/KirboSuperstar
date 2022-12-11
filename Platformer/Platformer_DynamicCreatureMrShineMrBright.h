@@ -16,6 +16,10 @@ public:
 	cDynamicCreatureMrShineMrBright(cLevel* l);
 	virtual ~cDynamicCreatureMrShineMrBright();
 
+	static OneLoneCoder_Platformer* engine;
+
+	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
+
 private:
 	const float cfGroundYPos = 7.0f;
 	const float cfMovingGroundLavaOffsetX = 1.8f;
@@ -122,13 +126,6 @@ private:
 
 	bool bCanSpawnAOE = true;
 
-public:
-	static OneLoneCoder_Platformer* engine;
-
-public:
-	void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
-
-private:
 	void ChangeState(AI_STATE state);
 	void UpdateTimers();
 	bool OnGround();

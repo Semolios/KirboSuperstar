@@ -9,8 +9,6 @@ class cAnimator
 {
 public:
 	std::map<std::string, std::vector<olc::Sprite*>> mapStates;
-
-public:
 	std::string sCurrentState;
 	int nCurrentFrame = 0;
 	float fTimeBetweenFrames = 0.033f;

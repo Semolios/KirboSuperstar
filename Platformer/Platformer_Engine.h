@@ -47,6 +47,120 @@ class OneLoneCoder_Platformer : public olc::PixelGameEngine
 public:
 	OneLoneCoder_Platformer();
 
+	// Keyboard function
+	bool GetAnyKey();
+	olc::Key GetFirstKeyPressed();
+
+	// Level detection functions
+	bool IsSolidTile(wchar_t tile);
+	bool IsBreakableTile(wchar_t tile);
+	bool IsSemiSolidTile(wchar_t tile);
+
+	// Projectiles functions
+	void AddProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, bool breackableAgainstTiles = true, float fDrag = -3.0f, std::string sound = "", bool bouncy = false, std::string bounceSound = "", bool scenery = false);
+	void AddBoomerang(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, std::string sound = "", bool scenery = false);
+	void AddOrbital(float ox, float oy, bool bFriend, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, float cx = 0.0f, float cy = 0.0f, float angrot = 0.0f, std::string sound = "", bool scenery = false);
+
+	// Platforms functions
+	void AddPlatform(float ox, float oy, std::string sprite, std::wstring iced);
+	void AddScenery(float ox, float oy, std::string sprite);
+	void AddHorizontalSinePtfm(float ox, float oy, std::string sprite, std::wstring iced, float amplitude, float frequency, std::wstring trigger);
+	void AddVerticalSinePtfm(float ox, float oy, std::string sprite, std::wstring iced, float amplitude, float frequency, std::wstring trigger);
+	void AddHorizontalSinglePtfm(float ox, float oy, std::string sprite, std::wstring iced, float tx, float vx, std::wstring trigger);
+	void AddVerticalSinglePtfm(float ox, float oy, std::string sprite, std::wstring iced, float ty, float vy, std::wstring trigger);
+	void AddWall(float ox, float oy, std::string sprite, std::wstring leftSolid, std::wstring rightSolid, std::wstring trigger, float trgX, float trgY);
+	void AddCeiling(float ox, float oy, std::string sprite, std::wstring topSolid, std::wstring linkToPreviousPtfm);
+	void AddHorizontalCrusher(float ox, float oy, std::string sprite, std::wstring side, float waitTime);
+	void AddVerticalCrusher(float ox, float oy, std::string sprite, std::wstring side, float waitTime);
+	void AddHarmfulBloc(float ox, float oy, std::string sprite, float dmg, std::wstring tangible);
+	std::vector<cDynamicMovingPlatform*> GetClosePlatforms(float px, float py);
+	olc::Sprite* GetDoorSwitch(bool on);
+
+	// Winds functions
+	void AddWind(float ox, float oy, std::string sprite, std::wstring direction, float power);
+	std::vector<cDynamicWind*> GetCloseWinds(float px, float py);
+
+	// Teleports functions
+	void AddTeleport(float ax, float ay, float bx, float by, std::string sprite);
+	std::vector<cDynamicTeleport*> GetCloseTeleport(float px, float py);
+	std::vector<cDynamicTeleport*> GetCloseTeleportDest(float px, float py);
+	void RespawnEnnemies(cLevel* level);
+
+	// Engine properties/modifications functions
+	float GetTileWidth();
+	float GetTileHeight();
+	float GetGravityValue();
+	float GetGroundDynamicOverlay();
+	bool IsInBossLevel();
+	void SetbInBossLevel(bool inBossLevel);
+	bool IsBossKilled();
+	void SetbBossKilled(bool bossKilled);
+	void SetGameState(std::string gameState);
+	void UpdateWinTimer(float fElapsedTime);
+	float GetWinTimer();
+	void ResetVariables();
+	void BreakLoop();
+	olc::Sprite* GetBackGround();
+	olc::Sprite* GetTilesSprites();
+	olc::Sprite* GetGroundTiles();
+	olc::Sprite* GetDoorSpr();
+	void ReturnToWorldMap();
+	void GoToControlsMenu();
+	void HitStop();
+	void BossHitStop();
+
+	// Pause menu functions
+	void SetPlayerChoice(int choice);
+
+	// Camera functions
+	cCamera* GetCamera();
+	void ActivateShakeEffect(bool activate, int shakeAmplitudeX = 50, int shakeAmplitudeY = 50);
+	void WindEffect(float direction, float windPower, bool activate);
+
+	// Sound functions
+	void AddSharedSound(std::string name, olc::sound::Wave* sound, std::string fileName);
+	void PlaySample(std::string name, bool loop = false, bool dontPlayIfAlreadyPlaying = false);
+	void StopSample(std::string name);
+	bool IsSamplePlaying(std::string name);
+	void PlayLevelMusic();
+	void StopLevelMusic();
+
+	// Player functions
+	void ChangeKirboVelocities(float vx, float vy);
+	void SetKirboGrabbed(bool grabbed);
+	void ChangeKirboAnimation(std::string animation);
+	void SetKirboVisible(bool visible);
+	void SetKirboAttackable(bool attackable);
+	void SetKirboPositions(float px, float py);
+	bool KirboCollisionWithEnnemy(cDynamic* object);
+	bool IsKirboAttackable();
+	void MaxHealPlayer();
+	void HealPlayer(int hp);
+	void PlayerGetCandy(float candyTime);
+	void BuffPlayerDamage();
+	void BuffPlayerDefense();
+
+	// Controller functions
+	ControllerManager* GetController();
+
+	// Loading Screen functions
+	void UpdateProgressBar(std::string loadPercent);
+
+	// Controls menu functions
+	void ApplyControls();
+	olc::Key ToOlcKey(std::string key);
+	std::string olcKeyToStr(olc::Key key);
+	olc::Key GetSavedControls(std::string control);
+
+	// Transition function
+	void TransitionTo(std::string newState, bool playTransitionSound);
+
+	//	Font functions
+	void DrawKirboString(int x, int y, std::string text, int scale = 1, bool centered = false);
+
+	// Other
+	std::string ToStr(std::wstring str);
+
 private:
 	// Constant values
 	const float cfGravity = 20.0f;						// Gravity
@@ -404,121 +518,6 @@ protected:
 
 	void DestroyAllDynamics();
 	void LoadLevelProperties();
-
-public:
-	// Keyboard function
-	bool GetAnyKey();
-	olc::Key GetFirstKeyPressed();
-
-	// Level detection functions
-	bool IsSolidTile(wchar_t tile);
-	bool IsBreakableTile(wchar_t tile);
-	bool IsSemiSolidTile(wchar_t tile);
-
-	// Projectiles functions
-	void AddProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, bool breackableAgainstTiles = true, float fDrag = -3.0f, std::string sound = "", bool bouncy = false, std::string bounceSound = "", bool scenery = false);
-	void AddBoomerang(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, std::string sound = "", bool scenery = false);
-	void AddOrbital(float ox, float oy, bool bFriend, float duration, std::string sprite, int damage, bool solidVSMap, bool oneHit = true, int corner = 0, float cx = 0.0f, float cy = 0.0f, float angrot = 0.0f, std::string sound = "", bool scenery = false);
-
-	// Platforms functions
-	void AddPlatform(float ox, float oy, std::string sprite, std::wstring iced);
-	void AddScenery(float ox, float oy, std::string sprite);
-	void AddHorizontalSinePtfm(float ox, float oy, std::string sprite, std::wstring iced, float amplitude, float frequency, std::wstring trigger);
-	void AddVerticalSinePtfm(float ox, float oy, std::string sprite, std::wstring iced, float amplitude, float frequency, std::wstring trigger);
-	void AddHorizontalSinglePtfm(float ox, float oy, std::string sprite, std::wstring iced, float tx, float vx, std::wstring trigger);
-	void AddVerticalSinglePtfm(float ox, float oy, std::string sprite, std::wstring iced, float ty, float vy, std::wstring trigger);
-	void AddWall(float ox, float oy, std::string sprite, std::wstring leftSolid, std::wstring rightSolid, std::wstring trigger, float trgX, float trgY);
-	void AddCeiling(float ox, float oy, std::string sprite, std::wstring topSolid, std::wstring linkToPreviousPtfm);
-	void AddHorizontalCrusher(float ox, float oy, std::string sprite, std::wstring side, float waitTime);
-	void AddVerticalCrusher(float ox, float oy, std::string sprite, std::wstring side, float waitTime);
-	void AddHarmfulBloc(float ox, float oy, std::string sprite, float dmg, std::wstring tangible);
-	std::vector<cDynamicMovingPlatform*> GetClosePlatforms(float px, float py);
-	olc::Sprite* GetDoorSwitch(bool on);
-
-	// Winds functions
-	void AddWind(float ox, float oy, std::string sprite, std::wstring direction, float power);
-	std::vector<cDynamicWind*> GetCloseWinds(float px, float py);
-
-	// Teleports functions
-	void AddTeleport(float ax, float ay, float bx, float by, std::string sprite);
-	std::vector<cDynamicTeleport*> GetCloseTeleport(float px, float py);
-	std::vector<cDynamicTeleport*> GetCloseTeleportDest(float px, float py);
-	void RespawnEnnemies(cLevel* level);
-
-	// Engine properties/modifications functions
-	float GetTileWidth();
-	float GetTileHeight();
-	float GetGravityValue();
-	float GetGroundDynamicOverlay();
-	bool IsInBossLevel();
-	void SetbInBossLevel(bool inBossLevel);
-	bool IsBossKilled();
-	void SetbBossKilled(bool bossKilled);
-	void SetGameState(std::string gameState);
-	void UpdateWinTimer(float fElapsedTime);
-	float GetWinTimer();
-	void ResetVariables();
-	void BreakLoop();
-	olc::Sprite* GetBackGround();
-	olc::Sprite* GetTilesSprites();
-	olc::Sprite* GetGroundTiles();
-	olc::Sprite* GetDoorSpr();
-	void ReturnToWorldMap();
-	void GoToControlsMenu();
-	void HitStop();
-	void BossHitStop();
-
-	// Pause menu functions
-	void SetPlayerChoice(int choice);
-
-	// Camera functions
-	cCamera* GetCamera();
-	void ActivateShakeEffect(bool activate, int shakeAmplitudeX = 50, int shakeAmplitudeY = 50);
-	void WindEffect(float direction, float windPower, bool activate);
-
-	// Sound functions
-	void AddSharedSound(std::string name, olc::sound::Wave* sound, std::string fileName);
-	void PlaySample(std::string name, bool loop = false, bool dontPlayIfAlreadyPlaying = false);
-	void StopSample(std::string name);
-	bool IsSamplePlaying(std::string name);
-	void PlayLevelMusic();
-	void StopLevelMusic();
-
-	// Player functions
-	void ChangeKirboVelocities(float vx, float vy);
-	void SetKirboGrabbed(bool grabbed);
-	void ChangeKirboAnimation(std::string animation);
-	void SetKirboVisible(bool visible);
-	void SetKirboAttackable(bool attackable);
-	void SetKirboPositions(float px, float py);
-	bool KirboCollisionWithEnnemy(cDynamic* object);
-	bool IsKirboAttackable();
-	void MaxHealPlayer();
-	void HealPlayer(int hp);
-	void PlayerGetCandy(float candyTime);
-	void BuffPlayerDamage();
-	void BuffPlayerDefense();
-
-	// Controller functions
-	ControllerManager* GetController();
-
-	// Loading Screen functions
-	void UpdateProgressBar(std::string loadPercent);
-
-	// Controls menu functions
-	void ApplyControls();
-	olc::Key ToOlcKey(std::string key);
-	std::string olcKeyToStr(olc::Key key);
-	olc::Key GetSavedControls(std::string control);
-
-	// Transition function
-	void TransitionTo(std::string newState, bool playTransitionSound);
-
-	//	Font functions
-	void DrawKirboString(int x, int y, std::string text, int scale = 1, bool centered = false);
-
-	// Other
-	std::string ToStr(std::wstring str);
 };
 
 #endif // !DEF_ENGINE

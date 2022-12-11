@@ -32,6 +32,57 @@ static std::atomic<int> nLvlWorkerComplete;
 
 class cLevel
 {
+public:
+	static OneLoneCoder_Platformer* engine;
+
+	cLevel();
+
+	bool LoadLevel(std::string levelName);
+	std::wstring GetLevel();
+	int GetWidth();
+	int GetHeight();
+	int GetInitPlayerPosX();
+	int GetInitPlayerPosY();
+	bool PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::string levelName);
+	bool PopulateMechanisms(std::string levelName);
+	bool PopulateBoss(std::vector<cDynamicCreature*>& vecDyns);
+	void DrawTiles(int nVisibleTilesX, int nVisibleTilesY, float fOffsetX, float fOffsetY);
+	void SelectTile(int startX, int endX, int nVisibleTilesX, int nVisibleTilesY, float fOffsetX, float fOffsetY, float fTileOffsetX, float fTileOffsetY);
+	void InitialiseThreadPool();
+	void DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY, float fCamOffsetX, float fCamOffsetY, olc::Sprite* spriteTiles, wchar_t tile);
+	wchar_t GetTile(int x, int y);
+	void SetTile(int x, int y, wchar_t c);
+
+	void LoadLevelsList();
+	void LoadBossesList();
+	void LoadEnnemiesList();
+	void LoadMechanismsList();
+	void LoadSpecialTilesList();
+	void LoadGroundTilesList();
+	void LoadBackGroundsList();
+	void LoadBossesBackGroundsList();
+	void LoadMusicsList();
+	void LoadBossesMusicsList();
+
+	std::string GetName();
+	std::string GetBoss();
+	std::string GetEnnemies();
+	std::string GetMechanisms();
+	std::string GetSpecialTiles();
+	std::string GetGroundTiles();
+	std::string GetBackGround();
+	std::string GetBossBackGround();
+	std::string GetMusic();
+	std::string GetBossMusic();
+
+	int GetCurrentLvl();
+	void SetCurrentLvl(int selectedLvl);
+	int GetUnlockedLvl();
+	void UnlockNewLvl();
+
+	bool IsLastOfGame();
+	bool IsLastUnlocked();
+
 private:
 	const float cfWhispyWoodPX = 14.0f;
 	const float cfWhispyWoodPY = 5.0f;
@@ -120,59 +171,6 @@ private:
 	};
 
 	WorkerThread workers[nMaxLvlThreads];
-
-public:
-	static OneLoneCoder_Platformer* engine;
-
-public:
-	cLevel();
-
-public:
-	bool LoadLevel(std::string levelName);
-	std::wstring GetLevel();
-	int GetWidth();
-	int GetHeight();
-	int GetInitPlayerPosX();
-	int GetInitPlayerPosY();
-	bool PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::string levelName);
-	bool PopulateMechanisms(std::string levelName);
-	bool PopulateBoss(std::vector<cDynamicCreature*>& vecDyns);
-	void DrawTiles(int nVisibleTilesX, int nVisibleTilesY, float fOffsetX, float fOffsetY);
-	void SelectTile(int startX, int endX, int nVisibleTilesX, int nVisibleTilesY, float fOffsetX, float fOffsetY, float fTileOffsetX, float fTileOffsetY);
-	void InitialiseThreadPool();
-	void DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY, float fCamOffsetX, float fCamOffsetY, olc::Sprite* spriteTiles, wchar_t tile);
-	wchar_t GetTile(int x, int y);
-	void SetTile(int x, int y, wchar_t c);
-
-	void LoadLevelsList();
-	void LoadBossesList();
-	void LoadEnnemiesList();
-	void LoadMechanismsList();
-	void LoadSpecialTilesList();
-	void LoadGroundTilesList();
-	void LoadBackGroundsList();
-	void LoadBossesBackGroundsList();
-	void LoadMusicsList();
-	void LoadBossesMusicsList();
-
-	std::string GetName();
-	std::string GetBoss();
-	std::string GetEnnemies();
-	std::string GetMechanisms();
-	std::string GetSpecialTiles();
-	std::string GetGroundTiles();
-	std::string GetBackGround();
-	std::string GetBossBackGround();
-	std::string GetMusic();
-	std::string GetBossMusic();
-
-	int GetCurrentLvl();
-	void SetCurrentLvl(int selectedLvl);
-	int GetUnlockedLvl();
-	void UnlockNewLvl();
-
-	bool IsLastOfGame();
-	bool IsLastUnlocked();
 };
 
 #endif // !DEF_LEVEL

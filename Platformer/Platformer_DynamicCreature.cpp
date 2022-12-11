@@ -149,7 +149,7 @@ void cDynamicCreature::Collision(float fElapsedTime)
 	{
 		if (vx <= 0) // Moving Left
 		{
-			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, py + fBorder)) ||
+			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, py +										   fBorder)) ||
 				engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, py + (fDynHeight / engine->GetTileHeight()) - fBorder)))
 			{
 				fNewObjectPosX = (int)fNewObjectPosX + 1;
@@ -170,7 +170,7 @@ void cDynamicCreature::Collision(float fElapsedTime)
 		}
 		else // Moving Right
 		{
-			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + fBorder)) ||
+			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py +											fBorder)) ||
 				engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + (fDynHeight / engine->GetTileHeight()) - fBorder)))
 			{
 				fNewObjectPosX = (int)fNewObjectPosX;
@@ -192,7 +192,7 @@ void cDynamicCreature::Collision(float fElapsedTime)
 
 		if (vy <= 0) // Moving Up
 		{
-			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY)) ||
+			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX +											fBorder,  fNewObjectPosY)) ||
 				engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY)))
 			{
 				fNewObjectPosY = (int)fNewObjectPosY + 1;
@@ -214,9 +214,9 @@ void cDynamicCreature::Collision(float fElapsedTime)
 		else // Moving Down
 		{
 			// Same process as kirbo crossing semi-solid platform
-			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
+			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX +											fBorder,  fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
 				engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
-				((engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
+				((engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX +										  fBorder,  fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
 				  engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight())))) && py + fDynHeight < (float)((int)fNewObjectPosY + fDynHeight) + fBorder))
 			{
 				fNewObjectPosY = (int)fNewObjectPosY + engine->GetGroundDynamicOverlay();
@@ -368,7 +368,7 @@ void cDynamicCreature::ExplodeAndDie(float fElapsedTime)
 		float explosionWidth = 142.0f;
 		float explosionHeight = 200.0f;
 
-		float centerOfBossX = ((fDynWidth - explosionWidth) / 2.0f) / engine->GetTileWidth();
+		float centerOfBossX = ((fDynWidth  - explosionWidth)  / 2.0f) / engine->GetTileWidth();
 		float centerOfBossY = ((fDynHeight - explosionHeight) / 2.0f) / engine->GetTileHeight();
 		engine->AddProjectile(px + centerOfBossX, py + centerOfBossY, true, 0.0f, 0.0f, cfExplosionDuration, "explosion", false, 0, false, false, 0, false, 0.0f, "", false, "", true);
 		engine->PlaySample("explosion");

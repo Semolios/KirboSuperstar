@@ -139,7 +139,7 @@ void cDynamicProjectile::RightCollision(cLevel* level, float fNewObjectPosX, flo
 
 void cDynamicProjectile::TopCollision(cLevel* level, float fNewObjectPosX, float fBorder, float fNewObjectPosY)
 {
-	if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY)) ||
+	if (engine->IsSolidTile(level->GetTile(fNewObjectPosX +											fBorder,  fNewObjectPosY)) ||
 		engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY)))
 	{
 		if (bBreaksAgainstTiles)
@@ -151,9 +151,9 @@ void cDynamicProjectile::TopCollision(cLevel* level, float fNewObjectPosX, float
 
 void cDynamicProjectile::BottomCollision(cLevel* level, float fNewObjectPosX, float fBorder, float fNewObjectPosY, float fElapsedTime)
 {
-	if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
+	if (engine->IsSolidTile(level->GetTile(fNewObjectPosX +											fBorder,  fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
 		engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
-		engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
+		engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX +											fBorder,  fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
 		engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))))
 	{
 		if (bBreaksAgainstTiles && !bBouncy)
@@ -189,9 +189,9 @@ void cDynamicProjectile::CheckBreakableBlocks(cLevel* level, float fNewObjectPos
 	// |     |
 	// x-----x
 	//
-	BreakTile(level, fNewObjectPosX + fBorder, fNewObjectPosY + fBorder);
+	BreakTile(level, fNewObjectPosX + fBorder, fNewObjectPosY +											 fBorder);
 	BreakTile(level, fNewObjectPosX + fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()) - fBorder);
-	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + fBorder);
+	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY +										  fBorder);
 	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()) - fBorder);
 	//
 	//  --x-- 
@@ -200,9 +200,9 @@ void cDynamicProjectile::CheckBreakableBlocks(cLevel* level, float fNewObjectPos
 	// |     |
 	//  --x-- 
 	//
-	BreakTile(level, fNewObjectPosX + fBorder, fNewObjectPosY + ((fDynHeight / engine->GetTileHeight()) / 2.0f));
+	BreakTile(level, fNewObjectPosX +										  fBorder,  fNewObjectPosY + ((fDynHeight / engine->GetTileHeight()) / 2.0f));
 	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + ((fDynHeight / engine->GetTileHeight()) / 2.0f));
-	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) / 2.0f), fNewObjectPosY + fBorder);
+	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) / 2.0f), fNewObjectPosY +										   fBorder);
 	BreakTile(level, fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) / 2.0f), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()) - fBorder);
 	//
 	//  ----- 

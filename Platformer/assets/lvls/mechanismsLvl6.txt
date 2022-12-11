@@ -17,7 +17,7 @@ Wall,82,27,fountainWall,1,1,1,185,12
 Wall,85,27,fountainWall,1,1,1,7,60
 Wall,88,27,fountainWall,1,1,1,186,60
 Wall,91,27,fountainWall,1,1,1,187,18
-Wall,65,16.1,fountainWall,1,1,1,5,28
+Wall,65,16.2,fountainWall,1,1,1,5,28
 Wall,130,16,fountainWall,1,1,1,161,18
 Wall,20,10.2,fountainWall,1,1,1,31,1
 VerticalCrusher,13,52,fountainCrusher,down,2.0

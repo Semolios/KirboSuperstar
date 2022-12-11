@@ -30,6 +30,15 @@ public:
 				  olc::Sprite* A,
 				  olc::Sprite* RBump);
 
+	static OneLoneCoder_Platformer* engine;
+
+	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller);
+	int GetSelectedItem();
+	void SetSelectedItem(int i);
+	void UpdateSavedControls();
+	void ApplyDefaultControls();
+	bool CheckConflicts();
+
 private:
 	int nSelectedItem = 0;
 	int nOffsetX = 0;
@@ -72,16 +81,6 @@ private:
 
 	std::map<std::string, olc::Key> tempControls;
 	std::map<std::string, olc::Key> previousControls;
-
-public:
-	static OneLoneCoder_Platformer* engine;
-
-	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller);
-	int GetSelectedItem();
-	void SetSelectedItem(int i);
-	void UpdateSavedControls();
-	void ApplyDefaultControls();
-	bool CheckConflicts();
 };
 
 #endif // !DEF_CONTROLS_MENU

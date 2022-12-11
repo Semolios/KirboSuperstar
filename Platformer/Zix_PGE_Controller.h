@@ -42,29 +42,6 @@ struct CBState
 
 class ControllerManager
 {
-private:
-	bool buttonState[C_BUTTON_COUNT];
-	bool lastButtonState[C_BUTTON_COUNT];
-
-	// Trigger values are in the range of 0 to 1, where 0 is fully
-	// released and 1 is fully pressed.
-	float triggerLeft = 0;
-	float triggerRight = 0;
-
-	// Stick values are in the range of -1 to 1. For X values, -1 is
-	// all the way to the left while +1 is all the way to the right.
-	float leftStickX = 0;
-	float leftStickY = 0;
-	float rightStickX = 0;
-	float rightStickY = 0;
-
-	// Whether or not the controller is plugged in.
-	bool pluggedIn = true;
-
-	bool vibrating = false;
-	float vibrateTime = 0;
-	float vibrateCounter = 0;
-
 public:
 	bool Initialize();
 	void Update(float dt);
@@ -88,6 +65,28 @@ public:
 	bool AnyButtonPressed();
 
 private:
+	bool buttonState[C_BUTTON_COUNT];
+	bool lastButtonState[C_BUTTON_COUNT];
+
+	// Trigger values are in the range of 0 to 1, where 0 is fully
+	// released and 1 is fully pressed.
+	float triggerLeft = 0;
+	float triggerRight = 0;
+
+	// Stick values are in the range of -1 to 1. For X values, -1 is
+	// all the way to the left while +1 is all the way to the right.
+	float leftStickX = 0;
+	float leftStickY = 0;
+	float rightStickX = 0;
+	float rightStickY = 0;
+
+	// Whether or not the controller is plugged in.
+	bool pluggedIn = true;
+
+	bool vibrating = false;
+	float vibrateTime = 0;
+	float vibrateCounter = 0;
+
 	float NormalizeStickValue(short value);
 };
 

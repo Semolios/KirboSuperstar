@@ -14,17 +14,16 @@ class cSelectMenu
 public:
 	cSelectMenu(olc::PixelGameEngine* gfx, olc::Sprite* background, olc::Sprite* cursor);
 
+	static OneLoneCoder_Platformer* engine;
+
+	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller);
+	int GetPlayerChoice();
+
 private:
 	int nPlayerChoice = 0;
 
 	olc::Sprite* sprBackGround;
 	olc::Sprite* sprCursor;
-
-public:
-	static OneLoneCoder_Platformer* engine;
-
-	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller);
-	int GetPlayerChoice();
 };
 
 #endif // !DEF_SELECT_MENU

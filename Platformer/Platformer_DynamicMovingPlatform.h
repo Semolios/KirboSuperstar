@@ -16,36 +16,8 @@ public:
 
 	virtual void DrawSwitch(float cameraX, float cameraY);
 
-protected:
-	std::vector<olc::Sprite*> mapStates;
-
-	// animation
-	int nCurrentFrame = 0;
-	float fTimeBetweenFrames = 0.033f;
-	float fTimeCounter = 0.0f;
-
-	float fHitboxThickness = 0.15f;
-	bool bTriggerable;
-	bool bTriggered = false;
-	bool bIced = false;
-
-	// Sides Traversability
-	bool bSolidTop = true;
-	bool bSolidBot = false;
-	bool bSolidLeft = false;
-	bool bSolidRight = false;
-	bool bTangible = true;
-
-	float fPrevPosX;
-	float fPrevPosY;
-
-	cDynamicMovingPlatform* linkedPtfm;
-	bool bLinkedToPreviousPtfm;
-
-public:
 	static OneLoneCoder_Platformer* engine;
 
-public:
 	void DrawSelf(float ox, float oy) override;
 	void Update(float fElapsedTime, float playerX, float playerY) override;
 	void UpdateHitbox(float cameraOffsetX, float cameraOffsetY) override;
@@ -83,6 +55,32 @@ public:
 	virtual void Behaviour(float fElapsedTime, float playerX, float playerY);
 	virtual void LinkPtfm(cDynamicMovingPlatform* ptfm);
 	virtual bool IsLinkedToPreviousPtfm();
+
+protected:
+	std::vector<olc::Sprite*> mapStates;
+
+	// animation
+	int nCurrentFrame = 0;
+	float fTimeBetweenFrames = 0.033f;
+	float fTimeCounter = 0.0f;
+
+	float fHitboxThickness = 0.15f;
+	bool bTriggerable;
+	bool bTriggered = false;
+	bool bIced = false;
+
+	// Sides Traversability
+	bool bSolidTop = true;
+	bool bSolidBot = false;
+	bool bSolidLeft = false;
+	bool bSolidRight = false;
+	bool bTangible = true;
+
+	float fPrevPosX;
+	float fPrevPosY;
+
+	cDynamicMovingPlatform* linkedPtfm;
+	bool bLinkedToPreviousPtfm;
 };
 
 #endif // !DEF_MOVING_PLATFORM

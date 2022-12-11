@@ -35,8 +35,8 @@ void cDynamicVerticalCrusher::Behaviour(float fElapsedTime, float playerX, float
 		break;
 		case CRUSHING:
 		{
-			if (bUp) vy = -cfCrushSpeed;
-			if (bDown) vy = cfCrushSpeed;
+			if (bUp)   vy = -cfCrushSpeed;
+			if (bDown) vy = +cfCrushSpeed;
 
 			if (fabs(py - fOriginY) >= (mapStates[nCurrentFrame]->height / engine->GetTileHeight()))
 			{

@@ -38,7 +38,7 @@ void cDynamicWind::Update(float fElapsedTime, float playerX, float playerY)
 		if (nCurrentFrame >= mapStates.size())
 			nCurrentFrame = 0;
 
-		fDynWidth = mapStates[nCurrentFrame]->width;
+		fDynWidth =  mapStates[nCurrentFrame]->width;
 		fDynHeight = mapStates[nCurrentFrame]->height;
 	}
 }

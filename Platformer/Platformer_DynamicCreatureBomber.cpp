@@ -141,7 +141,7 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 				float explosionWidth = 142.0f;
 				float explosionHeight = 200.0f;
 
-				float centerOfBossX = ((fDynWidth - explosionWidth) / 2.0f) / engine->GetTileWidth();
+				float centerOfBossX = ((fDynWidth -  explosionWidth) /  2.0f) / engine->GetTileWidth();
 				float centerOfBossY = ((fDynHeight - explosionHeight) / 2.0f) / engine->GetTileHeight();
 				engine->AddProjectile(px + centerOfBossX, py + centerOfBossY, false, 0.0f, 0.0f, cfExplosionDuration, "explosion", false, cnExplosionDmg, false);
 
@@ -159,10 +159,16 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 
 bool cDynamicCreatureBomber::RightObstacle()
 {
-	return engine->IsSolidTile(level->GetTile(px + 1, py)) || (!engine->IsSolidTile(level->GetTile(px + 1, py)) && !engine->IsSolidTile(level->GetTile(px + 1, py + 1)) && !engine->IsSemiSolidTile(level->GetTile(px + 1, py + 1)));
+	return engine->IsSolidTile(level->GetTile(px + 1, py)) || 
+		   (!engine->IsSolidTile(level->GetTile(px + 1, py + 0)) && 
+		    !engine->IsSolidTile(level->GetTile(px + 1, py + 1)) && 
+		    !engine->IsSemiSolidTile(level->GetTile(px + 1, py + 1)));
 }
 
 bool cDynamicCreatureBomber::LeftObstacle()
 {
-	return engine->IsSolidTile(level->GetTile(px, py)) || (!engine->IsSolidTile(level->GetTile(px, py)) && !engine->IsSolidTile(level->GetTile(px, py + 1)) && !engine->IsSemiSolidTile(level->GetTile(px, py + 1)));
+	return engine->IsSolidTile(level->GetTile(px, py)) ||
+		   (!engine->IsSolidTile(level->GetTile(px, py + 0)) &&
+			!engine->IsSolidTile(level->GetTile(px, py + 1)) &&
+			!engine->IsSemiSolidTile(level->GetTile(px, py + 1)));
 }
