@@ -293,7 +293,6 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["toLeft"].push_back(new olc::Sprite("assets/gfx/toLeft.png"));
 	mapPlatforms["toRight"].push_back(new olc::Sprite("assets/gfx/toRight.png"));
 
-	mapPlatforms["ceiling"].push_back(new olc::Sprite("assets/gfx/ceiling.png"));
 	mapPlatforms["marbleCeiling"].push_back(new olc::Sprite("assets/gfx/marbleBasicCeiling.png"));
 	mapPlatforms["fountainCeiling"].push_back(new olc::Sprite("assets/gfx/fountainBasicCeiling.png"));
 #pragma endregion
