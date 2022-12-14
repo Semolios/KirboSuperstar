@@ -31,7 +31,7 @@ void cHUD::BossHealthBar(olc::PixelGameEngine* gfx, olc::Sprite* bossHealthBar, 
 	}
 
 	// Health
-	gfx->FillRect(nBossHealthPosX + (nBossMaxHealth - nBossHP), nBossHealthPosY, nBossHP, nBossHealthHeight, olc::VERY_DARK_MAGENTA);
+	gfx->FillRect(nBossHealthPosX + (nBossMaxHealth - nBossHP), nBossHealthPosY, nBossHP, nBossHealthHeight, olc::RED);
 
 	// Health bar
 	gfx->SetPixelMode(olc::Pixel::ALPHA);

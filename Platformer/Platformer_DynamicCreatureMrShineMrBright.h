@@ -29,18 +29,18 @@ private:
 
 	const float cfMagmaRock1OffsetX = 1.8f;
 	const float cfMagmaRock1PosY = 8.0f;
-	const float cfMagmaRock1VelX = -2.4f;
-	const float cfMagmaRock1VelY = -10.0f;
+	const float cfMagmaRock1VelX = -3.5f;
+	const float cfMagmaRock1VelY = -7.0f;
 
 	const float cfMagmaRock2OffsetX = 2.1f;
 	const float cfMagmaRock2PosY = 7.7f;
-	const float cfMagmaRock2VelX = -0.6f;
+	const float cfMagmaRock2VelX = -2.6f;
 	const float cfMagmaRock2VelY = -12.0f;
 
 	const float cfMagmaRock3OffsetX = 2.0f;
 	const float cfMagmaRock3PosY = 8.0f;
-	const float cfMagmaRock3VelX = 4.8f;
-	const float cfMagmaRock3VelY = -10.0f;
+	const float cfMagmaRock3VelX = 6.0f;
+	const float cfMagmaRock3VelY = -13.0f;
 
 	const float cfMagmaRockDuration = 10.0f;
 
