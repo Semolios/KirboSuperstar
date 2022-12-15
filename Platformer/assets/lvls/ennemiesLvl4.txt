@@ -39,7 +39,7 @@ bomber,17,178
 bomber,18,199
 bomber,18,218
 bomber,19,101
-bomber,24,187
+bomber,20,187
 bomber,27,167
 bomber,28,199
 bomber,30,161
@@ -49,7 +49,7 @@ bomber,37,209
 bomber,37,232
 bomber,38,199
 bomber,41,137
-bomber,42,187
+bomber,38,187
 bomber,50,99
 bomber,55,214
 bomber,56,130
