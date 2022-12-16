@@ -116,6 +116,8 @@ private:
 	int nFirstFrameDownTilt = 1;
 	int nLastFrameDownTilt = 4;
 
+	void DashToKirbo(float playerX);
+	void TeleportToKirbo();
 	void ChangeState(AI_STATE state, bool resetBehaviourTimer = true);
 	void UpdateTimers();
 	void LoopAnimation(int firstFrame, int lastFrame);

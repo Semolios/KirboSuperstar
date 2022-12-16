@@ -48,31 +48,38 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 				// Select attack
 				if (abs(px - playerX) >= fKirboIsFarPoint)
 				{
+					// If kirbo is far, he only uses dashes and TP
 					int chosenAttack = rand() % 2;
 
 					if (chosenAttack == 0)
 					{
-						if (px < playerX - fStayAwayDistance || px > playerX + fStayAwayDistance)
-							engine->PlaySample("dash");
-
-						ChangeState(AI_DASHING);
+						DashToKirbo(playerX);
 					}
 					else
 					{
-						bUseTPAttack = true;
-						engine->PlaySample("behold");
-						ChangeState(AI_DISAPPEARING);
+						TeleportToKirbo();
 					}
 				}
 				else
 				{
-					// if kirbo is near, MK use tornado or down tilt
-					int chosenAttack = rand() % 2;
+					int chosenAttack = rand() % 4;
 
 					if (chosenAttack == 0)
+					{
 						ChangeState(AI_TORNADO);
-					else
+					}
+					else if (chosenAttack == 1)
+					{
 						ChangeState(AI_DOWNTILT);
+					}
+					else if (chosenAttack == 2)
+					{
+						DashToKirbo(playerX);
+					}
+					else
+					{
+						TeleportToKirbo();
+					}
 				}
 			}
 		}
@@ -407,6 +414,21 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 
 	if (nHealth <= 0 && engine->IsSamplePlaying("meleeControllerRape"))
 		engine->StopSample("meleeControllerRape");
+}
+
+void cDynamicCreatureSSTierMetaKnight::TeleportToKirbo()
+{
+	bUseTPAttack = true;
+	engine->PlaySample("behold");
+	ChangeState(AI_DISAPPEARING);
+}
+
+void cDynamicCreatureSSTierMetaKnight::DashToKirbo(float playerX)
+{
+	if (px < playerX - fStayAwayDistance || px > playerX + fStayAwayDistance)
+		engine->PlaySample("dash");
+
+	ChangeState(AI_DASHING);
 }
 
 void cDynamicCreatureSSTierMetaKnight::ChangeState(AI_STATE state, bool resetBehaviourTimer)
