@@ -64,7 +64,7 @@
         "Entry"
         {
         "MsmKey" = "8:_03B5F6E3E49ECDDA90FDC526B95AFAB8"
-        "OwnerKey" = "8:_C1F5E9FA6361400996B0CC0ED347E82E"
+        "OwnerKey" = "8:_98E3D866565B4F6A8C332E89228A1E8D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -292,7 +292,7 @@
         "Entry"
         {
         "MsmKey" = "8:_16B2CB2EFCC34E649F95F5CAC0C8F0E5"
-        "OwnerKey" = "8:_C1F5E9FA6361400996B0CC0ED347E82E"
+        "OwnerKey" = "8:_98E3D866565B4F6A8C332E89228A1E8D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -364,7 +364,7 @@
         "Entry"
         {
         "MsmKey" = "8:_1BE4F895A349D786825351C9896391DC"
-        "OwnerKey" = "8:_C1F5E9FA6361400996B0CC0ED347E82E"
+        "OwnerKey" = "8:_98E3D866565B4F6A8C332E89228A1E8D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -465,6 +465,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_23216AA5628541F4AF3F5D45619472F8"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_23227EBD868740CE99600740F39CE190"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -532,7 +538,7 @@
         "Entry"
         {
         "MsmKey" = "8:_2560B5BF8ADB411AC1FD5E991F9B8F55"
-        "OwnerKey" = "8:_C1F5E9FA6361400996B0CC0ED347E82E"
+        "OwnerKey" = "8:_98E3D866565B4F6A8C332E89228A1E8D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -592,7 +598,7 @@
         "Entry"
         {
         "MsmKey" = "8:_28A0D77B6A134D98881A8F7B3FC17C86"
-        "OwnerKey" = "8:_C1F5E9FA6361400996B0CC0ED347E82E"
+        "OwnerKey" = "8:_98E3D866565B4F6A8C332E89228A1E8D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -790,7 +796,7 @@
         "Entry"
         {
         "MsmKey" = "8:_3767640E449259D7FD7F8B306671AC0A"
-        "OwnerKey" = "8:_C1F5E9FA6361400996B0CC0ED347E82E"
+        "OwnerKey" = "8:_98E3D866565B4F6A8C332E89228A1E8D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -820,7 +826,7 @@
         "Entry"
         {
         "MsmKey" = "8:_39E52C14BBE9FC7CD89D991274C90190"
-        "OwnerKey" = "8:_C1F5E9FA6361400996B0CC0ED347E82E"
+        "OwnerKey" = "8:_98E3D866565B4F6A8C332E89228A1E8D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -928,7 +934,7 @@
         "Entry"
         {
         "MsmKey" = "8:_453A223F73B0B64EED25079E8658FD13"
-        "OwnerKey" = "8:_C1F5E9FA6361400996B0CC0ED347E82E"
+        "OwnerKey" = "8:_98E3D866565B4F6A8C332E89228A1E8D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1240,12 +1246,6 @@
         "Entry"
         {
         "MsmKey" = "8:_5F9F1581BB0040EB99E74FBCF900054D"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_5FC810309F48482781D16BBE2879478B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1678,7 +1678,7 @@
         "Entry"
         {
         "MsmKey" = "8:_7B7AAFF16AFCB9AE6073A724DEFA3F57"
-        "OwnerKey" = "8:_C1F5E9FA6361400996B0CC0ED347E82E"
+        "OwnerKey" = "8:_98E3D866565B4F6A8C332E89228A1E8D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1864,7 +1864,7 @@
         "Entry"
         {
         "MsmKey" = "8:_8AD6844A9664485668A3F073585DA8F5"
-        "OwnerKey" = "8:_C1F5E9FA6361400996B0CC0ED347E82E"
+        "OwnerKey" = "8:_98E3D866565B4F6A8C332E89228A1E8D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1948,7 +1948,7 @@
         "Entry"
         {
         "MsmKey" = "8:_9059920E0E4B777C4B14D8D3DB7B2B6B"
-        "OwnerKey" = "8:_C1F5E9FA6361400996B0CC0ED347E82E"
+        "OwnerKey" = "8:_98E3D866565B4F6A8C332E89228A1E8D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -2031,6 +2031,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_98E3D866565B4F6A8C332E89228A1E8D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_9979056760174D57AD5682C7CE7AB3E4"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -2038,7 +2044,7 @@
         "Entry"
         {
         "MsmKey" = "8:_99BF0F4720D171F4E46BB9AF49113082"
-        "OwnerKey" = "8:_C1F5E9FA6361400996B0CC0ED347E82E"
+        "OwnerKey" = "8:_98E3D866565B4F6A8C332E89228A1E8D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -2098,7 +2104,7 @@
         "Entry"
         {
         "MsmKey" = "8:_9FEFC0C3362C721CF173C90AA73789C0"
-        "OwnerKey" = "8:_C1F5E9FA6361400996B0CC0ED347E82E"
+        "OwnerKey" = "8:_98E3D866565B4F6A8C332E89228A1E8D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -2122,7 +2128,7 @@
         "Entry"
         {
         "MsmKey" = "8:_A2FAA2301FB31999537D7612AB1C94B4"
-        "OwnerKey" = "8:_C1F5E9FA6361400996B0CC0ED347E82E"
+        "OwnerKey" = "8:_98E3D866565B4F6A8C332E89228A1E8D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -2428,7 +2434,7 @@
         "Entry"
         {
         "MsmKey" = "8:_B8A673CE34C367C33820DA3C78180FD3"
-        "OwnerKey" = "8:_C1F5E9FA6361400996B0CC0ED347E82E"
+        "OwnerKey" = "8:_98E3D866565B4F6A8C332E89228A1E8D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -2511,19 +2517,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_C16C71650B9A4122A85663897534B573"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_C1976A0A21B5465FA6EC629BE1C01AF6"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C1F5E9FA6361400996B0CC0ED347E82E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -2997,6 +2991,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_ED851AC2A86B477DB8436D3609B24531"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_EDDE8740FA38419AA6AE6391A0D6B92B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -3004,7 +3004,7 @@
         "Entry"
         {
         "MsmKey" = "8:_EEA1D9831884823776B0B1293599F667"
-        "OwnerKey" = "8:_C1F5E9FA6361400996B0CC0ED347E82E"
+        "OwnerKey" = "8:_98E3D866565B4F6A8C332E89228A1E8D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -4180,7 +4180,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -4420,7 +4420,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -4744,6 +4744,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_23216AA5628541F4AF3F5D45619472F8"
+            {
+            "SourcePath" = "8:..\\Platformer\\assets\\saveAndCtrl\\controls.txt"
+            "TargetName" = "8:controls.txt"
+            "Tag" = "8:"
+            "Folder" = "8:_AAF6B64E586B4607AFD781FB29566FB1"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_23227EBD868740CE99600740F39CE190"
             {
             "SourcePath" = "8:..\\Platformer\\assets\\gfx\\selDefault.png"
@@ -4980,7 +5000,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -5840,7 +5860,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -7330,26 +7350,6 @@
             "TargetName" = "8:swordAttack.png"
             "Tag" = "8:"
             "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5FC810309F48482781D16BBE2879478B"
-            {
-            "SourcePath" = "8:..\\Platformer\\assets\\ctrls\\controls.txt"
-            "TargetName" = "8:controls.txt"
-            "Tag" = "8:"
-            "Folder" = "8:_C323F89B0F1E4A61919C01F72805649C"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -9700,7 +9700,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -10000,7 +10000,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -11550,26 +11550,6 @@
             "TargetName" = "8:doorDebris3.png"
             "Tag" = "8:"
             "Folder" = "8:_B1488C8FFE694B3CA81B420D7EDDE97E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C16C71650B9A4122A85663897534B573"
-            {
-            "SourcePath" = "8:..\\Platformer\\assets\\lvls\\save.txt"
-            "TargetName" = "8:save.txt"
-            "Tag" = "8:"
-            "Folder" = "8:_EA76159DDA8F49268F31C42BEF0A946A"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -13164,6 +13144,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_ED851AC2A86B477DB8436D3609B24531"
+            {
+            "SourcePath" = "8:..\\Platformer\\assets\\saveAndCtrl\\save.txt"
+            "TargetName" = "8:save.txt"
+            "Tag" = "8:"
+            "Folder" = "8:_AAF6B64E586B4607AFD781FB29566FB1"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EDDE8740FA38419AA6AE6391A0D6B92B"
             {
             "SourcePath" = "8:..\\Platformer\\assets\\gfx\\unselDefault.png"
@@ -13732,6 +13732,28 @@
                 {
                 }
             }
+            "{1525181F-901A-416C-8A58-119130FE478E}:_CDD8174D033549A0AC15C19F72AD2FE8"
+            {
+            "Name" = "8:#1918"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:PersonalFolder"
+                "Folders"
+                {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_AAF6B64E586B4607AFD781FB29566FB1"
+                    {
+                    "Name" = "8:Kirbo Superstar"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_4A81F95EDD5C4588BA1C4A1C95BA64DC"
+                        "Folders"
+                        {
+                        }
+                    }
+                }
+            }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_E283B790B04B4094B3C661B9367D9896"
             {
             "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
@@ -13758,17 +13780,6 @@
                             "Condition" = "8:"
                             "Transitive" = "11:FALSE"
                             "Property" = "8:_051C08B66BB7473DA59475750DE9D15B"
-                                "Folders"
-                                {
-                                }
-                            }
-                            "{9EF0B969-E518-4E46-987F-47570745A589}:_C323F89B0F1E4A61919C01F72805649C"
-                            {
-                            "Name" = "8:ctrls"
-                            "AlwaysCreate" = "11:FALSE"
-                            "Condition" = "8:"
-                            "Transitive" = "11:FALSE"
-                            "Property" = "8:_378C596381B740E5BF4956143B99A87A"
                                 "Folders"
                                 {
                                 }
@@ -13816,7 +13827,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Kirbo Superstar"
         "ProductCode" = "8:{D5E739C6-409C-4E68-9559-ACA8C8AE94FB}"
-        "PackageCode" = "8:{B58C348F-DC43-4B71-81AE-BA1FFC69EC7A}"
+        "PackageCode" = "8:{4CD4C2E2-4474-416A-953C-78BDEEFC409F}"
         "UpgradeCode" = "8:{E5D46990-4A70-406A-8219-A41C4B705770}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -13936,7 +13947,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_550865B7AF994DEA901FE8F6AFA930AB"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_AAC1F6F38C7C442CB9115B03EA1B0F94"
             {
             "Name" = "8:Kirbo Superstar"
             "Arguments" = "8:"
@@ -13944,10 +13955,10 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_E283B790B04B4094B3C661B9367D9896"
+            "Target" = "8:_98E3D866565B4F6A8C332E89228A1E8D"
             "Folder" = "8:_862BC3658A594E88B41A3BE6C48F3DD0"
             "WorkingFolder" = "8:_E283B790B04B4094B3C661B9367D9896"
-            "Icon" = "8:"
+            "Icon" = "8:_2EC4FE11EBB14E76B245455CD938A480"
             "Feature" = "8:"
             }
         }
@@ -14349,7 +14360,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C1F5E9FA6361400996B0CC0ED347E82E"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_98E3D866565B4F6A8C332E89228A1E8D"
             {
             "SourcePath" = "8:..\\x64\\Release\\Platformer.exe"
             "TargetName" = "8:"

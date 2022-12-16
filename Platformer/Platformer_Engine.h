@@ -41,6 +41,7 @@
 #include "Platformer_WorldMap.h"
 
 #include <cTime>
+#include <Lmcons.h>
 
 class OneLoneCoder_Platformer : public olc::PixelGameEngine
 {

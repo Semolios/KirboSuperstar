@@ -48,7 +48,13 @@ bool cControlsMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Contro
 	{
 		bAppliedControls = true;
 
-		std::wifstream file("assets/ctrls/controls.txt");
+		char username[UNLEN + 1];
+		DWORD username_len = UNLEN + 1;
+		GetUserNameA(username, &username_len);
+
+		std::string un = username;
+
+		std::wifstream file("C:/Users/" + un + "/Documents/Kirbo Superstar/controls.txt");
 
 		if (file)
 		{
@@ -238,7 +244,14 @@ void cControlsMenu::UpdateSavedControls()
 		"poyo=" + engine->olcKeyToStr(tempControls["poyo"]);
 
 	std::ofstream controls;
-	controls.open("assets/ctrls/controls.txt", std::ofstream::trunc);
+
+	char username[UNLEN + 1];
+	DWORD username_len = UNLEN + 1;
+	GetUserNameA(username, &username_len);
+
+	std::string un = username;
+
+	controls.open("C:/Users/" + un + "/Documents/Kirbo Superstar/controls.txt", std::ofstream::trunc);
 	controls << ctrls;
 	controls.close();
 }

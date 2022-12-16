@@ -6,7 +6,13 @@ OneLoneCoder_Platformer* cLevel::engine = nullptr;
 
 cLevel::cLevel()
 {
-	std::wifstream file("assets/lvls/save.txt");
+	char username[UNLEN + 1];
+	DWORD username_len = UNLEN + 1;
+	GetUserNameA(username, &username_len);
+
+	std::string un = username;
+
+	std::wifstream file("C:/Users/" + un + "/Documents/Kirbo Superstar/save.txt");
 	if (file)
 	{
 		std::wstring line;
@@ -943,7 +949,14 @@ void cLevel::UnlockNewLvl()
 	nUnlockedLevel++;
 
 	std::ofstream save;
-	save.open("assets/lvls/save.txt", std::ofstream::trunc);
+
+	char username[UNLEN + 1];
+	DWORD username_len = UNLEN + 1;
+	GetUserNameA(username, &username_len);
+
+	std::string un = username;
+
+	save.open("C:/Users/" + un + "/Documents/Kirbo Superstar/save.txt", std::ofstream::trunc);
 	save << nUnlockedLevel;
 	save.close();
 }
