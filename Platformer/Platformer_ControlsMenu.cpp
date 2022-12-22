@@ -54,7 +54,7 @@ bool cControlsMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Contro
 
 		std::string un = username;
 
-		std::wifstream file("C:/Users/" + un + "/Documents/Kirbo Superstar/controls.txt");
+		std::wifstream file("C:/Users/" + un + "/AppData/Roaming/Kirbo Superstar/controls.txt");
 
 		if (file)
 		{
@@ -251,7 +251,7 @@ void cControlsMenu::UpdateSavedControls()
 
 	std::string un = username;
 
-	controls.open("C:/Users/" + un + "/Documents/Kirbo Superstar/controls.txt", std::ofstream::trunc);
+	controls.open("C:/Users/" + un + "/AppData/Roaming/Kirbo Superstar/controls.txt", std::ofstream::trunc);
 	controls << ctrls;
 	controls.close();
 }

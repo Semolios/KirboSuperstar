@@ -1656,7 +1656,7 @@ void OneLoneCoder_Platformer::ApplyControls()
 
 	std::string un = username;
 
-	std::wifstream file("C:/Users/" + un + "/Documents/Kirbo Superstar/controls.txt");
+	std::wifstream file("C:/Users/" + un + "/AppData/Roaming/Kirbo Superstar/controls.txt");
 
 	if (file)
 	{

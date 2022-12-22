@@ -12,7 +12,7 @@ cLevel::cLevel()
 
 	std::string un = username;
 
-	std::wifstream file("C:/Users/" + un + "/Documents/Kirbo Superstar/save.txt");
+	std::wifstream file("C:/Users/" + un + "/AppData/Roaming/Kirbo Superstar/save.txt");
 	if (file)
 	{
 		std::wstring line;
@@ -956,7 +956,7 @@ void cLevel::UnlockNewLvl()
 
 	std::string un = username;
 
-	save.open("C:/Users/" + un + "/Documents/Kirbo Superstar/save.txt", std::ofstream::trunc);
+	save.open("C:/Users/" + un + "/AppData/Roaming/Kirbo Superstar/save.txt", std::ofstream::trunc);
 	save << nUnlockedLevel;
 	save.close();
 }
