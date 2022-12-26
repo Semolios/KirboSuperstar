@@ -32,6 +32,7 @@ bool OneLoneCoder_Platformer::OnUserUpdate(float fElapsedTime)
 			case GS_LOADBOSSLEVEL: GameState_LoadBossLevel(fElapsedTime); break;
 			case GS_SELECTMENU:	   GameState_SelectMenu(fElapsedTime);    break;
 			case GS_CONTROLS:	   GameState_Controls(fElapsedTime);	  break;
+			case GS_SOUNDS:		   GameState_Sounds(fElapsedTime);		  break;
 			case GS_CREDITS:	   GameState_Credits(fElapsedTime);		  break;
 			case GS_CLOSE:		   GameState_Close(fElapsedTime);	      break;
 			case GS_TRANSITION:	   GameState_Transition(fElapsedTime);    break;
@@ -212,6 +213,18 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 			UpdateProgressBar("Loading 51%");
 
+			nLoadingState = LS_SOUNDMENU;
+		}
+		break;
+		case LS_SOUNDMENU:
+		{
+			sprSoundMenuNoSound = new olc::Sprite("assets/gfx/soundMenuNoSound.png");
+			sprSoundMenuLow = new olc::Sprite("assets/gfx/soundMenuLow.png");
+			sprSoundMenuMid = new olc::Sprite("assets/gfx/soundMenuMid.png");
+			sprSoundMenuHigh = new olc::Sprite("assets/gfx/soundMenuHigh.png");
+			soundMenu = new cSoundMenu(this, sprSoundMenuNoSound, sprSoundMenuLow, sprSoundMenuMid, sprSoundMenuHigh);
+			UpdateProgressBar("Loading 52%");
+
 			nLoadingState = LS_CONTROLSMENU;
 		}
 		break;
@@ -255,7 +268,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 
 			ApplyControls();
 
-			UpdateProgressBar("Loading 52%");
+			UpdateProgressBar("Loading 54%");
 
 			nLoadingState = LS_CREDITSMENU;
 		}
@@ -286,6 +299,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		{
 			cCamera::engine = this;
 			cControlsMenu::engine = this;
+			cSoundMenu::engine = this;
 			cDynamicCreature::engine = this;
 			cDynamicCreatureBladeKnight::engine = this;
 			cDynamicCreatureBomber::engine = this;
@@ -899,6 +913,8 @@ bool OneLoneCoder_Platformer::GameState_SelectMenu(float fElapsedTime)
 			GoToControlsMenu();
 		else if (selectMenu->GetPlayerChoice() == 2)
 			TransitionTo("GS_CREDITS", true);
+		else if (selectMenu->GetPlayerChoice() == 3)
+			GoToSoundMenu();
 		else
 			nGameState = GS_CLOSE; // No need a transition when closing the game
 	}
@@ -919,6 +935,19 @@ bool OneLoneCoder_Platformer::GameState_Controls(float fElapsedTime)
 			waveEngine.StopAll();
 			TransitionTo("GS_SELECTMENU", true);
 		}
+	}
+
+	return true;
+}
+
+bool OneLoneCoder_Platformer::GameState_Sounds(float fElapsedTime)
+{
+	soundMenu->Update(this, fElapsedTime, GetController());
+
+	if (GetKey(olc::Key::ESCAPE).bPressed || controller.GetButton(B).bPressed)
+	{
+		waveEngine.StopAll();
+		TransitionTo("GS_SELECTMENU", true);
 	}
 
 	return true;
@@ -1398,7 +1427,7 @@ void OneLoneCoder_Platformer::SetbBossKilled(bool bossKilled)
 
 void OneLoneCoder_Platformer::SetGameState(std::string gameState)
 {
-	if (gameState == "GS_LOADING")			  nGameState = GS_LOADING;
+	if		(gameState == "GS_LOADING")		  nGameState = GS_LOADING;
 	else if (gameState == "GS_TITLE")		  nGameState = GS_TITLE;
 	else if (gameState == "GS_MAIN")		  nGameState = GS_MAIN;
 	else if (gameState == "GS_LEVELSTART")	  nGameState = GS_LEVELSTART;
@@ -1409,6 +1438,7 @@ void OneLoneCoder_Platformer::SetGameState(std::string gameState)
 	else if (gameState == "GS_LOADBOSSLEVEL") nGameState = GS_LOADBOSSLEVEL;
 	else if (gameState == "GS_SELECTMENU")	  nGameState = GS_SELECTMENU;
 	else if (gameState == "GS_CONTROLS")	  nGameState = GS_CONTROLS;
+	else if (gameState == "GS_SOUNDS")		  nGameState = GS_SOUNDS;
 	else if (gameState == "GS_CREDITS")		  nGameState = GS_CREDITS;
 	else if (gameState == "GS_Transition")	  nGameState = GS_TRANSITION;
 }
@@ -1476,6 +1506,12 @@ void OneLoneCoder_Platformer::GoToControlsMenu()
 	waveEngine.StopAll();
 	pwMenu = waveEngine.PlayWaveform(&sndMenu, true);
 	TransitionTo("GS_CONTROLS", true);
+}
+
+void OneLoneCoder_Platformer::GoToSoundMenu()
+{
+	waveEngine.StopAll();
+	TransitionTo("GS_SOUNDS", true);
 }
 
 void OneLoneCoder_Platformer::HitStop()
@@ -1562,6 +1598,11 @@ void OneLoneCoder_Platformer::StopLevelMusic()
 {
 	if (waveEngine.IsWaveformPlaying(&sndLevelMusic))
 		waveEngine.StopWaveform(pwLevelMusic);
+}
+
+void OneLoneCoder_Platformer::UpdateVolume(int volume)
+{
+	waveEngine.SetOutputVolume((float)volume / 10.0f);
 }
 
 void OneLoneCoder_Platformer::ChangeKirboVelocities(float vx, float vy)
