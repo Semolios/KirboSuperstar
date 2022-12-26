@@ -3,14 +3,15 @@
 
 OneLoneCoder_Platformer* cSoundMenu::engine = nullptr;
 
-cSoundMenu::cSoundMenu(olc::PixelGameEngine* gfx, olc::Sprite* soundMenuNoSound, olc::Sprite* soundMenuLow, olc::Sprite* soundMenuMid, olc::Sprite* soundMenuHigh)
+cSoundMenu::cSoundMenu(olc::PixelGameEngine* gfx, olc::Sprite* soundMenuNoSound, olc::Sprite* soundMenuLow, olc::Sprite* soundMenuMid, olc::Sprite* soundMenuHigh, olc::Sprite* soundMenuMax)
 {
 	sprSoundMenuNoSound = soundMenuNoSound;
 	sprSoundMenuLow = soundMenuLow;
 	sprSoundMenuMid = soundMenuMid;
 	sprSoundMenuHigh = soundMenuHigh;
+	sprSoundMenuMax = soundMenuMax;
 
-	nSoundVolume = 10;
+	nSoundVolume = 9;
 }
 
 bool cSoundMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller)
@@ -23,8 +24,10 @@ bool cSoundMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Controlle
 		gfx->DrawSprite(0, 0, sprSoundMenuLow);
 	else if (nSoundVolume >= 4 && nSoundVolume <= 6)
 		gfx->DrawSprite(0, 0, sprSoundMenuMid);
-	else if (nSoundVolume >= 7)
+	else if (nSoundVolume >= 7 && nSoundVolume <= 9)
 		gfx->DrawSprite(0, 0, sprSoundMenuHigh);
+	else if (nSoundVolume == 10)
+		gfx->DrawSprite(0, 0, sprSoundMenuMax);
 
 	if ((gfx->GetKey(olc::LEFT).bPressed || controller->GetButton(LEFT).bPressed) && nSoundVolume > 0)
 	{

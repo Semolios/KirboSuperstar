@@ -411,6 +411,7 @@ private:
 	olc::Sprite* sprSoundMenuLow;
 	olc::Sprite* sprSoundMenuMid;
 	olc::Sprite* sprSoundMenuHigh;
+	olc::Sprite* sprSoundMenuMax;
 	cSoundMenu* soundMenu;
 
 	// Credits Menu
