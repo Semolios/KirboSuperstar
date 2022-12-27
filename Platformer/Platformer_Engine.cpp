@@ -224,6 +224,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			sprSoundMenuHigh = new olc::Sprite("assets/gfx/soundMenuHigh.png");
 			sprSoundMenuMax = new olc::Sprite("assets/gfx/soundMenuMax.png");
 			soundMenu = new cSoundMenu(this, sprSoundMenuNoSound, sprSoundMenuLow, sprSoundMenuMid, sprSoundMenuHigh, sprSoundMenuMax);
+			UpdateVolume(soundMenu->GetSoundVolume());
 
 			UpdateProgressBar("Loading 52%");
 
