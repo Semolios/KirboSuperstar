@@ -278,7 +278,6 @@ bool cControlsMenu::CheckConflicts()
 
 	for (const auto& pair : tempControls)
 	{
-		std::cout << pair.first << ' ' << pair.second;
 		const int num_times = aux_map[pair.second];
 		if (num_times > 1)
 			return true;
