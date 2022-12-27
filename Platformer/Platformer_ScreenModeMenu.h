@@ -17,7 +17,7 @@ public:
 	static OneLoneCoder_Platformer* engine;
 
 	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller);
-	void UpdateResolution();
+	void UpdateScreenMode();
 
 private:
 	const int cnScreenModeTextX = 150;

@@ -41,7 +41,7 @@ bool cScreenModeMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Cont
 	{
 		bWindowed = !bWindowed;
 		engine->PlaySample("menuBip");
-		UpdateResolution();
+		UpdateScreenMode();
 	}
 
 	if (!bWindowed) 
@@ -61,9 +61,9 @@ bool cScreenModeMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Cont
 	return true;
 }
 
-void cScreenModeMenu::UpdateResolution()
+void cScreenModeMenu::UpdateScreenMode()
 {
-	std::ofstream resolution;
+	std::ofstream mode;
 
 	char username[UNLEN + 1];
 	DWORD username_len = UNLEN + 1;
@@ -71,12 +71,12 @@ void cScreenModeMenu::UpdateResolution()
 
 	std::string un = username;
 
-	resolution.open("C:/Users/" + un + "/AppData/Roaming/Kirbo Superstar/screenMode.txt", std::ofstream::trunc);
+	mode.open("C:/Users/" + un + "/AppData/Roaming/Kirbo Superstar/screenMode.txt", std::ofstream::trunc);
 	
 	if (bWindowed)
-		resolution << "windowed";
+		mode << "windowed";
 	else
-		resolution << "fullscreen";
+		mode << "fullscreen";
 	
-	resolution.close();
+	mode.close();
 }
