@@ -128,6 +128,20 @@ private:
 	bool bChargingBeam = true;
 	// Gun attack
 	const float fGunTime = 4.0f;
+	// meteors spawn
+	const float cfMeteorPosXRangeOffset = 1.0f;
+	const float cfMeteorPosY = 2.0f;
+	const float cfMeteorDuration = 10.0f;
+	const float cfMeteorVelX = 5.0f;
+	const float cfMeteorVelY = 5.0f;
+	const float cfMeteorSpawnTimeMaxHP = 2.0f;
+	const float cfMeteorSpawnTimeHiHP = 1.6f;
+	const float cfMeteorSpawnTimeMiHP = 1.3f;
+	const float cfMeteorSpawnTimeLoHP = 1.0f;
+	const int cnMeteorPosXRange = 150;
+	const int cnMeteorDmg = 1;
+	float fMeteorsTimer = 0.0f;
+	float fMeteorsSpawnTime = 1.5f;
 
 	bool bCanSpawnAOE = true;
 	bool bAlreadyUsedGunLastTime = false;

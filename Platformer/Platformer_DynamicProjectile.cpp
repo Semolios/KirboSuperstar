@@ -366,6 +366,8 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProject
 
 	mapProjectiles["magmaBoulder"].push_back(new olc::Sprite("assets/gfx/magmaBoulder.png"));
 
+	mapProjectiles["stars"].push_back(new olc::Sprite("assets/gfx/stars.png"));
+
 	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam00.png"));
 	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam01.png"));
 	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam02.png"));

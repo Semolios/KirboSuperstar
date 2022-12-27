@@ -262,6 +262,25 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 		break;
 	}
 
+	// Periodically spawn apples at a random location
+	fMeteorsTimer += fElapsedTime;
+
+	if (fMeteorsTimer >= fMeteorsSpawnTime)
+	{
+		fMeteorsTimer = 0.0f;
+
+		// Apple spawn between 1 and 16 (Whispy wood position)
+		float fMeteorPosX = ((float)(rand() % cnMeteorPosXRange) / 10.0f) + cfMeteorPosXRangeOffset;
+
+		int nChosenMeteor = rand() % 2;
+
+		// Spawn meteor
+		if (nChosenMeteor == 0)
+			engine->AddProjectile(fMeteorPosX, cfMeteorPosY, false, +cfMeteorVelX, cfMeteorVelY, cfMeteorDuration, "magmaBoulder", false, cnMeteorDmg, true, false);
+		else
+			engine->AddProjectile(fMeteorPosX, cfMeteorPosY, false, -cfMeteorVelX, cfMeteorVelY, cfMeteorDuration, "stars", false, cnMeteorDmg, true, false);
+	}
+
 	UpdateTimers();
 
 	nAIState = nAINextState;
@@ -283,24 +302,28 @@ void cDynamicCreatureMrShineMrBright::UpdateTimers()
 		fMoveSpeed = cfMoveSpeedMaxHP;
 		fColumnSpawnTime = cfColumnSpawnTimeMaxHP;
 		fWaitingTime = cfWaitingTimeMaxHP;
+		fMeteorsSpawnTime = cfMeteorSpawnTimeMaxHP;
 	}
 	else if (nHealth < cnHiHP && nHealth >= cnMiHP)
 	{
 		fMoveSpeed = cfMoveSpeedHiHP;
 		fColumnSpawnTime = cfColumnSpawnTimeHiHP;
 		fWaitingTime = cfWaitingTimeHiHP;
+		fMeteorsSpawnTime = cfMeteorSpawnTimeHiHP;
 	}
 	else if (nHealth < cnMiHP && nHealth >= cnLoHP)
 	{
 		fMoveSpeed = cfMoveSpeedMiHP;
 		fColumnSpawnTime = cfColumnSpawnTimeMiHP;
 		fWaitingTime = cfWaitingTimeMiHP;
+		fMeteorsSpawnTime = cfMeteorSpawnTimeMiHP;
 	}
 	else
 	{
 		fMoveSpeed = cfMoveSpeedLoHP;
 		fColumnSpawnTime = cfColumnSpawnTimeLoHP;
 		fWaitingTime = cfWaitingTimeLoHP;
+		fMeteorsSpawnTime = cfMeteorSpawnTimeLoHP;
 	}
 }
 
