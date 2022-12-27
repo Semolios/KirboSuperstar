@@ -42,6 +42,11 @@ private:
 	const float cfMagmaRock3VelX = 6.0f;
 	const float cfMagmaRock3VelY = -13.0f;
 
+	const float cfMagmaRock4OffsetX = 1.9f;
+	const float cfMagmaRock4PosY = 7.7f;
+	const float cfMagmaRock4VelX = 5.0f;
+	const float cfMagmaRock4VelY = -10.0f;
+
 	const float cfMagmaRockDuration = 10.0f;
 
 	const float cfChargeBeamOffsetX = 1.8f;

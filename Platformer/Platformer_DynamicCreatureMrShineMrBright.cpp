@@ -121,6 +121,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 				engine->AddProjectile(px + cfMagmaRock1OffsetX, cfMagmaRock1PosY, false, cfMagmaRock1VelX, cfMagmaRock1VelY, cfMagmaRockDuration, "magmaBoulder", true, cnMagmaDmg, true, false);
 				engine->AddProjectile(px + cfMagmaRock2OffsetX, cfMagmaRock2PosY, false, cfMagmaRock2VelX, cfMagmaRock2VelY, cfMagmaRockDuration, "magmaBoulder", true, cnMagmaDmg, true, false);
 				engine->AddProjectile(px + cfMagmaRock3OffsetX, cfMagmaRock3PosY, false, cfMagmaRock3VelX, cfMagmaRock3VelY, cfMagmaRockDuration, "magmaBoulder", true, cnMagmaDmg, true, false);
+				engine->AddProjectile(px + cfMagmaRock4OffsetX, cfMagmaRock4PosY, false, cfMagmaRock4VelX, cfMagmaRock4VelY, cfMagmaRockDuration, "magmaBoulder", true, cnMagmaDmg, true, false);
 			}
 
 			fBehaviourTimer += fElapsedTime;
