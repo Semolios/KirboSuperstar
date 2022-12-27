@@ -67,9 +67,25 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 			{
 				nChosenAttack = rand() % cnNumberOfAttack;
 
+				if (!bAlreadyUsedGunLastTime && nChosenAttack == 4)
+				{
+					bAlreadyUsedGunLastTime = true;
+				}
+				else if (bAlreadyUsedGunLastTime && nChosenAttack == 4)
+				{
+					bAlreadyUsedGunLastTime = false;
+					nChosenAttack = rand() % (cnNumberOfAttack - 1);
+				}
+				else if (nChosenAttack != 4)
+				{
+					bAlreadyUsedGunLastTime = false;
+				}
+
 				if (nChosenAttack == 0) ChangeState(AI_FLAMECOLUMN);
-				if (nChosenAttack == 1) ChangeState(AI_BEAM);
-				if (nChosenAttack == 2) ChangeState(AI_GUN);
+				if (nChosenAttack == 1) ChangeState(AI_FLAMECOLUMN);
+				if (nChosenAttack == 2) ChangeState(AI_BEAM);
+				if (nChosenAttack == 3) ChangeState(AI_BEAM);
+				if (nChosenAttack == 4) ChangeState(AI_GUN);
 			}
 		}
 		break;

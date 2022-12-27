@@ -74,7 +74,7 @@ private:
 
 	const int cnMoveLocXRange = 150;
 	const int cnMoveLocYRange = 70;
-	const int cnNumberOfAttack = 3;
+	const int cnNumberOfAttack = 5; // reduce the GUN attack ratio, too easy free dps
 	const int cnLowShakeAmplitudeX = 40;
 	const int cnLowShakeAmplitudeY = 40;
 	const int cnHighShakeAmplitudeX = 200;
@@ -130,6 +130,7 @@ private:
 	const float fGunTime = 4.0f;
 
 	bool bCanSpawnAOE = true;
+	bool bAlreadyUsedGunLastTime = false;
 
 	void ChangeState(AI_STATE state);
 	void UpdateTimers();
