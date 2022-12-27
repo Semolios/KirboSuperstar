@@ -18,8 +18,11 @@ public:
 
 	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller);
 	int GetPlayerChoice();
+	bool IsInOptionSubmenu();
+	void SetInOptionSubmenu(bool submenu);
 
 private:
+	bool bInOptionsSubmenu;
 	int nPlayerChoice = 0;
 
 	olc::Sprite* sprBackGround;

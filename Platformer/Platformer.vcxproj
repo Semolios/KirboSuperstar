@@ -199,6 +199,7 @@
     <ClCompile Include="Platformer_PauseMenu.cpp" />
     <ClCompile Include="Platformer_Player.cpp" />
     <ClCompile Include="Platformer_Hitbox.cpp" />
+    <ClCompile Include="Platformer_ScreenModeMenu.cpp" />
     <ClCompile Include="Platformer_SelectMenu.cpp" />
     <ClCompile Include="Platformer_LevelStart.cpp" />
     <ClCompile Include="Platformer_SoundMenu.cpp" />
@@ -258,6 +259,7 @@
     <ClInclude Include="Platformer_PauseMenu.h" />
     <ClInclude Include="Platformer_Player.h" />
     <ClInclude Include="Platformer_Hitbox.h" />
+    <ClInclude Include="Platformer_ScreenModeMenu.h" />
     <ClInclude Include="Platformer_SelectMenu.h" />
     <ClInclude Include="Platformer_LevelStart.h" />
     <ClInclude Include="Platformer_SoundMenu.h" />

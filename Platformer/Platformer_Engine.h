@@ -11,6 +11,7 @@
 #include "Platformer_Camera.h"
 #include "Platformer_ControlsMenu.h"
 #include "Platformer_SoundMenu.h"
+#include "Platformer_ScreenModeMenu.h"
 #include "Platformer_CreditsMenu.h"
 #include "Platformer_Dynamic.h"
 #include "Platformer_DynamicCeiling.h"
@@ -109,6 +110,7 @@ public:
 	void ReturnToWorldMap();
 	void GoToControlsMenu();
 	void GoToSoundMenu();
+	void GoToScreenModeMenu();
 	void HitStop();
 	void BossHitStop();
 
@@ -416,6 +418,10 @@ private:
 	olc::Sprite* sprSoundMenuLeftArrow;
 	cSoundMenu* soundMenu;
 
+	// Screen mode menu
+	olc::Sprite* sprScreenModeMenu;
+	cScreenModeMenu* screenModeMenu;
+
 	// Credits Menu
 	olc::Sprite* sprCreditsMenu;
 	cCreditsMenu* creditsMenu;
@@ -482,6 +488,7 @@ private:
 		LS_SELECTMENU,
 		LS_CONTROLSMENU,
 		LS_SOUNDMENU,
+		LS_SCREENMODEMENU,
 		LS_CREDITSMENU,
 		LS_HUD,
 		LS_ENGINEPOINTERS,
@@ -507,6 +514,7 @@ private:
 		GS_SELECTMENU,
 		GS_CONTROLS,
 		GS_SOUNDS,
+		GS_SCREENMODE,
 		GS_CREDITS,
 		GS_CLOSE,
 		GS_TRANSITION,
@@ -529,6 +537,7 @@ protected:
 	bool GameState_SelectMenu(float fElapsedTime);
 	bool GameState_Controls(float fElapsedTime);
 	bool GameState_Sounds(float fElapsedTime);
+	bool GameState_ScreenMode(float fElapsedTime);
 	bool GameState_Credits(float fElapsedTime);
 	bool GameState_Close(float fElapsedTime);
 	bool GameState_Transition(float fElapsedTime);
