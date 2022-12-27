@@ -25,6 +25,7 @@ public:
 
 	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller);
 	int GetSoundVolume();
+	void UpdateVolume();
 
 private:
 	const int cnVolumeTextX = 245;

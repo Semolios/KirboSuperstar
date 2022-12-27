@@ -20,7 +20,27 @@ cSoundMenu::cSoundMenu(olc::PixelGameEngine* gfx,
 	sprSoundMenuRightArrow = soundMenuRightArrow;
 	sprSoundMenuLeftArrow = soundMenuLeftArrow;
 
-	nSoundVolume = 9;
+	char username[UNLEN + 1];
+	DWORD username_len = UNLEN + 1;
+	GetUserNameA(username, &username_len);
+
+	std::string un = username;
+
+	std::wifstream file("C:/Users/" + un + "/AppData/Roaming/Kirbo Superstar/volume.txt");
+
+	if (file)
+	{
+		std::wstring line;
+		while (std::getline(file, line))
+		{
+			if (std::stoi(line) < 0)
+				nSoundVolume = 0;
+			else if (std::stoi(line) > 10)
+				nSoundVolume = 10;
+			else
+				nSoundVolume = std::stoi(line);
+		}
+	}
 }
 
 bool cSoundMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller)
@@ -43,6 +63,7 @@ bool cSoundMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Controlle
 		nSoundVolume--;
 		engine->UpdateVolume(nSoundVolume);
 		engine->PlaySample("menuBip");
+		UpdateVolume();
 	}
 
 	if ((gfx->GetKey(olc::RIGHT).bPressed || controller->GetButton(RIGHT).bPressed) && nSoundVolume < 10)
@@ -50,6 +71,7 @@ bool cSoundMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Controlle
 		nSoundVolume++;
 		engine->UpdateVolume(nSoundVolume);
 		engine->PlaySample("menuBip");
+		UpdateVolume();
 	}
 
 	engine->DrawKirboString(cnVolumeTextX, cnVolumeTextY, "Volume  " + std::to_string(nSoundVolume * 10) + "%", 2);
@@ -65,4 +87,21 @@ bool cSoundMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Controlle
 int cSoundMenu::GetSoundVolume()
 {
 	return nSoundVolume;
+}
+
+void cSoundMenu::UpdateVolume()
+{
+	std::ofstream volumeFile;
+
+	char username[UNLEN + 1];
+	DWORD username_len = UNLEN + 1;
+	GetUserNameA(username, &username_len);
+
+	std::string un = username;
+
+	volumeFile.open("C:/Users/" + un + "/AppData/Roaming/Kirbo Superstar/volume.txt", std::ofstream::trunc);
+
+	volumeFile << std::to_string(nSoundVolume);
+
+	volumeFile.close();
 }
