@@ -12,7 +12,14 @@ class OneLoneCoder_Platformer;
 class cSoundMenu
 {
 public:
-	cSoundMenu(olc::PixelGameEngine* gfx, olc::Sprite* soundMenuNoSound, olc::Sprite* soundMenuLow, olc::Sprite* soundMenuMid, olc::Sprite* soundMenuHigh, olc::Sprite* soundMenuMax);
+	cSoundMenu(olc::PixelGameEngine* gfx,
+			   olc::Sprite* soundMenuNoSound,
+			   olc::Sprite* soundMenuLow,
+			   olc::Sprite* soundMenuMid,
+			   olc::Sprite* soundMenuHigh,
+			   olc::Sprite* soundMenuMax,
+			   olc::Sprite* soundMenuRightArrow,
+			   olc::Sprite* soundMenuLeftArrow);
 
 	static OneLoneCoder_Platformer* engine;
 
@@ -20,6 +27,11 @@ public:
 	int GetSoundVolume();
 
 private:
+	const int cnVolumeTextX = 245;
+	const int cnVolumeTextY = 115;
+	const int cnLeftArrowX = 420;
+	const int cnRightArrowX = 560;
+
 	int nSoundVolume = 10;
 
 	olc::Sprite* sprSoundMenuNoSound;
@@ -27,6 +39,8 @@ private:
 	olc::Sprite* sprSoundMenuMid;
 	olc::Sprite* sprSoundMenuHigh;
 	olc::Sprite* sprSoundMenuMax;
+	olc::Sprite* sprSoundMenuRightArrow;
+	olc::Sprite* sprSoundMenuLeftArrow;
 };
 
 #endif // !DEF_SOUND_MENU

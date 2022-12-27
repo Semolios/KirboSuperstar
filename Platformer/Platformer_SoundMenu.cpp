@@ -3,13 +3,22 @@
 
 OneLoneCoder_Platformer* cSoundMenu::engine = nullptr;
 
-cSoundMenu::cSoundMenu(olc::PixelGameEngine* gfx, olc::Sprite* soundMenuNoSound, olc::Sprite* soundMenuLow, olc::Sprite* soundMenuMid, olc::Sprite* soundMenuHigh, olc::Sprite* soundMenuMax)
+cSoundMenu::cSoundMenu(olc::PixelGameEngine* gfx,
+					   olc::Sprite* soundMenuNoSound,
+					   olc::Sprite* soundMenuLow,
+					   olc::Sprite* soundMenuMid,
+					   olc::Sprite* soundMenuHigh,
+					   olc::Sprite* soundMenuMax,
+					   olc::Sprite* soundMenuRightArrow,
+					   olc::Sprite* soundMenuLeftArrow)
 {
 	sprSoundMenuNoSound = soundMenuNoSound;
 	sprSoundMenuLow = soundMenuLow;
 	sprSoundMenuMid = soundMenuMid;
 	sprSoundMenuHigh = soundMenuHigh;
 	sprSoundMenuMax = soundMenuMax;
+	sprSoundMenuRightArrow = soundMenuRightArrow;
+	sprSoundMenuLeftArrow = soundMenuLeftArrow;
 
 	nSoundVolume = 9;
 }
@@ -43,7 +52,10 @@ bool cSoundMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Controlle
 		engine->PlaySample("menuBip");
 	}
 
-	engine->DrawKirboString(360, 115, "Volume " + std::to_string(nSoundVolume * 10) + "%", 2);
+	engine->DrawKirboString(cnVolumeTextX, cnVolumeTextY, "Volume  " + std::to_string(nSoundVolume * 10) + "%", 2);
+
+	engine->DrawSprite(cnLeftArrowX, cnVolumeTextY, sprSoundMenuLeftArrow);
+	engine->DrawSprite(cnRightArrowX, cnVolumeTextY, sprSoundMenuRightArrow);
 
 	gfx->SetPixelMode(olc::Pixel::NORMAL);
 

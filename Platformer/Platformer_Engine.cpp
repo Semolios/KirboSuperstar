@@ -223,7 +223,9 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			sprSoundMenuMid = new olc::Sprite("assets/gfx/soundMenuMid.png");
 			sprSoundMenuHigh = new olc::Sprite("assets/gfx/soundMenuHigh.png");
 			sprSoundMenuMax = new olc::Sprite("assets/gfx/soundMenuMax.png");
-			soundMenu = new cSoundMenu(this, sprSoundMenuNoSound, sprSoundMenuLow, sprSoundMenuMid, sprSoundMenuHigh, sprSoundMenuMax);
+			sprSoundMenuRightArrow = new olc::Sprite("assets/gfx/rightArrow.png");
+			sprSoundMenuLeftArrow = new olc::Sprite("assets/gfx/leftArrow.png");
+			soundMenu = new cSoundMenu(this, sprSoundMenuNoSound, sprSoundMenuLow, sprSoundMenuMid, sprSoundMenuHigh, sprSoundMenuMax, sprSoundMenuRightArrow, sprSoundMenuLeftArrow);
 			UpdateVolume(soundMenu->GetSoundVolume());
 
 			UpdateProgressBar("Loading 52%");
@@ -1514,6 +1516,7 @@ void OneLoneCoder_Platformer::GoToControlsMenu()
 void OneLoneCoder_Platformer::GoToSoundMenu()
 {
 	waveEngine.StopAll();
+	pwMenu = waveEngine.PlayWaveform(&sndMenu, true);
 	TransitionTo("GS_SOUNDS", true);
 }
 
