@@ -1547,6 +1547,7 @@ void OneLoneCoder_Platformer::ReturnToWorldMap()
 	player->SetDamageBooster(1);
 	player->SetDefenseBooster(1);
 	player->SetCandyPower(false);
+	player->SetAttackable(true);
 }
 
 void OneLoneCoder_Platformer::GoToControlsMenu()
