@@ -135,8 +135,11 @@ void cDynamicCreature::TurnBack()
 
 void cDynamicCreature::Collision(float fElapsedTime)
 {
-	float fNewObjectPosX = px + vx * fElapsedTime;
-	float fNewObjectPosY = py + vy * fElapsedTime;
+	float fNewPosX = px + vx * fElapsedTime;
+	float fNewPosY = py + vy * fElapsedTime;
+
+	float fNormalizedWidth = fDynWidth / engine->GetTileWidth();
+	float fNormalizedHeight = fDynHeight / engine->GetTileHeight();
 
 	// Collision
 	float fBorder = 0.1f;
@@ -149,42 +152,42 @@ void cDynamicCreature::Collision(float fElapsedTime)
 	{
 		if (vx <= 0) // Moving Left
 		{
-			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, py +										   fBorder)) ||
-				engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, py + (fDynHeight / engine->GetTileHeight()) - fBorder)))
+			if (engine->IsSolidTile(level->GetTile(fNewPosX + fBorder, py +						fBorder)) ||
+				engine->IsSolidTile(level->GetTile(fNewPosX + fBorder, py + fNormalizedHeight - fBorder)))
 			{
-				fNewObjectPosX = (int)fNewObjectPosX + 1;
+				fNewPosX = (int)fNewPosX + 1;
 				vx = 0;
 			}
 
 			// Moving platforms collision
-			for (auto& ptfm : engine->GetClosePlatforms(fNewObjectPosX, fNewObjectPosY))
+			for (auto& ptfm : engine->GetClosePlatforms(fNewPosX, fNewPosY))
 			{
-				if ((ptfm->RightCollision(fNewObjectPosY, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()), fNewObjectPosX + fBorder) ||
-					 ptfm->RightCollisionWithLag(fNewObjectPosY, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()), px, fNewObjectPosX)) &&
+				if ((ptfm->RightCollision(fNewPosY, fNewPosY + fNormalizedHeight, fNewPosX + fBorder) ||
+					 ptfm->RightCollisionWithLag(fNewPosY, fNewPosY + fNormalizedHeight, px, fNewPosX)) &&
 					ptfm->IsHarmfulblocTangible())
 				{
-					fNewObjectPosX = ptfm->GetPX() + ptfm->GetNormalizedWidth();
+					fNewPosX = ptfm->GetPX() + ptfm->GetNormalizedWidth();
 					vx = 0;
 				}
 			}
 		}
 		else // Moving Right
 		{
-			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py +											fBorder)) ||
-				engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + (fDynHeight / engine->GetTileHeight()) - fBorder)))
+			if (engine->IsSolidTile(level->GetTile(fNewPosX + fNormalizedWidth - fBorder, py +				       fBorder)) ||
+				engine->IsSolidTile(level->GetTile(fNewPosX + fNormalizedWidth - fBorder, py + fNormalizedHeight - fBorder)))
 			{
-				fNewObjectPosX = (int)fNewObjectPosX;
+				fNewPosX = (int)fNewPosX;
 				vx = 0;
 			}
 
 			// Moving platforms collision
-			for (auto& ptfm : engine->GetClosePlatforms(fNewObjectPosX, fNewObjectPosY))
+			for (auto& ptfm : engine->GetClosePlatforms(fNewPosX, fNewPosY))
 			{
-				if ((ptfm->LeftCollision(fNewObjectPosY, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()), fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder)) ||
-					 ptfm->LeftCollisionWithLag(fNewObjectPosY, fNewObjectPosY + (fDynHeight / engine->GetTileHeight()), px + (fDynWidth / engine->GetTileWidth()), fNewObjectPosX + (fDynWidth / engine->GetTileWidth()))) &&
+				if ((ptfm->LeftCollision(fNewPosY, fNewPosY + fNormalizedHeight, fNewPosX + fNormalizedWidth - fBorder) ||
+					 ptfm->LeftCollisionWithLag(fNewPosY, fNewPosY + fNormalizedHeight, px + fNormalizedWidth, fNewPosX + fNormalizedWidth)) &&
 					ptfm->IsHarmfulblocTangible())
 				{
-					fNewObjectPosX = ptfm->GetPX() - (fDynWidth / engine->GetTileWidth());
+					fNewPosX = ptfm->GetPX() - fNormalizedWidth;
 					vx = 0;
 				}
 			}
@@ -192,21 +195,21 @@ void cDynamicCreature::Collision(float fElapsedTime)
 
 		if (vy <= 0) // Moving Up
 		{
-			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX +											fBorder,  fNewObjectPosY)) ||
-				engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY)))
+			if (engine->IsSolidTile(level->GetTile(fNewPosX +					 fBorder, fNewPosY)) ||
+				engine->IsSolidTile(level->GetTile(fNewPosX + fNormalizedWidth - fBorder, fNewPosY)))
 			{
-				fNewObjectPosY = (int)fNewObjectPosY + 1;
+				fNewPosY = (int)fNewPosY + 1;
 				vy = 0;
 			}
 
 			// Moving platforms collision
-			for (auto& ptfm : engine->GetClosePlatforms(fNewObjectPosX, fNewObjectPosY))
+			for (auto& ptfm : engine->GetClosePlatforms(fNewPosX, fNewPosY))
 			{
-				if ((ptfm->BotCollision(fNewObjectPosX + fBorder, fNewObjectPosX + (fDynWidth / engine->GetTileWidth()) - fBorder, fNewObjectPosY) ||
-					 ptfm->BotCollisionWithLag(fNewObjectPosX + fBorder, fNewObjectPosX + (fDynWidth / engine->GetTileWidth()) - fBorder, py, fNewObjectPosY)) &&
+				if ((ptfm->BotCollision(fNewPosX + fBorder, fNewPosX + fNormalizedWidth - fBorder, fNewPosY) ||
+					 ptfm->BotCollisionWithLag(fNewPosX + fBorder, fNewPosX + fNormalizedWidth - fBorder, py, fNewPosY)) &&
 					ptfm->IsHarmfulblocTangible())
 				{
-					fNewObjectPosY = ptfm->GetPY() + ptfm->GetNormalizedHeight();
+					fNewPosY = ptfm->GetPY() + ptfm->GetNormalizedHeight();
 					vy = 0;
 				}
 			}
@@ -214,32 +217,32 @@ void cDynamicCreature::Collision(float fElapsedTime)
 		else // Moving Down
 		{
 			// Same process as kirbo crossing semi-solid platform
-			if (engine->IsSolidTile(level->GetTile(fNewObjectPosX +											fBorder,  fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
-				engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
-				((engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX +										  fBorder,  fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
-				  engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight())))) && py + fDynHeight < (float)((int)fNewObjectPosY + fDynHeight) + fBorder))
+			if (engine->IsSolidTile(level->GetTile(fNewPosX +					 fBorder, fNewPosY + fNormalizedHeight)) ||
+				engine->IsSolidTile(level->GetTile(fNewPosX + fNormalizedWidth - fBorder, fNewPosY + fNormalizedHeight)) ||
+				((engine->IsSemiSolidTile(level->GetTile(fNewPosX +					   fBorder, fNewPosY + fNormalizedHeight)) ||
+				  engine->IsSemiSolidTile(level->GetTile(fNewPosX + fNormalizedWidth - fBorder, fNewPosY + fNormalizedHeight))) && py + fDynHeight < (float)((int)fNewPosY + fDynHeight) + fBorder))
 			{
-				fNewObjectPosY = (int)fNewObjectPosY + engine->GetGroundDynamicOverlay();
+				fNewPosY = (int)fNewPosY + engine->GetGroundDynamicOverlay();
 				vy = 0;
 			}
 
 			// Moving platforms collision
-			for (auto& ptfm : engine->GetClosePlatforms(fNewObjectPosX, fNewObjectPosY))
+			for (auto& ptfm : engine->GetClosePlatforms(fNewPosX, fNewPosY))
 			{
-				if ((ptfm->TopCollision(fNewObjectPosX + fBorder, fNewObjectPosX + (fDynWidth / engine->GetTileWidth()) - fBorder, fNewObjectPosY + (fDynHeight / engine->GetTileHeight())) ||
-					 ptfm->TopCollisionWithLag(fNewObjectPosX + fBorder, fNewObjectPosX + (fDynWidth / engine->GetTileWidth()) - fBorder, py + (fDynHeight / engine->GetTileHeight()), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) &&
+				if ((ptfm->TopCollision(fNewPosX + fBorder, fNewPosX + fNormalizedWidth - fBorder, fNewPosY + fNormalizedHeight) ||
+					 ptfm->TopCollisionWithLag(fNewPosX + fBorder, fNewPosX + fNormalizedWidth - fBorder, py + fNormalizedHeight, fNewPosY + fNormalizedHeight)) &&
 					ptfm->IsHarmfulblocTangible())
 				{
-					fNewObjectPosY = ptfm->GetPY() - (fDynHeight / engine->GetTileHeight());
-					fNewObjectPosX += ptfm->GetVX() * fElapsedTime;
+					fNewPosY = ptfm->GetPY() - fNormalizedHeight;
+					fNewPosX += ptfm->GetVX() * fElapsedTime;
 					vy = 0;
 				}
 			}
 		}
 	}
 
-	px = fNewObjectPosX;
-	py = fNewObjectPosY;
+	px = fNewPosX;
+	py = fNewPosY;
 }
 
 void cDynamicCreature::UpdateHitbox(float cameraOffsetX, float cameraOffsetY)
@@ -268,7 +271,7 @@ void cDynamicCreature::UpdateHitbox(float cameraOffsetX, float cameraOffsetY)
 	hitbox->ClearO();
 
 	// debug AOE
-	//hitbox->Draw(engine, olc::YELLOW);
+	hitbox->Draw(engine, olc::YELLOW);
 }
 
 void cDynamicCreature::Vacuumed(bool vaccumedState)
