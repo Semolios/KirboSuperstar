@@ -928,9 +928,9 @@ bool cPlayer::DynamicCeiling(float fNewPosX, float fNewPosY)
 
 bool cPlayer::SemiSolidFloor(cLevel* lvl, float fNewPosX, float fNewPosY)
 {
-	// This little trick (fPlayerPosY + 1.0f < (float)((int)fNewPosY + 1.0f) + 0.1f) checks if the player's feets are above the top of the semi-solid Block.
+	// This little trick (fPosY + 1.0f < (float)((int)fNewPosY + 1.0f) + 0.1f) checks if the player's feets are above the top of the semi-solid Block.
 	// Otherwise the player is moved to the top of the block when his feets reach the bottom of the block
-	// "fPlayerPosY + 1.0f" is the feets Y position, "(float)((int)fNewPosY + 1.0f) + 0.1f" takes the top of the block at the feets position and add a 0.1 delta, 
+	// "fPosY + 1.0f" is the feets Y position, "(float)((int)fNewPosY + 1.0f) + 0.1f" takes the top of the block at the feets position and add a 0.1 delta, 
 	// if the feets are above this delta, the player is moved on top of the block.
 	return (engine->IsSemiSolidTile(lvl->GetTile(fNewPosX + fCollisionLowerLimit, fNewPosY + 1.0f)) ||
 			engine->IsSemiSolidTile(lvl->GetTile(fNewPosX + fCollisionUpperLimit, fNewPosY + 1.0f))) && fPosY + 1.0f < (float)((int)fNewPosY + 1.0f) + 0.1f;
