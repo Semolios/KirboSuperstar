@@ -278,7 +278,7 @@ void cDynamicCreature::UpdateHitbox(float cameraOffsetX, float cameraOffsetY)
     hitbox->ClearO();
 
     // debug AOE
-    hitbox->Draw(engine, olc::YELLOW);
+    //hitbox->Draw(engine, olc::YELLOW);
 }
 
 void cDynamicCreature::Vacuumed(bool vaccumedState)
