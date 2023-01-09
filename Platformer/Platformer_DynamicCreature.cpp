@@ -144,8 +144,10 @@ void cDynamicCreature::Collision(float fElapsedTime)
     // Collision
     float fGap = 0.1f;
 
-    float fLCollision = fNewPosX + fGap;
-    float fRCollision = fNewPosX + fNormalizedW - fGap;
+    float fLftCollision = fNewPosX + fGap;
+    float fRgtCollision = fNewPosX + fNormalizedW - fGap;
+    float fTopCollision = py + fGap;
+    float fBotCollision = py + fNormalizedH - fGap;
 
     // Gravity
     if (bAffectedByGravity)
@@ -155,8 +157,8 @@ void cDynamicCreature::Collision(float fElapsedTime)
     {
         if (vx <= 0) // Moving Left
         {
-            if (engine->IsSolidTile(level->GetTile(fLCollision, py +                fGap)) ||
-                engine->IsSolidTile(level->GetTile(fLCollision, py + fNormalizedH - fGap)))
+            if (engine->IsSolidTile(level->GetTile(fLftCollision, fTopCollision)) ||
+                engine->IsSolidTile(level->GetTile(fLftCollision, fBotCollision)))
             {
                 fNewPosX = (int)fNewPosX + 1;
                 vx = 0;
@@ -165,7 +167,7 @@ void cDynamicCreature::Collision(float fElapsedTime)
             // Moving platforms collision
             for (auto& ptfm : engine->GetClosePlatforms(fNewPosX, fNewPosY))
             {
-                if ((ptfm->RightCollision(fNewPosY, fNewPosY + fNormalizedH, fLCollision) ||
+                if ((ptfm->RightCollision(fNewPosY, fNewPosY + fNormalizedH, fLftCollision) ||
                      ptfm->RightCollisionWithLag(fNewPosY, fNewPosY + fNormalizedH, px, fNewPosX)) &&
                     ptfm->IsHarmfulblocTangible())
                 {
@@ -176,8 +178,8 @@ void cDynamicCreature::Collision(float fElapsedTime)
         }
         else // Moving Right
         {
-            if (engine->IsSolidTile(level->GetTile(fRCollision, py +                fGap)) ||
-                engine->IsSolidTile(level->GetTile(fRCollision, py + fNormalizedH - fGap)))
+            if (engine->IsSolidTile(level->GetTile(fRgtCollision, fTopCollision)) ||
+                engine->IsSolidTile(level->GetTile(fRgtCollision, fBotCollision)))
             {
                 fNewPosX = (int)fNewPosX;
                 vx = 0;
@@ -186,7 +188,7 @@ void cDynamicCreature::Collision(float fElapsedTime)
             // Moving platforms collision
             for (auto& ptfm : engine->GetClosePlatforms(fNewPosX, fNewPosY))
             {
-                if ((ptfm->LeftCollision(fNewPosY, fNewPosY + fNormalizedH, fRCollision) ||
+                if ((ptfm->LeftCollision(fNewPosY, fNewPosY + fNormalizedH, fRgtCollision) ||
                      ptfm->LeftCollisionWithLag(fNewPosY, fNewPosY + fNormalizedH, px + fNormalizedW, fNewPosX + fNormalizedW)) &&
                     ptfm->IsHarmfulblocTangible())
                 {
@@ -198,8 +200,8 @@ void cDynamicCreature::Collision(float fElapsedTime)
 
         if (vy <= 0) // Moving Up
         {
-            if (engine->IsSolidTile(level->GetTile(fLCollision, fNewPosY)) ||
-                engine->IsSolidTile(level->GetTile(fRCollision, fNewPosY)))
+            if (engine->IsSolidTile(level->GetTile(fLftCollision, fNewPosY)) ||
+                engine->IsSolidTile(level->GetTile(fRgtCollision, fNewPosY)))
             {
                 fNewPosY = (int)fNewPosY + 1;
                 vy = 0;
@@ -208,8 +210,8 @@ void cDynamicCreature::Collision(float fElapsedTime)
             // Moving platforms collision
             for (auto& ptfm : engine->GetClosePlatforms(fNewPosX, fNewPosY))
             {
-                if ((ptfm->BotCollision(fLCollision, fRCollision, fNewPosY) ||
-                     ptfm->BotCollisionWithLag(fLCollision, fRCollision, py, fNewPosY)) &&
+                if ((ptfm->BotCollision(fLftCollision, fRgtCollision, fNewPosY) ||
+                     ptfm->BotCollisionWithLag(fLftCollision, fRgtCollision, py, fNewPosY)) &&
                     ptfm->IsHarmfulblocTangible())
                 {
                     fNewPosY = ptfm->GetPY() + ptfm->GetNormalizedHeight();
@@ -222,10 +224,10 @@ void cDynamicCreature::Collision(float fElapsedTime)
             float fSemiSolidThickness = 0.1f;
 
             // Same process as kirbo crossing semi-solid platform
-            if (engine->IsSolidTile(level->GetTile(fLCollision, fNewPosY + fNormalizedH)) ||
-                engine->IsSolidTile(level->GetTile(fRCollision, fNewPosY + fNormalizedH)) ||
-                ((engine->IsSemiSolidTile(level->GetTile(fLCollision, fNewPosY + fNormalizedH)) ||
-                  engine->IsSemiSolidTile(level->GetTile(fRCollision, fNewPosY + fNormalizedH))) && py + fDynHeight < (float)((int)fNewPosY + fDynHeight) + fSemiSolidThickness))
+            if (engine->IsSolidTile(level->GetTile(fLftCollision, fNewPosY + fNormalizedH)) ||
+                engine->IsSolidTile(level->GetTile(fRgtCollision, fNewPosY + fNormalizedH)) ||
+                ((engine->IsSemiSolidTile(level->GetTile(fLftCollision, fNewPosY + fNormalizedH)) ||
+                  engine->IsSemiSolidTile(level->GetTile(fRgtCollision, fNewPosY + fNormalizedH))) && py + fDynHeight < (float)((int)fNewPosY + fDynHeight) + fSemiSolidThickness))
             {
                 fNewPosY = (int)fNewPosY + engine->GetGroundDynamicOverlay();
                 vy = 0;
@@ -234,8 +236,8 @@ void cDynamicCreature::Collision(float fElapsedTime)
             // Moving platforms collision
             for (auto& ptfm : engine->GetClosePlatforms(fNewPosX, fNewPosY))
             {
-                if ((ptfm->TopCollision(fLCollision, fRCollision, fNewPosY + fNormalizedH) ||
-                     ptfm->TopCollisionWithLag(fLCollision, fRCollision, py + fNormalizedH, fNewPosY + fNormalizedH)) &&
+                if ((ptfm->TopCollision(fLftCollision, fRgtCollision, fNewPosY + fNormalizedH) ||
+                     ptfm->TopCollisionWithLag(fLftCollision, fRgtCollision, py + fNormalizedH, fNewPosY + fNormalizedH)) &&
                     ptfm->IsHarmfulblocTangible())
                 {
                     fNewPosY = ptfm->GetPY() - fNormalizedH;
@@ -376,7 +378,7 @@ void cDynamicCreature::ExplodeAndDie(float fElapsedTime)
         float explosionWidth = 142.0f;
         float explosionHeight = 200.0f;
 
-        float centerOfBossX = ((fDynWidth  - explosionWidth)  / 2.0f) / engine->GetTileWidth();
+        float centerOfBossX = ((fDynWidth - explosionWidth) / 2.0f) / engine->GetTileWidth();
         float centerOfBossY = ((fDynHeight - explosionHeight) / 2.0f) / engine->GetTileHeight();
         engine->AddProjectile(px + centerOfBossX, py + centerOfBossY, true, 0.0f, 0.0f, cfExplosionDuration, "explosion", false, 0, false, false, 0, false, 0.0f, "", false, "", true);
         engine->PlaySample("explosion");
