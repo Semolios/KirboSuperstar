@@ -346,15 +346,15 @@ private:
 
 	// engine Properties
 	cPlayer* player;
-	bool bBreakLoop = false;
 	float fStopTimebeforeDeadAnim = 0.0f;
 	float fWindDirection = 1.0f;
 	float fWindPower = 25.0f;
+	float fWaitBeforeWinAnimation = 0.0f;
+	float fWinTimer = 0.0f;
+	bool bBreakLoop = false;
 	bool bBossKilled = false;
 	bool bInBossLvl = false;
 	bool bWind = false;
-	float fWaitBeforeWinAnimation = 0.0f;
-	float fWinTimer = 0.0f;
 
 	// Camera Properties
 	cCamera* camera;
