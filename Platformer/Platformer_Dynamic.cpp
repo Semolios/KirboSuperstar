@@ -2,6 +2,7 @@
 
 cDynamic::cDynamic(std::string n)
 {
+	sName = n;
 	hitbox = new cHitbox();
 }
 
