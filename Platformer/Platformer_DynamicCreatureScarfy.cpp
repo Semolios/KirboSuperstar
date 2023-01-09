@@ -2,12 +2,12 @@
 
 cDynamicCreatureScarfy::cDynamicCreatureScarfy(cLevel* l) : cDynamicCreature("scarfy", cAssets::get().GetSprite("scarfy"), 16)
 {
-	fDynWidth = 64.0f;
-	fDynHeight = 64.0f;
+	fDynWidth = 40.0f;
+	fDynHeight = 40.0f;
 	fSpriteW = 64.0f;
 	fSpriteH = 64.0f;
-	fSpriteOffsetX = 0.0f;
-	fSpriteOffsetY = 0.0f;
+	fSpriteOffsetX = -12.0f;
+	fSpriteOffsetY = -12.0f;
 	bFriendly = false;
 	nHealth = 6;
 	nHealthMax = 6;

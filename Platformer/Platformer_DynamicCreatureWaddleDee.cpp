@@ -6,12 +6,12 @@ OneLoneCoder_Platformer* cDynamicCreatureWaddleDee::engine = nullptr;
 
 cDynamicCreatureWaddleDee::cDynamicCreatureWaddleDee(cLevel* l) : cDynamicCreature("waddleDee", cAssets::get().GetSprite("waddleDee"), 4)
 {
-	fDynWidth = 64.0f;
-	fDynHeight = 64.0f;
+	fDynWidth = 48.0f;
+	fDynHeight = 32.0f;
 	fSpriteW = 64.0f;
 	fSpriteH = 64.0f;
-	fSpriteOffsetX = 0.0f;
-	fSpriteOffsetY = 0.0f;
+	fSpriteOffsetX = -8.0f;
+	fSpriteOffsetY = -32.0f;
 	bFriendly = false;
 	nHealth = 1;
 	nHealthMax = 1;
@@ -44,7 +44,7 @@ void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, flo
 				// Don't check the platforms if the waddle dee is on ground, or all the waddle dees will check all platforms
 				for (auto& ptfm : engine->GetClosePlatforms(px, py))
 				{
-					if (ptfm->TopCollisionOneCorner(px, py + 1.0f) && !engine->IsSolidTile(level->GetTile(px, py)))
+					if (ptfm->TopCollisionOneCorner(px, py + fNormalizedH) && !engine->IsSolidTile(level->GetTile(px, py)))
 					{
 						mustTurnBack = false;
 					}
@@ -57,7 +57,7 @@ void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, flo
 				mustTurnBack = false;
 				for (auto& ptfm : engine->GetClosePlatforms(px, py))
 				{
-					if (ptfm->RightCollision(py, py + 1.0f, px))
+					if (ptfm->RightCollision(py, py + fNormalizedH, px))
 					{
 						mustTurnBack = true;
 					}
@@ -73,7 +73,7 @@ void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, flo
 				// Don't check the platforms if the waddle dee is on ground, or all the waddle dees will check all platforms
 				for (auto& ptfm : engine->GetClosePlatforms(px, py))
 				{
-					if (ptfm->TopCollisionOneCorner(px + 1.0f, py + 1.0f) && !ptfm->LeftCollision(py, py + 1.0f, px + 1.0f) && !engine->IsSolidTile(level->GetTile(px + 1, py)))
+					if (ptfm->TopCollisionOneCorner(px + fNormalizedW, py + fNormalizedH) && !ptfm->LeftCollision(py, py + fNormalizedH, px + fNormalizedW) && !engine->IsSolidTile(level->GetTile(px + fNormalizedW, py)))
 					{
 						mustTurnBack = false;
 					}
@@ -86,7 +86,7 @@ void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, flo
 				mustTurnBack = false;
 				for (auto& ptfm : engine->GetClosePlatforms(px, py))
 				{
-					if (ptfm->LeftCollision(py, py + 1.0f, px + 1.0f))
+					if (ptfm->LeftCollision(py, py + fNormalizedH, px + fNormalizedW))
 					{
 						mustTurnBack = true;
 					}
@@ -104,16 +104,16 @@ void cDynamicCreatureWaddleDee::Behaviour(float fElapsedTime, float playerX, flo
 
 bool cDynamicCreatureWaddleDee::RightObstacle()
 {
-	return engine->IsSolidTile(level->GetTile(px + 1, py)) || // Wall
-		   (!engine->IsSolidTile(level->GetTile(px + 1, py + 0)) &&
-			!engine->IsSolidTile(level->GetTile(px + 1, py + 1)) &&
-			!engine->IsSemiSolidTile(level->GetTile(px + 1, py + 1))); // Hole
+	return engine->IsSolidTile(level->GetTile(px + fNormalizedW, py)) || // Wall
+		   (!engine->IsSolidTile(level->GetTile(px + fNormalizedW, py)) &&
+			!engine->IsSolidTile(level->GetTile(px + fNormalizedW, py + fNormalizedH)) &&
+			!engine->IsSemiSolidTile(level->GetTile(px + fNormalizedW, py + fNormalizedH))); // Hole
 }
 
 bool cDynamicCreatureWaddleDee::LeftObstacle()
 {
 	return engine->IsSolidTile(level->GetTile(px, py)) || // Wall
-		   (!engine->IsSolidTile(level->GetTile(px, py + 0)) &&
-			!engine->IsSolidTile(level->GetTile(px, py + 1)) &&
-			!engine->IsSemiSolidTile(level->GetTile(px, py + 1))); // Hole
+		   (!engine->IsSolidTile(level->GetTile(px, py)) &&
+			!engine->IsSolidTile(level->GetTile(px, py + fNormalizedH)) &&
+			!engine->IsSemiSolidTile(level->GetTile(px, py + fNormalizedH))); // Hole
 }

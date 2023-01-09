@@ -3,12 +3,12 @@
 
 cDynamicCreatureBrontoBurt::cDynamicCreatureBrontoBurt(cLevel* l, float oscillationAmplitude) : cDynamicCreature("brontoBurt", cAssets::get().GetSprite("brontoBurt"), 4)
 {
-	fDynWidth = 64.0f;
-	fDynHeight = 64.0f;
+	fDynWidth = 32.0f;
+	fDynHeight = 32.0f;
 	fSpriteW = 64.0f;
 	fSpriteH = 64.0f;
-	fSpriteOffsetX = 0.0f;
-	fSpriteOffsetY = 0.0f;
+	fSpriteOffsetX = -16.0f;
+	fSpriteOffsetY = -16.0f;
 	bFriendly = false;
 	nHealth = 6;
 	nHealthMax = 6;

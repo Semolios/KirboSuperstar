@@ -42,6 +42,8 @@ protected:
 	float fSpriteH;
 	float fSpriteOffsetX;
 	float fSpriteOffsetY;
+	float fNormalizedW;
+	float fNormalizedH;
 
 	float px, py;
 	float vx, vy;

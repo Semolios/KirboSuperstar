@@ -6,12 +6,12 @@ OneLoneCoder_Platformer* cDynamicCreatureRocky::engine = nullptr;
 
 cDynamicCreatureRocky::cDynamicCreatureRocky(cLevel* l) : cDynamicCreature("rocky", cAssets::get().GetSprite("rocky"), 16)
 {
-	fDynWidth = 64.0f;
-	fDynHeight = 64.0f;
+	fDynWidth = 56.0f;
+	fDynHeight = 56.0f;
 	fSpriteW = 64.0f;
 	fSpriteH = 64.0f;
-	fSpriteOffsetX = 0.0f;
-	fSpriteOffsetY = 0.0f;
+	fSpriteOffsetX = -4.0f;
+	fSpriteOffsetY = -4.0f;
 	bFriendly = false;
 	nHealth = 9;
 	nHealthMax = 9;
@@ -57,10 +57,10 @@ void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float p
 			bAffectedByGravity = true;
 			nGraphicState = WALKING;
 
-			if (engine->IsSolidTile(level->GetTile(px + cfRockyLowerBoundary, py + 1)) ||
-				engine->IsSolidTile(level->GetTile(px + cfRockyUpperBoundary, py + 1)) ||
-				engine->IsSemiSolidTile(level->GetTile(px + cfRockyLowerBoundary, py + 1)) ||
-				engine->IsSemiSolidTile(level->GetTile(px + cfRockyUpperBoundary, py + 1)))
+			if (engine->IsSolidTile(level->GetTile(px,				  py + fNormalizedH)) ||
+				engine->IsSolidTile(level->GetTile(px + fNormalizedW, py + fNormalizedH)) ||
+				engine->IsSemiSolidTile(level->GetTile(px,				  py + fNormalizedH)) ||
+				engine->IsSemiSolidTile(level->GetTile(px + fNormalizedW, py + fNormalizedH)))
 			{
 				engine->StopSample("rockyFall");
 				nAINextState = AI_LANDING;
@@ -69,7 +69,7 @@ void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float p
 			{
 				for (auto& ptfm : engine->GetClosePlatforms(px, py))
 				{
-					if (ptfm->TopCollision(px, px + 1.0f, py + 1.0f))
+					if (ptfm->TopCollision(px, px + fNormalizedW, py + fNormalizedH))
 					{
 						engine->StopSample("rockyFall");
 						nAINextState = AI_LANDING;
@@ -94,8 +94,8 @@ void cDynamicCreatureRocky::Behaviour(float fElapsedTime, float playerX, float p
 			bAffectedByGravity = false;
 			vy = cfGoingBackUpSpeed;
 
-			if (engine->IsSolidTile(level->GetTile(px + cfRockyLowerBoundary, py - 0.01f)) ||
-				engine->IsSolidTile(level->GetTile(px + cfRockyUpperBoundary, py - 0.01f)) ||
+			if (engine->IsSolidTile(level->GetTile(px,				  py - 0.01f)) ||
+				engine->IsSolidTile(level->GetTile(px + fNormalizedW, py - 0.01f)) ||
 				DynamicCeiling() || py < 1)
 			{
 				vy = 0;
@@ -127,10 +127,10 @@ bool cDynamicCreatureRocky::HasObstacleUnder(float playerY)
 
 	for (int i = ((int)py + 1); i < playerY; i++)
 	{
-		if (engine->IsSolidTile(level->GetTile(px + cfRockyLowerBoundary, i)) ||
-			engine->IsSolidTile(level->GetTile(px + cfRockyUpperBoundary, i)) ||
-			engine->IsSemiSolidTile(level->GetTile(px + cfRockyLowerBoundary, i)) ||
-			engine->IsSemiSolidTile(level->GetTile(px + cfRockyUpperBoundary, i)))
+		if (engine->IsSolidTile(level->GetTile(px,				  i)) ||
+			engine->IsSolidTile(level->GetTile(px + fNormalizedW, i)) ||
+			engine->IsSemiSolidTile(level->GetTile(px,				  i)) ||
+			engine->IsSemiSolidTile(level->GetTile(px + fNormalizedW, i)))
 		{
 			isObstacle = true;
 		}
@@ -138,7 +138,7 @@ bool cDynamicCreatureRocky::HasObstacleUnder(float playerY)
 		{
 			for (auto& ptfm : engine->GetClosePlatforms(px, i))
 			{
-				if (ptfm->TopCollision(px, px + 1.0f, i + 1.0f))
+				if (ptfm->TopCollision(px, px + fNormalizedW, i + 1.0f))
 				{
 					isObstacle = true;
 				}

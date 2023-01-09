@@ -80,7 +80,7 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY)
 
         if (bCanBehaveWhileAttacked && !bVacuumed && !bBossKilled)
             Behaviour(fElapsedTime, playerX, playerY, engine);
-        else
+        else if (sName == "rocky")
             engine->StopSample("rockyFall");
 
         if (bVacuumed)
@@ -138,8 +138,8 @@ void cDynamicCreature::Collision(float fElapsedTime)
     float fNewPosX = px + vx * fElapsedTime;
     float fNewPosY = py + vy * fElapsedTime;
 
-    float fNormalizedW = fDynWidth / engine->GetTileWidth();
-    float fNormalizedH = fDynHeight / engine->GetTileHeight();
+    fNormalizedW = fDynWidth / engine->GetTileWidth();
+    fNormalizedH = fDynHeight / engine->GetTileHeight();
 
     // Collision
     float fGap = 0.1f;
@@ -181,7 +181,7 @@ void cDynamicCreature::Collision(float fElapsedTime)
             if (engine->IsSolidTile(level->GetTile(fRgtCollision, fTopCollision)) ||
                 engine->IsSolidTile(level->GetTile(fRgtCollision, fBotCollision)))
             {
-                fNewPosX = (int)fNewPosX;
+                fNewPosX = (int)(fNewPosX + fNormalizedW) - fNormalizedW;
                 vx = 0;
             }
 
@@ -227,9 +227,9 @@ void cDynamicCreature::Collision(float fElapsedTime)
             if (engine->IsSolidTile(level->GetTile(fLftCollision, fNewPosY + fNormalizedH)) ||
                 engine->IsSolidTile(level->GetTile(fRgtCollision, fNewPosY + fNormalizedH)) ||
                 ((engine->IsSemiSolidTile(level->GetTile(fLftCollision, fNewPosY + fNormalizedH)) ||
-                  engine->IsSemiSolidTile(level->GetTile(fRgtCollision, fNewPosY + fNormalizedH))) && py + fDynHeight < (float)((int)fNewPosY + fDynHeight) + fSemiSolidThickness))
+                  engine->IsSemiSolidTile(level->GetTile(fRgtCollision, fNewPosY + fNormalizedH))) && py + fNormalizedH < (float)((int)(fNewPosY + fNormalizedH)) + fSemiSolidThickness))
             {
-                fNewPosY = (int)fNewPosY + engine->GetGroundDynamicOverlay();
+                fNewPosY = (int)(fNewPosY + fNormalizedH) - fNormalizedH + engine->GetGroundDynamicOverlay();
                 vy = 0;
             }
 

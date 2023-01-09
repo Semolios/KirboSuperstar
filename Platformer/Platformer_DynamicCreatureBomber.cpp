@@ -6,12 +6,12 @@ OneLoneCoder_Platformer* cDynamicCreatureBomber::engine = nullptr;
 
 cDynamicCreatureBomber::cDynamicCreatureBomber(cLevel* l) : cDynamicCreature("bomber", cAssets::get().GetSprite("bomber"), 8)
 {
-	fDynWidth = 64.0f;
-	fDynHeight = 64.0f;
+	fDynWidth = 48.0f;
+	fDynHeight = 40.0f;
 	fSpriteW = 64.0f;
 	fSpriteH = 64.0f;
-	fSpriteOffsetX = 0.0f;
-	fSpriteOffsetY = 0.0f;
+	fSpriteOffsetX = -8.0f;
+	fSpriteOffsetY = -24.0f;
 	bFriendly = false;
 	nHealth = 1;
 	nHealthMax = 1;
@@ -53,7 +53,7 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 						// Don't check the platforms if the bomber is on ground, or all the bombers will check all platforms
 						for (auto& ptfm : engine->GetClosePlatforms(px, py))
 						{
-							if (ptfm->TopCollisionOneCorner(px, py + 1.0f) && !engine->IsSolidTile(level->GetTile(px, py)))
+							if (ptfm->TopCollisionOneCorner(px, py + fNormalizedH) && !engine->IsSolidTile(level->GetTile(px, py)))
 							{
 								mustTurnBack = false;
 							}
@@ -66,7 +66,7 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 						mustTurnBack = false;
 						for (auto& ptfm : engine->GetClosePlatforms(px, py))
 						{
-							if (ptfm->RightCollision(py, py + 1.0f, px))
+							if (ptfm->RightCollision(py, py + fNormalizedH, px))
 							{
 								mustTurnBack = true;
 							}
@@ -82,7 +82,7 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 						// Don't check the platforms if the bomber is on ground, or all the bombers will check all platforms
 						for (auto& ptfm : engine->GetClosePlatforms(px, py))
 						{
-							if (ptfm->TopCollisionOneCorner(px + 1.0f, py + 1.0f) && !ptfm->LeftCollision(py, py + 1.0f, px + 1.0f) && !engine->IsSolidTile(level->GetTile(px + 1, py)))
+							if (ptfm->TopCollisionOneCorner(px + fNormalizedW, py + fNormalizedH) && !ptfm->LeftCollision(py, py + fNormalizedH, px + fNormalizedW) && !engine->IsSolidTile(level->GetTile(px + fNormalizedW, py)))
 							{
 								mustTurnBack = false;
 							}
@@ -95,7 +95,7 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 						mustTurnBack = false;
 						for (auto& ptfm : engine->GetClosePlatforms(px, py))
 						{
-							if (ptfm->LeftCollision(py, py + 1.0f, px + 1.0f))
+							if (ptfm->LeftCollision(py, py + fNormalizedH, px + fNormalizedW))
 							{
 								mustTurnBack = true;
 							}
@@ -141,10 +141,10 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 				float explosionWidth = 142.0f;
 				float explosionHeight = 200.0f;
 
-				float centerOfBossX = ((fDynWidth -  explosionWidth) /  2.0f) / engine->GetTileWidth();
-				float centerOfBossY = ((fDynHeight - explosionHeight) / 2.0f) / engine->GetTileHeight();
-				engine->AddProjectile(px + centerOfBossX, py + centerOfBossY, false, 0.0f, 0.0f, cfExplosionDuration - cfExplosionNoHarmingDuration, "explosion", false, cnExplosionDmg, false);
-				engine->AddProjectile(px + centerOfBossX, py + centerOfBossY, true, 0.0f, 0.0f, cfExplosionDuration, "explosion", false, 0, false, true, 0, true, -3.0f, "", false, "", true);
+				float centerX = ((fDynWidth  - explosionWidth) /  2.0f) / engine->GetTileWidth();
+				float centerY = ((fDynHeight - explosionHeight) / 2.0f) / engine->GetTileHeight();
+				engine->AddProjectile(px + centerX, py + centerY, false, 0.0f, 0.0f, cfExplosionDuration - cfExplosionNoHarmingDuration, "explosion", false, cnExplosionDmg, false);
+				engine->AddProjectile(px + centerX, py + centerY, true, 0.0f, 0.0f, cfExplosionDuration, "explosion", false, 0, false, true, 0, true, -3.0f, "", false, "", true);
 
 				nHealth = 0;
 				KnockBack(0.0f, 0.0f, cfKnockBackDuration);
@@ -160,16 +160,16 @@ void cDynamicCreatureBomber::Behaviour(float fElapsedTime, float playerX, float 
 
 bool cDynamicCreatureBomber::RightObstacle()
 {
-	return engine->IsSolidTile(level->GetTile(px + 1, py)) || 
-		   (!engine->IsSolidTile(level->GetTile(px + 1, py + 0)) && 
-		    !engine->IsSolidTile(level->GetTile(px + 1, py + 1)) && 
-		    !engine->IsSemiSolidTile(level->GetTile(px + 1, py + 1)));
+	return engine->IsSolidTile(level->GetTile(px + fNormalizedW, py)) ||
+		   (!engine->IsSolidTile(level->GetTile(px + fNormalizedW, py)) && 
+		    !engine->IsSolidTile(level->GetTile(px + fNormalizedW, py + fNormalizedH)) &&
+		    !engine->IsSemiSolidTile(level->GetTile(px + fNormalizedW, py + fNormalizedH)));
 }
 
 bool cDynamicCreatureBomber::LeftObstacle()
 {
 	return engine->IsSolidTile(level->GetTile(px, py)) ||
-		   (!engine->IsSolidTile(level->GetTile(px, py + 0)) &&
-			!engine->IsSolidTile(level->GetTile(px, py + 1)) &&
-			!engine->IsSemiSolidTile(level->GetTile(px, py + 1)));
+		   (!engine->IsSolidTile(level->GetTile(px, py)) &&
+			!engine->IsSolidTile(level->GetTile(px, py + fNormalizedH)) &&
+			!engine->IsSemiSolidTile(level->GetTile(px, py + fNormalizedH)));
 }
