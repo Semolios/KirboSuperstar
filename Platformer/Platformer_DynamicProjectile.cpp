@@ -514,6 +514,16 @@ bool cDynamicProjectile::IsScenery()
 	return bScenery;
 }
 
+float cDynamicProjectile::GetNormalizedW()
+{
+	return fDynWidth / engine->GetTileWidth();
+}
+
+float cDynamicProjectile::GetNormalizedH()
+{
+	return fDynHeight / engine->GetTileHeight();
+}
+
 void cDynamicProjectile::UpdateTrajectory(float fElapsedTime)
 {
 	// Standard projectile has no particular trajectory, either straight or bell curved

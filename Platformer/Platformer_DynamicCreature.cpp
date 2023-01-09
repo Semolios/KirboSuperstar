@@ -358,6 +358,16 @@ bool cDynamicCreature::IsDead()
     return bDead;
 }
 
+float cDynamicCreature::GetNormalizedW()
+{
+    return fNormalizedW;
+}
+
+float cDynamicCreature::GetNormalizedH()
+{
+    return fNormalizedH;
+}
+
 void cDynamicCreature::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 {
     // No default behaviour

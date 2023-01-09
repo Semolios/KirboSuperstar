@@ -40,6 +40,8 @@ public:
 	void SetBreakableAgainstTiles(bool breakable);
 	void SetDrag(float drag);
 	bool IsScenery();
+	float GetNormalizedW();
+	float GetNormalizedH();
 
 	virtual void UpdateTrajectory(float fElapsedTime);
 

@@ -37,6 +37,8 @@ public:
 	bool IsKnockable();
 	void SetKnockable(bool knockable);
 	bool IsDead();
+	float GetNormalizedW();
+	float GetNormalizedH();
 
 	virtual void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
 	virtual void ExplodeAndDie(float fElapsedTime);
