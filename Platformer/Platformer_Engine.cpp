@@ -56,6 +56,7 @@ bool OneLoneCoder_Platformer::GameState_LevelStart(float fElapsedTime)
 	}
 
 	SetPixelMode(olc::Pixel::ALPHA);
+
 	switch (worldMap->GetSelectedLevel())
 	{
 		case 0: DrawKirboString(50, 400, "green green", 2);		   break;
@@ -65,9 +66,13 @@ bool OneLoneCoder_Platformer::GameState_LevelStart(float fElapsedTime)
 		case 4: DrawKirboString(50, 400, "halberd", 2);			   break;
 		case 5: DrawKirboString(50, 400, "fountain of dreams", 2); break;
 	}
+
+	DrawKirboString(295, 450, "press any key");
+
 	SetPixelMode(olc::Pixel::NORMAL);
 
-	if (GetKey(olc::Key::SPACE).bPressed || controller.GetButton(A).bPressed)
+
+	if (GetAnyKey() || controller.AnyButtonPressed())
 		TransitionTo("GS_MAIN", true);
 
 	return false;
