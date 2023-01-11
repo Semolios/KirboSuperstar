@@ -7,7 +7,7 @@ Teleport,148,61.2,160,56.2,door
 Teleport,154,19.2,162,49.2,door
 ------ Return to Start point ------
 Teleport,4,59.2,74.8,28.2,door
-Teleport,41,11.2,74.8,28.2,door
+Teleport,40,11.2,74.8,28.2,door
 Teleport,187,11.2,74.8,28.2,door
 Teleport,189,17.2,74.8,28.2,door
 Teleport,189,59.2,74.8,28.2,door
@@ -19,7 +19,7 @@ Wall,88,27,fountainWall,1,1,1,186,60
 Wall,91,27,fountainWall,1,1,1,187,18
 Wall,65,16.2,fountainWall,1,1,1,5,28
 Wall,130,16,fountainWall,1,1,1,161,18
-Wall,20,10.2,fountainWall,1,1,1,31,1
+Wall,20,10.2,fountainWall,1,1,1,31,2
 VerticalCrusher,13,52,fountainCrusher,down,2.0
 VerticalCrusher,19,52,fountainCrusher,down,2.8
 VerticalCrusher,25,52,fountainCrusher,down,2.5
@@ -81,6 +81,11 @@ HarmfulBloc,170.5,10.2,poison,10,0
 HarmfulBloc,172.5,10.2,poison,10,0
 HarmfulBloc,174.5,10.2,poison,10,0
 Scenery,170.8,46,upArrow2
+Scenery,31,28.2,leftArrow
+Scenery,82,15.8,rightArrow2
+Scenery,57.2,41,downArrow2
+Scenery,138.8,49,downArrow
+Scenery,130,39.2,rightArrow
 Scenery,80,28.1,deedeedeeStatue
 Scenery,83,28.1,deedeedeeStatue
 Scenery,86,28.1,deedeedeeStatue
@@ -88,3 +93,22 @@ Scenery,89,28.1,deedeedeeStatue
 Scenery,22,37.2,deathPanel
 Scenery,89,7.2,deathPanel
 Scenery,161,56.2,deathPanel
+Scenery,77,26,elementWood
+Scenery,80,26,elementEarth
+Scenery,83,26,elementMetal
+Scenery,86,26,elementWater
+Scenery,89,26,elementFire
+------ zone 1 sceneries ------
+Scenery,5,17.2,bush
+Scenery,2,17.2,bush
+Scenery,7.5,8.2,bush
+Scenery,38,11.2,bush
+Scenery,41,11.2,bush
+Scenery,26.5,5.2,bush
+Scenery,13,10.2,tree
+Scenery,40,0.2,greatTree
+Scenery,14,4.2,greatBranch
+------ zone 2 sceneries ------
+------ zone 3 sceneries ------
+------ zone 4 sceneries ------
+------ zone 5 sceneries ------

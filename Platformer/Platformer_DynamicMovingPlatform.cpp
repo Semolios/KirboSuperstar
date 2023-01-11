@@ -310,11 +310,24 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["snowman"].push_back(new olc::Sprite("assets/gfx/snowman.png"));
 	mapPlatforms["snowtree"].push_back(new olc::Sprite("assets/gfx/snowtree.png"));
 
-	mapPlatforms["upArrow"].push_back(new olc::Sprite("assets/gfx/upArrow.png"));
+	mapPlatforms["upArrow"].push_back(new olc::Sprite("assets/gfx/upArrowPanel.png"));
+	mapPlatforms["upArrow2"].push_back(new olc::Sprite("assets/gfx/upArrowPanel2.png"));
+	mapPlatforms["rightArrow"].push_back(new olc::Sprite("assets/gfx/rightArrowPanel.png"));
+	mapPlatforms["rightArrow2"].push_back(new olc::Sprite("assets/gfx/rightArrowPanel2.png"));
+	mapPlatforms["leftArrow"].push_back(new olc::Sprite("assets/gfx/leftArrowPanel.png"));
+	mapPlatforms["leftArrow2"].push_back(new olc::Sprite("assets/gfx/leftArrowPanel2.png"));
+	mapPlatforms["downArrow"].push_back(new olc::Sprite("assets/gfx/downArrowPanel.png"));
+	mapPlatforms["downArrow2"].push_back(new olc::Sprite("assets/gfx/downArrowPanel2.png"));
 
-	mapPlatforms["upArrow2"].push_back(new olc::Sprite("assets/gfx/upArrow2.png"));
+	mapPlatforms["elementWood"].push_back(new olc::Sprite("assets/gfx/elementWood.png"));
+	mapPlatforms["elementEarth"].push_back(new olc::Sprite("assets/gfx/elementEarth.png"));
+	mapPlatforms["elementMetal"].push_back(new olc::Sprite("assets/gfx/elementMetal.png"));
+	mapPlatforms["elementWater"].push_back(new olc::Sprite("assets/gfx/elementWater.png"));
+	mapPlatforms["elementFire"].push_back(new olc::Sprite("assets/gfx/elementFire.png"));
 	mapPlatforms["deedeedeeStatue"].push_back(new olc::Sprite("assets/gfx/deedeedeeStatue.png"));
 	mapPlatforms["deathPanel"].push_back(new olc::Sprite("assets/gfx/deathPanel.png"));
+	mapPlatforms["greatTree"].push_back(new olc::Sprite("assets/gfx/greatTree.png"));
+	mapPlatforms["greatBranch"].push_back(new olc::Sprite("assets/gfx/greatBranch.png"));
 #pragma endregion
 
 #pragma region Crushers
