@@ -81,7 +81,7 @@ void cDynamicWall::DrawSwitch(float cameraX, float cameraY)
 		float fTargetY = cameraY - fTriggerY;
 		float fDistance = sqrtf(fTargetX * fTargetX + fTargetY * fTargetY);
 
-		if (fDistance <= engine->ScreenWidth() / engine->GetTileWidth())
+        if (fDistance <= (engine->ScreenWidth() / engine->GetTileWidth()) * 1.5f)
 		{
 			engine->SetPixelMode(olc::Pixel::ALPHA);
 			olc::GFX2D::Transform2D t;
