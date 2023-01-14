@@ -33,10 +33,10 @@ bool cSelectMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Controll
 
 	if (!bInOptionsSubmenu)
 	{
-		engine->DrawKirboString(160, 30,  "Play",	 2);
-		engine->DrawKirboString(160, 70,  "Options", 2);
-		engine->DrawKirboString(160, 110, "Credits", 2);
-		engine->DrawKirboString(160, 150, "Quit",	 2);
+		engine->DrawKirboString(160, 30,  "Play",	  2);
+		engine->DrawKirboString(160, 70,  "Settings", 2);
+		engine->DrawKirboString(160, 110, "Credits",  2);
+		engine->DrawKirboString(160, 150, "Quit",	  2);
 	}
 	else
 	{
