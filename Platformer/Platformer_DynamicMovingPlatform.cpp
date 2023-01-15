@@ -328,6 +328,14 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["deathPanel"].push_back(new olc::Sprite("assets/gfx/deathPanel.png"));
 	mapPlatforms["greatTree"].push_back(new olc::Sprite("assets/gfx/greatTree.png"));
 	mapPlatforms["greatBranch"].push_back(new olc::Sprite("assets/gfx/greatBranch.png"));
+	mapPlatforms["groundGate"].push_back(new olc::Sprite("assets/gfx/groundGate.png"));
+	mapPlatforms["cave"].push_back(new olc::Sprite("assets/gfx/cave.png"));
+	mapPlatforms["diglett"].push_back(new olc::Sprite("assets/gfx/diglett.png"));
+	mapPlatforms["groundMound"].push_back(new olc::Sprite("assets/gfx/groundMound.png"));
+	mapPlatforms["carrots"].push_back(new olc::Sprite("assets/gfx/carrots.png"));
+	mapPlatforms["leftGrdWall"].push_back(new olc::Sprite("assets/gfx/leftGrdWall.png"));
+	mapPlatforms["rightGrdWall"].push_back(new olc::Sprite("assets/gfx/rightGrdWall.png"));
+	mapPlatforms["midGrdWall"].push_back(new olc::Sprite("assets/gfx/midGrdWall.png"));
 #pragma endregion
 
 #pragma region Crushers

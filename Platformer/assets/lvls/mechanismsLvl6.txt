@@ -1,3 +1,44 @@
+------ zone 1 sceneries ------
+Scenery,5,17.2,bush
+Scenery,2,17.2,bush
+Scenery,7.5,8.2,bush
+Scenery,38,11.2,bush
+Scenery,41,11.2,bush
+Scenery,26.5,5.2,bush
+Scenery,13,10.2,tree
+Scenery,40,0.2,greatTree
+Scenery,14,4.2,greatBranch
+------ zone 2 sceneries ------
+Scenery,115,16.2,groundGate
+Scenery,186,10.2,groundGate
+Scenery,72.1,9.2,cave
+Scenery,81,8.2,diglett
+Scenery,83,6.2,groundMound
+Scenery,99,3.2,groundMound
+Scenery,164,6.2,groundMound
+Scenery,83,1.7,carrots
+Scenery,110,5.7,carrots
+Scenery,152,6.7,carrots
+Scenery,124,2.2,leftGrdWall
+Scenery,124,6.2,leftGrdWall
+Scenery,142,2.2,rightGrdWall
+Scenery,142,6.2,rightGrdWall
+Scenery,127,2.2,midGrdWall
+Scenery,130,2.2,midGrdWall
+Scenery,133,2.2,midGrdWall
+Scenery,136,2.2,midGrdWall
+Scenery,139,2.2,midGrdWall
+Scenery,127,6.2,midGrdWall
+Scenery,130,6.2,midGrdWall
+Scenery,133,6.2,midGrdWall
+Scenery,136,6.2,midGrdWall
+Scenery,139,6.2,midGrdWall
+------ zone 3 sceneries ------
+------ zone 4 sceneries ------
+------ zone 5 sceneries ------
+--------------------------------------
+------ END OF SCENERIES SECTION ------
+--------------------------------------
 VerticalSingle,171,47,fountainBasic,0,19,1.0,1
 Ceiling,171,43,fountainCeiling,0,1
 Teleport,4,17.2,2,11.2,door
@@ -98,17 +139,3 @@ Scenery,80,26,elementEarth
 Scenery,83,26,elementMetal
 Scenery,86,26,elementWater
 Scenery,89,26,elementFire
------- zone 1 sceneries ------
-Scenery,5,17.2,bush
-Scenery,2,17.2,bush
-Scenery,7.5,8.2,bush
-Scenery,38,11.2,bush
-Scenery,41,11.2,bush
-Scenery,26.5,5.2,bush
-Scenery,13,10.2,tree
-Scenery,40,0.2,greatTree
-Scenery,14,4.2,greatBranch
------- zone 2 sceneries ------
------- zone 3 sceneries ------
------- zone 4 sceneries ------
------- zone 5 sceneries ------
