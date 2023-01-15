@@ -2,7 +2,7 @@ VerticalSingle,171,47,fountainBasic,0,19,1.0,1
 Ceiling,171,43,fountainCeiling,0,1
 Teleport,4,17.2,2,11.2,door
 Teleport,46,59.2,39,59.2,door
-Teleport,116,16.2,60,11.2,door
+Teleport,116,17.2,60,11.2,door
 Teleport,148,61.2,160,56.2,door
 Teleport,154,19.2,162,49.2,door
 ------ Return to Start point ------
