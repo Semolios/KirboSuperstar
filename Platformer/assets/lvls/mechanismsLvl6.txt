@@ -34,6 +34,10 @@ Scenery,133,6.2,midGrdWall
 Scenery,136,6.2,midGrdWall
 Scenery,139,6.2,midGrdWall
 ------ zone 3 sceneries ------
+Scenery,38,58.2,metalVent
+Scenery,22.1,54.3,abbath
+Scenery,34,54.25,mettaton
+Scenery,-5,54.8,A350
 ------ zone 4 sceneries ------
 ------ zone 5 sceneries ------
 --------------------------------------

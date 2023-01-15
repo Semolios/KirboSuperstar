@@ -728,6 +728,12 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		return ((cDynamicProjectile*)d)->IsRedundant();
 	}), vecProjectiles.end());
 
+	// Draw Platforms
+	for (auto& object : GetClosePlatforms(player->GetPosX(), player->GetPosY()))
+	{
+		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
+	}
+
 	// Draw walls switches
 	for (auto& object : vecPlatforms)
 	{
@@ -742,12 +748,6 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	for (auto& object : GetCloseTeleportDest(player->GetPosX(), player->GetPosY()))
 	{
 		object->DrawDest(camera->GetOffsetX(), camera->GetOffsetY());
-	}
-
-	// Draw Platforms
-	for (auto& object : GetClosePlatforms(player->GetPosX(), player->GetPosY()))
-	{
-		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
 	}
 
 	// Draw Wind
