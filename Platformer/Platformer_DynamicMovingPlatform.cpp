@@ -343,6 +343,19 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["mettaton"].push_back(new olc::Sprite("assets/gfx/mettaton01.png"));
 	mapPlatforms["mettaton"].push_back(new olc::Sprite("assets/gfx/mettaton01.png"));
 	mapPlatforms["A350"].push_back(new olc::Sprite("assets/gfx/A350.png"));
+	mapPlatforms["waterFall"].push_back(new olc::Sprite("assets/gfx/waterFall00.png"));
+	mapPlatforms["waterFall"].push_back(new olc::Sprite("assets/gfx/waterFall00.png"));
+	mapPlatforms["waterFall"].push_back(new olc::Sprite("assets/gfx/waterFall01.png"));
+	mapPlatforms["waterFall"].push_back(new olc::Sprite("assets/gfx/waterFall01.png"));
+	mapPlatforms["waterFall"].push_back(new olc::Sprite("assets/gfx/waterFall02.png"));
+	mapPlatforms["waterFall"].push_back(new olc::Sprite("assets/gfx/waterFall02.png"));
+	mapPlatforms["waterFlow"].push_back(new olc::Sprite("assets/gfx/waterFlow00.png"));
+	mapPlatforms["waterFlow"].push_back(new olc::Sprite("assets/gfx/waterFlow00.png"));
+	mapPlatforms["waterFlow"].push_back(new olc::Sprite("assets/gfx/waterFlow01.png"));
+	mapPlatforms["waterFlow"].push_back(new olc::Sprite("assets/gfx/waterFlow01.png"));
+	mapPlatforms["waterFlow"].push_back(new olc::Sprite("assets/gfx/waterFlow02.png"));
+	mapPlatforms["waterFlow"].push_back(new olc::Sprite("assets/gfx/waterFlow02.png"));
+	mapPlatforms["frisk"].push_back(new olc::Sprite("assets/gfx/frisk.png"));
 #pragma endregion
 
 #pragma region Crushers

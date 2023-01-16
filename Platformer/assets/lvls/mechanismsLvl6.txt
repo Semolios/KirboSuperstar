@@ -39,6 +39,8 @@ Scenery,22.1,54.3,abbath
 Scenery,34,54.25,mettaton
 Scenery,-5,54.8,A350
 ------ zone 4 sceneries ------
+Scenery,147,59.5,waterFall
+Scenery,188,57.1,waterFall
 ------ zone 5 sceneries ------
 --------------------------------------
 ------ END OF SCENERIES SECTION ------
@@ -143,3 +145,8 @@ Scenery,80,26,elementEarth
 Scenery,83,26,elementMetal
 Scenery,86,26,elementWater
 Scenery,89,26,elementFire
+Scenery,164,55.9,waterFlow
+Scenery,169.5,55.9,waterFlow
+Scenery,175.5,55.9,waterFlow
+Scenery,180,55.9,waterFlow
+Scenery,167,59,frisk
