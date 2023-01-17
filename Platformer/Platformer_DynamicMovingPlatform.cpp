@@ -356,6 +356,29 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["waterFlow"].push_back(new olc::Sprite("assets/gfx/waterFlow02.png"));
 	mapPlatforms["waterFlow"].push_back(new olc::Sprite("assets/gfx/waterFlow02.png"));
 	mapPlatforms["frisk"].push_back(new olc::Sprite("assets/gfx/frisk.png"));
+	mapPlatforms["fireStatueLeft"].push_back(new olc::Sprite("assets/gfx/fireStatueLeft.png"));
+	mapPlatforms["fireStatueRight"].push_back(new olc::Sprite("assets/gfx/fireStatueRight.png"));
+	mapPlatforms["fire"].push_back(new olc::Sprite("assets/gfx/fire00.png"));
+	mapPlatforms["fire"].push_back(new olc::Sprite("assets/gfx/fire00.png"));
+	mapPlatforms["fire"].push_back(new olc::Sprite("assets/gfx/fire00.png"));
+	mapPlatforms["fire"].push_back(new olc::Sprite("assets/gfx/fire01.png"));
+	mapPlatforms["fire"].push_back(new olc::Sprite("assets/gfx/fire01.png"));
+	mapPlatforms["fire"].push_back(new olc::Sprite("assets/gfx/fire01.png"));
+	mapPlatforms["fire"].push_back(new olc::Sprite("assets/gfx/fire02.png"));
+	mapPlatforms["fire"].push_back(new olc::Sprite("assets/gfx/fire02.png"));
+	mapPlatforms["fire"].push_back(new olc::Sprite("assets/gfx/fire02.png"));
+	mapPlatforms["fire"].push_back(new olc::Sprite("assets/gfx/fire03.png"));
+	mapPlatforms["fire"].push_back(new olc::Sprite("assets/gfx/fire03.png"));
+	mapPlatforms["fire"].push_back(new olc::Sprite("assets/gfx/fire03.png"));
+	mapPlatforms["fire"].push_back(new olc::Sprite("assets/gfx/fire04.png"));
+	mapPlatforms["fire"].push_back(new olc::Sprite("assets/gfx/fire04.png"));
+	mapPlatforms["fire"].push_back(new olc::Sprite("assets/gfx/fire04.png"));
+	mapPlatforms["burntLink"].push_back(new olc::Sprite("assets/gfx/burntLink.png"));
+	mapPlatforms["torch"].push_back(new olc::Sprite("assets/gfx/torch.png"));
+	mapPlatforms["torchLeft"].push_back(new olc::Sprite("assets/gfx/torchLeft.png"));
+	mapPlatforms["torchRight"].push_back(new olc::Sprite("assets/gfx/torchRight.png"));
+	mapPlatforms["charizardFamily"].push_back(new olc::Sprite("assets/gfx/charizardFamily.png"));
+	mapPlatforms["gasCooker"].push_back(new olc::Sprite("assets/gfx/gasCooker.png"));
 #pragma endregion
 
 #pragma region Crushers
