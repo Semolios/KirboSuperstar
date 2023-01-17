@@ -164,6 +164,9 @@ public:
 	//	Font functions
 	void DrawKirboString(int x, int y, std::string text, int scale = 1, bool centered = false);
 
+	// Ennemies
+	std::vector<cDynamicCreature*> GetCloseEnnemies(float px, float py);
+
 	// Other
 	std::string ToStr(std::wstring str);
 

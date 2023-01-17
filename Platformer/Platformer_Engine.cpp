@@ -596,7 +596,6 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	camera->SetPositions(player->GetPosX(), player->GetPosY());
 
 	camera->CalculateFOV(level);
-	camera->DrawBackground(level);
 
 	player->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
 
@@ -728,48 +727,6 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		return ((cDynamicProjectile*)d)->IsRedundant();
 	}), vecProjectiles.end());
 
-	// Draw Platforms
-	for (auto& object : GetClosePlatforms(player->GetPosX(), player->GetPosY()))
-	{
-		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
-	}
-
-	// Draw walls switches
-	for (auto& object : vecPlatforms)
-	{
-		object->DrawSwitch(camera->GetOffsetX(), camera->GetOffsetY());
-	}
-
-	// Draw Teleports
-	for (auto& object : GetCloseTeleport(player->GetPosX(), player->GetPosY()))
-	{
-		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
-	}
-	for (auto& object : GetCloseTeleportDest(player->GetPosX(), player->GetPosY()))
-	{
-		object->DrawDest(camera->GetOffsetX(), camera->GetOffsetY());
-	}
-
-	// Draw Wind
-	for (auto& object : GetCloseWinds(player->GetPosX(), player->GetPosY()))
-	{
-		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
-	}
-
-	camera->DrawLevel(level, fElapsedTime);
-
-	// Draw Ennemies
-	for (auto& object : vecEnnemies)
-	{
-		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
-	}
-
-	// Draw Projectiles
-	for (auto& object : vecProjectiles)
-	{
-		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
-	}
-
 	if (bInBossLvl && vecEnnemies.empty() && !player->IsDead())
 	{
 		// Wait a little before begin win animation
@@ -810,15 +767,60 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		}
 	}
 
+#pragma region MyRegion
+
+	// Draw Background
+	camera->DrawBackground(level);
+
+	// Draw Platforms
+	for (auto& object : GetClosePlatforms(player->GetPosX(), player->GetPosY()))
+	{
+		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
+	}
+
+	// Draw walls switches
+	for (auto& object : vecPlatforms)
+	{
+		object->DrawSwitch(camera->GetOffsetX(), camera->GetOffsetY());
+	}
+
+	// Draw Teleports
+	for (auto& object : GetCloseTeleport(player->GetPosX(), player->GetPosY()))
+	{
+		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
+	}
+	for (auto& object : GetCloseTeleportDest(player->GetPosX(), player->GetPosY()))
+	{
+		object->DrawDest(camera->GetOffsetX(), camera->GetOffsetY());
+	}
+
+	// Draw Wind
+	for (auto& object : GetCloseWinds(player->GetPosX(), player->GetPosY()))
+	{
+		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
+	}
+
+	// Draw tiles
+	camera->DrawLevel(level, fElapsedTime);
+
+	// Draw Ennemies
+	for (auto& object : GetCloseEnnemies(player->GetPosX(), player->GetPosY()))
+	{
+		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
+	}
+
+	// Draw Projectiles
+	for (auto& object : vecProjectiles)
+	{
+		object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
+	}
+
+	// Draw Player
 	player->UpdateInvulnerability(fElapsedTime);
-	t.Translate((player->GetPosX() - camera->GetOffsetX()) * nTileWidth + (nTileWidth / 2), (player->GetPosY() - camera->GetOffsetY()) * nTileHeight + (nTileHeight / 2));
+	t.Translate((player->GetPosX() - camera->GetOffsetX())* nTileWidth + (nTileWidth / 2), (player->GetPosY() - camera->GetOffsetY())* nTileHeight + (nTileHeight / 2));
 	player->DrawKirbo(t);
 
-	// Don't move kirbo before the white fading is finished
-	player->ChangePosAfterTP();
-
-#pragma region HUD
-
+	// Draw HUD
 	HUD->HealthBar(this, sprHealthBar);
 	HUD->HealthPoints(this, sprHealthPoint, player->GetHealth());
 
@@ -830,6 +832,9 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		HUD->DefenseBoost(this, GetTilesSprites());
 
 #pragma endregion
+
+	// Don't move kirbo before the white fading is finished
+	player->ChangePosAfterTP();
 
 	return true;
 }
@@ -1343,10 +1348,10 @@ std::vector<cDynamicMovingPlatform*> OneLoneCoder_Platformer::GetClosePlatforms(
 		// -----------------------------------------------------------------
 		// ------ /!\ FPS drops considerably if item is too large /!\ ------
 		// -----------------------------------------------------------------
-		if (fabs(px - (ptfm->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (ptfm->GetPY()										   )) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
-			fabs(px - (ptfm->GetPX() + ptfm->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (ptfm->GetPY()										   )) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
-			fabs(px - (ptfm->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (ptfm->GetPY() + ptfm->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
-			fabs(px - (ptfm->GetPX() + ptfm->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (ptfm->GetPY() + ptfm->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f) * 1.5f))
+		if (fabs(px - (ptfm->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (ptfm->GetPY()										    )) < ((((float)ScreenHeight()) / 64.0f)) ||
+			fabs(px - (ptfm->GetPX() + ptfm->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (ptfm->GetPY()										    )) < ((((float)ScreenHeight()) / 64.0f)) ||
+			fabs(px - (ptfm->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (ptfm->GetPY() + ptfm->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f)) ||
+			fabs(px - (ptfm->GetPX() + ptfm->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (ptfm->GetPY() + ptfm->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f)))
 		{
 			closePtfms.push_back(ptfm);
 		}
@@ -1374,10 +1379,10 @@ std::vector<cDynamicWind*> OneLoneCoder_Platformer::GetCloseWinds(float px, floa
 		// -----------------------------------------------------------------
 		// ------ /!\ FPS drops considerably if item is too large /!\ ------
 		// -----------------------------------------------------------------
-		if (fabs(px - (wind->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (wind->GetPY()										   )) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
-			fabs(px - (wind->GetPX() + wind->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (wind->GetPY()										   )) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
-			fabs(px - (wind->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (wind->GetPY() + wind->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
-			fabs(px - (wind->GetPX() + wind->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (wind->GetPY() + wind->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f) * 1.5f))
+		if (fabs(px - (wind->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (wind->GetPY()										    )) < ((((float)ScreenHeight()) / 64.0f)) ||
+			fabs(px - (wind->GetPX() + wind->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (wind->GetPY()										    )) < ((((float)ScreenHeight()) / 64.0f)) ||
+			fabs(px - (wind->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (wind->GetPY() + wind->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f)) ||
+			fabs(px - (wind->GetPX() + wind->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (wind->GetPY() + wind->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f)))
 		{
 			closeWinds.push_back(wind);
 		}
@@ -1400,10 +1405,10 @@ std::vector<cDynamicTeleport*> OneLoneCoder_Platformer::GetCloseTeleport(float p
 		// -----------------------------------------------------------------
 		// ------ /!\ FPS drops considerably if item is too large /!\ ------
 		// -----------------------------------------------------------------
-		if (fabs(px - (tp->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (tp->GetPY()										   )) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
-			fabs(px - (tp->GetPX() + tp->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (tp->GetPY()										   )) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
-			fabs(px - (tp->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (tp->GetPY() + tp->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
-			fabs(px - (tp->GetPX() + tp->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (tp->GetPY() + tp->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f) * 1.5f))
+		if (fabs(px - (tp->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (tp->GetPY()										    )) < ((((float)ScreenHeight()) / 64.0f)) ||
+			fabs(px - (tp->GetPX() + tp->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (tp->GetPY()										    )) < ((((float)ScreenHeight()) / 64.0f)) ||
+			fabs(px - (tp->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (tp->GetPY() + tp->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f)) ||
+			fabs(px - (tp->GetPX() + tp->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (tp->GetPY() + tp->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f)))
 		{
 			closeTeleports.push_back(tp);
 		}
@@ -1420,10 +1425,10 @@ std::vector<cDynamicTeleport*> OneLoneCoder_Platformer::GetCloseTeleportDest(flo
 		// -----------------------------------------------------------------
 		// ------ /!\ FPS drops considerably if item is too large /!\ ------
 		// -----------------------------------------------------------------
-		if (fabs(px - (tp->GetDestX()										 )) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (tp->GetDestY()										 )) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
-			fabs(px - (tp->GetDestX() + tp->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (tp->GetDestY()										 )) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
-			fabs(px - (tp->GetDestX()										 )) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (tp->GetDestY() + tp->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f) * 1.5f) ||
-			fabs(px - (tp->GetDestX() + tp->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f) * 1.5f) && fabs(py - (tp->GetDestY() + tp->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f) * 1.5f))
+		if (fabs(px - (tp->GetDestX()										 )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (tp->GetDestY()										  )) < ((((float)ScreenHeight()) / 64.0f)) ||
+			fabs(px - (tp->GetDestX() + tp->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (tp->GetDestY()										  )) < ((((float)ScreenHeight()) / 64.0f)) ||
+			fabs(px - (tp->GetDestX()										 )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (tp->GetDestY() + tp->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f)) ||
+			fabs(px - (tp->GetDestX() + tp->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (tp->GetDestY() + tp->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f)))
 		{
 			closeTeleports.push_back(tp);
 		}
@@ -2046,6 +2051,26 @@ void OneLoneCoder_Platformer::DrawKirboString(int x, int y, std::string text, in
 
 		++pos;
 	};
+}
+
+std::vector<cDynamicCreature*> OneLoneCoder_Platformer::GetCloseEnnemies(float px, float py)
+{
+	std::vector<cDynamicCreature*> closeEnnemies;
+	for (auto& mob : vecEnnemies)
+	{
+		// Check the 4 corners to avoid the item disappearing when player is far from top left corner
+		// -----------------------------------------------------------------
+		// ------ /!\ FPS drops considerably if item is too large /!\ ------
+		// -----------------------------------------------------------------
+		if (fabs(px - (mob->GetPX()						   )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (mob->GetPY()						 )) < ((((float)ScreenHeight() + 64.0f) / 64.0f)) ||
+			fabs(px - (mob->GetPX() + mob->GetNormalizedW())) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (mob->GetPY()						 )) < ((((float)ScreenHeight() + 64.0f) / 64.0f)) ||
+			fabs(px - (mob->GetPX()						   )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (mob->GetPY() + mob->GetNormalizedH())) < ((((float)ScreenHeight() + 64.0f) / 64.0f)) ||
+			fabs(px - (mob->GetPX() + mob->GetNormalizedW())) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (mob->GetPY() + mob->GetNormalizedH())) < ((((float)ScreenHeight() + 64.0f) / 64.0f)))
+		{
+			closeEnnemies.push_back(mob);
+		}
+	}
+	return closeEnnemies;
 }
 
 std::string OneLoneCoder_Platformer::ToStr(std::wstring str)
