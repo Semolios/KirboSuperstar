@@ -118,7 +118,7 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 
 			if (fBehaviourTimer == 0.0f)
 			{
-				engine->AddProjectile(px + cfMiddleOfKrackoX, py + cfMiddleOfKrackoY, true, 0.0f, 0.0f, fAimingTime + fFireTime, "chargeLightning", false, 0, false, false, 0, false, 0.0f, "", false, "", true);
+				engine->AddProjectile(px + cfMiddleOfKrackoX - 0.5f, py + cfMiddleOfKrackoY - 0.5f, true, 0.0f, 0.0f, fAimingTime + fFireTime, "chargeLightning", false, 0, false, false, 0, false, 0.0f, "", false, "", true);
 				engine->PlaySample("electricity");
 			}
 
