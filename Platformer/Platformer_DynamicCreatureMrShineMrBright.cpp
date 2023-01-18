@@ -262,14 +262,14 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 		break;
 	}
 
-	// Periodically spawn apples at a random location
+	// Periodically spawn meteors at a random location
 	fMeteorsTimer += fElapsedTime;
 
 	if (fMeteorsTimer >= fMeteorsSpawnTime)
 	{
 		fMeteorsTimer = 0.0f;
 
-		// Apple spawn between 1 and 16 (Whispy wood position)
+		// meteors spawn between 1 and 16 (MrShineAndMrBright position)
 		float fMeteorPosX = ((float)(rand() % cnMeteorPosXRange) / 10.0f) + cfMeteorPosXRangeOffset;
 
 		int nChosenMeteor = rand() % 2;

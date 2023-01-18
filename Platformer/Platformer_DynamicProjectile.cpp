@@ -339,17 +339,6 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProject
 	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple05.png"));
 	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple06.png"));
 	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple07.png"));
-	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple08.png"));
-	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple09.png"));
-	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple10.png"));
-	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple11.png"));
-	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple12.png"));
-	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple13.png"));
-	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple14.png"));
-	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple15.png"));
-	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple16.png"));
-	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple17.png"));
-	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple18.png"));
 
 	mapProjectiles["blow"].push_back(new olc::Sprite("assets/gfx/blow.png"));
 
