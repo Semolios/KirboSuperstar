@@ -2062,10 +2062,10 @@ std::vector<cDynamicCreature*> OneLoneCoder_Platformer::GetCloseEnnemies(float p
 		// -----------------------------------------------------------------
 		// ------ /!\ FPS drops considerably if item is too large /!\ ------
 		// -----------------------------------------------------------------
-		if (fabs(px - (mob->GetPX()						   )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (mob->GetPY()						 )) < ((((float)ScreenHeight() + 64.0f) / 64.0f)) ||
-			fabs(px - (mob->GetPX() + mob->GetNormalizedW())) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (mob->GetPY()						 )) < ((((float)ScreenHeight() + 64.0f) / 64.0f)) ||
-			fabs(px - (mob->GetPX()						   )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (mob->GetPY() + mob->GetNormalizedH())) < ((((float)ScreenHeight() + 64.0f) / 64.0f)) ||
-			fabs(px - (mob->GetPX() + mob->GetNormalizedW())) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (mob->GetPY() + mob->GetNormalizedH())) < ((((float)ScreenHeight() + 64.0f) / 64.0f)))
+		if (fabs(px - (mob->GetPX()						   )) < ((((float)ScreenWidth()) / 64.0f) * 1.25f) && fabs(py - (mob->GetPY()						 )) < ((((float)ScreenHeight()) / 64.0f) * 1.25f) ||
+			fabs(px - (mob->GetPX() + mob->GetNormalizedW())) < ((((float)ScreenWidth()) / 64.0f) * 1.25f) && fabs(py - (mob->GetPY()						 )) < ((((float)ScreenHeight()) / 64.0f) * 1.25f) ||
+			fabs(px - (mob->GetPX()						   )) < ((((float)ScreenWidth()) / 64.0f) * 1.25f) && fabs(py - (mob->GetPY() + mob->GetNormalizedH())) < ((((float)ScreenHeight()) / 64.0f) * 1.25f) ||
+			fabs(px - (mob->GetPX() + mob->GetNormalizedW())) < ((((float)ScreenWidth()) / 64.0f) * 1.25f) && fabs(py - (mob->GetPY() + mob->GetNormalizedH())) < ((((float)ScreenHeight()) / 64.0f) * 1.25f))
 		{
 			closeEnnemies.push_back(mob);
 		}
