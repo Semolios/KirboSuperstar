@@ -175,7 +175,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 				engine->PlaySample("beamCharge");
 				engine->ActivateShakeEffect(true, cnLowShakeAmplitudeX, cnLowShakeAmplitudeY);
 
-				engine->AddProjectile(px + cfChargeBeamOffsetX, py - cfChargeBeamOffsetY, false, 0.0f, 0.0f, fBeamSpawnTime, "chargeBeam", false, 0, false, false);
+                engine->AddProjectile(px + cfChargeBeamOffsetX, py + cfChargeBeamOffsetY, false, -0.1f, 0.1f, fBeamSpawnTime, "chargeBeam", false, 0, false, false, 0, true, -3.0f, "", false, "", true);
 				bCanSpawnAOE = false;
 			}
 

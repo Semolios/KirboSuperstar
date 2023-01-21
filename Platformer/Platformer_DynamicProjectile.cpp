@@ -364,11 +364,6 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProject
 	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam04.png"));
 	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam05.png"));
 	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam06.png"));
-	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam07.png"));
-	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam08.png"));
-	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam09.png"));
-	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam10.png"));
-	mapProjectiles["chargeBeam"].push_back(new olc::Sprite("assets/gfx/chargeBeam11.png"));
 
 	mapProjectiles["beam"].push_back(new olc::Sprite("assets/gfx/beam00.png"));
 	mapProjectiles["beam"].push_back(new olc::Sprite("assets/gfx/beam01.png"));

@@ -49,8 +49,8 @@ private:
 
 	const float cfMagmaRockDuration = 10.0f;
 
-	const float cfChargeBeamOffsetX = 1.8f;
-	const float cfChargeBeamOffsetY = 0.2f;
+	const float cfChargeBeamOffsetX = 0.2f;
+	const float cfChargeBeamOffsetY = 0.5f;
 	const float cfBeamOffsetX = 8.0f;
 	const float cfBeamOffsetY = 3.0f;
 	const float cfSunTakePunchTime = 1.0f;
