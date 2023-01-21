@@ -26,7 +26,7 @@ private:
 	const float cfRootPosY = 9.1f;
 	const float cfRootDuration = 0.396f;
 	const float cfWindDirection = -1.0f;
-	const float cfWindPower = 20.0f;
+	const float cfWindPower = 30.0f;
 	const float cfProjectilesYRangeOffset = -5.0f;
 	const float cfProjectilePosX = 14.0f;
 	const float cfProjectilePosY = 7.5f;
