@@ -118,7 +118,7 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 				engine->PlaySample("earthQuake");
 				engine->ActivateShakeEffect(true);
 
-				engine->AddProjectile(px + cfMovingGroundLavaOffsetX, cfMovingGroundLavaPosY, true, 0.0f, 0.0f, fColumnSpawnTime, "movingGroundLava", false, 0, false, false);
+                engine->AddProjectile(px + cfMovingGroundLavaOffsetX, cfMovingGroundLavaPosY, true, 0.0f, 0.0f, fColumnSpawnTime, "movingGroundLava", false, 0, false, false, 0, true, -3.0f, "", false, "", true);
 				bCanSpawnAOE = false;
 			}
 
