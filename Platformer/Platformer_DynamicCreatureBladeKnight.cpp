@@ -19,7 +19,7 @@ cDynamicCreatureBladeKnight::cDynamicCreatureBladeKnight(cLevel* l) : cDynamicCr
 	bSolidVsMap = true;
 	bSolidVsDynInitValue = true;
 	bAffectedByGravity = true;
-	nDamage = 5;
+	nDamage = 2;
 }
 
 cDynamicCreatureBladeKnight::~cDynamicCreatureBladeKnight()

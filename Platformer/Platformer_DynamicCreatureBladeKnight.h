@@ -50,8 +50,8 @@ private:
 	const float cfUpAtkSpeed = -10.0f;
 	const float cfUpAtkDuration = 0.1f;
 	const float cfDownAtkAOEDuration = 10.0f;
-	const int cnDownAtkDmg = 5;
-	const int cnUpAtkDmg = 5;
+	const int cnDownAtkDmg = 3;
+	const int cnUpAtkDmg = 3;
 
 	enum AI_STATE
 	{

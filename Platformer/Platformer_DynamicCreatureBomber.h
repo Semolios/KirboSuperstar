@@ -25,7 +25,7 @@ private:
 	const float cfExplosionDuration = 0.528f;
 	const float cfExplosionNoHarmingDuration = 0.132f;
 	const float cfKnockBackDuration = 0.3f;
-	const int cnExplosionDmg = 5;
+	const int cnExplosionDmg = 3;
 
 	enum AI_STATE
 	{
