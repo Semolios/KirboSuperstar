@@ -819,6 +819,16 @@ void cLevel::LoadMechanismsList()
 	mechanisms.push_back("assets/lvls/mechanismsLvl6.txt");
 }
 
+void cLevel::LoadBossMechanismsList()
+{
+	bossMechanisms.push_back("assets/lvls/mechanismsBoss1.txt");
+	bossMechanisms.push_back("assets/lvls/mechanismsBoss2.txt");
+	bossMechanisms.push_back("assets/lvls/mechanismsBoss3.txt");
+	bossMechanisms.push_back("assets/lvls/mechanismsBoss4.txt");
+	bossMechanisms.push_back("assets/lvls/mechanismsBoss5.txt");
+	bossMechanisms.push_back("assets/lvls/mechanismsBoss6.txt");
+}
+
 void cLevel::LoadSpecialTilesList()
 {
 	specialTiles.push_back("assets/gfx/tilemap00.png");
@@ -897,6 +907,11 @@ std::string cLevel::GetEnnemies()
 std::string cLevel::GetMechanisms()
 {
 	return mechanisms[nCurrentLevel];
+}
+
+std::string cLevel::GetBossMechanisms()
+{
+	return bossMechanisms[nCurrentLevel];
 }
 
 std::string cLevel::GetSpecialTiles()

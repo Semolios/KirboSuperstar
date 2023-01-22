@@ -57,6 +57,7 @@ public:
 	void LoadBossesList();
 	void LoadEnnemiesList();
 	void LoadMechanismsList();
+	void LoadBossMechanismsList();
 	void LoadSpecialTilesList();
 	void LoadGroundTilesList();
 	void LoadBackGroundsList();
@@ -68,6 +69,7 @@ public:
 	std::string GetBoss();
 	std::string GetEnnemies();
 	std::string GetMechanisms();
+	std::string GetBossMechanisms();
 	std::string GetSpecialTiles();
 	std::string GetGroundTiles();
 	std::string GetBackGround();
@@ -113,6 +115,7 @@ private:
 	std::vector<std::string> levels;
 	std::vector<std::string> ennemies;
 	std::vector<std::string> mechanisms;
+	std::vector<std::string> bossMechanisms;
 	std::vector<std::string> specialTiles;
 	std::vector<std::string> musics;
 	std::vector<std::string> groundTiles;

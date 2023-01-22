@@ -298,18 +298,87 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 #pragma endregion
 
 #pragma region Sceneries
+	// lvl 1
 	mapPlatforms["arrowPanel"].push_back(new olc::Sprite("assets/gfx/arrowPanel.png"));
 	mapPlatforms["tree"].push_back(new olc::Sprite("assets/gfx/tree.png"));
 	mapPlatforms["bush"].push_back(new olc::Sprite("assets/gfx/bush.png"));
 	mapPlatforms["mojo"].push_back(new olc::Sprite("assets/gfx/mojo.png"));
+	// boss 1
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros00.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros00.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros00.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros01.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros01.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros01.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros02.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros02.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros02.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros03.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros03.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros03.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros04.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros04.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros04.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros05.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros05.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros05.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros06.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros06.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros06.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros07.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros07.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros07.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros08.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros08.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros08.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros09.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros09.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros09.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros10.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros10.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros10.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros11.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros11.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros11.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros12.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros12.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros12.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros13.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros13.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros13.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros14.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros14.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros14.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros15.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros15.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros15.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros08.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros08.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros08.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros09.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros09.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros09.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros10.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros10.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros10.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros11.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros11.png"));
+	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros11.png"));
 
+	// lvl 2
 	mapPlatforms["hillYellow"].push_back(new olc::Sprite("assets/gfx/hillYellow.png"));
 	mapPlatforms["hillRed"].push_back(new olc::Sprite("assets/gfx/hillRed.png"));
 	mapPlatforms["hillsRed"].push_back(new olc::Sprite("assets/gfx/hillsRed.png"));
+	// boss 2
+	// TODO
 
+	// lvl 3
 	mapPlatforms["snowman"].push_back(new olc::Sprite("assets/gfx/snowman.png"));
 	mapPlatforms["snowtree"].push_back(new olc::Sprite("assets/gfx/snowtree.png"));
+	// boss 3
+	// TODO
 
+	// lvl 4
 	mapPlatforms["upArrow"].push_back(new olc::Sprite("assets/gfx/upArrowPanel.png"));
 	mapPlatforms["upArrow2"].push_back(new olc::Sprite("assets/gfx/upArrowPanel2.png"));
 	mapPlatforms["rightArrow"].push_back(new olc::Sprite("assets/gfx/rightArrowPanel.png"));
@@ -318,7 +387,15 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["leftArrow2"].push_back(new olc::Sprite("assets/gfx/leftArrowPanel2.png"));
 	mapPlatforms["downArrow"].push_back(new olc::Sprite("assets/gfx/downArrowPanel.png"));
 	mapPlatforms["downArrow2"].push_back(new olc::Sprite("assets/gfx/downArrowPanel2.png"));
+	// boss 4
+	// TODO
 
+	// lvl 5
+	// no Sceneries on lvl 5
+	// boss 5
+	// TODO
+
+	// lvl 6
 	mapPlatforms["elementWood"].push_back(new olc::Sprite("assets/gfx/elementWood.png"));
 	mapPlatforms["elementEarth"].push_back(new olc::Sprite("assets/gfx/elementEarth.png"));
 	mapPlatforms["elementMetal"].push_back(new olc::Sprite("assets/gfx/elementMetal.png"));
@@ -379,6 +456,11 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["torchRight"].push_back(new olc::Sprite("assets/gfx/torchRight.png"));
 	mapPlatforms["charizardFamily"].push_back(new olc::Sprite("assets/gfx/charizardFamily.png"));
 	mapPlatforms["gasCooker"].push_back(new olc::Sprite("assets/gfx/gasCooker.png"));
+	// boss 6
+	mapPlatforms["waterMark"].push_back(new olc::Sprite("assets/gfx/waterMark00.png"));
+	mapPlatforms["waterMark"].push_back(new olc::Sprite("assets/gfx/waterMark00.png"));
+	mapPlatforms["waterMark"].push_back(new olc::Sprite("assets/gfx/waterMark01.png"));
+	mapPlatforms["waterMark"].push_back(new olc::Sprite("assets/gfx/waterMark01.png"));
 #pragma endregion
 
 #pragma region Crushers

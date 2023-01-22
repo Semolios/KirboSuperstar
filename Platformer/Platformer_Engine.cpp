@@ -114,6 +114,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			level->LoadBossesList();
 			level->LoadEnnemiesList();
 			level->LoadMechanismsList();
+			level->LoadBossMechanismsList();
 			level->LoadSpecialTilesList();
 			level->LoadGroundTilesList();
 			level->LoadBackGroundsList();
@@ -910,6 +911,7 @@ bool OneLoneCoder_Platformer::GameState_LoadBossLevel(float fElapsedTime)
 		LoadLevelProperties();
 
 		level->PopulateBoss(vecEnnemies);
+		level->PopulateMechanisms(level->GetBossMechanisms());
 
 		sprBackground = new olc::Sprite(level->GetBossBackGround());
 		sndBossLevelMusic.LoadAudioWaveform(level->GetBossMusic());
