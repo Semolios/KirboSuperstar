@@ -210,7 +210,7 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 			{
 				fLightningPosX1 = px + cfMiddleOfKrackoX;
 				fLightningPosX2 = px + cfMiddleOfKrackoX;
-				engine->AddProjectile(fLightningPosX1, fGroundPositionY, true, 0.0f, 0.0f, fFireTime, "chargeLightning", false, 0, false);
+				engine->AddProjectile(fLightningPosX1, fGroundPositionY, true, 0.0f, 0.0f, fFireTime, "chargeLightning", false, 0, false, true, 0, true, -3.0f, "", false, "", true);
 				engine->PlaySample("electricity");
 			}
 
@@ -235,8 +235,8 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 
 				if (fBehaviourTimer < fNumberOfAttacks * fFireTime)
 				{
-					engine->AddProjectile(fLightningPosX1, fGroundPositionY, true, 0.0f, 0.0f, fFireTime, "chargeLightning", false, 0, false);
-					engine->AddProjectile(fLightningPosX2, fGroundPositionY, true, 0.0f, 0.0f, fFireTime, "chargeLightning", false, 0, false);
+					engine->AddProjectile(fLightningPosX1, fGroundPositionY, true, 0.0f, 0.0f, fFireTime, "chargeLightning", false, 0, false, true, 0, true, -3.0f, "", false, "", true);
+					engine->AddProjectile(fLightningPosX2, fGroundPositionY, true, 0.0f, 0.0f, fFireTime, "chargeLightning", false, 0, false, true, 0, true, -3.0f, "", false, "", true);
 					engine->PlaySample("electricity");
 				}
 			}
