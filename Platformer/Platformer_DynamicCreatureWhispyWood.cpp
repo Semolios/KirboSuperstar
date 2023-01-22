@@ -18,7 +18,7 @@ cDynamicCreatureWhispyWood::cDynamicCreatureWhispyWood(cLevel* l) : cDynamicCrea
 	level = l;
 	bSolidVsMap = true;
 	bAffectedByGravity = true;
-	nDamage = 3;
+	nDamage = 1;
 	bCanBehaveWhileAttacked = true;
 }
 

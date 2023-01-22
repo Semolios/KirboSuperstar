@@ -52,7 +52,7 @@ private:
 	const float cfAppleSpawnTimeLoHP = 1.0f;
 
 	const int cnNumberOfAttack = 3;
-	const int cnRootDmg = 3;
+	const int cnRootDmg = 2;
 	const int cnCorner = 3;
 	const int cnProjectilesYRange = 100;
 	const int cnProjectileDmg = 1;

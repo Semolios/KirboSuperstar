@@ -18,7 +18,7 @@ cDynamicCreatureKingDDD::cDynamicCreatureKingDDD(cLevel* l) : cDynamicCreature("
 	level = l;
 	bSolidVsMap = true;
 	bAffectedByGravity = true;
-	nDamage = 3;
+	nDamage = 2;
 	bCanBehaveWhileAttacked = true;
 }
 
@@ -489,7 +489,7 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 					bCanSpawnAOE = false;
 
 					engine->PlaySample("kingDDDUpAir");
-					engine->AddProjectile(px, py + fUpAirAOEPosY, false, vx, vy, fUpAirAOEDuration, "kingDDDUpAir", true, cnAttacksDmg, false);
+					engine->AddProjectile(px, py + fUpAirAOEPosY, false, vx, vy, fUpAirAOEDuration, "kingDDDUpAir", true, cnAttacksLowDmg, false);
 				}
 			}
 			else
@@ -519,7 +519,7 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 
 					engine->PlaySample("kingDDDAirAtkVoice");
 					engine->PlaySample("kingDDDAirAtkHammer");
-					engine->AddProjectile(px + fForwardAirAOEPosX, py, false, 0.0f, 0.0f, fAOEsDuration, "kingDDDForwardAir", false, cnAttacksDmg, false);
+					engine->AddProjectile(px + fForwardAirAOEPosX, py, false, 0.0f, 0.0f, fAOEsDuration, "kingDDDForwardAir", false, cnAttacksLowDmg, false);
 				}
 			}
 			else
@@ -548,7 +548,7 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 
 					engine->PlaySample("kingDDDAirAtkVoice");
 					engine->PlaySample("kingDDDAirAtkHammer");
-					engine->AddProjectile(px + fBackwardAirAOEPosX, py, false, 0.0f, 0.0f, fAOEsDuration, "kingDDDBackwardAir", false, cnAttacksDmg, false);
+					engine->AddProjectile(px + fBackwardAirAOEPosX, py, false, 0.0f, 0.0f, fAOEsDuration, "kingDDDBackwardAir", false, cnAttacksLowDmg, false);
 				}
 			}
 			else
@@ -580,7 +580,7 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 
 					engine->PlaySample("kingDDDAirAtkVoice");
 					engine->PlaySample("kingDDDAirAtkHammer");
-					engine->AddProjectile(px, py + fDownAirAOEPosY, false, 0.0f, 0.0f, fAOEsDuration, "kingDDDDownAir", false, cnAttacksDmg, false);
+					engine->AddProjectile(px, py + fDownAirAOEPosY, false, 0.0f, 0.0f, fAOEsDuration, "kingDDDDownAir", false, cnAttacksLowDmg, false);
 				}
 			}
 			else

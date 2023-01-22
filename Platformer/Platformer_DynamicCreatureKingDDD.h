@@ -73,6 +73,7 @@ private:
 
 	const int cnNumberOfAttack = 5;
 	const int cnAttacksDmg = 3;
+	const int cnAttacksLowDmg = 2;
 
 	const int cnShakeAmplitude = 50;
 

@@ -18,7 +18,7 @@ cDynamicCreatureSSTierMetaKnight::cDynamicCreatureSSTierMetaKnight(cLevel* l) : 
 	level = l;
 	bSolidVsMap = true;
 	bAffectedByGravity = true;
-	nDamage = 3;
+	nDamage = 2;
 	bCanBehaveWhileAttacked = true;
 }
 
@@ -302,7 +302,7 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 					if (nFaceDir == 0)
 						fOffsetX = -2.0f;
 
-					engine->AddProjectile(px + fOffsetX * cfMKWidth, py - 1.0f * cfMKWidth, false, 0.0f, 0.0f, fAOEDuration, "SSTierMKTPAttack", false, cnSSTierMKDmg, false);
+					engine->AddProjectile(px + fOffsetX * cfMKWidth, py - 1.0f * cfMKWidth, false, 0.0f, 0.0f, fAOEDuration, "SSTierMKTPAttack", false, cnSSTierMKLowDmg, false);
 				}
 			}
 			else

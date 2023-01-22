@@ -25,7 +25,8 @@ private:
 	const float cfOneSSTierMKFrame = 0.03125f;
 	const float cfTornadoOffsetX = 1.5f;
 	const float cfTornadoOffsetY = 3.0f;
-	const int cnSSTierMKDmg = 4;
+	const int cnSSTierMKDmg = 3;
+	const int cnSSTierMKLowDmg = 2;
 
 	const float cfWaitingTimeMaxHp = 2.5f;
 	const float cfWaitingTimeHiHp = 2.0f;

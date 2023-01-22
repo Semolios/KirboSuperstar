@@ -100,14 +100,14 @@ private:
 	float fIceCubeDuration = 4.0f;
 	float fIceCubeDrag = -1.0f;
 	float fIceCubeOffset = 0.0f;
-	int nIceCubeDmg = 4;
+	int nIceCubeDmg = 2;
 	std::string sIceCube;
 
 	// Iceblow behaviour
 	float fWaitBeforeBlow = 1.5f;
 	float fBlowTime = 2.0f;
 	float fWindOffsetX = -2.0f;
-	int nWindDmg = 4;
+	int nWindDmg = 3;
 
 	// Jumping behaviour
 	float fWaitBeforeJump = 0.5f;

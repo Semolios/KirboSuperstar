@@ -18,7 +18,7 @@ cDynamicCreatureMrShineMrBright::cDynamicCreatureMrShineMrBright(cLevel* l) : cD
 	level = l;
 	bSolidVsMap = true;
 	bAffectedByGravity = false;
-	nDamage = 3;
+	nDamage = 2;
 	bCanBehaveWhileAttacked = true;
 }
 
