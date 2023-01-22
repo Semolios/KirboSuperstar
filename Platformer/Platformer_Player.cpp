@@ -895,7 +895,8 @@ void cPlayer::Crushed()
 {
 	if (!bDead)
 		engine->PlaySample("kirboHit");
-	Kill();
+    if (IsAttackable())
+        Damage(nullptr);
 }
 
 bool cPlayer::DynamicFloor(float fNewPosX, float fNewPosY)
@@ -1203,7 +1204,14 @@ void cPlayer::Damage(cDynamic* object)
 	fInvulnerabilityTimer = cfInvulnerabilityFrame;
 	bDamaged = true;
 	bIsAttackable = false;
-	fHealth -= round((float)(object->GetDamage() / (float)nDefBoost)); // Kirbo can't take 0 damage with defense boost
+	if (object != nullptr)
+	{
+        fHealth -= round((float)(object->GetDamage() / (float)nDefBoost)); // Kirbo can't take 0 damage with defense boost
+	}
+	else
+	{
+		fHealth -= 4; // Crushed damage
+	}
 
 	if (fHealth <= 0.0f)
 	{
@@ -1213,7 +1221,7 @@ void cPlayer::Damage(cDynamic* object)
 	if (!bDead)
 	{
 		// Knockback the player out of the ennemy
-		if (object->GetPX() < fPosX)
+		if ((object != nullptr && object->GetPX() < fPosX) || (object == nullptr && GetFaceDir() < 0.0f))
 		{
 			fVelX = cfDamageEjectionVelX;
 			fVelY = -cfDamageEjectionVelY;
