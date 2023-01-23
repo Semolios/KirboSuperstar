@@ -16,7 +16,7 @@ cDynamicCreatureMrShineMrBright::cDynamicCreatureMrShineMrBright(cLevel* l) : cD
 	nHealth = 100;
 	nHealthMax = 100;
 	level = l;
-	bSolidVsMap = true;
+	bSolidVsMap = false;
 	bAffectedByGravity = false;
 	nDamage = 2;
 	bCanBehaveWhileAttacked = true;

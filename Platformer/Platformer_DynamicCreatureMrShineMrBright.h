@@ -130,7 +130,7 @@ private:
 	const float fGunTime = 4.0f;
 	// meteors spawn
 	const float cfMeteorPosXRangeOffset = 1.0f;
-	const float cfMeteorPosY = 2.0f;
+	const float cfMeteorPosY = 0.0f;
 	const float cfMeteorDuration = 10.0f;
 	const float cfMeteorVelX = 5.0f;
 	const float cfMeteorVelY = 5.0f;

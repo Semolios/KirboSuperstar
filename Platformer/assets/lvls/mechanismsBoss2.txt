@@ -1,0 +1,5 @@
+Scenery,2,7.1,hillRed
+Scenery,7,7.1,hillsRed
+Scenery,14,7.1,hillYellow
+Basic,4,6,basic,0
+Basic,10,6,basic,0
