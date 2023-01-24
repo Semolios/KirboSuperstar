@@ -370,13 +370,14 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["hillRed"].push_back(new olc::Sprite("assets/gfx/hillRed.png"));
 	mapPlatforms["hillsRed"].push_back(new olc::Sprite("assets/gfx/hillsRed.png"));
 	// boss 2
-	// TODO
+	// no different Sceneries in boss 2
 
 	// lvl 3
 	mapPlatforms["snowman"].push_back(new olc::Sprite("assets/gfx/snowman.png"));
 	mapPlatforms["snowtree"].push_back(new olc::Sprite("assets/gfx/snowtree.png"));
 	// boss 3
-	// TODO
+	mapPlatforms["nipperPlant"].push_back(new olc::Sprite("assets/gfx/nipperPlant.png"));
+	mapPlatforms["snowMount"].push_back(new olc::Sprite("assets/gfx/snowMount.png"));
 
 	// lvl 4
 	mapPlatforms["upArrow"].push_back(new olc::Sprite("assets/gfx/upArrowPanel.png"));
@@ -391,7 +392,7 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	// TODO
 
 	// lvl 5
-	// no Sceneries on lvl 5
+	// TODO
 	// boss 5
 	// TODO
 
