@@ -3,6 +3,10 @@ Scenery,-1,2.8,fence
 Scenery,-1,4.8,fence
 Scenery,13,2.8,fence
 Scenery,13,4.8,fence
+Scenery,1,2.3,spectateBladeKnight
+Scenery,1,4.52,waddleDoo
+Scenery,16,2.3,soldierWaddleDee
+Scenery,16,4.3,sirKibble
 Basic,-1,3.5,halberdBasic,0
 Basic,-1,5.5,halberdBasic,0
 Basic,13,3.5,halberdBasic,0
