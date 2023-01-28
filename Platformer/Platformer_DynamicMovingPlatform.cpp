@@ -280,6 +280,7 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["basic"].push_back(new olc::Sprite("assets/gfx/basicPlatform.png"));
 	mapPlatforms["iceBasic"].push_back(new olc::Sprite("assets/gfx/iceBasicPlatform.png"));
 	mapPlatforms["marbleBasic"].push_back(new olc::Sprite("assets/gfx/marbleBasicPlatform.png"));
+	mapPlatforms["halberdBasic"].push_back(new olc::Sprite("assets/gfx/halberdBasicPlatform.png"));
 	mapPlatforms["fountainBasic"].push_back(new olc::Sprite("assets/gfx/fountainBasicPlatform.png"));
 
 	mapPlatforms["ice"].push_back(new olc::Sprite("assets/gfx/icePlatform.png"));
@@ -396,7 +397,8 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	// lvl 5
 	// TODO
 	// boss 5
-	// TODO
+	mapPlatforms["MKSword"].push_back(new olc::Sprite("assets/gfx/MKSword.png"));
+	mapPlatforms["fence"].push_back(new olc::Sprite("assets/gfx/fence.png"));
 
 	// lvl 6
 	mapPlatforms["elementWood"].push_back(new olc::Sprite("assets/gfx/elementWood.png"));
