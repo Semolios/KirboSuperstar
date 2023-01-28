@@ -389,7 +389,9 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["downArrow"].push_back(new olc::Sprite("assets/gfx/downArrowPanel.png"));
 	mapPlatforms["downArrow2"].push_back(new olc::Sprite("assets/gfx/downArrowPanel2.png"));
 	// boss 4
-	// TODO
+	mapPlatforms["cloud"].push_back(new olc::Sprite("assets/gfx/cloud.png"));
+	mapPlatforms["pikachu"].push_back(new olc::Sprite("assets/gfx/pikachu.png"));
+	mapPlatforms["electricalSocket"].push_back(new olc::Sprite("assets/gfx/electricalSocket.png"));
 
 	// lvl 5
 	// TODO

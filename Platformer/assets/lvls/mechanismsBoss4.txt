@@ -1,0 +1,4 @@
+Scenery,1,7.1,cloud
+Scenery,4,1,pikachu
+Scenery,12,1,electricalSocket
+Basic,6,6,marbleBasic,0
