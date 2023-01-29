@@ -1,0 +1,9 @@
+Scenery,6.65,13,waterMark
+Scenery,6.675,10,waterMark
+Scenery,13,11.5,waterMark
+Scenery,20.9,10,waterMark
+Scenery,21.2,13,waterMark
+Scenery,7.75,9.1,fountainFlow
+Scenery,8.5,4.4,meleeFox
+Scenery,11.5,1,SSTierMK
+Scenery,16.4,3.6,meleeMarth

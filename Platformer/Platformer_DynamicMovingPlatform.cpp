@@ -513,6 +513,23 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["waterMark"].push_back(new olc::Sprite("assets/gfx/waterMark00.png"));
 	mapPlatforms["waterMark"].push_back(new olc::Sprite("assets/gfx/waterMark01.png"));
 	mapPlatforms["waterMark"].push_back(new olc::Sprite("assets/gfx/waterMark01.png"));
+	mapPlatforms["fountainFlow"].push_back(new olc::Sprite("assets/gfx/fountainFlow00.png"));
+	mapPlatforms["fountainFlow"].push_back(new olc::Sprite("assets/gfx/fountainFlow00.png"));
+	mapPlatforms["fountainFlow"].push_back(new olc::Sprite("assets/gfx/fountainFlow01.png"));
+	mapPlatforms["fountainFlow"].push_back(new olc::Sprite("assets/gfx/fountainFlow01.png"));
+	mapPlatforms["meleeFox"].push_back(new olc::Sprite("assets/gfx/meleeFox00.png"));
+	mapPlatforms["meleeFox"].push_back(new olc::Sprite("assets/gfx/meleeFox01.png"));
+	mapPlatforms["meleeFox"].push_back(new olc::Sprite("assets/gfx/meleeFox02.png"));
+	mapPlatforms["meleeFox"].push_back(new olc::Sprite("assets/gfx/meleeFox03.png"));
+	mapPlatforms["meleeMarth"].push_back(new olc::Sprite("assets/gfx/meleeMarth00.png"));
+	mapPlatforms["meleeMarth"].push_back(new olc::Sprite("assets/gfx/meleeMarth01.png"));
+	mapPlatforms["meleeMarth"].push_back(new olc::Sprite("assets/gfx/meleeMarth02.png"));
+	mapPlatforms["meleeMarth"].push_back(new olc::Sprite("assets/gfx/meleeMarth03.png"));
+	mapPlatforms["SSTierMK"].push_back(new olc::Sprite("assets/gfx/SSTierMK00.png"));
+	mapPlatforms["SSTierMK"].push_back(new olc::Sprite("assets/gfx/SSTierMK01.png"));
+	mapPlatforms["SSTierMK"].push_back(new olc::Sprite("assets/gfx/SSTierMK02.png"));
+	mapPlatforms["SSTierMK"].push_back(new olc::Sprite("assets/gfx/SSTierMK03.png"));
+	mapPlatforms["SSTierMK"].push_back(new olc::Sprite("assets/gfx/SSTierMK04.png"));
 #pragma endregion
 
 #pragma region Crushers
