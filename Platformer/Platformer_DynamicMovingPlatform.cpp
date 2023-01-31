@@ -304,6 +304,18 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["tree"].push_back(new olc::Sprite("assets/gfx/tree.png"));
 	mapPlatforms["bush"].push_back(new olc::Sprite("assets/gfx/bush.png"));
 	mapPlatforms["mojo"].push_back(new olc::Sprite("assets/gfx/mojo.png"));
+	mapPlatforms["caterpillar"].push_back(new olc::Sprite("assets/gfx/caterpillar.png"));
+	mapPlatforms["happyShroom"].push_back(new olc::Sprite("assets/gfx/happyShroom.png"));
+	mapPlatforms["pirahnaPlant"].push_back(new olc::Sprite("assets/gfx/pirahnaPlant.png"));
+	mapPlatforms["smilingShroom"].push_back(new olc::Sprite("assets/gfx/smilingShroom.png"));
+	mapPlatforms["soldierSkeleton"].push_back(new olc::Sprite("assets/gfx/soldierSkeleton00.png"));
+	mapPlatforms["soldierSkeleton"].push_back(new olc::Sprite("assets/gfx/soldierSkeleton01.png"));
+	mapPlatforms["soldierSkeleton"].push_back(new olc::Sprite("assets/gfx/soldierSkeleton02.png"));
+	mapPlatforms["bahbahbahbah"].push_back(new olc::Sprite("assets/gfx/bahbahbahbah00.png"));
+	mapPlatforms["bahbahbahbah"].push_back(new olc::Sprite("assets/gfx/bahbahbahbah01.png"));
+	mapPlatforms["bahbahbahbah"].push_back(new olc::Sprite("assets/gfx/bahbahbahbah02.png"));
+	mapPlatforms["bahbahbahbah"].push_back(new olc::Sprite("assets/gfx/bahbahbahbah03.png"));
+	mapPlatforms["kremling"].push_back(new olc::Sprite("assets/gfx/kremling.png"));
 	// boss 1
 	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros00.png"));
 	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros00.png"));
@@ -365,6 +377,9 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros11.png"));
 	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros11.png"));
 	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros11.png"));
+	mapPlatforms["skullKidBush"].push_back(new olc::Sprite("assets/gfx/skullKidBush.png"));
+	mapPlatforms["chikoritaBush"].push_back(new olc::Sprite("assets/gfx/chikoritaBush.png"));
+	mapPlatforms["coolBugFact"].push_back(new olc::Sprite("assets/gfx/coolBugFact.png"));
 
 	// lvl 2
 	mapPlatforms["hillYellow"].push_back(new olc::Sprite("assets/gfx/hillYellow.png"));

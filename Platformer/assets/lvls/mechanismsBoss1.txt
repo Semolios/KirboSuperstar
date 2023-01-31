@@ -1,1 +1,4 @@
 Scenery,15.5,7.1,dancingPoppyBros
+Scenery,1,7.1,skullKidBush
+Scenery,9,7.1,chikoritaBush
+Scenery,6,7.6,coolBugFact
