@@ -30,3 +30,12 @@ Scenery,34,8.2,hillRed
 Scenery,93,8.2,hillsRed
 Scenery,178,7.2,hillsRed
 Scenery,210,7.2,hillYellow
+Scenery,190,5.7,cannibalHill
+Scenery,21.7,2.3,mustacheHill
+Scenery,59.5,11,wryHill
+Scenery,89,9.1,goomba
+Scenery,90,9,greenKoopaTroopa
+Scenery,69,4,flyingRedKoopaTroopa
+Scenery,213,5,rotatingHill
+Scenery,15,3.9,beaver
+Scenery,100,8.9,beaver
