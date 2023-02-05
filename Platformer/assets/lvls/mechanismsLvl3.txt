@@ -52,3 +52,4 @@ Scenery,31,26.7,snowtree
 Scenery,79,26.7,snowtree
 Scenery,142,26.7,snowtree
 Scenery,116,12.7,snowtree
+Scenery,82,24.2,scrat

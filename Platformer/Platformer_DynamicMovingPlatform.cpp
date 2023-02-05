@@ -515,6 +515,7 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	// lvl 3
 	mapPlatforms["snowman"].push_back(new olc::Sprite("assets/gfx/snowman.png"));
 	mapPlatforms["snowtree"].push_back(new olc::Sprite("assets/gfx/snowtree.png"));
+	mapPlatforms["scrat"].push_back(new olc::Sprite("assets/gfx/scrat.png"));
 	// boss 3
 	mapPlatforms["nipperPlant"].push_back(new olc::Sprite("assets/gfx/nipperPlant.png"));
 	mapPlatforms["snowMount"].push_back(new olc::Sprite("assets/gfx/snowMount.png"));
