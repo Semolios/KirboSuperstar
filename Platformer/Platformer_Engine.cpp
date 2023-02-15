@@ -1649,8 +1649,14 @@ void OneLoneCoder_Platformer::PlaySample(std::string name, bool loop, bool dontP
 
 void OneLoneCoder_Platformer::StopSample(std::string name)
 {
-	if (waveEngine.IsWaveformPlaying(sharedSounds[name]))
-		waveEngine.StopWaveform(sharedPlaying[name]);
+    try
+    {
+        if (waveEngine.IsWaveformPlaying(sharedSounds[name]))
+            waveEngine.StopWaveform(sharedPlaying[name]);
+    }
+    catch (const std::exception&)
+    {
+    }
 }
 
 bool OneLoneCoder_Platformer::IsSamplePlaying(std::string name)

@@ -195,3 +195,4 @@ Scenery,169.5,55.9,waterFlow
 Scenery,175.5,55.9,waterFlow
 Scenery,180,55.9,waterFlow
 Scenery,167,59,frisk
+Scenery,176.4,54.9,kingZora
