@@ -641,8 +641,19 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["leftArrow2"].push_back(new olc::Sprite("assets/gfx/leftArrowPanel2.png"));
 	mapPlatforms["downArrow"].push_back(new olc::Sprite("assets/gfx/downArrowPanel.png"));
 	mapPlatforms["downArrow2"].push_back(new olc::Sprite("assets/gfx/downArrowPanel2.png"));
-	// boss 4
 	mapPlatforms["cloud"].push_back(new olc::Sprite("assets/gfx/cloud.png"));
+	mapPlatforms["smileCloud"].push_back(new olc::Sprite("assets/gfx/smileCloud.png"));
+	mapPlatforms["cloudConstruction1"].push_back(new olc::Sprite("assets/gfx/cloudConstruction1.png"));
+	mapPlatforms["cloudConstruction2"].push_back(new olc::Sprite("assets/gfx/cloudConstruction2.png"));
+	mapPlatforms["cloudConstruction3"].push_back(new olc::Sprite("assets/gfx/cloudConstruction3.png"));
+	mapPlatforms["cloudConstruction4"].push_back(new olc::Sprite("assets/gfx/cloudConstruction4.png"));
+	mapPlatforms["cloudConstruction5"].push_back(new olc::Sprite("assets/gfx/cloudConstruction5.png"));
+	mapPlatforms["cloudConstruction6"].push_back(new olc::Sprite("assets/gfx/cloudConstruction6.png"));
+	mapPlatforms["pit"].push_back(new olc::Sprite("assets/gfx/pit00.png"));
+	mapPlatforms["pit"].push_back(new olc::Sprite("assets/gfx/pit00.png"));
+	mapPlatforms["pit"].push_back(new olc::Sprite("assets/gfx/pit01.png"));
+	mapPlatforms["pit"].push_back(new olc::Sprite("assets/gfx/pit01.png"));
+	// boss 4
 	mapPlatforms["pikachu"].push_back(new olc::Sprite("assets/gfx/pikachu.png"));
 	mapPlatforms["electricalSocket"].push_back(new olc::Sprite("assets/gfx/electricalSocket.png"));
 
