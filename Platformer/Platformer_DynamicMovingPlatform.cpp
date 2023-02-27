@@ -658,7 +658,44 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["electricalSocket"].push_back(new olc::Sprite("assets/gfx/electricalSocket.png"));
 
 	// lvl 5
-	// TODO
+	mapPlatforms["chunLi"].push_back(new olc::Sprite("assets/gfx/chunLi00.png"));
+	mapPlatforms["chunLi"].push_back(new olc::Sprite("assets/gfx/chunLi01.png"));
+	mapPlatforms["chunLi"].push_back(new olc::Sprite("assets/gfx/chunLi02.png"));
+	mapPlatforms["chunLi"].push_back(new olc::Sprite("assets/gfx/chunLi03.png"));
+	mapPlatforms["chunLi"].push_back(new olc::Sprite("assets/gfx/chunLi04.png"));
+	mapPlatforms["guileAndRyuTango"].push_back(new olc::Sprite("assets/gfx/guileAndRyuTango00.png"));
+	mapPlatforms["guileAndRyuTango"].push_back(new olc::Sprite("assets/gfx/guileAndRyuTango00.png"));
+	mapPlatforms["guileAndRyuTango"].push_back(new olc::Sprite("assets/gfx/guileAndRyuTango00.png"));
+	mapPlatforms["guileAndRyuTango"].push_back(new olc::Sprite("assets/gfx/guileAndRyuTango00.png"));
+	mapPlatforms["guileAndRyuTango"].push_back(new olc::Sprite("assets/gfx/guileAndRyuTango00.png"));
+	mapPlatforms["guileAndRyuTango"].push_back(new olc::Sprite("assets/gfx/guileAndRyuTango00.png"));
+	mapPlatforms["guileAndRyuTango"].push_back(new olc::Sprite("assets/gfx/guileAndRyuTango01.png"));
+	mapPlatforms["guileAndRyuTango"].push_back(new olc::Sprite("assets/gfx/guileAndRyuTango01.png"));
+	mapPlatforms["guileAndRyuTango"].push_back(new olc::Sprite("assets/gfx/guileAndRyuTango01.png"));
+	mapPlatforms["guileAndRyuTango"].push_back(new olc::Sprite("assets/gfx/guileAndRyuTango01.png"));
+	mapPlatforms["guileAndRyuTango"].push_back(new olc::Sprite("assets/gfx/guileAndRyuTango01.png"));
+	mapPlatforms["guileAndRyuTango"].push_back(new olc::Sprite("assets/gfx/guileAndRyuTango01.png"));
+	mapPlatforms["spyro"].push_back(new olc::Sprite("assets/gfx/spyro00.png"));
+	mapPlatforms["spyro"].push_back(new olc::Sprite("assets/gfx/spyro00.png"));
+	mapPlatforms["spyro"].push_back(new olc::Sprite("assets/gfx/spyro01.png"));
+	mapPlatforms["spyro"].push_back(new olc::Sprite("assets/gfx/spyro01.png"));
+	mapPlatforms["spyro"].push_back(new olc::Sprite("assets/gfx/spyro02.png"));
+	mapPlatforms["spyro"].push_back(new olc::Sprite("assets/gfx/spyro02.png"));
+	mapPlatforms["spyro"].push_back(new olc::Sprite("assets/gfx/spyro03.png"));
+	mapPlatforms["spyro"].push_back(new olc::Sprite("assets/gfx/spyro03.png"));
+	mapPlatforms["spyro"].push_back(new olc::Sprite("assets/gfx/spyro04.png"));
+	mapPlatforms["spyro"].push_back(new olc::Sprite("assets/gfx/spyro04.png"));
+	mapPlatforms["spyro"].push_back(new olc::Sprite("assets/gfx/spyro05.png"));
+	mapPlatforms["spyro"].push_back(new olc::Sprite("assets/gfx/spyro05.png"));
+	mapPlatforms["samusShip"].push_back(new olc::Sprite("assets/gfx/samusShip00.png"));
+	mapPlatforms["samusShip"].push_back(new olc::Sprite("assets/gfx/samusShip01.png"));
+	mapPlatforms["samusShip"].push_back(new olc::Sprite("assets/gfx/samusShip02.png"));
+	mapPlatforms["samusShip"].push_back(new olc::Sprite("assets/gfx/samusShip03.png"));
+	mapPlatforms["olimarShip"].push_back(new olc::Sprite("assets/gfx/olimarShip00.png"));
+	mapPlatforms["olimarShip"].push_back(new olc::Sprite("assets/gfx/olimarShip01.png"));
+	mapPlatforms["olimarShip"].push_back(new olc::Sprite("assets/gfx/olimarShip02.png"));
+	mapPlatforms["olimarShip"].push_back(new olc::Sprite("assets/gfx/olimarShip03.png"));
+	mapPlatforms["olimar"].push_back(new olc::Sprite("assets/gfx/olimar.png"));
 	// boss 5
 	mapPlatforms["MKSword"].push_back(new olc::Sprite("assets/gfx/MKSword.png"));
 	mapPlatforms["fence"].push_back(new olc::Sprite("assets/gfx/fence.png"));

@@ -22,3 +22,10 @@ HarmfulBloc,150,11.25,shipFlame,2,0
 HarmfulBloc,156,6.25,shipFlame,2,0
 HarmfulBloc,166,2.25,shipFlame,2,0
 HarmfulBloc,168,10.25,shipFlame,2,0
+Scenery,19,9,chunLi
+Scenery,55,12,spyro
+Scenery,92,2,flyingRedKoopaTroopa
+Scenery,116,6,samusShip
+Scenery,144,5,olimarShip
+Scenery,152,9.85,olimar
+Scenery,174,5,guileAndRyuTango
