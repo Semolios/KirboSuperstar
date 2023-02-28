@@ -34,6 +34,8 @@ Scenery,26.5,5.2,bush
 Scenery,13,10.2,tree
 Scenery,40,0.2,greatTree
 Scenery,14,4.2,greatBranch
+Scenery,3.5,11.1,chikoritaBush
+Scenery,25,11.1,skullKidBush
 ------ zone 2 sceneries ------
 Scenery,115,16.2,groundGate
 Scenery,186,10.2,groundGate
@@ -59,14 +61,18 @@ Scenery,130,6.2,midGrdWall
 Scenery,133,6.2,midGrdWall
 Scenery,136,6.2,midGrdWall
 Scenery,139,6.2,midGrdWall
+Scenery,129,4.1,miningKremling
+Scenery,135,4.1,miningKremling
 ------ zone 3 sceneries ------
 Scenery,38,58.2,metalVent
 Scenery,22.1,54.3,abbath
-Scenery,34,54.25,mettaton
+Scenery,28,55.25,mettaton
+Scenery,16,55,waddlingRegisteel
 Scenery,-5,54.8,A350
 ------ zone 4 sceneries ------
 Scenery,147,59.5,waterFall
 Scenery,188,57.1,waterFall
+Scenery,184,58.3,enguardeTheSwordfish
 ------ zone 5 sceneries ------
 Scenery,152,18.1,fireStatueLeft
 Scenery,155,18.1,fireStatueRight
@@ -115,6 +121,7 @@ Scenery,170.9,20.6,torchLeft
 Scenery,179.7,20.6,torchRight
 Scenery,171.1,19,fire
 Scenery,179.5,19,fire
+Scenery,181.5,16.2,entei
 ------------------------------
 HarmfulBloc,10,42.2,poison,4,0
 HarmfulBloc,12,42.2,poison,4,0
@@ -196,3 +203,4 @@ Scenery,175.5,55.9,waterFlow
 Scenery,180,55.9,waterFlow
 Scenery,167,59,frisk
 Scenery,176.4,54.9,kingZora
+Scenery,87,7.2,mukUsedToxic
