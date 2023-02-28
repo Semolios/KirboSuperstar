@@ -149,7 +149,7 @@ private:
 	const float cfWaitBeforeReenterDoor = 0.5f;			// a little time to prevent player from spamming doors
 
 	const int cnSlapDmg = 3;							// damages of the slap attack
-	const int cnJesusCrossDmg = 1;						// damages of the jesus cross
+	const int cnJesusCrossDmg = 2;						// damages of the jesus cross
 	const int cnCandyPowerDmg = 5;						// Damages when candy power activated
 
 	float fPosX = 0.0f;
