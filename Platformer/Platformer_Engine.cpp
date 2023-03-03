@@ -230,14 +230,20 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		break;
 		case LS_SOUNDMENU:
 		{
-			sprSoundMenuNoSound = new olc::Sprite("assets/gfx/soundMenuNoSound.png");
-			sprSoundMenuLow = new olc::Sprite("assets/gfx/soundMenuLow.png");
-			sprSoundMenuMid = new olc::Sprite("assets/gfx/soundMenuMid.png");
-			sprSoundMenuHigh = new olc::Sprite("assets/gfx/soundMenuHigh.png");
-			sprSoundMenuMax = new olc::Sprite("assets/gfx/soundMenuMax.png");
-			sprSoundMenuRightArrow = new olc::Sprite("assets/gfx/rightArrow.png");
-			sprSoundMenuLeftArrow = new olc::Sprite("assets/gfx/leftArrow.png");
-			soundMenu = new cSoundMenu(this, sprSoundMenuNoSound, sprSoundMenuLow, sprSoundMenuMid, sprSoundMenuHigh, sprSoundMenuMax, sprSoundMenuRightArrow, sprSoundMenuLeftArrow);
+            sprSoundMenuNoSound = olc::Sprite("assets/gfx/soundMenuNoSound.png");
+            sprSoundMenuLow = olc::Sprite("assets/gfx/soundMenuLow.png");
+            sprSoundMenuMid = olc::Sprite("assets/gfx/soundMenuMid.png");
+            sprSoundMenuHigh = olc::Sprite("assets/gfx/soundMenuHigh.png");
+            sprSoundMenuMax = olc::Sprite("assets/gfx/soundMenuMax.png");
+            sprSoundMenuRightArrow = olc::Sprite("assets/gfx/rightArrow.png");
+            sprSoundMenuLeftArrow = olc::Sprite("assets/gfx/leftArrow.png");
+			soundMenu = new cSoundMenu(&sprSoundMenuNoSound,
+									   &sprSoundMenuLow,
+									   &sprSoundMenuMid,
+									   &sprSoundMenuHigh,
+									   &sprSoundMenuMax,
+									   &sprSoundMenuRightArrow,
+									   &sprSoundMenuLeftArrow);
 			UpdateVolume(soundMenu->GetSoundVolume());
 
 			UpdateProgressBar("Loading 52%");
@@ -248,7 +254,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		case LS_SCREENMODEMENU:
 		{
 			sprScreenModeMenu = new olc::Sprite("assets/gfx/screenMode.png");
-			screenModeMenu = new cScreenModeMenu(this, sprScreenModeMenu, sprSoundMenuRightArrow, sprSoundMenuLeftArrow);
+			screenModeMenu = new cScreenModeMenu(this, sprScreenModeMenu, &sprSoundMenuRightArrow, &sprSoundMenuLeftArrow);
 
 			UpdateProgressBar("Loading 53%");
 
@@ -326,7 +332,6 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		{
 			cCamera::engine = this;
 			cControlsMenu::engine = this;
-			cSoundMenu::engine = this;
 			cScreenModeMenu::engine = this;
 			cDynamicCreature::engine = this;
 			cDynamicCreatureBladeKnight::engine = this;

@@ -6,14 +6,12 @@
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
 #include "Zix_PGE_Controller.h"
-
-class OneLoneCoder_Platformer;
+#include "Platformer_Engine.h"
 
 class cSoundMenu
 {
 public:
-	cSoundMenu(olc::PixelGameEngine* gfx,
-			   olc::Sprite* soundMenuNoSound,
+	cSoundMenu(olc::Sprite* soundMenuNoSound,
 			   olc::Sprite* soundMenuLow,
 			   olc::Sprite* soundMenuMid,
 			   olc::Sprite* soundMenuHigh,
@@ -21,9 +19,7 @@ public:
 			   olc::Sprite* soundMenuRightArrow,
 			   olc::Sprite* soundMenuLeftArrow);
 
-	static OneLoneCoder_Platformer* engine;
-
-	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller);
+	bool Update(OneLoneCoder_Platformer* engine, float fElapsedTime, ControllerManager* controller);
 	int GetSoundVolume();
 	void UpdateVolume();
 

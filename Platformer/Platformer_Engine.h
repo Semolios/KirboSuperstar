@@ -45,6 +45,8 @@
 #include <cTime>
 #include <Lmcons.h>
 
+class cSoundMenu;
+
 class OneLoneCoder_Platformer : public olc::PixelGameEngine
 {
 public:
@@ -348,13 +350,13 @@ private:
 	olc::Sprite* sprRBump;
 
 	// Sound Menu
-	olc::Sprite* sprSoundMenuNoSound;
-	olc::Sprite* sprSoundMenuLow;
-	olc::Sprite* sprSoundMenuMid;
-	olc::Sprite* sprSoundMenuHigh;
-	olc::Sprite* sprSoundMenuMax;
-	olc::Sprite* sprSoundMenuRightArrow;
-	olc::Sprite* sprSoundMenuLeftArrow;
+	olc::Sprite sprSoundMenuNoSound;
+	olc::Sprite sprSoundMenuLow;
+	olc::Sprite sprSoundMenuMid;
+	olc::Sprite sprSoundMenuHigh;
+	olc::Sprite sprSoundMenuMax;
+	olc::Sprite sprSoundMenuRightArrow;
+	olc::Sprite sprSoundMenuLeftArrow;
 	cSoundMenu* soundMenu;
 
 	// Screen mode menu

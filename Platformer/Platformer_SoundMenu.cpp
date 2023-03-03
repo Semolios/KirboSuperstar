@@ -1,10 +1,6 @@
 #include "Platformer_SoundMenu.h"
-#include "Platformer_Engine.h"
 
-OneLoneCoder_Platformer* cSoundMenu::engine = nullptr;
-
-cSoundMenu::cSoundMenu(olc::PixelGameEngine* gfx,
-					   olc::Sprite* soundMenuNoSound,
+cSoundMenu::cSoundMenu(olc::Sprite* soundMenuNoSound,
 					   olc::Sprite* soundMenuLow,
 					   olc::Sprite* soundMenuMid,
 					   olc::Sprite* soundMenuHigh,
@@ -43,22 +39,22 @@ cSoundMenu::cSoundMenu(olc::PixelGameEngine* gfx,
 	}
 }
 
-bool cSoundMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller)
+bool cSoundMenu::Update(OneLoneCoder_Platformer* engine, float fElapsedTime, ControllerManager* controller)
 {
-	gfx->SetPixelMode(olc::Pixel::ALPHA);
+	engine->SetPixelMode(olc::Pixel::ALPHA);
 
 	if (nSoundVolume == 0)
-		gfx->DrawSprite(0, 0, sprSoundMenuNoSound);
+		engine->DrawSprite(0, 0, sprSoundMenuNoSound);
 	else if (nSoundVolume >= 1 && nSoundVolume <= 3)
-		gfx->DrawSprite(0, 0, sprSoundMenuLow);
+		engine->DrawSprite(0, 0, sprSoundMenuLow);
 	else if (nSoundVolume >= 4 && nSoundVolume <= 6)
-		gfx->DrawSprite(0, 0, sprSoundMenuMid);
+		engine->DrawSprite(0, 0, sprSoundMenuMid);
 	else if (nSoundVolume >= 7 && nSoundVolume <= 9)
-		gfx->DrawSprite(0, 0, sprSoundMenuHigh);
+		engine->DrawSprite(0, 0, sprSoundMenuHigh);
 	else if (nSoundVolume == 10)
-		gfx->DrawSprite(0, 0, sprSoundMenuMax);
+		engine->DrawSprite(0, 0, sprSoundMenuMax);
 
-	if ((gfx->GetKey(olc::LEFT).bPressed || controller->GetButton(LEFT).bPressed) && nSoundVolume > 0)
+	if ((engine->GetKey(olc::LEFT).bPressed || controller->GetButton(LEFT).bPressed) && nSoundVolume > 0)
 	{
 		nSoundVolume--;
 		engine->UpdateVolume(nSoundVolume);
@@ -66,7 +62,7 @@ bool cSoundMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Controlle
 		UpdateVolume();
 	}
 
-	if ((gfx->GetKey(olc::RIGHT).bPressed || controller->GetButton(RIGHT).bPressed) && nSoundVolume < 10)
+	if ((engine->GetKey(olc::RIGHT).bPressed || controller->GetButton(RIGHT).bPressed) && nSoundVolume < 10)
 	{
 		nSoundVolume++;
 		engine->UpdateVolume(nSoundVolume);
@@ -79,7 +75,7 @@ bool cSoundMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Controlle
 	engine->DrawSprite(cnLeftArrowX, cnVolumeTextY, sprSoundMenuLeftArrow);
 	engine->DrawSprite(cnRightArrowX, cnVolumeTextY, sprSoundMenuRightArrow);
 
-	gfx->SetPixelMode(olc::Pixel::NORMAL);
+	engine->SetPixelMode(olc::Pixel::NORMAL);
 
 	return true;
 }
