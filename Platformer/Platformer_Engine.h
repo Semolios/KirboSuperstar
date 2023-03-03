@@ -186,10 +186,10 @@ private:
 
 	// Level storage
 	cLevel* level;
-	olc::Sprite* sprBackground;
-	olc::Sprite* spriteTiles;
-	olc::Sprite* sprGrdTiles;
-	olc::Sprite* sprDoor;
+	olc::Sprite sprBackground;
+	olc::Sprite spriteTiles;
+	olc::Sprite sprGrdTiles;
+	olc::Sprite sprDoor;
 
 	// Sounds
 	olc::sound::WaveEngine waveEngine;

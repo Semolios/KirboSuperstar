@@ -82,7 +82,9 @@ bool OneLoneCoder_Platformer::GameState_SplashScreen(float fElapsedTime)
 {
 	fSplashScreenTimer += fElapsedTime;
 
-	DrawSprite(0, 0, new olc::Sprite("assets/gfx/OLCPixelGameEngineSplashScreen.png"));
+	olc::Sprite sprSplashScreen("assets/gfx/OLCPixelGameEngineSplashScreen.png");
+
+	DrawSprite(0, 0, &sprSplashScreen);
 
 	if (fSplashScreenTimer >= fSplashScreenTime || GetKey(olc::Key::SPACE).bPressed || controller.GetButton(A).bPressed)
 		TransitionTo("GS_LOADING", false);
@@ -108,7 +110,10 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		{
 			level = new cLevel();
 			cLevel::engine = this;
-			sprDoor = new olc::Sprite("assets/gfx/bossDoor.png");
+			sprBackground = olc::Sprite();
+			spriteTiles	  = olc::Sprite();
+			sprGrdTiles	  = olc::Sprite();
+			sprDoor		  = olc::Sprite("assets/gfx/bossDoor.png");
 
 			level->LoadLevelsList();
 			level->LoadBossesList();
@@ -482,9 +487,9 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
 		level->PopulateEnnemies(vecEnnemies, level->GetEnnemies());
 		level->PopulateMechanisms(level->GetMechanisms());
 
-		spriteTiles = new olc::Sprite(level->GetSpecialTiles());
-		sprGrdTiles = new olc::Sprite(level->GetGroundTiles());
-		sprBackground = new olc::Sprite(level->GetBackGround());
+		spriteTiles.LoadFromFile(level->GetSpecialTiles());
+		sprGrdTiles.LoadFromFile(level->GetGroundTiles());
+		sprBackground.LoadFromFile(level->GetBackGround());
 		sndLevelMusic.LoadAudioWaveform(level->GetMusic());
 	}
 
@@ -913,7 +918,7 @@ bool OneLoneCoder_Platformer::GameState_LoadBossLevel(float fElapsedTime)
 		level->PopulateBoss(vecEnnemies);
 		level->PopulateMechanisms(level->GetBossMechanisms());
 
-		sprBackground = new olc::Sprite(level->GetBossBackGround());
+		sprBackground.LoadFromFile(level->GetBossBackGround());
 		sndBossLevelMusic.LoadAudioWaveform(level->GetBossMusic());
 	}
 
@@ -1531,22 +1536,22 @@ void OneLoneCoder_Platformer::BreakLoop()
 
 olc::Sprite* OneLoneCoder_Platformer::GetBackGround()
 {
-	return sprBackground;
+	return &sprBackground;
 }
 
 olc::Sprite* OneLoneCoder_Platformer::GetTilesSprites()
 {
-	return spriteTiles;
+	return &spriteTiles;
 }
 
 olc::Sprite* OneLoneCoder_Platformer::GetGroundTiles()
 {
-	return sprGrdTiles;
+	return &sprGrdTiles;
 }
 
 olc::Sprite* OneLoneCoder_Platformer::GetDoorSpr()
 {
-	return sprDoor;
+	return &sprDoor;
 }
 
 void OneLoneCoder_Platformer::ReturnToWorldMap()
