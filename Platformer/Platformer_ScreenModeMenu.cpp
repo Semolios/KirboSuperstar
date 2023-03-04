@@ -1,9 +1,6 @@
 #include "Platformer_ScreenModeMenu.h"
-#include "Platformer_Engine.h"
 
-OneLoneCoder_Platformer* cScreenModeMenu::engine = nullptr;
-
-cScreenModeMenu::cScreenModeMenu(olc::PixelGameEngine* gfx, olc::Sprite* screenModeMenu, olc::Sprite* rightArrow, olc::Sprite* leftArrow)
+cScreenModeMenu::cScreenModeMenu(olc::Sprite* screenModeMenu, olc::Sprite* rightArrow, olc::Sprite* leftArrow)
 {
 	sprScreenModeMenu = screenModeMenu;
 	sprLeftArrow = leftArrow;
@@ -30,14 +27,14 @@ cScreenModeMenu::cScreenModeMenu(olc::PixelGameEngine* gfx, olc::Sprite* screenM
 	}
 }
 
-bool cScreenModeMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller)
+bool cScreenModeMenu::Update(OneLoneCoder_Platformer* engine, float fElapsedTime, ControllerManager* controller)
 {
-	gfx->SetPixelMode(olc::Pixel::ALPHA);
+	engine->SetPixelMode(olc::Pixel::ALPHA);
 
-	gfx->DrawSprite(0, 0, sprScreenModeMenu);
+	engine->DrawSprite(0, 0, sprScreenModeMenu);
 
-	if (gfx->GetKey(olc::LEFT).bPressed  || controller->GetButton(LEFT).bPressed ||
-		gfx->GetKey(olc::RIGHT).bPressed || controller->GetButton(RIGHT).bPressed)
+	if (engine->GetKey(olc::LEFT).bPressed  || controller->GetButton(LEFT).bPressed ||
+		engine->GetKey(olc::RIGHT).bPressed || controller->GetButton(RIGHT).bPressed)
 	{
 		bWindowed = !bWindowed;
 		engine->PlaySample("menuBip");
@@ -56,7 +53,7 @@ bool cScreenModeMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Cont
 	engine->DrawKirboString(cnTextX, cnTextY2, "the game to apply",   1, true);
 	engine->DrawKirboString(cnTextX, cnTextY3, "the new resolution",  1, true);
 
-	gfx->SetPixelMode(olc::Pixel::NORMAL);
+	engine->SetPixelMode(olc::Pixel::NORMAL);
 
 	return true;
 }

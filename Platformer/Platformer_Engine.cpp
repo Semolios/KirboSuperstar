@@ -253,8 +253,8 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		break;
 		case LS_SCREENMODEMENU:
 		{
-			sprScreenModeMenu = new olc::Sprite("assets/gfx/screenMode.png");
-			screenModeMenu = new cScreenModeMenu(this, sprScreenModeMenu, &sprSoundMenuRightArrow, &sprSoundMenuLeftArrow);
+			sprScreenModeMenu = olc::Sprite("assets/gfx/screenMode.png");
+			screenModeMenu = new cScreenModeMenu(&sprScreenModeMenu, &sprSoundMenuRightArrow, &sprSoundMenuLeftArrow);
 
 			UpdateProgressBar("Loading 53%");
 
@@ -332,7 +332,6 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		{
 			cCamera::engine = this;
 			cControlsMenu::engine = this;
-			cScreenModeMenu::engine = this;
 			cDynamicCreature::engine = this;
 			cDynamicCreatureBladeKnight::engine = this;
 			cDynamicCreatureBomber::engine = this;

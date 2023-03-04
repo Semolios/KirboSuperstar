@@ -46,6 +46,7 @@
 
 class cPauseMenu;
 class cPlayer;
+class cScreenModeMenu;
 class cSelectMenu;
 class cSoundMenu;
 
@@ -362,7 +363,7 @@ private:
 	cSoundMenu* soundMenu;
 
 	// Screen mode menu
-	olc::Sprite* sprScreenModeMenu;
+	olc::Sprite		 sprScreenModeMenu;
 	cScreenModeMenu* screenModeMenu;
 
 	// Credits Menu

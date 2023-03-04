@@ -6,17 +6,14 @@
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
 #include "Zix_PGE_Controller.h"
-
-class OneLoneCoder_Platformer;
+#include "Platformer_Engine.h"
 
 class cScreenModeMenu
 {
 public:
-	cScreenModeMenu(olc::PixelGameEngine* gfx, olc::Sprite* screenModeMenu, olc::Sprite* rightArrow, olc::Sprite* leftArrow);
+	cScreenModeMenu(olc::Sprite* screenModeMenu, olc::Sprite* rightArrow, olc::Sprite* leftArrow);
 
-	static OneLoneCoder_Platformer* engine;
-
-	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller);
+	bool Update(OneLoneCoder_Platformer* engine, float fElapsedTime, ControllerManager* controller);
 	void UpdateScreenMode();
 
 private:
