@@ -33,7 +33,6 @@
 #include "Platformer_EndScreen.h"
 #include "Platformer_Hitbox.h"
 #include "Platformer_HUD.h"
-#include "Platformer_Item.h"
 #include "Platformer_Level.h"
 #include "Platformer_LevelStart.h"
 #include "Platformer_PauseMenu.h"
@@ -46,8 +45,9 @@
 #include <Lmcons.h>
 
 class cPauseMenu;
-class cSoundMenu;
+class cPlayer;
 class cSelectMenu;
+class cSoundMenu;
 
 class OneLoneCoder_Platformer : public olc::PixelGameEngine
 {

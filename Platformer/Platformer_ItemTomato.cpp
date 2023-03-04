@@ -1,7 +1,4 @@
 #include "Platformer_ItemTomato.h"
-#include "Platformer_Engine.h"
-
-OneLoneCoder_Platformer* cItemTomato::engine = nullptr;
 
 cItemTomato::cItemTomato()
 {
@@ -11,7 +8,7 @@ cItemTomato::~cItemTomato()
 {
 }
 
-void cItemTomato::PickItem()
+void cItemTomato::PickItem(OneLoneCoder_Platformer* engine)
 {
 	engine->PlaySample("itemPicked");
 	engine->MaxHealPlayer();

@@ -13,58 +13,55 @@
 #include "Platformer_ItemMinorHeal.h"
 #include "Platformer_ItemTomato.h"
 #include "Platformer_Level.h"
-
-class OneLoneCoder_Platformer;
+#include "Platformer_Engine.h"
 
 class cPlayer
 {
 public:
 	cPlayer(cAnimator* animator);
 
-	static OneLoneCoder_Platformer* engine;
-
 	void InitialiseKirboHealth();
 	bool IsDead();
-	void HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl);
-	void Jump();
-	bool IsEnteringDoor(cLevel* lvl);
-	void EnterDoor(cLevel* lvl);
-	void EnterTP(cLevel* level);
-	void Teleport(float px, float py, cLevel* level);
-	bool CanInteract();
-	void ApplyGravity(float fElapsedTime);
-	void Update(float fElapsedTime);
+	void HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneLoneCoder_Platformer* engine);
+	void Jump(OneLoneCoder_Platformer* engine);
+	bool IsEnteringDoor(cLevel* lvl, OneLoneCoder_Platformer* engine);
+	void EnterDoor(cLevel* lvl, OneLoneCoder_Platformer* engine);
+	void EnterTP(cLevel* level, OneLoneCoder_Platformer* engine);
+	void Teleport(float px, float py, cLevel* level, OneLoneCoder_Platformer* engine);
+	bool CanInteract(OneLoneCoder_Platformer* engine);
+	void ApplyGravity(float fElapsedTime, OneLoneCoder_Platformer* engine);
+	void Update(float fElapsedTime, OneLoneCoder_Platformer* engine);
 	float GetFaceDir();
-	void OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t, std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles, cLevel* lvl);
+	void OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t, std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles, cLevel* lvl, OneLoneCoder_Platformer* engine);
 	void StopAnyAction();
 	void ClampVelocities();
 	void IncreaseVelocities(float dvx, float dvy);
 	void DecreaseVelocities(float dvx, float dvy);
 	void SetVelocities(float vx, float vy);
-	void Collisions(float fElapsedTime, cLevel* lvl);
-	void CheckHole(cLevel* lvl);
-	void CheckPickUp(cLevel* lvl, float fNewPosX, float fNewPosY);
-	void CheckSolidFloor(cLevel* lvl, float fNewPosX, float& fNewPosY);
+	void Collisions(float fElapsedTime, cLevel* lvl, OneLoneCoder_Platformer* engine);
+	void CheckHole(cLevel* lvl, OneLoneCoder_Platformer* engine);
+	void CheckPickUp(cLevel* lvl, float fNewPosX, float fNewPosY, OneLoneCoder_Platformer* engine);
+	void CheckSolidFloor(cLevel* lvl, float fNewPosX, float& fNewPosY, OneLoneCoder_Platformer* engine);
 	void NormalDrag();
-	void CheckDynamicFloor(float& fNewPosX, float& fNewPosY, float fElapsedTime, cLevel* lvl);
+	void CheckDynamicFloor(float& fNewPosX, float& fNewPosY, float fElapsedTime, cLevel* lvl, OneLoneCoder_Platformer* engine);
 	void IcedDrag();
 	bool CeilingFloorCrushed(cDynamicMovingPlatform*& ptfm);
-	void CheckSolidCeiling(cLevel* lvl, float fNewPosX, float& fNewPosY);
-	void CheckDynamicCeiling(float fNewPosX, float& fNewPosY, cLevel* lvl);
+	void CheckSolidCeiling(cLevel* lvl, float fNewPosX, float& fNewPosY, OneLoneCoder_Platformer* engine);
+	void CheckDynamicCeiling(float fNewPosX, float& fNewPosY, cLevel* lvl, OneLoneCoder_Platformer* engine);
 	bool FloorCeilingCrushed(cDynamicMovingPlatform*& ptfm);
-	void Crushed();
-	bool DynamicFloor(float fNewPosX, float fNewPosY);
-	bool DynamicCeiling(float fNewPosX, float fNewPosY);
-	bool SemiSolidFloor(cLevel* lvl, float fNewPosX, float fNewPosY);
-	bool SolidFloor(cLevel* lvl, float fNewPosX, float fNewPosY);
-	bool Ceiling(cLevel* lvl, float fNewPosX, float fNewPosY);
-	void CheckRightWall(cLevel* lvl, float& fNewPosX);
+	void Crushed(OneLoneCoder_Platformer* engine);
+	bool DynamicFloor(float fNewPosX, float fNewPosY, OneLoneCoder_Platformer* engine);
+	bool DynamicCeiling(float fNewPosX, float fNewPosY, OneLoneCoder_Platformer* engine);
+	bool SemiSolidFloor(cLevel* lvl, float fNewPosX, float fNewPosY, OneLoneCoder_Platformer* engine);
+	bool SolidFloor(cLevel* lvl, float fNewPosX, float fNewPosY, OneLoneCoder_Platformer* engine);
+	bool Ceiling(cLevel* lvl, float fNewPosX, float fNewPosY, OneLoneCoder_Platformer* engine);
+	void CheckRightWall(cLevel* lvl, float& fNewPosX, OneLoneCoder_Platformer* engine);
 	bool LeftRightCrushed(cDynamicMovingPlatform*& ptfm);
-	bool DynamicLeftWall(float fNewPosX);
-	void CheckLeftWall(cLevel* lvl, float& fNewPosX);
-	void HarmfulBloc(cDynamicMovingPlatform*& ptfm);
+	bool DynamicLeftWall(float fNewPosX, OneLoneCoder_Platformer* engine);
+	void CheckLeftWall(cLevel* lvl, float& fNewPosX, OneLoneCoder_Platformer* engine);
+	void HarmfulBloc(cDynamicMovingPlatform*& ptfm, OneLoneCoder_Platformer* engine);
 	bool RightLeftCrushed(cDynamicMovingPlatform*& ptfm);
-	bool DynamicRightWall(float fNewPosX);
+	bool DynamicRightWall(float fNewPosX, OneLoneCoder_Platformer* engine);
 	float GetPosX();
 	float GetPosY();
 	void SetPosX(float px);
@@ -75,19 +72,19 @@ public:
 	bool HasCandyPower();
 	void SetAttackable(bool attackable);
 	bool IsSwallowing();
-	void UpdateInvulnerability(float fElapsedTime);
-	void DrawKirbo(olc::GFX2D::Transform2D t);
+	void UpdateInvulnerability(float fElapsedTime, OneLoneCoder_Platformer* engine);
+	void DrawKirbo(olc::GFX2D::Transform2D t, OneLoneCoder_Platformer* engine);
 	float GetHealth();
-	void Damage(cDynamic* object);
+	void Damage(cDynamic* object, OneLoneCoder_Platformer* engine);
 	void Kill();
 	void ResetVariables();
-	void VacuumHitbox(float cameraOffsetX, float cameraOffsetY);
+	void VacuumHitbox(float cameraOffsetX, float cameraOffsetY, OneLoneCoder_Platformer* engine);
 	cHitbox* GetVacuumHitbox();
-	void UpdateHitbox(float cameraOffsetX, float cameraOffsetY);
+	void UpdateHitbox(float cameraOffsetX, float cameraOffsetY, OneLoneCoder_Platformer* engine);
 	cHitbox* GetHitbox();
 	void Attack(cDynamicCreature* victim, int damage);
-	void Vacuum(cDynamicCreature* object, float cameraOffsetX, float cameraOffsetY);
-	void EnemyCollision(cDynamic* object, float cameraOffsetX, float cameraOffsetY);
+	void Vacuum(cDynamicCreature* object, float cameraOffsetX, float cameraOffsetY, OneLoneCoder_Platformer* engine);
+	void EnemyCollision(cDynamic* object, float cameraOffsetX, float cameraOffsetY, OneLoneCoder_Platformer* engine);
 	bool EnemyTouched(cDynamic* object, float cameraOffsetX, float cameraOffsetY);
 	void SetGrabbedByEnnemy(bool grabbed);
 	void ChangeAnimation(std::string animation);
@@ -96,7 +93,7 @@ public:
 
 	// Item Pick-up functions
 	bool IsCollectibleItem(wchar_t c);
-	void SelectItem(wchar_t item);
+	void SelectItem(wchar_t item, OneLoneCoder_Platformer* engine);
 	void MaxHeal();
 	void Heal(int hp);
 	void SetInvincible(float time, bool blink = true);

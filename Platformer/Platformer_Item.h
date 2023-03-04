@@ -2,10 +2,8 @@
 #define DEF_ITEM
 
 #pragma once
-#include "olcPixelGameEngine.h"
-#include "olcPGEX_Graphics2D.h"
 
-class Platformer_Engine;
+class OneLoneCoder_Platformer;
 
 class cItem
 {
@@ -13,7 +11,7 @@ public:
 	cItem();
 	virtual ~cItem();
 
-	virtual void PickItem(){}
+	virtual void PickItem(OneLoneCoder_Platformer* engine){}
 };
 
 #endif // !DEF_ITEM

@@ -351,12 +351,6 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			cDynamicVerticalCrusher::engine = this;
 			cDynamicWall::engine = this;
 			cDynamicWind::engine = this;
-			cItemCandy::engine = this;
-			cItemDamage::engine = this;
-			cItemDefense::engine = this;
-			cItemMinorHeal::engine = this;
-			cItemTomato::engine = this;
-			cPlayer::engine = this;
 
 			UpdateProgressBar("Loading 74%");
 
@@ -561,7 +555,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	animPlayer.Update(fElapsedTime);
 
-	player->HandleInput(fElapsedTime, camera, level);
+	player->HandleInput(fElapsedTime, camera, level, this);
 	// Handle pause button pressed
 	if (bBreakLoop)
 	{
@@ -571,16 +565,16 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	camera->ClampOffset();
 
-	player->ApplyGravity(fElapsedTime);
+	player->ApplyGravity(fElapsedTime, this);
 
-	player->Update(fElapsedTime);
+	player->Update(fElapsedTime, this);
 
 	// Initialize the Transform2D object
 	olc::GFX2D::Transform2D t;
 	t.Translate(((float)-nTileWidth / 2.0f) - cnSpriteOffsetX, ((float)-nTileWidth / 2.0f) - cnSpriteOffsetY);
 	t.Scale(player->GetFaceDir() * 1.0f, 1.0f);
 
-	player->OneCycleAnimations(fElapsedTime, &t, mapProjectiles, level);
+	player->OneCycleAnimations(fElapsedTime, &t, mapProjectiles, level, this);
 	// Handle State Change
 	if (bBreakLoop)
 	{
@@ -600,13 +594,13 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	}
 
 	if (!player->IsDead())
-		player->Collisions(fElapsedTime, level);
+		player->Collisions(fElapsedTime, level, this);
 
 	camera->SetPositions(player->GetPosX(), player->GetPosY());
 
 	camera->CalculateFOV(level);
 
-	player->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
+	player->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY(), this);
 
 	camera->SpawnSceneries(level, fElapsedTime);
 
@@ -620,7 +614,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		{
 			if (player->IsVacuuming())
 			{
-				player->Vacuum(object, camera->GetOffsetX(), camera->GetOffsetY());
+				player->Vacuum(object, camera->GetOffsetX(), camera->GetOffsetY(), this);
 			}
 			else
 			{
@@ -632,7 +626,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 		// Check collision with player to damage him
 		if ((player->IsAttackable() && !player->IsSwallowing() && !object->IsVacuumed()) || player->HasCandyPower())
 		{
-			player->EnemyCollision(object, camera->GetOffsetX(), camera->GetOffsetY());
+			player->EnemyCollision(object, camera->GetOffsetX(), camera->GetOffsetY(), this);
 		}
 	}
 
@@ -669,7 +663,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 			{
 				if (player->IsAttackable())
 				{
-					player->EnemyCollision(object, camera->GetOffsetX(), camera->GetOffsetY());
+					player->EnemyCollision(object, camera->GetOffsetX(), camera->GetOffsetY(), this);
 				}
 			}
 		}
@@ -825,9 +819,9 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	}
 
 	// Draw Player
-	player->UpdateInvulnerability(fElapsedTime);
+	player->UpdateInvulnerability(fElapsedTime, this);
 	t.Translate((player->GetPosX() - camera->GetOffsetX())* nTileWidth + (nTileWidth / 2), (player->GetPosY() - camera->GetOffsetY())* nTileHeight + (nTileHeight / 2));
-	player->DrawKirbo(t);
+	player->DrawKirbo(t, this);
 
 	// Draw HUD
 	HUD->HealthBar(this, sprHealthBar);

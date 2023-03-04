@@ -1,7 +1,4 @@
 #include "Platformer_ItemCandy.h"
-#include "Platformer_Engine.h"
-
-OneLoneCoder_Platformer* cItemCandy::engine = nullptr;
 
 cItemCandy::cItemCandy()
 {
@@ -11,7 +8,7 @@ cItemCandy::~cItemCandy()
 {
 }
 
-void cItemCandy::PickItem()
+void cItemCandy::PickItem(OneLoneCoder_Platformer* engine)
 {
 	engine->StopLevelMusic();
 	engine->PlaySample("itemPicked");

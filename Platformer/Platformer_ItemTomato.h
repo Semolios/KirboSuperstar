@@ -2,9 +2,9 @@
 #define DEF_ITEM_TOMATO
 
 #pragma once
-#include "Platformer_Item.h"
 
-class OneLoneCoder_Platformer;
+#include "Platformer_Item.h"
+#include "Platformer_Engine.h"
 
 class cItemTomato : public cItem
 {
@@ -12,9 +12,7 @@ public:
 	cItemTomato();
 	virtual ~cItemTomato();
 
-	void PickItem();
-
-	static OneLoneCoder_Platformer* engine;
+	void PickItem(OneLoneCoder_Platformer* engine);
 };
 
 #endif // !DEF_ITEM_TOMATO

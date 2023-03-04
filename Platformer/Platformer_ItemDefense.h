@@ -2,9 +2,9 @@
 #define DEF_ITEM_DEFENSE
 
 #pragma once
-#include "Platformer_Item.h"
 
-class OneLoneCoder_Platformer;
+#include "Platformer_Item.h"
+#include "Platformer_Engine.h"
 
 class cItemDefense : public cItem
 {
@@ -12,9 +12,7 @@ public:
 	cItemDefense();
 	virtual ~cItemDefense();
 
-	void PickItem();
-
-	static OneLoneCoder_Platformer* engine;
+	void PickItem(OneLoneCoder_Platformer* engine);
 };
 
 #endif // !DEF_ITEM_DEFENSE
