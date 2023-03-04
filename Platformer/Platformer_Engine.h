@@ -45,6 +45,7 @@
 #include <cTime>
 #include <Lmcons.h>
 
+class cPauseMenu;
 class cSoundMenu;
 class cSelectMenu;
 
@@ -321,8 +322,8 @@ private:
 	bool bPlayMusic = true;
 
 	// Pause Menu
-	olc::Sprite* sprPauseMenu;
-	olc::Sprite* sprCursor;
+	olc::Sprite sprPauseMenu;
+	olc::Sprite sprCursor;
 	cPauseMenu* pauseMenu;
 
 	// Select Menu

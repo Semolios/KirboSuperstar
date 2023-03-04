@@ -209,9 +209,9 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		break;
 		case LS_PAUSEMENU:
 		{
-			sprPauseMenu = new olc::Sprite("assets/gfx/PauseMenu.png");
-			sprCursor = new olc::Sprite("assets/gfx/cursor.png");
-			pauseMenu = new cPauseMenu(this, sprPauseMenu, sprCursor);
+			sprPauseMenu = olc::Sprite("assets/gfx/PauseMenu.png");
+			sprCursor = olc::Sprite("assets/gfx/cursor.png");
+			pauseMenu = new cPauseMenu(&sprPauseMenu, &sprCursor);
 
 			UpdateProgressBar("Loading 46%");
 
@@ -221,7 +221,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		case LS_SELECTMENU:
 		{
 			sprSelectMenu = olc::Sprite("assets/gfx/SelectMenu.png");
-			selectMenu = new cSelectMenu(&sprSelectMenu, sprCursor);
+			selectMenu = new cSelectMenu(&sprSelectMenu, &sprCursor);
 
 			UpdateProgressBar("Loading 51%");
 
@@ -356,7 +356,6 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			cItemDefense::engine = this;
 			cItemMinorHeal::engine = this;
 			cItemTomato::engine = this;
-			cPauseMenu::engine = this;
 			cPlayer::engine = this;
 
 			UpdateProgressBar("Loading 74%");
