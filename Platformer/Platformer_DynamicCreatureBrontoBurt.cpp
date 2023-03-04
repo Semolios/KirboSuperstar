@@ -10,8 +10,8 @@ cDynamicCreatureBrontoBurt::cDynamicCreatureBrontoBurt(cLevel* l, float oscillat
 	fSpriteOffsetX = -16.0f;
 	fSpriteOffsetY = -16.0f;
 	bFriendly = false;
-	nHealth = 6;
-	nHealthMax = 6;
+	nHealth = 3;
+	nHealthMax = 3;
 	level = l;
 	fInitSpeed = -1;
 	fTheta = 0.0f;
