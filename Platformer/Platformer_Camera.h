@@ -3,7 +3,6 @@
 
 #pragma once
 #include "olcPixelGameEngine.h"
-#include "olcPGEX_Graphics2D.h"
 #include "Platformer_Level.h"
 
 class OneLoneCoder_Platformer;

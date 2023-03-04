@@ -22,7 +22,7 @@ void cAnimator::Update(float fElapsedTime)
 	}
 }
 
-void cAnimator::DrawSelf(olc::PixelGameEngine* pge, olc::GFX2D::Transform2D& t)
+void cAnimator::DrawSelf(olc::GFX2D::Transform2D& t)
 {
 	olc::GFX2D::DrawSprite(mapStates[sCurrentState][nCurrentFrame], t);
 }

@@ -1184,7 +1184,7 @@ void cPlayer::DrawKirbo(olc::GFX2D::Transform2D t, OneLoneCoder_Platformer* engi
 	if (bShowKirbo)
 	{
 		engine->SetPixelMode(olc::Pixel::ALPHA);
-		animPlayer->DrawSelf(engine, t);
+		animPlayer->DrawSelf(t);
 		engine->SetPixelMode(olc::Pixel::NORMAL);
 	}
 }

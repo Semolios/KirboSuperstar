@@ -50,7 +50,7 @@ bool cWorldMap::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Controller
 	t.Translate(path[nSelectedLevel].x - (cnKirboTileWidth / 2.0f), path[nSelectedLevel].y - (cnKirboTileHeight / 2.0f));
 
 	gfx->SetPixelMode(olc::Pixel::ALPHA);
-	animPlayer->DrawSelf(gfx, t);
+	animPlayer->DrawSelf(t);
 	gfx->SetPixelMode(olc::Pixel::NORMAL);
 
 	return false;

@@ -4,7 +4,6 @@
 #pragma once
 
 #include "olcPixelGameEngine.h"
-#include "olcPGEX_Graphics2D.h"
 #include "Zix_PGE_Controller.h"
 #include "Platformer_Engine.h"
 

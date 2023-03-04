@@ -18,7 +18,7 @@ bool cLevelStart::Update(olc::PixelGameEngine* gfx, float fElapsedTime)
 	t.Translate(gfx->ScreenWidth() * 0.7f, gfx->ScreenHeight() * 0.7f);
 
 	gfx->SetPixelMode(olc::Pixel::ALPHA);
-	animPlayer->DrawSelf(gfx, t);
+	animPlayer->DrawSelf(t);
 	gfx->SetPixelMode(olc::Pixel::NORMAL);
 
 	return false;

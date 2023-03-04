@@ -16,7 +16,7 @@ public:
 
 	void ChangeState(std::string s);
 	void Update(float fElapsedTime);
-	void DrawSelf(olc::PixelGameEngine* pge, olc::GFX2D::Transform2D& t);
+	void DrawSelf(olc::GFX2D::Transform2D& t);
 	void LoadAnimations();
 };
 
