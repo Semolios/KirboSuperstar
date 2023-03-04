@@ -1,10 +1,6 @@
 #include "Platformer_ControlsMenu.h"
-#include "Platformer_Engine.h"
 
-OneLoneCoder_Platformer* cControlsMenu::engine = nullptr;
-
-cControlsMenu::cControlsMenu(olc::PixelGameEngine* gfx,
-							 olc::Sprite* background,
+cControlsMenu::cControlsMenu(olc::Sprite* background,
 							 olc::Sprite* menubar,
 							 olc::Sprite* unselQuit,
 							 olc::Sprite* selQuit,
@@ -41,7 +37,7 @@ cControlsMenu::cControlsMenu(olc::PixelGameEngine* gfx,
 	sprRBump = RBump;
 }
 
-bool cControlsMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller)
+bool cControlsMenu::Update(OneLoneCoder_Platformer* engine, float fElapsedTime, ControllerManager* controller)
 {
 	// On first coming on this screen, apply saved controls on temps controls
 	if (!bAppliedControls)
@@ -76,21 +72,21 @@ bool cControlsMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Contro
 		}
 	}
 
-	gfx->SetPixelMode(olc::Pixel::ALPHA);
+	engine->SetPixelMode(olc::Pixel::ALPHA);
 
-	gfx->DrawSprite(0, 0, sprBackGround);
+	engine->DrawSprite(0, 0, sprBackGround);
 
 	// Handle input
 	if (!bModify)
 	{
-		if (gfx->GetKey(olc::DOWN).bPressed || controller->GetButton(DOWN).bPressed)
+		if (engine->GetKey(olc::DOWN).bPressed || controller->GetButton(DOWN).bPressed)
 		{
 			engine->PlaySample("menuBip");
 			nSelectedItem++;
 			if (nSelectedItem > 10) nSelectedItem = 0;
 		}
 
-		if (gfx->GetKey(olc::UP).bPressed || controller->GetButton(UP).bPressed)
+		if (engine->GetKey(olc::UP).bPressed || controller->GetButton(UP).bPressed)
 		{
 			engine->PlaySample("menuBip");
 			nSelectedItem--;
@@ -100,7 +96,7 @@ bool cControlsMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Contro
 				nSelectedItem = 9;
 		}
 
-		if (gfx->GetKey(olc::LEFT).bPressed || controller->GetButton(LEFT).bPressed || gfx->GetKey(olc::RIGHT).bPressed || controller->GetButton(RIGHT).bPressed)
+		if (engine->GetKey(olc::LEFT).bPressed || controller->GetButton(LEFT).bPressed || engine->GetKey(olc::RIGHT).bPressed || controller->GetButton(RIGHT).bPressed)
 		{
 			if (nSelectedItem == 10)
 			{
@@ -114,7 +110,7 @@ bool cControlsMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Contro
 			}
 		}
 
-		if (gfx->GetKey(olc::SPACE).bPressed || controller->GetButton(A).bPressed || gfx->GetKey(olc::ENTER).bPressed)
+		if (engine->GetKey(olc::SPACE).bPressed || controller->GetButton(A).bPressed || engine->GetKey(olc::ENTER).bPressed)
 		{
 			if (nSelectedItem == 10)
 				ApplyDefaultControls();
@@ -155,7 +151,7 @@ bool cControlsMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Contro
 		else
 			nOffsetX = nIsnotSelected;
 
-		gfx->DrawSprite(nOffsetX, nOffsetY + i * nSpacingY, sprMenuBar);
+		engine->DrawSprite(nOffsetX, nOffsetY + i * nSpacingY, sprMenuBar);
 	}
 
 	// controls names
@@ -187,34 +183,34 @@ bool cControlsMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Contro
 	engine->DrawKirboString(nControllerTextX, nTextY - nSpacingY, "Controller (fixed)", 1, true);
 
 	// controller buttons
-	gfx->DrawSprite(nButtonsTextX + ((nSelectedItem == 0) ? nIsSelected : nIsnotSelected), nButtonsTextY + 0 * nSpacingY, sprX);
-	gfx->DrawSprite(nButtonsTextX + ((nSelectedItem == 1) ? nIsSelected : nIsnotSelected), nButtonsTextY + 1 * nSpacingY, sprY);
-	gfx->DrawSprite(nButtonsTextX + ((nSelectedItem == 2) ? nIsSelected : nIsnotSelected), nButtonsTextY + 2 * nSpacingY, sprB);
-	gfx->DrawSprite(nButtonsTextX + ((nSelectedItem == 3) ? nIsSelected : nIsnotSelected), nButtonsTextY + 3 * nSpacingY, sprA);
-	gfx->DrawSprite(nButtonsTextX + ((nSelectedItem == 4) ? nIsSelected : nIsnotSelected), nButtonsTextY + 4 * nSpacingY, sprPause);
-	gfx->DrawSprite(nButtonsTextX + ((nSelectedItem == 5) ? nIsSelected : nIsnotSelected), nButtonsTextY + 5 * nSpacingY, sprUp);
-	gfx->DrawSprite(nButtonsTextX + ((nSelectedItem == 6) ? nIsSelected : nIsnotSelected), nButtonsTextY + 6 * nSpacingY, sprDown);
-	gfx->DrawSprite(nButtonsTextX + ((nSelectedItem == 7) ? nIsSelected : nIsnotSelected), nButtonsTextY + 7 * nSpacingY, sprLeft);
-	gfx->DrawSprite(nButtonsTextX + ((nSelectedItem == 8) ? nIsSelected : nIsnotSelected), nButtonsTextY + 8 * nSpacingY, sprRight);
-	gfx->DrawSprite(nButtonsTextX + ((nSelectedItem == 9) ? nIsSelected : nIsnotSelected), nButtonsTextY + 9 * nSpacingY, sprRBump);
+	engine->DrawSprite(nButtonsTextX + ((nSelectedItem == 0) ? nIsSelected : nIsnotSelected), nButtonsTextY + 0 * nSpacingY, sprX);
+	engine->DrawSprite(nButtonsTextX + ((nSelectedItem == 1) ? nIsSelected : nIsnotSelected), nButtonsTextY + 1 * nSpacingY, sprY);
+	engine->DrawSprite(nButtonsTextX + ((nSelectedItem == 2) ? nIsSelected : nIsnotSelected), nButtonsTextY + 2 * nSpacingY, sprB);
+	engine->DrawSprite(nButtonsTextX + ((nSelectedItem == 3) ? nIsSelected : nIsnotSelected), nButtonsTextY + 3 * nSpacingY, sprA);
+	engine->DrawSprite(nButtonsTextX + ((nSelectedItem == 4) ? nIsSelected : nIsnotSelected), nButtonsTextY + 4 * nSpacingY, sprPause);
+	engine->DrawSprite(nButtonsTextX + ((nSelectedItem == 5) ? nIsSelected : nIsnotSelected), nButtonsTextY + 5 * nSpacingY, sprUp);
+	engine->DrawSprite(nButtonsTextX + ((nSelectedItem == 6) ? nIsSelected : nIsnotSelected), nButtonsTextY + 6 * nSpacingY, sprDown);
+	engine->DrawSprite(nButtonsTextX + ((nSelectedItem == 7) ? nIsSelected : nIsnotSelected), nButtonsTextY + 7 * nSpacingY, sprLeft);
+	engine->DrawSprite(nButtonsTextX + ((nSelectedItem == 8) ? nIsSelected : nIsnotSelected), nButtonsTextY + 8 * nSpacingY, sprRight);
+	engine->DrawSprite(nButtonsTextX + ((nSelectedItem == 9) ? nIsSelected : nIsnotSelected), nButtonsTextY + 9 * nSpacingY, sprRBump);
 
 	if (nSelectedItem == 10)
 	{
-		gfx->DrawSprite(nDefaultX, nDefaultY, sprSelDefault);
-		gfx->DrawSprite(nQuitX, nQuitY, sprUnselQuit);
+		engine->DrawSprite(nDefaultX, nDefaultY, sprSelDefault);
+		engine->DrawSprite(nQuitX, nQuitY, sprUnselQuit);
 	}
 	else if (nSelectedItem == 11)
 	{
-		gfx->DrawSprite(nDefaultX, nDefaultY, sprUnselDefault);
-		gfx->DrawSprite(nQuitX, nQuitY, sprSelQuit);
+		engine->DrawSprite(nDefaultX, nDefaultY, sprUnselDefault);
+		engine->DrawSprite(nQuitX, nQuitY, sprSelQuit);
 	}
 	else
 	{
-		gfx->DrawSprite(nDefaultX, nDefaultY, sprUnselDefault);
-		gfx->DrawSprite(nQuitX, nQuitY, sprUnselQuit);
+		engine->DrawSprite(nDefaultX, nDefaultY, sprUnselDefault);
+		engine->DrawSprite(nQuitX, nQuitY, sprUnselQuit);
 	}
 
-	gfx->SetPixelMode(olc::Pixel::NORMAL);
+	engine->SetPixelMode(olc::Pixel::NORMAL);
 
 	return true;
 }
@@ -229,7 +225,7 @@ void cControlsMenu::SetSelectedItem(int i)
 	nSelectedItem = i;
 }
 
-void cControlsMenu::UpdateSavedControls()
+void cControlsMenu::UpdateSavedControls(OneLoneCoder_Platformer* engine)
 {
 	std::string ctrls =
 		"vacuum=" + engine->olcKeyToStr(tempControls["vacuum"]) + "\n"

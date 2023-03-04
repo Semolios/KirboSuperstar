@@ -44,6 +44,7 @@
 #include <cTime>
 #include <Lmcons.h>
 
+class cControlsMenu;
 class cPauseMenu;
 class cPlayer;
 class cScreenModeMenu;
@@ -332,25 +333,25 @@ private:
 	cSelectMenu* selectMenu;
 
 	// Controls Menu
-	olc::Sprite* sprControlsMenu;
-	olc::Sprite* sprMenuBar;
-	olc::Sprite* sprUnselQuit;
-	olc::Sprite* sprSelQuit;
-	olc::Sprite* sprUnselDefault;
-	olc::Sprite* sprSelDefault;
+	olc::Sprite	   sprControlsMenu;
+	olc::Sprite	   sprMenuBar;
+	olc::Sprite	   sprUnselQuit;
+	olc::Sprite	   sprSelQuit;
+	olc::Sprite	   sprUnselDefault;
+	olc::Sprite	   sprSelDefault;
 	cControlsMenu* controlsMenu;
 	std::map<std::string, olc::Key> savedControls;
 	// --- Controller Sprites
-	olc::Sprite* sprX;
-	olc::Sprite* sprY;
-	olc::Sprite* sprB;
-	olc::Sprite* sprPause;
-	olc::Sprite* sprUp;
-	olc::Sprite* sprDown;
-	olc::Sprite* sprLeft;
-	olc::Sprite* sprRight;
-	olc::Sprite* sprA;
-	olc::Sprite* sprRBump;
+	olc::Sprite sprX;
+	olc::Sprite sprY;
+	olc::Sprite sprB;
+	olc::Sprite sprPause;
+	olc::Sprite sprUp;
+	olc::Sprite sprDown;
+	olc::Sprite sprLeft;
+	olc::Sprite sprRight;
+	olc::Sprite sprA;
+	olc::Sprite sprRBump;
 
 	// Sound Menu
 	olc::Sprite sprSoundMenuNoSound;

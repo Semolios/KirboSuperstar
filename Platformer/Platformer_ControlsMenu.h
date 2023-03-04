@@ -6,14 +6,12 @@
 #include "olcPixelGameEngine.h"
 #include "olcPGEX_Graphics2D.h"
 #include "Zix_PGE_Controller.h"
-
-class OneLoneCoder_Platformer;
+#include "Platformer_Engine.h"
 
 class cControlsMenu
 {
 public:
-	cControlsMenu(olc::PixelGameEngine* gfx,
-				  olc::Sprite* background,
+	cControlsMenu(olc::Sprite* background,
 				  olc::Sprite* menubar,
 				  olc::Sprite* unselQuit,
 				  olc::Sprite* selQuit,
@@ -30,12 +28,10 @@ public:
 				  olc::Sprite* A,
 				  olc::Sprite* RBump);
 
-	static OneLoneCoder_Platformer* engine;
-
-	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller);
+	bool Update(OneLoneCoder_Platformer* engine, float fElapsedTime, ControllerManager* controller);
 	int GetSelectedItem();
 	void SetSelectedItem(int i);
-	void UpdateSavedControls();
+	void UpdateSavedControls(OneLoneCoder_Platformer* engine);
 	void ApplyDefaultControls();
 	bool CheckConflicts();
 

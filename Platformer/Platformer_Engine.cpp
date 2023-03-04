@@ -263,41 +263,40 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		break;
 		case LS_CONTROLSMENU:
 		{
-			sprControlsMenu = new olc::Sprite("assets/gfx/ControlsMenu.png");
-			sprMenuBar = new olc::Sprite("assets/gfx/MenuBar.png");
-			sprUnselQuit = new olc::Sprite("assets/gfx/unselQuit.png");
-			sprSelQuit = new olc::Sprite("assets/gfx/selQuit.png");
-			sprUnselDefault = new olc::Sprite("assets/gfx/unselDefault.png");
-			sprSelDefault = new olc::Sprite("assets/gfx/selDefault.png");
+			sprControlsMenu = olc::Sprite("assets/gfx/ControlsMenu.png");
+			sprMenuBar		= olc::Sprite("assets/gfx/MenuBar.png");
+			sprUnselQuit	= olc::Sprite("assets/gfx/unselQuit.png");
+			sprSelQuit		= olc::Sprite("assets/gfx/selQuit.png");
+			sprUnselDefault = olc::Sprite("assets/gfx/unselDefault.png");
+			sprSelDefault	= olc::Sprite("assets/gfx/selDefault.png");
 			// Controller sprites
-			sprX = new olc::Sprite("assets/gfx/XBtn.png");
-			sprY = new olc::Sprite("assets/gfx/YBtn.png");
-			sprB = new olc::Sprite("assets/gfx/BBtn.png");
-			sprPause = new olc::Sprite("assets/gfx/PauseBtn.png");
-			sprUp = new olc::Sprite("assets/gfx/UpBtn.png");
-			sprDown = new olc::Sprite("assets/gfx/DownBtn.png");
-			sprLeft = new olc::Sprite("assets/gfx/LeftBtn.png");
-			sprRight = new olc::Sprite("assets/gfx/RightBtn.png");
-			sprA = new olc::Sprite("assets/gfx/ABtn.png");
-			sprRBump = new olc::Sprite("assets/gfx/RBumpBtn.png");
+			sprX	 = olc::Sprite("assets/gfx/XBtn.png");
+			sprY	 = olc::Sprite("assets/gfx/YBtn.png");
+			sprB	 = olc::Sprite("assets/gfx/BBtn.png");
+			sprPause = olc::Sprite("assets/gfx/PauseBtn.png");
+			sprUp	 = olc::Sprite("assets/gfx/UpBtn.png");
+			sprDown	 = olc::Sprite("assets/gfx/DownBtn.png");
+			sprLeft	 = olc::Sprite("assets/gfx/LeftBtn.png");
+			sprRight = olc::Sprite("assets/gfx/RightBtn.png");
+			sprA	 = olc::Sprite("assets/gfx/ABtn.png");
+			sprRBump = olc::Sprite("assets/gfx/RBumpBtn.png");
 
-			controlsMenu = new cControlsMenu(this,
-											 sprControlsMenu,
-											 sprMenuBar,
-											 sprUnselQuit,
-											 sprSelQuit,
-											 sprUnselDefault,
-											 sprSelDefault,
-											 sprX,
-											 sprY,
-											 sprB,
-											 sprPause,
-											 sprUp,
-											 sprDown,
-											 sprLeft,
-											 sprRight,
-											 sprA,
-											 sprRBump);
+			controlsMenu = new cControlsMenu(&sprControlsMenu,
+											 &sprMenuBar,
+											 &sprUnselQuit,
+											 &sprSelQuit,
+											 &sprUnselDefault,
+											 &sprSelDefault,
+											 &sprX,
+											 &sprY,
+											 &sprB,
+											 &sprPause,
+											 &sprUp,
+											 &sprDown,
+											 &sprLeft,
+											 &sprRight,
+											 &sprA,
+											 &sprRBump);
 
 			ApplyControls();
 
@@ -331,7 +330,6 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		case LS_ENGINEPOINTERS:
 		{
 			cCamera::engine = this;
-			cControlsMenu::engine = this;
 			cDynamicCreature::engine = this;
 			cDynamicCreatureBladeKnight::engine = this;
 			cDynamicCreatureBomber::engine = this;
@@ -976,7 +974,7 @@ bool OneLoneCoder_Platformer::GameState_Controls(float fElapsedTime)
 	{
 		if (controlsMenu->GetSelectedItem() == 11)
 		{
-			controlsMenu->UpdateSavedControls();
+			controlsMenu->UpdateSavedControls(this);
 			controlsMenu->SetSelectedItem(0);
 			ApplyControls();
 			waveEngine.StopAll();
