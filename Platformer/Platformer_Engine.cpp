@@ -220,8 +220,8 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		break;
 		case LS_SELECTMENU:
 		{
-			sprSelectMenu = new olc::Sprite("assets/gfx/SelectMenu.png");
-			selectMenu = new cSelectMenu(this, sprSelectMenu, sprCursor);
+			sprSelectMenu = olc::Sprite("assets/gfx/SelectMenu.png");
+			selectMenu = new cSelectMenu(&sprSelectMenu, sprCursor);
 
 			UpdateProgressBar("Loading 51%");
 
@@ -358,7 +358,6 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 			cItemTomato::engine = this;
 			cPauseMenu::engine = this;
 			cPlayer::engine = this;
-			cSelectMenu::engine = this;
 
 			UpdateProgressBar("Loading 74%");
 

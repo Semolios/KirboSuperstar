@@ -1,27 +1,24 @@
 #include "Platformer_SelectMenu.h"
-#include "Platformer_Engine.h"
 
-OneLoneCoder_Platformer* cSelectMenu::engine = nullptr;
-
-cSelectMenu::cSelectMenu(olc::PixelGameEngine* gfx, olc::Sprite* background, olc::Sprite* cursor)
+cSelectMenu::cSelectMenu(olc::Sprite* background, olc::Sprite* cursor)
 {
 	sprBackGround = background;
 	sprCursor = cursor;
 }
 
-bool cSelectMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller)
+bool cSelectMenu::Update(OneLoneCoder_Platformer* engine, float fElapsedTime, ControllerManager* controller)
 {
-	gfx->DrawSprite(0, 0, sprBackGround);
+	engine->DrawSprite(0, 0, sprBackGround);
 
 	// Handle input
-	if (gfx->GetKey(olc::DOWN).bReleased || controller->GetButton(DOWN).bPressed)
+	if (engine->GetKey(olc::DOWN).bReleased || controller->GetButton(DOWN).bPressed)
 	{
 		engine->PlaySample("menuBip");
 		nPlayerChoice++;
 		if (nPlayerChoice > 3) nPlayerChoice = 0;
 	}
 
-	if (gfx->GetKey(olc::UP).bReleased || controller->GetButton(UP).bPressed)
+	if (engine->GetKey(olc::UP).bReleased || controller->GetButton(UP).bPressed)
 	{
 		engine->PlaySample("menuBip");
 		nPlayerChoice--;
@@ -29,7 +26,7 @@ bool cSelectMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Controll
 	}
 
 	// Draw choices and cursor
-	gfx->SetPixelMode(olc::Pixel::ALPHA);
+	engine->SetPixelMode(olc::Pixel::ALPHA);
 
 	if (!bInOptionsSubmenu)
 	{
@@ -52,8 +49,8 @@ bool cSelectMenu::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Controll
 	if (nPlayerChoice == 2) ncursorY = 112;
 	if (nPlayerChoice == 3) ncursorY = 152;
 
-	gfx->DrawSprite(120, ncursorY, sprCursor);
-	gfx->SetPixelMode(olc::Pixel::NORMAL);
+	engine->DrawSprite(120, ncursorY, sprCursor);
+	engine->SetPixelMode(olc::Pixel::NORMAL);
 
 	return true;
 }

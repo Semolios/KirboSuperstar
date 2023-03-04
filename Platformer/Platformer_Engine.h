@@ -46,6 +46,7 @@
 #include <Lmcons.h>
 
 class cSoundMenu;
+class cSelectMenu;
 
 class OneLoneCoder_Platformer : public olc::PixelGameEngine
 {
@@ -325,7 +326,7 @@ private:
 	cPauseMenu* pauseMenu;
 
 	// Select Menu
-	olc::Sprite* sprSelectMenu;
+	olc::Sprite  sprSelectMenu;
 	cSelectMenu* selectMenu;
 
 	// Controls Menu
