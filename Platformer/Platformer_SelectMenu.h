@@ -3,8 +3,6 @@
 
 #pragma once
 
-#include "olcPixelGameEngine.h"
-#include "Zix_PGE_Controller.h"
 #include "Platformer_Engine.h"
 
 class cSelectMenu

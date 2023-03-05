@@ -2,7 +2,7 @@
 #define DEF_HUD
 
 #pragma once
-#include "olcPixelGameEngine.h"
+
 #include "Platformer_DynamicCreature.h"
 
 class cHUD

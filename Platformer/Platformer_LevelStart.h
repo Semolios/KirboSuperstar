@@ -2,8 +2,7 @@
 #define DEF_LEVELSTART
 
 #pragma once
-#include "olcPixelGameEngine.h"
-#include "olcPGEX_Graphics2D.h"
+
 #include "Platformer_Animator.h"
 
 class cLevelStart

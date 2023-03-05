@@ -2,8 +2,7 @@
 #define DEF_WORLD_MAP
 
 #pragma once
-#include "olcPixelGameEngine.h"
-#include "olcPGEX_Graphics2D.h"
+
 #include "Platformer_Animator.h"
 #include "Zix_PGE_Controller.h"
 
