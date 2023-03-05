@@ -10,7 +10,7 @@ Scenery,28,10.9,caterpillar
 Scenery,146,6.65,pirahnaPlant
 Scenery,156,7.2,smilingShroom
 Scenery,166,6.9,happyShroom
-Scenery,61.5,1.3,soldierSkeleton
+Scenery,46.5,10.3,soldierSkeleton
 Scenery,177,2.1,bahbahbahbah
 Scenery,203.5,9.5,kremling
 Scenery,209.5,9.5,kremling
