@@ -1,8 +1,6 @@
 #ifndef DEF_ENGINE
 #define DEF_ENGINE
 
-#include "olcPixelGameEngine.h"
-#include "olcPGEX_Graphics2D.h"
 #include "olcSoundWaveEngine.h"
 #include "Zix_PGE_Controller.h"
 
