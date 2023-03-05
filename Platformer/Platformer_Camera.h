@@ -4,34 +4,25 @@
 #pragma once
 #include "olcPixelGameEngine.h"
 #include "Platformer_Level.h"
-
-class OneLoneCoder_Platformer;
-
-constexpr int nMaxThreads = 32;
-
-static std::atomic<int> nWorkerComplete;
+#include "Platformer_Engine.h"
 
 class cCamera
 {
 public:
 	cCamera();
 
-	static OneLoneCoder_Platformer* engine;
-
 	void ClampOffset();
 	void SetPositions(float fPlayerPosX, float fPlayerPosY);
 	void DrawLevel(cLevel* level, float fElapsedTime);
-	void CalculateFOV(cLevel* level);
-	void DrawBackground(cLevel* level);
-	void DrawBackgroundThread(int x, int y, float fBckgrdoffX, float fBckgrdoffY, int w, int h);
+	void CalculateFOV(cLevel* level, OneLoneCoder_Platformer* engine);
+	void DrawBackground(cLevel* level, OneLoneCoder_Platformer* engine);
 	float GetOffsetX();
 	float GetOffsetY();
 	void LowerPosition();
 	void RaisePosition();
 	void SetShake(bool shake);
 	void ActivateShakeEffect(bool activate, int shakeAmplitudeX = 50, int shakeAmplitudeY = 50);
-	void InitialiseThreadPool();
-	void SpawnSceneries(cLevel* level, float fElapsedTime);
+	void SpawnSceneries(cLevel* level, float fElapsedTime, OneLoneCoder_Platformer* engine);
 
 private:
 	const float cfLowerPos = 1.0f / 4.0f;		  // Lower position for the camera (when the player is not pushing down)
@@ -60,52 +51,6 @@ private:
 	int nVisibleTilesX;
 	int nVisibleTilesY;
 	bool bShake = false;
-
-	struct WorkerThread
-	{
-		int ox;
-		int oy;
-		float fBackgroundOffsetX;
-		float fBackgroundOffsetY;
-		int width;
-		int height;
-		std::condition_variable cvStart;
-		bool alive = true;
-		std::mutex mux;
-		int screen_width = 0;
-		cCamera* cam;
-
-		std::thread thread;
-
-		void Start(int x, int y, float fBckgrdoffX, float fBckgrdoffY, int w, int h, cCamera* camera)
-		{
-			ox = x;
-			oy = y;
-			fBackgroundOffsetX = fBckgrdoffX;
-			fBackgroundOffsetY = fBckgrdoffY;
-			width = w;
-			height = h;
-			cam = camera;
-
-			std::unique_lock<std::mutex> lm(mux);
-			cvStart.notify_one();
-		}
-
-		void DrawBackground()
-		{
-			while (alive)
-			{
-				std::unique_lock<std::mutex> lm(mux);
-				cvStart.wait(lm);
-
-				cam->DrawBackgroundThread(ox, oy, fBackgroundOffsetX, fBackgroundOffsetY, width, height);
-
-				nWorkerComplete++;
-			}
-		}
-	};
-
-	WorkerThread workers[nMaxThreads];
 };
 
 #endif // !DEF_CAMERA

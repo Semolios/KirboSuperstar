@@ -1,7 +1,4 @@
 #include "Platformer_Camera.h"
-#include "Platformer_Engine.h"
-
-OneLoneCoder_Platformer* cCamera::engine = nullptr;
 
 cCamera::cCamera()
 {}
@@ -23,7 +20,7 @@ void cCamera::DrawLevel(cLevel* level, float fElapsedTime)
 	level->DrawTiles(nVisibleTilesX, nVisibleTilesY, fOffsetX, fOffsetY);
 }
 
-void cCamera::CalculateFOV(cLevel* level)
+void cCamera::CalculateFOV(cLevel* level, OneLoneCoder_Platformer* engine)
 {
 	nVisibleTilesX = engine->ScreenWidth() / engine->GetTileWidth();
 	nVisibleTilesY = engine->ScreenHeight() / engine->GetTileHeight();
@@ -48,28 +45,12 @@ void cCamera::CalculateFOV(cLevel* level)
 	}
 }
 
-void cCamera::DrawBackground(cLevel* level)
+void cCamera::DrawBackground(cLevel* level, OneLoneCoder_Platformer* engine)
 {
 	float fBackgroundOffsetX = fOffsetX * engine->GetTileWidth() * ((float)(engine->GetBackGround()->width - engine->ScreenWidth()) / (float)(level->GetWidth() * engine->GetTileWidth() - engine->ScreenWidth()));
 	float fBackgroundOffsetY = fOffsetY * engine->GetTileHeight() * ((float)(engine->GetBackGround()->height - engine->ScreenHeight()) / (float)(level->GetHeight() * engine->GetTileHeight() - engine->ScreenHeight()));
 
-	int nSectionWidth = engine->ScreenWidth() / nMaxThreads;
-
-	nWorkerComplete = 0;
-
-	for (size_t i = 0; i < nMaxThreads; i++)
-	{
-		workers[i].Start(nSectionWidth * i, 0, fBackgroundOffsetX + (nSectionWidth * i), fBackgroundOffsetY, nSectionWidth, engine->ScreenHeight(), this);
-	}
-
-	while (nWorkerComplete < nMaxThreads) // Wait for all workers to complete
-	{
-	}
-}
-
-void cCamera::DrawBackgroundThread(int x, int y, float fBckgrdoffX, float fBckgrdoffY, int w, int h)
-{
-	engine->DrawPartialSprite(x, y, engine->GetBackGround(), fBckgrdoffX, fBckgrdoffY, w, h);
+	engine->DrawPartialSprite(0, 0, engine->GetBackGround(), fBackgroundOffsetX, fBackgroundOffsetY, engine->ScreenWidth(), engine->ScreenHeight());
 }
 
 float cCamera::GetOffsetX()
@@ -104,17 +85,7 @@ void cCamera::ActivateShakeEffect(bool activate, int shakeAmplitudeX, int shakeA
 	nShakeAmplitudeY = shakeAmplitudeY;
 }
 
-void cCamera::InitialiseThreadPool()
-{
-	for (int i = 0; i < nMaxThreads; i++)
-	{
-		workers[i].alive = true;
-		workers[i].screen_width = engine->ScreenWidth();
-		workers[i].thread = std::thread(&WorkerThread::DrawBackground, &workers[i]);
-	}
-}
-
-void cCamera::SpawnSceneries(cLevel* level, float fElapsedTime)
+void cCamera::SpawnSceneries(cLevel* level, float fElapsedTime, OneLoneCoder_Platformer* engine)
 {
 #pragma region Iceberg
 

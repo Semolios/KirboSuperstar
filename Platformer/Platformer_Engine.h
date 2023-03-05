@@ -44,6 +44,7 @@
 #include <cTime>
 #include <Lmcons.h>
 
+class cCamera;
 class cControlsMenu;
 class cPauseMenu;
 class cPlayer;

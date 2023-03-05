@@ -12,8 +12,8 @@
 #include "Platformer_ItemDefense.h"
 #include "Platformer_ItemMinorHeal.h"
 #include "Platformer_ItemTomato.h"
-#include "Platformer_Level.h"
-#include "Platformer_Engine.h"
+
+class cCamera;
 
 class cPlayer
 {

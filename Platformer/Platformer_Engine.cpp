@@ -329,7 +329,6 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		break;
 		case LS_ENGINEPOINTERS:
 		{
-			cCamera::engine = this;
 			cDynamicCreature::engine = this;
 			cDynamicCreatureBladeKnight::engine = this;
 			cDynamicCreatureBomber::engine = this;
@@ -366,7 +365,6 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		case LS_CAMERA:
 		{
 			camera = new cCamera();
-			camera->InitialiseThreadPool();
 
 			UpdateProgressBar("Loading 95%");
 
@@ -595,11 +593,11 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
 	camera->SetPositions(player->GetPosX(), player->GetPosY());
 
-	camera->CalculateFOV(level);
+	camera->CalculateFOV(level, this);
 
 	player->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY(), this);
 
-	camera->SpawnSceneries(level, fElapsedTime);
+	camera->SpawnSceneries(level, fElapsedTime, this);
 
 	// Ennemies
 	for (auto& object : vecEnnemies)
@@ -770,7 +768,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 #pragma region MyRegion
 
 	// Draw Background
-	camera->DrawBackground(level);
+	camera->DrawBackground(level, this);
 
 	// Draw Platforms
 	for (auto& object : GetClosePlatforms(player->GetPosX(), player->GetPosY()))
