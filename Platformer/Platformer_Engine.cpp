@@ -155,8 +155,8 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		case LS_MECHANISMS:
 		{
 			mapPlatforms = cDynamicMovingPlatform::LoadMovingPlatformsSprites();
-			sprDoorSwitchOff = new olc::Sprite("assets/gfx/doorSwitchOff.png");
-			sprDoorSwitchOn = new olc::Sprite("assets/gfx/doorSwitchOn.png");
+			sprDoorSwitchOff = olc::Sprite("assets/gfx/doorSwitchOff.png");
+			sprDoorSwitchOn = olc::Sprite("assets/gfx/doorSwitchOn.png");
 			mapWinds = cDynamicWind::LoadWindSprites();
 			mapTeleports = cDynamicTeleport::LoadTeleportsSprites();
 
@@ -167,8 +167,8 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		break;
 		case LS_TITLE:
 		{
-			sprTitleScreen = new olc::Sprite("assets/gfx/titleScreen.png");
-			titleScreen = new cTitleScreen(this, sprTitleScreen);
+			sprTitleScreen = olc::Sprite("assets/gfx/titleScreen.png");
+			titleScreen = new cTitleScreen(this, &sprTitleScreen);
 
 			UpdateProgressBar("Loading 20%");
 
@@ -177,9 +177,9 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		break;
 		case LS_WORLDMAP:
 		{
-			sprWorldMap = new olc::Sprite("assets/gfx/WorldMap.png");
-			sprLock = new olc::Sprite("assets/gfx/Lock.png");
-			worldMap = new cWorldMap(this, sprWorldMap, sprLock, &animPlayer);
+			sprWorldMap = olc::Sprite("assets/gfx/WorldMap.png");
+			sprLock = olc::Sprite("assets/gfx/Lock.png");
+			worldMap = new cWorldMap(this, &sprWorldMap, &sprLock, &animPlayer);
 			worldMap->SetUnlockedLevel(level->GetUnlockedLvl());
 
 			UpdateProgressBar("Loading 23%");
@@ -189,8 +189,8 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		break;
 		case LS_LEVELSTART:
 		{
-			sprLevelStart = new olc::Sprite("assets/gfx/levelStartScreen.png");
-			levelStart = new cLevelStart(this, sprLevelStart, &animPlayer);
+			sprLevelStart = olc::Sprite("assets/gfx/levelStartScreen.png");
+			levelStart = new cLevelStart(this, &sprLevelStart, &animPlayer);
 
 			UpdateProgressBar("Loading 30%");
 
@@ -199,8 +199,8 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		break;
 		case LS_ENDSCREEN:
 		{
-			sprEndScreen = new olc::Sprite("assets/gfx/endScreen.png");
-			endScreen = new cEndScreen(this, sprEndScreen, &animPlayer);
+			sprEndScreen = olc::Sprite("assets/gfx/endScreen.png");
+			endScreen = new cEndScreen(this, &sprEndScreen, &animPlayer);
 
 			UpdateProgressBar("Loading 40%");
 
@@ -307,8 +307,8 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		break;
 		case LS_CREDITSMENU:
 		{
-			sprCreditsMenu = new olc::Sprite("assets/gfx/CreditsMenu.png");
-			creditsMenu = new cCreditsMenu(this, sprCreditsMenu);
+			sprCreditsMenu = olc::Sprite("assets/gfx/CreditsMenu.png");
+			creditsMenu = new cCreditsMenu(this, &sprCreditsMenu);
 
 			UpdateProgressBar("Loading 58%");
 
@@ -318,9 +318,9 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
 		case LS_HUD:
 		{
 			HUD = new cHUD();
-			sprHealthBar = new olc::Sprite("assets/gfx/emptyHealthBar.png");
-			sprHealthPoint = new olc::Sprite("assets/gfx/healthPoint.png");
-			sprBossHealthBar = new olc::Sprite("assets/gfx/emptyBossHealthBar.png");
+			sprHealthBar = olc::Sprite("assets/gfx/emptyHealthBar.png");
+			sprHealthPoint = olc::Sprite("assets/gfx/healthPoint.png");
+			sprBossHealthBar = olc::Sprite("assets/gfx/emptyBossHealthBar.png");
 
 			UpdateProgressBar("Loading 66%");
 
@@ -821,11 +821,11 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 	player->DrawKirbo(t, this);
 
 	// Draw HUD
-	HUD->HealthBar(this, sprHealthBar);
-	HUD->HealthPoints(this, sprHealthPoint, player->GetHealth());
+	HUD->HealthBar(this, &sprHealthBar);
+	HUD->HealthPoints(this, &sprHealthPoint, player->GetHealth());
 
 	if (bInBossLvl)
-		HUD->BossHealthBar(this, sprBossHealthBar, vecEnnemies);
+		HUD->BossHealthBar(this, &sprBossHealthBar, vecEnnemies);
 	if (player->HasDamageBooster())
 		HUD->DamageBoost(this, GetTilesSprites());
 	if (player->HasDefenseBooster())
@@ -1362,7 +1362,7 @@ std::vector<cDynamicMovingPlatform*> OneLoneCoder_Platformer::GetClosePlatforms(
 
 olc::Sprite* OneLoneCoder_Platformer::GetDoorSwitch(bool on)
 {
-	return on ? sprDoorSwitchOn : sprDoorSwitchOff;
+	return on ? &sprDoorSwitchOn : &sprDoorSwitchOff;
 }
 
 void OneLoneCoder_Platformer::AddWind(float ox, float oy, std::string sprite, std::wstring direction, float power)

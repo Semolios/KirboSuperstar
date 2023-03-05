@@ -305,21 +305,21 @@ private:
 	cCamera* camera;
 
 	// Title screen
-	olc::Sprite* sprTitleScreen;
+	olc::Sprite	  sprTitleScreen;
 	cTitleScreen* titleScreen;
 
 	// World Map
-	olc::Sprite* sprWorldMap;
-	olc::Sprite* sprLock;
-	cWorldMap* worldMap;
+	olc::Sprite sprWorldMap;
+	olc::Sprite sprLock;
+	cWorldMap*  worldMap;
 
 	// Level Start Screen
-	olc::Sprite* sprLevelStart;
+	olc::Sprite  sprLevelStart;
 	cLevelStart* levelStart;
 	int levelStartAnim = 0;
 
 	// End Screen
-	olc::Sprite* sprEndScreen;
+	olc::Sprite sprEndScreen;
 	cEndScreen* endScreen;
 	bool bPlayMusic = true;
 
@@ -368,7 +368,7 @@ private:
 	cScreenModeMenu* screenModeMenu;
 
 	// Credits Menu
-	olc::Sprite* sprCreditsMenu;
+	olc::Sprite	  sprCreditsMenu;
 	cCreditsMenu* creditsMenu;
 
 	// Player Sprites
@@ -387,8 +387,8 @@ private:
 	// Moving Platforms
 	std::vector<cDynamicMovingPlatform*> vecPlatforms;
 	std::map<std::string, std::vector<olc::Sprite*>> mapPlatforms;
-	olc::Sprite* sprDoorSwitchOff;
-	olc::Sprite* sprDoorSwitchOn;
+	olc::Sprite sprDoorSwitchOff;
+	olc::Sprite sprDoorSwitchOn;
 
 	// Winds
 	std::vector<cDynamicWind*> vecWinds;
@@ -400,9 +400,9 @@ private:
 
 	// HUD
 	cHUD* HUD;
-	olc::Sprite* sprHealthBar;
-	olc::Sprite* sprHealthPoint;
-	olc::Sprite* sprBossHealthBar;
+	olc::Sprite sprHealthBar;
+	olc::Sprite sprHealthPoint;
+	olc::Sprite sprBossHealthBar;
 
 	// SplashScreen
 	float fSplashScreenTimer;
