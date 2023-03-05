@@ -8,18 +8,12 @@ cLevelStart::cLevelStart(olc::PixelGameEngine* gfx, olc::Sprite* background, cAn
 	animPlayer = anim;
 }
 
-bool cLevelStart::Update(olc::PixelGameEngine* gfx, float fElapsedTime)
+bool cLevelStart::Update(olc::PixelGameEngine* gfx, float fElapsedTime, olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
 	gfx->DrawSprite(0, 0, sprBackGround);
 
-	animPlayer->Update(fElapsedTime);
-
-	olc::GFX2D::Transform2D t;
-	t.Translate(gfx->ScreenWidth() * 0.7f, gfx->ScreenHeight() * 0.7f);
-
-	gfx->SetPixelMode(olc::Pixel::ALPHA);
-	animPlayer->DrawSelf(t);
-	gfx->SetPixelMode(olc::Pixel::NORMAL);
+	animPlayer->Update(fElapsedTime, playerSprite, playerDecal);
+    animPlayer->DrawSelf(gfx->ScreenWidth() * 0.7f + playerSprite->width / 2.0f, gfx->ScreenHeight() * 0.7f + playerSprite->height / 2.0f, 0.0f, 1.0f, gfx, playerDecal);
 
 	return false;
 }

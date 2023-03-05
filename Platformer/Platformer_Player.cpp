@@ -17,7 +17,7 @@ bool cPlayer::IsDead()
 	return bDead;
 }
 
-void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneLoneCoder_Platformer* engine)
+void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneLoneCoder_Platformer* engine, olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
 	if (engine->IsFocused() && CanInteract(engine))
 	{
@@ -29,7 +29,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneL
 			{
 				if (IsEnteringDoor(lvl, engine))
 				{
-					animPlayer->ChangeState("enterDoor");
+					animPlayer->ChangeState("enterDoor", playerSprite, playerDecal);
 					bInteracting = true;
 					bFlying = false;
 					bBreakDoor = true;
@@ -43,7 +43,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneL
 				{
 					fVelY = -cfVelY;
 					bFlying = true;
-					animPlayer->ChangeState("flying");
+					animPlayer->ChangeState("flying", playerSprite, playerDecal);
 				}
 			}
 		}
@@ -204,7 +204,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneL
 			// Can't spam slap, can't slap when player is flying
 			if (!bInteracting && !bFlying)
 			{
-				animPlayer->ChangeState("slap");
+				animPlayer->ChangeState("slap", playerSprite, playerDecal);
 				bInteracting = true;
 				bSlapping = true;
 				bCanSpawnProjectile = true;
@@ -230,7 +230,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneL
 			// Can't spam Launching cross, can't launch when player is flying
 			if (!bInteracting && !bFlying)
 			{
-				animPlayer->ChangeState("jesus_christ");
+				animPlayer->ChangeState("jesus_christ", playerSprite, playerDecal);
 				bInteracting = true;
 				bLaunchingJesusCross = true;
 				bCanSpawnProjectile = true;
@@ -247,7 +247,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneL
 				if (!bVacuuming && !bInteracting)
 				{
 					engine->PlaySample("beginVacuum");
-					animPlayer->ChangeState("begin_vacuum");
+					animPlayer->ChangeState("begin_vacuum", playerSprite, playerDecal);
 					bVacuuming = true;
 					fAnimationTimer = 0.0f;
 				}
@@ -282,7 +282,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneL
 				if (poyo == 0) engine->PlaySample("poyo01");
 				if (poyo == 1) engine->PlaySample("poyo02");
 
-				animPlayer->ChangeState("poyo");
+				animPlayer->ChangeState("poyo", playerSprite, playerDecal);
 				bInteracting = true;
 				bPoyo = true;
 				fAnimationTimer = 0.0f;
@@ -370,7 +370,7 @@ void cPlayer::ApplyGravity(float fElapsedTime, OneLoneCoder_Platformer* engine)
 	fVelY += engine->GetGravityValue() * fElapsedTime;
 }
 
-void cPlayer::Update(float fElapsedTime, OneLoneCoder_Platformer* engine)
+void cPlayer::Update(float fElapsedTime, OneLoneCoder_Platformer* engine, olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
 	if (bInteracting && CanInteract(engine))
 	{
@@ -399,12 +399,12 @@ void cPlayer::Update(float fElapsedTime, OneLoneCoder_Platformer* engine)
 				fVelX = 0.0f;
 
 				if (CanInteract(engine))
-					animPlayer->ChangeState("idle");
+					animPlayer->ChangeState("idle", playerSprite, playerDecal);
 			}
 			else
 			{
 				if (CanInteract(engine))
-					animPlayer->ChangeState("run");
+					animPlayer->ChangeState("run", playerSprite, playerDecal);
 			}
 		}
 		else
@@ -416,9 +416,9 @@ void cPlayer::Update(float fElapsedTime, OneLoneCoder_Platformer* engine)
 					engine->StopSample("kirboFly");
 
 					if (fVelY < 0)
-						animPlayer->ChangeState("jump");
+						animPlayer->ChangeState("jump", playerSprite, playerDecal);
 					else
-						animPlayer->ChangeState("fall");
+						animPlayer->ChangeState("fall", playerSprite, playerDecal);
 				}
 				else
 				{
@@ -434,7 +434,7 @@ float cPlayer::GetFaceDir()
 	return fFaceDir;
 }
 
-void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t, std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles, cLevel* lvl, OneLoneCoder_Platformer* engine)
+void cPlayer::OneCycleAnimations(float fElapsedTime, float& angle, float& offsetX, float& offsetY, std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles, cLevel* lvl, OneLoneCoder_Platformer* engine, olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
 	if (bInteracting && !bDead)
 	{
@@ -502,7 +502,7 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 			{
 				if (!engine->IsSamplePlaying("beginVacuum"))
 					engine->PlaySample("vacuum", false, true);
-				animPlayer->ChangeState("vacuum");
+				animPlayer->ChangeState("vacuum", playerSprite, playerDecal);
 			}
 		}
 
@@ -518,7 +518,7 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 				engine->PlaySample("swallow");
 			}
 
-			animPlayer->ChangeState("swallow");
+			animPlayer->ChangeState("swallow", playerSprite, playerDecal);
 		}
 
 		// Stop the action when it's finished
@@ -566,9 +566,10 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 		fDeadAnimation += fElapsedTime;
 		if (fDeadAnimation != fElapsedTime)
 		{
-			t->Rotate(fDeadAnimation * cfDeadRotationAnimation);
+			angle = fDeadAnimation * cfDeadRotationAnimation;
 			// animation based on a 2nd degree polynome to simulate kirbo's death animation
-			t->Translate(0.0f, (4.0f * fDeadAnimation - 2.0f) * 64.0f * (4.0f * fDeadAnimation - 2.0f) - 4 * 64.0f);
+			offsetX = 0.0f;
+			offsetY = (4.0f * fDeadAnimation - 2.0f) * 64.0f * (4.0f * fDeadAnimation - 2.0f) - 4 * 64.0f;
 		}
 
 		// Return to the map after dead animation
@@ -602,12 +603,11 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, olc::GFX2D::Transform2D* t,
 		if (engine->GetWinTimer() >= animPlayer->mapStates["boss_killed"].size() * animPlayer->fTimeBetweenFrames)
 		{
 			fKirboGoesAwayTimer += fElapsedTime;
-			animPlayer->ChangeState("kirbo_goes_away");
+			animPlayer->ChangeState("kirbo_goes_away", playerSprite, playerDecal);
 
-			fFaceDir = 1.0f;
-			t->Scale(-1.0f, 1.0f); // Scale the sprite because riding_star00 sprite is facing left
-			t->Rotate(-fKirboGoesAwayTimer * cfGoAwayRotationAnimation);
-			t->Translate(fKirboGoesAwayTimer * cfGoAwayTranslationAnimation, -fKirboGoesAwayTimer * cfGoAwayTranslationAnimation);
+			angle = fKirboGoesAwayTimer * cfGoAwayRotationAnimation;
+			offsetX = fKirboGoesAwayTimer * cfGoAwayTranslationAnimation;
+			offsetY = -fKirboGoesAwayTimer * cfGoAwayTranslationAnimation;
 		}
 		else
 		{
@@ -659,7 +659,7 @@ void cPlayer::SetVelocities(float vx, float vy)
 	fVelY = vy;
 }
 
-void cPlayer::Collisions(float fElapsedTime, cLevel* lvl, OneLoneCoder_Platformer* engine)
+void cPlayer::Collisions(float fElapsedTime, cLevel* lvl, OneLoneCoder_Platformer* engine, olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
 	float fNewVelX = fVelX;
 	float fNewVelY = fVelY;
@@ -694,22 +694,22 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl, OneLoneCoder_Platforme
 	CheckPickUp(lvl, fNewPosX + 1.0f, fNewPosY + 0.0f, engine);
 	CheckPickUp(lvl, fNewPosX + 1.0f, fNewPosY + 1.0f, engine);
 
-	CheckHole(lvl, engine);
+	CheckHole(lvl, engine, playerSprite, playerDecal);
 
 	// Collision
 	if (fNewVelX <= 0) // Moving Left
 	{
 		if (fNewPosX <= 1) fNewPosX = 1; // Prevent from being brutally moved to 0 only when reaching -1
 
-		CheckLeftWall(lvl, fNewPosX, engine);
-		CheckRightWall(lvl, fNewPosX, engine);
+		CheckLeftWall(lvl, fNewPosX, engine, playerSprite, playerDecal);
+		CheckRightWall(lvl, fNewPosX, engine, playerSprite, playerDecal);
 	}
 	else // Moving Right
 	{
 		if (fNewPosX >= lvl->GetWidth() - 2) fNewPosX = lvl->GetWidth() - 2; // Kirbo can't cross the edge of the map
 
-		CheckLeftWall(lvl, fNewPosX, engine);
-		CheckRightWall(lvl, fNewPosX, engine);
+		CheckLeftWall(lvl, fNewPosX, engine, playerSprite, playerDecal);
+		CheckRightWall(lvl, fNewPosX, engine, playerSprite, playerDecal);
 	}
 
 	bOnGround = false;
@@ -717,30 +717,30 @@ void cPlayer::Collisions(float fElapsedTime, cLevel* lvl, OneLoneCoder_Platforme
 	{
 		if (fNewPosY <= 1) fNewPosY = 1; // Prevent from being brutally moved to 0 only when reaching -1
 
-		CheckDynamicCeiling(fNewPosX, fNewPosY, lvl, engine);
-		CheckDynamicFloor(fNewPosX, fNewPosY, fElapsedTime, lvl, engine);
+		CheckDynamicCeiling(fNewPosX, fNewPosY, lvl, engine, playerSprite, playerDecal);
+		CheckDynamicFloor(fNewPosX, fNewPosY, fElapsedTime, lvl, engine, playerSprite, playerDecal);
 
-		CheckSolidCeiling(lvl, fNewPosX, fNewPosY, engine);
+		CheckSolidCeiling(lvl, fNewPosX, fNewPosY, engine, playerSprite, playerDecal);
 	}
 	else // Moving Down
 	{
-		CheckDynamicCeiling(fNewPosX, fNewPosY, lvl, engine);
-		CheckDynamicFloor(fNewPosX, fNewPosY, fElapsedTime, lvl, engine);
+		CheckDynamicCeiling(fNewPosX, fNewPosY, lvl, engine, playerSprite, playerDecal);
+		CheckDynamicFloor(fNewPosX, fNewPosY, fElapsedTime, lvl, engine, playerSprite, playerDecal);
 
-		CheckSolidFloor(lvl, fNewPosX, fNewPosY, engine);
+		CheckSolidFloor(lvl, fNewPosX, fNewPosY, engine, playerSprite, playerDecal);
 	}
 
 	fPosX = fNewPosX;
 	fPosY = fNewPosY;
 }
 
-void cPlayer::CheckHole(cLevel* lvl, OneLoneCoder_Platformer* engine)
+void cPlayer::CheckHole(cLevel* lvl, OneLoneCoder_Platformer* engine, olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
 	if (fPosY > lvl->GetHeight())
 	{
 		if (!bDead)
 			engine->PlaySample("kirboHit");
-		Kill();
+		Kill(playerSprite, playerDecal);
 	}
 }
 
@@ -753,13 +753,13 @@ void cPlayer::CheckPickUp(cLevel* lvl, float fNewPosX, float fNewPosY, OneLoneCo
 	}
 }
 
-void cPlayer::CheckSolidFloor(cLevel* lvl, float fNewPosX, float& fNewPosY, OneLoneCoder_Platformer* engine)
+void cPlayer::CheckSolidFloor(cLevel* lvl, float fNewPosX, float& fNewPosY, OneLoneCoder_Platformer* engine, olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
 	if (SolidFloor(lvl, fNewPosX, fNewPosY, engine) || SemiSolidFloor(lvl, fNewPosX, fNewPosY, engine))
 	{
 		if (DynamicCeiling(fNewPosX, fNewPosY, engine) && fCrushingObjVY > 0.0f)
 		{
-			Crushed(engine);
+			Crushed(engine, playerSprite, playerDecal);
 		}
 
 		NormalDrag();
@@ -779,14 +779,14 @@ void cPlayer::NormalDrag()
 	bOnIcedGround = false;
 }
 
-void cPlayer::CheckDynamicFloor(float& fNewPosX, float& fNewPosY, float fElapsedTime, cLevel* lvl, OneLoneCoder_Platformer* engine)
+void cPlayer::CheckDynamicFloor(float& fNewPosX, float& fNewPosY, float fElapsedTime, cLevel* lvl, OneLoneCoder_Platformer* engine, olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
 	for (auto& ptfm : engine->GetClosePlatforms(fPosX, fPosY))
 	{
 		if (ptfm->TopCollision(fNewPosX + fCollisionLowerLimit, fNewPosX + fCollisionUpperLimit, fNewPosY + 0.8f) ||
 			ptfm->TopCollisionWithLag(fNewPosX + fCollisionLowerLimit, fNewPosX + fCollisionUpperLimit, fPosY + 0.8f, fNewPosY + 0.8f))
 		{
-			HarmfulBloc(ptfm, engine);
+			HarmfulBloc(ptfm, engine, playerSprite, playerDecal);
 
 			if (ptfm->IsIced())
 				IcedDrag();
@@ -802,16 +802,16 @@ void cPlayer::CheckDynamicFloor(float& fNewPosX, float& fNewPosY, float fElapsed
 			// Check if a wall is there
 			if (fNewPosX < fPosX)
 			{
-				CheckLeftWall(lvl, fNewPosX, engine);
+				CheckLeftWall(lvl, fNewPosX, engine, playerSprite, playerDecal);
 			}
 			if (fNewPosX > fPosX)
 			{
-				CheckRightWall(lvl, fNewPosX, engine);
+				CheckRightWall(lvl, fNewPosX, engine, playerSprite, playerDecal);
 			}
 
 			if ((Ceiling(lvl, fNewPosX, fNewPosY, engine) && ptfm->GetVY() < 0.0f) || (DynamicCeiling(fNewPosX, fNewPosY, engine) && CeilingFloorCrushed(ptfm)))
 			{
-				Crushed(engine);
+				Crushed(engine, playerSprite, playerDecal);
 			}
 
 			if (ptfm->IsHarmfulblocTangible())
@@ -840,7 +840,7 @@ bool cPlayer::CeilingFloorCrushed(cDynamicMovingPlatform*& ptfm)
 		   fCrushingObjVY < 0.0f && ptfm->GetVY() < 0.0f && fCrushingObjVY > ptfm->GetVY();
 }
 
-void cPlayer::CheckSolidCeiling(cLevel* lvl, float fNewPosX, float& fNewPosY, OneLoneCoder_Platformer* engine)
+void cPlayer::CheckSolidCeiling(cLevel* lvl, float fNewPosX, float& fNewPosY, OneLoneCoder_Platformer* engine, olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
 	if (Ceiling(lvl, fNewPosX, fNewPosY, engine))
 	{
@@ -853,20 +853,20 @@ void cPlayer::CheckSolidCeiling(cLevel* lvl, float fNewPosX, float& fNewPosY, On
 				(ptfm->TopCollision(fNewPosX + fCollisionLowerLimit, fNewPosX + fCollisionUpperLimit, fNewPosY + 1.0f) ||
 				 ptfm->TopCollisionWithLag(fNewPosX + fCollisionLowerLimit, fNewPosX + fCollisionUpperLimit, fPosY + 1.0f, fNewPosY + 1.0f)))
 			{
-				Crushed(engine);
+				Crushed(engine, playerSprite, playerDecal);
 			}
 		}
 	}
 }
 
-void cPlayer::CheckDynamicCeiling(float fNewPosX, float& fNewPosY, cLevel* lvl, OneLoneCoder_Platformer* engine)
+void cPlayer::CheckDynamicCeiling(float fNewPosX, float& fNewPosY, cLevel* lvl, OneLoneCoder_Platformer* engine, olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
 	for (auto& ptfm : engine->GetClosePlatforms(fPosX, fPosY))
 	{
 		if (ptfm->BotCollision(fNewPosX + fCollisionLowerLimit, fNewPosX + fCollisionUpperLimit, fNewPosY) ||
 			ptfm->BotCollisionWithLag(fNewPosX + fCollisionLowerLimit, fNewPosX + fCollisionUpperLimit, fPosY, fNewPosY))
 		{
-			HarmfulBloc(ptfm, engine);
+			HarmfulBloc(ptfm, engine, playerSprite, playerDecal);
 
 			if ((ptfm->GetVY() >= fVelY) && ptfm->IsHarmfulblocTangible())
 				fNewPosY = ptfm->GetPY() + ptfm->GetNormalizedHeight();
@@ -875,7 +875,7 @@ void cPlayer::CheckDynamicCeiling(float fNewPosX, float& fNewPosY, cLevel* lvl, 
 				SemiSolidFloor(lvl, fNewPosX, fNewPosY, engine) && ptfm->GetVY() > 0.0f ||
 				DynamicFloor(fNewPosX, fNewPosY, engine) && FloorCeilingCrushed(ptfm))
 			{
-				Crushed(engine);
+				Crushed(engine, playerSprite, playerDecal);
 			}
 		}
 	}
@@ -888,12 +888,12 @@ bool cPlayer::FloorCeilingCrushed(cDynamicMovingPlatform*& ptfm)
 		   fCrushingObjVY < 0.0f && ptfm->GetVY() < 0.0f && fCrushingObjVY < ptfm->GetVY();
 }
 
-void cPlayer::Crushed(OneLoneCoder_Platformer* engine)
+void cPlayer::Crushed(OneLoneCoder_Platformer* engine, olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
 	if (!bDead)
 		engine->PlaySample("kirboHit");
     if (IsAttackable())
-        Damage(nullptr, engine);
+        Damage(nullptr, engine, playerSprite, playerDecal);
 }
 
 bool cPlayer::DynamicFloor(float fNewPosX, float fNewPosY, OneLoneCoder_Platformer* engine)
@@ -946,14 +946,14 @@ bool cPlayer::Ceiling(cLevel* lvl, float fNewPosX, float fNewPosY, OneLoneCoder_
 		   engine->IsSolidTile(lvl->GetTile(fNewPosX + fCollisionUpperLimit, fNewPosY));
 }
 
-void cPlayer::CheckRightWall(cLevel* lvl, float& fNewPosX, OneLoneCoder_Platformer* engine)
+void cPlayer::CheckRightWall(cLevel* lvl, float& fNewPosX, OneLoneCoder_Platformer* engine, olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
 	if (engine->IsSolidTile(lvl->GetTile(fNewPosX + 1.0f, fPosY + 0.0f				  )) ||
 		engine->IsSolidTile(lvl->GetTile(fNewPosX + 1.0f, fPosY + fCollisionUpperLimit)))
 	{
 		if (DynamicLeftWall(fNewPosX, engine) && fCrushingObjVX > 0.0f)
 		{
-			Crushed(engine);
+			Crushed(engine, playerSprite, playerDecal);
 		}
 
 		fNewPosX = (int)fNewPosX;
@@ -967,10 +967,10 @@ void cPlayer::CheckRightWall(cLevel* lvl, float& fNewPosX, OneLoneCoder_Platform
 		{
 			if (DynamicLeftWall(fNewPosX, engine) && LeftRightCrushed(ptfm))
 			{
-				Crushed(engine);
+				Crushed(engine, playerSprite, playerDecal);
 			}
 
-			HarmfulBloc(ptfm, engine);
+			HarmfulBloc(ptfm, engine, playerSprite, playerDecal);
 
 			if ((ptfm->GetVX() <= fVelX || fVelX == 0) && ptfm->IsHarmfulblocTangible())
 			{
@@ -1004,14 +1004,14 @@ bool cPlayer::DynamicLeftWall(float fNewPosX, OneLoneCoder_Platformer* engine)
 	return false;
 }
 
-void cPlayer::CheckLeftWall(cLevel* lvl, float& fNewPosX, OneLoneCoder_Platformer* engine)
+void cPlayer::CheckLeftWall(cLevel* lvl, float& fNewPosX, OneLoneCoder_Platformer* engine, olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
 	if (engine->IsSolidTile(lvl->GetTile(fNewPosX + 0.0f, fPosY + 0.0f				  )) ||
 		engine->IsSolidTile(lvl->GetTile(fNewPosX + 0.0f, fPosY + fCollisionUpperLimit)))
 	{
 		if (DynamicRightWall(fNewPosX, engine) && fCrushingObjVX < 0.0f)
 		{
-			Crushed(engine);
+			Crushed(engine, playerSprite, playerDecal);
 		}
 
 		fNewPosX = (int)fNewPosX + 1;
@@ -1025,10 +1025,10 @@ void cPlayer::CheckLeftWall(cLevel* lvl, float& fNewPosX, OneLoneCoder_Platforme
 		{
 			if (DynamicRightWall(fNewPosX, engine) && RightLeftCrushed(ptfm))
 			{
-				Crushed(engine);
+				Crushed(engine, playerSprite, playerDecal);
 			}
 
-			HarmfulBloc(ptfm, engine);
+			HarmfulBloc(ptfm, engine, playerSprite, playerDecal);
 
 			if ((ptfm->GetVX() >= fVelX || fVelX == 0) && ptfm->IsHarmfulblocTangible())
 			{
@@ -1041,11 +1041,11 @@ void cPlayer::CheckLeftWall(cLevel* lvl, float& fNewPosX, OneLoneCoder_Platforme
 	}
 }
 
-void cPlayer::HarmfulBloc(cDynamicMovingPlatform*& ptfm, OneLoneCoder_Platformer* engine)
+void cPlayer::HarmfulBloc(cDynamicMovingPlatform*& ptfm, OneLoneCoder_Platformer* engine, olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
 	if (!ptfm->IsFriendly() && bIsAttackable)
 	{
-		Damage(ptfm, engine);
+		Damage(ptfm, engine, playerSprite, playerDecal);
 	}
 }
 
@@ -1179,13 +1179,11 @@ void cPlayer::UpdateInvulnerability(float fElapsedTime, OneLoneCoder_Platformer*
 	}
 }
 
-void cPlayer::DrawKirbo(olc::GFX2D::Transform2D t, OneLoneCoder_Platformer* engine)
+void cPlayer::DrawKirbo(float posx, float posy, float angle, float faceDir, OneLoneCoder_Platformer* engine, olc::Decal* playerDecal)
 {
 	if (bShowKirbo)
 	{
-		engine->SetPixelMode(olc::Pixel::ALPHA);
-		animPlayer->DrawSelf(t);
-		engine->SetPixelMode(olc::Pixel::NORMAL);
+		animPlayer->DrawSelf(posx, posy, angle, faceDir, engine, playerDecal);
 	}
 }
 
@@ -1194,10 +1192,10 @@ float cPlayer::GetHealth()
 	return fHealth;
 }
 
-void cPlayer::Damage(cDynamic* object, OneLoneCoder_Platformer* engine)
+void cPlayer::Damage(cDynamic* object, OneLoneCoder_Platformer* engine, olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
 	engine->PlaySample("kirboHit");
-	animPlayer->ChangeState("damaged");
+	animPlayer->ChangeState("damaged", playerSprite, playerDecal);
 	fInvulnerabilityTimer = cfInvulnerabilityFrame;
 	bDamaged = true;
 	bIsAttackable = false;
@@ -1212,7 +1210,7 @@ void cPlayer::Damage(cDynamic* object, OneLoneCoder_Platformer* engine)
 
 	if (fHealth <= 0.0f)
 	{
-		Kill();
+		Kill(playerSprite, playerDecal);
 	}
 
 	if (!bDead)
@@ -1231,11 +1229,11 @@ void cPlayer::Damage(cDynamic* object, OneLoneCoder_Platformer* engine)
 	}
 }
 
-void cPlayer::Kill()
+void cPlayer::Kill(olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
 	fHealth = 0.0f;
 	bDead = true;
-	animPlayer->ChangeState("dead");
+	animPlayer->ChangeState("dead", playerSprite, playerDecal);
 	nDmgBoost = 1;
 	nDefBoost = 1;
 }
@@ -1366,13 +1364,13 @@ void cPlayer::Vacuum(cDynamicCreature* object, float cameraOffsetX, float camera
 	}
 }
 
-void cPlayer::EnemyCollision(cDynamic* object, float cameraOffsetX, float cameraOffsetY, OneLoneCoder_Platformer* engine)
+void cPlayer::EnemyCollision(cDynamic* object, float cameraOffsetX, float cameraOffsetY, OneLoneCoder_Platformer* engine, olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
 	if (EnemyTouched(object, cameraOffsetX, cameraOffsetY))
 	{
 		if (!HasCandyPower())
 		{
-			Damage(object, engine);
+			Damage(object, engine, playerSprite, playerDecal);
 			engine->HitStop();
 		}
 		else
@@ -1394,9 +1392,9 @@ void cPlayer::SetGrabbedByEnnemy(bool grabbed)
 	bIsGrabbedByEnnemy = grabbed;
 }
 
-void cPlayer::ChangeAnimation(std::string animation)
+void cPlayer::ChangeAnimation(std::string animation, olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
-	animPlayer->ChangeState(animation);
+	animPlayer->ChangeState(animation, playerSprite, playerDecal);
 }
 
 void cPlayer::SetVisible(bool visible)

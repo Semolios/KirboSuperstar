@@ -174,6 +174,7 @@ public:
 
 	// Other
 	std::string ToStr(std::wstring str);
+	void DrawGame(float fElapsedTime, float angle, float offsetX, float offsetY);
 
 private:
 	// Constant values
@@ -195,6 +196,7 @@ private:
 	olc::Sprite spriteTiles;
 	olc::Sprite sprGrdTiles;
 	olc::Sprite sprDoor;
+	olc::Decal* decalTiles;
 
 	// Sounds
 	olc::sound::WaveEngine waveEngine;
@@ -371,9 +373,12 @@ private:
 	cCreditsMenu* creditsMenu;
 
 	// Player Sprites
-	const int nTileWidth = 64;
-	const int nTileHeight = 64;
-	cAnimator animPlayer;
+	const int	nTileWidth = 64;
+	const int	nTileHeight = 64;
+	cAnimator	animPlayer;
+	olc::Sprite sprPlayer;
+	olc::Sprite sprSlap;
+	olc::Decal* decPlayer;
 
 	// Ennemies
 	std::vector<cDynamicCreature*> vecEnnemies;
@@ -402,6 +407,9 @@ private:
 	olc::Sprite sprHealthBar;
 	olc::Sprite sprHealthPoint;
 	olc::Sprite sprBossHealthBar;
+	olc::Decal* decHealthBar;
+	olc::Decal* decHealthPoint;
+	olc::Decal* decBossHealthBar;
 
 	// SplashScreen
 	float fSplashScreenTimer;

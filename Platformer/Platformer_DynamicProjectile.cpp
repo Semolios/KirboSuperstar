@@ -3,7 +3,7 @@
 
 OneLoneCoder_Platformer* cDynamicProjectile::engine = nullptr;
 
-cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float drag, bool bouncy, std::string bounceSound, bool scenery) : cDynamic("projectile")
+cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, std::string spriteName, int corner, bool breackableAgainstTiles, float drag, bool bouncy, std::string bounceSound, bool scenery) : cDynamic("projectile")
 {
 	fDynWidth = map[0]->width;
 	fDynHeight = map[0]->height;
@@ -28,11 +28,18 @@ cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float v
 	bBouncy = bouncy;
 	bounceSoundEffect = bounceSound;
 	bScenery = scenery;
+	projectileName = spriteName;
+	FillSpriteFilesList();
+	dynSprite = new olc::Sprite();
+	dynSprite->LoadFromFile(spriteFiles[projectileName][0]);
+	dynDecal = new olc::Decal(dynSprite);
 }
 
 cDynamicProjectile::~cDynamicProjectile()
 {
 	delete hitbox;
+	delete dynDecal;
+	delete dynSprite;
 }
 
 void cDynamicProjectile::DrawSelf(float ox, float oy)
@@ -41,13 +48,13 @@ void cDynamicProjectile::DrawSelf(float ox, float oy)
 	float sprPosX = (nCornerSpr == 0 || nCornerSpr == 3) ? 0.0f : mapStates[nCurrentFrame]->width;
 	float sprPosY = (nCornerSpr == 0 || nCornerSpr == 1) ? 0.0f : -mapStates[nCurrentFrame]->height;
 
-	engine->SetPixelMode(olc::Pixel::ALPHA);
-	olc::GFX2D::Transform2D t;
-	t.Translate(-fDynWidth / 2.0f, -fDynHeight / 2.0f);
-	t.Rotate(atan2f(-vy, vx));
-	t.Translate((px - ox + ((fDynWidth / 64.0f) / 2.0f)) * 64.0f + sprPosX, (py - oy + ((fDynHeight / 64.0f) / 2.0f)) * 64.0f + sprPosY);
-	olc::GFX2D::DrawSprite(mapStates[nCurrentFrame], t);
-	engine->SetPixelMode(olc::Pixel::NORMAL);
+	olc::vf2d pos;
+	pos.x = (px - ox + ((fDynWidth  / 64.0f) / 2.0f)) * 64.0f + sprPosX;
+	pos.y = (py - oy + ((fDynHeight / 64.0f) / 2.0f)) * 64.0f + sprPosY;
+	olc::vf2d center;
+	center.x = dynSprite->width  / 2.0f;
+	center.y = dynSprite->height / 2.0f;
+	engine->DrawRotatedDecal(pos, dynDecal, atan2f(vy, vx), center);
 }
 
 void cDynamicProjectile::Update(float fElapsedTime, float playerX, float playerY)
@@ -62,6 +69,8 @@ void cDynamicProjectile::Update(float fElapsedTime, float playerX, float playerY
 
 		fDynWidth = mapStates[nCurrentFrame]->width;
 		fDynHeight = mapStates[nCurrentFrame]->height;
+		dynSprite->LoadFromFile(spriteFiles[projectileName][nCurrentFrame]);
+		dynDecal->Update();
 	}
 
 	fDuration -= fElapsedTime;
@@ -505,6 +514,174 @@ float cDynamicProjectile::GetNormalizedW()
 float cDynamicProjectile::GetNormalizedH()
 {
 	return fDynHeight / engine->GetTileHeight();
+}
+
+void cDynamicProjectile::FillSpriteFilesList()
+{
+	spriteFiles["jesuscross"].push_back("assets/gfx/jesuscross.png");
+
+	spriteFiles["slapAOE"].push_back("assets/gfx/slapAOE.png");
+
+	spriteFiles["kirboFart"].push_back("assets/gfx/kirboFart00.png");
+	spriteFiles["kirboFart"].push_back("assets/gfx/kirboFart01.png");
+	spriteFiles["kirboFart"].push_back("assets/gfx/kirboFart02.png");
+	spriteFiles["kirboFart"].push_back("assets/gfx/kirboFart03.png");
+	spriteFiles["kirboFart"].push_back("assets/gfx/kirboFart04.png");
+
+	spriteFiles["swordDownAOE"].push_back("assets/gfx/swordDownAOE00.png");
+	spriteFiles["swordDownAOE"].push_back("assets/gfx/swordDownAOE01.png");
+	spriteFiles["swordDownAOE"].push_back("assets/gfx/swordDownAOE02.png");
+
+	spriteFiles["swordUpAOE"].push_back("assets/gfx/swordUpAOE.png");
+
+	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion00.png");
+	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion01.png");
+	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion02.png");
+	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion03.png");
+	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion04.png");
+	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion05.png");
+	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion06.png");
+	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion07.png");
+	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion08.png");
+	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion09.png");
+	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion10.png");
+	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion11.png");
+	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion12.png");
+	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion13.png");
+	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion14.png");
+	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion15.png");
+
+	spriteFiles["movingGround"].push_back("assets/gfx/movingGround00.png");
+	spriteFiles["movingGround"].push_back("assets/gfx/movingGround01.png");
+	spriteFiles["movingGround"].push_back("assets/gfx/movingGround02.png");
+	spriteFiles["movingGround"].push_back("assets/gfx/movingGround03.png");
+	spriteFiles["movingGround"].push_back("assets/gfx/movingGround04.png");
+
+	spriteFiles["root"].push_back("assets/gfx/root00.png");
+	spriteFiles["root"].push_back("assets/gfx/root02.png");
+	spriteFiles["root"].push_back("assets/gfx/root03.png");
+	spriteFiles["root"].push_back("assets/gfx/root04.png");
+	spriteFiles["root"].push_back("assets/gfx/root05.png");
+	spriteFiles["root"].push_back("assets/gfx/root06.png");
+	spriteFiles["root"].push_back("assets/gfx/root07.png");
+	spriteFiles["root"].push_back("assets/gfx/root04.png");
+	spriteFiles["root"].push_back("assets/gfx/root03.png");
+	spriteFiles["root"].push_back("assets/gfx/root02.png");
+	spriteFiles["root"].push_back("assets/gfx/root01.png");
+	spriteFiles["root"].push_back("assets/gfx/root00.png");
+
+	spriteFiles["apple"].push_back("assets/gfx/apple00.png");
+	spriteFiles["apple"].push_back("assets/gfx/apple01.png");
+	spriteFiles["apple"].push_back("assets/gfx/apple02.png");
+	spriteFiles["apple"].push_back("assets/gfx/apple03.png");
+	spriteFiles["apple"].push_back("assets/gfx/apple04.png");
+	spriteFiles["apple"].push_back("assets/gfx/apple05.png");
+	spriteFiles["apple"].push_back("assets/gfx/apple06.png");
+	spriteFiles["apple"].push_back("assets/gfx/apple07.png");
+
+	spriteFiles["blow"].push_back("assets/gfx/blow.png");
+
+	spriteFiles["movingGroundLava"].push_back("assets/gfx/movingGroundLava00.png");
+	spriteFiles["movingGroundLava"].push_back("assets/gfx/movingGroundLava00.png");
+	spriteFiles["movingGroundLava"].push_back("assets/gfx/movingGroundLava01.png");
+	spriteFiles["movingGroundLava"].push_back("assets/gfx/movingGroundLava01.png");
+
+	spriteFiles["magma"].push_back("assets/gfx/magma00.png");
+	spriteFiles["magma"].push_back("assets/gfx/magma01.png");
+	spriteFiles["magma"].push_back("assets/gfx/magma02.png");
+	spriteFiles["magma"].push_back("assets/gfx/magma03.png");
+
+	spriteFiles["magmaBoulder"].push_back("assets/gfx/magmaBoulder.png");
+
+	spriteFiles["stars"].push_back("assets/gfx/stars.png");
+
+	spriteFiles["chargeBeam"].push_back("assets/gfx/chargeBeam00.png");
+	spriteFiles["chargeBeam"].push_back("assets/gfx/chargeBeam01.png");
+	spriteFiles["chargeBeam"].push_back("assets/gfx/chargeBeam02.png");
+	spriteFiles["chargeBeam"].push_back("assets/gfx/chargeBeam03.png");
+	spriteFiles["chargeBeam"].push_back("assets/gfx/chargeBeam04.png");
+	spriteFiles["chargeBeam"].push_back("assets/gfx/chargeBeam05.png");
+	spriteFiles["chargeBeam"].push_back("assets/gfx/chargeBeam06.png");
+
+	spriteFiles["beam"].push_back("assets/gfx/beam00.png");
+	spriteFiles["beam"].push_back("assets/gfx/beam01.png");
+
+	spriteFiles["tinyIceCube"].push_back("assets/gfx/tinyIceCube.png");
+	spriteFiles["mediumIceCube"].push_back("assets/gfx/mediumIceCube.png");
+	spriteFiles["bigIceCube"].push_back("assets/gfx/bigIceCube.png");
+	spriteFiles["hugeIceCubeLeft"].push_back("assets/gfx/hugeIceCubeLeft.png");
+	spriteFiles["hugeIceCubeRight"].push_back("assets/gfx/hugeIceCubeRight.png");
+
+	spriteFiles["frostyWind"].push_back("assets/gfx/frostyWind00.png");
+	spriteFiles["frostyWind"].push_back("assets/gfx/frostyWind01.png");
+	spriteFiles["frostyWind"].push_back("assets/gfx/frostyWind02.png");
+	spriteFiles["frostyWind"].push_back("assets/gfx/frostyWind03.png");
+
+	spriteFiles["thunderShot"].push_back("assets/gfx/thunderShot00.png");
+	spriteFiles["thunderShot"].push_back("assets/gfx/thunderShot01.png");
+
+	spriteFiles["thunderUnder"].push_back("assets/gfx/thunderUnder.png");
+
+	spriteFiles["aim"].push_back("assets/gfx/aim.png");
+
+	spriteFiles["lightning"].push_back("assets/gfx/lightning.png");
+
+	spriteFiles["chargeLightning"].push_back("assets/gfx/chargeLightning00.png");
+	spriteFiles["chargeLightning"].push_back("assets/gfx/chargeLightning01.png");
+	spriteFiles["chargeLightning"].push_back("assets/gfx/chargeLightning02.png");
+	spriteFiles["chargeLightning"].push_back("assets/gfx/chargeLightning03.png");
+
+	spriteFiles["lightningAround"].push_back("assets/gfx/lightningAround00.png");
+	spriteFiles["lightningAround"].push_back("assets/gfx/lightningAround01.png");
+	spriteFiles["lightningAround"].push_back("assets/gfx/lightningAround02.png");
+
+	spriteFiles["swordAttack"].push_back("assets/gfx/swordAttack.png");
+
+	spriteFiles["tornado"].push_back("assets/gfx/tornado00.png");
+	spriteFiles["tornado"].push_back("assets/gfx/tornado01.png");
+	spriteFiles["tornado"].push_back("assets/gfx/tornado02.png");
+	spriteFiles["tornado"].push_back("assets/gfx/tornado03.png");
+	spriteFiles["tornado"].push_back("assets/gfx/tornado04.png");
+
+	spriteFiles["SSTierMKTPAttack"].push_back("assets/gfx/SSTierMKTPAttack.png");
+
+	spriteFiles["downTilt"].push_back("assets/gfx/downTilt.png");
+
+	spriteFiles["kingDDDUpSmash"].push_back("assets/gfx/kingDDDUpSmash.png");
+	spriteFiles["kingDDDLeftSideSmash"].push_back("assets/gfx/kingDDDLeftSideSmash.png");
+	spriteFiles["kingDDDRightSideSmash"].push_back("assets/gfx/kingDDDRightSideSmash.png");
+	spriteFiles["kingDDDDownSmash"].push_back("assets/gfx/kingDDDDownSmash.png");
+	spriteFiles["kingDDDForwardAir"].push_back("assets/gfx/kingDDDForwardAir.png");
+	spriteFiles["kingDDDBackwardAir"].push_back("assets/gfx/kingDDDBackwardAir.png");
+	spriteFiles["kingDDDDownAir"].push_back("assets/gfx/kingDDDDownAir.png");
+
+	spriteFiles["spike"].push_back("assets/gfx/spike00.png");
+	spriteFiles["spike"].push_back("assets/gfx/spike01.png");
+	spriteFiles["spike"].push_back("assets/gfx/spike02.png");
+	spriteFiles["spike"].push_back("assets/gfx/spike03.png");
+	spriteFiles["spike"].push_back("assets/gfx/spike04.png");
+	spriteFiles["spike"].push_back("assets/gfx/spike05.png");
+	spriteFiles["spike"].push_back("assets/gfx/spike06.png");
+	spriteFiles["spike"].push_back("assets/gfx/spike07.png");
+	spriteFiles["spike"].push_back("assets/gfx/spike08.png");
+	spriteFiles["spike"].push_back("assets/gfx/spike09.png");
+
+	spriteFiles["doorDebris1"].push_back("assets/gfx/doorDebris1.png");
+
+	spriteFiles["doorDebris2"].push_back("assets/gfx/doorDebris2.png");
+
+	spriteFiles["doorDebris3"].push_back("assets/gfx/doorDebris3.png");
+
+	spriteFiles["halberdCloud"].push_back("assets/gfx/halberdCloud.png");
+
+	spriteFiles["speedrunnerWahoo"].push_back("assets/gfx/speedrunnerWahoo.png");
+
+	spriteFiles["snow"].push_back("assets/gfx/snow.png");
+
+	// Invisibles Projectiles (these ones are invisible because they are included in the ennemies animations
+	spriteFiles["SSTierMKHiyayaAOE"].push_back("assets/gfx/SSTierMKHiyayaAOE.png");
+	spriteFiles["kingDDDDownB"].push_back("assets/gfx/kingDDDDownB.png");
+	spriteFiles["kingDDDUpAir"].push_back("assets/gfx/kingDDDUpAir.png");
 }
 
 void cDynamicProjectile::UpdateTrajectory(float fElapsedTime)

@@ -10,7 +10,7 @@ class cLevelStart
 public:
 	cLevelStart(olc::PixelGameEngine* gfx, olc::Sprite* background, cAnimator* anim);
 
-	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime);
+	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime, olc::Sprite* playerSprite, olc::Decal* playerDecal);
 
 private:
 	static cAnimator* animPlayer;

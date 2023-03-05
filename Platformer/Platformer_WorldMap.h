@@ -11,7 +11,7 @@ class cWorldMap
 public:
 	cWorldMap(olc::PixelGameEngine* gfx, olc::Sprite* background, olc::Sprite* lock, cAnimator* anim);
 
-	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller);
+	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime, ControllerManager* controller, olc::Sprite* playerSprite, olc::Decal* playerDecal);
 	int GetSelectedLevel();
 	void SetUnlockedLevel(int unlockedLevels);
 

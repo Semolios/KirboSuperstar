@@ -10,11 +10,11 @@ class cHUD
 public:
 	cHUD();
 
-	void HealthBar(olc::PixelGameEngine* gfx, olc::Sprite* healthBar);
-	void HealthPoints(olc::PixelGameEngine* gfx, olc::Sprite* healthPoint, int health);
-	void BossHealthBar(olc::PixelGameEngine* gfx, olc::Sprite* bossHealthBar, std::vector<cDynamicCreature*> vecEnnemies);
-	void DamageBoost(olc::PixelGameEngine* gfx, olc::Sprite* tileMapSheet);
-	void DefenseBoost(olc::PixelGameEngine* gfx, olc::Sprite* tileMapSheet);
+	void HealthBar(olc::PixelGameEngine* gfx, olc::Decal* healthBar);
+	void HealthPoints(olc::PixelGameEngine* gfx, olc::Decal* healthPoint, int health);
+	void BossHealthBar(olc::PixelGameEngine* gfx, olc::Decal* bossHealthBar, std::vector<cDynamicCreature*> vecEnnemies);
+	void DamageBoost(olc::PixelGameEngine* gfx, olc::Decal* tileMapSheet);
+	void DefenseBoost(olc::PixelGameEngine* gfx, olc::Decal* tileMapSheet);
 
 private:
 	int nFirstHealthPointPosX = 13;

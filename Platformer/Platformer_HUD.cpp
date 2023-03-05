@@ -4,24 +4,23 @@ cHUD::cHUD()
 {
 }
 
-void cHUD::HealthBar(olc::PixelGameEngine* gfx, olc::Sprite* healthBar)
+void cHUD::HealthBar(olc::PixelGameEngine* gfx, olc::Decal* healthBar)
 {
-	gfx->SetPixelMode(olc::Pixel::ALPHA);
-	gfx->DrawSprite(0, 0, healthBar);
-	gfx->SetPixelMode(olc::Pixel::NORMAL);
+    gfx->DrawDecal({ 0, 0 }, healthBar);
 }
 
-void cHUD::HealthPoints(olc::PixelGameEngine* gfx, olc::Sprite* healthPoint, int health)
+void cHUD::HealthPoints(olc::PixelGameEngine* gfx, olc::Decal* healthPoint, int health)
 {
 	for (int i = 0; i < health; i++)
 	{
-		gfx->SetPixelMode(olc::Pixel::ALPHA);
-		gfx->DrawSprite(nFirstHealthPointPosX + i * (healthPoint->width + 1), nHealthPointPosY, healthPoint);
-		gfx->SetPixelMode(olc::Pixel::NORMAL);
+		olc::vf2d pos;
+		pos.x = nFirstHealthPointPosX + i * (healthPoint->sprite->width + 1);
+		pos.y = nHealthPointPosY;
+		gfx->DrawDecal(pos, healthPoint);
 	}
 }
 
-void cHUD::BossHealthBar(olc::PixelGameEngine* gfx, olc::Sprite* bossHealthBar, std::vector<cDynamicCreature*> vecEnnemies)
+void cHUD::BossHealthBar(olc::PixelGameEngine* gfx, olc::Decal* bossHealthBar, std::vector<cDynamicCreature*> vecEnnemies)
 {
 	// Health points of All ennemies in the arena
 	int nBossHP = 0;
@@ -31,24 +30,32 @@ void cHUD::BossHealthBar(olc::PixelGameEngine* gfx, olc::Sprite* bossHealthBar, 
 	}
 
 	// Health
-	gfx->FillRect(nBossHealthPosX + (nBossMaxHealth - nBossHP), nBossHealthPosY, nBossHP, nBossHealthHeight, olc::RED);
+    olc::vf2d pos;
+    pos.x = nBossHealthPosX + (nBossMaxHealth - nBossHP);
+    pos.y = nBossHealthPosY;
+	olc::vf2d size;
+	size.x = nBossHP;
+	size.y = nBossHealthHeight;
+	gfx->FillRectDecal(pos, size, olc::RED);
 
 	// Health bar
-	gfx->SetPixelMode(olc::Pixel::ALPHA);
-	gfx->DrawSprite(nBossHealthBarPosX, nBossHealthBarPosY, bossHealthBar);
-	gfx->SetPixelMode(olc::Pixel::NORMAL);
+	pos.x = nBossHealthBarPosX;
+	pos.y = nBossHealthBarPosY;
+	gfx->DrawDecal(pos, bossHealthBar);
 }
 
-void cHUD::DamageBoost(olc::PixelGameEngine* gfx, olc::Sprite* tileMapSheet)
+void cHUD::DamageBoost(olc::PixelGameEngine* gfx, olc::Decal* tileMapSheet)
 {
-	gfx->SetPixelMode(olc::Pixel::ALPHA);
-	gfx->DrawPartialSprite(nBuffsPosX, 0, tileMapSheet, 0 * nTileWidth, 1 * nTileHeight, nTileWidth, nTileHeight);
-	gfx->SetPixelMode(olc::Pixel::NORMAL);
+	olc::vf2d pos; pos.x = nBuffsPosX; pos.y = 0;
+	olc::vf2d sourcePos; sourcePos.x = 0 * nTileWidth; sourcePos.y = 1 * nTileHeight;
+	olc::vf2d sourceSize; sourceSize.x = nTileWidth; sourceSize.y = nTileHeight;
+	gfx->DrawPartialDecal(pos, tileMapSheet, sourcePos, sourceSize);
 }
 
-void cHUD::DefenseBoost(olc::PixelGameEngine* gfx, olc::Sprite* tileMapSheet)
+void cHUD::DefenseBoost(olc::PixelGameEngine* gfx, olc::Decal* tileMapSheet)
 {
-	gfx->SetPixelMode(olc::Pixel::ALPHA);
-	gfx->DrawPartialSprite(nBuffsPosX + nTileWidth, 0, tileMapSheet, 1 * nTileWidth, 1 * nTileHeight, nTileWidth, nTileHeight);
-	gfx->SetPixelMode(olc::Pixel::NORMAL);
+    olc::vf2d pos; pos.x = nBuffsPosX + nTileWidth; pos.y = 0;
+	olc::vf2d sourcePos; sourcePos.x = 1 * nTileWidth; sourcePos.y = 1 * nTileHeight;
+	olc::vf2d sourceSize; sourceSize.x = nTileWidth; sourceSize.y = nTileHeight;
+	gfx->DrawPartialDecal(pos, tileMapSheet, sourcePos, sourceSize);
 }

@@ -8,7 +8,7 @@
 class cDynamicProjectileBoomerang : public cDynamicProjectile
 {
 public:
-	cDynamicProjectileBoomerang(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, int damage, bool solidVSMap, bool oneHit, int corner, bool scenery);
+	cDynamicProjectileBoomerang(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, int damage, bool solidVSMap, bool oneHit, int corner, bool scenery, std::string spriteName);
 	~cDynamicProjectileBoomerang();
 
 	void UpdateTrajectory(float fElapsedTime) override;

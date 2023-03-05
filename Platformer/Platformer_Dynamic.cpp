@@ -9,6 +9,8 @@ cDynamic::cDynamic(std::string n)
 cDynamic::~cDynamic()
 {
 	delete hitbox;
+	delete dynDecal;
+	delete dynSprite;
 }
 
 void cDynamic::SetPosition(float x, float y)

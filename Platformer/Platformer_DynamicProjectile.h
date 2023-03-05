@@ -11,7 +11,7 @@ class OneLoneCoder_Platformer;
 class cDynamicProjectile : public cDynamic
 {
 public:
-	cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner = 0, bool breackableAgainstTiles = true, float drag = -3.0f, bool bouncy = false, std::string bounceSound = "", bool scenery = false);
+	cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, std::string spriteName, int corner = 0, bool breackableAgainstTiles = true, float drag = -3.0f, bool bouncy = false, std::string bounceSound = "", bool scenery = false);
 	virtual ~cDynamicProjectile();
 
 	static OneLoneCoder_Platformer* engine;
@@ -42,6 +42,7 @@ public:
 	bool IsScenery();
 	float GetNormalizedW();
 	float GetNormalizedH();
+	void FillSpriteFilesList();
 
 	virtual void UpdateTrajectory(float fElapsedTime);
 
@@ -50,6 +51,8 @@ protected:
 
 	std::vector<olc::Sprite*> mapStates;
 	std::vector<olc::vf2d> crossedTiles;
+	std::map<std::string, std::vector<std::string>> spriteFiles;
+	std::string projectileName;
 	std::string soundEffect;
 	std::string bounceSoundEffect;
 	float fDuration;
