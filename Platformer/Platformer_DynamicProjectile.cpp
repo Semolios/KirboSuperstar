@@ -3,10 +3,10 @@
 
 OneLoneCoder_Platformer* cDynamicProjectile::engine = nullptr;
 
-cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Sprite*> map, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, std::string spriteName, int corner, bool breackableAgainstTiles, float drag, bool bouncy, std::string bounceSound, bool scenery) : cDynamic("projectile")
+cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::vector<olc::Decal*> map, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, std::string spriteName, int corner, bool breackableAgainstTiles, float drag, bool bouncy, std::string bounceSound, bool scenery) : cDynamic("projectile")
 {
-	fDynWidth = map[0]->width;
-	fDynHeight = map[0]->height;
+	fDynWidth = map[0]->sprite->width;
+	fDynHeight = map[0]->sprite->height;
 	fDuration = duration;
 	px = ox;
 	py = oy;
@@ -28,33 +28,26 @@ cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float v
 	bBouncy = bouncy;
 	bounceSoundEffect = bounceSound;
 	bScenery = scenery;
-	projectileName = spriteName;
-	FillSpriteFilesList();
-	dynSprite = new olc::Sprite();
-	dynSprite->LoadFromFile(spriteFiles[projectileName][0]);
-	dynDecal = new olc::Decal(dynSprite);
 }
 
 cDynamicProjectile::~cDynamicProjectile()
 {
 	delete hitbox;
-	delete dynDecal;
-	delete dynSprite;
 }
 
 void cDynamicProjectile::DrawSelf(float ox, float oy)
 {
 	// check from which corner we draw the sprite
-	float sprPosX = (nCornerSpr == 0 || nCornerSpr == 3) ? 0.0f : mapStates[nCurrentFrame]->width;
-	float sprPosY = (nCornerSpr == 0 || nCornerSpr == 1) ? 0.0f : -mapStates[nCurrentFrame]->height;
+	float sprPosX = (nCornerSpr == 0 || nCornerSpr == 3) ? 0.0f : mapStates[nCurrentFrame]->sprite->width;
+	float sprPosY = (nCornerSpr == 0 || nCornerSpr == 1) ? 0.0f : -mapStates[nCurrentFrame]->sprite->height;
 
 	olc::vf2d pos;
 	pos.x = (px - ox + ((fDynWidth  / 64.0f) / 2.0f)) * 64.0f + sprPosX;
 	pos.y = (py - oy + ((fDynHeight / 64.0f) / 2.0f)) * 64.0f + sprPosY;
 	olc::vf2d center;
-	center.x = dynSprite->width  / 2.0f;
-	center.y = dynSprite->height / 2.0f;
-	engine->DrawRotatedDecal(pos, dynDecal, atan2f(vy, vx), center);
+	center.x = mapStates[nCurrentFrame]->sprite->width  / 2.0f;
+	center.y = mapStates[nCurrentFrame]->sprite->height / 2.0f;
+	engine->DrawRotatedDecal(pos, mapStates[nCurrentFrame], atan2f(vy, vx), center);
 }
 
 void cDynamicProjectile::Update(float fElapsedTime, float playerX, float playerY)
@@ -67,10 +60,8 @@ void cDynamicProjectile::Update(float fElapsedTime, float playerX, float playerY
 		if (nCurrentFrame >= mapStates.size())
 			nCurrentFrame = 0;
 
-		fDynWidth = mapStates[nCurrentFrame]->width;
-		fDynHeight = mapStates[nCurrentFrame]->height;
-		dynSprite->LoadFromFile(spriteFiles[projectileName][nCurrentFrame]);
-		dynDecal->Update();
+		fDynWidth = mapStates[nCurrentFrame]->sprite->width;
+		fDynHeight = mapStates[nCurrentFrame]->sprite->height;
 	}
 
 	fDuration -= fElapsedTime;
@@ -288,6 +279,7 @@ void cDynamicProjectile::PlaySoundEffect()
 std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProjectilesSprites()
 {
 	std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles;
+
 	mapProjectiles["jesuscross"].push_back(new olc::Sprite("assets/gfx/jesuscross.png"));
 
 	mapProjectiles["slapAOE"].push_back(new olc::Sprite("assets/gfx/slapAOE.png"));
@@ -456,6 +448,178 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProject
 	return mapProjectiles;
 }
 
+std::map<std::string, std::vector<olc::Decal*>> cDynamicProjectile::LoadProjectilesDecals(std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles)
+{
+	std::map<std::string, std::vector<olc::Decal*>> mapDecProjectiles;
+
+	mapDecProjectiles["jesuscross"].push_back(new olc::Decal(mapProjectiles["jesuscross"][0]));
+
+	mapDecProjectiles["slapAOE"].push_back(new olc::Decal(mapProjectiles["slapAOE"][0]));
+
+	mapDecProjectiles["kirboFart"].push_back(new olc::Decal(mapProjectiles["kirboFart"][0]));
+	mapDecProjectiles["kirboFart"].push_back(new olc::Decal(mapProjectiles["kirboFart"][1]));
+	mapDecProjectiles["kirboFart"].push_back(new olc::Decal(mapProjectiles["kirboFart"][2]));
+	mapDecProjectiles["kirboFart"].push_back(new olc::Decal(mapProjectiles["kirboFart"][3]));
+	mapDecProjectiles["kirboFart"].push_back(new olc::Decal(mapProjectiles["kirboFart"][4]));
+
+	mapDecProjectiles["swordDownAOE"].push_back(new olc::Decal(mapProjectiles["swordDownAOE"][0]));
+	mapDecProjectiles["swordDownAOE"].push_back(new olc::Decal(mapProjectiles["swordDownAOE"][1]));
+	mapDecProjectiles["swordDownAOE"].push_back(new olc::Decal(mapProjectiles["swordDownAOE"][2]));
+
+	mapDecProjectiles["swordUpAOE"].push_back(new olc::Decal(mapProjectiles["swordUpAOE"][0]));
+
+	mapDecProjectiles["explosion"].push_back(new olc::Decal(mapProjectiles["explosion"][0]));
+	mapDecProjectiles["explosion"].push_back(new olc::Decal(mapProjectiles["explosion"][1]));
+	mapDecProjectiles["explosion"].push_back(new olc::Decal(mapProjectiles["explosion"][2]));
+	mapDecProjectiles["explosion"].push_back(new olc::Decal(mapProjectiles["explosion"][3]));
+	mapDecProjectiles["explosion"].push_back(new olc::Decal(mapProjectiles["explosion"][4]));
+	mapDecProjectiles["explosion"].push_back(new olc::Decal(mapProjectiles["explosion"][5]));
+	mapDecProjectiles["explosion"].push_back(new olc::Decal(mapProjectiles["explosion"][6]));
+	mapDecProjectiles["explosion"].push_back(new olc::Decal(mapProjectiles["explosion"][7]));
+	mapDecProjectiles["explosion"].push_back(new olc::Decal(mapProjectiles["explosion"][8]));
+	mapDecProjectiles["explosion"].push_back(new olc::Decal(mapProjectiles["explosion"][9]));
+	mapDecProjectiles["explosion"].push_back(new olc::Decal(mapProjectiles["explosion"][10]));
+	mapDecProjectiles["explosion"].push_back(new olc::Decal(mapProjectiles["explosion"][11]));
+	mapDecProjectiles["explosion"].push_back(new olc::Decal(mapProjectiles["explosion"][12]));
+	mapDecProjectiles["explosion"].push_back(new olc::Decal(mapProjectiles["explosion"][13]));
+	mapDecProjectiles["explosion"].push_back(new olc::Decal(mapProjectiles["explosion"][14]));
+	mapDecProjectiles["explosion"].push_back(new olc::Decal(mapProjectiles["explosion"][15]));
+
+	mapDecProjectiles["movingGround"].push_back(new olc::Decal(mapProjectiles["movingGround"][0]));
+	mapDecProjectiles["movingGround"].push_back(new olc::Decal(mapProjectiles["movingGround"][1]));
+	mapDecProjectiles["movingGround"].push_back(new olc::Decal(mapProjectiles["movingGround"][2]));
+	mapDecProjectiles["movingGround"].push_back(new olc::Decal(mapProjectiles["movingGround"][3]));
+	mapDecProjectiles["movingGround"].push_back(new olc::Decal(mapProjectiles["movingGround"][4]));
+
+	mapDecProjectiles["root"].push_back(new olc::Decal(mapProjectiles["root"][0]));
+	mapDecProjectiles["root"].push_back(new olc::Decal(mapProjectiles["root"][2]));
+	mapDecProjectiles["root"].push_back(new olc::Decal(mapProjectiles["root"][3]));
+	mapDecProjectiles["root"].push_back(new olc::Decal(mapProjectiles["root"][4]));
+	mapDecProjectiles["root"].push_back(new olc::Decal(mapProjectiles["root"][5]));
+	mapDecProjectiles["root"].push_back(new olc::Decal(mapProjectiles["root"][6]));
+	mapDecProjectiles["root"].push_back(new olc::Decal(mapProjectiles["root"][7]));
+	mapDecProjectiles["root"].push_back(new olc::Decal(mapProjectiles["root"][4]));
+	mapDecProjectiles["root"].push_back(new olc::Decal(mapProjectiles["root"][3]));
+	mapDecProjectiles["root"].push_back(new olc::Decal(mapProjectiles["root"][2]));
+	mapDecProjectiles["root"].push_back(new olc::Decal(mapProjectiles["root"][1]));
+	mapDecProjectiles["root"].push_back(new olc::Decal(mapProjectiles["root"][0]));
+
+	mapDecProjectiles["apple"].push_back(new olc::Decal(mapProjectiles["apple"][0]));
+	mapDecProjectiles["apple"].push_back(new olc::Decal(mapProjectiles["apple"][1]));
+	mapDecProjectiles["apple"].push_back(new olc::Decal(mapProjectiles["apple"][2]));
+	mapDecProjectiles["apple"].push_back(new olc::Decal(mapProjectiles["apple"][3]));
+	mapDecProjectiles["apple"].push_back(new olc::Decal(mapProjectiles["apple"][4]));
+	mapDecProjectiles["apple"].push_back(new olc::Decal(mapProjectiles["apple"][5]));
+	mapDecProjectiles["apple"].push_back(new olc::Decal(mapProjectiles["apple"][6]));
+	mapDecProjectiles["apple"].push_back(new olc::Decal(mapProjectiles["apple"][7]));
+
+	mapDecProjectiles["blow"].push_back(new olc::Decal(mapProjectiles["blow"][0]));
+
+	mapDecProjectiles["movingGroundLava"].push_back(new olc::Decal(mapProjectiles["movingGroundLava"][0]));
+	mapDecProjectiles["movingGroundLava"].push_back(new olc::Decal(mapProjectiles["movingGroundLava"][0]));
+	mapDecProjectiles["movingGroundLava"].push_back(new olc::Decal(mapProjectiles["movingGroundLava"][1]));
+	mapDecProjectiles["movingGroundLava"].push_back(new olc::Decal(mapProjectiles["movingGroundLava"][1]));
+
+	mapDecProjectiles["magma"].push_back(new olc::Decal(mapProjectiles["magma"][0]));
+	mapDecProjectiles["magma"].push_back(new olc::Decal(mapProjectiles["magma"][1]));
+	mapDecProjectiles["magma"].push_back(new olc::Decal(mapProjectiles["magma"][2]));
+	mapDecProjectiles["magma"].push_back(new olc::Decal(mapProjectiles["magma"][3]));
+
+	mapDecProjectiles["magmaBoulder"].push_back(new olc::Decal(mapProjectiles["magmaBoulder"][0]));
+
+	mapDecProjectiles["stars"].push_back(new olc::Decal(mapProjectiles["stars"][0]));
+
+	mapDecProjectiles["chargeBeam"].push_back(new olc::Decal(mapProjectiles["chargeBeam"][0]));
+	mapDecProjectiles["chargeBeam"].push_back(new olc::Decal(mapProjectiles["chargeBeam"][1]));
+	mapDecProjectiles["chargeBeam"].push_back(new olc::Decal(mapProjectiles["chargeBeam"][2]));
+	mapDecProjectiles["chargeBeam"].push_back(new olc::Decal(mapProjectiles["chargeBeam"][3]));
+	mapDecProjectiles["chargeBeam"].push_back(new olc::Decal(mapProjectiles["chargeBeam"][4]));
+	mapDecProjectiles["chargeBeam"].push_back(new olc::Decal(mapProjectiles["chargeBeam"][5]));
+	mapDecProjectiles["chargeBeam"].push_back(new olc::Decal(mapProjectiles["chargeBeam"][6]));
+
+	mapDecProjectiles["beam"].push_back(new olc::Decal(mapProjectiles["beam"][0]));
+	mapDecProjectiles["beam"].push_back(new olc::Decal(mapProjectiles["beam"][1]));
+
+	mapDecProjectiles["tinyIceCube"].push_back(new olc::Decal(mapProjectiles["tinyIceCube"][0]));
+	mapDecProjectiles["mediumIceCube"].push_back(new olc::Decal(mapProjectiles["mediumIceCube"][0]));
+	mapDecProjectiles["bigIceCube"].push_back(new olc::Decal(mapProjectiles["bigIceCube"][0]));
+	mapDecProjectiles["hugeIceCubeLeft"].push_back(new olc::Decal(mapProjectiles["hugeIceCubeLeft"][0]));
+	mapDecProjectiles["hugeIceCubeRight"].push_back(new olc::Decal(mapProjectiles["hugeIceCubeRight"][0]));
+
+	mapDecProjectiles["frostyWind"].push_back(new olc::Decal(mapProjectiles["frostyWind"][0]));
+	mapDecProjectiles["frostyWind"].push_back(new olc::Decal(mapProjectiles["frostyWind"][1]));
+	mapDecProjectiles["frostyWind"].push_back(new olc::Decal(mapProjectiles["frostyWind"][2]));
+	mapDecProjectiles["frostyWind"].push_back(new olc::Decal(mapProjectiles["frostyWind"][3]));
+
+	mapDecProjectiles["thunderShot"].push_back(new olc::Decal(mapProjectiles["thunderShot"][0]));
+	mapDecProjectiles["thunderShot"].push_back(new olc::Decal(mapProjectiles["thunderShot"][1]));
+
+	mapDecProjectiles["thunderUnder"].push_back(new olc::Decal(mapProjectiles["thunderUnder"][0]));
+
+	mapDecProjectiles["aim"].push_back(new olc::Decal(mapProjectiles["aim"][0]));
+
+	mapDecProjectiles["lightning"].push_back(new olc::Decal(mapProjectiles["lightning"][0]));
+
+	mapDecProjectiles["chargeLightning"].push_back(new olc::Decal(mapProjectiles["chargeLightning"][0]));
+	mapDecProjectiles["chargeLightning"].push_back(new olc::Decal(mapProjectiles["chargeLightning"][1]));
+	mapDecProjectiles["chargeLightning"].push_back(new olc::Decal(mapProjectiles["chargeLightning"][2]));
+	mapDecProjectiles["chargeLightning"].push_back(new olc::Decal(mapProjectiles["chargeLightning"][3]));
+
+	mapDecProjectiles["lightningAround"].push_back(new olc::Decal(mapProjectiles["lightningAround"][0]));
+	mapDecProjectiles["lightningAround"].push_back(new olc::Decal(mapProjectiles["lightningAround"][1]));
+	mapDecProjectiles["lightningAround"].push_back(new olc::Decal(mapProjectiles["lightningAround"][2]));
+
+	mapDecProjectiles["swordAttack"].push_back(new olc::Decal(mapProjectiles["swordAttack"][0]));
+
+	mapDecProjectiles["tornado"].push_back(new olc::Decal(mapProjectiles["tornado"][0]));
+	mapDecProjectiles["tornado"].push_back(new olc::Decal(mapProjectiles["tornado"][1]));
+	mapDecProjectiles["tornado"].push_back(new olc::Decal(mapProjectiles["tornado"][2]));
+	mapDecProjectiles["tornado"].push_back(new olc::Decal(mapProjectiles["tornado"][3]));
+	mapDecProjectiles["tornado"].push_back(new olc::Decal(mapProjectiles["tornado"][4]));
+
+	mapDecProjectiles["SSTierMKTPAttack"].push_back(new olc::Decal(mapProjectiles["SSTierMKTPAttack"][0]));
+
+	mapDecProjectiles["downTilt"].push_back(new olc::Decal(mapProjectiles["downTilt"][0]));
+
+	mapDecProjectiles["kingDDDUpSmash"].push_back(new olc::Decal(mapProjectiles["kingDDDUpSmash"][0]));
+	mapDecProjectiles["kingDDDLeftSideSmash"].push_back(new olc::Decal(mapProjectiles["kingDDDLeftSideSmash"][0]));
+	mapDecProjectiles["kingDDDRightSideSmash"].push_back(new olc::Decal(mapProjectiles["kingDDDRightSideSmash"][0]));
+	mapDecProjectiles["kingDDDDownSmash"].push_back(new olc::Decal(mapProjectiles["kingDDDDownSmash"][0]));
+	mapDecProjectiles["kingDDDForwardAir"].push_back(new olc::Decal(mapProjectiles["kingDDDForwardAir"][0]));
+	mapDecProjectiles["kingDDDBackwardAir"].push_back(new olc::Decal(mapProjectiles["kingDDDBackwardAir"][0]));
+	mapDecProjectiles["kingDDDDownAir"].push_back(new olc::Decal(mapProjectiles["kingDDDDownAir"][0]));
+
+	mapDecProjectiles["spike"].push_back(new olc::Decal(mapProjectiles["spike"][0]));
+	mapDecProjectiles["spike"].push_back(new olc::Decal(mapProjectiles["spike"][1]));
+	mapDecProjectiles["spike"].push_back(new olc::Decal(mapProjectiles["spike"][2]));
+	mapDecProjectiles["spike"].push_back(new olc::Decal(mapProjectiles["spike"][3]));
+	mapDecProjectiles["spike"].push_back(new olc::Decal(mapProjectiles["spike"][4]));
+	mapDecProjectiles["spike"].push_back(new olc::Decal(mapProjectiles["spike"][5]));
+	mapDecProjectiles["spike"].push_back(new olc::Decal(mapProjectiles["spike"][6]));
+	mapDecProjectiles["spike"].push_back(new olc::Decal(mapProjectiles["spike"][7]));
+	mapDecProjectiles["spike"].push_back(new olc::Decal(mapProjectiles["spike"][8]));
+	mapDecProjectiles["spike"].push_back(new olc::Decal(mapProjectiles["spike"][9]));
+
+	mapDecProjectiles["doorDebris1"].push_back(new olc::Decal(mapProjectiles["doorDebris1"][0]));
+
+	mapDecProjectiles["doorDebris2"].push_back(new olc::Decal(mapProjectiles["doorDebris2"][0]));
+
+	mapDecProjectiles["doorDebris3"].push_back(new olc::Decal(mapProjectiles["doorDebris3"][0]));
+
+	mapDecProjectiles["halberdCloud"].push_back(new olc::Decal(mapProjectiles["halberdCloud"][0]));
+
+	mapDecProjectiles["speedrunnerWahoo"].push_back(new olc::Decal(mapProjectiles["speedrunnerWahoo"][0]));
+
+	mapDecProjectiles["snow"].push_back(new olc::Decal(mapProjectiles["snow"][0]));
+
+	// Invisibles Projectiles (these ones are invisible because they are included in the ennemies animations
+	mapDecProjectiles["SSTierMKHiyayaAOE"].push_back(new olc::Decal(mapProjectiles["SSTierMKHiyayaAOE"][0]));
+	mapDecProjectiles["kingDDDDownB"].push_back(new olc::Decal(mapProjectiles["kingDDDDownB"][0]));
+	mapDecProjectiles["kingDDDUpAir"].push_back(new olc::Decal(mapProjectiles["kingDDDUpAir"][0]));
+
+	return mapDecProjectiles;
+}
+
 bool cDynamicProjectile::IsOneHit()
 {
 	return bOneHit;
@@ -514,174 +678,6 @@ float cDynamicProjectile::GetNormalizedW()
 float cDynamicProjectile::GetNormalizedH()
 {
 	return fDynHeight / engine->GetTileHeight();
-}
-
-void cDynamicProjectile::FillSpriteFilesList()
-{
-	spriteFiles["jesuscross"].push_back("assets/gfx/jesuscross.png");
-
-	spriteFiles["slapAOE"].push_back("assets/gfx/slapAOE.png");
-
-	spriteFiles["kirboFart"].push_back("assets/gfx/kirboFart00.png");
-	spriteFiles["kirboFart"].push_back("assets/gfx/kirboFart01.png");
-	spriteFiles["kirboFart"].push_back("assets/gfx/kirboFart02.png");
-	spriteFiles["kirboFart"].push_back("assets/gfx/kirboFart03.png");
-	spriteFiles["kirboFart"].push_back("assets/gfx/kirboFart04.png");
-
-	spriteFiles["swordDownAOE"].push_back("assets/gfx/swordDownAOE00.png");
-	spriteFiles["swordDownAOE"].push_back("assets/gfx/swordDownAOE01.png");
-	spriteFiles["swordDownAOE"].push_back("assets/gfx/swordDownAOE02.png");
-
-	spriteFiles["swordUpAOE"].push_back("assets/gfx/swordUpAOE.png");
-
-	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion00.png");
-	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion01.png");
-	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion02.png");
-	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion03.png");
-	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion04.png");
-	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion05.png");
-	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion06.png");
-	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion07.png");
-	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion08.png");
-	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion09.png");
-	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion10.png");
-	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion11.png");
-	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion12.png");
-	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion13.png");
-	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion14.png");
-	spriteFiles["explosion"].push_back("assets/gfx/bossExplosion15.png");
-
-	spriteFiles["movingGround"].push_back("assets/gfx/movingGround00.png");
-	spriteFiles["movingGround"].push_back("assets/gfx/movingGround01.png");
-	spriteFiles["movingGround"].push_back("assets/gfx/movingGround02.png");
-	spriteFiles["movingGround"].push_back("assets/gfx/movingGround03.png");
-	spriteFiles["movingGround"].push_back("assets/gfx/movingGround04.png");
-
-	spriteFiles["root"].push_back("assets/gfx/root00.png");
-	spriteFiles["root"].push_back("assets/gfx/root02.png");
-	spriteFiles["root"].push_back("assets/gfx/root03.png");
-	spriteFiles["root"].push_back("assets/gfx/root04.png");
-	spriteFiles["root"].push_back("assets/gfx/root05.png");
-	spriteFiles["root"].push_back("assets/gfx/root06.png");
-	spriteFiles["root"].push_back("assets/gfx/root07.png");
-	spriteFiles["root"].push_back("assets/gfx/root04.png");
-	spriteFiles["root"].push_back("assets/gfx/root03.png");
-	spriteFiles["root"].push_back("assets/gfx/root02.png");
-	spriteFiles["root"].push_back("assets/gfx/root01.png");
-	spriteFiles["root"].push_back("assets/gfx/root00.png");
-
-	spriteFiles["apple"].push_back("assets/gfx/apple00.png");
-	spriteFiles["apple"].push_back("assets/gfx/apple01.png");
-	spriteFiles["apple"].push_back("assets/gfx/apple02.png");
-	spriteFiles["apple"].push_back("assets/gfx/apple03.png");
-	spriteFiles["apple"].push_back("assets/gfx/apple04.png");
-	spriteFiles["apple"].push_back("assets/gfx/apple05.png");
-	spriteFiles["apple"].push_back("assets/gfx/apple06.png");
-	spriteFiles["apple"].push_back("assets/gfx/apple07.png");
-
-	spriteFiles["blow"].push_back("assets/gfx/blow.png");
-
-	spriteFiles["movingGroundLava"].push_back("assets/gfx/movingGroundLava00.png");
-	spriteFiles["movingGroundLava"].push_back("assets/gfx/movingGroundLava00.png");
-	spriteFiles["movingGroundLava"].push_back("assets/gfx/movingGroundLava01.png");
-	spriteFiles["movingGroundLava"].push_back("assets/gfx/movingGroundLava01.png");
-
-	spriteFiles["magma"].push_back("assets/gfx/magma00.png");
-	spriteFiles["magma"].push_back("assets/gfx/magma01.png");
-	spriteFiles["magma"].push_back("assets/gfx/magma02.png");
-	spriteFiles["magma"].push_back("assets/gfx/magma03.png");
-
-	spriteFiles["magmaBoulder"].push_back("assets/gfx/magmaBoulder.png");
-
-	spriteFiles["stars"].push_back("assets/gfx/stars.png");
-
-	spriteFiles["chargeBeam"].push_back("assets/gfx/chargeBeam00.png");
-	spriteFiles["chargeBeam"].push_back("assets/gfx/chargeBeam01.png");
-	spriteFiles["chargeBeam"].push_back("assets/gfx/chargeBeam02.png");
-	spriteFiles["chargeBeam"].push_back("assets/gfx/chargeBeam03.png");
-	spriteFiles["chargeBeam"].push_back("assets/gfx/chargeBeam04.png");
-	spriteFiles["chargeBeam"].push_back("assets/gfx/chargeBeam05.png");
-	spriteFiles["chargeBeam"].push_back("assets/gfx/chargeBeam06.png");
-
-	spriteFiles["beam"].push_back("assets/gfx/beam00.png");
-	spriteFiles["beam"].push_back("assets/gfx/beam01.png");
-
-	spriteFiles["tinyIceCube"].push_back("assets/gfx/tinyIceCube.png");
-	spriteFiles["mediumIceCube"].push_back("assets/gfx/mediumIceCube.png");
-	spriteFiles["bigIceCube"].push_back("assets/gfx/bigIceCube.png");
-	spriteFiles["hugeIceCubeLeft"].push_back("assets/gfx/hugeIceCubeLeft.png");
-	spriteFiles["hugeIceCubeRight"].push_back("assets/gfx/hugeIceCubeRight.png");
-
-	spriteFiles["frostyWind"].push_back("assets/gfx/frostyWind00.png");
-	spriteFiles["frostyWind"].push_back("assets/gfx/frostyWind01.png");
-	spriteFiles["frostyWind"].push_back("assets/gfx/frostyWind02.png");
-	spriteFiles["frostyWind"].push_back("assets/gfx/frostyWind03.png");
-
-	spriteFiles["thunderShot"].push_back("assets/gfx/thunderShot00.png");
-	spriteFiles["thunderShot"].push_back("assets/gfx/thunderShot01.png");
-
-	spriteFiles["thunderUnder"].push_back("assets/gfx/thunderUnder.png");
-
-	spriteFiles["aim"].push_back("assets/gfx/aim.png");
-
-	spriteFiles["lightning"].push_back("assets/gfx/lightning.png");
-
-	spriteFiles["chargeLightning"].push_back("assets/gfx/chargeLightning00.png");
-	spriteFiles["chargeLightning"].push_back("assets/gfx/chargeLightning01.png");
-	spriteFiles["chargeLightning"].push_back("assets/gfx/chargeLightning02.png");
-	spriteFiles["chargeLightning"].push_back("assets/gfx/chargeLightning03.png");
-
-	spriteFiles["lightningAround"].push_back("assets/gfx/lightningAround00.png");
-	spriteFiles["lightningAround"].push_back("assets/gfx/lightningAround01.png");
-	spriteFiles["lightningAround"].push_back("assets/gfx/lightningAround02.png");
-
-	spriteFiles["swordAttack"].push_back("assets/gfx/swordAttack.png");
-
-	spriteFiles["tornado"].push_back("assets/gfx/tornado00.png");
-	spriteFiles["tornado"].push_back("assets/gfx/tornado01.png");
-	spriteFiles["tornado"].push_back("assets/gfx/tornado02.png");
-	spriteFiles["tornado"].push_back("assets/gfx/tornado03.png");
-	spriteFiles["tornado"].push_back("assets/gfx/tornado04.png");
-
-	spriteFiles["SSTierMKTPAttack"].push_back("assets/gfx/SSTierMKTPAttack.png");
-
-	spriteFiles["downTilt"].push_back("assets/gfx/downTilt.png");
-
-	spriteFiles["kingDDDUpSmash"].push_back("assets/gfx/kingDDDUpSmash.png");
-	spriteFiles["kingDDDLeftSideSmash"].push_back("assets/gfx/kingDDDLeftSideSmash.png");
-	spriteFiles["kingDDDRightSideSmash"].push_back("assets/gfx/kingDDDRightSideSmash.png");
-	spriteFiles["kingDDDDownSmash"].push_back("assets/gfx/kingDDDDownSmash.png");
-	spriteFiles["kingDDDForwardAir"].push_back("assets/gfx/kingDDDForwardAir.png");
-	spriteFiles["kingDDDBackwardAir"].push_back("assets/gfx/kingDDDBackwardAir.png");
-	spriteFiles["kingDDDDownAir"].push_back("assets/gfx/kingDDDDownAir.png");
-
-	spriteFiles["spike"].push_back("assets/gfx/spike00.png");
-	spriteFiles["spike"].push_back("assets/gfx/spike01.png");
-	spriteFiles["spike"].push_back("assets/gfx/spike02.png");
-	spriteFiles["spike"].push_back("assets/gfx/spike03.png");
-	spriteFiles["spike"].push_back("assets/gfx/spike04.png");
-	spriteFiles["spike"].push_back("assets/gfx/spike05.png");
-	spriteFiles["spike"].push_back("assets/gfx/spike06.png");
-	spriteFiles["spike"].push_back("assets/gfx/spike07.png");
-	spriteFiles["spike"].push_back("assets/gfx/spike08.png");
-	spriteFiles["spike"].push_back("assets/gfx/spike09.png");
-
-	spriteFiles["doorDebris1"].push_back("assets/gfx/doorDebris1.png");
-
-	spriteFiles["doorDebris2"].push_back("assets/gfx/doorDebris2.png");
-
-	spriteFiles["doorDebris3"].push_back("assets/gfx/doorDebris3.png");
-
-	spriteFiles["halberdCloud"].push_back("assets/gfx/halberdCloud.png");
-
-	spriteFiles["speedrunnerWahoo"].push_back("assets/gfx/speedrunnerWahoo.png");
-
-	spriteFiles["snow"].push_back("assets/gfx/snow.png");
-
-	// Invisibles Projectiles (these ones are invisible because they are included in the ennemies animations
-	spriteFiles["SSTierMKHiyayaAOE"].push_back("assets/gfx/SSTierMKHiyayaAOE.png");
-	spriteFiles["kingDDDDownB"].push_back("assets/gfx/kingDDDDownB.png");
-	spriteFiles["kingDDDUpAir"].push_back("assets/gfx/kingDDDUpAir.png");
 }
 
 void cDynamicProjectile::UpdateTrajectory(float fElapsedTime)

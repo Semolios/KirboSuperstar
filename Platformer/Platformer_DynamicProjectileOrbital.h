@@ -8,7 +8,7 @@
 class cDynamicProjectileOrbital : public cDynamicProjectile
 {
 public:
-	cDynamicProjectileOrbital(float ox, float oy, bool bFriend, float duration, std::vector<olc::Sprite*> map, int damage, bool solidVSMap, bool oneHit, int corner, float cx, float cy, float angrot, bool scenery, std::string spriteName);
+	cDynamicProjectileOrbital(float ox, float oy, bool bFriend, float duration, std::vector<olc::Decal*> map, int damage, bool solidVSMap, bool oneHit, int corner, float cx, float cy, float angrot, bool scenery, std::string spriteName);
 	~cDynamicProjectileOrbital();
 
 	void UpdateTrajectory(float fElapsedTime) override;
