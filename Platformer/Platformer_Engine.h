@@ -387,6 +387,7 @@ private:
 	// Projectiles
 	std::vector<cDynamicProjectile*> vecProjectiles;
 	std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles;
+	std::map<std::string, std::vector<olc::Decal*>>  mapDecProjectiles;
 
 	// Moving Platforms
 	std::vector<cDynamicMovingPlatform*> vecPlatforms;

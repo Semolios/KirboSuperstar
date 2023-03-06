@@ -34,9 +34,6 @@ public:
 	cHitbox* GetHitbox();
 
 protected:
-	olc::Sprite* dynSprite;
-	olc::Decal*  dynDecal;
-
 	float fDynWidth;
 	float fDynHeight;
 	float fSpriteW;
