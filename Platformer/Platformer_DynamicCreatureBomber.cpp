@@ -29,7 +29,7 @@ cDynamicCreatureBomber::cDynamicCreatureBomber(cLevel* l) : cDynamicCreature("bo
 cDynamicCreatureBomber::~cDynamicCreatureBomber()
 {
 	delete hitbox;
-	delete sSprite;
+	delete dynSprite;
 	delete level;
 }
 

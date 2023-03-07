@@ -25,7 +25,7 @@ cDynamicCreatureKingDDD::cDynamicCreatureKingDDD(cLevel* l) : cDynamicCreature("
 cDynamicCreatureKingDDD::~cDynamicCreatureKingDDD()
 {
 	delete hitbox;
-	delete sSprite;
+	delete dynSprite;
 	delete level;
 }
 

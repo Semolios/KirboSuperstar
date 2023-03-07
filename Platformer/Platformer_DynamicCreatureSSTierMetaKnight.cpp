@@ -25,7 +25,7 @@ cDynamicCreatureSSTierMetaKnight::cDynamicCreatureSSTierMetaKnight(cLevel* l) : 
 cDynamicCreatureSSTierMetaKnight::~cDynamicCreatureSSTierMetaKnight()
 {
 	delete hitbox;
-	delete sSprite;
+	delete dynSprite;
 	delete level;
 }
 

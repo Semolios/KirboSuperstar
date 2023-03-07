@@ -25,7 +25,7 @@ cDynamicCreatureKracko::cDynamicCreatureKracko(cLevel* l) : cDynamicCreature("kr
 cDynamicCreatureKracko::~cDynamicCreatureKracko()
 {
 	delete hitbox;
-	delete sSprite;
+	delete dynSprite;
 	delete level;
 }
 

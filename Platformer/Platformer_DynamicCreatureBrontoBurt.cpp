@@ -25,7 +25,7 @@ cDynamicCreatureBrontoBurt::cDynamicCreatureBrontoBurt(cLevel* l, float oscillat
 cDynamicCreatureBrontoBurt::~cDynamicCreatureBrontoBurt()
 {
 	delete hitbox;
-	delete sSprite;
+	delete dynSprite;
 	delete level;
 }
 

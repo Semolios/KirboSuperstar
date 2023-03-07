@@ -52,7 +52,8 @@ private:
 	const float cfExplosionDuration = 0.528f;
 
 protected:
-	olc::Sprite* sSprite;
+	olc::Sprite* dynSprite;
+	olc::Decal*  dynDecal;
 	cLevel* level = nullptr; // The Dynamic must be aware of the level to interact with (i.e. turn when encounter a wall or a hole)
 	float fTimer;
 	float fInitSpeed;

@@ -25,7 +25,7 @@ cDynamicCreatureFrosty::cDynamicCreatureFrosty(cLevel* l) : cDynamicCreature("fr
 cDynamicCreatureFrosty::~cDynamicCreatureFrosty()
 {
 	delete hitbox;
-	delete sSprite;
+	delete dynSprite;
 	delete level;
 }
 

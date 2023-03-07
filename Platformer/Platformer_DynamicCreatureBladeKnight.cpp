@@ -25,7 +25,7 @@ cDynamicCreatureBladeKnight::cDynamicCreatureBladeKnight(cLevel* l) : cDynamicCr
 cDynamicCreatureBladeKnight::~cDynamicCreatureBladeKnight()
 {
 	delete hitbox;
-	delete sSprite;
+	delete dynSprite;
 	delete level;
 }
 
