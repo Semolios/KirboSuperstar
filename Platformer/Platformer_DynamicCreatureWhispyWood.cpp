@@ -25,7 +25,7 @@ cDynamicCreatureWhispyWood::cDynamicCreatureWhispyWood(cLevel* l) : cDynamicCrea
 cDynamicCreatureWhispyWood::~cDynamicCreatureWhispyWood()
 {
 	delete hitbox;
-	delete sSprite;
+	delete dynSprite;
 	delete level;
 }
 

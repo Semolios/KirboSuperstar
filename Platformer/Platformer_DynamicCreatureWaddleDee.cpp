@@ -27,7 +27,7 @@ cDynamicCreatureWaddleDee::cDynamicCreatureWaddleDee(cLevel* l) : cDynamicCreatu
 cDynamicCreatureWaddleDee::~cDynamicCreatureWaddleDee()
 {
 	delete hitbox;
-	delete sSprite;
+	delete dynSprite;
 	delete level;
 }
 

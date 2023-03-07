@@ -5,7 +5,8 @@ OneLoneCoder_Platformer* cDynamicCreature::engine = nullptr;
 
 cDynamicCreature::cDynamicCreature(std::string n, olc::Sprite* sprite, int framesPerSecond) : cDynamic(n)
 {
-    sSprite = sprite;
+    dynSprite = sprite;
+    dynDecal = new olc::Decal(dynSprite);
     nHealth = 10;
     nHealthMax = 10;
     nGraphicState = STANDING;
@@ -18,7 +19,8 @@ cDynamicCreature::cDynamicCreature(std::string n, olc::Sprite* sprite, int frame
 cDynamicCreature::~cDynamicCreature()
 {
     delete hitbox;
-    delete sSprite;
+    delete dynSprite;
+    delete dynDecal;
     delete level;
 }
 
@@ -27,9 +29,19 @@ void cDynamicCreature::DrawSelf(float ox, float oy)
     int nSheetOffsetX = nGraphicCounter * fSpriteW;					// Same State of a sprite are stored in one line
     int nSheetOffsetY = (2 * nGraphicState + nFaceDir) * fSpriteH;	// 0 = Left Idle, 1 = Right Idle, 2 = Left Walking, 3 = Right Walking, 4 = Left Damaged, 5 = Right Damaged ...
 
-    engine->SetPixelMode(olc::Pixel::ALPHA);
-    engine->DrawPartialSprite((px - ox) * 64.0f + fSpriteOffsetX, (py - oy) * 64.0f + fSpriteOffsetY, sSprite, nSheetOffsetX, nSheetOffsetY, fSpriteW, fSpriteH);
-    engine->SetPixelMode(olc::Pixel::NORMAL);
+    olc::vf2d pos;
+    pos.x = (px - ox) * 64.0f + fSpriteOffsetX;
+    pos.y = (py - oy) * 64.0f + fSpriteOffsetY;
+
+    olc::vf2d sourcePos;
+    sourcePos.x = nSheetOffsetX;
+    sourcePos.y = nSheetOffsetY;
+    
+    olc::vf2d sourceSize;
+    sourceSize.x = fSpriteW;
+    sourceSize.y = fSpriteH;
+
+    engine->DrawPartialDecal(pos, dynDecal, sourcePos, sourceSize);
 }
 
 void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY)

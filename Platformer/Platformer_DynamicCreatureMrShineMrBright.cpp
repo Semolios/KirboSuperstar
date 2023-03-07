@@ -25,7 +25,7 @@ cDynamicCreatureMrShineMrBright::cDynamicCreatureMrShineMrBright(cLevel* l) : cD
 cDynamicCreatureMrShineMrBright::~cDynamicCreatureMrShineMrBright()
 {
 	delete hitbox;
-	delete sSprite;
+	delete dynSprite;
 	delete level;
 }
 

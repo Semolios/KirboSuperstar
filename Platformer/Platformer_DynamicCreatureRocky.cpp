@@ -27,7 +27,7 @@ cDynamicCreatureRocky::cDynamicCreatureRocky(cLevel* l) : cDynamicCreature("rock
 cDynamicCreatureRocky::~cDynamicCreatureRocky()
 {
 	delete hitbox;
-	delete sSprite;
+	delete dynSprite;
 	delete level;
 }
 
