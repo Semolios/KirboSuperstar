@@ -69,10 +69,10 @@ public:
 	std::string GetEnnemies();
 	std::string GetMechanisms();
 	std::string GetBossMechanisms();
-	std::string GetSpecialTiles();
-	std::string GetGroundTiles();
-	std::string GetBackGround();
-	std::string GetBossBackGround();
+	std::string GetSpecialTilesSpritesheet();
+	std::string GetGroundTilesSpritesheet();
+	std::string GetBackGroundSpritesheet();
+	std::string GetBossBackGroundSpritesheet();
 	std::string GetMusic();
 	std::string GetBossMusic();
 

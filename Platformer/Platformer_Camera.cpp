@@ -47,10 +47,10 @@ void cCamera::CalculateFOV(cLevel* level, OneLoneCoder_Platformer* engine)
 
 void cCamera::DrawBackground(cLevel* level, OneLoneCoder_Platformer* engine)
 {
-	float fBackgroundOffsetX = fOffsetX * engine->GetTileWidth() * ((float)(engine->GetBackGround()->width - engine->ScreenWidth()) / (float)(level->GetWidth() * engine->GetTileWidth() - engine->ScreenWidth()));
-	float fBackgroundOffsetY = fOffsetY * engine->GetTileHeight() * ((float)(engine->GetBackGround()->height - engine->ScreenHeight()) / (float)(level->GetHeight() * engine->GetTileHeight() - engine->ScreenHeight()));
+	float fBackgroundOffsetX = fOffsetX * engine->GetTileWidth()  * ((float)(engine->GetBackGroundSprite()->width  - engine->ScreenWidth())  / (float)(level->GetWidth()  * engine->GetTileWidth()  - engine->ScreenWidth() ));
+	float fBackgroundOffsetY = fOffsetY * engine->GetTileHeight() * ((float)(engine->GetBackGroundSprite()->height - engine->ScreenHeight()) / (float)(level->GetHeight() * engine->GetTileHeight() - engine->ScreenHeight()));
 
-	engine->DrawPartialSprite(0, 0, engine->GetBackGround(), fBackgroundOffsetX, fBackgroundOffsetY, engine->ScreenWidth(), engine->ScreenHeight());
+	engine->DrawPartialSprite(0, 0, engine->GetBackGroundSprite(), fBackgroundOffsetX, fBackgroundOffsetY, engine->ScreenWidth(), engine->ScreenHeight());
 }
 
 float cCamera::GetOffsetX()
