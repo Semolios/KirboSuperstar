@@ -108,10 +108,10 @@ public:
 	float GetWinTimer();
 	void ResetVariables();
 	void BreakLoop();
-	olc::Sprite* GetBackGround();
-	olc::Sprite* GetTilesSprites();
-	olc::Sprite* GetGroundTiles();
-	olc::Sprite* GetDoorSpr();
+	olc::Sprite* GetBackGroundSprite();
+	olc::Sprite* GetSpecialTilesSprite();
+	olc::Sprite* GetGroundTilesSprite();
+	olc::Sprite* GetDoorSprite();
 	void ReturnToWorldMap();
 	void GoToControlsMenu();
 	void GoToSoundMenu();

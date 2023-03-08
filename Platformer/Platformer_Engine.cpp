@@ -491,10 +491,10 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
         level->PopulateEnnemies(vecEnnemies, level->GetEnnemies());
         level->PopulateMechanisms(level->GetMechanisms());
 
-        spriteTiles.LoadFromFile(level->GetSpecialTiles());
+        spriteTiles.LoadFromFile(level->GetSpecialTilesSpritesheet());
         decalTiles->Update();
-        sprGrdTiles.LoadFromFile(level->GetGroundTiles());
-        sprBackground.LoadFromFile(level->GetBackGround());
+        sprGrdTiles.LoadFromFile(level->GetGroundTilesSpritesheet());
+        sprBackground.LoadFromFile(level->GetBackGroundSpritesheet());
         sndLevelMusic.LoadAudioWaveform(level->GetMusic());
     }
 
@@ -858,7 +858,7 @@ bool OneLoneCoder_Platformer::GameState_LoadBossLevel(float fElapsedTime)
         level->PopulateBoss(vecEnnemies);
         level->PopulateMechanisms(level->GetBossMechanisms());
 
-        sprBackground.LoadFromFile(level->GetBossBackGround());
+        sprBackground.LoadFromFile(level->GetBossBackGroundSpritesheet());
         sndBossLevelMusic.LoadAudioWaveform(level->GetBossMusic());
     }
 
@@ -1474,22 +1474,22 @@ void OneLoneCoder_Platformer::BreakLoop()
     bBreakLoop = true;
 }
 
-olc::Sprite* OneLoneCoder_Platformer::GetBackGround()
+olc::Sprite* OneLoneCoder_Platformer::GetBackGroundSprite()
 {
     return &sprBackground;
 }
 
-olc::Sprite* OneLoneCoder_Platformer::GetTilesSprites()
+olc::Sprite* OneLoneCoder_Platformer::GetSpecialTilesSprite()
 {
     return &spriteTiles;
 }
 
-olc::Sprite* OneLoneCoder_Platformer::GetGroundTiles()
+olc::Sprite* OneLoneCoder_Platformer::GetGroundTilesSprite()
 {
     return &sprGrdTiles;
 }
 
-olc::Sprite* OneLoneCoder_Platformer::GetDoorSpr()
+olc::Sprite* OneLoneCoder_Platformer::GetDoorSprite()
 {
     return &sprDoor;
 }
