@@ -219,7 +219,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneL
 
 			// You can't use pause when you are hit.
 			// like you can't pause when you jump in mario sunshine so you can't leave the level when you are falling
-			engine->TransitionTo("GS_PAUSE", true);
+			engine->TransitionTo("GS_PAUSE", true, true);
 			engine->BreakLoop();
 			return;
 		}
@@ -357,7 +357,7 @@ void cPlayer::Teleport(float px, float py, cLevel* level, OneLoneCoder_Platforme
 	// respawn all ennemies of the level
 	engine->RespawnEnnemies(level);
 
-	engine->TransitionTo("GS_MAIN", true);
+	engine->TransitionTo("GS_MAIN", true, true);
 }
 
 bool cPlayer::CanInteract(OneLoneCoder_Platformer* engine)
@@ -585,7 +585,7 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, float& angle, float& offset
 				return;
 			}
 
-			engine->ReturnToWorldMap();
+			engine->ReturnToWorldMap(true);
 			engine->BreakLoop();
 			return;
 		}
