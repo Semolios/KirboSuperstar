@@ -33,6 +33,10 @@ void cDynamicCreature::DrawSelf(float ox, float oy)
     pos.x = (px - ox) * 64.0f + fSpriteOffsetX;
     pos.y = (py - oy) * 64.0f + fSpriteOffsetY;
 
+    olc::vf2d size;
+    size.x = fSpriteW;
+    size.y = fSpriteH;
+
     olc::vf2d sourcePos;
     sourcePos.x = nSheetOffsetX;
     sourcePos.y = nSheetOffsetY;
@@ -41,7 +45,7 @@ void cDynamicCreature::DrawSelf(float ox, float oy)
     sourceSize.x = fSpriteW;
     sourceSize.y = fSpriteH;
 
-    engine->DrawPartialDecal(pos, dynDecal, sourcePos, sourceSize);
+    engine->DrawPartialDecal(pos, size, dynDecal, sourcePos, sourceSize);
 }
 
 void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY)
