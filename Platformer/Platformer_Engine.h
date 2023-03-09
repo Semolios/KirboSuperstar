@@ -112,7 +112,7 @@ public:
 	olc::Sprite* GetSpecialTilesSprite();
 	olc::Sprite* GetGroundTilesSprite();
 	olc::Sprite* GetDoorSprite();
-	void ReturnToWorldMap();
+	void ReturnToWorldMap(bool drawGame);
 	void GoToControlsMenu();
 	void GoToSoundMenu();
 	void GoToScreenModeMenu();
@@ -164,7 +164,7 @@ public:
 	olc::Key GetSavedControls(std::string control);
 
 	// Transition function
-	void TransitionTo(std::string newState, bool playTransitionSound);
+	void TransitionTo(std::string newState, bool playTransitionSound, bool drawGame);
 
 	//	Font functions
 	void DrawKirboString(int x, int y, std::string text, int scale = 1, bool centered = false);
@@ -421,8 +421,9 @@ private:
 
 	// Transition
 	float fTransitionTimer;
-	float fTransitionTime = 0.5f;
+	float fTransitionTime = 0.25f;
 	bool bPlayTransitionSound = false;
+	bool bDrawGame = false;
 	std::string sNextState;
 
 	// Loading Screen

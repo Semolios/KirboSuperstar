@@ -81,7 +81,7 @@ bool OneLoneCoder_Platformer::GameState_LevelStart(float fElapsedTime)
 
 
     if (GetAnyKey() || controller.AnyButtonPressed())
-        TransitionTo("GS_MAIN", true);
+        TransitionTo("GS_MAIN", true, false);
 
     return false;
 }
@@ -95,7 +95,7 @@ bool OneLoneCoder_Platformer::GameState_SplashScreen(float fElapsedTime)
     DrawSprite(0, 0, &sprSplashScreen);
 
     if (fSplashScreenTimer >= fSplashScreenTime || GetKey(olc::Key::SPACE).bPressed || controller.GetButton(A).bPressed)
-        TransitionTo("GS_LOADING", false);
+        TransitionTo("GS_LOADING", false, false);
 
     return false;
 }
@@ -474,7 +474,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
     }
 
     if (bLoadFinished)
-        TransitionTo("GS_TITLE", true);
+        TransitionTo("GS_TITLE", true, false);
 
     return true;
 }
@@ -515,7 +515,7 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
         ActivateShakeEffect(true, 40, 40);
     }
 
-    TransitionTo("GS_LEVELSTART", true);
+    TransitionTo("GS_LEVELSTART", true, false);
 
     return true;
 }
@@ -530,7 +530,7 @@ bool OneLoneCoder_Platformer::GameState_Title(float fElapsedTime)
     if (GetAnyKey() || controller.AnyButtonPressed())
     {
         waveEngine.StopAll();
-        TransitionTo("GS_SELECTMENU", true);
+        TransitionTo("GS_SELECTMENU", true, false);
     }
 
     return true;
@@ -761,7 +761,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
         {
             if (level->IsLastOfGame())
             {
-                TransitionTo("GS_ENDSCREEN", true);
+                TransitionTo("GS_ENDSCREEN", true, true);
 
                 return true;
             }
@@ -771,7 +771,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
 
                 worldMap->SetUnlockedLevel(level->GetUnlockedLvl());
             }
-            ReturnToWorldMap();
+            ReturnToWorldMap(true);
 
             return true;
         }
@@ -795,7 +795,7 @@ bool OneLoneCoder_Platformer::GameState_WorldMap(float fElapsedTime)
     if (GetKey(olc::Key::ESCAPE).bPressed || controller.GetButton(B).bPressed)
     {
         waveEngine.StopAll();
-        TransitionTo("GS_SELECTMENU", true);
+        TransitionTo("GS_SELECTMENU", true, false);
     }
 
     return false;
@@ -822,7 +822,7 @@ bool OneLoneCoder_Platformer::GameState_EndScreen(float fElapsedTime)
     {
         waveEngine.StopAll();
         bPlayMusic = true;
-        TransitionTo("GS_TITLE", true);
+        TransitionTo("GS_TITLE", true, false);
     }
 
     return false;
@@ -834,14 +834,14 @@ bool OneLoneCoder_Platformer::GameState_PauseMenu(float fElapsedTime)
 
     if (GetKey(olc::Key::P).bPressed || controller.GetButton(START).bPressed)
     {
-        TransitionTo("GS_MAIN", true);
+        TransitionTo("GS_MAIN", true, false);
     }
     else if (GetKey(olc::Key::SPACE).bPressed || controller.GetButton(A).bPressed)
     {
         if (pauseMenu->GetPlayerChoice() == 1)
-            ReturnToWorldMap();
+            ReturnToWorldMap(false);
         else
-            TransitionTo("GS_MAIN", true);
+            TransitionTo("GS_MAIN", true, false);
     }
 
     return true;
@@ -870,7 +870,7 @@ bool OneLoneCoder_Platformer::GameState_LoadBossLevel(float fElapsedTime)
     waveEngine.StopAll();
     pwBossLevelMusic = waveEngine.PlayWaveform(&sndBossLevelMusic, true);
 
-    TransitionTo("GS_MAIN", false);
+    TransitionTo("GS_MAIN", false, false);
 
     return true;
 }
@@ -884,11 +884,11 @@ bool OneLoneCoder_Platformer::GameState_SelectMenu(float fElapsedTime)
         if (!selectMenu->IsInOptionSubmenu())
         {
             if (selectMenu->GetPlayerChoice() == 0)
-                ReturnToWorldMap();
+                ReturnToWorldMap(false);
             else if (selectMenu->GetPlayerChoice() == 1)
                 selectMenu->SetInOptionSubmenu(true);
             else if (selectMenu->GetPlayerChoice() == 2)
-                TransitionTo("GS_CREDITS", true);
+                TransitionTo("GS_CREDITS", true, false);
             else
                 nGameState = GS_CLOSE; // No need a transition when closing the game
         }
@@ -924,7 +924,7 @@ bool OneLoneCoder_Platformer::GameState_Controls(float fElapsedTime)
             controlsMenu->SetSelectedItem(0);
             ApplyControls();
             waveEngine.StopAll();
-            TransitionTo("GS_SELECTMENU", true);
+            TransitionTo("GS_SELECTMENU", true, false);
         }
     }
 
@@ -938,7 +938,7 @@ bool OneLoneCoder_Platformer::GameState_Sounds(float fElapsedTime)
     if (GetKey(olc::Key::ESCAPE).bPressed || controller.GetButton(B).bPressed)
     {
         waveEngine.StopAll();
-        TransitionTo("GS_SELECTMENU", true);
+        TransitionTo("GS_SELECTMENU", true, false);
     }
 
     return true;
@@ -951,7 +951,7 @@ bool OneLoneCoder_Platformer::GameState_ScreenMode(float fElapsedTime)
     if (GetKey(olc::Key::ESCAPE).bPressed || controller.GetButton(B).bPressed)
     {
         waveEngine.StopAll();
-        TransitionTo("GS_SELECTMENU", true);
+        TransitionTo("GS_SELECTMENU", true, false);
     }
 
     return true;
@@ -962,7 +962,7 @@ bool OneLoneCoder_Platformer::GameState_Credits(float fElapsedTime)
     creditsMenu->Update(this, fElapsedTime);
 
     if (GetKey(olc::Key::SPACE).bPressed || GetKey(olc::Key::ESCAPE).bPressed || controller.GetButton(A).bPressed || controller.GetButton(B).bPressed)
-        TransitionTo("GS_SELECTMENU", false);
+        TransitionTo("GS_SELECTMENU", false, false);
 
     return true;
 }
@@ -987,6 +987,11 @@ bool OneLoneCoder_Platformer::GameState_Transition(float fElapsedTime)
     {
         pwTransition = waveEngine.PlayWaveform(&sndTransition);
         bPlayTransitionSound = false;
+    }
+
+    if (bDrawGame)
+    {
+        DrawGame(fElapsedTime, 0, 800, 600);
     }
 
     fTransitionTimer += fElapsedTime;
@@ -1494,13 +1499,13 @@ olc::Sprite* OneLoneCoder_Platformer::GetDoorSprite()
     return &sprDoor;
 }
 
-void OneLoneCoder_Platformer::ReturnToWorldMap()
+void OneLoneCoder_Platformer::ReturnToWorldMap(bool drawGame)
 {
     waveEngine.StopAll();
     pwWorldMap = waveEngine.PlayWaveform(&sndWorldMap, true);
     WindEffect(0.0f, 0.0f, false);
     animPlayer.ChangeState("riding_star", &sprPlayer, decPlayer);
-    TransitionTo("GS_WORLDMAP", true);
+    TransitionTo("GS_WORLDMAP", true, drawGame);
     player->SetDamageBooster(1);
     player->SetDefenseBooster(1);
     player->SetCandyPower(false);
@@ -1511,21 +1516,21 @@ void OneLoneCoder_Platformer::GoToControlsMenu()
 {
     waveEngine.StopAll();
     pwMenu = waveEngine.PlayWaveform(&sndMenu, true);
-    TransitionTo("GS_CONTROLS", true);
+    TransitionTo("GS_CONTROLS", true, false);
 }
 
 void OneLoneCoder_Platformer::GoToSoundMenu()
 {
     waveEngine.StopAll();
     pwMenu = waveEngine.PlayWaveform(&sndMenu, true);
-    TransitionTo("GS_SOUNDS", true);
+    TransitionTo("GS_SOUNDS", true, false);
 }
 
 void OneLoneCoder_Platformer::GoToScreenModeMenu()
 {
     waveEngine.StopAll();
     pwMenu = waveEngine.PlayWaveform(&sndMenu, true);
-    TransitionTo("GS_SCREENMODE", true);
+    TransitionTo("GS_SCREENMODE", true, false);
 }
 
 void OneLoneCoder_Platformer::HitStop()
@@ -1975,9 +1980,10 @@ olc::Key OneLoneCoder_Platformer::GetSavedControls(std::string control)
     return savedControls[control];
 }
 
-void OneLoneCoder_Platformer::TransitionTo(std::string newState, bool playTransitionSound)
+void OneLoneCoder_Platformer::TransitionTo(std::string newState, bool playTransitionSound, bool drawGame)
 {
     bPlayTransitionSound = playTransitionSound;
+    bDrawGame = drawGame;
     sNextState = newState;
     nGameState = GS_TRANSITION;
 }
