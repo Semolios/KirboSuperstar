@@ -30,12 +30,8 @@ void cDynamicCreature::DrawSelf(float ox, float oy)
     int nSheetOffsetY = (2 * nGraphicState + nFaceDir) * fSpriteH;	// 0 = Left Idle, 1 = Right Idle, 2 = Left Walking, 3 = Right Walking, 4 = Left Damaged, 5 = Right Damaged ...
 
     olc::vf2d pos;
-    pos.x = (px - ox) * 64.0f + fSpriteOffsetX;
-    pos.y = (py - oy) * 64.0f + fSpriteOffsetY;
-
-    olc::vf2d size;
-    size.x = fSpriteW;
-    size.y = fSpriteH;
+    pos.x = (int)((px - ox) * 64.0f) + fSpriteOffsetX; // set integer values or the sprite will be messed a little when redered
+    pos.y = (int)((py - oy) * 64.0f) + fSpriteOffsetY; // set integer values or the sprite will be messed a little when redered
 
     olc::vf2d sourcePos;
     sourcePos.x = nSheetOffsetX;
@@ -45,7 +41,7 @@ void cDynamicCreature::DrawSelf(float ox, float oy)
     sourceSize.x = fSpriteW;
     sourceSize.y = fSpriteH;
 
-    engine->DrawPartialDecal(pos, size, dynDecal, sourcePos, sourceSize);
+    engine->DrawPartialDecal(pos, dynDecal, sourcePos, sourceSize);
 }
 
 void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY)
