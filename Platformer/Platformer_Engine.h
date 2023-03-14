@@ -109,9 +109,9 @@ public:
 	void ResetVariables();
 	void BreakLoop();
 	olc::Sprite* GetBackGroundSprite();
-	olc::Sprite* GetSpecialTilesSprite();
-	olc::Sprite* GetGroundTilesSprite();
-	olc::Sprite* GetDoorSprite();
+	olc::Decal* GetSpecialTilesDecal();
+	olc::Decal* GetGroundTilesDecal();
+	olc::Decal* GetDoorDecal();
 	void ReturnToWorldMap(bool drawGame);
 	void GoToControlsMenu();
 	void GoToSoundMenu();
@@ -193,10 +193,13 @@ private:
 	// Level storage
 	cLevel* level;
 	olc::Sprite sprBackground;
-	olc::Sprite spriteTiles;
+	olc::Sprite sprSpecialTiles;
 	olc::Sprite sprGrdTiles;
 	olc::Sprite sprDoor;
-	olc::Decal* decalTiles;
+	olc::Decal* decBackground;
+	olc::Decal* decSpecialTiles;
+	olc::Decal* decGrdTiles;
+	olc::Decal* decDoor;
 
 	// Sounds
 	olc::sound::WaveEngine waveEngine;

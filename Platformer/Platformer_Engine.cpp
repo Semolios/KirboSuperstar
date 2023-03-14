@@ -8,9 +8,11 @@ OneLoneCoder_Platformer::OneLoneCoder_Platformer()
 bool OneLoneCoder_Platformer::OnUserCreate()
 {
     // Init Decals
-    sprPlayer.LoadFromFile("assets/gfx/kirbo00.png");
     decPlayer = new olc::Decal(&sprPlayer);
-    decalTiles = new olc::Decal(&spriteTiles);
+    decBackground = new olc::Decal(&sprBackground);
+    decSpecialTiles = new olc::Decal(&sprSpecialTiles);
+    decGrdTiles = new olc::Decal(&sprGrdTiles);
+    decDoor = new olc::Decal(&sprDoor);
     decHealthBar = new olc::Decal(&sprHealthBar);
     decHealthPoint = new olc::Decal(&sprHealthPoint);
     decBossHealthBar = new olc::Decal(&sprBossHealthBar);
@@ -79,7 +81,6 @@ bool OneLoneCoder_Platformer::GameState_LevelStart(float fElapsedTime)
 
     SetPixelMode(olc::Pixel::NORMAL);
 
-
     if (GetAnyKey() || controller.AnyButtonPressed())
         TransitionTo("GS_MAIN", true, false);
 
@@ -119,9 +120,10 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
             level = new cLevel();
             cLevel::engine = this;
             sprBackground = olc::Sprite();
-            spriteTiles = olc::Sprite();
+            sprSpecialTiles = olc::Sprite();
             sprGrdTiles = olc::Sprite();
             sprDoor = olc::Sprite("assets/gfx/bossDoor.png");
+            decDoor->Update();
 
             level->LoadLevelsList();
             level->LoadBossesList();
@@ -134,8 +136,6 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
             level->LoadBossesBackGroundsList();
             level->LoadMusicsList();
             level->LoadBossesMusicsList();
-
-            level->InitialiseThreadPool();
 
             UpdateProgressBar("Loading 6%");
 
@@ -491,10 +491,12 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
         level->PopulateEnnemies(vecEnnemies, level->GetEnnemies());
         level->PopulateMechanisms(level->GetMechanisms());
 
-        spriteTiles.LoadFromFile(level->GetSpecialTilesSpritesheet());
-        decalTiles->Update();
+        sprSpecialTiles.LoadFromFile(level->GetSpecialTilesSpritesheet());
+        decSpecialTiles->Update();
         sprGrdTiles.LoadFromFile(level->GetGroundTilesSpritesheet());
+        decGrdTiles->Update();
         sprBackground.LoadFromFile(level->GetBackGroundSpritesheet());
+        decBackground->Update();
         sndLevelMusic.LoadAudioWaveform(level->GetMusic());
     }
 
@@ -1484,19 +1486,19 @@ olc::Sprite* OneLoneCoder_Platformer::GetBackGroundSprite()
     return &sprBackground;
 }
 
-olc::Sprite* OneLoneCoder_Platformer::GetSpecialTilesSprite()
+olc::Decal* OneLoneCoder_Platformer::GetSpecialTilesDecal()
 {
-    return &spriteTiles;
+    return decSpecialTiles;
 }
 
-olc::Sprite* OneLoneCoder_Platformer::GetGroundTilesSprite()
+olc::Decal* OneLoneCoder_Platformer::GetGroundTilesDecal()
 {
-    return &sprGrdTiles;
+    return decGrdTiles;
 }
 
-olc::Sprite* OneLoneCoder_Platformer::GetDoorSprite()
+olc::Decal* OneLoneCoder_Platformer::GetDoorDecal()
 {
-    return &sprDoor;
+    return decDoor;
 }
 
 void OneLoneCoder_Platformer::ReturnToWorldMap(bool drawGame)
@@ -2101,7 +2103,7 @@ void OneLoneCoder_Platformer::DrawGame(float fElapsedTime, float angle, float of
     if (bInBossLvl)
         HUD->BossHealthBar(this, decBossHealthBar, vecEnnemies);
     if (player->HasDamageBooster())
-        HUD->DamageBoost(this, decalTiles);
+        HUD->DamageBoost(this, decSpecialTiles);
     if (player->HasDefenseBooster())
-        HUD->DefenseBoost(this, decalTiles);
+        HUD->DefenseBoost(this, decSpecialTiles);
 }

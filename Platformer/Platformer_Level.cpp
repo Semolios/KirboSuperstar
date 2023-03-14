@@ -328,466 +328,458 @@ void cLevel::DrawTiles(int nVisibleTilesX, int nVisibleTilesY, float fOffsetX, f
 	float fTileOffsetX = (fOffsetX - (int)fOffsetX) * engine->GetTileWidth();
 	float fTileOffsetY = (fOffsetY - (int)fOffsetY) * engine->GetTileHeight();
 
-	int nSectionWidth = (nVisibleTilesX + 4) / nMaxLvlThreads;
-
-	nLvlWorkerComplete = 0;
-
-	engine->SetPixelMode(olc::Pixel::ALPHA);
-	for (size_t i = 0; i < nMaxLvlThreads; i++)
-	{
-		workers[i].Start(i, i + nSectionWidth, nVisibleTilesX, nVisibleTilesY, fOffsetX, fOffsetY, fTileOffsetX, fTileOffsetY, this);
-	}
-
-	while (nLvlWorkerComplete < nMaxLvlThreads) // Wait for all workers to complete
-	{
-	}
-	engine->SetPixelMode(olc::Pixel::NORMAL);
+    SelectTile(0, 16, nVisibleTilesX, nVisibleTilesY, fOffsetX, fOffsetY, fTileOffsetX, fTileOffsetY);
 }
 
 void cLevel::SelectTile(int startX, int endX, int nVisibleTilesX, int nVisibleTilesY, float fOffsetX, float fOffsetY, float fTileOffsetX, float fTileOffsetY)
 {
+	float tileW = engine->GetTileWidth();
+	float tileH = engine->GetTileHeight();
+
 	for (int x = startX; x < endX; x++)
 	{
 		for (int y = -2; y < nVisibleTilesY + 2; y++)
 		{
 			wchar_t sTileID = GetTile(x + fOffsetX, y + fOffsetY);
+
+            olc::vf2d pos;
+            pos.x = (int)(x * tileW - fTileOffsetX);
+            pos.y = (int)(y * tileH - fTileOffsetY);
+
 			switch (sTileID)
 			{
 				case L'G': // Ground Block
-					DrawGroundTile(x, y, fTileOffsetX, fTileOffsetY, fOffsetX, fOffsetY, engine->GetGroundTilesSprite(), sTileID);
+					DrawGroundTile(x, y, fTileOffsetX, fTileOffsetY, fOffsetX, fOffsetY, engine->GetGroundTilesDecal(), sTileID);
 					break;
 				case L'#': // Solid Block
-					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, engine->GetSpecialTilesSprite(), 0 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
+					engine->DrawPartialDecal(pos, engine->GetSpecialTilesDecal(), { 0 * tileW, 0 * tileH }, { tileW, tileH });
 					break;
 				case L'B': // Breakable Block
-					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, engine->GetSpecialTilesSprite(), 1 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
+					engine->DrawPartialDecal(pos, engine->GetSpecialTilesDecal(), { 1 * tileW, 0 * tileH }, { tileW, tileH });
 					break;
 				case L'_': // Semi solid platform
-					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, engine->GetSpecialTilesSprite(), 2 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
+					engine->DrawPartialDecal(pos, engine->GetSpecialTilesDecal(), { 2 * tileW, 0 * tileH }, { tileW, tileH });
 					break;
 				case L'c': // Candy
-					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, engine->GetSpecialTilesSprite(), 3 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
+					engine->DrawPartialDecal(pos, engine->GetSpecialTilesDecal(), { 3 * tileW, 0 * tileH }, { tileW, tileH });
 					break;
 				case L't': // Tomato
-					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, engine->GetSpecialTilesSprite(), 4 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
+					engine->DrawPartialDecal(pos, engine->GetSpecialTilesDecal(), { 4 * tileW, 0 * tileH }, { tileW, tileH });
 					break;
 				case L's': // Strength boost
-					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, engine->GetSpecialTilesSprite(), 0 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
+					engine->DrawPartialDecal(pos, engine->GetSpecialTilesDecal(), { 0 * tileW, 1 * tileH }, { tileW, tileH });
 					break;
 				case L'd': // Defense boost
-					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, engine->GetSpecialTilesSprite(), 1 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
+					engine->DrawPartialDecal(pos, engine->GetSpecialTilesDecal(), { 1 * tileW, 1 * tileH }, { tileW, tileH });
 					break;
 				case L'P': // Partially broken Block
-					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, engine->GetSpecialTilesSprite(), 2 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
+					engine->DrawPartialDecal(pos, engine->GetSpecialTilesDecal(), { 2 * tileW, 1 * tileH }, { tileW, tileH });
 					break;
 				case L'H': // Heavily damaged Block
-					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, engine->GetSpecialTilesSprite(), 3 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
+					engine->DrawPartialDecal(pos, engine->GetSpecialTilesDecal(), { 3 * tileW, 1 * tileH }, { tileW, tileH });
 					break;
 				case L'x': // Minor heal item
-					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, engine->GetSpecialTilesSprite(), 4 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
+					engine->DrawPartialDecal(pos, engine->GetSpecialTilesDecal(), { 4 * tileW, 1 * tileH }, { tileW, tileH });
 					break;
 				case L'w': // Door
-					engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY + (engine->GetTileHeight() - engine->GetDoorSprite()->height) + 5.0f, engine->GetDoorSprite(), 0, 0, engine->GetDoorSprite()->width, engine->GetDoorSprite()->height);
+					engine->DrawDecal({ x * tileW - fTileOffsetX, y * tileH - fTileOffsetY + (tileH - engine->GetDoorDecal()->sprite->height) + 5.0f }, engine->GetDoorDecal());
 					break;
 			}
 		}
 	}
 }
 
-void cLevel::InitialiseThreadPool()
+void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY, float fCamOffsetX, float fCamOffsetY, olc::Decal* decalTiles, wchar_t tile)
 {
-	for (int i = 0; i < nMaxLvlThreads; i++)
-	{
-		workers[i].alive = true;
-		workers[i].screen_width = engine->ScreenWidth();
-		workers[i].thread = std::thread(&WorkerThread::SelectTile, &workers[i]);
-	}
-}
+    float tileW = engine->GetTileWidth();
+    float tileH = engine->GetTileHeight();
 
-void cLevel::DrawGroundTile(int x, int y, float fTileOffsetX, float fTileOffsetY, float fCamOffsetX, float fCamOffsetY, olc::Sprite* spriteTiles, wchar_t tile)
-{
-	// Get all tiles around the current tile
-	wchar_t tilesAround[3][3];
-	tilesAround[0][0] = GetTile(x - 1 + fCamOffsetX, y - 1 + fCamOffsetY); tilesAround[0][1] = GetTile(x + 0 + fCamOffsetX, y - 1 + fCamOffsetY); tilesAround[0][2] = GetTile(x + 1 + fCamOffsetX, y - 1 + fCamOffsetY);
-	tilesAround[1][0] = GetTile(x - 1 + fCamOffsetX, y + 0 + fCamOffsetY); tilesAround[1][1] = tile;											  tilesAround[1][2] = GetTile(x + 1 + fCamOffsetX, y + 0 + fCamOffsetY);
-	tilesAround[2][0] = GetTile(x - 1 + fCamOffsetX, y + 1 + fCamOffsetY); tilesAround[2][1] = GetTile(x + 0 + fCamOffsetX, y + 1 + fCamOffsetY); tilesAround[2][2] = GetTile(x + 1 + fCamOffsetX, y + 1 + fCamOffsetY);
+    olc::vf2d pos;
+    pos.x = (int)(x * tileW - fTileOffsetX);
+    pos.y = (int)(y * tileH - fTileOffsetY);
 
-	// Check the 47 configurations
-	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 0 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    // Get all tiles around the current tile
+    wchar_t tilesAround[3][3];
+    tilesAround[0][0] = GetTile(x - 1 + fCamOffsetX, y - 1 + fCamOffsetY); tilesAround[0][1] = GetTile(x + 0 + fCamOffsetX, y - 1 + fCamOffsetY); tilesAround[0][2] = GetTile(x + 1 + fCamOffsetX, y - 1 + fCamOffsetY);
+    tilesAround[1][0] = GetTile(x - 1 + fCamOffsetX, y + 0 + fCamOffsetY); tilesAround[1][1] = tile;											  tilesAround[1][2] = GetTile(x + 1 + fCamOffsetX, y + 0 + fCamOffsetY);
+    tilesAround[2][0] = GetTile(x - 1 + fCamOffsetX, y + 1 + fCamOffsetY); tilesAround[2][1] = GetTile(x + 0 + fCamOffsetX, y + 1 + fCamOffsetY); tilesAround[2][2] = GetTile(x + 1 + fCamOffsetX, y + 1 + fCamOffsetY);
 
-	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 1 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    // Check the 47 configurations
+    if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 0 * tileW, 0 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 2 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 1 * tileW, 0 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 3 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 2 * tileW, 0 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 4 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 3 * tileW, 0 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 5 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 4 * tileW, 0 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 6 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 5 * tileW, 0 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 7 * engine->GetTileWidth(), 0 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 6 * tileW, 0 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 0 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 7 * tileW, 0 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 1 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 0 * tileW, 1 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 2 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 1 * tileW, 1 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 3 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 2 * tileW, 1 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 4 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 3 * tileW, 1 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 5 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 4 * tileW, 1 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 6 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 5 * tileW, 1 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 7 * engine->GetTileWidth(), 1 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 6 * tileW, 1 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
-		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] == tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 0 * engine->GetTileWidth(), 2 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 7 * tileW, 1 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
-		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] == tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 1 * engine->GetTileWidth(), 2 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+        tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        /*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 0 * tileW, 2 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
-		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] != tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 2 * engine->GetTileWidth(), 2 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+        tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        /*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 1 * tileW, 2 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
-		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] != tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 3 * engine->GetTileWidth(), 2 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+        tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        /*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 2 * tileW, 2 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 4 * engine->GetTileWidth(), 2 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+        tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        /*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 3 * tileW, 2 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 5 * engine->GetTileWidth(), 2 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 4 * tileW, 2 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 6 * engine->GetTileWidth(), 2 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        tilesAround[2][0] == tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 5 * tileW, 2 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 7 * engine->GetTileWidth(), 2 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 6 * tileW, 2 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && /*tilesAround[0][2]*/
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
-		tilesAround[2][0] == tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 0 * engine->GetTileWidth(), 3 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        tilesAround[2][0] != tile && tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 7 * tileW, 2 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && /*tilesAround[0][2]*/
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
-		tilesAround[2][0] != tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 1 * engine->GetTileWidth(), 3 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && /*tilesAround[0][2]*/
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+        tilesAround[2][0] == tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 0 * tileW, 3 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && /*tilesAround[0][2]*/
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
-		tilesAround[2][0] == tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 2 * engine->GetTileWidth(), 3 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && /*tilesAround[0][2]*/
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+        tilesAround[2][0] != tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 1 * tileW, 3 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && /*tilesAround[0][2]*/
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
-		tilesAround[2][0] != tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 3 * engine->GetTileWidth(), 3 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && /*tilesAround[0][2]*/
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+        tilesAround[2][0] == tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 2 * tileW, 3 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 4 * engine->GetTileWidth(), 3 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && /*tilesAround[0][2]*/
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+        tilesAround[2][0] != tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 3 * tileW, 3 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 5 * engine->GetTileWidth(), 3 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        /*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 4 * tileW, 3 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 6 * engine->GetTileWidth(), 3 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        /*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 5 * tileW, 3 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 7 * engine->GetTileWidth(), 3 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        /*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 6 * tileW, 3 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && /*tilesAround[0][2]*/
-		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
-		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 0 * engine->GetTileWidth(), 4 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        /*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 7 * tileW, 3 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 1 * engine->GetTileWidth(), 4 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && /*tilesAround[0][2]*/
+        tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+        /*tilesAround[2][0]*/		 tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 0 * tileW, 4 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
-		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] == tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 2 * engine->GetTileWidth(), 4 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        /*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 1 * tileW, 4 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
-		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] != tile)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 3 * engine->GetTileWidth(), 4 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+        tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        /*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] == tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 2 * tileW, 4 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
-		tilesAround[2][0] == tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 4 * engine->GetTileWidth(), 4 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+        tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        /*tilesAround[2][0]*/		 tilesAround[2][1] == tile && tilesAround[2][2] != tile)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 3 * tileW, 4 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
-		tilesAround[2][0] != tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 5 * engine->GetTileWidth(), 4 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+        tilesAround[2][0] == tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 4 * tileW, 4 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && /*tilesAround[0][2]*/
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
-		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 6 * engine->GetTileWidth(), 4 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+        tilesAround[2][0] != tile && tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 5 * tileW, 4 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && /*tilesAround[0][2]*/
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
-		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 7 * engine->GetTileWidth(), 4 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] == tile && tilesAround[0][1] == tile && /*tilesAround[0][2]*/
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+        /*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 6 * tileW, 4 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
-		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 0 * engine->GetTileWidth(), 5 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (tilesAround[0][0] != tile && tilesAround[0][1] == tile && /*tilesAround[0][2]*/
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+        /*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 7 * tileW, 4 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
-		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 1 * engine->GetTileWidth(), 5 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && tilesAround[0][2] == tile &&
+        tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        /*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 0 * tileW, 5 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
-		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
-		/*tilesAround[2][0]*/		 tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 2 * engine->GetTileWidth(), 5 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && tilesAround[0][2] != tile &&
+        tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        /*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 1 * tileW, 5 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
-		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
-		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 3 * engine->GetTileWidth(), 5 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+        tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+        /*tilesAround[2][0]*/		 tilesAround[2][1] == tile	  /*tilesAround[2][2]*/)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 2 * tileW, 5 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && /*tilesAround[0][2]*/
-		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
-		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 4 * engine->GetTileWidth(), 5 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+        tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] == tile &&
+        /*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 3 * tileW, 5 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
-		tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
-		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 5 * engine->GetTileWidth(), 5 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (/*tilesAround[0][0]*/		 tilesAround[0][1] == tile && /*tilesAround[0][2]*/
+        tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+        /*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 4 * tileW, 5 * tileH }, { tileW, tileH });
+        return;
+    }
 
-	if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
-		tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
-		/*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
-	{
-		engine->DrawPartialSprite(x * engine->GetTileWidth() - fTileOffsetX, y * engine->GetTileHeight() - fTileOffsetY, spriteTiles, 6 * engine->GetTileWidth(), 5 * engine->GetTileHeight(), engine->GetTileWidth(), engine->GetTileHeight());
-		return;
-	}
+    if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+        tilesAround[1][0] == tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+        /*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 5 * tileW, 5 * tileH }, { tileW, tileH });
+        return;
+    }
+
+    if (/*tilesAround[0][0]*/		 tilesAround[0][1] != tile && /*tilesAround[0][2]*/
+        tilesAround[1][0] != tile && tilesAround[1][1] == tile && tilesAround[1][2] != tile &&
+        /*tilesAround[2][0]*/		 tilesAround[2][1] != tile	  /*tilesAround[2][2]*/)
+    {
+        engine->DrawPartialDecal(pos, decalTiles, { 6 * tileW, 5 * tileH }, { tileW, tileH });
+        return;
+    }
 }
 
 wchar_t cLevel::GetTile(int x, int y)
