@@ -1481,9 +1481,9 @@ void OneLoneCoder_Platformer::BreakLoop()
     bBreakLoop = true;
 }
 
-olc::Sprite* OneLoneCoder_Platformer::GetBackGroundSprite()
+olc::Decal* OneLoneCoder_Platformer::GetBackGroundDecal()
 {
-    return &sprBackground;
+    return decBackground;
 }
 
 olc::Decal* OneLoneCoder_Platformer::GetSpecialTilesDecal()
