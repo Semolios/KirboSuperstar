@@ -42,8 +42,8 @@ void cDynamicProjectile::DrawSelf(float ox, float oy)
 	float sprPosY = (nCornerSpr == 0 || nCornerSpr == 1) ? 0.0f : -mapStates[nCurrentFrame]->sprite->height;
 
 	olc::vf2d pos;
-	pos.x = (px - ox + ((fDynWidth  / 64.0f) / 2.0f)) * 64.0f + sprPosX;
-	pos.y = (py - oy + ((fDynHeight / 64.0f) / 2.0f)) * 64.0f + sprPosY;
+	pos.x = ((px - ox) * 64.0f) + (fDynWidth  / 2.0f) + sprPosX;
+	pos.y = ((py - oy) * 64.0f) + (fDynHeight / 2.0f) + sprPosY;
 	olc::vf2d center;
 	center.x = mapStates[nCurrentFrame]->sprite->width  / 2.0f;
 	center.y = mapStates[nCurrentFrame]->sprite->height / 2.0f;
@@ -320,17 +320,13 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProject
 	mapProjectiles["movingGround"].push_back(new olc::Sprite("assets/gfx/movingGround04.png"));
 
 	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root00.png"));
+	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root01.png"));
 	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root02.png"));
 	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root03.png"));
 	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root04.png"));
 	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root05.png"));
 	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root06.png"));
 	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root07.png"));
-	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root04.png"));
-	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root03.png"));
-	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root02.png"));
-	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root01.png"));
-	mapProjectiles["root"].push_back(new olc::Sprite("assets/gfx/root00.png"));
 
 	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple00.png"));
 	mapProjectiles["apple"].push_back(new olc::Sprite("assets/gfx/apple01.png"));
@@ -344,8 +340,6 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProject
 	mapProjectiles["blow"].push_back(new olc::Sprite("assets/gfx/blow.png"));
 
 	mapProjectiles["movingGroundLava"].push_back(new olc::Sprite("assets/gfx/movingGroundLava00.png"));
-	mapProjectiles["movingGroundLava"].push_back(new olc::Sprite("assets/gfx/movingGroundLava00.png"));
-	mapProjectiles["movingGroundLava"].push_back(new olc::Sprite("assets/gfx/movingGroundLava01.png"));
 	mapProjectiles["movingGroundLava"].push_back(new olc::Sprite("assets/gfx/movingGroundLava01.png"));
 
 	mapProjectiles["magma"].push_back(new olc::Sprite("assets/gfx/magma00.png"));

@@ -3,7 +3,7 @@
 
 OneLoneCoder_Platformer* cDynamicTeleport::engine = nullptr;
 
-cDynamicTeleport::cDynamicTeleport(float ax, float ay, float bx, float by, std::vector<olc::Sprite*> map) : cDynamic("teleport")
+cDynamicTeleport::cDynamicTeleport(float ax, float ay, float bx, float by, std::vector<olc::Decal*> map) : cDynamic("teleport")
 {
 	px = ax;
 	py = ay;
@@ -21,22 +21,18 @@ cDynamicTeleport::~cDynamicTeleport()
 
 void cDynamicTeleport::DrawSelf(float ox, float oy)
 {
-	engine->SetPixelMode(olc::Pixel::ALPHA);
-	olc::GFX2D::Transform2D t;
-	t.Translate(-fDynWidth / 2.0f, -fDynHeight / 2.0f);
-	t.Translate((px - ox + (GetNormalizedWidth() / 2.0f)) * engine->GetTileWidth(), (py - oy + (GetNormalizedHeight() / 2.0f)) * engine->GetTileHeight());
-	olc::GFX2D::DrawSprite(mapStates[nCurrentFrame], t);
-	engine->SetPixelMode(olc::Pixel::NORMAL);
+	olc::vf2d pos;
+	pos.x = (px - ox) * engine->GetTileWidth();
+	pos.y = (py - oy) * engine->GetTileHeight();
+	engine->DrawDecal(pos, mapStates[nCurrentFrame]);
 }
 
 void cDynamicTeleport::DrawDest(float ox, float oy)
 {
-	engine->SetPixelMode(olc::Pixel::ALPHA);
-	olc::GFX2D::Transform2D t;
-	t.Translate(-fDynWidth / 2.0f, -fDynHeight / 2.0f);
-	t.Translate((fDestX - ox + (GetNormalizedWidth() / 2.0f)) * engine->GetTileWidth(), (fDestY - oy + (GetNormalizedHeight() / 2.0f)) * engine->GetTileHeight());
-	olc::GFX2D::DrawSprite(mapStates[nCurrentFrame], t);
-	engine->SetPixelMode(olc::Pixel::NORMAL);
+	olc::vf2d pos;
+	pos.x = (fDestX - ox) * engine->GetTileWidth();
+	pos.y = (fDestY - oy) * engine->GetTileHeight();
+	engine->DrawDecal(pos, mapStates[nCurrentFrame]);
 }
 
 void cDynamicTeleport::Update(float fElapsedTime, float playerX, float playerY)
@@ -49,8 +45,8 @@ void cDynamicTeleport::Update(float fElapsedTime, float playerX, float playerY)
 		if (nCurrentFrame >= mapStates.size())
 			nCurrentFrame = 0;
 
-		fDynWidth = mapStates[nCurrentFrame]->width;
-		fDynHeight = mapStates[nCurrentFrame]->height;
+		fDynWidth  = mapStates[nCurrentFrame]->sprite->width;
+		fDynHeight = mapStates[nCurrentFrame]->sprite->height;
 	}
 }
 
@@ -137,7 +133,7 @@ cHitbox* cDynamicTeleport::GetDestHitbox()
 
 olc::Sprite* cDynamicTeleport::GetCurrentSprite()
 {
-	return mapStates[nCurrentFrame];
+	return mapStates[nCurrentFrame]->sprite;
 }
 
 std::map<std::string, std::vector<olc::Sprite*>> cDynamicTeleport::LoadTeleportsSprites()
@@ -149,4 +145,15 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicTeleport::LoadTeleports
 	mapTeleports["iceDoor"].push_back(new olc::Sprite("assets/gfx/iceDoor.png"));
 
 	return mapTeleports;
+}
+
+std::map<std::string, std::vector<olc::Decal*>> cDynamicTeleport::LoadTeleportsDecals(std::map<std::string, std::vector<olc::Sprite*>> mapTeleports)
+{
+	std::map<std::string, std::vector<olc::Decal*>> mapDecTeleports;
+
+	mapDecTeleports["door"].push_back(new olc::Decal(mapTeleports["door"][0]));
+
+	mapDecTeleports["iceDoor"].push_back(new olc::Decal(mapTeleports["iceDoor"][0]));
+
+	return mapDecTeleports;
 }

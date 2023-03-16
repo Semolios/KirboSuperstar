@@ -10,8 +10,8 @@ class OneLoneCoder_Platformer;
 class cDynamicMovingPlatform : public cDynamic
 {
 public:
-	cDynamicMovingPlatform(float ox, float oy, std::vector<olc::Sprite*> map, std::wstring iced); // Spawn a normal platform
-	cDynamicMovingPlatform(float ox, float oy, std::vector<olc::Sprite*> map);					  // Spawn a Scenery
+	cDynamicMovingPlatform(float ox, float oy, std::vector<olc::Decal*> map, std::wstring iced); // Spawn a normal platform
+	cDynamicMovingPlatform(float ox, float oy, std::vector<olc::Decal*> map);					  // Spawn a Scenery
 	virtual ~cDynamicMovingPlatform();
 
 	virtual void DrawSwitch(float cameraX, float cameraY);
@@ -41,6 +41,7 @@ public:
 	bool BotCollisionOneCorner(float CornerX, float cornerY);
 
 	static std::map<std::string, std::vector<olc::Sprite*>> LoadMovingPlatformsSprites();
+	static std::map<std::string, std::vector<olc::Decal*>>  LoadMovingPlatformsDecals(std::map<std::string, std::vector<olc::Sprite*>> mapPlatforms);
 	void TriggerMovement();
 	void UntriggerMovement();
 
@@ -57,7 +58,7 @@ public:
 	virtual bool IsLinkedToPreviousPtfm();
 
 protected:
-	std::vector<olc::Sprite*> mapStates;
+	std::vector<olc::Decal*> mapStates;
 
 	// animation
 	int nCurrentFrame = 0;

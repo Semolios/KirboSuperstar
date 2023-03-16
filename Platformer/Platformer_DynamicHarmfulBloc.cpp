@@ -1,6 +1,6 @@
 #include "Platformer_DynamicHarmfulBloc.h"
 
-cDynamicHarmfulBloc::cDynamicHarmfulBloc(float ox, float oy, std::vector<olc::Sprite*> map, float dmg, std::wstring tangible)
+cDynamicHarmfulBloc::cDynamicHarmfulBloc(float ox, float oy, std::vector<olc::Decal*> map, float dmg, std::wstring tangible)
 	: cDynamicBloc(ox, oy, map)
 {
 	bFriendly = false;

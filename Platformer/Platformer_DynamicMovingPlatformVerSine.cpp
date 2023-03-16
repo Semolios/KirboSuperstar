@@ -1,6 +1,6 @@
 #include "Platformer_DynamicMovingPlatformVerSine.h"
 
-cDynamicMovingPlatformVerSine::cDynamicMovingPlatformVerSine(float ox, float oy, std::vector<olc::Sprite*> map, std::wstring iced, float A, float F, std::wstring trigger)
+cDynamicMovingPlatformVerSine::cDynamicMovingPlatformVerSine(float ox, float oy, std::vector<olc::Decal*> map, std::wstring iced, float A, float F, std::wstring trigger)
 	: cDynamicMovingPlatform(ox, oy, map, iced)
 {
 	fAmplitude = A;

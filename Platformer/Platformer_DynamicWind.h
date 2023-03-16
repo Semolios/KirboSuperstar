@@ -10,7 +10,7 @@ class OneLoneCoder_Platformer;
 class cDynamicWind : public cDynamic
 {
 public:
-	cDynamicWind(float ox, float oy, std::vector<olc::Sprite*> map, std::wstring direction, float power);
+	cDynamicWind(float ox, float oy, std::vector<olc::Decal*> map, std::wstring direction, float power);
 	~cDynamicWind();
 
 	static OneLoneCoder_Platformer* engine;
@@ -22,9 +22,10 @@ public:
 	float GetPower();
 	olc::Sprite* GetCurrentSprite();
 	static std::map<std::string, std::vector<olc::Sprite*>> LoadWindSprites();
+	static std::map<std::string, std::vector<olc::Decal*>>  LoadWindDecals(std::map<std::string, std::vector<olc::Sprite*>> mapWinds);
 
 protected:
-	std::vector<olc::Sprite*> mapStates;
+	std::vector<olc::Decal*> mapStates;
 
 	// animation
 	int nCurrentFrame = 0;

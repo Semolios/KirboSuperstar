@@ -1,6 +1,6 @@
 #include "Platformer_DynamicBloc.h"
 
-cDynamicBloc::cDynamicBloc(float ox, float oy, std::vector<olc::Sprite*> map)
+cDynamicBloc::cDynamicBloc(float ox, float oy, std::vector<olc::Decal*> map)
 	: cDynamicMovingPlatform(ox, oy, map, L"0")
 {
 	bSolidBot = true;

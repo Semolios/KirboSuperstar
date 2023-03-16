@@ -47,10 +47,10 @@ bool cHitbox::ShapeOverlap_DIAG(cHitbox* r1, cHitbox* r2)
 
 void cHitbox::Draw(olc::PixelGameEngine* gfx, olc::Pixel col)
 {
-	gfx->DrawLine(p[0].x, p[0].y, p[1].x, p[1].y, col);
-	gfx->DrawLine(p[1].x, p[1].y, p[2].x, p[2].y, col);
-	gfx->DrawLine(p[2].x, p[2].y, p[3].x, p[3].y, col);
-	gfx->DrawLine(p[3].x, p[3].y, p[0].x, p[0].y, col);
+    gfx->DrawLineDecal({ p[0].x, p[0].y }, { p[1].x, p[1].y }, col);
+    gfx->DrawLineDecal({ p[1].x, p[1].y }, { p[2].x, p[2].y }, col);
+    gfx->DrawLineDecal({ p[2].x, p[2].y }, { p[3].x, p[3].y }, col);
+    gfx->DrawLineDecal({ p[3].x, p[3].y }, { p[0].x, p[0].y }, col);
 }
 
 void cHitbox::SetPos(float px, float py)
