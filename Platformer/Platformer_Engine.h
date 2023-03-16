@@ -174,6 +174,7 @@ public:
 
 	// Other
 	std::string ToStr(std::wstring str);
+	void UpdateGame(float fElapsedTime, float* angle, float* offsetX, float* offsetY);
 	void DrawGame(float fElapsedTime, float angle, float offsetX, float offsetY);
 
 private:
