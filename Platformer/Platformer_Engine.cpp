@@ -163,11 +163,16 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
         break;
         case LS_MECHANISMS:
         {
-            mapPlatforms = cDynamicMovingPlatform::LoadMovingPlatformsSprites();
             sprDoorSwitchOff = olc::Sprite("assets/gfx/doorSwitchOff.png");
-            sprDoorSwitchOn = olc::Sprite("assets/gfx/doorSwitchOn.png");
-            mapWinds = cDynamicWind::LoadWindSprites();
+            sprDoorSwitchOn  = olc::Sprite("assets/gfx/doorSwitchOn.png");
+            decDoorSwitchOff = new olc::Decal(&sprDoorSwitchOff);
+            decDoorSwitchOn  = new olc::Decal(&sprDoorSwitchOn);
+            mapPlatforms = cDynamicMovingPlatform::LoadMovingPlatformsSprites();
+            mapDecPlatforms = cDynamicMovingPlatform::LoadMovingPlatformsDecals(mapPlatforms);
             mapTeleports = cDynamicTeleport::LoadTeleportsSprites();
+            mapDecTeleports = cDynamicTeleport::LoadTeleportsDecals(mapTeleports);
+            mapWinds = cDynamicWind::LoadWindSprites();
+            mapDecWinds = cDynamicWind::LoadWindDecals(mapWinds);
 
             UpdateProgressBar("Loading 16%");
 
@@ -486,7 +491,7 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
     level->SetCurrentLvl(worldMap->GetSelectedLevel());
     if (level->LoadLevel(level->GetName()))
     {
-        LoadLevelProperties();
+        SetKirboPositions(level->GetInitPlayerPosX(), level->GetInitPlayerPosY());
 
         level->PopulateEnnemies(vecEnnemies, level->GetEnnemies());
         level->PopulateMechanisms(level->GetMechanisms());
@@ -855,7 +860,7 @@ bool OneLoneCoder_Platformer::GameState_LoadBossLevel(float fElapsedTime)
 
     if (level->LoadLevel(level->GetBoss()))
     {
-        LoadLevelProperties();
+        SetKirboPositions(level->GetInitPlayerPosX(), level->GetInitPlayerPosY());
 
         level->PopulateBoss(vecEnnemies);
         level->PopulateMechanisms(level->GetBossMechanisms());
@@ -1021,11 +1026,6 @@ void OneLoneCoder_Platformer::DestroyAllDynamics()
     vecPlatforms.clear();
     vecWinds.clear();
     vecTeleports.clear();
-}
-
-void OneLoneCoder_Platformer::LoadLevelProperties()
-{
-    SetKirboPositions(level->GetInitPlayerPosX(), level->GetInitPlayerPosY());
 }
 
 bool OneLoneCoder_Platformer::GetAnyKey()
@@ -1225,49 +1225,49 @@ void OneLoneCoder_Platformer::AddOrbital(float ox, float oy, bool bFriend, float
 
 void OneLoneCoder_Platformer::AddPlatform(float ox, float oy, std::string sprite, std::wstring iced)
 {
-    cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatform(ox, oy, mapPlatforms[sprite], iced);
+    cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatform(ox, oy, mapDecPlatforms[sprite], iced);
     vecPlatforms.push_back(ptfm);
 }
 
 void OneLoneCoder_Platformer::AddScenery(float ox, float oy, std::string sprite)
 {
-    cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatform(ox, oy, mapPlatforms[sprite]);
+    cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatform(ox, oy, mapDecPlatforms[sprite]);
     vecPlatforms.push_back(ptfm);
 }
 
 void OneLoneCoder_Platformer::AddHorizontalSinePtfm(float ox, float oy, std::string sprite, std::wstring iced, float amplitude, float frequency, std::wstring trigger)
 {
-    cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatformHorSine(ox, oy, mapPlatforms[sprite], iced, amplitude, frequency, trigger);
+    cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatformHorSine(ox, oy, mapDecPlatforms[sprite], iced, amplitude, frequency, trigger);
     vecPlatforms.push_back(ptfm);
 }
 
 void OneLoneCoder_Platformer::AddVerticalSinePtfm(float ox, float oy, std::string sprite, std::wstring iced, float amplitude, float frequency, std::wstring trigger)
 {
-    cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatformVerSine(ox, oy, mapPlatforms[sprite], iced, amplitude, frequency, trigger);
+    cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatformVerSine(ox, oy, mapDecPlatforms[sprite], iced, amplitude, frequency, trigger);
     vecPlatforms.push_back(ptfm);
 }
 
 void OneLoneCoder_Platformer::AddHorizontalSinglePtfm(float ox, float oy, std::string sprite, std::wstring iced, float tx, float vx, std::wstring trigger)
 {
-    cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatformHorSingle(ox, oy, mapPlatforms[sprite], iced, tx, vx, trigger);
+    cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatformHorSingle(ox, oy, mapDecPlatforms[sprite], iced, tx, vx, trigger);
     vecPlatforms.push_back(ptfm);
 }
 
 void OneLoneCoder_Platformer::AddVerticalSinglePtfm(float ox, float oy, std::string sprite, std::wstring iced, float ty, float vy, std::wstring trigger)
 {
-    cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatformVerSingle(ox, oy, mapPlatforms[sprite], iced, ty, vy, trigger);
+    cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatformVerSingle(ox, oy, mapDecPlatforms[sprite], iced, ty, vy, trigger);
     vecPlatforms.push_back(ptfm);
 }
 
 void OneLoneCoder_Platformer::AddWall(float ox, float oy, std::string sprite, std::wstring leftSolid, std::wstring rightSolid, std::wstring trigger, float trgX, float trgY)
 {
-    cDynamicMovingPlatform* ptfm = new cDynamicWall(ox, oy, mapPlatforms[sprite], leftSolid, rightSolid, trigger, trgX, trgY);
+    cDynamicMovingPlatform* ptfm = new cDynamicWall(ox, oy, mapDecPlatforms[sprite], leftSolid, rightSolid, trigger, trgX, trgY);
     vecPlatforms.push_back(ptfm);
 }
 
 void OneLoneCoder_Platformer::AddCeiling(float ox, float oy, std::string sprite, std::wstring topSolid, std::wstring linkToPreviousPtfm)
 {
-    cDynamicMovingPlatform* ptfm = new cDynamicCeiling(ox, oy, mapPlatforms[sprite], topSolid, linkToPreviousPtfm);
+    cDynamicMovingPlatform* ptfm = new cDynamicCeiling(ox, oy, mapDecPlatforms[sprite], topSolid, linkToPreviousPtfm);
     if (ptfm->IsLinkedToPreviousPtfm())
     {
         ptfm->LinkPtfm(vecPlatforms.front());
@@ -1277,19 +1277,19 @@ void OneLoneCoder_Platformer::AddCeiling(float ox, float oy, std::string sprite,
 
 void OneLoneCoder_Platformer::AddHorizontalCrusher(float ox, float oy, std::string sprite, std::wstring side, float waitTime)
 {
-    cDynamicMovingPlatform* ptfm = new cDynamicHorizontalCrusher(ox, oy, mapPlatforms[sprite], side, waitTime);
+    cDynamicMovingPlatform* ptfm = new cDynamicHorizontalCrusher(ox, oy, mapDecPlatforms[sprite], side, waitTime);
     vecPlatforms.push_back(ptfm);
 }
 
 void OneLoneCoder_Platformer::AddVerticalCrusher(float ox, float oy, std::string sprite, std::wstring side, float waitTime)
 {
-    cDynamicMovingPlatform* ptfm = new cDynamicVerticalCrusher(ox, oy, mapPlatforms[sprite], side, waitTime);
+    cDynamicMovingPlatform* ptfm = new cDynamicVerticalCrusher(ox, oy, mapDecPlatforms[sprite], side, waitTime);
     vecPlatforms.push_back(ptfm);
 }
 
 void OneLoneCoder_Platformer::AddHarmfulBloc(float ox, float oy, std::string sprite, float dmg, std::wstring tangible)
 {
-    cDynamicMovingPlatform* ptfm = new cDynamicHarmfulBloc(ox, oy, mapPlatforms[sprite], dmg, tangible);
+    cDynamicMovingPlatform* ptfm = new cDynamicHarmfulBloc(ox, oy, mapDecPlatforms[sprite], dmg, tangible);
     vecPlatforms.push_back(ptfm);
 }
 
@@ -1313,14 +1313,14 @@ std::vector<cDynamicMovingPlatform*> OneLoneCoder_Platformer::GetClosePlatforms(
     return closePtfms;
 }
 
-olc::Sprite* OneLoneCoder_Platformer::GetDoorSwitch(bool on)
+olc::Decal* OneLoneCoder_Platformer::GetDoorSwitch(bool on)
 {
-    return on ? &sprDoorSwitchOn : &sprDoorSwitchOff;
+    return on ? decDoorSwitchOn : decDoorSwitchOff;
 }
 
 void OneLoneCoder_Platformer::AddWind(float ox, float oy, std::string sprite, std::wstring direction, float power)
 {
-    cDynamicWind* wind = new cDynamicWind(ox, oy, mapWinds[sprite], direction, power);
+    cDynamicWind* wind = new cDynamicWind(ox, oy, mapDecWinds[sprite], direction, power);
     vecWinds.push_back(wind);
 }
 
@@ -1346,7 +1346,7 @@ std::vector<cDynamicWind*> OneLoneCoder_Platformer::GetCloseWinds(float px, floa
 
 void OneLoneCoder_Platformer::AddTeleport(float ax, float ay, float bx, float by, std::string sprite)
 {
-    cDynamicTeleport* tp = new cDynamicTeleport(ax, ay, bx, by, mapTeleports[sprite]);
+    cDynamicTeleport* tp = new cDynamicTeleport(ax, ay, bx, by, mapDecTeleports[sprite]);
     vecTeleports.push_back(tp);
 }
 

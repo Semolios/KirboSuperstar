@@ -8,7 +8,7 @@
 class cDynamicBloc : public cDynamicMovingPlatform
 {
 public:
-	cDynamicBloc(float ox, float oy, std::vector<olc::Sprite*> map);
+	cDynamicBloc(float ox, float oy, std::vector<olc::Decal*> map);
 	virtual ~cDynamicBloc();
 
 	virtual void Behaviour(float fElapsedTime, float playerX, float playerY);

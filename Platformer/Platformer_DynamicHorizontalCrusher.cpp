@@ -3,7 +3,7 @@
 
 OneLoneCoder_Platformer* cDynamicHorizontalCrusher::engine = nullptr;
 
-cDynamicHorizontalCrusher::cDynamicHorizontalCrusher(float ox, float oy, std::vector<olc::Sprite*> map, std::wstring side, float waitTime)
+cDynamicHorizontalCrusher::cDynamicHorizontalCrusher(float ox, float oy, std::vector<olc::Decal*> map, std::wstring side, float waitTime)
 	: cDynamicBloc(ox, oy, map)
 {
 	bLeft = (side == L"left");
@@ -38,7 +38,7 @@ void cDynamicHorizontalCrusher::Behaviour(float fElapsedTime, float playerX, flo
 			if (bRight) vx = cfCrushSpeed;
 			if (bLeft) vx = -cfCrushSpeed;
 
-			if (fabs(px - fOriginX) >= (mapStates[nCurrentFrame]->width / engine->GetTileWidth()))
+			if (fabs(px - fOriginX) >= (mapStates[nCurrentFrame]->sprite->width / engine->GetTileWidth()))
 			{
 				float fTargetX = playerX - px;
 				float fTargetY = playerY - py;

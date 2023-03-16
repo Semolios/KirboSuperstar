@@ -3,7 +3,7 @@
 
 OneLoneCoder_Platformer* cDynamicWall::engine = nullptr;
 
-cDynamicWall::cDynamicWall(float ox, float oy, std::vector<olc::Sprite*> map, std::wstring leftSolid, std::wstring rightSolid, std::wstring trigger, float trgX, float trgY)
+cDynamicWall::cDynamicWall(float ox, float oy, std::vector<olc::Decal*> map, std::wstring leftSolid, std::wstring rightSolid, std::wstring trigger, float trgX, float trgY)
 	: cDynamicMovingPlatform(ox, oy, map, L"0")
 {
 	bSolidTop = false;
@@ -56,7 +56,7 @@ void cDynamicWall::Behaviour(float fElapsedTime, float playerX, float playerY)
 
 	if (bTriggered)
 	{
-		if (fabs(py - fOriginY) <= (mapStates[nCurrentFrame]->height / 64.0f))
+		if (fabs(py - fOriginY) <= (mapStates[nCurrentFrame]->sprite->height / 64.0f))
 		{
 			vy = cfOpeningSpeed;
 		}
@@ -83,12 +83,10 @@ void cDynamicWall::DrawSwitch(float cameraX, float cameraY)
 
         if (fDistance <= (engine->ScreenWidth() / engine->GetTileWidth()) * 1.5f)
 		{
-			engine->SetPixelMode(olc::Pixel::ALPHA);
-			olc::GFX2D::Transform2D t;
-			t.Translate(-engine->GetTileWidth() / 2.0f, -engine->GetTileHeight() / 2.0f);
-			t.Translate((fTriggerX - cameraX + 0.5f) * engine->GetTileWidth(), (fTriggerY - cameraY + 0.7f) * engine->GetTileHeight());
-			olc::GFX2D::DrawSprite(engine->GetDoorSwitch(bTriggered), t);
-			engine->SetPixelMode(olc::Pixel::NORMAL);
+			olc::vf2d pos;
+			pos.x = (fTriggerX - cameraX) * engine->GetTileWidth();
+            pos.y = (fTriggerY - cameraY) * engine->GetTileHeight() + cnSwitchOffsetY;
+            engine->DrawDecal(pos, engine->GetDoorSwitch(bTriggered));
 		}
 	}
 }

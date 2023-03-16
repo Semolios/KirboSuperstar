@@ -82,7 +82,7 @@ public:
 	void AddVerticalCrusher(float ox, float oy, std::string sprite, std::wstring side, float waitTime);
 	void AddHarmfulBloc(float ox, float oy, std::string sprite, float dmg, std::wstring tangible);
 	std::vector<cDynamicMovingPlatform*> GetClosePlatforms(float px, float py);
-	olc::Sprite* GetDoorSwitch(bool on);
+	olc::Decal* GetDoorSwitch(bool on);
 
 	// Winds functions
 	void AddWind(float ox, float oy, std::string sprite, std::wstring direction, float power);
@@ -395,16 +395,21 @@ private:
 	// Moving Platforms
 	std::vector<cDynamicMovingPlatform*> vecPlatforms;
 	std::map<std::string, std::vector<olc::Sprite*>> mapPlatforms;
+	std::map<std::string, std::vector<olc::Decal*>>  mapDecPlatforms;
 	olc::Sprite sprDoorSwitchOff;
 	olc::Sprite sprDoorSwitchOn;
+	olc::Decal* decDoorSwitchOff;
+	olc::Decal* decDoorSwitchOn;
 
 	// Winds
 	std::vector<cDynamicWind*> vecWinds;
 	std::map<std::string, std::vector<olc::Sprite*>> mapWinds;
+	std::map<std::string, std::vector<olc::Decal*>>  mapDecWinds;
 
 	// Teleports
 	std::vector<cDynamicTeleport*> vecTeleports;
 	std::map<std::string, std::vector<olc::Sprite*>> mapTeleports;
+	std::map<std::string, std::vector<olc::Decal*>>  mapDecTeleports;
 
 	// HUD
 	cHUD* HUD;
@@ -500,7 +505,6 @@ protected:
 	bool GameState_Transition(float fElapsedTime);
 
 	void DestroyAllDynamics();
-	void LoadLevelProperties();
 };
 
 #endif // !DEF_ENGINE

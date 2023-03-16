@@ -3,7 +3,7 @@
 
 OneLoneCoder_Platformer* cDynamicWind::engine = nullptr;
 
-cDynamicWind::cDynamicWind(float ox, float oy, std::vector<olc::Sprite*> map, std::wstring direction, float power) : cDynamic("wind")
+cDynamicWind::cDynamicWind(float ox, float oy, std::vector<olc::Decal*> map, std::wstring direction, float power) : cDynamic("wind")
 {
 	px = ox;
 	py = oy;
@@ -20,12 +20,10 @@ cDynamicWind::~cDynamicWind()
 
 void cDynamicWind::DrawSelf(float ox, float oy)
 {
-	engine->SetPixelMode(olc::Pixel::ALPHA);
-	olc::GFX2D::Transform2D t;
-	t.Translate(-fDynWidth / 2.0f, -fDynHeight / 2.0f);
-	t.Translate((px - ox + ((fDynWidth / engine->GetTileWidth()) / 2.0f)) * engine->GetTileWidth(), (py - oy + ((fDynHeight / engine->GetTileHeight()) / 2.0f)) * engine->GetTileHeight());
-	olc::GFX2D::DrawSprite(mapStates[nCurrentFrame], t);
-	engine->SetPixelMode(olc::Pixel::NORMAL);
+	olc::vf2d pos;
+	pos.x = (px - ox) * engine->GetTileWidth();
+	pos.y = (py - oy) * engine->GetTileHeight();
+	engine->DrawDecal(pos, mapStates[nCurrentFrame]);
 }
 
 void cDynamicWind::Update(float fElapsedTime, float playerX, float playerY)
@@ -38,8 +36,8 @@ void cDynamicWind::Update(float fElapsedTime, float playerX, float playerY)
 		if (nCurrentFrame >= mapStates.size())
 			nCurrentFrame = 0;
 
-		fDynWidth =  mapStates[nCurrentFrame]->width;
-		fDynHeight = mapStates[nCurrentFrame]->height;
+		fDynWidth  = mapStates[nCurrentFrame]->sprite->width;
+		fDynHeight = mapStates[nCurrentFrame]->sprite->height;
 	}
 }
 
@@ -83,7 +81,7 @@ float cDynamicWind::GetPower()
 
 olc::Sprite* cDynamicWind::GetCurrentSprite()
 {
-	return mapStates[nCurrentFrame];
+	return mapStates[nCurrentFrame]->sprite;
 }
 
 std::map<std::string, std::vector<olc::Sprite*>> cDynamicWind::LoadWindSprites()
@@ -100,4 +98,20 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicWind::LoadWindSprites()
 	mapWinds["down"].push_back(new olc::Sprite("assets/gfx/downWind07.png"));
 
 	return mapWinds;
+}
+
+std::map<std::string, std::vector<olc::Decal*>> cDynamicWind::LoadWindDecals(std::map<std::string, std::vector<olc::Sprite*>> mapWinds)
+{
+	std::map<std::string, std::vector<olc::Decal*>> mapDecWinds;
+
+	mapDecWinds["down"].push_back(new olc::Decal(mapWinds["down"][0]));
+	mapDecWinds["down"].push_back(new olc::Decal(mapWinds["down"][1]));
+	mapDecWinds["down"].push_back(new olc::Decal(mapWinds["down"][2]));
+	mapDecWinds["down"].push_back(new olc::Decal(mapWinds["down"][3]));
+	mapDecWinds["down"].push_back(new olc::Decal(mapWinds["down"][4]));
+	mapDecWinds["down"].push_back(new olc::Decal(mapWinds["down"][5]));
+	mapDecWinds["down"].push_back(new olc::Decal(mapWinds["down"][6]));
+	mapDecWinds["down"].push_back(new olc::Decal(mapWinds["down"][7]));
+
+	return mapDecWinds;
 }

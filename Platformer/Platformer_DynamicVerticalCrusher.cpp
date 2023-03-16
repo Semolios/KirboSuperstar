@@ -3,7 +3,7 @@
 
 OneLoneCoder_Platformer* cDynamicVerticalCrusher::engine = nullptr;
 
-cDynamicVerticalCrusher::cDynamicVerticalCrusher(float ox, float oy, std::vector<olc::Sprite*> map, std::wstring side, float waitTime)
+cDynamicVerticalCrusher::cDynamicVerticalCrusher(float ox, float oy, std::vector<olc::Decal*> map, std::wstring side, float waitTime)
 	: cDynamicBloc(ox, oy, map)
 {
 	bUp = (side == L"up");
@@ -38,7 +38,7 @@ void cDynamicVerticalCrusher::Behaviour(float fElapsedTime, float playerX, float
 			if (bUp)   vy = -cfCrushSpeed;
 			if (bDown) vy = +cfCrushSpeed;
 
-			if (fabs(py - fOriginY) >= (mapStates[nCurrentFrame]->height / engine->GetTileHeight()))
+			if (fabs(py - fOriginY) >= (mapStates[nCurrentFrame]->sprite->height / engine->GetTileHeight()))
 			{
 				float fTargetX = playerX - px;
 				float fTargetY = playerY - py;

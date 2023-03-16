@@ -1,6 +1,6 @@
 #include "Platformer_DynamicMovingPlatformHorSingle.h"
 
-cDynamicMovingPlatformHorSingle::cDynamicMovingPlatformHorSingle(float ox, float oy, std::vector<olc::Sprite*> map, std::wstring iced, float tx, float vx, std::wstring trigger)
+cDynamicMovingPlatformHorSingle::cDynamicMovingPlatformHorSingle(float ox, float oy, std::vector<olc::Decal*> map, std::wstring iced, float tx, float vx, std::wstring trigger)
 	: cDynamicMovingPlatform(ox, oy, map, iced)
 {
 	fTargetX = tx;

@@ -10,7 +10,7 @@ class OneLoneCoder_Platformer;
 class cDynamicTeleport : public cDynamic
 {
 public:
-	cDynamicTeleport(float ax, float ay, float bx, float by, std::vector<olc::Sprite*> map);
+	cDynamicTeleport(float ax, float ay, float bx, float by, std::vector<olc::Decal*> map);
 	virtual ~cDynamicTeleport();
 
 	static OneLoneCoder_Platformer* engine;
@@ -32,9 +32,10 @@ public:
 	olc::Sprite* GetCurrentSprite();
 
 	static std::map<std::string, std::vector<olc::Sprite*>> LoadTeleportsSprites();
+	static std::map<std::string, std::vector<olc::Decal*>>  LoadTeleportsDecals(std::map<std::string, std::vector<olc::Sprite*>> mapTeleports);
 
 protected:
-	std::vector<olc::Sprite*> mapStates;
+	std::vector<olc::Decal*> mapStates;
 
 	// animation
 	int nCurrentFrame = 0;

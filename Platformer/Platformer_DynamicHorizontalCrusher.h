@@ -8,7 +8,7 @@
 class cDynamicHorizontalCrusher : public cDynamicBloc
 {
 public:
-	cDynamicHorizontalCrusher(float ox, float oy, std::vector<olc::Sprite*> map, std::wstring side, float waitTime);
+	cDynamicHorizontalCrusher(float ox, float oy, std::vector<olc::Decal*> map, std::wstring side, float waitTime);
 	virtual ~cDynamicHorizontalCrusher();
 
 	void Behaviour(float fElapsedTime, float playerX, float playerY);
