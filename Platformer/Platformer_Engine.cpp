@@ -549,240 +549,7 @@ bool OneLoneCoder_Platformer::GameState_Main(float fElapsedTime)
     float offsetX = 0.0f; 
     float offsetY = 0.0f;
 
-    // Stop time a while before dead animation
-    if (player->IsDead())
-    {
-        // stop music
-        if (waveEngine.IsWaveformPlaying(&sndLevelMusic))
-            waveEngine.StopWaveform(pwLevelMusic);
-        if (waveEngine.IsWaveformPlaying(&sndBossLevelMusic))
-            waveEngine.StopWaveform(pwBossLevelMusic);
-        if (waveEngine.IsWaveformPlaying(&sndInvincibility))
-            waveEngine.StopWaveform(pwInvincibility);
-
-        fStopTimebeforeDeadAnim += fElapsedTime;
-
-        if (fStopTimebeforeDeadAnim < cfStopTimebeforeDeadAnim)
-            return true;
-    }
-
-    if (fHitStop > 0.0f)
-    {
-        fHitStop -= fElapsedTime;
-        return true;
-    }
-
-    animPlayer.Update(fElapsedTime, &sprPlayer, decPlayer);
-
-    player->HandleInput(fElapsedTime, camera, level, this, &sprPlayer, decPlayer);
-    // Handle pause button pressed
-    if (bBreakLoop)
-    {
-        bBreakLoop = false;
-        return true;
-    }
-
-    camera->ClampOffset();
-
-    player->ApplyGravity(fElapsedTime, this);
-
-    player->Update(fElapsedTime, this, &sprPlayer, decPlayer);
-
-    player->OneCycleAnimations(fElapsedTime, angle, offsetX, offsetY, mapProjectiles, level, this, &sprPlayer, decPlayer);
-    // Handle State Change
-    if (bBreakLoop)
-    {
-        bBreakLoop = false;
-        return true;
-    }
-
-    player->ClampVelocities();
-
-    // Wind effect
-    if (bWind)
-        player->IncreaseVelocities(fWindDirection * fWindPower * fElapsedTime, 0);
-
-    for (auto& object : vecPlatforms)
-    {
-        object->Update(fElapsedTime, player->GetPosX(), player->GetPosY());
-    }
-
-    if (!player->IsDead())
-        player->Collisions(fElapsedTime, level, this, &sprPlayer, decPlayer);
-
-    camera->SetPositions(player->GetPosX(), player->GetPosY());
-
-    camera->CalculateFOV(level, this);
-
-    player->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY(), this);
-
-    camera->SpawnSceneries(level, fElapsedTime, this);
-
-    // Ennemies
-    for (auto& object : vecEnnemies)
-    {
-        object->Collision(fElapsedTime);
-
-        // Check if the ennemi is in the vacuum
-        if (object->IsVacuumable())
-        {
-            if (player->IsVacuuming())
-            {
-                player->Vacuum(object, camera->GetOffsetX(), camera->GetOffsetY(), this);
-            }
-            else
-            {
-                object->Vacuumed(false);
-                object->SetSwallowable(false);
-            }
-        }
-
-        // Check collision with player to damage him
-        if ((player->IsAttackable() && !player->IsSwallowing() && !object->IsVacuumed()) || player->HasCandyPower())
-        {
-            player->EnemyCollision(object, camera->GetOffsetX(), camera->GetOffsetY(), this, &sprPlayer, decPlayer);
-        }
-    }
-
-    // Projectiles
-    for (auto& object : vecProjectiles)
-    {
-        object->Collision(fElapsedTime, level);
-
-        // check if a Projectile hits a creature
-        if (!object->IsRedundant() && !object->IsScenery())
-        {
-            if (object->IsFriendly())
-            {
-                object->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
-
-                // Check if an ennemy take the attack
-                for (auto& dyn : vecEnnemies)
-                {
-                    dyn->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
-
-                    if (cHitbox::ShapeOverlap_DIAG(object->GetHitbox(), dyn->GetHitbox()))
-                    {
-                        if (dyn->IsAttackable())
-                        {
-                            object->PlaySoundEffect();
-                            player->Attack(dyn, object->GetDamage());
-                            if (object->IsOneHit())
-                                object->SetRedundant(true);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                if (player->IsAttackable())
-                {
-                    player->EnemyCollision(object, camera->GetOffsetX(), camera->GetOffsetY(), this, &sprPlayer, decPlayer);
-                }
-            }
-        }
-    }
-
-    for (auto& object : vecPlatforms)
-    {
-        object->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
-    }
-
-    for (auto& object : vecWinds)
-    {
-        object->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
-    }
-
-    for (auto& object : vecTeleports)
-    {
-        object->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
-    }
-
-    for (auto& object : vecTeleports)
-    {
-        object->UpdateDestHitbox(camera->GetOffsetX(), camera->GetOffsetY());
-    }
-
-    for (auto& object : vecEnnemies)
-    {
-        object->Update(fElapsedTime, player->GetPosX(), player->GetPosY());
-    }
-
-    for (auto& object : vecProjectiles)
-    {
-        object->Update(fElapsedTime, player->GetPosX(), player->GetPosY());
-    }
-
-    for (auto& object : vecWinds)
-    {
-        object->Update(fElapsedTime, player->GetPosX(), player->GetPosY());
-    }
-
-    for (auto& object : vecTeleports)
-    {
-        object->Update(fElapsedTime, player->GetPosX(), player->GetPosY());
-    }
-
-    // Remove dead ennemies
-    vecEnnemies.erase(remove_if(vecEnnemies.begin(), vecEnnemies.end(), [](const cDynamicCreature* d)
-    {
-        return ((cDynamicCreature*)d)->IsDead();
-    }), vecEnnemies.end());
-
-    // Remove swallowed ennemies
-    if (player->IsSwallowing())
-    {
-        vecEnnemies.erase(remove_if(vecEnnemies.begin(), vecEnnemies.end(), [](const cDynamicCreature* d)
-        {
-            return ((cDynamicCreature*)d)->IsSwallowable();
-        }), vecEnnemies.end());
-    }
-
-    // Erase and delete redundant projectiles
-    vecProjectiles.erase(remove_if(vecProjectiles.begin(), vecProjectiles.end(), [](const cDynamic* d)
-    {
-        return ((cDynamicProjectile*)d)->IsRedundant();
-    }), vecProjectiles.end());
-
-    if (bInBossLvl && vecEnnemies.empty() && !player->IsDead())
-    {
-        // Wait a little before begin win animation
-        fWaitBeforeWinAnimation += fElapsedTime;
-
-        if (fWaitBeforeWinAnimation >= cfTimeBeforeWinAnimation)
-        {
-            // do it only once
-            if (!bBossKilled)
-            {
-                waveEngine.StopAll();
-                pwBossKilled = waveEngine.PlayWaveform(&sndBossKilled);
-            }
-
-            bBossKilled = true;
-            if (fWinTimer < animPlayer.mapStates["boss_killed"].size() * animPlayer.fTimeBetweenFrames)
-                animPlayer.ChangeState("boss_killed", &sprPlayer, decPlayer);
-        }
-
-        // When win animation is over, quit the level
-        if (fWinTimer >= cfBossKilledAnimation)
-        {
-            if (level->IsLastOfGame())
-            {
-                TransitionTo("GS_ENDSCREEN", true, true);
-
-                return true;
-            }
-            else if (level->IsLastUnlocked())
-            {
-                level->UnlockNewLvl();
-
-                worldMap->SetUnlockedLevel(level->GetUnlockedLvl());
-            }
-            ReturnToWorldMap(true);
-
-            return true;
-        }
-    }
+    UpdateGame(fElapsedTime, &angle, &offsetX, &offsetY);
 
     DrawGame(fElapsedTime, angle, offsetX, offsetY);
 
@@ -866,6 +633,7 @@ bool OneLoneCoder_Platformer::GameState_LoadBossLevel(float fElapsedTime)
         level->PopulateMechanisms(level->GetBossMechanisms());
 
         sprBackground.LoadFromFile(level->GetBossBackGroundSpritesheet());
+        decBackground->Update();
         sndBossLevelMusic.LoadAudioWaveform(level->GetBossMusic());
     }
 
@@ -2042,6 +1810,244 @@ std::string OneLoneCoder_Platformer::ToStr(std::wstring str)
         result += x;
 
     return result;
+}
+
+void OneLoneCoder_Platformer::UpdateGame(float fElapsedTime, float* angle, float* offsetX, float* offsetY)
+{
+    // Stop time a while before dead animation
+    if (player->IsDead())
+    {
+        // stop music
+        if (waveEngine.IsWaveformPlaying(&sndLevelMusic))
+            waveEngine.StopWaveform(pwLevelMusic);
+        if (waveEngine.IsWaveformPlaying(&sndBossLevelMusic))
+            waveEngine.StopWaveform(pwBossLevelMusic);
+        if (waveEngine.IsWaveformPlaying(&sndInvincibility))
+            waveEngine.StopWaveform(pwInvincibility);
+
+        fStopTimebeforeDeadAnim += fElapsedTime;
+
+        if (fStopTimebeforeDeadAnim < cfStopTimebeforeDeadAnim)
+            return;
+    }
+
+    if (fHitStop > 0.0f)
+    {
+        fHitStop -= fElapsedTime;
+        return;
+    }
+
+    animPlayer.Update(fElapsedTime, &sprPlayer, decPlayer);
+
+    player->HandleInput(fElapsedTime, camera, level, this, &sprPlayer, decPlayer);
+    // Handle pause button pressed
+    if (bBreakLoop)
+    {
+        bBreakLoop = false;
+        return;
+    }
+
+    camera->ClampOffset();
+
+    player->ApplyGravity(fElapsedTime, this);
+
+    player->Update(fElapsedTime, this, &sprPlayer, decPlayer);
+
+    player->OneCycleAnimations(fElapsedTime, *angle, *offsetX, *offsetY, mapProjectiles, level, this, &sprPlayer, decPlayer);
+    // Handle State Change
+    if (bBreakLoop)
+    {
+        bBreakLoop = false;
+        return;
+    }
+
+    player->ClampVelocities();
+
+    // Wind effect
+    if (bWind)
+        player->IncreaseVelocities(fWindDirection * fWindPower * fElapsedTime, 0);
+
+    for (auto& object : vecPlatforms)
+    {
+        object->Update(fElapsedTime, player->GetPosX(), player->GetPosY());
+    }
+
+    if (!player->IsDead())
+        player->Collisions(fElapsedTime, level, this, &sprPlayer, decPlayer);
+
+    camera->SetPositions(player->GetPosX(), player->GetPosY());
+
+    camera->CalculateFOV(level, this);
+
+    player->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY(), this);
+
+    camera->SpawnSceneries(level, fElapsedTime, this);
+
+    // Ennemies
+    for (auto& object : vecEnnemies)
+    {
+        object->Collision(fElapsedTime);
+
+        // Check if the ennemi is in the vacuum
+        if (object->IsVacuumable())
+        {
+            if (player->IsVacuuming())
+            {
+                player->Vacuum(object, camera->GetOffsetX(), camera->GetOffsetY(), this);
+            }
+            else
+            {
+                object->Vacuumed(false);
+                object->SetSwallowable(false);
+            }
+        }
+
+        // Check collision with player to damage him
+        if ((player->IsAttackable() && !player->IsSwallowing() && !object->IsVacuumed() && !player->IsDead()) || player->HasCandyPower())
+        {
+            player->EnemyCollision(object, camera->GetOffsetX(), camera->GetOffsetY(), this, &sprPlayer, decPlayer);
+        }
+    }
+
+    // Projectiles
+    for (auto& object : vecProjectiles)
+    {
+        object->Collision(fElapsedTime, level);
+
+        // check if a Projectile hits a creature
+        if (!object->IsRedundant() && !object->IsScenery())
+        {
+            if (object->IsFriendly())
+            {
+                object->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
+
+                // Check if an ennemy take the attack
+                for (auto& dyn : vecEnnemies)
+                {
+                    dyn->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
+
+                    if (cHitbox::ShapeOverlap_DIAG(object->GetHitbox(), dyn->GetHitbox()))
+                    {
+                        if (dyn->IsAttackable())
+                        {
+                            object->PlaySoundEffect();
+                            player->Attack(dyn, object->GetDamage());
+                            if (object->IsOneHit())
+                                object->SetRedundant(true);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (player->IsAttackable())
+                {
+                    player->EnemyCollision(object, camera->GetOffsetX(), camera->GetOffsetY(), this, &sprPlayer, decPlayer);
+                }
+            }
+        }
+    }
+
+    for (auto& object : vecPlatforms)
+    {
+        object->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
+    }
+
+    for (auto& object : vecWinds)
+    {
+        object->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
+    }
+
+    for (auto& object : vecTeleports)
+    {
+        object->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
+    }
+
+    for (auto& object : vecTeleports)
+    {
+        object->UpdateDestHitbox(camera->GetOffsetX(), camera->GetOffsetY());
+    }
+
+    for (auto& object : vecEnnemies)
+    {
+        object->Update(fElapsedTime, player->GetPosX(), player->GetPosY());
+    }
+
+    for (auto& object : vecProjectiles)
+    {
+        object->Update(fElapsedTime, player->GetPosX(), player->GetPosY());
+    }
+
+    for (auto& object : vecWinds)
+    {
+        object->Update(fElapsedTime, player->GetPosX(), player->GetPosY());
+    }
+
+    for (auto& object : vecTeleports)
+    {
+        object->Update(fElapsedTime, player->GetPosX(), player->GetPosY());
+    }
+
+    // Remove dead ennemies
+    vecEnnemies.erase(remove_if(vecEnnemies.begin(), vecEnnemies.end(), [](const cDynamicCreature* d)
+    {
+        return ((cDynamicCreature*)d)->IsDead();
+    }), vecEnnemies.end());
+
+    // Remove swallowed ennemies
+    if (player->IsSwallowing())
+    {
+        vecEnnemies.erase(remove_if(vecEnnemies.begin(), vecEnnemies.end(), [](const cDynamicCreature* d)
+        {
+            return ((cDynamicCreature*)d)->IsSwallowable();
+        }), vecEnnemies.end());
+    }
+
+    // Erase and delete redundant projectiles
+    vecProjectiles.erase(remove_if(vecProjectiles.begin(), vecProjectiles.end(), [](const cDynamic* d)
+    {
+        return ((cDynamicProjectile*)d)->IsRedundant();
+    }), vecProjectiles.end());
+
+    if (bInBossLvl && vecEnnemies.empty() && !player->IsDead())
+    {
+        // Wait a little before begin win animation
+        fWaitBeforeWinAnimation += fElapsedTime;
+
+        if (fWaitBeforeWinAnimation >= cfTimeBeforeWinAnimation)
+        {
+            // do it only once
+            if (!bBossKilled)
+            {
+                waveEngine.StopAll();
+                pwBossKilled = waveEngine.PlayWaveform(&sndBossKilled);
+            }
+
+            bBossKilled = true;
+            if (fWinTimer < animPlayer.mapStates["boss_killed"].size() * animPlayer.fTimeBetweenFrames)
+                animPlayer.ChangeState("boss_killed", &sprPlayer, decPlayer);
+        }
+
+        // When win animation is over, quit the level
+        if (fWinTimer >= cfBossKilledAnimation)
+        {
+            if (level->IsLastOfGame())
+            {
+                TransitionTo("GS_ENDSCREEN", true, true);
+
+                return;
+            }
+            else if (level->IsLastUnlocked())
+            {
+                level->UnlockNewLvl();
+
+                worldMap->SetUnlockedLevel(level->GetUnlockedLvl());
+            }
+            ReturnToWorldMap(true);
+
+            return;
+        }
+    }
 }
 
 void OneLoneCoder_Platformer::DrawGame(float fElapsedTime, float angle, float offsetX, float offsetY)
