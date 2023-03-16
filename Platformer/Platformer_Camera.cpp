@@ -47,10 +47,15 @@ void cCamera::CalculateFOV(cLevel* level, OneLoneCoder_Platformer* engine)
 
 void cCamera::DrawBackground(cLevel* level, OneLoneCoder_Platformer* engine)
 {
-	float fBackgroundOffsetX = fOffsetX * engine->GetTileWidth()  * ((float)(engine->GetBackGroundSprite()->width  - engine->ScreenWidth())  / (float)(level->GetWidth()  * engine->GetTileWidth()  - engine->ScreenWidth() ));
-	float fBackgroundOffsetY = fOffsetY * engine->GetTileHeight() * ((float)(engine->GetBackGroundSprite()->height - engine->ScreenHeight()) / (float)(level->GetHeight() * engine->GetTileHeight() - engine->ScreenHeight()));
-
-	engine->DrawPartialSprite(0, 0, engine->GetBackGroundSprite(), fBackgroundOffsetX, fBackgroundOffsetY, engine->ScreenWidth(), engine->ScreenHeight());
+	olc::vf2d sourcePos;
+	sourcePos.x = fOffsetX * engine->GetTileWidth()  * ((float)(engine->GetBackGroundDecal()->sprite->width  - engine->ScreenWidth())  / (float)(level->GetWidth()  * engine->GetTileWidth()  - engine->ScreenWidth()));
+	sourcePos.y = fOffsetY * engine->GetTileHeight() * ((float)(engine->GetBackGroundDecal()->sprite->height - engine->ScreenHeight()) / (float)(level->GetHeight() * engine->GetTileHeight() - engine->ScreenHeight()));
+	
+	olc::vf2d sourceSize;
+	sourceSize.x = engine->ScreenWidth();
+	sourceSize.y = engine->ScreenHeight();
+    
+	engine->DrawPartialDecal({ 0, 0 }, engine->GetBackGroundDecal(), sourcePos, sourceSize);
 }
 
 float cCamera::GetOffsetX()

@@ -108,7 +108,7 @@ public:
 	float GetWinTimer();
 	void ResetVariables();
 	void BreakLoop();
-	olc::Sprite* GetBackGroundSprite();
+	olc::Decal* GetBackGroundDecal();
 	olc::Decal* GetSpecialTilesDecal();
 	olc::Decal* GetGroundTilesDecal();
 	olc::Decal* GetDoorDecal();
