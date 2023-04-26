@@ -65,6 +65,8 @@ public:
 	std::string GetSpecialTilesSpritesheet();
 	std::string GetGroundTilesSpritesheet();
 	std::string GetBackGroundSpritesheet();
+	std::string GetParallax1Spritesheet();
+	std::string GetParallax2Spritesheet();
 	std::string GetBossBackGroundSpritesheet();
 	std::string GetMusic();
 	std::string GetBossMusic();
@@ -112,6 +114,8 @@ private:
 	std::vector<std::string> musics;
 	std::vector<std::string> groundTiles;
 	std::vector<std::string> backgrounds;
+	std::vector<std::string> parallaxLayer1;
+	std::vector<std::string> parallaxLayer2;
 	std::vector<std::string> bosses;
 	std::vector<std::string> bossesMusics;
 	std::vector<std::string> bossesBackgrounds;

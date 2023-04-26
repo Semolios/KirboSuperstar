@@ -109,6 +109,8 @@ public:
 	void ResetVariables();
 	void BreakLoop();
 	olc::Decal* GetBackGroundDecal();
+	olc::Decal* GetParallax1Decal();
+	olc::Decal* GetParallax2Decal();
 	olc::Decal* GetSpecialTilesDecal();
 	olc::Decal* GetGroundTilesDecal();
 	olc::Decal* GetDoorDecal();
@@ -194,10 +196,14 @@ private:
 	// Level storage
 	cLevel* level;
 	olc::Sprite sprBackground;
+	olc::Sprite sprParallax1;
+	olc::Sprite sprParallax2;
 	olc::Sprite sprSpecialTiles;
 	olc::Sprite sprGrdTiles;
 	olc::Sprite sprDoor;
 	olc::Decal* decBackground;
+	olc::Decal* decParallax1;
+	olc::Decal* decParallax2;
 	olc::Decal* decSpecialTiles;
 	olc::Decal* decGrdTiles;
 	olc::Decal* decDoor;

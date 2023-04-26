@@ -440,6 +440,7 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["frozenKingZora"].push_back(new olc::Sprite("assets/gfx/frozenKingZora.png"));
 	mapPlatforms["RaphaelTheRaven"].push_back(new olc::Sprite("assets/gfx/RaphaelTheRaven.png"));
 	mapPlatforms["frozenPoppyBros"].push_back(new olc::Sprite("assets/gfx/frozenPoppyBros.png"));
+	mapPlatforms["speedrunnerLink"].push_back(new olc::Sprite("assets/gfx/speedrunnerLink.png"));
 	// boss 3
 	mapPlatforms["nipperPlant"].push_back(new olc::Sprite("assets/gfx/nipperPlant.png"));
 	mapPlatforms["snowMount"].push_back(new olc::Sprite("assets/gfx/snowMount.png"));
@@ -869,6 +870,7 @@ std::map<std::string, std::vector<olc::Decal*>> cDynamicMovingPlatform::LoadMovi
 	mapDecPlatforms["frozenKingZora"].push_back(new olc::Decal(mapPlatforms["frozenKingZora"][0]));
 	mapDecPlatforms["RaphaelTheRaven"].push_back(new olc::Decal(mapPlatforms["RaphaelTheRaven"][0]));
 	mapDecPlatforms["frozenPoppyBros"].push_back(new olc::Decal(mapPlatforms["frozenPoppyBros"][0]));
+	mapDecPlatforms["speedrunnerLink"].push_back(new olc::Decal(mapPlatforms["speedrunnerLink"][0]));
 	// boss 3
 	mapDecPlatforms["nipperPlant"].push_back(new olc::Decal(mapPlatforms["nipperPlant"][0]));
 	mapDecPlatforms["snowMount"].push_back(new olc::Decal(mapPlatforms["snowMount"][0]));

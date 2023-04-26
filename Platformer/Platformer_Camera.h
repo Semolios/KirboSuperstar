@@ -15,7 +15,7 @@ public:
 	void SetPositions(float fPlayerPosX, float fPlayerPosY);
 	void DrawLevel(cLevel* level, float fElapsedTime);
 	void CalculateFOV(cLevel* level, OneLoneCoder_Platformer* engine);
-	void DrawBackground(cLevel* level, OneLoneCoder_Platformer* engine);
+	void DrawBackground(cLevel* level, OneLoneCoder_Platformer* engine, bool bossLevel);
 	float GetOffsetX();
 	float GetOffsetY();
 	void LowerPosition();

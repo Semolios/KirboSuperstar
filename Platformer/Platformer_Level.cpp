@@ -874,6 +874,20 @@ void cLevel::LoadBackGroundsList()
 	backgrounds.push_back("assets/gfx/BckGrd03.png");
 	backgrounds.push_back("assets/gfx/BckGrd04.png");
 	backgrounds.push_back("assets/gfx/BckGrd05.png");
+
+	parallaxLayer1.push_back("assets/gfx/ParallaxLayer100.png");
+	parallaxLayer1.push_back("assets/gfx/ParallaxLayer101.png");
+	parallaxLayer1.push_back("assets/gfx/ParallaxLayer102.png");
+	parallaxLayer1.push_back("assets/gfx/ParallaxLayer103.png");
+	parallaxLayer1.push_back("assets/gfx/ParallaxLayer104.png");
+	parallaxLayer1.push_back("assets/gfx/ParallaxLayer105.png");
+
+	parallaxLayer2.push_back("assets/gfx/ParallaxLayer200.png");
+	parallaxLayer2.push_back("assets/gfx/ParallaxLayer201.png");
+	parallaxLayer2.push_back("assets/gfx/ParallaxLayer202.png");
+	parallaxLayer2.push_back("assets/gfx/ParallaxLayer203.png");
+	parallaxLayer2.push_back("assets/gfx/ParallaxLayer204.png");
+	parallaxLayer2.push_back("assets/gfx/ParallaxLayer205.png");
 }
 
 void cLevel::LoadBossesBackGroundsList()
@@ -944,6 +958,16 @@ std::string cLevel::GetGroundTilesSpritesheet()
 std::string cLevel::GetBackGroundSpritesheet()
 {
 	return backgrounds[nCurrentLevel];
+}
+
+std::string cLevel::GetParallax1Spritesheet()
+{
+	return parallaxLayer1[nCurrentLevel];
+}
+
+std::string cLevel::GetParallax2Spritesheet()
+{
+	return parallaxLayer2[nCurrentLevel];
 }
 
 std::string cLevel::GetBossBackGroundSpritesheet()

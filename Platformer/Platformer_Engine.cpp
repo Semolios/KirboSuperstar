@@ -10,6 +10,8 @@ bool OneLoneCoder_Platformer::OnUserCreate()
     // Init Decals
     decPlayer = new olc::Decal(&sprPlayer);
     decBackground = new olc::Decal(&sprBackground);
+    decParallax1 = new olc::Decal(&sprParallax1);
+    decParallax2 = new olc::Decal(&sprParallax2);
     decSpecialTiles = new olc::Decal(&sprSpecialTiles);
     decGrdTiles = new olc::Decal(&sprGrdTiles);
     decDoor = new olc::Decal(&sprDoor);
@@ -120,6 +122,8 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
             level = new cLevel();
             cLevel::engine = this;
             sprBackground = olc::Sprite();
+            sprParallax1 = olc::Sprite();
+            sprParallax2 = olc::Sprite();
             sprSpecialTiles = olc::Sprite();
             sprGrdTiles = olc::Sprite();
             sprDoor = olc::Sprite("assets/gfx/bossDoor.png");
@@ -502,6 +506,10 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
         decGrdTiles->Update();
         sprBackground.LoadFromFile(level->GetBackGroundSpritesheet());
         decBackground->Update();
+        sprParallax1.LoadFromFile(level->GetParallax1Spritesheet());
+        decParallax1->Update();
+        sprParallax2.LoadFromFile(level->GetParallax2Spritesheet());
+        decParallax2->Update();
         sndLevelMusic.LoadAudioWaveform(level->GetMusic());
     }
 
@@ -1252,6 +1260,16 @@ void OneLoneCoder_Platformer::BreakLoop()
 olc::Decal* OneLoneCoder_Platformer::GetBackGroundDecal()
 {
     return decBackground;
+}
+
+olc::Decal* OneLoneCoder_Platformer::GetParallax1Decal()
+{
+    return decParallax1;
+}
+
+olc::Decal* OneLoneCoder_Platformer::GetParallax2Decal()
+{
+    return decParallax2;
 }
 
 olc::Decal* OneLoneCoder_Platformer::GetSpecialTilesDecal()
@@ -2053,7 +2071,7 @@ void OneLoneCoder_Platformer::UpdateGame(float fElapsedTime, float* angle, float
 void OneLoneCoder_Platformer::DrawGame(float fElapsedTime, float angle, float offsetX, float offsetY)
 {
     // Draw Background
-    camera->DrawBackground(level, this);
+    camera->DrawBackground(level, this, bInBossLvl);
 
     // Draw Platforms
     for (auto& object : GetClosePlatforms(player->GetPosX(), player->GetPosY()))
