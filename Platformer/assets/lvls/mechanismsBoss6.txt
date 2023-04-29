@@ -1,3 +1,4 @@
+Scenery,5.95,0.77,BossBckGrd05_arena
 Scenery,6.65,13,waterMark
 Scenery,6.675,10,waterMark
 Scenery,13,11.5,waterMark

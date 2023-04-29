@@ -581,6 +581,7 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["SSTierMK"].push_back(new olc::Sprite("assets/gfx/SSTierMK02.png"));
 	mapPlatforms["SSTierMK"].push_back(new olc::Sprite("assets/gfx/SSTierMK03.png"));
 	mapPlatforms["SSTierMK"].push_back(new olc::Sprite("assets/gfx/SSTierMK04.png"));
+	mapPlatforms["BossBckGrd05_arena"].push_back(new olc::Sprite("assets/gfx/BossBckGrd05_arena.png"));
 #pragma endregion
 
 #pragma region Crushers
@@ -1113,6 +1114,7 @@ std::map<std::string, std::vector<olc::Decal*>> cDynamicMovingPlatform::LoadMovi
 	mapDecPlatforms["SSTierMK"].push_back(new olc::Decal(mapPlatforms["SSTierMK"][2]));
 	mapDecPlatforms["SSTierMK"].push_back(new olc::Decal(mapPlatforms["SSTierMK"][3]));
 	mapDecPlatforms["SSTierMK"].push_back(new olc::Decal(mapPlatforms["SSTierMK"][4]));
+	mapDecPlatforms["BossBckGrd05_arena"].push_back(new olc::Decal(mapPlatforms["BossBckGrd05_arena"][0]));
 #pragma endregion
 
 #pragma region Crushers
