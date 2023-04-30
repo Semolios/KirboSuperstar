@@ -264,8 +264,11 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneL
 			{
 				engine->StopSample("beginVacuum");
 				engine->StopSample("vacuum");
-				SetInvincible(cfVacuumInvincibleFrame, false);
-				bVacuumInvincible = true;
+                if (!HasCandyPower())
+                {
+                    SetInvincible(cfVacuumInvincibleFrame, false);
+                    bVacuumInvincible = true;
+                }
 			}
 			bVacuuming = false;
 		}
@@ -527,7 +530,7 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, float& angle, float& offset
 			endAnimationTime -= animPlayer->fTimeBetweenFrames;
 		if (fAnimationTimer >= endAnimationTime)
 		{
-			if (bSwallowing)
+			if (bSwallowing && !HasCandyPower())
 			{
 				SetInvincible(cfVacuumInvincibleFrame, false);
 				bVacuumInvincible = true;
