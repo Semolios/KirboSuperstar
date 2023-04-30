@@ -29,12 +29,14 @@ public:
 	void ChangeTile(cLevel* level, float tileX, float tileY, wchar_t t);
 	void UpdateHitbox(float cameraOffsetX, float cameraOffsetY) override;
 	void PlaySoundEffect();
+	void SpawnEffect(float posX, float posY);
 	static std::map<std::string, std::vector<olc::Sprite*>> LoadProjectilesSprites();
 	static std::map<std::string, std::vector<olc::Decal*>>  LoadProjectilesDecals(std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles);
 	bool IsOneHit();
 	void SetOneHit(bool oneHit);
 	std::string GetSoundEffect();
 	void SetSoundEffect(std::string sndEffect);
+	void SetEffect(std::string eff, float duration);
 	bool IsRedundant();
 	void SetRedundant(bool redundant);
 	bool BreaksAgainstTiles();
@@ -53,9 +55,11 @@ protected:
 	std::vector<olc::vf2d> crossedTiles;
 	std::string projectileName;
 	std::string soundEffect;
+	std::string effect;
 	std::string bounceSoundEffect;
 	float fDuration;
 	float fDrag;
+	float fEffectDuration;
 	bool bOneHit;
 	bool bRedundant;
 	bool bBreaksAgainstTiles;

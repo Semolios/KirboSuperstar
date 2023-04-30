@@ -489,7 +489,7 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, float& angle, float& offset
 			{
 				if (bCanSpawnProjectile)
 				{
-					engine->AddProjectile((fPosX + fFaceDir), fPosY - 1.0f, true, cfJesusCrossVelX * fFaceDir, cfJesusCrossVelY, cfJesusCrossDuration, "jesuscross", true, cnJesusCrossDmg * nDmgBoost, true);
+					engine->AddProjectile((fPosX + fFaceDir), fPosY - 1.0f, true, cfJesusCrossVelX * fFaceDir, cfJesusCrossVelY, cfJesusCrossDuration, "jesuscross", true, cnJesusCrossDmg * nDmgBoost, true, true, 0, true, 0.0f, "explosion", false, "", false, "explosion", cfExplosionDuration);
 					bCanSpawnProjectile = false;
 				}
 			}

@@ -276,6 +276,12 @@ void cDynamicProjectile::PlaySoundEffect()
 		engine->PlaySample(soundEffect);
 }
 
+void cDynamicProjectile::SpawnEffect(float posX, float posY)
+{
+	if (!effect.empty())
+		engine->AddPreparedProjectile(posX, posY, true, 0.0f, 0.0f, fEffectDuration, effect, false, 0, false, true, 0, false, 0.0f, "", false, "", true);
+}
+
 std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProjectilesSprites()
 {
 	std::map<std::string, std::vector<olc::Sprite*>> mapProjectiles;
@@ -632,6 +638,12 @@ std::string cDynamicProjectile::GetSoundEffect()
 void cDynamicProjectile::SetSoundEffect(std::string sndEffect)
 {
 	soundEffect = sndEffect;
+}
+
+void cDynamicProjectile::SetEffect(std::string scn, float duration)
+{
+	effect = scn;
+	fEffectDuration = duration;
 }
 
 bool cDynamicProjectile::IsRedundant()

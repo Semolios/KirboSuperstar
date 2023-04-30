@@ -980,11 +980,13 @@ bool OneLoneCoder_Platformer::IsSemiSolidTile(wchar_t tile)
     return tile == '_';
 }
 
-void OneLoneCoder_Platformer::AddProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float fDrag, std::string sound, bool bouncy, std::string bounceSound, bool scenery)
+void OneLoneCoder_Platformer::AddProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float fDrag, std::string sound, bool bouncy, std::string bounceSound, bool scenery, std::string effect, float effectDuration)
 {
     cDynamicProjectile* p = new cDynamicProjectile(ox, oy, bFriend, velx, vely, duration, mapDecProjectiles[sprite], affectedByGravity, damage, solidVSMap, oneHit, sprite, corner, breackableAgainstTiles, fDrag, bouncy, bounceSound, scenery);
     if (sound != "")
         p->SetSoundEffect(sound);
+    if (effect != "")
+        p->SetEffect(effect, effectDuration);
     vecProjectiles.push_back(p);
 }
 
@@ -1002,6 +1004,12 @@ void OneLoneCoder_Platformer::AddOrbital(float ox, float oy, bool bFriend, float
     if (sound != "")
         p->SetSoundEffect(sound);
     vecProjectiles.push_back(p);
+}
+
+void OneLoneCoder_Platformer::AddPreparedProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float fDrag, std::string sound, bool bouncy, std::string bounceSound, bool scenery)
+{
+    cDynamicProjectile* p = new cDynamicProjectile(ox, oy, bFriend, velx, vely, duration, mapDecProjectiles[sprite], affectedByGravity, damage, solidVSMap, oneHit, sprite, corner, breackableAgainstTiles, fDrag, bouncy, bounceSound, scenery);
+    vecPreparedProjectiles.push_back(p);
 }
 
 void OneLoneCoder_Platformer::AddPlatform(float ox, float oy, std::string sprite, std::wstring iced)
@@ -1954,6 +1962,7 @@ void OneLoneCoder_Platformer::UpdateGame(float fElapsedTime, float* angle, float
                         if (dyn->IsAttackable())
                         {
                             object->PlaySoundEffect();
+                            object->SpawnEffect(dyn->GetPX() + (dyn->GetNormalizedW() / 2.0f) - 1.1f, dyn->GetPY() + (dyn->GetNormalizedH() / 2.0f) - 1.5f); // hardcoded values because it's only used for jesus cross
                             player->Attack(dyn, object->GetDamage());
                             if (object->IsOneHit())
                                 object->SetRedundant(true);
@@ -1970,6 +1979,12 @@ void OneLoneCoder_Platformer::UpdateGame(float fElapsedTime, float* angle, float
             }
         }
     }
+
+    for (auto& object : vecPreparedProjectiles)
+    {
+        vecProjectiles.push_back(object);
+    }
+    vecPreparedProjectiles.clear();
 
     for (auto& object : vecPlatforms)
     {
