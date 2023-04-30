@@ -44,6 +44,7 @@
 
 class cCamera;
 class cControlsMenu;
+class cCreditsMenu;
 class cPauseMenu;
 class cPlayer;
 class cScreenModeMenu;
@@ -299,6 +300,7 @@ private:
 	olc::sound::Wave sndMenuBip;
 	olc::sound::Wave sndGateOpening;
 	olc::sound::Wave sndGateOpened;
+	olc::sound::Wave sndCreditMenu;
 
 	// engine Properties
 	cPlayer* player;

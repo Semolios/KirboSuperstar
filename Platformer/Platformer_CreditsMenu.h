@@ -3,17 +3,25 @@
 
 #pragma once
 
-#include "olcPixelGameEngine.h"
+#include "Platformer_Engine.h"
 
 class cCreditsMenu
 {
 public:
-	cCreditsMenu(olc::PixelGameEngine* gfx, olc::Sprite* background);
+    cCreditsMenu(olc::Sprite* background);
 
-	bool Update(olc::PixelGameEngine* gfx, float fElapsedTime);
+    bool Update(OneLoneCoder_Platformer* engine, float fElapsedTime);
+    void ResetTextPosTimer();
+    bool IsCreditOver();
 
 private:
-	olc::Sprite* sprBackGround;
+    const float cfCreditsDuration = 128.0f;
+    const float cfTextScrollingSpeed = 18.0f;
+    const int   cnKirboCharHeight = 16;
+    
+    olc::Sprite* sprBackGround;
+    std::vector<std::string> credits;
+    float fTextPosTimer;
 };
 
 #endif // !DEF_CREDITS_MENU

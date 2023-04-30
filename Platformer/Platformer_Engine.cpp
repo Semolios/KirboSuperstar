@@ -326,7 +326,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
         case LS_CREDITSMENU:
         {
             sprCreditsMenu = olc::Sprite("assets/gfx/CreditsMenu.png");
-            creditsMenu = new cCreditsMenu(this, &sprCreditsMenu);
+            creditsMenu = new cCreditsMenu(&sprCreditsMenu);
 
             UpdateProgressBar("Loading 58%");
 
@@ -467,6 +467,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
             AddSharedSound("menuBip", &sndMenuBip, "assets/snd/menuBip.wav");
             AddSharedSound("gateOpening", &sndGateOpening, "assets/snd/gateOpening.wav");
             AddSharedSound("gateOpened", &sndGateOpened, "assets/snd/gateOpened.wav");
+            AddSharedSound("creditsMenu", &sndCreditMenu, "assets/snd/CreditsMenu.wav");
 
             UpdateProgressBar("Loading 99.99999999999999999999999999999");
 
@@ -744,8 +745,12 @@ bool OneLoneCoder_Platformer::GameState_Credits(float fElapsedTime)
 {
     creditsMenu->Update(this, fElapsedTime);
 
-    if (GetKey(olc::Key::SPACE).bPressed || GetKey(olc::Key::ESCAPE).bPressed || controller.GetButton(A).bPressed || controller.GetButton(B).bPressed)
-        TransitionTo("GS_SELECTMENU", false, false);
+    if (GetAnyKey() || controller.AnyButtonPressed() || creditsMenu->IsCreditOver())
+    {
+        TransitionTo("GS_SELECTMENU", true, false);
+        creditsMenu->ResetTextPosTimer();
+        StopSample("creditsMenu");
+    }
 
     return true;
 }
