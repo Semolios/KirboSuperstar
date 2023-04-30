@@ -561,7 +561,10 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, float& angle, float& offset
 		StopAnyAction();
 
 		if (fDeadAnimation == 0.0f)
+		{
 			engine->PlaySample("loseLife");
+			bExplosion = true;
+		}
 
 		fDeadAnimation += fElapsedTime;
 		if (fDeadAnimation != fElapsedTime)
@@ -570,6 +573,13 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, float& angle, float& offset
 			// animation based on a 2nd degree polynome to simulate kirbo's death animation
 			offsetX = 0.0f;
 			offsetY = (4.0f * fDeadAnimation - 2.0f) * 64.0f * (4.0f * fDeadAnimation - 2.0f) - 4 * 64.0f;
+		}
+
+		if (bExplosion && fDeadAnimation >= cfExplosionAnimation)
+		{
+			bExplosion = false;
+			engine->PlaySample("explosion");
+			engine->AddProjectile(fPosX + cfExplosionOffsetX, fPosY + cfExplosionOffsetY, true, 0.0f, 0.0f, cfExplosionDuration, "explosion", false, 0, false, true, 0, true, 0.0f, "", false, "", true);
 		}
 
 		// Return to the map after dead animation

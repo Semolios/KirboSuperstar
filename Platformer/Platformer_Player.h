@@ -126,6 +126,10 @@ private:
 	const float cfJesusCrossDuration = 10.0f;			// Duration of the jesus cross
 	const float cfVacuumAnimT = 4.0f;					// Number of frames when vacuum animation change to begin vacuum to vacuum
 	const float cfDeadRotationAnimation = 15.0f;		// rotation speed of dead animation
+	const float cfExplosionAnimation = 3.0f;			// Explosion after 3 seconds
+	const float cfExplosionDuration = 0.528f;			// Duration of the explosion
+	const float cfExplosionOffsetX = -0.6f;				// offset X position for the explosion
+	const float cfExplosionOffsetY = -1.0f;				// offset Y position for the explosion
 	const float cfDeadAnimation = 4.0f;					// Duration of the dead animation
 	const float cfGoAwayRotationAnimation = 15.0f;		// rotation speed of Kirbo goes away animation
 	const float cfGoAwayTranslationAnimation = 256.0f;	// speed of kirbo in go away animation
@@ -203,6 +207,7 @@ private:
 	bool bRunningRight = false;
 	bool bInvincibleBlink = true;
 	bool bVacuumInvincible = false;
+	bool bExplosion = false;
 	int nDmgBoost = 1;
 	int nDefBoost = 1;
 
