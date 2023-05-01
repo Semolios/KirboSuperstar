@@ -111,9 +111,14 @@ cCreditsMenu::cCreditsMenu(olc::Sprite* background)
     credits.push_back("");
     credits.push_back("");
     credits.push_back("");
-    credits.push_back("terminalmontage something series");
-    credits.push_back("registered in the u.s. patent and trademark office.");
-    credits.push_back("terminalmontage llc. all rights reserved.");
+    credits.push_back("kirbo and the something series");
+    credits.push_back("are the properties of terminal montage");
+    credits.push_back("");
+    credits.push_back("");
+    credits.push_back("");
+    credits.push_back("");
+    credits.push_back("");
+    credits.push_back("thank you for playing");
 }
 
 bool cCreditsMenu::Update(OneLoneCoder_Platformer* engine, float fElapsedTime)

@@ -31,8 +31,6 @@ cDynamicCreatureKingDDD::~cDynamicCreatureKingDDD()
 
 void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)
 {
-    engine->PlaySample("meleeControllerRape", false, true);
-
     switch (nAIState)
 	{
 		case AI_IDLE:

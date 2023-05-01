@@ -16,7 +16,7 @@ public:
 
 private:
     const float cfCreditsDuration = 128.0f;
-    const float cfTextScrollingSpeed = 18.0f;
+    const float cfTextScrollingSpeed = 20.0f;
     const int   cnKirboCharHeight = 16;
     
     olc::Sprite* sprBackGround;
