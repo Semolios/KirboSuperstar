@@ -141,6 +141,7 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 			{
 				cDynamicCreature* mob = new cDynamicCreatureBladeKnight(this);
 				vecDyns.push_back(mob);
+				mob->InitDecal();
 				mob->SetPosition(std::stoi(parts[1]), std::stoi(parts[2]));
 			}
 
@@ -149,6 +150,7 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 			{
 				cDynamicCreature* mob = new cDynamicCreatureBomber(this);
 				vecDyns.push_back(mob);
+				mob->InitDecal();
 				mob->SetPosition(std::stoi(parts[1]), std::stoi(parts[2]));
 			}
 
@@ -157,6 +159,7 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 			{
 				cDynamicCreature* mob = new cDynamicCreatureBrontoBurt(this, std::stof(parts[1]));
 				vecDyns.push_back(mob);
+				mob->InitDecal();
 				mob->SetPosition(std::stoi(parts[2]), std::stoi(parts[3]));
 			}
 
@@ -165,6 +168,7 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 			{
 				cDynamicCreature* mob = new cDynamicCreatureRocky(this);
 				vecDyns.push_back(mob);
+				mob->InitDecal();
 				mob->SetPosition(std::stoi(parts[1]), std::stoi(parts[2]));
 			}
 
@@ -173,6 +177,7 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 			{
 				cDynamicCreature* mob = new cDynamicCreatureScarfy(this);
 				vecDyns.push_back(mob);
+				mob->InitDecal();
 				mob->SetPosition(std::stoi(parts[1]), std::stoi(parts[2]));
 			}
 
@@ -181,6 +186,7 @@ bool cLevel::PopulateEnnemies(std::vector<cDynamicCreature*>& vecDyns, std::stri
 			{
 				cDynamicCreature* mob = new cDynamicCreatureWaddleDee(this);
 				vecDyns.push_back(mob);
+				mob->InitDecal();
 				mob->SetPosition(std::stoi(parts[1]), std::stoi(parts[2]));
 			}
 		}
@@ -315,6 +321,7 @@ bool cLevel::PopulateBoss(std::vector<cDynamicCreature*>& vecDyns)
 		break;
 	}
 
+	mob->InitDecal();
 	mob->SetVacuumable(false);
 	mob->SetBoss(true);
 	mob->SetKnockable(false);

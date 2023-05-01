@@ -16,6 +16,7 @@ public:
 
 	static OneLoneCoder_Platformer* engine;
 
+	void InitDecal();
 	void DrawSelf(float ox, float oy) override;
 	void Update(float fElapsedTime, float playerX, float playerY) override;
 	void KnockBack(float dx, float dy, float dist);

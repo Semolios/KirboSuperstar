@@ -6,7 +6,6 @@ OneLoneCoder_Platformer* cDynamicCreature::engine = nullptr;
 cDynamicCreature::cDynamicCreature(std::string n, olc::Sprite* sprite, int framesPerSecond) : cDynamic(n)
 {
     dynSprite = sprite;
-    dynDecal = new olc::Decal(dynSprite);
     nHealth = 10;
     nHealthMax = 10;
     nGraphicState = STANDING;
@@ -22,6 +21,11 @@ cDynamicCreature::~cDynamicCreature()
     delete dynSprite;
     delete dynDecal;
     delete level;
+}
+
+void cDynamicCreature::InitDecal()
+{
+    dynDecal = new olc::Decal(dynSprite);
 }
 
 void cDynamicCreature::DrawSelf(float ox, float oy)
