@@ -73,7 +73,6 @@ private:
 	olc::Sprite* sprRBump;
 
 	std::map<std::string, olc::Key> tempControls;
-	std::map<std::string, olc::Key> previousControls;
 };
 
 #endif // !DEF_CONTROLS_MENU

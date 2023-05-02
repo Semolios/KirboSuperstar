@@ -67,7 +67,6 @@ bool cControlsMenu::Update(OneLoneCoder_Platformer* engine, float fElapsedTime, 
 				}
 
 				tempControls[engine->ToStr(parts[0])] = engine->ToOlcKey(engine->ToStr(parts[1]));
-				previousControls[engine->ToStr(parts[0])] = engine->ToOlcKey(engine->ToStr(parts[1]));
 			}
 		}
 	}
@@ -136,10 +135,11 @@ bool cControlsMenu::Update(OneLoneCoder_Platformer* engine, float fElapsedTime, 
 				case 9: tempControls["poyo"] = engine->GetFirstKeyPressed();		     break;
 			}
 
-			if (CheckConflicts())
-				tempControls = previousControls;
-			else
+			if (!CheckConflicts())
+			{
 				bModify = false;
+				UpdateSavedControls(engine);
+			}
 		}
 	}
 
