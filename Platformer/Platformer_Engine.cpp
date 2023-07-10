@@ -1578,16 +1578,16 @@ olc::Key OneLoneCoder_Platformer::ToOlcKey(std::string key)
     if (key == "y") k = olc::Key::Y;
     if (key == "z") k = olc::Key::Z;
 
-    if (key == "k0") k = olc::Key::K0;
-    if (key == "k1") k = olc::Key::K1;
-    if (key == "k2") k = olc::Key::K2;
-    if (key == "k3") k = olc::Key::K3;
-    if (key == "k4") k = olc::Key::K4;
-    if (key == "k5") k = olc::Key::K5;
-    if (key == "k6") k = olc::Key::K6;
-    if (key == "k7") k = olc::Key::K7;
-    if (key == "k8") k = olc::Key::K8;
-    if (key == "k9") k = olc::Key::K9;
+    if (key == "0") k = olc::Key::K0;
+    if (key == "1") k = olc::Key::K1;
+    if (key == "2") k = olc::Key::K2;
+    if (key == "3") k = olc::Key::K3;
+    if (key == "4") k = olc::Key::K4;
+    if (key == "5") k = olc::Key::K5;
+    if (key == "6") k = olc::Key::K6;
+    if (key == "7") k = olc::Key::K7;
+    if (key == "8") k = olc::Key::K8;
+    if (key == "9") k = olc::Key::K9;
 
     if (key == "f1")  k = olc::Key::F1;
     if (key == "f2")  k = olc::Key::F2;
@@ -1694,16 +1694,16 @@ std::string OneLoneCoder_Platformer::olcKeyToStr(olc::Key key)
     if (key == olc::Key::Y) str = "y";
     if (key == olc::Key::Z) str = "z";
 
-    if (key == olc::Key::K0) str = "k0";
-    if (key == olc::Key::K1) str = "k1";
-    if (key == olc::Key::K2) str = "k2";
-    if (key == olc::Key::K3) str = "k3";
-    if (key == olc::Key::K4) str = "k4";
-    if (key == olc::Key::K5) str = "k5";
-    if (key == olc::Key::K6) str = "k6";
-    if (key == olc::Key::K7) str = "k7";
-    if (key == olc::Key::K8) str = "k8";
-    if (key == olc::Key::K9) str = "k9";
+    if (key == olc::Key::K0) str = "0";
+    if (key == olc::Key::K1) str = "1";
+    if (key == olc::Key::K2) str = "2";
+    if (key == olc::Key::K3) str = "3";
+    if (key == olc::Key::K4) str = "4";
+    if (key == olc::Key::K5) str = "5";
+    if (key == olc::Key::K6) str = "6";
+    if (key == olc::Key::K7) str = "7";
+    if (key == olc::Key::K8) str = "8";
+    if (key == olc::Key::K9) str = "9";
 
     if (key == olc::Key::F1)  str = "f1";
     if (key == olc::Key::F2)  str = "f2";

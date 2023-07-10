@@ -123,16 +123,16 @@ bool cControlsMenu::Update(OneLoneCoder_Platformer* engine, float fElapsedTime, 
 		{
 			switch (nSelectedItem)
 			{
-				case 0: tempControls["vacuum"] = engine->GetFirstKeyPressed();			 break;
+				case 0: tempControls["vacuum"]			 = engine->GetFirstKeyPressed(); break;
 				case 1: tempControls["launchJesusCross"] = engine->GetFirstKeyPressed(); break;
-				case 2: tempControls["slapAttack"] = engine->GetFirstKeyPressed();		 break;
-				case 3: tempControls["jump"] = engine->GetFirstKeyPressed();		     break;
-				case 4: tempControls["pause"] = engine->GetFirstKeyPressed();			 break;
-				case 5: tempControls["flyOrEnterDoor"] = engine->GetFirstKeyPressed();	 break;
-				case 6: tempControls["down"] = engine->GetFirstKeyPressed();			 break;
-				case 7: tempControls["moveLeft"] = engine->GetFirstKeyPressed();	     break;
-				case 8: tempControls["moveRight"] = engine->GetFirstKeyPressed();	     break;
-				case 9: tempControls["poyo"] = engine->GetFirstKeyPressed();		     break;
+				case 2: tempControls["slapAttack"]		 = engine->GetFirstKeyPressed(); break;
+				case 3: tempControls["jump"]			 = engine->GetFirstKeyPressed(); break;
+				case 4: tempControls["pause"]			 = engine->GetFirstKeyPressed(); break;
+				case 5: tempControls["flyOrEnterDoor"]	 = engine->GetFirstKeyPressed(); break;
+				case 6: tempControls["down"]			 = engine->GetFirstKeyPressed(); break;
+				case 7: tempControls["moveLeft"]		 = engine->GetFirstKeyPressed(); break;
+				case 8: tempControls["moveRight"]		 = engine->GetFirstKeyPressed(); break;
+				case 9: tempControls["poyo"]			 = engine->GetFirstKeyPressed(); break;
 			}
 
 			if (!CheckConflicts())
@@ -254,9 +254,9 @@ void cControlsMenu::UpdateSavedControls(OneLoneCoder_Platformer* engine)
 
 void cControlsMenu::ApplyDefaultControls()
 {
-	tempControls["vacuum"] = olc::Key::SHIFT;
-	tempControls["launchJesusCross"] = olc::Key::Z;
-	tempControls["slapAttack"] = olc::Key::D;
+	tempControls["vacuum"] = olc::Key::K1;
+	tempControls["launchJesusCross"] = olc::Key::K2;
+	tempControls["slapAttack"] = olc::Key::K3;
 	tempControls["jump"] = olc::Key::SPACE;
 	tempControls["pause"] = olc::Key::P;
 	tempControls["flyOrEnterDoor"] = olc::Key::UP;
