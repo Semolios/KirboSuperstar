@@ -88,7 +88,7 @@
         "Entry"
         {
         "MsmKey" = "8:_03B5F6E3E49ECDDA90FDC526B95AFAB8"
-        "OwnerKey" = "8:_C6F24537D96A43848DCFC50EBEF96901"
+        "OwnerKey" = "8:_A575EB1BFFE94F8994D9ABE7AC331EAC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -406,7 +406,7 @@
         "Entry"
         {
         "MsmKey" = "8:_16B2CB2EFCC34E649F95F5CAC0C8F0E5"
-        "OwnerKey" = "8:_C6F24537D96A43848DCFC50EBEF96901"
+        "OwnerKey" = "8:_A575EB1BFFE94F8994D9ABE7AC331EAC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -496,7 +496,7 @@
         "Entry"
         {
         "MsmKey" = "8:_1BE4F895A349D786825351C9896391DC"
-        "OwnerKey" = "8:_C6F24537D96A43848DCFC50EBEF96901"
+        "OwnerKey" = "8:_A575EB1BFFE94F8994D9ABE7AC331EAC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -706,7 +706,7 @@
         "Entry"
         {
         "MsmKey" = "8:_2560B5BF8ADB411AC1FD5E991F9B8F55"
-        "OwnerKey" = "8:_C6F24537D96A43848DCFC50EBEF96901"
+        "OwnerKey" = "8:_A575EB1BFFE94F8994D9ABE7AC331EAC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -772,7 +772,7 @@
         "Entry"
         {
         "MsmKey" = "8:_28A0D77B6A134D98881A8F7B3FC17C86"
-        "OwnerKey" = "8:_C6F24537D96A43848DCFC50EBEF96901"
+        "OwnerKey" = "8:_A575EB1BFFE94F8994D9ABE7AC331EAC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1054,7 +1054,7 @@
         "Entry"
         {
         "MsmKey" = "8:_3767640E449259D7FD7F8B306671AC0A"
-        "OwnerKey" = "8:_C6F24537D96A43848DCFC50EBEF96901"
+        "OwnerKey" = "8:_A575EB1BFFE94F8994D9ABE7AC331EAC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1102,7 +1102,7 @@
         "Entry"
         {
         "MsmKey" = "8:_39E52C14BBE9FC7CD89D991274C90190"
-        "OwnerKey" = "8:_C6F24537D96A43848DCFC50EBEF96901"
+        "OwnerKey" = "8:_A575EB1BFFE94F8994D9ABE7AC331EAC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1306,7 +1306,7 @@
         "Entry"
         {
         "MsmKey" = "8:_453A223F73B0B64EED25079E8658FD13"
-        "OwnerKey" = "8:_C6F24537D96A43848DCFC50EBEF96901"
+        "OwnerKey" = "8:_A575EB1BFFE94F8994D9ABE7AC331EAC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -2296,7 +2296,7 @@
         "Entry"
         {
         "MsmKey" = "8:_7B7AAFF16AFCB9AE6073A724DEFA3F57"
-        "OwnerKey" = "8:_C6F24537D96A43848DCFC50EBEF96901"
+        "OwnerKey" = "8:_A575EB1BFFE94F8994D9ABE7AC331EAC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -2578,7 +2578,7 @@
         "Entry"
         {
         "MsmKey" = "8:_8AD6844A9664485668A3F073585DA8F5"
-        "OwnerKey" = "8:_C6F24537D96A43848DCFC50EBEF96901"
+        "OwnerKey" = "8:_A575EB1BFFE94F8994D9ABE7AC331EAC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -2680,7 +2680,7 @@
         "Entry"
         {
         "MsmKey" = "8:_9059920E0E4B777C4B14D8D3DB7B2B6B"
-        "OwnerKey" = "8:_C6F24537D96A43848DCFC50EBEF96901"
+        "OwnerKey" = "8:_A575EB1BFFE94F8994D9ABE7AC331EAC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -2842,7 +2842,7 @@
         "Entry"
         {
         "MsmKey" = "8:_99BF0F4720D171F4E46BB9AF49113082"
-        "OwnerKey" = "8:_C6F24537D96A43848DCFC50EBEF96901"
+        "OwnerKey" = "8:_A575EB1BFFE94F8994D9ABE7AC331EAC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -2974,7 +2974,7 @@
         "Entry"
         {
         "MsmKey" = "8:_9FEFC0C3362C721CF173C90AA73789C0"
-        "OwnerKey" = "8:_C6F24537D96A43848DCFC50EBEF96901"
+        "OwnerKey" = "8:_A575EB1BFFE94F8994D9ABE7AC331EAC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -3046,7 +3046,7 @@
         "Entry"
         {
         "MsmKey" = "8:_A2FAA2301FB31999537D7612AB1C94B4"
-        "OwnerKey" = "8:_C6F24537D96A43848DCFC50EBEF96901"
+        "OwnerKey" = "8:_A575EB1BFFE94F8994D9ABE7AC331EAC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -3082,6 +3082,12 @@
         "Entry"
         {
         "MsmKey" = "8:_A544DB4AD31E4DF0A722DAB2AC54AABE"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A575EB1BFFE94F8994D9ABE7AC331EAC"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -3418,7 +3424,7 @@
         "Entry"
         {
         "MsmKey" = "8:_B8A673CE34C367C33820DA3C78180FD3"
-        "OwnerKey" = "8:_C6F24537D96A43848DCFC50EBEF96901"
+        "OwnerKey" = "8:_A575EB1BFFE94F8994D9ABE7AC331EAC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -3694,12 +3700,6 @@
         "Entry"
         {
         "MsmKey" = "8:_C67ACBBEC280401883B33CB238DA80BB"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C6F24537D96A43848DCFC50EBEF96901"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -4474,7 +4474,7 @@
         "Entry"
         {
         "MsmKey" = "8:_EEA1D9831884823776B0B1293599F667"
-        "OwnerKey" = "8:_C6F24537D96A43848DCFC50EBEF96901"
+        "OwnerKey" = "8:_A575EB1BFFE94F8994D9ABE7AC331EAC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -20769,7 +20769,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Kirbo Superstar"
         "ProductCode" = "8:{D5E739C6-409C-4E68-9559-ACA8C8AE94FB}"
-        "PackageCode" = "8:{D2A547F6-0D63-47CA-8701-031677105DF1}"
+        "PackageCode" = "8:{CB07F182-07EF-4477-B23B-0B03BCB5B747}"
         "UpgradeCode" = "8:{E5D46990-4A70-406A-8219-A41C4B705770}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -20786,7 +20786,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:"
+        "ARPPRODUCTICON" = "8:_53B4E5FC6C444D15AABD2F8A9A38E803"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -20889,7 +20889,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_0BA93E50CED649CA80D90E16AE984CA8"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_E1A5A28472E94654BDF6D6FF0FF57E60"
             {
             "Name" = "8:Kirbo Superstar"
             "Arguments" = "8:"
@@ -20897,7 +20897,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_C6F24537D96A43848DCFC50EBEF96901"
+            "Target" = "8:_A575EB1BFFE94F8994D9ABE7AC331EAC"
             "Folder" = "8:_862BC3658A594E88B41A3BE6C48F3DD0"
             "WorkingFolder" = "8:_E283B790B04B4094B3C661B9367D9896"
             "Icon" = "8:_53B4E5FC6C444D15AABD2F8A9A38E803"
@@ -21302,9 +21302,9 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C6F24537D96A43848DCFC50EBEF96901"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A575EB1BFFE94F8994D9ABE7AC331EAC"
             {
-            "SourcePath" = "8:..\\x64\\Release\\Platformer.exe"
+            "SourcePath" = "8:..\\x64\\Release\\Kirbo Superstar.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_E283B790B04B4094B3C661B9367D9896"
