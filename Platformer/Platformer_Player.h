@@ -86,6 +86,7 @@ public:
 	void Vacuum(cDynamicCreature* object, float cameraOffsetX, float cameraOffsetY, OneLoneCoder_Platformer* engine);
 	void EnemyCollision(cDynamic* object, float cameraOffsetX, float cameraOffsetY, OneLoneCoder_Platformer* engine, olc::Sprite* playerSprite, olc::Decal* playerDecal);
 	bool EnemyTouched(cDynamic* object, float cameraOffsetX, float cameraOffsetY);
+	void PickupGrabbed(cDynamicProjectile* object, float cameraOffsetX, float cameraOffsetY, OneLoneCoder_Platformer* engine);
 	void SetGrabbedByEnnemy(bool grabbed);
 	void ChangeAnimation(std::string animation, olc::Sprite* playerSprite, olc::Decal* playerDecal);
 	void SetVisible(bool visible);

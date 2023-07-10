@@ -19,6 +19,7 @@ public:
 	void InitDecal();
 	void DrawSelf(float ox, float oy) override;
 	void Update(float fElapsedTime, float playerX, float playerY) override;
+	void GeneratePickUp();
 	void KnockBack(float dx, float dy, float dist);
 	void TurnBack();
 	void Collision(float fElapsedTime);
@@ -40,6 +41,7 @@ public:
 	bool IsDead();
 	float GetNormalizedW();
 	float GetNormalizedH();
+	void AlwaysGeneratePickUp(bool alwaysGenerate);
 
 	virtual void Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx);
 	virtual void ExplodeAndDie(float fElapsedTime);
@@ -77,6 +79,8 @@ protected:
 	bool bBossKilled = false;
 	bool bBossExplosionAvailable = true;
 	bool bLoopAnimation = true;
+	bool bCanGeneratePickUp = true;
+	bool bAlwaysGeneratePickUp = false;
 
 	enum GraphicState
 	{

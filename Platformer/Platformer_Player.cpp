@@ -1400,6 +1400,18 @@ bool cPlayer::EnemyTouched(cDynamic* object, float cameraOffsetX, float cameraOf
 	return cHitbox::ShapeOverlap_DIAG(object->GetHitbox(), GetHitbox());
 }
 
+void cPlayer::PickupGrabbed(cDynamicProjectile* object, float cameraOffsetX, float cameraOffsetY, OneLoneCoder_Platformer* engine)
+{
+	object->UpdateHitbox(cameraOffsetX, cameraOffsetY);
+
+	if (cHitbox::ShapeOverlap_DIAG(object->GetHitbox(), GetHitbox()))
+	{
+		cItemMinorHeal pickup = cItemMinorHeal();
+		pickup.PickItem(engine);
+		object->SetRedundant(true);
+	}
+}
+
 void cPlayer::SetGrabbedByEnnemy(bool grabbed)
 {
 	bIsGrabbedByEnnemy = grabbed;

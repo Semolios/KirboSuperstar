@@ -156,26 +156,41 @@ void cDynamicProjectile::BottomCollision(cLevel* level, float fNewObjectPosX, fl
 		engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX +											fBorder,  fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
 		engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))))
 	{
-		if (bBreaksAgainstTiles && !bBouncy)
+		BottomCollisionBehaviour(fElapsedTime);
+	}
+	else
+	{
+		for (auto& ptfm : engine->GetClosePlatforms(px, py))
 		{
-			bRedundant = true;
+			if (ptfm->TopCollision(fNewObjectPosX, fNewObjectPosX + (fDynWidth / engine->GetTileWidth()), fNewObjectPosY + (fDynHeight / engine->GetTileHeight())))
+			{
+				BottomCollisionBehaviour(fElapsedTime);
+			}
+		}
+	}
+}
+
+void cDynamicProjectile::BottomCollisionBehaviour(float fElapsedTime)
+{
+	if (bBreaksAgainstTiles && !bBouncy)
+	{
+		bRedundant = true;
+	}
+	else
+	{
+		if (!bBouncy)
+		{
+			vy = 0.0f;
+
+			vx += fDrag * vx * fElapsedTime;
+			if (fabs(vx) < cfMinGlideVX) vx = 0.0f;
 		}
 		else
 		{
-			if (!bBouncy)
-			{
-				vy = 0.0f;
+			if (!bounceSoundEffect.empty())
+				engine->PlaySample(bounceSoundEffect);
 
-				vx += fDrag * vx * fElapsedTime;
-				if (fabs(vx) < cfMinGlideVX) vx = 0.0f;
-			}
-			else
-			{
-				if (!bounceSoundEffect.empty())
-					engine->PlaySample(bounceSoundEffect);
-
-				vy = -vy;
-			}
+			vy = -vy;
 		}
 	}
 }
@@ -440,6 +455,8 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProject
 	
 	mapProjectiles["snow"].push_back(new olc::Sprite("assets/gfx/snow.png"));
 
+	mapProjectiles["pickup"].push_back(new olc::Sprite("assets/gfx/pickup.png"));
+
 	// Invisibles Projectiles (these ones are invisible because they are included in the ennemies animations
 	mapProjectiles["SSTierMKHiyayaAOE"].push_back(new olc::Sprite("assets/gfx/SSTierMKHiyayaAOE.png"));
 	mapProjectiles["kingDDDDownB"].push_back(new olc::Sprite("assets/gfx/kingDDDDownB.png"));
@@ -612,6 +629,8 @@ std::map<std::string, std::vector<olc::Decal*>> cDynamicProjectile::LoadProjecti
 
 	mapDecProjectiles["snow"].push_back(new olc::Decal(mapProjectiles["snow"][0]));
 
+	mapDecProjectiles["pickup"].push_back(new olc::Decal(mapProjectiles["pickup"][0]));
+
 	// Invisibles Projectiles (these ones are invisible because they are included in the ennemies animations
 	mapDecProjectiles["SSTierMKHiyayaAOE"].push_back(new olc::Decal(mapProjectiles["SSTierMKHiyayaAOE"][0]));
 	mapDecProjectiles["kingDDDDownB"].push_back(new olc::Decal(mapProjectiles["kingDDDDownB"][0]));
@@ -684,6 +703,16 @@ float cDynamicProjectile::GetNormalizedW()
 float cDynamicProjectile::GetNormalizedH()
 {
 	return fDynHeight / engine->GetTileHeight();
+}
+
+void cDynamicProjectile::SetPickable(bool pickable)
+{
+	bPickable = pickable;
+}
+
+bool cDynamicProjectile::IsPickable()
+{
+	return bPickable;
 }
 
 void cDynamicProjectile::UpdateTrajectory(float fElapsedTime)

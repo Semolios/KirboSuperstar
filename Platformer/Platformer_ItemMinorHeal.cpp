@@ -13,4 +13,3 @@ void cItemMinorHeal::PickItem(OneLoneCoder_Platformer* engine)
 	engine->PlaySample("itemPicked");
 	engine->HealPlayer(2);
 }
-

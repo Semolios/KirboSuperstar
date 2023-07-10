@@ -84,6 +84,7 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY)
                 }
                 else
                 {
+                    GeneratePickUp();
                     nHealth = 0;
                     bDead = true;
                 }
@@ -111,6 +112,7 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY)
 
             if (fDistance < cfSwallowableLimit)
             {
+                GeneratePickUp();
                 bSwallowable = true;
             }
         }
@@ -132,6 +134,19 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY)
     else
     {
         ExplodeAndDie(fElapsedTime);
+    }
+}
+
+void cDynamicCreature::GeneratePickUp()
+{
+    if (bCanGeneratePickUp)
+    {
+        int generatePickUp = rand() % 10;
+        //if (generatePickUp == 0 || bAlwaysGeneratePickUp)
+        {
+            engine->AddProjectile(px, py, true, 0.0f, 0.0f, 30, "pickup", true, 0, true, true, 0, false, 0.0f, "itemPicked", false, "", true, "", 0.0f, true);
+        }
+        bCanGeneratePickUp = false;
     }
 }
 
@@ -382,6 +397,11 @@ float cDynamicCreature::GetNormalizedW()
 float cDynamicCreature::GetNormalizedH()
 {
     return fNormalizedH;
+}
+
+void cDynamicCreature::AlwaysGeneratePickUp(bool alwaysGenerate)
+{
+    bAlwaysGeneratePickUp = alwaysGenerate;
 }
 
 void cDynamicCreature::Behaviour(float fElapsedTime, float playerX, float playerY, olc::PixelGameEngine* gfx)

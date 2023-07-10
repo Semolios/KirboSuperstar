@@ -24,6 +24,7 @@ public:
 	void RightCollision(cLevel* level, float fNewObjectPosX, float fBorder);
 	void TopCollision(cLevel* level, float fNewObjectPosX, float fBorder, float fNewObjectPosY);
 	void BottomCollision(cLevel* level, float fNewObjectPosX, float fBorder, float fNewObjectPosY, float fElapsedTime);
+	void BottomCollisionBehaviour(float fElapsedTime);
 	void CheckBreakableBlocks(cLevel* level, float fNewObjectPosX, float fBorder, float fNewObjectPosY);
 	void BreakTile(cLevel* level, float tileX, float tileY);
 	void ChangeTile(cLevel* level, float tileX, float tileY, wchar_t t);
@@ -45,6 +46,8 @@ public:
 	bool IsScenery();
 	float GetNormalizedW();
 	float GetNormalizedH();
+	void SetPickable(bool pickable);
+	bool IsPickable();
 
 	virtual void UpdateTrajectory(float fElapsedTime);
 
@@ -65,6 +68,7 @@ protected:
 	bool bBreaksAgainstTiles;
 	bool bBouncy;
 	bool bScenery;
+	bool bPickable;
 
 	// animation
 	int nCurrentFrame = 0;

@@ -980,13 +980,14 @@ bool OneLoneCoder_Platformer::IsSemiSolidTile(wchar_t tile)
     return tile == '_';
 }
 
-void OneLoneCoder_Platformer::AddProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float fDrag, std::string sound, bool bouncy, std::string bounceSound, bool scenery, std::string effect, float effectDuration)
+void OneLoneCoder_Platformer::AddProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float fDrag, std::string sound, bool bouncy, std::string bounceSound, bool scenery, std::string effect, float effectDuration, bool pickable)
 {
     cDynamicProjectile* p = new cDynamicProjectile(ox, oy, bFriend, velx, vely, duration, mapDecProjectiles[sprite], affectedByGravity, damage, solidVSMap, oneHit, sprite, corner, breackableAgainstTiles, fDrag, bouncy, bounceSound, scenery);
     if (sound != "")
         p->SetSoundEffect(sound);
     if (effect != "")
         p->SetEffect(effect, effectDuration);
+    p->SetPickable(pickable);
     vecProjectiles.push_back(p);
 }
 
@@ -1946,36 +1947,43 @@ void OneLoneCoder_Platformer::UpdateGame(float fElapsedTime, float* angle, float
         object->Collision(fElapsedTime, level);
 
         // check if a Projectile hits a creature
-        if (!object->IsRedundant() && !object->IsScenery())
+        if (!object->IsRedundant())
         {
-            if (object->IsFriendly())
+            if (!object->IsScenery())
             {
-                object->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
-
-                // Check if an ennemy take the attack
-                for (auto& dyn : vecEnnemies)
+                if (object->IsFriendly())
                 {
-                    dyn->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
+                    object->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
 
-                    if (cHitbox::ShapeOverlap_DIAG(object->GetHitbox(), dyn->GetHitbox()))
+                    // Check if an ennemy take the attack
+                    for (auto& dyn : vecEnnemies)
                     {
-                        if (dyn->IsAttackable())
+                        dyn->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
+
+                        if (cHitbox::ShapeOverlap_DIAG(object->GetHitbox(), dyn->GetHitbox()))
                         {
-                            object->PlaySoundEffect();
-                            object->SpawnEffect(dyn->GetPX() + (dyn->GetNormalizedW() / 2.0f) - 1.1f, dyn->GetPY() + (dyn->GetNormalizedH() / 2.0f) - 1.5f); // hardcoded values because it's only used for jesus cross
-                            player->Attack(dyn, object->GetDamage());
-                            if (object->IsOneHit())
-                                object->SetRedundant(true);
+                            if (dyn->IsAttackable())
+                            {
+                                object->PlaySoundEffect();
+                                object->SpawnEffect(dyn->GetPX() + (dyn->GetNormalizedW() / 2.0f) - 1.1f, dyn->GetPY() + (dyn->GetNormalizedH() / 2.0f) - 1.5f); // hardcoded values because it's only used for jesus cross
+                                player->Attack(dyn, object->GetDamage());
+                                if (object->IsOneHit())
+                                    object->SetRedundant(true);
+                            }
                         }
                     }
                 }
-            }
-            else
-            {
-                if (player->IsAttackable())
+                else
                 {
-                    player->EnemyCollision(object, camera->GetOffsetX(), camera->GetOffsetY(), this, &sprPlayer, decPlayer);
+                    if (player->IsAttackable())
+                    {
+                        player->EnemyCollision(object, camera->GetOffsetX(), camera->GetOffsetY(), this, &sprPlayer, decPlayer);
+                    }
                 }
+            }
+            else if (object->IsPickable())
+            {
+                player->PickupGrabbed(object, camera->GetOffsetX(), camera->GetOffsetY(), this);
             }
         }
     }
@@ -2035,6 +2043,14 @@ void OneLoneCoder_Platformer::UpdateGame(float fElapsedTime, float* angle, float
     // Remove swallowed ennemies
     if (player->IsSwallowing())
     {
+        for (auto& dyn : vecEnnemies)
+        {
+            if (dyn->IsSwallowable())
+            {
+                dyn->GeneratePickUp();
+            }
+        }
+
         vecEnnemies.erase(remove_if(vecEnnemies.begin(), vecEnnemies.end(), [](const cDynamicCreature* d)
         {
             return ((cDynamicCreature*)d)->IsSwallowable();
