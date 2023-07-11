@@ -36,6 +36,7 @@ bool OneLoneCoder_Platformer::OnUserUpdate(float fElapsedTime)
             case GS_LOADING:	   GameState_Loading(fElapsedTime);		  break;
             case GS_TITLE:		   GameState_Title(fElapsedTime);		  break;
             case GS_MAIN:		   GameState_Main(fElapsedTime);		  break;
+            case GS_MANUAL:	       GameState_Manual(fElapsedTime);        break;
             case GS_LEVELSTART:	   GameState_LevelStart(fElapsedTime);    break;
             case GS_LOADLEVEL:	   GameState_LoadLevel(fElapsedTime);     break;
             case GS_WORLDMAP:	   GameState_WorldMap(fElapsedTime);	  break;
@@ -53,6 +54,26 @@ bool OneLoneCoder_Platformer::OnUserUpdate(float fElapsedTime)
     }
 
     return true;
+}
+
+bool OneLoneCoder_Platformer::GameState_Manual(float fElapsedTime)
+{
+    manual->Update(this, fElapsedTime);
+
+    if (GetKey(olc::Key::SPACE).bPressed || controller.GetButton(A).bPressed)
+    {
+        if (!manual->IsLastPage())
+        {
+            manual->NextPage();
+        }
+        else
+        {
+            TransitionTo("GS_LEVELSTART", true, false);
+            manual->SetPage(0);
+        }
+    }
+
+    return false;
 }
 
 bool OneLoneCoder_Platformer::GameState_LevelStart(float fElapsedTime)
@@ -201,6 +222,29 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
             worldMap->SetUnlockedLevel(level->GetUnlockedLvl());
 
             UpdateProgressBar("Loading 23%");
+
+            nLoadingState = LS_MANUAL;
+        }
+        break;
+        case LS_MANUAL:
+        {
+            sprVacuum = olc::Sprite("assets/gfx/kirboVacuum00.png");;
+            sprLaunchJesusCross = olc::Sprite("assets/gfx/kirbolaunchingcross04.png");
+            sprJesusCross = olc::Sprite("assets/gfx/jesuscross.png");
+            sprSlapAttack = olc::Sprite("assets/gfx/slap02.png");
+            sprJump = olc::Sprite("assets/gfx/kirboJump.png");
+            sprFly = olc::Sprite("assets/gfx/kirboFlying00.png");
+            sprCameraDown = olc::Sprite("assets/gfx/cameraDown.png");
+            manual = new cManual(this,
+                                 &sprVacuum,
+                                 &sprLaunchJesusCross,
+                                 &sprJesusCross,
+                                 &sprSlapAttack,
+                                 &sprJump,
+                                 &sprFly,
+                                 &sprCameraDown);
+
+            UpdateProgressBar("Loading 27%");
 
             nLoadingState = LS_LEVELSTART;
         }
@@ -531,7 +575,14 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
         ActivateShakeEffect(true, 40, 40);
     }
 
-    TransitionTo("GS_LEVELSTART", true, false);
+    if (worldMap->GetSelectedLevel() == 0)
+    {
+        TransitionTo("GS_MANUAL", true, false);
+    }
+    else
+    {
+        TransitionTo("GS_LEVELSTART", true, false);
+    }
 
     return true;
 }
@@ -1231,6 +1282,7 @@ void OneLoneCoder_Platformer::SetGameState(std::string gameState)
 	if		(gameState == "GS_LOADING")		  nGameState = GS_LOADING;
     else if (gameState == "GS_TITLE")		  nGameState = GS_TITLE;
     else if (gameState == "GS_MAIN")		  nGameState = GS_MAIN;
+    else if (gameState == "GS_MANUAL")	      nGameState = GS_MANUAL;
     else if (gameState == "GS_LEVELSTART")	  nGameState = GS_LEVELSTART;
     else if (gameState == "GS_LOADLEVEL")	  nGameState = GS_LOADLEVEL;
     else if (gameState == "GS_WORLDMAP")	  nGameState = GS_WORLDMAP;
@@ -2166,4 +2218,19 @@ void OneLoneCoder_Platformer::DrawGame(float fElapsedTime, float angle, float of
         HUD->DamageBoost(this, decSpecialTiles);
     if (player->HasDefenseBooster())
         HUD->DefenseBoost(this, decSpecialTiles);
+}
+
+olc::Sprite* OneLoneCoder_Platformer::GetLoadedSprite(std::string spr)
+{
+    if (spr == "controllerA") return &sprA;
+    if (spr == "controllerB") return &sprB;
+    if (spr == "controllerX") return &sprX;
+    if (spr == "controllerY") return &sprY;
+    if (spr == "controllerP") return &sprPause;
+    if (spr == "controllerU") return &sprUp;
+    if (spr == "controllerD") return &sprDown;
+    if (spr == "controllerL") return &sprLeft;
+    if (spr == "controllerR") return &sprRight;
+
+    if (spr == "ControlsMenuBckGrd") return &sprControlsMenu;
 }

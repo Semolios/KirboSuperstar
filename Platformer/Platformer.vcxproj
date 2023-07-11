@@ -198,6 +198,7 @@
     <ClCompile Include="Platformer_ItemTomato.cpp" />
     <ClCompile Include="Platformer_Level.cpp" />
     <ClCompile Include="Platformer_DynamicMovingPlatformHorSine.cpp" />
+    <ClCompile Include="Platformer_Manual.cpp" />
     <ClCompile Include="Platformer_PauseMenu.cpp" />
     <ClCompile Include="Platformer_Player.cpp" />
     <ClCompile Include="Platformer_Hitbox.cpp" />
@@ -258,6 +259,7 @@
     <ClInclude Include="Platformer_ItemTomato.h" />
     <ClInclude Include="Platformer_Level.h" />
     <ClInclude Include="Platformer_DynamicMovingPlatformHorSine.h" />
+    <ClInclude Include="Platformer_Manual.h" />
     <ClInclude Include="Platformer_PauseMenu.h" />
     <ClInclude Include="Platformer_Player.h" />
     <ClInclude Include="Platformer_Hitbox.h" />

@@ -33,6 +33,7 @@
 #include "Platformer_HUD.h"
 #include "Platformer_Level.h"
 #include "Platformer_LevelStart.h"
+#include "Platformer_Manual.h"
 #include "Platformer_PauseMenu.h"
 #include "Platformer_Player.h"
 #include "Platformer_SelectMenu.h"
@@ -45,6 +46,7 @@
 class cCamera;
 class cControlsMenu;
 class cCreditsMenu;
+class cManual;
 class cPauseMenu;
 class cPlayer;
 class cScreenModeMenu;
@@ -180,6 +182,7 @@ public:
 	std::string ToStr(std::wstring str);
 	void UpdateGame(float fElapsedTime, float* angle, float* offsetX, float* offsetY);
 	void DrawGame(float fElapsedTime, float angle, float offsetX, float offsetY);
+	olc::Sprite* GetLoadedSprite(std::string spr);
 
 private:
 	// Constant values
@@ -332,6 +335,16 @@ private:
 	cLevelStart* levelStart;
 	int levelStartAnim = 0;
 
+	// Manual Screen
+	olc::Sprite sprVacuum;
+	olc::Sprite sprLaunchJesusCross;
+	olc::Sprite sprJesusCross;
+	olc::Sprite sprSlapAttack;
+	olc::Sprite sprJump;
+	olc::Sprite sprFly;
+	olc::Sprite sprCameraDown;
+	cManual* manual;
+
 	// End Screen
 	olc::Sprite sprEndScreen;
 	cEndScreen* endScreen;
@@ -390,7 +403,6 @@ private:
 	const int	nTileHeight = 64;
 	cAnimator	animPlayer;
 	olc::Sprite sprPlayer;
-	olc::Sprite sprSlap;
 	olc::Decal* decPlayer;
 
 	// Ennemies
@@ -455,6 +467,7 @@ private:
 		LS_MECHANISMS,
 		LS_TITLE,
 		LS_WORLDMAP,
+		LS_MANUAL,
 		LS_LEVELSTART,
 		LS_ENDSCREEN,
 		LS_PAUSEMENU,
@@ -478,6 +491,7 @@ private:
 		GS_LOADING,
 		GS_TITLE,
 		GS_MAIN,
+		GS_MANUAL,
 		GS_LEVELSTART,
 		GS_LOADLEVEL,
 		GS_WORLDMAP,
@@ -497,6 +511,7 @@ protected:
 	bool OnUserCreate() override;
 	bool OnUserUpdate(float fElapsedTime) override;
 
+	bool GameState_Manual(float fElapsedTime);
 	bool GameState_LevelStart(float fElapsedTime);
 	bool GameState_SplashScreen(float fElapsedTime);
 	bool GameState_Loading(float fElapsedTime);
