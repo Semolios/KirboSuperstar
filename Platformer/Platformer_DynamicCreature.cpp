@@ -142,7 +142,7 @@ void cDynamicCreature::GeneratePickUp()
     if (bCanGeneratePickUp)
     {
         int generatePickUp = rand() % 10;
-        //if (generatePickUp == 0 || bAlwaysGeneratePickUp)
+        if (generatePickUp == 0 || bAlwaysGeneratePickUp)
         {
             engine->AddProjectile(px, py, true, 0.0f, 0.0f, 30, "pickup", true, 0, true, true, 0, false, 0.0f, "itemPicked", false, "", true, "", 0.0f, true);
         }
