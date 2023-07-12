@@ -9,6 +9,7 @@ bool OneLoneCoder_Platformer::OnUserCreate()
 {
     // Init Decals
     decPlayer = new olc::Decal(&sprPlayer);
+    decDoorUp = new olc::Decal(&sprDoorUp);
     decBackground = new olc::Decal(&sprBackground);
     decParallax1 = new olc::Decal(&sprParallax1);
     decParallax2 = new olc::Decal(&sprParallax2);
@@ -148,7 +149,10 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
             sprSpecialTiles = olc::Sprite();
             sprGrdTiles = olc::Sprite();
             sprDoor = olc::Sprite("assets/gfx/bossDoor.png");
+            sprDoorUp = olc::Sprite("assets/gfx/doorUp.png");
+            
             decDoor->Update();
+            decDoorUp->Update();
 
             level->LoadLevelsList();
             level->LoadBossesList();
@@ -2204,6 +2208,9 @@ void OneLoneCoder_Platformer::DrawGame(float fElapsedTime, float angle, float of
         object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
     }
 
+    // Draw HUD if player close to a door
+    player->DrawDoorCommand(level, this, camera->GetOffsetX(), camera->GetOffsetY());
+
     // Draw Player
     player->UpdateInvulnerability(fElapsedTime, this);
     player->DrawKirbo((player->GetPosX() - camera->GetOffsetX()) * nTileWidth + (nTileWidth / 2) + offsetX, (player->GetPosY() - camera->GetOffsetY()) * nTileHeight + (nTileHeight / 2) + offsetY, angle, player->GetFaceDir(), this, decPlayer);
@@ -2233,4 +2240,11 @@ olc::Sprite* OneLoneCoder_Platformer::GetLoadedSprite(std::string spr)
     if (spr == "controllerR") return &sprRight;
 
     if (spr == "ControlsMenuBckGrd") return &sprControlsMenu;
+
+    if (spr == "doorUp") return &sprDoorUp;
+}
+
+olc::Decal* OneLoneCoder_Platformer::GetLoadedDecal(std::string dec)
+{
+    if (dec == "doorUp") return decDoorUp;
 }

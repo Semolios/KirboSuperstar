@@ -91,6 +91,8 @@ public:
 	void ChangeAnimation(std::string animation, olc::Sprite* playerSprite, olc::Decal* playerDecal);
 	void SetVisible(bool visible);
 	void ChangePosAfterTP();
+	void DrawDoorCommand(cLevel* lvl, OneLoneCoder_Platformer* engine, float cameraOffsetX, float cameraOffsetY);
+	void DoorCommandPosition(int posX, int posY, OneLoneCoder_Platformer* engine, float cameraOffsetX, float cameraOffsetY);
 
 	// Item Pick-up functions
 	bool IsCollectibleItem(wchar_t c);

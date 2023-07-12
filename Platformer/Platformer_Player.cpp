@@ -1438,6 +1438,38 @@ void cPlayer::ChangePosAfterTP()
 	}
 }
 
+void cPlayer::DrawDoorCommand(cLevel* lvl, OneLoneCoder_Platformer* engine, float cameraOffsetX, float cameraOffsetY)
+{
+	if (lvl->GetTile(fPosX + 0.5f, fPosY + 0.5f) == L'w' && bOnGround)
+	{
+		DoorCommandPosition((int)(fPosX + 0.5f), (int)(fPosY + 0.5f), engine, cameraOffsetX, cameraOffsetY);
+	}
+
+	for (auto& TP : engine->GetCloseTeleport(fPosX, fPosY))
+	{
+		if (cHitbox::ShapeOverlap_DIAG(hitbox, TP->GetHitbox()) && fWaitBeforeReenterDoor <= 0.0f)
+		{
+			DoorCommandPosition((int)(TP->GetPX()), (int)(TP->GetPY() + 1), engine, cameraOffsetX, cameraOffsetY);
+		}
+	}
+
+	for (auto& TP : engine->GetCloseTeleportDest(fPosX, fPosY))
+	{
+		if (cHitbox::ShapeOverlap_DIAG(hitbox, TP->GetDestHitbox()) && fWaitBeforeReenterDoor <= 0.0f)
+		{
+			DoorCommandPosition((int)(TP->GetDestX()), (int)(TP->GetDestY() + 1), engine, cameraOffsetX, cameraOffsetY);
+		}
+	}
+}
+
+void cPlayer::DoorCommandPosition(int posX, int posY, OneLoneCoder_Platformer* engine, float cameraOffsetX, float cameraOffsetY)
+{
+	olc::vf2d sprPos;
+	sprPos.x = (posX - cameraOffsetX) * engine->GetTileWidth();
+	sprPos.y = (posY - cameraOffsetY) * engine->GetTileHeight() - engine->GetTileHeight();
+	engine->DrawDecal(sprPos, engine->GetLoadedDecal("doorUp"));
+}
+
 bool cPlayer::IsCollectibleItem(wchar_t c)
 {
 	return c == L't' || c == L'c' || c == L's' || c == L'd' || c == L'x';

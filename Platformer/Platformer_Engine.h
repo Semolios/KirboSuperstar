@@ -183,6 +183,7 @@ public:
 	void UpdateGame(float fElapsedTime, float* angle, float* offsetX, float* offsetY);
 	void DrawGame(float fElapsedTime, float angle, float offsetX, float offsetY);
 	olc::Sprite* GetLoadedSprite(std::string spr);
+	olc::Decal* GetLoadedDecal(std::string dec);
 
 private:
 	// Constant values
@@ -206,12 +207,14 @@ private:
 	olc::Sprite sprSpecialTiles;
 	olc::Sprite sprGrdTiles;
 	olc::Sprite sprDoor;
+	olc::Sprite sprDoorUp;
 	olc::Decal* decBackground;
 	olc::Decal* decParallax1;
 	olc::Decal* decParallax2;
 	olc::Decal* decSpecialTiles;
 	olc::Decal* decGrdTiles;
 	olc::Decal* decDoor;
+	olc::Decal* decDoorUp;
 
 	// Sounds
 	olc::sound::WaveEngine waveEngine;
