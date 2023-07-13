@@ -563,6 +563,7 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["gasCooker"].push_back(new olc::Sprite("assets/gfx/gasCooker.png"));
 	mapPlatforms["entei"].push_back(new olc::Sprite("assets/gfx/entei00.png"));
 	mapPlatforms["entei"].push_back(new olc::Sprite("assets/gfx/entei01.png"));
+	mapPlatforms["elementsDirections"].push_back(new olc::Sprite("assets/gfx/elementsDirections.png"));
 	// boss 6
 	mapPlatforms["waterMark"].push_back(new olc::Sprite("assets/gfx/waterMark00.png"));
 	mapPlatforms["waterMark"].push_back(new olc::Sprite("assets/gfx/waterMark01.png"));
@@ -1092,6 +1093,7 @@ std::map<std::string, std::vector<olc::Decal*>> cDynamicMovingPlatform::LoadMovi
 	mapDecPlatforms["entei"].push_back(new olc::Decal(mapPlatforms["entei"][1]));
 	mapDecPlatforms["entei"].push_back(new olc::Decal(mapPlatforms["entei"][1]));
 	mapDecPlatforms["entei"].push_back(new olc::Decal(mapPlatforms["entei"][1]));
+	mapDecPlatforms["elementsDirections"].push_back(new olc::Decal(mapPlatforms["elementsDirections"][0]));
 	// boss 6
 	mapDecPlatforms["waterMark"].push_back(new olc::Decal(mapPlatforms["waterMark"][0]));
 	mapDecPlatforms["waterMark"].push_back(new olc::Decal(mapPlatforms["waterMark"][0]));

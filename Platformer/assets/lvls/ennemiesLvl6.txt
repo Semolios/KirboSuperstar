@@ -100,10 +100,7 @@ scarfy,179,40
 bladeKnight,81,8
 bladeKnight,83,1
 bladeKnight,91,60
-bladeKnight,97,29
 bladeKnight,97,60
-bladeKnight,99,29
-bladeKnight,101,29
 bladeKnight,111,5
 bladeKnight,131,5
 bladeKnight,137,5
