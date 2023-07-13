@@ -1,5 +1,5 @@
 --WADDLE DEES
-waddleDee,7,3
+waddleDee,10,3
 waddleDee,35,9
 waddleDee,92,9
 waddleDee,100,9
@@ -37,8 +37,8 @@ brontoBurt,3.0,147,1
 brontoBurt,3.0,153,7
 brontoBurt,3.0,157,1
 brontoBurt,3.0,157,4
-brontoBurt,5.0,230,7
-brontoBurt,5.0,245,12
+brontoBurt,5.0,233,7
+brontoBurt,5.0,248,12
 brontoBurt,5.0,247,2
 brontoBurt,5.0,251,3
 --BOMBERS
