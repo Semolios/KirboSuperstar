@@ -753,7 +753,10 @@ void cPlayer::CheckHole(cLevel* lvl, OneLoneCoder_Platformer* engine, olc::Sprit
 	{
 		if (!bDead)
 			engine->PlaySample("kirboHit");
-		Kill(playerSprite, playerDecal);
+		
+		fVelY = -10.0f;
+		if(IsAttackable())
+            Damage(nullptr, engine, playerSprite, playerDecal);
 	}
 }
 
@@ -1218,7 +1221,7 @@ void cPlayer::Damage(cDynamic* object, OneLoneCoder_Platformer* engine, olc::Spr
 	}
 	else
 	{
-		fHealth -= 4; // Crushed damage
+		fHealth -= 3; // Crushed and hole damages
 	}
 
 	if (fHealth <= 0.0f)
