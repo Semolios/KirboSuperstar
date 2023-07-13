@@ -156,6 +156,8 @@ public:
 	void PlayerGetCandy(float candyTime);
 	void BuffPlayerDamage();
 	void BuffPlayerDefense();
+	void ProjectPlayer(float vx, float vy);
+	void StopProjectPlayer();
 
 	// Controller functions
 	ControllerManager* GetController();

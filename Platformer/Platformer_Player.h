@@ -93,6 +93,7 @@ public:
 	void ChangePosAfterTP();
 	void DrawDoorCommand(cLevel* lvl, OneLoneCoder_Platformer* engine, float cameraOffsetX, float cameraOffsetY);
 	void DoorCommandPosition(int posX, int posY, OneLoneCoder_Platformer* engine, float cameraOffsetX, float cameraOffsetY);
+	void SetProjected(bool projected);
 
 	// Item Pick-up functions
 	bool IsCollectibleItem(wchar_t c);
@@ -211,6 +212,7 @@ private:
 	bool bInvincibleBlink = true;
 	bool bVacuumInvincible = false;
 	bool bExplosion = false;
+	bool bProjected = false;
 	int nDmgBoost = 1;
 	int nDefBoost = 1;
 

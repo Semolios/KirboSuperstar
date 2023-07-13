@@ -462,6 +462,15 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 				{
 					nGraphicCounter = nSpitKirboFrame;
 
+					if (fBehaviourTimer <= fProjectedTime)
+					{
+						engine->ProjectPlayer((nFaceDir ? fProjectionSpeed : -fProjectionSpeed), 0.0f);
+					}
+					else
+					{
+						engine->StopProjectPlayer();
+					}
+
 					if (fBehaviourTimer >= fSpitKirboTime)
 						ChangeState(AI_MOVING);
 				}

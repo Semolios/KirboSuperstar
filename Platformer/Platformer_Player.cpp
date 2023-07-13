@@ -641,10 +641,13 @@ void cPlayer::StopAnyAction()
 
 void cPlayer::ClampVelocities()
 {
-	if (fVelX > cfMaxVelX)  fVelX = cfMaxVelX;
-	if (fVelX < -cfMaxVelX) fVelX = -cfMaxVelX;
-	if (fVelY > cfMaxVelY)  fVelY = cfMaxVelY;
-	if (fVelY < -cfMaxVelY) fVelY = -cfMaxVelY;
+    if (!bProjected)
+    {
+        if (fVelX > cfMaxVelX)  fVelX = cfMaxVelX;
+        if (fVelX < -cfMaxVelX) fVelX = -cfMaxVelX;
+        if (fVelY > cfMaxVelY)  fVelY = cfMaxVelY;
+        if (fVelY < -cfMaxVelY) fVelY = -cfMaxVelY;
+    }
 
 	if (bFlying)
 	{
@@ -1471,6 +1474,11 @@ void cPlayer::DoorCommandPosition(int posX, int posY, OneLoneCoder_Platformer* e
 	sprPos.x = (posX - cameraOffsetX) * engine->GetTileWidth();
 	sprPos.y = (posY - cameraOffsetY) * engine->GetTileHeight() - engine->GetTileHeight();
 	engine->DrawDecal(sprPos, engine->GetLoadedDecal("doorUp"));
+}
+
+void cPlayer::SetProjected(bool projected)
+{
+	bProjected = projected;
 }
 
 bool cPlayer::IsCollectibleItem(wchar_t c)

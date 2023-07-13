@@ -1558,6 +1558,17 @@ void OneLoneCoder_Platformer::BuffPlayerDefense()
     player->SetDefenseBooster(2);
 }
 
+void OneLoneCoder_Platformer::ProjectPlayer(float vx, float vy)
+{
+    player->SetVelocities(vx, vy);
+    player->SetProjected(true);
+}
+
+void OneLoneCoder_Platformer::StopProjectPlayer()
+{
+    player->SetProjected(false);
+}
+
 ControllerManager* OneLoneCoder_Platformer::GetController()
 {
     return &controller;

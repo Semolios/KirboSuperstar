@@ -220,6 +220,8 @@ private:
 	float fSwallowKirboTime = 1.0f;
 	float fSpitKirboTime = 1.0f;
 	float fVacuumSpeed = 5.0f;
+	float fProjectedTime = 0.25f;
+	float fProjectionSpeed = 20.0f;
 
 	int nPrepareVacuumFrame = 0;
 	int nFirstFrameVacuum = 1;
