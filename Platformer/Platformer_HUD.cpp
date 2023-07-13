@@ -22,11 +22,11 @@ void cHUD::HealthPoints(olc::PixelGameEngine* gfx, olc::Decal* healthPoint, int 
 
 void cHUD::BossHealthBar(olc::PixelGameEngine* gfx, olc::Decal* bossHealthBar, std::vector<cDynamicCreature*> vecEnnemies)
 {
-	// Health points of All ennemies in the arena
+	// Health points of the boss
 	int nBossHP = 0;
-	for (auto& dyn : vecEnnemies)
+	if (vecEnnemies.size() != 0)
 	{
-		nBossHP += dyn->GetHealth();
+		nBossHP = vecEnnemies[0]->GetHealth();
 	}
 
 	// Health

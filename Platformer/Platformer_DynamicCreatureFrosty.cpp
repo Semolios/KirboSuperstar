@@ -4,7 +4,7 @@
 
 OneLoneCoder_Platformer* cDynamicCreatureFrosty::engine = nullptr;
 
-cDynamicCreatureFrosty::cDynamicCreatureFrosty(cLevel* l) : cDynamicCreature("frosty", cAssets::get().GetSprite("frosty"), 8)
+cDynamicCreatureFrosty::cDynamicCreatureFrosty(cLevel* l) : cDynamicCreatureSpawnerBoss("frosty", cAssets::get().GetSprite("frosty"), 8)
 {
 	fDynWidth = 128.0f;
 	fDynHeight = 128.0f;
@@ -229,6 +229,8 @@ void cDynamicCreatureFrosty::Behaviour(float fElapsedTime, float playerX, float 
 	}
 
 	UpdateTimers();
+
+	UpdateSpawn(fElapsedTime);
 
 	nAIState = nAINextState;
 }

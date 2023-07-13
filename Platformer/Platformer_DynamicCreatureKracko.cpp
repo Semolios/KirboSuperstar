@@ -4,7 +4,7 @@
 
 OneLoneCoder_Platformer* cDynamicCreatureKracko::engine = nullptr;
 
-cDynamicCreatureKracko::cDynamicCreatureKracko(cLevel* l) : cDynamicCreature("kracko", cAssets::get().GetSprite("kracko"), 16)
+cDynamicCreatureKracko::cDynamicCreatureKracko(cLevel* l) : cDynamicCreatureSpawnerBoss("kracko", cAssets::get().GetSprite("kracko"), 16)
 {
 	fDynWidth = 192.0f;
 	fDynHeight = 128.0f;
@@ -313,6 +313,8 @@ void cDynamicCreatureKracko::Behaviour(float fElapsedTime, float playerX, float 
 	}
 
 	UpdateTimers();
+
+	UpdateSpawn(fElapsedTime);
 
 	nAIState = nAINextState;
 }

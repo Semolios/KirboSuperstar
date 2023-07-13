@@ -4,7 +4,7 @@
 
 OneLoneCoder_Platformer* cDynamicCreatureMrShineMrBright::engine = nullptr;
 
-cDynamicCreatureMrShineMrBright::cDynamicCreatureMrShineMrBright(cLevel* l) : cDynamicCreature("mrShineMrBright", cAssets::get().GetSprite("mrShineMrBright"), 16)
+cDynamicCreatureMrShineMrBright::cDynamicCreatureMrShineMrBright(cLevel* l) : cDynamicCreatureSpawnerBoss("mrShineMrBright", cAssets::get().GetSprite("mrShineMrBright"), 16)
 {
 	fDynWidth = 192.0f;
 	fDynHeight = 128.0f;
@@ -282,6 +282,8 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 	}
 
 	UpdateTimers();
+
+	UpdateSpawn(fElapsedTime);
 
 	nAIState = nAINextState;
 }

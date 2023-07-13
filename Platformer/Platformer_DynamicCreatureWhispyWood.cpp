@@ -4,7 +4,7 @@
 
 OneLoneCoder_Platformer* cDynamicCreatureWhispyWood::engine = nullptr;
 
-cDynamicCreatureWhispyWood::cDynamicCreatureWhispyWood(cLevel* l) : cDynamicCreature("whispyWood", cAssets::get().GetSprite("whispyWood"), 4)
+cDynamicCreatureWhispyWood::cDynamicCreatureWhispyWood(cLevel* l) : cDynamicCreatureSpawnerBoss("whispyWood", cAssets::get().GetSprite("whispyWood"), 4)
 {
 	fDynWidth = 132.0f; // cheating a little bit so the player can't stay behind whispy wood
 	fDynHeight = 256.0f;
@@ -159,6 +159,8 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 		engine->WindEffect(0.0f, 0.0f, false);
 
 	UpdateTimers();
+
+	UpdateSpawn(fElapsedTime);
 
 	nAIState = nAINextState;
 }

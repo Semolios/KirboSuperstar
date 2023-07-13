@@ -3,14 +3,14 @@
 
 #pragma once
 
-#include "Platformer_DynamicCreature.h"
+#include "Platformer_DynamicCreatureSpawnerBoss.h"
 #include "Platformer_Assets.h"
 
 #include <cTime>
 
 class OneLoneCoder_Platformer;
 
-class cDynamicCreatureMrShineMrBright : public cDynamicCreature
+class cDynamicCreatureMrShineMrBright : public cDynamicCreatureSpawnerBoss
 {
 public:
 	cDynamicCreatureMrShineMrBright(cLevel* l);

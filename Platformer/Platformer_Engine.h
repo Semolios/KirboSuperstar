@@ -177,6 +177,8 @@ public:
 
 	// Ennemies
 	std::vector<cDynamicCreature*> GetCloseEnnemies(float px, float py);
+	void AddNewWaddleDee(int px, int py, bool alwaysGeneratePickUp);
+	void NukeAllEnnemies();
 
 	// Other
 	std::string ToStr(std::wstring str);

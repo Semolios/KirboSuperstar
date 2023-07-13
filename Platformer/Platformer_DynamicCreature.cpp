@@ -437,5 +437,7 @@ void cDynamicCreature::ExplodeAndDie(float fElapsedTime)
         nHealth = 0;
         bDead = true;
         engine->ActivateShakeEffect(false);
+
+        engine->NukeAllEnnemies();
     }
 }

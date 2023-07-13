@@ -406,6 +406,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
             cDynamicCreatureKracko::engine = this;
             cDynamicCreatureMrShineMrBright::engine = this;
             cDynamicCreatureRocky::engine = this;
+            cDynamicCreatureSpawnerBoss::engine = this;
             cDynamicCreatureSSTierMetaKnight::engine = this;
             cDynamicCreatureWaddleDee::engine = this;
             cDynamicCreatureWhispyWood::engine = this;
@@ -1888,6 +1889,23 @@ std::vector<cDynamicCreature*> OneLoneCoder_Platformer::GetCloseEnnemies(float p
         }
     }
     return closeEnnemies;
+}
+
+void OneLoneCoder_Platformer::AddNewWaddleDee(int px, int py, bool alwaysGeneratePickUp)
+{
+    cDynamicCreature* mob = new cDynamicCreatureWaddleDee(level);
+    vecEnnemies.push_back(mob);
+    mob->InitDecal();
+    mob->SetPosition(px, py);
+    mob->AlwaysGeneratePickUp(alwaysGeneratePickUp);
+}
+
+void OneLoneCoder_Platformer::NukeAllEnnemies()
+{
+    if (vecEnnemies.size() != 0)
+    {
+        vecEnnemies.clear();
+    }
 }
 
 std::string OneLoneCoder_Platformer::ToStr(std::wstring str)
