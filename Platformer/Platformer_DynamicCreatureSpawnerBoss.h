@@ -21,8 +21,10 @@ public:
     void UpdateSpawn(float fElapsedTime);
 
 protected:
+    const float cfWarningTimer = 18.0f;
     const float cfSpawnTimer = 20.0f;
     float fSpawnTime;
+    bool bCanSpawnWarning;
 };
 
 #endif // !DEF_SPAWNER_BOSS

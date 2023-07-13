@@ -457,6 +457,9 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicProjectile::LoadProject
 
 	mapProjectiles["pickup"].push_back(new olc::Sprite("assets/gfx/pickup.png"));
 
+	mapProjectiles["spawnWarning"].push_back(new olc::Sprite("assets/gfx/spawnWarning00.png"));
+	mapProjectiles["spawnWarning"].push_back(new olc::Sprite("assets/gfx/spawnWarning01.png"));
+
 	// Invisibles Projectiles (these ones are invisible because they are included in the ennemies animations
 	mapProjectiles["SSTierMKHiyayaAOE"].push_back(new olc::Sprite("assets/gfx/SSTierMKHiyayaAOE.png"));
 	mapProjectiles["kingDDDDownB"].push_back(new olc::Sprite("assets/gfx/kingDDDDownB.png"));
@@ -630,6 +633,13 @@ std::map<std::string, std::vector<olc::Decal*>> cDynamicProjectile::LoadProjecti
 	mapDecProjectiles["snow"].push_back(new olc::Decal(mapProjectiles["snow"][0]));
 
 	mapDecProjectiles["pickup"].push_back(new olc::Decal(mapProjectiles["pickup"][0]));
+
+	mapDecProjectiles["spawnWarning"].push_back(new olc::Decal(mapProjectiles["spawnWarning"][0]));
+	mapDecProjectiles["spawnWarning"].push_back(new olc::Decal(mapProjectiles["spawnWarning"][0]));
+	mapDecProjectiles["spawnWarning"].push_back(new olc::Decal(mapProjectiles["spawnWarning"][0]));
+	mapDecProjectiles["spawnWarning"].push_back(new olc::Decal(mapProjectiles["spawnWarning"][1]));
+	mapDecProjectiles["spawnWarning"].push_back(new olc::Decal(mapProjectiles["spawnWarning"][1]));
+	mapDecProjectiles["spawnWarning"].push_back(new olc::Decal(mapProjectiles["spawnWarning"][1]));
 
 	// Invisibles Projectiles (these ones are invisible because they are included in the ennemies animations
 	mapDecProjectiles["SSTierMKHiyayaAOE"].push_back(new olc::Decal(mapProjectiles["SSTierMKHiyayaAOE"][0]));
