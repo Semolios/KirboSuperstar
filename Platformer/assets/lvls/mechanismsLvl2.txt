@@ -18,7 +18,6 @@ Wind,117,12,down,down,3
 HarmfulBloc,109,1,spikeDown,2,1
 HarmfulBloc,110,1,spikeDown,2,1
 HarmfulBloc,111,1,spikeDown,2,1
-HarmfulBloc,115,12.8,spikeDown,2,1
 HarmfulBloc,122.8,7,spikeRight,2,1
 HarmfulBloc,125.2,10,spikeLeft,2,1
 HarmfulBloc,129,3,spikeBall,2,1
