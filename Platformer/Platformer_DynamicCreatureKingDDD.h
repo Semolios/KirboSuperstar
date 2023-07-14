@@ -296,6 +296,7 @@ private:
 	bool KirboIsInFrontOfDDD(float playerX, float playerY);
 	bool KirboIsBehindDDD(float playerX, float playerY);
 	void CrossPlatform();
+	void AllowDamagedAnimation();
 };
 
 #endif // !DEF_KINGDDD

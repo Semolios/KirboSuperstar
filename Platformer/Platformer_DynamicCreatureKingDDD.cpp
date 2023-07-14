@@ -191,6 +191,7 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 					engine->AddProjectile(px + fUpSmashPosX, py + fUpSmashPosY, false, 0.0f, 0.0f, fAOEsDuration, "kingDDDUpSmash", false, cnAttacksDmg, false);
 				}
 				SingleAnimation(nFirstFrameUpSmash, nLastFrameUpSmash);
+				AllowDamagedAnimation();
 			}
 			else
 			{
@@ -222,6 +223,7 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 						engine->AddProjectile(px + fRightSideSmashPosX, py + fSideSmashPosY, false, 0.0f, 0.0f, fAOEsDuration, "kingDDDRightSideSmash", false, cnAttacksDmg, false);
 				}
 				SingleAnimation(nFirstFrameSideSmash, nLastFrameSideSmash);
+				AllowDamagedAnimation();
 			}
 			else
 			{
@@ -250,6 +252,7 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 					engine->AddProjectile(px + fDownSmashPosX, py + fDownSmashPosY, false, 0.0f, 0.0f, fAOEsDuration, "kingDDDDownSmash", false, cnAttacksDmg, false);
 				}
 				SingleAnimation(nFirstFrameDownSmash, nLastFrameDownSmash);
+				AllowDamagedAnimation();
 			}
 			else
 			{
@@ -284,6 +287,7 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 					// spawn bouncy spike
 					engine->AddProjectile((nFaceDir == 0 ? fSpikeLeftPX : fSpikeRightPX) + px, py, false, nFaceDir == 0 ? fSpikeLeftVX : fSpikeRightVX, fSpikeVY, fSpikeDuration, "spike", true, cnAttacksDmg, true, true, 0, false, -3.0f, "", true, "spikeBallBounce");
 				}
+				AllowDamagedAnimation();
 			}
 			else
 			{
@@ -333,6 +337,7 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 						engine->PlaySample("kingDDDDownBAttack");
 						engine->AddProjectile(px + fDownBAOEPosX, py + fDownBAOEPosY, false, 0.0f, 0.0f, fAOEsDuration, "kingDDDDownB", false, cnAttacksDmg, false);
 					}
+					AllowDamagedAnimation();
 				}
 				else
 				{
@@ -837,4 +842,12 @@ bool cDynamicCreatureKingDDD::KirboIsBehindDDD(float playerX, float playerY)
 void cDynamicCreatureKingDDD::CrossPlatform()
 {
 	py += cfCrossPlatformGap;
+}
+
+void cDynamicCreatureKingDDD::AllowDamagedAnimation()
+{
+	if (fKnockBackTimer > 0.0f)
+	{
+		nGraphicState = DAMAGED;
+	}
 }
