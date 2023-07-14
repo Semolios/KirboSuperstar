@@ -212,3 +212,4 @@ Scenery,108.8,22,downArrow
 Scenery,119,47.2,rightArrow
 Scenery,127.2,44,upArrow
 Scenery,129,47.2,rightArrow
+Scenery,95,25.2,lvl6Exit

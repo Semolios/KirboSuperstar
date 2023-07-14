@@ -39,3 +39,4 @@ Scenery,69,4,flyingRedKoopaTroopa
 Scenery,213,5,rotatingHill
 Scenery,15,3.9,beaver
 Scenery,100,8.9,beaver
+Scenery,262,4.2,lvl2Exit

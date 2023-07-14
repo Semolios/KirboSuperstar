@@ -43,3 +43,4 @@ Scenery,55.8,101,upArrow2
 Scenery,54.2,89,upArrow
 Scenery,53.8,80,upArrow2
 Scenery,58.8,69,upArrow2
+Scenery,21,33,lvl4Exit

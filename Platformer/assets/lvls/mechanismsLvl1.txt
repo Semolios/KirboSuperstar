@@ -15,3 +15,4 @@ Scenery,177,2.1,bahbahbahbah
 Scenery,203.5,9.5,kremling
 Scenery,209.5,9.5,kremling
 Scenery,215.5,9.5,kremling
+Scenery,248,8,lvl1Exit

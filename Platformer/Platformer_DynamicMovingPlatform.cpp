@@ -314,6 +314,7 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["bahbahbahbah"].push_back(new olc::Sprite("assets/gfx/bahbahbahbah02.png"));
 	mapPlatforms["bahbahbahbah"].push_back(new olc::Sprite("assets/gfx/bahbahbahbah03.png"));
 	mapPlatforms["kremling"].push_back(new olc::Sprite("assets/gfx/kremling.png"));
+	mapPlatforms["lvl1Exit"].push_back(new olc::Sprite("assets/gfx/lvl1Exit.png"));
 	// boss 1
 	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros00.png"));
 	mapPlatforms["dancingPoppyBros"].push_back(new olc::Sprite("assets/gfx/dancingPoppyBros01.png"));
@@ -422,6 +423,7 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
     mapPlatforms["rotatingHill"].push_back(new olc::Sprite("assets/gfx/rotatingHill46.png"));
     mapPlatforms["rotatingHill"].push_back(new olc::Sprite("assets/gfx/rotatingHill47.png"));
     mapPlatforms["beaver"].push_back(new olc::Sprite("assets/gfx/beaver.png"));
+	mapPlatforms["lvl2Exit"].push_back(new olc::Sprite("assets/gfx/lvl2Exit.png"));
 	// boss 2
 	mapPlatforms["cappy"].push_back(new olc::Sprite("assets/gfx/cappy00.png"));
 	mapPlatforms["cappy"].push_back(new olc::Sprite("assets/gfx/cappy01.png"));
@@ -441,6 +443,7 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["RaphaelTheRaven"].push_back(new olc::Sprite("assets/gfx/RaphaelTheRaven.png"));
 	mapPlatforms["frozenPoppyBros"].push_back(new olc::Sprite("assets/gfx/frozenPoppyBros.png"));
 	mapPlatforms["speedrunnerLink"].push_back(new olc::Sprite("assets/gfx/speedrunnerLink.png"));
+	mapPlatforms["lvl3Exit"].push_back(new olc::Sprite("assets/gfx/lvl3Exit.png"));
 	// boss 3
 	mapPlatforms["nipperPlant"].push_back(new olc::Sprite("assets/gfx/nipperPlant.png"));
 	mapPlatforms["snowMount"].push_back(new olc::Sprite("assets/gfx/snowMount.png"));
@@ -465,6 +468,7 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["cloudConstruction6"].push_back(new olc::Sprite("assets/gfx/cloudConstruction6.png"));
 	mapPlatforms["pit"].push_back(new olc::Sprite("assets/gfx/pit00.png"));
 	mapPlatforms["pit"].push_back(new olc::Sprite("assets/gfx/pit01.png"));
+	mapPlatforms["lvl4Exit"].push_back(new olc::Sprite("assets/gfx/lvl4Exit.png"));
 	// boss 4
 	mapPlatforms["pikachu"].push_back(new olc::Sprite("assets/gfx/pikachu.png"));
 	mapPlatforms["electricalSocket"].push_back(new olc::Sprite("assets/gfx/electricalSocket.png"));
@@ -492,6 +496,7 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["olimarShip"].push_back(new olc::Sprite("assets/gfx/olimarShip02.png"));
 	mapPlatforms["olimarShip"].push_back(new olc::Sprite("assets/gfx/olimarShip03.png"));
 	mapPlatforms["olimar"].push_back(new olc::Sprite("assets/gfx/olimar.png"));
+	mapPlatforms["lvl5Exit"].push_back(new olc::Sprite("assets/gfx/lvl5Exit.png"));
 	// boss 5
 	mapPlatforms["MKSword"].push_back(new olc::Sprite("assets/gfx/MKSword.png"));
 	mapPlatforms["fence"].push_back(new olc::Sprite("assets/gfx/fence.png"));
@@ -564,6 +569,7 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["entei"].push_back(new olc::Sprite("assets/gfx/entei00.png"));
 	mapPlatforms["entei"].push_back(new olc::Sprite("assets/gfx/entei01.png"));
 	mapPlatforms["elementsDirections"].push_back(new olc::Sprite("assets/gfx/elementsDirections.png"));
+	mapPlatforms["lvl6Exit"].push_back(new olc::Sprite("assets/gfx/lvl6Exit.png"));
 	// boss 6
 	mapPlatforms["waterMark"].push_back(new olc::Sprite("assets/gfx/waterMark00.png"));
 	mapPlatforms["waterMark"].push_back(new olc::Sprite("assets/gfx/waterMark01.png"));
@@ -666,6 +672,7 @@ std::map<std::string, std::vector<olc::Decal*>> cDynamicMovingPlatform::LoadMovi
 	mapDecPlatforms["bahbahbahbah"].push_back(new olc::Decal(mapPlatforms["bahbahbahbah"][2]));
 	mapDecPlatforms["bahbahbahbah"].push_back(new olc::Decal(mapPlatforms["bahbahbahbah"][3]));
 	mapDecPlatforms["kremling"].push_back(new olc::Decal(mapPlatforms["kremling"][0]));
+	mapDecPlatforms["lvl1Exit"].push_back(new olc::Decal(mapPlatforms["lvl1Exit"][0]));
 	// boss 1
 	mapDecPlatforms["dancingPoppyBros"].push_back(new olc::Decal(mapPlatforms["dancingPoppyBros"][0]));
 	mapDecPlatforms["dancingPoppyBros"].push_back(new olc::Decal(mapPlatforms["dancingPoppyBros"][0]));
@@ -850,6 +857,7 @@ std::map<std::string, std::vector<olc::Decal*>> cDynamicMovingPlatform::LoadMovi
 	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][46]));
 	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][47]));
 	mapDecPlatforms["beaver"].push_back(new olc::Decal(mapPlatforms["beaver"][0]));
+	mapDecPlatforms["lvl2Exit"].push_back(new olc::Decal(mapPlatforms["lvl2Exit"][0]));
 	// boss 2
 	mapDecPlatforms["cappy"].push_back(new olc::Decal(mapPlatforms["cappy"][0]));
 	mapDecPlatforms["cappy"].push_back(new olc::Decal(mapPlatforms["cappy"][0]));
@@ -873,6 +881,7 @@ std::map<std::string, std::vector<olc::Decal*>> cDynamicMovingPlatform::LoadMovi
 	mapDecPlatforms["RaphaelTheRaven"].push_back(new olc::Decal(mapPlatforms["RaphaelTheRaven"][0]));
 	mapDecPlatforms["frozenPoppyBros"].push_back(new olc::Decal(mapPlatforms["frozenPoppyBros"][0]));
 	mapDecPlatforms["speedrunnerLink"].push_back(new olc::Decal(mapPlatforms["speedrunnerLink"][0]));
+	mapDecPlatforms["lvl3Exit"].push_back(new olc::Decal(mapPlatforms["lvl3Exit"][0]));
 	// boss 3
 	mapDecPlatforms["nipperPlant"].push_back(new olc::Decal(mapPlatforms["nipperPlant"][0]));
 	mapDecPlatforms["snowMount"].push_back(new olc::Decal(mapPlatforms["snowMount"][0]));
@@ -899,6 +908,7 @@ std::map<std::string, std::vector<olc::Decal*>> cDynamicMovingPlatform::LoadMovi
 	mapDecPlatforms["pit"].push_back(new olc::Decal(mapPlatforms["pit"][0]));
 	mapDecPlatforms["pit"].push_back(new olc::Decal(mapPlatforms["pit"][1]));
 	mapDecPlatforms["pit"].push_back(new olc::Decal(mapPlatforms["pit"][1]));
+	mapDecPlatforms["lvl4Exit"].push_back(new olc::Decal(mapPlatforms["lvl4Exit"][0]));
 	// boss 4
 	mapDecPlatforms["pikachu"].push_back(new olc::Decal(mapPlatforms["pikachu"][0]));
 	mapDecPlatforms["electricalSocket"].push_back(new olc::Decal(mapPlatforms["electricalSocket"][0]));
@@ -942,6 +952,7 @@ std::map<std::string, std::vector<olc::Decal*>> cDynamicMovingPlatform::LoadMovi
 	mapDecPlatforms["olimarShip"].push_back(new olc::Decal(mapPlatforms["olimarShip"][2]));
 	mapDecPlatforms["olimarShip"].push_back(new olc::Decal(mapPlatforms["olimarShip"][3]));
 	mapDecPlatforms["olimar"].push_back(new olc::Decal(mapPlatforms["olimar"][0]));
+	mapDecPlatforms["lvl5Exit"].push_back(new olc::Decal(mapPlatforms["lvl5Exit"][0]));
 	// boss 5
 	mapDecPlatforms["MKSword"].push_back(new olc::Decal(mapPlatforms["MKSword"][0]));
 	mapDecPlatforms["fence"].push_back(new olc::Decal(mapPlatforms["fence"][0]));
@@ -1094,6 +1105,7 @@ std::map<std::string, std::vector<olc::Decal*>> cDynamicMovingPlatform::LoadMovi
 	mapDecPlatforms["entei"].push_back(new olc::Decal(mapPlatforms["entei"][1]));
 	mapDecPlatforms["entei"].push_back(new olc::Decal(mapPlatforms["entei"][1]));
 	mapDecPlatforms["elementsDirections"].push_back(new olc::Decal(mapPlatforms["elementsDirections"][0]));
+	mapDecPlatforms["lvl6Exit"].push_back(new olc::Decal(mapPlatforms["lvl6Exit"][0]));
 	// boss 6
 	mapDecPlatforms["waterMark"].push_back(new olc::Decal(mapPlatforms["waterMark"][0]));
 	mapDecPlatforms["waterMark"].push_back(new olc::Decal(mapPlatforms["waterMark"][0]));

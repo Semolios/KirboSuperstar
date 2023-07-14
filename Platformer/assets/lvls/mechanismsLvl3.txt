@@ -19,9 +19,9 @@ Basic,174,18,ice,1
 Basic,176,8,ice,1
 Basic,177,22,ice,1
 Basic,180,15,ice,1
-Basic,182,23,ice,1
+Basic,181,23,ice,1
 Basic,184,11,ice,1
-Basic,184,20,ice,1
+Basic,184,19,ice,1
 Basic,186,3,ice,1
 Basic,186,14,ice,1
 Wall,68,26,iceWall,1,1,1,23,24
@@ -67,3 +67,4 @@ Scenery,130.8,15,downArrow
 Scenery,152.2,22,upArrow
 Scenery,159.8,5,downArrow
 Scenery,163,24.2,rightArrow
+Scenery,181.5,19.2,lvl3Exit

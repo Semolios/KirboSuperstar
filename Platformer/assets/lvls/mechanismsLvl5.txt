@@ -29,3 +29,4 @@ Scenery,116,6,samusShip
 Scenery,144,5,olimarShip
 Scenery,152,9.85,olimar
 Scenery,174,5,guileAndRyuTango
+Scenery,184,1.2,lvl5Exit
