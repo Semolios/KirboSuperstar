@@ -262,24 +262,27 @@ void cDynamicCreatureMrShineMrBright::Behaviour(float fElapsedTime, float player
 		break;
 	}
 
-	// Periodically spawn meteors at a random location
-	fMeteorsTimer += fElapsedTime;
+    if (nHealth > 0)
+    {
+        // Periodically spawn meteors at a random location
+        fMeteorsTimer += fElapsedTime;
 
-	if (fMeteorsTimer >= fMeteorsSpawnTime)
-	{
-		fMeteorsTimer = 0.0f;
+        if (fMeteorsTimer >= fMeteorsSpawnTime)
+        {
+            fMeteorsTimer = 0.0f;
 
-		// meteors spawn between 1 and 16 (MrShineAndMrBright position)
-		float fMeteorPosX = ((float)(rand() % cnMeteorPosXRange) / 10.0f) + cfMeteorPosXRangeOffset;
+            // meteors spawn between 1 and 16 (MrShineAndMrBright position)
+            float fMeteorPosX = ((float)(rand() % cnMeteorPosXRange) / 10.0f) + cfMeteorPosXRangeOffset;
 
-		int nChosenMeteor = rand() % 2;
+            int nChosenMeteor = rand() % 2;
 
-		// Spawn meteor
-		if (nChosenMeteor == 0)
-			engine->AddProjectile(fMeteorPosX, cfMeteorPosY, false, +cfMeteorVelX, cfMeteorVelY, cfMeteorDuration, "magmaBoulder", false, cnMeteorDmg, true, false);
-		else
-			engine->AddProjectile(fMeteorPosX, cfMeteorPosY, false, -cfMeteorVelX, cfMeteorVelY, cfMeteorDuration, "stars", false, cnMeteorDmg, true, false);
-	}
+            // Spawn meteor
+            if (nChosenMeteor == 0)
+                engine->AddProjectile(fMeteorPosX, cfMeteorPosY, false, +cfMeteorVelX, cfMeteorVelY, cfMeteorDuration, "magmaBoulder", false, cnMeteorDmg, true, false);
+            else
+                engine->AddProjectile(fMeteorPosX, cfMeteorPosY, false, -cfMeteorVelX, cfMeteorVelY, cfMeteorDuration, "stars", false, cnMeteorDmg, true, false);
+        }
+    }
 
 	UpdateTimers();
 

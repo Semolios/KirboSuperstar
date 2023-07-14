@@ -132,7 +132,7 @@ private:
 	const float cfMeteorPosXRangeOffset = 1.0f;
 	const float cfMeteorPosY = 0.0f;
 	const float cfMeteorDuration = 10.0f;
-	const float cfMeteorVelX = 5.0f;
+	const float cfMeteorVelX = 3.0f;
 	const float cfMeteorVelY = 5.0f;
 	const float cfMeteorSpawnTimeMaxHP = 2.0f;
 	const float cfMeteorSpawnTimeHiHP = 1.6f;
