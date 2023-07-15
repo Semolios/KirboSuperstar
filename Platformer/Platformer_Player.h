@@ -128,7 +128,8 @@ private:
 	const float cfJesusCrossVelX = 10.0f;				// X Velocity of the jesus cross
 	const float cfJesusCrossVelY = -7.0f;				// Y Velocity of the jesus cross
 	const float cfJesusCrossDuration = 10.0f;			// Duration of the jesus cross
-	const float cfVacuumAnimT = 4.0f;					// Number of frames when vacuum animation change to begin vacuum to vacuum
+	const float cfVacuumAnimT = 4.0f;					// Number of frames when vacuum animation change from begin vacuum to vacuum
+	const float cfGrabbingCameraAnimT = 6.0f;
 	const float cfDeadRotationAnimation = 15.0f;		// rotation speed of dead animation
 	const float cfExplosionAnimation = 3.0f;			// Explosion after 3 seconds
 	const float cfExplosionDuration = 0.528f;			// Duration of the explosion
@@ -190,6 +191,7 @@ private:
 	bool bInteracting = false;
 	bool bSlapping = false;
 	bool bVacuuming = false;
+	bool bHoldingCamera = false;
 	bool bLaunchingJesusCross = false;
 	bool bCanSpawnProjectile = false;
 	bool bDamaged = false;

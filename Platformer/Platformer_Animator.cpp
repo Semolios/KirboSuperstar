@@ -232,4 +232,13 @@ void cAnimator::LoadAnimations()
 
 	mapStates["joy"].push_back("assets/gfx/kirboJoy00.png");
 	mapStates["joy"].push_back("assets/gfx/kirboJoy01.png");
+
+	mapStates["grabCamera"].push_back("assets/gfx/kirboCamera00.png");
+	mapStates["grabCamera"].push_back("assets/gfx/kirboCamera00.png");
+	mapStates["grabCamera"].push_back("assets/gfx/kirboCamera01.png");
+	mapStates["grabCamera"].push_back("assets/gfx/kirboCamera01.png");
+	mapStates["grabCamera"].push_back("assets/gfx/kirboCamera02.png");
+	mapStates["grabCamera"].push_back("assets/gfx/kirboCamera02.png");
+
+	mapStates["holdCamera"].push_back("assets/gfx/kirboCamera03.png");
 }

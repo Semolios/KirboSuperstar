@@ -25,7 +25,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneL
 		if (engine->GetKey(engine->GetSavedControls("flyOrEnterDoor")).bHeld || engine->GetController()->GetButton(UP).bHeld || engine->GetController()->GetLeftStickY() > 0.5f)
 		{
 			bUsingFlyCmd = true;
-			if (!bInteracting && !bVacuuming)
+			if (!bInteracting && !bVacuuming && !bHoldingCamera)
 			{
 				if (IsEnteringDoor(lvl, engine))
 				{
@@ -69,27 +69,42 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneL
 			if ((engine->IsSolidTile(lvl->GetTile(fPosX + 0.0f,					fPosY + 1.0f)) ||
 				 engine->IsSolidTile(lvl->GetTile(fPosX + fCollisionUpperLimit, fPosY + 1.0f))) && bOnGround)
 			{
+				if (!bVacuuming && !bInteracting && !bHoldingCamera)
+				{
+					animPlayer->ChangeState("grabCamera", playerSprite, playerDecal);
+					bHoldingCamera = true;
+					fAnimationTimer = 0.0f;
+				}
+				bInteracting = true;
 				camera->LowerPosition();
 			}
 
 			// Moving platforms collision
 			for (auto& ptfm : engine->GetClosePlatforms(fPosX, fPosY))
 			{
-				if (ptfm->TopCollision(fPosX + fCollisionLowerLimit, fPosX + fCollisionUpperLimit, fPosY + 1.0f))
+				if (ptfm->TopCollision(fPosX + fCollisionLowerLimit, fPosX + fCollisionUpperLimit, fPosY + 0.8f))
 				{
+					if (!bVacuuming && !bInteracting && !bHoldingCamera)
+					{
+						animPlayer->ChangeState("grabCamera", playerSprite, playerDecal);
+						bHoldingCamera = true;
+						fAnimationTimer = 0.0f;
+					}
+					bInteracting = true;
 					camera->LowerPosition();
 				}
 			}
 		}
 		else
 		{
+			bHoldingCamera = false;
 			camera->RaisePosition();
 		}
 
 		// Go left
 		if (engine->GetKey(engine->GetSavedControls("moveLeft")).bHeld || engine->GetController()->GetButton(LEFT).bHeld || engine->GetController()->GetLeftStickX() < -0.25f)
 		{
-			if (!bInteracting && !bVacuuming)
+			if (!bInteracting && !bVacuuming && !bHoldingCamera)
 			{
 				// Init walking sound
 				engine->PlaySample("kirboWalk", false, true);
@@ -105,7 +120,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneL
 		// Go right
 		if (engine->GetKey(engine->GetSavedControls("moveRight")).bHeld || engine->GetController()->GetButton(RIGHT).bHeld || engine->GetController()->GetLeftStickX() > 0.25f)
 		{
-			if (!bInteracting && !bVacuuming)
+			if (!bInteracting && !bVacuuming && !bHoldingCamera)
 			{
 				// Init walking sound
 				engine->PlaySample("kirboWalk", false, true);
@@ -158,7 +173,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneL
 		// The more you hold, the higher you go
 		if (engine->GetKey(engine->GetSavedControls("jump")).bHeld || engine->GetController()->GetButton(A).bHeld)
 		{
-			if (!bInteracting && !bVacuuming)
+			if (!bInteracting && !bVacuuming && !bHoldingCamera)
 			{
 				if (bChargeJump)
 				{
@@ -244,7 +259,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneL
 			// can't Vacuum when player is attacking, swallowing or flying
 			if (!bFlying && !bSwallowing)
 			{
-				if (!bVacuuming && !bInteracting)
+				if (!bVacuuming && !bInteracting && !bHoldingCamera)
 				{
 					engine->PlaySample("beginVacuum");
 					animPlayer->ChangeState("begin_vacuum", playerSprite, playerDecal);
@@ -506,6 +521,15 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, float& angle, float& offset
 				if (!engine->IsSamplePlaying("beginVacuum"))
 					engine->PlaySample("vacuum", false, true);
 				animPlayer->ChangeState("vacuum", playerSprite, playerDecal);
+			}
+		}
+
+		// Holding camera
+		if (bHoldingCamera)
+		{
+			if (fAnimationTimer >= cfGrabbingCameraAnimT * animPlayer->fTimeBetweenFrames)
+			{
+				animPlayer->ChangeState("holdCamera", playerSprite, playerDecal);
 			}
 		}
 
