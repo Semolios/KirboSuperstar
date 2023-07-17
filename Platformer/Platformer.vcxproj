@@ -156,6 +156,7 @@
     <ClCompile Include="Platformer_Animator.cpp" />
     <ClCompile Include="Platformer_Assets.cpp" />
     <ClCompile Include="Platformer_Camera.cpp" />
+    <ClCompile Include="Platformer_CheckPoint.cpp" />
     <ClCompile Include="Platformer_ControlsMenu.cpp" />
     <ClCompile Include="Platformer_CreditsMenu.cpp" />
     <ClCompile Include="Platformer_Dynamic.cpp" />
@@ -218,6 +219,7 @@
     <ClInclude Include="Platformer_Animator.h" />
     <ClInclude Include="Platformer_Assets.h" />
     <ClInclude Include="Platformer_Camera.h" />
+    <ClInclude Include="Platformer_CheckPoint.h" />
     <ClInclude Include="Platformer_ControlsMenu.h" />
     <ClInclude Include="Platformer_CreditsMenu.h" />
     <ClInclude Include="Platformer_Dynamic.h" />

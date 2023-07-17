@@ -150,6 +150,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
             sprGrdTiles = olc::Sprite();
             sprDoor = olc::Sprite("assets/gfx/bossDoor.png");
             sprDoorUp = olc::Sprite("assets/gfx/doorUp.png");
+            checkPoint = new cCheckPoint();
             
             decDoor->Update();
             decDoorUp->Update();
@@ -579,6 +580,8 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
     {
         ActivateShakeEffect(true, 40, 40);
     }
+
+    checkPoint->Use(level, this, vecPlatforms);
 
     if (worldMap->GetSelectedLevel() == 0)
     {
@@ -1999,6 +2002,8 @@ void OneLoneCoder_Platformer::UpdateGame(float fElapsedTime, float* angle, float
     player->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY(), this);
 
     camera->SpawnSceneries(level, fElapsedTime, this);
+
+    checkPoint->Update(level, player, vecPlatforms);
 
     // Ennemies
     for (auto& object : vecEnnemies)

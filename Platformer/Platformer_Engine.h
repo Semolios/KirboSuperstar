@@ -7,6 +7,7 @@
 #include "Platformer_Animator.h"
 #include "Platformer_Assets.h"
 #include "Platformer_Camera.h"
+#include "Platformer_CheckPoint.h"
 #include "Platformer_ControlsMenu.h"
 #include "Platformer_SoundMenu.h"
 #include "Platformer_ScreenModeMenu.h"
@@ -44,6 +45,7 @@
 #include <Lmcons.h>
 
 class cCamera;
+class cCheckPoint;
 class cControlsMenu;
 class cCreditsMenu;
 class cManual;
@@ -205,6 +207,7 @@ private:
 
 	// Level storage
 	cLevel* level;
+	cCheckPoint* checkPoint;
 	olc::Sprite sprBackground;
 	olc::Sprite sprParallax1;
 	olc::Sprite sprParallax2;
