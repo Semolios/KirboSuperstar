@@ -1213,6 +1213,16 @@ olc::Sprite* cDynamicMovingPlatform::GetCurrentSprite()
 	return mapStates[nCurrentFrame]->sprite;
 }
 
+std::string cDynamicMovingPlatform::GetIdentifier()
+{
+	return sIdentifier;
+}
+
+void cDynamicMovingPlatform::SetIdentifier(std::string id)
+{
+	sIdentifier = id;
+}
+
 void cDynamicMovingPlatform::Behaviour(float fElapsedTime, float playerX, float playerY)
 {
 	// Depends on the type of platform

@@ -90,3 +90,13 @@ void cDynamicWall::DrawSwitch(float cameraX, float cameraY)
 		}
 	}
 }
+
+bool cDynamicWall::IsTriggered()
+{
+	return bTriggered;
+}
+
+void cDynamicWall::SetTriggered(bool triggered)
+{
+	bTriggered = triggered;
+}

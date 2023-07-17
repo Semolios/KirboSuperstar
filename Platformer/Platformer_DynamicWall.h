@@ -13,6 +13,8 @@ public:
 
 	void Behaviour(float fElapsedTime, float playerX, float playerY);
 	void DrawSwitch(float cameraX, float cameraY);
+	bool IsTriggered();
+	void SetTriggered(bool triggered);
 
 	static OneLoneCoder_Platformer* engine;
 

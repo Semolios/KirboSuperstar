@@ -236,7 +236,12 @@ bool cLevel::PopulateMechanisms(std::string levelName)
 			}
 			if (parts[0] == L"Wall")
 			{
-				engine->AddWall(std::stof(parts[1]), std::stof(parts[2]), engine->ToStr(parts[3]), parts[4], parts[5], parts[6], std::stof(parts[7]), std::stof(parts[8]));
+				std::string id = "";
+				if (parts.size() == 10)
+				{
+					id = engine->ToStr(parts[9]);
+				}
+				engine->AddWall(std::stof(parts[1]), std::stof(parts[2]), engine->ToStr(parts[3]), parts[4], parts[5], parts[6], std::stof(parts[7]), std::stof(parts[8]), id);
 			}
 			if (parts[0] == L"Ceiling")
 			{

@@ -12,11 +12,11 @@ Teleport,187,11.2,74.8,28.2,door
 Teleport,188,17.2,74.8,28.2,door
 Teleport,189,59.2,74.8,28.2,door
 ------ Return to Start point ------
-Wall,79,27,fountainWall,1,1,1,36,12
-Wall,82,27,fountainWall,1,1,1,185,12
-Wall,85,27,fountainWall,1,1,1,7,60
-Wall,88,27,fountainWall,1,1,1,186,60
-Wall,91,27,fountainWall,1,1,1,186,18
+Wall,79,27,fountainWall,1,1,1,36,12,door1
+Wall,82,27,fountainWall,1,1,1,185,12,door2
+Wall,85,27,fountainWall,1,1,1,7,60,door3
+Wall,88,27,fountainWall,1,1,1,186,60,door4
+Wall,91,27,fountainWall,1,1,1,186,18,door5
 Wall,65,16.2,fountainWall,1,1,1,5,28
 Wall,130,16,fountainWall,1,1,1,161,18
 Wall,20,10.2,fountainWall,1,1,1,31,2

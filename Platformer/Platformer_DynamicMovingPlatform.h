@@ -53,12 +53,17 @@ public:
 
 	olc::Sprite* GetCurrentSprite();
 
+	std::string GetIdentifier();
+	void SetIdentifier(std::string id);
+
 	virtual void Behaviour(float fElapsedTime, float playerX, float playerY);
 	virtual void LinkPtfm(cDynamicMovingPlatform* ptfm);
 	virtual bool IsLinkedToPreviousPtfm();
 
 protected:
 	std::vector<olc::Decal*> mapStates;
+
+	std::string sIdentifier;
 
 	// animation
 	int nCurrentFrame = 0;

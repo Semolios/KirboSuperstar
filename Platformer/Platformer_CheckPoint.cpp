@@ -23,12 +23,12 @@ void cCheckPoint::Use(cLevel* level, OneLoneCoder_Platformer* engine, std::vecto
     {
         switch (level->GetCurrentLvl())
         {
-            case 0: engine->SetKirboPositions(fLvl1PX, fLvl1PY); break;
-            case 1: engine->SetKirboPositions(fLvl2PX, fLvl2PY); break;
-            case 2: engine->SetKirboPositions(fLvl3PX, fLvl3PY); break;
-            case 3: engine->SetKirboPositions(fLvl4PX, fLvl4PY); break;
-            case 4: engine->SetKirboPositions(fLvl5PX, fLvl5PY); break;
-            case 5: ManageOpennedDoors(vecMecanisms);            break;
+            case 0: engine->SetKirboPositions(cfLvl1PX, cfLvl1PY); break;
+            case 1: engine->SetKirboPositions(cfLvl2PX, cfLvl2PY); break;
+            case 2: engine->SetKirboPositions(cfLvl3PX, cfLvl3PY); break;
+            case 3: engine->SetKirboPositions(cfLvl4PX, cfLvl4PY); break;
+            case 4: engine->SetKirboPositions(cfLvl5PX, cfLvl5PY); break;
+            case 5: ManageOpennedDoors(vecMecanisms);              break;
         }
     }
 }
@@ -54,21 +54,35 @@ bool cCheckPoint::CheckCondition(cLevel* level, cPlayer* player, std::vector<cDy
 {
     switch (level->GetCurrentLvl())
     {
-        case 0: return player->GetPosX() >= fLvl1PX || bCheckPoints[0]; break;
-        case 1: return player->GetPosX() >= fLvl2PX || bCheckPoints[1]; break;
-        case 2: return player->GetPosX() >= fLvl3PX || bCheckPoints[2]; break;
-        case 3: return player->GetPosY() <= fLvl4PY || bCheckPoints[3]; break;
-        case 4: return player->GetPosX() >= fLvl5PX || bCheckPoints[4]; break;
-        case 5: SaveDoorsStates(player); return true;                   break;
+        case 0: return player->GetPosX() >= cfLvl1PX || bCheckPoints[0]; break;
+        case 1: return player->GetPosX() >= cfLvl2PX || bCheckPoints[1]; break;
+        case 2: return player->GetPosX() >= cfLvl3PX || bCheckPoints[2]; break;
+        case 3: return player->GetPosY() <= cfLvl4PY || bCheckPoints[3]; break;
+        case 4: return player->GetPosX() >= cfLvl5PX || bCheckPoints[4]; break;
+        case 5: SaveDoorsStates(vecMecanisms); return true;              break;
     }
 }
 
-void cCheckPoint::SaveDoorsStates(cPlayer* player)
+void cCheckPoint::SaveDoorsStates(std::vector<cDynamicMovingPlatform*> vecMecanisms)
 {
-    // TODO save the doors states
+    for (auto& mec : vecMecanisms)
+    {
+        if (mec->GetIdentifier() == "door1") bOpenedDoors[0] = ((cDynamicWall*)mec)->IsTriggered();
+        if (mec->GetIdentifier() == "door2") bOpenedDoors[1] = ((cDynamicWall*)mec)->IsTriggered();
+        if (mec->GetIdentifier() == "door3") bOpenedDoors[2] = ((cDynamicWall*)mec)->IsTriggered();
+        if (mec->GetIdentifier() == "door4") bOpenedDoors[3] = ((cDynamicWall*)mec)->IsTriggered();
+        if (mec->GetIdentifier() == "door5") bOpenedDoors[4] = ((cDynamicWall*)mec)->IsTriggered();
+    }
 }
 
 void cCheckPoint::ManageOpennedDoors(std::vector<cDynamicMovingPlatform*> vecMecanisms)
 {
-    // TODO open the already checked doors
+    for (auto& mec : vecMecanisms)
+    {
+        if (mec->GetIdentifier() == "door1") ((cDynamicWall*)mec)->SetTriggered(bOpenedDoors[0]);
+        if (mec->GetIdentifier() == "door2") ((cDynamicWall*)mec)->SetTriggered(bOpenedDoors[1]);
+        if (mec->GetIdentifier() == "door3") ((cDynamicWall*)mec)->SetTriggered(bOpenedDoors[2]);
+        if (mec->GetIdentifier() == "door4") ((cDynamicWall*)mec)->SetTriggered(bOpenedDoors[3]);
+        if (mec->GetIdentifier() == "door5") ((cDynamicWall*)mec)->SetTriggered(bOpenedDoors[4]);
+    }
 }
