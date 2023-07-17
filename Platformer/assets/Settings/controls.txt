@@ -1,6 +1,6 @@
-vacuum=shift
-launchJesusCross=z
-slapAttack=d
+vacuum=1
+launchJesusCross=2
+slapAttack=3
 jump=space
 pause=p
 flyOrEnterDoor=up
