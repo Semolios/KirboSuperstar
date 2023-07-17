@@ -9,8 +9,8 @@ cDynamicCreatureScarfy::cDynamicCreatureScarfy(cLevel* l) : cDynamicCreature("sc
 	fSpriteOffsetX = -12.0f;
 	fSpriteOffsetY = -12.0f;
 	bFriendly = false;
-	nHealth = 1;
-	nHealthMax = 1;
+	nHealth = 3;
+	nHealthMax = 3;
 	level = l;
 	vx = 0;
 	bSolidVsMap = true;
