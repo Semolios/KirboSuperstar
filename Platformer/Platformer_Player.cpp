@@ -409,8 +409,11 @@ void cPlayer::Update(float fElapsedTime, OneLoneCoder_Platformer* engine, olc::S
 		fVelX += fDrag * fVelX * fElapsedTime;
 		if (bOnGround)
 		{
-			bFlying = false;
-			engine->StopSample("kirboFly");
+            if (bFlying)
+            {
+                bFlying = false;
+                engine->StopSample("kirboFly");
+            }
 
 			if (fabs(fVelX) < cfMinVelX)
 			{
@@ -431,7 +434,11 @@ void cPlayer::Update(float fElapsedTime, OneLoneCoder_Platformer* engine, olc::S
 			{
 				if (!bFlying)
 				{
-					engine->StopSample("kirboFly");
+                    if (bFlySoundPlaying)
+                    {
+                        bFlySoundPlaying = false;
+                        engine->StopSample("kirboFly");
+                    }
 
 					if (fVelY < 0)
 						animPlayer->ChangeState("jump", playerSprite, playerDecal);
@@ -440,6 +447,7 @@ void cPlayer::Update(float fElapsedTime, OneLoneCoder_Platformer* engine, olc::S
 				}
 				else
 				{
+					bFlySoundPlaying = true;
 					engine->PlaySample("kirboFly", false, true);
 				}
 			}

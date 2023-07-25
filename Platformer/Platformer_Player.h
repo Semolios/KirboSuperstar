@@ -215,6 +215,7 @@ private:
 	bool bVacuumInvincible = false;
 	bool bExplosion = false;
 	bool bProjected = false;
+	bool bFlySoundPlaying = false;
 	int nDmgBoost = 1;
 	int nDefBoost = 1;
 
