@@ -516,6 +516,7 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["deathPanel"].push_back(new olc::Sprite("assets/gfx/deathPanel.png"));
 	mapPlatforms["greatTree"].push_back(new olc::Sprite("assets/gfx/greatTree.png"));
 	mapPlatforms["greatBranch"].push_back(new olc::Sprite("assets/gfx/greatBranch.png"));
+	mapPlatforms["branches"].push_back(new olc::Sprite("assets/gfx/branches.png"));
 	mapPlatforms["groundGate"].push_back(new olc::Sprite("assets/gfx/groundGate.png"));
 	mapPlatforms["cave"].push_back(new olc::Sprite("assets/gfx/cave.png"));
 	mapPlatforms["diglett"].push_back(new olc::Sprite("assets/gfx/diglett.png"));
@@ -532,7 +533,10 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["mukUsedToxic"].push_back(new olc::Sprite("assets/gfx/mukUsedToxic02.png"));
 	mapPlatforms["mukUsedToxic"].push_back(new olc::Sprite("assets/gfx/mukUsedToxic03.png"));
 	mapPlatforms["mukUsedToxic"].push_back(new olc::Sprite("assets/gfx/mukUsedToxic04.png"));
+	mapPlatforms["golem"].push_back(new olc::Sprite("assets/gfx/golem.png"));
 	mapPlatforms["metalVent"].push_back(new olc::Sprite("assets/gfx/metalVent.png"));
+	mapPlatforms["wrench"].push_back(new olc::Sprite("assets/gfx/wrench.png"));
+	mapPlatforms["boltAndNut"].push_back(new olc::Sprite("assets/gfx/boltAndNut.png"));
 	mapPlatforms["abbath"].push_back(new olc::Sprite("assets/gfx/abbath.png"));
 	mapPlatforms["mettaton"].push_back(new olc::Sprite("assets/gfx/mettaton00.png"));
 	mapPlatforms["mettaton"].push_back(new olc::Sprite("assets/gfx/mettaton01.png"));
@@ -547,6 +551,7 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["waterFlow"].push_back(new olc::Sprite("assets/gfx/waterFlow00.png"));
 	mapPlatforms["waterFlow"].push_back(new olc::Sprite("assets/gfx/waterFlow01.png"));
 	mapPlatforms["waterFlow"].push_back(new olc::Sprite("assets/gfx/waterFlow02.png"));
+	mapPlatforms["vaporeon"].push_back(new olc::Sprite("assets/gfx/vaporeon.png"));
 	mapPlatforms["frisk"].push_back(new olc::Sprite("assets/gfx/frisk.png"));
 	mapPlatforms["kingZora"].push_back(new olc::Sprite("assets/gfx/kingZora.png"));
 	mapPlatforms["enguardeTheSwordfish"].push_back(new olc::Sprite("assets/gfx/enguardeTheSwordfish00.png"));
@@ -1014,6 +1019,7 @@ std::map<std::string, std::vector<olc::Decal*>> cDynamicMovingPlatform::LoadMovi
 	mapDecPlatforms["deathPanel"].push_back(new olc::Decal(mapPlatforms["deathPanel"][0]));
 	mapDecPlatforms["greatTree"].push_back(new olc::Decal(mapPlatforms["greatTree"][0]));
 	mapDecPlatforms["greatBranch"].push_back(new olc::Decal(mapPlatforms["greatBranch"][0]));
+	mapDecPlatforms["branches"].push_back(new olc::Decal(mapPlatforms["branches"][0]));
 	mapDecPlatforms["groundGate"].push_back(new olc::Decal(mapPlatforms["groundGate"][0]));
 	mapDecPlatforms["cave"].push_back(new olc::Decal(mapPlatforms["cave"][0]));
 	mapDecPlatforms["diglett"].push_back(new olc::Decal(mapPlatforms["diglett"][0]));
@@ -1034,7 +1040,10 @@ std::map<std::string, std::vector<olc::Decal*>> cDynamicMovingPlatform::LoadMovi
 	mapDecPlatforms["mukUsedToxic"].push_back(new olc::Decal(mapPlatforms["mukUsedToxic"][2]));
 	mapDecPlatforms["mukUsedToxic"].push_back(new olc::Decal(mapPlatforms["mukUsedToxic"][3]));
 	mapDecPlatforms["mukUsedToxic"].push_back(new olc::Decal(mapPlatforms["mukUsedToxic"][4]));
+	mapDecPlatforms["golem"].push_back(new olc::Decal(mapPlatforms["golem"][0]));
 	mapDecPlatforms["metalVent"].push_back(new olc::Decal(mapPlatforms["metalVent"][0]));
+	mapDecPlatforms["wrench"].push_back(new olc::Decal(mapPlatforms["wrench"][0]));
+	mapDecPlatforms["boltAndNut"].push_back(new olc::Decal(mapPlatforms["boltAndNut"][0]));
 	mapDecPlatforms["abbath"].push_back(new olc::Decal(mapPlatforms["abbath"][0]));
 	mapDecPlatforms["mettaton"].push_back(new olc::Decal(mapPlatforms["mettaton"][0]));
 	mapDecPlatforms["mettaton"].push_back(new olc::Decal(mapPlatforms["mettaton"][0]));
@@ -1061,6 +1070,7 @@ std::map<std::string, std::vector<olc::Decal*>> cDynamicMovingPlatform::LoadMovi
 	mapDecPlatforms["waterFlow"].push_back(new olc::Decal(mapPlatforms["waterFlow"][1]));
 	mapDecPlatforms["waterFlow"].push_back(new olc::Decal(mapPlatforms["waterFlow"][2]));
 	mapDecPlatforms["waterFlow"].push_back(new olc::Decal(mapPlatforms["waterFlow"][2]));
+	mapDecPlatforms["vaporeon"].push_back(new olc::Decal(mapPlatforms["vaporeon"][0]));
 	mapDecPlatforms["frisk"].push_back(new olc::Decal(mapPlatforms["frisk"][0]));
 	mapDecPlatforms["kingZora"].push_back(new olc::Decal(mapPlatforms["kingZora"][0]));
 	mapDecPlatforms["enguardeTheSwordfish"].push_back(new olc::Decal(mapPlatforms["enguardeTheSwordfish"][0]));
