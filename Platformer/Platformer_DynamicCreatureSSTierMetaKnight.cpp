@@ -41,6 +41,7 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 			fBehaviourTimer += fElapsedTime;
 
 			bCanSpawnAOE = true;
+			bWarning = true;
 			bUseTPAttack = false;
 
 			if (fBehaviourTimer >= fWaitingTime)
@@ -277,6 +278,12 @@ void cDynamicCreatureSSTierMetaKnight::Behaviour(float fElapsedTime, float playe
 			{
 				// stay invisible a little time
 				nGraphicCounter = nFirstFrameReappear;
+
+				if (bWarning)
+				{
+					bWarning = false;
+					engine->AddProjectile(fKirboPosX - 0.5f, fKirboPosY - 0.5f, true, 0.0f, 0.0f, 0.5f, "spawnWarning", false, 0, false, true, 0, false, 0.0f, "", false, "", true);
+				}
 			}
 			else if (fBehaviourTimer <= fWaitBeforeAttack + fAppearingTime)
 			{

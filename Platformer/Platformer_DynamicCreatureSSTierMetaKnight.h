@@ -29,14 +29,14 @@ private:
 	const int cnSSTierMKLowDmg = 2;
 
 	const float cfWaitingTimeMaxHp = 2.5f;
-	const float cfWaitingTimeHiHp = 2.0f;
-	const float cfWaitingTimeMiHp = 1.8f;
-	const float cfWaitingTimeLoHp = 1.5f;
+	const float cfWaitingTimeHiHp = 2.3f;
+	const float cfWaitingTimeMiHp = 2.1f;
+	const float cfWaitingTimeLoHp = 1.9f;
 
 	const float cfWaitBeforeAttackMaxHp = 1.0f;
-	const float cfWaitBeforeAttackHiHp = 0.8f;
-	const float cfWaitBeforeAttackMiHp = 0.7f;
-	const float cfWaitBeforeAttackLoHp = 0.5f;
+	const float cfWaitBeforeAttackHiHp = 0.9f;
+	const float cfWaitBeforeAttackMiHp = 0.8f;
+	const float cfWaitBeforeAttackLoHp = 0.7f;
 
 	const int cnHiHP = 70;
 	const int cnMiHP = 50;
@@ -63,7 +63,7 @@ private:
 	// Dash behaviour
 	float fKirboOnSameLine = 0.1f;
 	float fKirboIsFarPoint = 3.0f;
-	float fStayAwayDistance = 1.5f;
+	float fStayAwayDistance = 1.7f;
 
 	// HIYAYAYAYA behaviour
 	float fWaitBeforeAttack = 1.0f;
@@ -110,6 +110,7 @@ private:
 	int nFirstFrameTeleport = 8;
 	int nLastFrameTeleport = 11;
 	bool bUseTPAttack = false;
+	bool bWarning = false;
 
 	// DownTilt behaviour
 	float fDownTiltTime = 0.0625f;
