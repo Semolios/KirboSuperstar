@@ -152,9 +152,7 @@ void cDynamicProjectile::TopCollision(cLevel* level, float fNewObjectPosX, float
 void cDynamicProjectile::BottomCollision(cLevel* level, float fNewObjectPosX, float fBorder, float fNewObjectPosY, float fElapsedTime)
 {
 	if (engine->IsSolidTile(level->GetTile(fNewObjectPosX +											fBorder,  fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
-		engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
-		engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX +											fBorder,  fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
-		engine->IsSemiSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))))
+		engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))))
 	{
 		BottomCollisionBehaviour(fElapsedTime);
 	}

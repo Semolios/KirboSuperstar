@@ -53,27 +53,27 @@ private:
 	const float cfDownAreaBotPosY = 4.0f;
 
 	const float cfWaitingTimeMaxHp = 2.5f;
-	const float cfWaitingTimeHiHp = 2.0f;
-	const float cfWaitingTimeMiHp = 1.8f;
-	const float cfWaitingTimeLoHp = 1.5f;
+	const float cfWaitingTimeHiHp = 2.3f;
+	const float cfWaitingTimeMiHp = 2.1f;
+	const float cfWaitingTimeLoHp = 1.9f;
 
 	const float cfSmashChargeTimeMaxHp = 0.9f;
 	const float cfSmashChargeTimeHiHp = 0.8f;
 	const float cfSmashChargeTimeMiHp = 0.7f;
 	const float cfSmashChargeTimeLoHp = 0.6f;
 
-	const float cfWaitAfterSmashTimeMaxHp = 1.2f;
-	const float cfWaitAfterSmashTimeHiHp = 1.15f;
-	const float cfWaitAfterSmashTimeMiHp = 1.1f;
-	const float cfWaitAfterSmashTimeLoHp = 1.0f;
+	const float cfWaitAfterSmashTimeMaxHp = 1.5f;
+	const float cfWaitAfterSmashTimeHiHp = 1.4f;
+	const float cfWaitAfterSmashTimeMiHp = 1.3f;
+	const float cfWaitAfterSmashTimeLoHp = 1.2f;
 
 	const int cnHiHP = 70;
 	const int cnMiHP = 50;
 	const int cnLoHP = 30;
 
 	const int cnNumberOfAttack = 5;
-	const int cnAttacksDmg = 3;
-	const int cnAttacksLowDmg = 2;
+	const int cnAttacksDmg = 2;
+	const int cnAttacksLowDmg = 1;
 
 	const int cnShakeAmplitude = 50;
 
