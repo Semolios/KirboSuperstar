@@ -13,8 +13,8 @@ cDynamicCreatureBladeKnight::cDynamicCreatureBladeKnight(cLevel* l) : cDynamicCr
 	fSpriteOffsetX = -32.0f;
 	fSpriteOffsetY = -32.0f;
 	bFriendly = false;
-	nHealth = 15;
-	nHealthMax = 15;
+	nHealth = 9;
+	nHealthMax = 9;
 	level = l;
 	bSolidVsMap = true;
 	bSolidVsDynInitValue = true;
