@@ -786,9 +786,6 @@ void cPlayer::CheckHole(cLevel* lvl, OneLoneCoder_Platformer* engine, olc::Sprit
 {
 	if (fPosY > lvl->GetHeight())
 	{
-		if (!bDead)
-			engine->PlaySample("kirboHit");
-		
 		fVelY = -10.0f;
 		if(IsAttackable())
             Damage(nullptr, engine, playerSprite, playerDecal);
@@ -941,8 +938,6 @@ bool cPlayer::FloorCeilingCrushed(cDynamicMovingPlatform*& ptfm)
 
 void cPlayer::Crushed(OneLoneCoder_Platformer* engine, olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
-	if (!bDead)
-		engine->PlaySample("kirboHit");
     if (IsAttackable())
         Damage(nullptr, engine, playerSprite, playerDecal);
 }
@@ -1245,6 +1240,7 @@ float cPlayer::GetHealth()
 
 void cPlayer::Damage(cDynamic* object, OneLoneCoder_Platformer* engine, olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
+	engine->HitStop();
 	engine->PlaySample("kirboHit");
 	animPlayer->ChangeState("damaged", playerSprite, playerDecal);
 	fInvulnerabilityTimer = cfInvulnerabilityFrame;
@@ -1422,7 +1418,6 @@ void cPlayer::EnemyCollision(cDynamic* object, float cameraOffsetX, float camera
 		if (!HasCandyPower())
 		{
 			Damage(object, engine, playerSprite, playerDecal);
-			engine->HitStop();
 		}
 		else
 		{
