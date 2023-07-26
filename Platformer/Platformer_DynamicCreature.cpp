@@ -64,12 +64,17 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY)
 
     if (fKnockBackTimer > 0.0f)
     {
+        if (bHitShake && !bVacuumed)
+        {
+            engine->HitShake();
+            bHitShake = false;
+        }
+
         if (bIsKnockable)
         {
             vx = fKnockBackDX * cfKnockBackDX;
             vy = fKnockBackDY * cfKnockBackDY;
         }
-        bIsAttackable = false;
         fKnockBackTimer -= fElapsedTime;
         nGraphicState = DAMAGED;
 
@@ -92,6 +97,7 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY)
             else
             {
                 bIsAttackable = true;
+                bHitShake = true;
             }
         }
 
@@ -119,8 +125,6 @@ void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY)
     }
     else if (!bBossKilled)
     {
-        bSolidVsDyn = bSolidVsDynInitValue;
-
         if (fabs(vx) > 0)
             nGraphicState = WALKING;
         else
@@ -155,7 +159,6 @@ void cDynamicCreature::KnockBack(float dx, float dy, float dist)
     fKnockBackDX = dx;
     fKnockBackDY = dy;
     fKnockBackTimer = dist;
-    bSolidVsDyn = false;
     bIsAttackable = false;
 }
 
@@ -314,7 +317,6 @@ void cDynamicCreature::UpdateHitbox(float cameraOffsetX, float cameraOffsetY)
 
 void cDynamicCreature::Vacuumed(bool vaccumedState)
 {
-    bSolidVsDyn = !vaccumedState;
     bVacuumed = vaccumedState;
     bIsKnockable = !vaccumedState;
 }

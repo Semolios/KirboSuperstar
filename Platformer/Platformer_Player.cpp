@@ -1240,6 +1240,7 @@ float cPlayer::GetHealth()
 
 void cPlayer::Damage(cDynamic* object, OneLoneCoder_Platformer* engine, olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
+	engine->HitShake();
 	engine->HitStop();
 	engine->PlaySample("kirboHit");
 	animPlayer->ChangeState("damaged", playerSprite, playerDecal);

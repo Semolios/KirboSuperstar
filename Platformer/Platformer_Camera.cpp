@@ -15,14 +15,14 @@ void cCamera::SetPositions(float fPlayerPosX, float fPlayerPosY)
 	fPosY = fPlayerPosY;
 }
 
-void cCamera::DrawLevel(cLevel* level, float fElapsedTime)
+void cCamera::DrawLevel(cLevel* level)
 {
 	level->DrawTiles(nVisibleTilesX, nVisibleTilesY, fOffsetX, fOffsetY);
 }
 
-void cCamera::CalculateFOV(cLevel* level, OneLoneCoder_Platformer* engine)
+void cCamera::CalculateFOV(cLevel* level, OneLoneCoder_Platformer* engine, float fElapsedTime)
 {
-	nVisibleTilesX = engine->ScreenWidth() / engine->GetTileWidth();
+	nVisibleTilesX = engine->ScreenWidth()  / engine->GetTileWidth();
 	nVisibleTilesY = engine->ScreenHeight() / engine->GetTileHeight();
 
 	// Calculate Top-Left most visible tile
@@ -32,7 +32,7 @@ void cCamera::CalculateFOV(cLevel* level, OneLoneCoder_Platformer* engine)
 	// Clamp camera to game boundaries
 	if (fOffsetX < 1) fOffsetX = 1;
 	if (fOffsetY < 1) fOffsetY = 1;
-	if (fOffsetX > level->GetWidth() - nVisibleTilesX - 1) fOffsetX = level->GetWidth() - nVisibleTilesX - 1;
+	if (fOffsetX > level->GetWidth()  - nVisibleTilesX - 1) fOffsetX = level->GetWidth()  - nVisibleTilesX - 1;
 	if (fOffsetY > level->GetHeight() - nVisibleTilesY - 1) fOffsetY = level->GetHeight() - nVisibleTilesY - 1;
 
 	if (bShake)
@@ -42,6 +42,18 @@ void cCamera::CalculateFOV(cLevel* level, OneLoneCoder_Platformer* engine)
 
 		fOffsetX += fShakeEffectX;
 		fOffsetY += fShakeEffectY;
+	}
+
+	if (bHitShake)
+	{
+		fOffsetY += cfHitShakeAmplitude * ((cfHitShakeDuration - fHitShakeTimer) / cfHitShakeDuration);
+		fHitShakeTimer += fElapsedTime;
+
+		if (fHitShakeTimer >= cfHitShakeDuration)
+		{
+			fHitShakeTimer = 0.0f;
+			bHitShake = false;
+		}
 	}
 }
 
@@ -158,4 +170,9 @@ void cCamera::SpawnSceneries(cLevel* level, float fElapsedTime, OneLoneCoder_Pla
 	}
 
 #pragma endregion
+}
+
+void cCamera::HitShake()
+{
+	bHitShake = true;
 }

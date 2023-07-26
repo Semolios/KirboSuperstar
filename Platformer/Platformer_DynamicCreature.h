@@ -71,6 +71,7 @@ protected:
 	int nFaceDir = 0; // 0 = Left, 1 = Right
 	bool bDead = false;
 	bool bIsKnockable = true;
+	bool bHitShake = true;
 	bool bCanBehaveWhileAttacked = false;
 	bool bIsVacuumable = true;
 	bool bVacuumed = false;

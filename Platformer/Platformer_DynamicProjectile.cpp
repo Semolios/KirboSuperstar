@@ -12,7 +12,6 @@ cDynamicProjectile::cDynamicProjectile(float ox, float oy, bool bFriend, float v
 	py = oy;
 	vx = velx;
 	vy = vely;
-	bSolidVsDyn = false;
 	bSolidVsMap = true;
 	bIsProjectile = true;
 	bIsAttackable = false;

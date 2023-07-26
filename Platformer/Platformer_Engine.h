@@ -134,6 +134,7 @@ public:
 	cCamera* GetCamera();
 	void ActivateShakeEffect(bool activate, int shakeAmplitudeX = 50, int shakeAmplitudeY = 50);
 	void WindEffect(float direction, float windPower, bool activate);
+	void HitShake();
 
 	// Sound functions
 	void AddSharedSound(std::string name, olc::sound::Wave* sound, std::string fileName);

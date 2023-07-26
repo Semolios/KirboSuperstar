@@ -14,7 +14,6 @@ cDynamicCreatureScarfy::cDynamicCreatureScarfy(cLevel* l) : cDynamicCreature("sc
 	level = l;
 	vx = 0;
 	bSolidVsMap = true;
-	bSolidVsDynInitValue = true;
 	bAffectedByGravity = false;
 	nDamage = 2;
 }

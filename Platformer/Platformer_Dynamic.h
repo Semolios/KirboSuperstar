@@ -48,8 +48,6 @@ protected:
 	int nDamage;
 	int nCornerSpr = 0;
 	bool bSolidVsMap;
-	bool bSolidVsDyn;
-	bool bSolidVsDynInitValue;
 	bool bFriendly;
 	bool bIsProjectile;
 	bool bIsAttackable;

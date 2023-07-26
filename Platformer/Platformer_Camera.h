@@ -13,8 +13,8 @@ public:
 
 	void ClampOffset();
 	void SetPositions(float fPlayerPosX, float fPlayerPosY);
-	void DrawLevel(cLevel* level, float fElapsedTime);
-	void CalculateFOV(cLevel* level, OneLoneCoder_Platformer* engine);
+	void DrawLevel(cLevel* level);
+	void CalculateFOV(cLevel* level, OneLoneCoder_Platformer* engine, float fElapsedTime);
 	void DrawBackground(cLevel* level, OneLoneCoder_Platformer* engine, bool bossLevel);
 	float GetOffsetX();
 	float GetOffsetY();
@@ -23,6 +23,7 @@ public:
 	void SetShake(bool shake);
 	void ActivateShakeEffect(bool activate, int shakeAmplitudeX = 50, int shakeAmplitudeY = 50);
 	void SpawnSceneries(cLevel* level, float fElapsedTime, OneLoneCoder_Platformer* engine);
+	void HitShake();
 
 private:
 	const float cfLowerPos = 1.0f / 4.0f;		  // Lower position for the camera (when the player is not pushing down)
@@ -34,6 +35,8 @@ private:
 	const float cfSnowVelY = 20.0f;				  // Speed of the clouds on halberd stage
 	const float cfWahooVelX = -70.0f;			  // speed of speedrunner wahoo on halberd stage
 	const float cfHalberdCloudSpawnTime = 0.125f; // spawn time of the clouds on halberd stage
+	const float cfHitShakeAmplitude = 0.125f;	  // the amplitude of shaking when a Hit occurs
+	const float cfHitShakeDuration = 0.0625f;	  // the duration of the shaking when a Hit occurs
 	const int cnObjectPosXRange = 205;			  // a factor to spawn randomly object on the top of the screen
 	const int cnObjectPosYRange = 75;			  // a factor to spawn randomly object on the right of the screen
 
@@ -46,11 +49,13 @@ private:
 	float fShakeTimerChange = 0.0f;
 	float fShakeEffectX;
 	float fShakeEffectY;
+	float fHitShakeTimer;
 	int nShakeAmplitudeX;
 	int nShakeAmplitudeY;
 	int nVisibleTilesX;
 	int nVisibleTilesY;
 	bool bShake = false;
+	bool bHitShake = false;
 };
 
 #endif // !DEF_CAMERA

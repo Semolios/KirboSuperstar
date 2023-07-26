@@ -1442,6 +1442,11 @@ void OneLoneCoder_Platformer::WindEffect(float direction, float windPower, bool 
     }
 }
 
+void OneLoneCoder_Platformer::HitShake()
+{
+    camera->HitShake();
+}
+
 void OneLoneCoder_Platformer::AddSharedSound(std::string name, olc::sound::Wave* sound, std::string fileName)
 {
     sound->LoadAudioWaveform(fileName);
@@ -2001,7 +2006,7 @@ void OneLoneCoder_Platformer::UpdateGame(float fElapsedTime, float* angle, float
 
     camera->SetPositions(player->GetPosX(), player->GetPosY());
 
-    camera->CalculateFOV(level, this);
+    camera->CalculateFOV(level, this, fElapsedTime);
 
     player->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY(), this);
 
@@ -2232,7 +2237,7 @@ void OneLoneCoder_Platformer::DrawGame(float fElapsedTime, float angle, float of
     }
 
     // Draw tiles
-    camera->DrawLevel(level, fElapsedTime);
+    camera->DrawLevel(level);
 
     // Draw Ennemies
     for (auto& object : GetCloseEnnemies(player->GetPosX(), player->GetPosY()))

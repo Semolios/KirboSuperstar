@@ -17,7 +17,6 @@ cDynamicCreatureBladeKnight::cDynamicCreatureBladeKnight(cLevel* l) : cDynamicCr
 	nHealthMax = 9;
 	level = l;
 	bSolidVsMap = true;
-	bSolidVsDynInitValue = true;
 	bAffectedByGravity = true;
 	nDamage = 2;
 }

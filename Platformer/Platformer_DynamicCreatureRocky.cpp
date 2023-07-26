@@ -19,7 +19,6 @@ cDynamicCreatureRocky::cDynamicCreatureRocky(cLevel* l) : cDynamicCreature("rock
 	vx = 0;
 	fInitSpeed = 0;
 	bSolidVsMap = true;
-	bSolidVsDynInitValue = true;
 	bAffectedByGravity = false;
 	nDamage = 2;
 }
