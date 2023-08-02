@@ -117,6 +117,7 @@ public:
 	olc::Decal* GetBackGroundDecal();
 	olc::Decal* GetParallax1Decal();
 	olc::Decal* GetParallax2Decal();
+	olc::Decal* GetParallax3Decal();
 	olc::Decal* GetSpecialTilesDecal();
 	olc::Decal* GetGroundTilesDecal();
 	olc::Decal* GetDoorDecal();
@@ -212,6 +213,7 @@ private:
 	olc::Sprite sprBackground;
 	olc::Sprite sprParallax1;
 	olc::Sprite sprParallax2;
+	olc::Sprite sprParallax3;
 	olc::Sprite sprSpecialTiles;
 	olc::Sprite sprGrdTiles;
 	olc::Sprite sprDoor;
@@ -219,6 +221,7 @@ private:
 	olc::Decal* decBackground;
 	olc::Decal* decParallax1;
 	olc::Decal* decParallax2;
+	olc::Decal* decParallax3;
 	olc::Decal* decSpecialTiles;
 	olc::Decal* decGrdTiles;
 	olc::Decal* decDoor;

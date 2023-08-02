@@ -93,6 +93,19 @@ void cCamera::DrawBackground(cLevel* level, OneLoneCoder_Platformer* engine, boo
 	}
 }
 
+void cCamera::DrawForeground(cLevel* level, OneLoneCoder_Platformer* engine)
+{
+    olc::vf2d sourcePos;
+    sourcePos.x = fmod(fOffsetX * engine->GetTileWidth()  * 1.5f, engine->GetParallax3Decal()->sprite->width  / 2.0f);
+    sourcePos.y = fmod(fOffsetY * engine->GetTileHeight() * 1.5f, engine->GetParallax3Decal()->sprite->height / 2.0f);
+
+    olc::vf2d sourceSize;
+    sourceSize.x = engine->GetParallax3Decal()->sprite->width  - sourcePos.x;
+    sourceSize.y = engine->GetParallax3Decal()->sprite->height - sourcePos.y;
+
+    engine->DrawPartialDecal({ 0, 0 }, engine->GetParallax3Decal(), sourcePos, sourceSize);
+}
+
 float cCamera::GetOffsetX()
 {
 	return fOffsetX;

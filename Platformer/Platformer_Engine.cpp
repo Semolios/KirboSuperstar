@@ -13,6 +13,7 @@ bool OneLoneCoder_Platformer::OnUserCreate()
     decBackground = new olc::Decal(&sprBackground);
     decParallax1 = new olc::Decal(&sprParallax1);
     decParallax2 = new olc::Decal(&sprParallax2);
+    decParallax3 = new olc::Decal(&sprParallax3);
     decSpecialTiles = new olc::Decal(&sprSpecialTiles);
     decGrdTiles = new olc::Decal(&sprGrdTiles);
     decDoor = new olc::Decal(&sprDoor);
@@ -146,6 +147,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
             sprBackground = olc::Sprite();
             sprParallax1 = olc::Sprite();
             sprParallax2 = olc::Sprite();
+            sprParallax3 = olc::Sprite();
             sprSpecialTiles = olc::Sprite();
             sprGrdTiles = olc::Sprite();
             sprDoor = olc::Sprite("assets/gfx/bossDoor.png");
@@ -561,6 +563,8 @@ bool OneLoneCoder_Platformer::GameState_LoadLevel(float fElapsedTime)
         decParallax1->Update();
         sprParallax2.LoadFromFile(level->GetParallax2Spritesheet());
         decParallax2->Update();
+        sprParallax3.LoadFromFile(level->GetParallax3Spritesheet());
+        decParallax3->Update();
         sndLevelMusic.LoadAudioWaveform(level->GetMusic());
     }
 
@@ -1348,6 +1352,11 @@ olc::Decal* OneLoneCoder_Platformer::GetParallax1Decal()
 olc::Decal* OneLoneCoder_Platformer::GetParallax2Decal()
 {
     return decParallax2;
+}
+
+olc::Decal* OneLoneCoder_Platformer::GetParallax3Decal()
+{
+    return decParallax3;
 }
 
 olc::Decal* OneLoneCoder_Platformer::GetSpecialTilesDecal()
@@ -2257,6 +2266,15 @@ void OneLoneCoder_Platformer::DrawGame(float fElapsedTime, float angle, float of
     // Draw Player
     player->UpdateInvulnerability(fElapsedTime, this);
     player->DrawKirbo((player->GetPosX() - camera->GetOffsetX()) * nTileWidth + (nTileWidth / 2) + offsetX, (player->GetPosY() - camera->GetOffsetY()) * nTileHeight + (nTileHeight / 2) + offsetY, angle, player->GetFaceDir(), this, decPlayer);
+    
+    // Draw foreground same plan items
+    // TODO
+
+    // Draw foreground parallax
+    if (!bInBossLvl)
+    {
+        camera->DrawForeground(level, this);
+    }
 
     // Draw HUD
     HUD->HealthBar(this, decHealthBar);

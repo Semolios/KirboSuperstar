@@ -16,6 +16,7 @@ public:
 	void DrawLevel(cLevel* level);
 	void CalculateFOV(cLevel* level, OneLoneCoder_Platformer* engine, float fElapsedTime);
 	void DrawBackground(cLevel* level, OneLoneCoder_Platformer* engine, bool bossLevel);
+	void DrawForeground(cLevel* level, OneLoneCoder_Platformer* engine);
 	float GetOffsetX();
 	float GetOffsetY();
 	void LowerPosition();
