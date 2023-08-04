@@ -269,7 +269,12 @@ bool cLevel::PopulateMechanisms(std::string levelName)
 			}
 			if (parts[0] == L"Scenery")
 			{
-				engine->AddScenery(std::stof(parts[1]), std::stof(parts[2]), engine->ToStr(parts[3]));
+				bool foreground = false;
+                if (parts.size() == 5 && engine->ToStr(parts[4]) == "foreground")
+                {
+					foreground = true;
+                }
+                engine->AddScenery(std::stof(parts[1]), std::stof(parts[2]), engine->ToStr(parts[3]), foreground);
 			}
 		}
 	}

@@ -56,6 +56,9 @@ public:
 	std::string GetIdentifier();
 	void SetIdentifier(std::string id);
 
+	bool IsForeground();
+	void SetForeground(bool foreground);
+
 	virtual void Behaviour(float fElapsedTime, float playerX, float playerY);
 	virtual void LinkPtfm(cDynamicMovingPlatform* ptfm);
 	virtual bool IsLinkedToPreviousPtfm();
@@ -74,6 +77,7 @@ protected:
 	bool bTriggerable;
 	bool bTriggered = false;
 	bool bIced = false;
+	bool bForeground = false;
 
 	// Sides Traversability
 	bool bSolidTop = true;

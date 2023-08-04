@@ -19,9 +19,12 @@ waddleDee,195,7
 waddleDee,204,10
 waddleDee,210,10
 waddleDee,216,10
-waddleDee,236,4
-waddleDee,236,6
-waddleDee,236,8
+waddleDee,233,4
+waddleDee,233,6
+waddleDee,233,8
+waddleDee,244,4
+waddleDee,244,6
+waddleDee,244,8
 waddleDee,236,11
 --BRONTO BURTS
 brontoBurt,5.0,25,6

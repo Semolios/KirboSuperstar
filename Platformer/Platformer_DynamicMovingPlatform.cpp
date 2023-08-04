@@ -300,7 +300,13 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	// lvl 1
 	mapPlatforms["arrowPanel"].push_back(new olc::Sprite("assets/gfx/arrowPanel.png"));
 	mapPlatforms["tree"].push_back(new olc::Sprite("assets/gfx/tree.png"));
+	mapPlatforms["grass"].push_back(new olc::Sprite("assets/gfx/grass.png"));
+	mapPlatforms["bushHider"].push_back(new olc::Sprite("assets/gfx/bushHider.png"));
+	mapPlatforms["treeLeaves"].push_back(new olc::Sprite("assets/gfx/treeLeaves.png"));
 	mapPlatforms["bush"].push_back(new olc::Sprite("assets/gfx/bush.png"));
+	mapPlatforms["cloud1"].push_back(new olc::Sprite("assets/gfx/cloud1.png"));
+	mapPlatforms["cloud2"].push_back(new olc::Sprite("assets/gfx/cloud2.png"));
+	mapPlatforms["cloud3"].push_back(new olc::Sprite("assets/gfx/cloud3.png"));
 	mapPlatforms["mojo"].push_back(new olc::Sprite("assets/gfx/mojo.png"));
 	mapPlatforms["caterpillar"].push_back(new olc::Sprite("assets/gfx/caterpillar.png"));
 	mapPlatforms["happyShroom"].push_back(new olc::Sprite("assets/gfx/happyShroom.png"));
@@ -663,7 +669,13 @@ std::map<std::string, std::vector<olc::Decal*>> cDynamicMovingPlatform::LoadMovi
 	// lvl 1
 	mapDecPlatforms["arrowPanel"].push_back(new olc::Decal(mapPlatforms["arrowPanel"][0]));
 	mapDecPlatforms["tree"].push_back(new olc::Decal(mapPlatforms["tree"][0]));
+	mapDecPlatforms["grass"].push_back(new olc::Decal(mapPlatforms["grass"][0]));
+	mapDecPlatforms["bushHider"].push_back(new olc::Decal(mapPlatforms["bushHider"][0]));
+	mapDecPlatforms["treeLeaves"].push_back(new olc::Decal(mapPlatforms["treeLeaves"][0]));
 	mapDecPlatforms["bush"].push_back(new olc::Decal(mapPlatforms["bush"][0]));
+	mapDecPlatforms["cloud1"].push_back(new olc::Decal(mapPlatforms["cloud1"][0]));
+	mapDecPlatforms["cloud2"].push_back(new olc::Decal(mapPlatforms["cloud2"][0]));
+	mapDecPlatforms["cloud3"].push_back(new olc::Decal(mapPlatforms["cloud3"][0]));
 	mapDecPlatforms["mojo"].push_back(new olc::Decal(mapPlatforms["mojo"][0]));
 	mapDecPlatforms["caterpillar"].push_back(new olc::Decal(mapPlatforms["caterpillar"][0]));
 	mapDecPlatforms["happyShroom"].push_back(new olc::Decal(mapPlatforms["happyShroom"][0]));
@@ -1231,6 +1243,16 @@ std::string cDynamicMovingPlatform::GetIdentifier()
 void cDynamicMovingPlatform::SetIdentifier(std::string id)
 {
 	sIdentifier = id;
+}
+
+bool cDynamicMovingPlatform::IsForeground()
+{
+	return bForeground;
+}
+
+void cDynamicMovingPlatform::SetForeground(bool foreground)
+{
+	bForeground = foreground;
 }
 
 void cDynamicMovingPlatform::Behaviour(float fElapsedTime, float playerX, float playerY)

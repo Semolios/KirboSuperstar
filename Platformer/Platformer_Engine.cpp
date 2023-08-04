@@ -1082,9 +1082,11 @@ void OneLoneCoder_Platformer::AddPlatform(float ox, float oy, std::string sprite
     vecPlatforms.push_back(ptfm);
 }
 
-void OneLoneCoder_Platformer::AddScenery(float ox, float oy, std::string sprite)
+void OneLoneCoder_Platformer::AddScenery(float ox, float oy, std::string sprite, bool foreground)
 {
     cDynamicMovingPlatform* ptfm = new cDynamicMovingPlatform(ox, oy, mapDecPlatforms[sprite]);
+    ptfm->SetForeground(foreground);
+    
     vecPlatforms.push_back(ptfm);
 }
 
@@ -2220,7 +2222,10 @@ void OneLoneCoder_Platformer::DrawGame(float fElapsedTime, float angle, float of
     // Draw Platforms
     for (auto& object : GetClosePlatforms(player->GetPosX(), player->GetPosY()))
     {
-        object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
+        if (!object->IsForeground())
+        {
+            object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
+        }
     }
 
     // Draw walls switches
@@ -2268,7 +2273,13 @@ void OneLoneCoder_Platformer::DrawGame(float fElapsedTime, float angle, float of
     player->DrawKirbo((player->GetPosX() - camera->GetOffsetX()) * nTileWidth + (nTileWidth / 2) + offsetX, (player->GetPosY() - camera->GetOffsetY()) * nTileHeight + (nTileHeight / 2) + offsetY, angle, player->GetFaceDir(), this, decPlayer);
     
     // Draw foreground same plan items
-    // TODO
+    for (auto& object : GetClosePlatforms(player->GetPosX(), player->GetPosY()))
+    {
+        if (object->IsForeground())
+        {
+            object->DrawSelf(camera->GetOffsetX(), camera->GetOffsetY());
+        }
+    }
 
     // Draw foreground parallax
     if (!bInBossLvl)
