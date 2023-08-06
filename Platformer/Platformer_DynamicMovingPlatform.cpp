@@ -345,7 +345,14 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	// lvl 2
 	mapPlatforms["hillYellow"].push_back(new olc::Sprite("assets/gfx/hillYellow.png"));
 	mapPlatforms["hillRed"].push_back(new olc::Sprite("assets/gfx/hillRed.png"));
+	mapPlatforms["hillBlue"].push_back(new olc::Sprite("assets/gfx/hillBlue.png"));
+	mapPlatforms["hillSimple"].push_back(new olc::Sprite("assets/gfx/hillSimple.png"));
 	mapPlatforms["hillsRed"].push_back(new olc::Sprite("assets/gfx/hillsRed.png"));
+	mapPlatforms["doorHide1"].push_back(new olc::Sprite("assets/gfx/doorHide1.png"));
+	mapPlatforms["doorHide2"].push_back(new olc::Sprite("assets/gfx/doorHide2.png"));
+	mapPlatforms["grass2"].push_back(new olc::Sprite("assets/gfx/grass2.png"));
+	mapPlatforms["cloud4"].push_back(new olc::Sprite("assets/gfx/cloud4.png"));
+	mapPlatforms["cloud5"].push_back(new olc::Sprite("assets/gfx/cloud5.png"));
     mapPlatforms["cannibalHill"].push_back(new olc::Sprite("assets/gfx/cannibalHill00.png"));
     mapPlatforms["cannibalHill"].push_back(new olc::Sprite("assets/gfx/cannibalHill01.png"));
     mapPlatforms["cannibalHill"].push_back(new olc::Sprite("assets/gfx/cannibalHill02.png"));
@@ -758,7 +765,14 @@ std::map<std::string, std::vector<olc::Decal*>> cDynamicMovingPlatform::LoadMovi
 	// lvl 2
 	mapDecPlatforms["hillYellow"].push_back(new olc::Decal(mapPlatforms["hillYellow"][0]));
 	mapDecPlatforms["hillRed"].push_back(new olc::Decal(mapPlatforms["hillRed"][0]));
+	mapDecPlatforms["hillBlue"].push_back(new olc::Decal(mapPlatforms["hillBlue"][0]));
+	mapDecPlatforms["hillSimple"].push_back(new olc::Decal(mapPlatforms["hillSimple"][0]));
 	mapDecPlatforms["hillsRed"].push_back(new olc::Decal(mapPlatforms["hillsRed"][0]));
+	mapDecPlatforms["doorHide1"].push_back(new olc::Decal(mapPlatforms["doorHide1"][0]));
+	mapDecPlatforms["doorHide2"].push_back(new olc::Decal(mapPlatforms["doorHide2"][0]));
+	mapDecPlatforms["grass2"].push_back(new olc::Decal(mapPlatforms["grass2"][0]));
+	mapDecPlatforms["cloud4"].push_back(new olc::Decal(mapPlatforms["cloud4"][0]));
+	mapDecPlatforms["cloud5"].push_back(new olc::Decal(mapPlatforms["cloud5"][0]));
 	// ------- very long animation -------
 	for (int i = 0; i < 90; i++)
 	{
@@ -825,54 +839,10 @@ std::map<std::string, std::vector<olc::Decal*>> cDynamicMovingPlatform::LoadMovi
 	mapDecPlatforms["flyingRedKoopaTroopa"].push_back(new olc::Decal(mapPlatforms["flyingRedKoopaTroopa"][2]));
 	mapDecPlatforms["flyingRedKoopaTroopa"].push_back(new olc::Decal(mapPlatforms["flyingRedKoopaTroopa"][3]));
 	mapDecPlatforms["flyingRedKoopaTroopa"].push_back(new olc::Decal(mapPlatforms["flyingRedKoopaTroopa"][3]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][0]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][1]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][2]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][3]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][4]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][5]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][6]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][7]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][8]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][9]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][10]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][11]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][12]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][13]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][14]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][15]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][16]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][17]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][18]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][19]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][20]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][21]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][22]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][23]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][24]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][25]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][26]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][27]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][28]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][29]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][30]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][31]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][32]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][33]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][34]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][35]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][36]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][37]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][38]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][39]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][40]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][41]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][42]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][43]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][44]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][45]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][46]));
-	mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][47]));
+	for (int i = 0; i < 48; i++)
+	{
+		mapDecPlatforms["rotatingHill"].push_back(new olc::Decal(mapPlatforms["rotatingHill"][i]));
+	}
 	mapDecPlatforms["beaver"].push_back(new olc::Decal(mapPlatforms["beaver"][0]));
 	mapDecPlatforms["lvl2Exit"].push_back(new olc::Decal(mapPlatforms["lvl2Exit"][0]));
 	// boss 2

@@ -1,6 +1,6 @@
 VerticalSine,42,8,basic,0,10,2,0
 VerticalSine,71,8,basic,0,10,2,0
-Wall,14,1,wall,1,1,1,10,3
+Wall,13,1,wall,1,1,1,10,3
 Wall,99,7,wall,1,1,1,85,2
 Wall,202,6,wall,1,1,1,247,13
 Wall,136,1,toRight,0,1,0,0,0
@@ -39,3 +39,13 @@ Scenery,213,5,rotatingHill
 Scenery,15,3.9,beaver
 Scenery,100,8.9,beaver
 Scenery,262,4.2,lvl2Exit
+Scenery,5,2.8,hillBlue,foreground
+Scenery,12.8,3.75,doorHide1,foreground
+Scenery,80.7,2.8,cloud4,foreground
+Scenery,98.8,9.75,doorHide1,foreground
+Scenery,98.8,6.4,doorHide2,foreground
+Scenery,109.2,1.1,cloud5,foreground
+Scenery,142.8,8.75,doorHide1,foreground
+Scenery,201.8,8.75,doorHide1,foreground
+Scenery,201.8,5.4,doorHide2,foreground
+Scenery,232,8,hillSimple,foreground
