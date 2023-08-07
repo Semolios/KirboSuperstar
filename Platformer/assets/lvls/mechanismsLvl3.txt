@@ -67,3 +67,14 @@ Scenery,163,24.2,rightArrow
 Scenery,181.5,19.2,lvl3Exit
 Wall,68,26.2,iceWall,1,1,1,23,24
 Wall,87,26.2,iceWall,1,1,1,90,11
+Scenery,7,27,crystal,foreground
+Scenery,39.7,21.7,doorHide3,foreground
+Scenery,56.7,21.7,doorHide3,foreground
+Scenery,67.7,28.7,doorHide3,foreground
+Scenery,67.6,25.3,doorHide4,foreground
+Scenery,86.7,28.7,doorHide3,foreground
+Scenery,86.6,25.3,doorHide4,foreground
+Scenery,75,27,crystal,foreground
+Scenery,129,17,crystal,foreground
+Scenery,130.3,4.2,snowHideout,foreground
+Scenery,137.7,23.7,doorHide3,foreground
