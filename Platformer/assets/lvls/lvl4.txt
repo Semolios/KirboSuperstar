@@ -137,7 +137,7 @@ GGGGG.......GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG.......GGGGG.....GG
 GGGGG.......GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG.......GGGGG.....GG
 GGGGG.........GGGGGGGGGGGGGGGGGGGGGGGGGGGGG.........GGGGG.....GG
 GGGGG.................................GGG...........GGGGG.....GG
-GGGGG.................................GGG...........GGGGG..t..GG
+GGGGG.................................GGG...........GGGGG..d..GG
 GGGGG...............................................GGGGGGGGGGGG
 GGGGGGG...........................................GGGGGGGGGGGGGG
 GGGGGGGGGGGGGGGGGGGG...........GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
@@ -193,7 +193,7 @@ GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
 ............GGG.....GGGGGG............GGGGGG.....GGG............
 ............GGG....GGGGGGGG..........GGGGGGGG....GGG............
 ............GGG.....G....G............G....G.....GGG............
-..........t.GGG..................................GGG.d..........
+..........t.GGG..................................GGG.x..........
 GGGGGGGGGGGGGGG..................................GGGGGGGGGGGGGGG
 GGGGGGGGGGGGGGG..........G............G..........GGGGGGGGGGGGGGG
 GGGGGGGGGGGGGGG..........G............G..........GGGGGGGGGGGGGGG

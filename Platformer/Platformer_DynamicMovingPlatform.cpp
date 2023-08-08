@@ -485,6 +485,11 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["cloudConstruction6"].push_back(new olc::Sprite("assets/gfx/cloudConstruction6.png"));
 	mapPlatforms["pit"].push_back(new olc::Sprite("assets/gfx/pit00.png"));
 	mapPlatforms["pit"].push_back(new olc::Sprite("assets/gfx/pit01.png"));
+	mapPlatforms["doorHide5"].push_back(new olc::Sprite("assets/gfx/doorHide5.png"));
+	mapPlatforms["doorHide6"].push_back(new olc::Sprite("assets/gfx/doorHide6.png"));
+	mapPlatforms["marbleTower1"].push_back(new olc::Sprite("assets/gfx/marbleTower1.png"));
+	mapPlatforms["marbleTower2"].push_back(new olc::Sprite("assets/gfx/marbleTower2.png"));
+	mapPlatforms["cracks"].push_back(new olc::Sprite("assets/gfx/cracks.png"));
 	mapPlatforms["lvl4Exit"].push_back(new olc::Sprite("assets/gfx/lvl4Exit.png"));
 	// boss 4
 	mapPlatforms["pikachu"].push_back(new olc::Sprite("assets/gfx/pikachu.png"));
@@ -903,6 +908,11 @@ std::map<std::string, std::vector<olc::Decal*>> cDynamicMovingPlatform::LoadMovi
 	mapDecPlatforms["pit"].push_back(new olc::Decal(mapPlatforms["pit"][0]));
 	mapDecPlatforms["pit"].push_back(new olc::Decal(mapPlatforms["pit"][1]));
 	mapDecPlatforms["pit"].push_back(new olc::Decal(mapPlatforms["pit"][1]));
+	mapDecPlatforms["doorHide5"].push_back(new olc::Decal(mapPlatforms["doorHide5"][0]));
+	mapDecPlatforms["doorHide6"].push_back(new olc::Decal(mapPlatforms["doorHide6"][0]));
+	mapDecPlatforms["marbleTower1"].push_back(new olc::Decal(mapPlatforms["marbleTower1"][0]));
+	mapDecPlatforms["marbleTower2"].push_back(new olc::Decal(mapPlatforms["marbleTower2"][0]));
+	mapDecPlatforms["cracks"].push_back(new olc::Decal(mapPlatforms["cracks"][0]));
 	mapDecPlatforms["lvl4Exit"].push_back(new olc::Decal(mapPlatforms["lvl4Exit"][0]));
 	// boss 4
 	mapDecPlatforms["pikachu"].push_back(new olc::Decal(mapPlatforms["pikachu"][0]));
