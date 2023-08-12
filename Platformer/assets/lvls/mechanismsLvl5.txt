@@ -24,9 +24,16 @@ HarmfulBloc,166,2.25,shipFlame,2,0
 HarmfulBloc,168,10.25,shipFlame,2,0
 Scenery,19,9,chunLi
 Scenery,55,12,spyro
+Scenery,90.6,11.4,fragilePanel
 Scenery,92,2,flyingRedKoopaTroopa
 Scenery,116,6,samusShip
 Scenery,144,5,olimarShip
 Scenery,152,9.85,olimar
 Scenery,174,5,guileAndRyuTango
 Scenery,184,1.2,lvl5Exit
+Scenery,91.7,12.5,boxCarrier,foreground
+Scenery,94.7,12.5,boxCarrier,foreground
+Scenery,4,12.5,canon,foreground
+Scenery,87,12.5,canonHand,foreground
+Scenery,19.8,3.5,pidgeotBack
+Scenery,19.9,2.8,pidgeotFront,foreground

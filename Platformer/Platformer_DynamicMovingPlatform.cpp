@@ -518,6 +518,15 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["olimarShip"].push_back(new olc::Sprite("assets/gfx/olimarShip02.png"));
 	mapPlatforms["olimarShip"].push_back(new olc::Sprite("assets/gfx/olimarShip03.png"));
 	mapPlatforms["olimar"].push_back(new olc::Sprite("assets/gfx/olimar.png"));
+	mapPlatforms["fragilePanel"].push_back(new olc::Sprite("assets/gfx/fragilePanel.png"));
+	mapPlatforms["boxCarrier"].push_back(new olc::Sprite("assets/gfx/boxCarrier.png"));
+	mapPlatforms["canon"].push_back(new olc::Sprite("assets/gfx/canon00.png"));
+	mapPlatforms["canon"].push_back(new olc::Sprite("assets/gfx/canon01.png"));
+	mapPlatforms["canon"].push_back(new olc::Sprite("assets/gfx/canon02.png"));
+	mapPlatforms["canon"].push_back(new olc::Sprite("assets/gfx/canon03.png"));
+	mapPlatforms["canonHand"].push_back(new olc::Sprite("assets/gfx/canonHand.png"));
+	mapPlatforms["pidgeotFront"].push_back(new olc::Sprite("assets/gfx/pidgeotFront.png"));
+	mapPlatforms["pidgeotBack"].push_back(new olc::Sprite("assets/gfx/pidgeotBack.png"));
 	mapPlatforms["lvl5Exit"].push_back(new olc::Sprite("assets/gfx/lvl5Exit.png"));
 	// boss 5
 	mapPlatforms["MKSword"].push_back(new olc::Sprite("assets/gfx/MKSword.png"));
@@ -957,6 +966,26 @@ std::map<std::string, std::vector<olc::Decal*>> cDynamicMovingPlatform::LoadMovi
 	mapDecPlatforms["olimarShip"].push_back(new olc::Decal(mapPlatforms["olimarShip"][2]));
 	mapDecPlatforms["olimarShip"].push_back(new olc::Decal(mapPlatforms["olimarShip"][3]));
 	mapDecPlatforms["olimar"].push_back(new olc::Decal(mapPlatforms["olimar"][0]));
+	mapDecPlatforms["fragilePanel"].push_back(new olc::Decal(mapPlatforms["fragilePanel"][0]));
+	mapDecPlatforms["boxCarrier"].push_back(new olc::Decal(mapPlatforms["boxCarrier"][0]));
+	mapDecPlatforms["canon"].push_back(new olc::Decal(mapPlatforms["canon"][0]));
+	mapDecPlatforms["canon"].push_back(new olc::Decal(mapPlatforms["canon"][0]));
+	mapDecPlatforms["canon"].push_back(new olc::Decal(mapPlatforms["canon"][0]));
+	mapDecPlatforms["canon"].push_back(new olc::Decal(mapPlatforms["canon"][0]));
+	mapDecPlatforms["canon"].push_back(new olc::Decal(mapPlatforms["canon"][0]));
+	mapDecPlatforms["canon"].push_back(new olc::Decal(mapPlatforms["canon"][0]));
+	mapDecPlatforms["canon"].push_back(new olc::Decal(mapPlatforms["canon"][0]));
+	mapDecPlatforms["canon"].push_back(new olc::Decal(mapPlatforms["canon"][0]));
+	mapDecPlatforms["canon"].push_back(new olc::Decal(mapPlatforms["canon"][0]));
+	mapDecPlatforms["canon"].push_back(new olc::Decal(mapPlatforms["canon"][0]));
+	mapDecPlatforms["canon"].push_back(new olc::Decal(mapPlatforms["canon"][0]));
+	mapDecPlatforms["canon"].push_back(new olc::Decal(mapPlatforms["canon"][0]));
+	mapDecPlatforms["canon"].push_back(new olc::Decal(mapPlatforms["canon"][1]));
+	mapDecPlatforms["canon"].push_back(new olc::Decal(mapPlatforms["canon"][2]));
+	mapDecPlatforms["canon"].push_back(new olc::Decal(mapPlatforms["canon"][3]));
+	mapDecPlatforms["canonHand"].push_back(new olc::Decal(mapPlatforms["canonHand"][0]));
+	mapDecPlatforms["pidgeotFront"].push_back(new olc::Decal(mapPlatforms["pidgeotFront"][0]));
+	mapDecPlatforms["pidgeotBack"].push_back(new olc::Decal(mapPlatforms["pidgeotBack"][0]));
 	mapDecPlatforms["lvl5Exit"].push_back(new olc::Decal(mapPlatforms["lvl5Exit"][0]));
 	// boss 5
 	mapDecPlatforms["MKSword"].push_back(new olc::Decal(mapPlatforms["MKSword"][0]));
