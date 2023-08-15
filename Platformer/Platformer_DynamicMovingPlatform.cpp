@@ -629,6 +629,13 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	mapPlatforms["lavaFlow"].push_back(new olc::Sprite("assets/gfx/lavaFlow01.png"));
 	mapPlatforms["lavaFlow"].push_back(new olc::Sprite("assets/gfx/lavaFlow02.png"));
 	mapPlatforms["lavaFlow"].push_back(new olc::Sprite("assets/gfx/lavaFlow03.png"));
+	mapPlatforms["poisonFilter"].push_back(new olc::Sprite("assets/gfx/poisonFilter.png"));
+	mapPlatforms["poisonFilter2"].push_back(new olc::Sprite("assets/gfx/poisonFilter2.png"));
+	mapPlatforms["poisonFilter3"].push_back(new olc::Sprite("assets/gfx/poisonFilter3.png"));
+	mapPlatforms["poisonFilter4"].push_back(new olc::Sprite("assets/gfx/poisonFilter4.png"));
+	mapPlatforms["poisonFilter5"].push_back(new olc::Sprite("assets/gfx/poisonFilter5.png"));
+	mapPlatforms["poisonFilter6"].push_back(new olc::Sprite("assets/gfx/poisonFilter6.png"));
+	mapPlatforms["poisonFilter7"].push_back(new olc::Sprite("assets/gfx/poisonFilter7.png"));
 	mapPlatforms["lvl6Exit"].push_back(new olc::Sprite("assets/gfx/lvl6Exit.png"));
 	// boss 6
 	mapPlatforms["waterMark"].push_back(new olc::Sprite("assets/gfx/waterMark00.png"));
@@ -1215,6 +1222,13 @@ std::map<std::string, std::vector<olc::Decal*>> cDynamicMovingPlatform::LoadMovi
 	mapDecPlatforms["lavaFlow"].push_back(new olc::Decal(mapPlatforms["lavaFlow"][1]));
 	mapDecPlatforms["lavaFlow"].push_back(new olc::Decal(mapPlatforms["lavaFlow"][1]));
 	mapDecPlatforms["lavaFlow"].push_back(new olc::Decal(mapPlatforms["lavaFlow"][1]));
+	mapDecPlatforms["poisonFilter"].push_back(new olc::Decal(mapPlatforms["poisonFilter"][0]));
+	mapDecPlatforms["poisonFilter2"].push_back(new olc::Decal(mapPlatforms["poisonFilter2"][0]));
+	mapDecPlatforms["poisonFilter3"].push_back(new olc::Decal(mapPlatforms["poisonFilter3"][0]));
+	mapDecPlatforms["poisonFilter4"].push_back(new olc::Decal(mapPlatforms["poisonFilter4"][0]));
+	mapDecPlatforms["poisonFilter5"].push_back(new olc::Decal(mapPlatforms["poisonFilter5"][0]));
+	mapDecPlatforms["poisonFilter6"].push_back(new olc::Decal(mapPlatforms["poisonFilter6"][0]));
+	mapDecPlatforms["poisonFilter7"].push_back(new olc::Decal(mapPlatforms["poisonFilter7"][0]));
 	mapDecPlatforms["lvl6Exit"].push_back(new olc::Decal(mapPlatforms["lvl6Exit"][0]));
 	// boss 6
 	mapDecPlatforms["waterMark"].push_back(new olc::Decal(mapPlatforms["waterMark"][0]));
