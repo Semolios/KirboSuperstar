@@ -110,7 +110,7 @@ void cDynamicCreatureFrosty::Behaviour(float fElapsedTime, float playerX, float 
 
 				engine->PlaySample("itemLaunch");
 
-				engine->AddProjectile(px, py - (fIceCubeOffset / engine->GetTileHeight()), false, fIceCubeDirection * fIceCubeVX, fIceCubeVY, fIceCubeDuration, sIceCube, true, nIceCubeDmg, true, true, 0, false, fIceCubeDrag);
+				engine->AddProjectile(px, py - (fIceCubeOffset / engine->GetTileHeight()), false, fIceCubeDirection * fIceCubeVX, fIceCubeVY, fIceCubeDuration, sIceCube, true, nIceCubeDmg, true, true, 0, false, fIceCubeDrag, "", false, "", false, "", 0.0f, false, true);
 				bCanSpawnAOE = false;
 			}
 

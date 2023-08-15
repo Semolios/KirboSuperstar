@@ -285,7 +285,7 @@ void cDynamicCreatureKingDDD::Behaviour(float fElapsedTime, float playerX, float
 
 					engine->PlaySample("kingDDDSideB");
 					// spawn bouncy spike
-					engine->AddProjectile((nFaceDir == 0 ? fSpikeLeftPX : fSpikeRightPX) + px, py, false, nFaceDir == 0 ? fSpikeLeftVX : fSpikeRightVX, fSpikeVY, fSpikeDuration, "spike", true, cnAttacksDmg, true, true, 0, false, -3.0f, "", true, "spikeBallBounce");
+					engine->AddProjectile((nFaceDir == 0 ? fSpikeLeftPX : fSpikeRightPX) + px, py, false, nFaceDir == 0 ? fSpikeLeftVX : fSpikeRightVX, fSpikeVY, fSpikeDuration, "spike", true, cnAttacksDmg, true, true, 0, false, -3.0f, "", true, "spikeBallBounce", false, "", 0.0f, false, true);
 				}
 				AllowDamagedAnimation();
 			}

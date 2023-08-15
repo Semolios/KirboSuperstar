@@ -28,9 +28,14 @@ public:
 	float GetPY();
 	float GetVX();
 	float GetVY();
+	void SetVX(float velX);
+	void SetVY(float velY);
 	int GetDamage();
 	bool IsAttackable();
 	bool IsFriendly();
+	void SetFriendly(bool friendly);
+	bool IsReflectible();
+	void SetReflectible(bool reflect);
 	cHitbox* GetHitbox();
 
 protected:
@@ -53,6 +58,7 @@ protected:
 	bool bIsAttackable;
 	bool bDead = false;
 	bool bAffectedByGravity = false;
+	bool bReflectible = false;
 	std::string sName;
 	cHitbox* hitbox;
 };

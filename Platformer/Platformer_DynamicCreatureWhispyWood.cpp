@@ -131,7 +131,7 @@ void cDynamicCreatureWhispyWood::Behaviour(float fElapsedTime, float playerX, fl
 
 				// Spawn the projectile to attack kirbo
 				engine->PlaySample("blow");
-				engine->AddProjectile(cfProjectilePosX, cfProjectilePosY, false, cfProjectileSpeedX, fProjectileSpeedY, cfProjectileDuration, "blow", false, cnProjectileDmg, false, false);
+				engine->AddProjectile(cfProjectilePosX, cfProjectilePosY, false, cfProjectileSpeedX, fProjectileSpeedY, cfProjectileDuration, "blow", false, cnProjectileDmg, false, false, 0, true, -3.0f, "", false, "", false, "", 0.0f, false, true);
 			}
 
 			if (fBehaviourTimer >= cfProjectilesTime)

@@ -1043,7 +1043,7 @@ bool OneLoneCoder_Platformer::IsSemiSolidTile(wchar_t tile)
     return tile == '_';
 }
 
-void OneLoneCoder_Platformer::AddProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float fDrag, std::string sound, bool bouncy, std::string bounceSound, bool scenery, std::string effect, float effectDuration, bool pickable)
+void OneLoneCoder_Platformer::AddProjectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, std::string sprite, bool affectedByGravity, int damage, bool solidVSMap, bool oneHit, int corner, bool breackableAgainstTiles, float fDrag, std::string sound, bool bouncy, std::string bounceSound, bool scenery, std::string effect, float effectDuration, bool pickable, bool reflectible)
 {
     cDynamicProjectile* p = new cDynamicProjectile(ox, oy, bFriend, velx, vely, duration, mapDecProjectiles[sprite], affectedByGravity, damage, solidVSMap, oneHit, sprite, corner, breackableAgainstTiles, fDrag, bouncy, bounceSound, scenery);
     if (sound != "")
@@ -1051,6 +1051,7 @@ void OneLoneCoder_Platformer::AddProjectile(float ox, float oy, bool bFriend, fl
     if (effect != "")
         p->SetEffect(effect, effectDuration);
     p->SetPickable(pickable);
+    p->SetReflectible(reflectible);
     vecProjectiles.push_back(p);
 }
 
@@ -2079,6 +2080,25 @@ void OneLoneCoder_Platformer::UpdateGame(float fElapsedTime, float* angle, float
                                 player->Attack(dyn, object->GetDamage());
                                 if (object->IsOneHit())
                                     object->SetRedundant(true);
+                            }
+                        }
+                    }
+
+                    // Reflect projectiles
+                    for (auto& enemyProj : vecProjectiles)
+                    {
+                        if (!enemyProj->IsRedundant() && !enemyProj->IsScenery() && !enemyProj->IsFriendly() && enemyProj->IsReflectible())
+                        {
+                            enemyProj->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
+                            if (cHitbox::ShapeOverlap_DIAG(object->GetHitbox(), enemyProj->GetHitbox()))
+                            {
+                                enemyProj->SetFriendly(true);
+                                if (object->GetVX() * enemyProj->GetVX() <= 0.0f)
+                                {
+                                    object->PlaySoundEffect();
+                                    object->SpawnEffect(enemyProj->GetPX() + (enemyProj->GetNormalizedW() / 2.0f) - 1.1f, enemyProj->GetPY() + (enemyProj->GetNormalizedH() / 2.0f) - 1.5f); // hardcoded values because it's only used for jesus cross
+                                    enemyProj->SetVX(-enemyProj->GetVX());
+                                }
                             }
                         }
                     }

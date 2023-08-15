@@ -37,6 +37,16 @@ float cDynamic::GetVY()
 	return vy;
 }
 
+void cDynamic::SetVX(float velX)
+{
+	vx = velX;
+}
+
+void cDynamic::SetVY(float velY)
+{
+	vy = velY;
+}
+
 int cDynamic::GetDamage()
 {
 	return nDamage;
@@ -50,6 +60,21 @@ bool cDynamic::IsAttackable()
 bool cDynamic::IsFriendly()
 {
 	return bFriendly;
+}
+
+void cDynamic::SetFriendly(bool friendly)
+{
+	bFriendly = friendly;
+}
+
+bool cDynamic::IsReflectible()
+{
+	return bReflectible;
+}
+
+void cDynamic::SetReflectible(bool reflect)
+{
+	bReflectible = reflect;
 }
 
 cHitbox* cDynamic::GetHitbox()
