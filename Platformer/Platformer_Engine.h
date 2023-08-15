@@ -189,6 +189,8 @@ public:
 	// Other
 	std::string ToStr(std::wstring str);
 	void UpdateGame(float fElapsedTime, float* angle, float* offsetX, float* offsetY);
+	void AttackNearbyEnnemies(cDynamicProjectile*& object);
+	void ReflectProjectiles(cDynamicProjectile*& object);
 	void DrawGame(float fElapsedTime, float angle, float offsetX, float offsetY);
 	olc::Sprite* GetLoadedSprite(std::string spr);
 	olc::Decal* GetLoadedDecal(std::string dec);

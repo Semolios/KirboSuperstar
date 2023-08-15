@@ -2066,42 +2066,8 @@ void OneLoneCoder_Platformer::UpdateGame(float fElapsedTime, float* angle, float
                 {
                     object->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
 
-                    // Check if an ennemy take the attack
-                    for (auto& dyn : vecEnnemies)
-                    {
-                        dyn->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
-
-                        if (cHitbox::ShapeOverlap_DIAG(object->GetHitbox(), dyn->GetHitbox()))
-                        {
-                            if (dyn->IsAttackable())
-                            {
-                                object->PlaySoundEffect();
-                                object->SpawnEffect(dyn->GetPX() + (dyn->GetNormalizedW() / 2.0f) - 1.1f, dyn->GetPY() + (dyn->GetNormalizedH() / 2.0f) - 1.5f); // hardcoded values because it's only used for jesus cross
-                                player->Attack(dyn, object->GetDamage());
-                                if (object->IsOneHit())
-                                    object->SetRedundant(true);
-                            }
-                        }
-                    }
-
-                    // Reflect projectiles
-                    for (auto& enemyProj : vecProjectiles)
-                    {
-                        if (!enemyProj->IsRedundant() && !enemyProj->IsScenery() && !enemyProj->IsFriendly() && enemyProj->IsReflectible())
-                        {
-                            enemyProj->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
-                            if (cHitbox::ShapeOverlap_DIAG(object->GetHitbox(), enemyProj->GetHitbox()))
-                            {
-                                enemyProj->SetFriendly(true);
-                                if (object->GetVX() * enemyProj->GetVX() <= 0.0f)
-                                {
-                                    object->PlaySoundEffect();
-                                    object->SpawnEffect(enemyProj->GetPX() + (enemyProj->GetNormalizedW() / 2.0f) - 1.1f, enemyProj->GetPY() + (enemyProj->GetNormalizedH() / 2.0f) - 1.5f); // hardcoded values because it's only used for jesus cross
-                                    enemyProj->SetVX(-enemyProj->GetVX());
-                                }
-                            }
-                        }
-                    }
+                    AttackNearbyEnnemies(object);
+                    ReflectProjectiles(object);
                 }
                 else
                 {
@@ -2230,6 +2196,47 @@ void OneLoneCoder_Platformer::UpdateGame(float fElapsedTime, float* angle, float
             ReturnToWorldMap(true);
 
             return;
+        }
+    }
+}
+
+void OneLoneCoder_Platformer::AttackNearbyEnnemies(cDynamicProjectile*& object)
+{
+    for (auto& dyn : vecEnnemies)
+    {
+        dyn->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
+
+        if (cHitbox::ShapeOverlap_DIAG(object->GetHitbox(), dyn->GetHitbox()))
+        {
+            if (dyn->IsAttackable())
+            {
+                object->PlaySoundEffect();
+                object->SpawnEffect(dyn->GetPX() + (dyn->GetNormalizedW() / 2.0f) - 1.1f, dyn->GetPY() + (dyn->GetNormalizedH() / 2.0f) - 1.5f); // hardcoded values because it's only used for jesus cross
+                player->Attack(dyn, object->GetDamage());
+                if (object->IsOneHit())
+                    object->SetRedundant(true);
+            }
+        }
+    }
+}
+
+void OneLoneCoder_Platformer::ReflectProjectiles(cDynamicProjectile*& object)
+{
+    for (auto& enemyProj : vecProjectiles)
+    {
+        if (!enemyProj->IsRedundant() && !enemyProj->IsScenery() && !enemyProj->IsFriendly() && enemyProj->IsReflectible())
+        {
+            enemyProj->UpdateHitbox(camera->GetOffsetX(), camera->GetOffsetY());
+            if (cHitbox::ShapeOverlap_DIAG(object->GetHitbox(), enemyProj->GetHitbox()))
+            {
+                enemyProj->SetFriendly(true);
+                if (object->GetVX() * enemyProj->GetVX() <= 0.0f)
+                {
+                    object->PlaySoundEffect();
+                    object->SpawnEffect(enemyProj->GetPX() + (enemyProj->GetNormalizedW() / 2.0f) - 1.1f, enemyProj->GetPY() + (enemyProj->GetNormalizedH() / 2.0f) - 1.5f); // hardcoded values because it's only used for jesus cross
+                    enemyProj->SetVX(-enemyProj->GetVX());
+                }
+            }
         }
     }
 }
