@@ -2,3 +2,4 @@ Scenery,1,0.5,snowMount
 Scenery,8,7.8,snowman
 Scenery,17,8.1,nipperPlant
 Scenery,12,6.9,painter
+Scenery,4,6.9,crystal,foreground

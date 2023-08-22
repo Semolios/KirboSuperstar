@@ -640,8 +640,11 @@ std::map<std::string, std::vector<olc::Sprite*>> cDynamicMovingPlatform::LoadMov
 	// boss 6
 	mapPlatforms["waterMark"].push_back(new olc::Sprite("assets/gfx/waterMark00.png"));
 	mapPlatforms["waterMark"].push_back(new olc::Sprite("assets/gfx/waterMark01.png"));
+	mapPlatforms["waterMark"].push_back(new olc::Sprite("assets/gfx/waterMark02.png"));
 	mapPlatforms["fountainFlow"].push_back(new olc::Sprite("assets/gfx/fountainFlow00.png"));
 	mapPlatforms["fountainFlow"].push_back(new olc::Sprite("assets/gfx/fountainFlow01.png"));
+	mapPlatforms["fountainFlow"].push_back(new olc::Sprite("assets/gfx/fountainFlow02.png"));
+	mapPlatforms["waterFallHide"].push_back(new olc::Sprite("assets/gfx/waterFallHide.png"));
 	mapPlatforms["meleeFox"].push_back(new olc::Sprite("assets/gfx/meleeFox00.png"));
 	mapPlatforms["meleeFox"].push_back(new olc::Sprite("assets/gfx/meleeFox01.png"));
 	mapPlatforms["meleeFox"].push_back(new olc::Sprite("assets/gfx/meleeFox02.png"));
@@ -1235,10 +1238,15 @@ std::map<std::string, std::vector<olc::Decal*>> cDynamicMovingPlatform::LoadMovi
 	mapDecPlatforms["waterMark"].push_back(new olc::Decal(mapPlatforms["waterMark"][0]));
 	mapDecPlatforms["waterMark"].push_back(new olc::Decal(mapPlatforms["waterMark"][1]));
 	mapDecPlatforms["waterMark"].push_back(new olc::Decal(mapPlatforms["waterMark"][1]));
+	mapDecPlatforms["waterMark"].push_back(new olc::Decal(mapPlatforms["waterMark"][2]));
+	mapDecPlatforms["waterMark"].push_back(new olc::Decal(mapPlatforms["waterMark"][2]));
 	mapDecPlatforms["fountainFlow"].push_back(new olc::Decal(mapPlatforms["fountainFlow"][0]));
 	mapDecPlatforms["fountainFlow"].push_back(new olc::Decal(mapPlatforms["fountainFlow"][0]));
 	mapDecPlatforms["fountainFlow"].push_back(new olc::Decal(mapPlatforms["fountainFlow"][1]));
 	mapDecPlatforms["fountainFlow"].push_back(new olc::Decal(mapPlatforms["fountainFlow"][1]));
+	mapDecPlatforms["fountainFlow"].push_back(new olc::Decal(mapPlatforms["fountainFlow"][2]));
+	mapDecPlatforms["fountainFlow"].push_back(new olc::Decal(mapPlatforms["fountainFlow"][2]));
+	mapDecPlatforms["waterFallHide"].push_back(new olc::Decal(mapPlatforms["waterFallHide"][0]));
 	mapDecPlatforms["meleeFox"].push_back(new olc::Decal(mapPlatforms["meleeFox"][0]));
 	mapDecPlatforms["meleeFox"].push_back(new olc::Decal(mapPlatforms["meleeFox"][1]));
 	mapDecPlatforms["meleeFox"].push_back(new olc::Decal(mapPlatforms["meleeFox"][2]));

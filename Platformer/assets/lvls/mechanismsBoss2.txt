@@ -1,4 +1,3 @@
-Scenery,2,7.1,hillRed
 Scenery,7,7.1,hillsRed
 Scenery,14,7.1,hillYellow
 Scenery,5,8,cappy
@@ -6,3 +5,5 @@ Scenery,12,8.5,burningCappy
 Scenery,12,7.8,fire
 Basic,4,6,basic,0
 Basic,10,6,basic,0
+Scenery,2,8.3,hillBlue,foreground
+Scenery,10,8.3,hillSimple,foreground
