@@ -20,12 +20,12 @@ public:
 	void Update(float fElapsedTime, float playerX, float playerY) override;
 	void Collision(float fElapsedTime, cLevel* level);
 	void SideCollision();
-	void LeftCollision(cLevel* level, float fNewObjectPosX, float fBorder);
-	void RightCollision(cLevel* level, float fNewObjectPosX, float fBorder);
-	void TopCollision(cLevel* level, float fNewObjectPosX, float fBorder, float fNewObjectPosY);
-	void BottomCollision(cLevel* level, float fNewObjectPosX, float fBorder, float fNewObjectPosY, float fElapsedTime);
-	void BottomCollisionBehaviour(float fElapsedTime);
-	void CheckBreakableBlocks(cLevel* level, float fNewObjectPosX, float fBorder, float fNewObjectPosY);
+	void LeftCollision(cLevel* level, float fBorder);
+	void RightCollision(cLevel* level, float fBorder);
+	void TopCollision(cLevel* level, float fBorder);
+	void BottomCollision(cLevel* level, float fBorder, float fElapsedTime);
+	void BottomCollisionBehaviour(float fElapsedTime, float grdSpeed);
+	void CheckBreakableBlocks(cLevel* level, float fBorder);
 	void BreakTile(cLevel* level, float tileX, float tileY);
 	void ChangeTile(cLevel* level, float tileX, float tileY, wchar_t t);
 	void UpdateHitbox(float cameraOffsetX, float cameraOffsetY) override;
@@ -63,6 +63,8 @@ protected:
 	float fDuration;
 	float fDrag;
 	float fEffectDuration;
+	float fNewObjectPosX;
+	float fNewObjectPosY;
 	bool bOneHit;
 	bool bRedundant;
 	bool bBreaksAgainstTiles;

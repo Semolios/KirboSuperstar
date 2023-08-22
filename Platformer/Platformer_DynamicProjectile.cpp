@@ -72,8 +72,8 @@ void cDynamicProjectile::Update(float fElapsedTime, float playerX, float playerY
 
 void cDynamicProjectile::Collision(float fElapsedTime, cLevel* level)
 {
-	float fNewObjectPosX = px + vx * fElapsedTime;
-	float fNewObjectPosY = py + vy * fElapsedTime;
+	fNewObjectPosX = px + vx * fElapsedTime;
+	fNewObjectPosY = py + vy * fElapsedTime;
 
 	// Collision
 	float fBorder = 0.1f;
@@ -83,26 +83,26 @@ void cDynamicProjectile::Collision(float fElapsedTime, cLevel* level)
 		vy += engine->GetGravityValue() * fElapsedTime;
 
 	if (bFriendly && !bScenery)
-		CheckBreakableBlocks(level, fNewObjectPosX, fBorder, fNewObjectPosY);
+		CheckBreakableBlocks(level, fBorder);
 
 	if (bSolidVsMap)
 	{
 		if (vx <= 0) // Moving Left
 		{
-			LeftCollision(level, fNewObjectPosX, fBorder);
+			LeftCollision(level, fBorder);
 		}
 		else // Moving Right
 		{
-			RightCollision(level, fNewObjectPosX, fBorder);
+			RightCollision(level, fBorder);
 		}
 
 		if (vy <= 0) // Moving Up
 		{
-			TopCollision(level, fNewObjectPosX, fBorder, fNewObjectPosY);
+			TopCollision(level, fBorder);
 		}
 		else // Moving Down
 		{
-			BottomCollision(level, fNewObjectPosX, fBorder, fNewObjectPosY, fElapsedTime);
+			BottomCollision(level, fBorder, fElapsedTime);
 		}
 	}
 
@@ -120,7 +120,7 @@ void cDynamicProjectile::SideCollision()
 		vx = -vx;
 }
 
-void cDynamicProjectile::LeftCollision(cLevel* level, float fNewObjectPosX, float fBorder)
+void cDynamicProjectile::LeftCollision(cLevel* level, float fBorder)
 {
 	if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + fBorder, py + ((fDynHeight / engine->GetTileHeight()) / 2.0f))))
 	{
@@ -128,7 +128,7 @@ void cDynamicProjectile::LeftCollision(cLevel* level, float fNewObjectPosX, floa
 	}
 }
 
-void cDynamicProjectile::RightCollision(cLevel* level, float fNewObjectPosX, float fBorder)
+void cDynamicProjectile::RightCollision(cLevel* level, float fBorder)
 {
 	if (engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), py + ((fDynHeight / engine->GetTileHeight()) / 2.0f))))
 	{
@@ -136,7 +136,7 @@ void cDynamicProjectile::RightCollision(cLevel* level, float fNewObjectPosX, flo
 	}
 }
 
-void cDynamicProjectile::TopCollision(cLevel* level, float fNewObjectPosX, float fBorder, float fNewObjectPosY)
+void cDynamicProjectile::TopCollision(cLevel* level, float fBorder)
 {
 	if (engine->IsSolidTile(level->GetTile(fNewObjectPosX +											fBorder,  fNewObjectPosY)) ||
 		engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY)))
@@ -148,12 +148,12 @@ void cDynamicProjectile::TopCollision(cLevel* level, float fNewObjectPosX, float
 	}
 }
 
-void cDynamicProjectile::BottomCollision(cLevel* level, float fNewObjectPosX, float fBorder, float fNewObjectPosY, float fElapsedTime)
+void cDynamicProjectile::BottomCollision(cLevel* level, float fBorder, float fElapsedTime)
 {
 	if (engine->IsSolidTile(level->GetTile(fNewObjectPosX +											fBorder,  fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))) ||
 		engine->IsSolidTile(level->GetTile(fNewObjectPosX + ((fDynWidth / engine->GetTileWidth()) - fBorder), fNewObjectPosY + (fDynHeight / engine->GetTileHeight()))))
 	{
-		BottomCollisionBehaviour(fElapsedTime);
+		BottomCollisionBehaviour(fElapsedTime, 0.0f);
 	}
 	else
 	{
@@ -161,13 +161,13 @@ void cDynamicProjectile::BottomCollision(cLevel* level, float fNewObjectPosX, fl
 		{
 			if (ptfm->TopCollision(fNewObjectPosX, fNewObjectPosX + (fDynWidth / engine->GetTileWidth()), fNewObjectPosY + (fDynHeight / engine->GetTileHeight())))
 			{
-				BottomCollisionBehaviour(fElapsedTime);
+				BottomCollisionBehaviour(fElapsedTime, ptfm->GetVY());
 			}
 		}
 	}
 }
 
-void cDynamicProjectile::BottomCollisionBehaviour(float fElapsedTime)
+void cDynamicProjectile::BottomCollisionBehaviour(float fElapsedTime, float grdSpeed)
 {
 	if (bBreaksAgainstTiles && !bBouncy)
 	{
@@ -177,7 +177,9 @@ void cDynamicProjectile::BottomCollisionBehaviour(float fElapsedTime)
 	{
 		if (!bBouncy)
 		{
+			// need to keep vy = 0.0f or the next frame, the projectile is considered going up and checks for TopCollision()
 			vy = 0.0f;
+			fNewObjectPosY += grdSpeed * fElapsedTime;
 
 			vx += fDrag * vx * fElapsedTime;
 			if (fabs(vx) < cfMinGlideVX) vx = 0.0f;
@@ -192,7 +194,7 @@ void cDynamicProjectile::BottomCollisionBehaviour(float fElapsedTime)
 	}
 }
 
-void cDynamicProjectile::CheckBreakableBlocks(cLevel* level, float fNewObjectPosX, float fBorder, float fNewObjectPosY)
+void cDynamicProjectile::CheckBreakableBlocks(cLevel* level, float fBorder)
 {
 	//
 	// x-----x
