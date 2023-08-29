@@ -17,7 +17,7 @@ Wall,79,27,fountainWall,1,1,1,36,12,door1
 Wall,82,27,fountainWall,1,1,1,185,12,door2
 Wall,85,27,fountainWall,1,1,1,7,60,door3
 Wall,88,27,fountainWall,1,1,1,186,60,door4
-Wall,91,27,fountainWall,1,1,1,186,18,door5
+Wall,91,27,fountainWall,1,1,1,185,18,door5
 Wall,65,16.2,fountainWall,1,1,1,5,28
 Wall,130,16,fountainWall,1,1,1,161,18
 Wall,20,10.2,fountainWall,1,1,1,31,2
@@ -191,6 +191,7 @@ Scenery,82,15.8,rightArrow2
 Scenery,57.2,41,downArrow2
 Scenery,138.8,49,downArrow
 Scenery,130,39.2,rightArrow
+Scenery,77,28.1,deedeedeeStatue
 Scenery,80,28.1,deedeedeeStatue
 Scenery,83,28.1,deedeedeeStatue
 Scenery,86,28.1,deedeedeeStatue

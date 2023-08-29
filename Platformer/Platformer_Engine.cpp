@@ -1159,9 +1159,6 @@ std::vector<cDynamicMovingPlatform*> OneLoneCoder_Platformer::GetClosePlatforms(
     for (auto& ptfm : vecPlatforms)
     {
         // Check the 4 corners to avoid the item disappearing when player is far from top left corner
-        // -----------------------------------------------------------------
-        // ------ /!\ FPS drops considerably if item is too large /!\ ------
-        // -----------------------------------------------------------------
 		if (fabs(px - (ptfm->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (ptfm->GetPY()										    )) < ((((float)ScreenHeight()) / 64.0f)) ||
 			fabs(px - (ptfm->GetPX() + ptfm->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (ptfm->GetPY()										    )) < ((((float)ScreenHeight()) / 64.0f)) ||
 			fabs(px - (ptfm->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (ptfm->GetPY() + ptfm->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f)) ||
@@ -1190,9 +1187,6 @@ std::vector<cDynamicWind*> OneLoneCoder_Platformer::GetCloseWinds(float px, floa
     for (auto& wind : vecWinds)
     {
         // Check the 4 corners to avoid the item disappearing when player is far from top left corner
-        // -----------------------------------------------------------------
-        // ------ /!\ FPS drops considerably if item is too large /!\ ------
-        // -----------------------------------------------------------------
 		if (fabs(px - (wind->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (wind->GetPY()										    )) < ((((float)ScreenHeight()) / 64.0f)) ||
 			fabs(px - (wind->GetPX() + wind->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (wind->GetPY()										    )) < ((((float)ScreenHeight()) / 64.0f)) ||
 			fabs(px - (wind->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (wind->GetPY() + wind->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f)) ||
@@ -1216,9 +1210,6 @@ std::vector<cDynamicTeleport*> OneLoneCoder_Platformer::GetCloseTeleport(float p
     for (auto& tp : vecTeleports)
     {
         // Check the 4 corners to avoid the item disappearing when player is far from top left corner
-        // -----------------------------------------------------------------
-        // ------ /!\ FPS drops considerably if item is too large /!\ ------
-        // -----------------------------------------------------------------
 		if (fabs(px - (tp->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (tp->GetPY()										    )) < ((((float)ScreenHeight()) / 64.0f)) ||
 			fabs(px - (tp->GetPX() + tp->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (tp->GetPY()										    )) < ((((float)ScreenHeight()) / 64.0f)) ||
 			fabs(px - (tp->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (tp->GetPY() + tp->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f)) ||
@@ -1236,9 +1227,6 @@ std::vector<cDynamicTeleport*> OneLoneCoder_Platformer::GetCloseTeleportDest(flo
     for (auto& tp : vecTeleports)
     {
         // Check the 4 corners to avoid the item disappearing when player is far from top left corner
-        // -----------------------------------------------------------------
-        // ------ /!\ FPS drops considerably if item is too large /!\ ------
-        // -----------------------------------------------------------------
 		if (fabs(px - (tp->GetDestX()										 )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (tp->GetDestY()										  )) < ((((float)ScreenHeight()) / 64.0f)) ||
 			fabs(px - (tp->GetDestX() + tp->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (tp->GetDestY()										  )) < ((((float)ScreenHeight()) / 64.0f)) ||
 			fabs(px - (tp->GetDestX()										 )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (tp->GetDestY() + tp->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f)) ||
@@ -1912,9 +1900,6 @@ std::vector<cDynamicCreature*> OneLoneCoder_Platformer::GetCloseEnnemies(float p
     for (auto& mob : vecEnnemies)
     {
         // Check the 4 corners to avoid the item disappearing when player is far from top left corner
-        // -----------------------------------------------------------------
-        // ------ /!\ FPS drops considerably if item is too large /!\ ------
-        // -----------------------------------------------------------------
 		if (fabs(px - (mob->GetPX()						   )) < ((((float)ScreenWidth()) / 64.0f) * 1.25f) && fabs(py - (mob->GetPY()						 )) < ((((float)ScreenHeight()) / 64.0f) * 1.25f) ||
 			fabs(px - (mob->GetPX() + mob->GetNormalizedW())) < ((((float)ScreenWidth()) / 64.0f) * 1.25f) && fabs(py - (mob->GetPY()						 )) < ((((float)ScreenHeight()) / 64.0f) * 1.25f) ||
 			fabs(px - (mob->GetPX()						   )) < ((((float)ScreenWidth()) / 64.0f) * 1.25f) && fabs(py - (mob->GetPY() + mob->GetNormalizedH())) < ((((float)ScreenHeight()) / 64.0f) * 1.25f) ||
