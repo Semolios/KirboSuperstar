@@ -18,6 +18,7 @@ public:
 
 	void InitDecal();
 	void DrawSelf(float ox, float oy) override;
+	void DrawHealthBar(olc::vf2d&& pos, float ox);
 	void Update(float fElapsedTime, float playerX, float playerY) override;
 	void GeneratePickUp();
 	void KnockBack(float dx, float dy, float dist);

@@ -46,6 +46,34 @@ void cDynamicCreature::DrawSelf(float ox, float oy)
     sourceSize.y = fSpriteH;
 
     engine->DrawPartialDecal(pos, dynDecal, sourcePos, sourceSize);
+
+    if (!IsBoss())
+    {
+        DrawHealthBar(std::move(pos), ox);
+    }
+}
+
+void cDynamicCreature::DrawHealthBar(olc::vf2d&& pos, float ox)
+{
+    pos.x -= fSpriteOffsetX;
+
+    olc::vf2d pos2;
+    pos2.x = (int)((px - ox) * 64.0f) + 36;
+    pos2.y = pos.y;
+
+    olc::vf2d pos3;
+    pos3.x = (int)((px - ox) * 64.0f) + (nHealth >= 0 ? (36 * ((float)nHealth / (float)nHealthMax)) : 0);
+    pos3.y = pos.y;
+
+    engine->DrawLineDecal(pos, pos2, olc::BLACK);
+    engine->DrawLineDecal(pos, pos3, olc::RED);
+
+    pos.y += 1;
+    pos2.y += 1;
+    pos3.y += 1;
+
+    engine->DrawLineDecal(pos, pos2, olc::BLACK);
+    engine->DrawLineDecal(pos, pos3, olc::RED);
 }
 
 void cDynamicCreature::Update(float fElapsedTime, float playerX, float playerY)
