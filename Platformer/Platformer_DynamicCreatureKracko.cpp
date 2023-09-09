@@ -18,7 +18,7 @@ cDynamicCreatureKracko::cDynamicCreatureKracko(cLevel* l) : cDynamicCreatureSpaw
 	level = l;
 	bSolidVsMap = false;
 	bAffectedByGravity = false;
-	nDamage = 2;
+	nDamage = 1;
 	bCanBehaveWhileAttacked = true;
 }
 

@@ -37,7 +37,7 @@ brontoBurt,3.0,147,1
 brontoBurt,3.0,153,7
 brontoBurt,3.0,157,1
 brontoBurt,3.0,157,4
-brontoBurt,5.0,233,7
+brontoBurt,5.0,233,6
 brontoBurt,5.0,248,12
 brontoBurt,5.0,247,2
 brontoBurt,5.0,251,3

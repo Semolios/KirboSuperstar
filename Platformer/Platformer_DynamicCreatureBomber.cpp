@@ -20,7 +20,7 @@ cDynamicCreatureBomber::cDynamicCreatureBomber(cLevel* l) : cDynamicCreature("bo
 	fInitSpeed = -1;
 	bSolidVsMap = true;
 	bAffectedByGravity = true;
-	nDamage = 2;
+	nDamage = 1;
 	bIsKnockable = false;
 	bCanBehaveWhileAttacked = true;
 }

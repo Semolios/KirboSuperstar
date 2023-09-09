@@ -18,7 +18,7 @@ cDynamicCreatureFrosty::cDynamicCreatureFrosty(cLevel* l) : cDynamicCreatureSpaw
 	level = l;
 	bSolidVsMap = true;
 	bAffectedByGravity = true;
-	nDamage = 2;
+	nDamage = 1;
 	bCanBehaveWhileAttacked = true;
 }
 

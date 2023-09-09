@@ -28,7 +28,7 @@ Scenery,51.9,185,cloudConstruction4
 Scenery,4.9,129.8,cloudConstruction4
 Scenery,21,137,cloudConstruction5
 Scenery,9,37,cloudConstruction5
-Scenery,50,68,cloudConstruction6
+Scenery,45,70,cloudConstruction6
 Scenery,40,243,cloudConstruction6
 Scenery,36,163,flyingRedKoopaTroopa
 Scenery,28,193,pit

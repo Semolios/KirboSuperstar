@@ -20,7 +20,7 @@ cDynamicCreatureWaddleDee::cDynamicCreatureWaddleDee(cLevel* l) : cDynamicCreatu
 	fInitSpeed = -1;
 	bSolidVsMap = true;
 	bAffectedByGravity = true;
-	nDamage = 2;
+	nDamage = 1;
 }
 
 cDynamicCreatureWaddleDee::~cDynamicCreatureWaddleDee()
