@@ -3,7 +3,6 @@
 
 #pragma once
 #include "olcPixelGameEngine.h"
-#include "olcPGEX_Graphics2D.h"
 #include "Platformer_Hitbox.h"
 
 class cDynamic

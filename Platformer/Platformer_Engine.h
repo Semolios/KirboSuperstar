@@ -41,7 +41,7 @@
 #include "Platformer_TitleScreen.h"
 #include "Platformer_WorldMap.h"
 
-#include <cTime>
+#include <time.h>
 #include <Lmcons.h>
 
 class cCamera;
