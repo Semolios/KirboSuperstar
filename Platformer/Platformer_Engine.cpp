@@ -214,7 +214,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
         case LS_TITLE:
         {
             sprTitleScreen = olc::Sprite("assets/gfx/titleScreen.png");
-            titleScreen = new cTitleScreen(this, sprTitleScreen);
+            titleScreen = new cTitleScreen(sprTitleScreen);
 
             UpdateProgressBar("Loading 20%");
 
@@ -604,7 +604,7 @@ bool OneLoneCoder_Platformer::GameState_Title(float fElapsedTime)
     if (!waveEngine.IsWaveformPlaying(&sndTitleScreen))
         pwTitleScreen = waveEngine.PlayWaveform(&sndTitleScreen, true);
 
-    titleScreen->Update(this, fElapsedTime);
+    titleScreen->Update(*this, fElapsedTime);
 
     if (GetAnyKey() || controller.AnyButtonPressed())
     {

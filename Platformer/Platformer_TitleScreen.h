@@ -9,10 +9,10 @@
 class cTitleScreen
 {
 public:
-	cTitleScreen(olc::PixelGameEngine* gfx, const olc::Sprite& background);
+	cTitleScreen(const olc::Sprite& background);
 
-	bool Update(olc::PixelGameEngine* gfx, const float& fElapsedTime);
-	void DrawNewStar(olc::PixelGameEngine* gfx, const float& px, const float& py, const float& theta);
+	bool Update(olc::PixelGameEngine& gfx, const float& fElapsedTime);
+	void DrawNewStar(olc::PixelGameEngine& gfx, const float& px, const float& py, const float& theta);
 
 private:
 	// Constant values

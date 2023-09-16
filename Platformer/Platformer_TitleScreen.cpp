@@ -1,6 +1,6 @@
 #include "Platformer_TitleScreen.h"
 
-cTitleScreen::cTitleScreen(olc::PixelGameEngine* gfx, const olc::Sprite& background)
+cTitleScreen::cTitleScreen(const olc::Sprite& background)
 {
 	sprBackGround = background;
 
@@ -9,9 +9,9 @@ cTitleScreen::cTitleScreen(olc::PixelGameEngine* gfx, const olc::Sprite& backgro
 	sprstars = olc::Sprite("assets/gfx/stars.png");
 }
 
-bool cTitleScreen::Update(olc::PixelGameEngine* gfx, const float& fElapsedTime)
+bool cTitleScreen::Update(olc::PixelGameEngine& gfx, const float& fElapsedTime)
 {
-	gfx->DrawSprite(0, 0, &sprBackGround);
+	gfx.DrawSprite(0, 0, &sprBackGround);
 
 	DrawNewStar(gfx, p1x, p1y, +fTheta);
 	DrawNewStar(gfx, p2x, p2y, -fTheta);
@@ -21,14 +21,14 @@ bool cTitleScreen::Update(olc::PixelGameEngine* gfx, const float& fElapsedTime)
 	return false;
 }
 
-void cTitleScreen::DrawNewStar(olc::PixelGameEngine* gfx, const float& px, const float& py, const float& theta)
+void cTitleScreen::DrawNewStar(olc::PixelGameEngine& gfx, const float& px, const float& py, const float& theta)
 {
 	olc::GFX2D::Transform2D t1;
 	t1.Translate(-cnTileWidth / 2.0f, -cnTileHeight / 2.0f);
 	t1.Rotate(theta);
 	t1.Translate(px, py);
 
-	gfx->SetPixelMode(olc::Pixel::ALPHA);
+	gfx.SetPixelMode(olc::Pixel::ALPHA);
 	olc::GFX2D::DrawSprite(&sprstars, t1);
-	gfx->SetPixelMode(olc::Pixel::NORMAL);
+	gfx.SetPixelMode(olc::Pixel::NORMAL);
 }
