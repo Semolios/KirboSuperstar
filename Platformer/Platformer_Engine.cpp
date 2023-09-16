@@ -84,10 +84,10 @@ bool OneLoneCoder_Platformer::GameState_LevelStart(float fElapsedTime)
 
     switch (levelStartAnim)
     {
-        case 0: animPlayer.ChangeState("idle", &sprPlayer, decPlayer);        break;
-        case 1: animPlayer.ChangeState("run", &sprPlayer, decPlayer);		  break;
-        case 2: animPlayer.ChangeState("flying", &sprPlayer, decPlayer);	  break;
-        case 3: animPlayer.ChangeState("riding_star", &sprPlayer, decPlayer); break;
+        case 0: animPlayer.ChangeState("idle", sprPlayer, *decPlayer);        break;
+        case 1: animPlayer.ChangeState("run", sprPlayer, *decPlayer);		  break;
+        case 2: animPlayer.ChangeState("flying", sprPlayer, *decPlayer);	  break;
+        case 3: animPlayer.ChangeState("riding_star", sprPlayer, *decPlayer); break;
     }
 
     SetPixelMode(olc::Pixel::ALPHA);
@@ -651,7 +651,7 @@ bool OneLoneCoder_Platformer::GameState_EndScreen(float fElapsedTime)
 {
     endScreen->Update(this, fElapsedTime, &sprPlayer, decPlayer);
 
-    animPlayer.ChangeState("joy", &sprPlayer, decPlayer);
+    animPlayer.ChangeState("joy", sprPlayer, *decPlayer);
 
     if (bPlayMusic)
     {
@@ -1370,7 +1370,7 @@ void OneLoneCoder_Platformer::ReturnToWorldMap(bool drawGame)
     waveEngine.StopAll();
     pwWorldMap = waveEngine.PlayWaveform(&sndWorldMap, true);
     WindEffect(0.0f, 0.0f, false);
-    animPlayer.ChangeState("riding_star", &sprPlayer, decPlayer);
+    animPlayer.ChangeState("riding_star", sprPlayer, *decPlayer);
     TransitionTo("GS_WORLDMAP", true, drawGame);
     player->SetDamageBooster(1);
     player->SetDefenseBooster(1);
@@ -1963,7 +1963,7 @@ void OneLoneCoder_Platformer::UpdateGame(float fElapsedTime, float* angle, float
         return;
     }
 
-    animPlayer.Update(fElapsedTime, &sprPlayer, decPlayer);
+    animPlayer.Update(fElapsedTime, sprPlayer, *decPlayer);
 
     player->HandleInput(fElapsedTime, camera, level, this, &sprPlayer, decPlayer);
     // Handle pause button pressed
@@ -2160,7 +2160,7 @@ void OneLoneCoder_Platformer::UpdateGame(float fElapsedTime, float* angle, float
 
             bBossKilled = true;
             if (fWinTimer < animPlayer.mapStates["boss_killed"].size() * animPlayer.fTimeBetweenFrames)
-                animPlayer.ChangeState("boss_killed", &sprPlayer, decPlayer);
+                animPlayer.ChangeState("boss_killed", sprPlayer, *decPlayer);
         }
 
         // When win animation is over, quit the level

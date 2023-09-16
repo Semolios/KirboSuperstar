@@ -29,7 +29,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneL
 			{
 				if (IsEnteringDoor(lvl, engine))
 				{
-					animPlayer->ChangeState("enterDoor", playerSprite, playerDecal);
+					animPlayer->ChangeState("enterDoor", *playerSprite, *playerDecal);
 					bInteracting = true;
 					bFlying = false;
 					bBreakDoor = true;
@@ -43,7 +43,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneL
 				{
 					fVelY = -cfVelY;
 					bFlying = true;
-					animPlayer->ChangeState("flying", playerSprite, playerDecal);
+					animPlayer->ChangeState("flying", *playerSprite, *playerDecal);
 				}
 			}
 		}
@@ -71,7 +71,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneL
 			{
 				if (!bVacuuming && !bInteracting && !bHoldingCamera)
 				{
-					animPlayer->ChangeState("grabCamera", playerSprite, playerDecal);
+					animPlayer->ChangeState("grabCamera", *playerSprite, *playerDecal);
 					bHoldingCamera = true;
 					fAnimationTimer = 0.0f;
 				}
@@ -86,7 +86,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneL
 				{
 					if (!bVacuuming && !bInteracting && !bHoldingCamera)
 					{
-						animPlayer->ChangeState("grabCamera", playerSprite, playerDecal);
+						animPlayer->ChangeState("grabCamera", *playerSprite, *playerDecal);
 						bHoldingCamera = true;
 						fAnimationTimer = 0.0f;
 					}
@@ -219,7 +219,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneL
 			// Can't spam slap, can't slap when player is flying
 			if (!bInteracting && !bFlying)
 			{
-				animPlayer->ChangeState("slap", playerSprite, playerDecal);
+				animPlayer->ChangeState("slap", *playerSprite, *playerDecal);
 				bInteracting = true;
 				bSlapping = true;
 				bCanSpawnProjectile = true;
@@ -245,7 +245,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneL
 			// Can't spam Launching cross, can't launch when player is flying
 			if (!bInteracting && !bFlying)
 			{
-				animPlayer->ChangeState("jesus_christ", playerSprite, playerDecal);
+				animPlayer->ChangeState("jesus_christ", *playerSprite, *playerDecal);
 				bInteracting = true;
 				bLaunchingJesusCross = true;
 				bCanSpawnProjectile = true;
@@ -262,7 +262,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneL
 				if (!bVacuuming && !bInteracting && !bHoldingCamera)
 				{
 					engine->PlaySample("beginVacuum");
-					animPlayer->ChangeState("begin_vacuum", playerSprite, playerDecal);
+					animPlayer->ChangeState("begin_vacuum", *playerSprite, *playerDecal);
 					bVacuuming = true;
 					fAnimationTimer = 0.0f;
 				}
@@ -300,7 +300,7 @@ void cPlayer::HandleInput(float fElapsedTime, cCamera* camera, cLevel* lvl, OneL
 				if (poyo == 0) engine->PlaySample("poyo01");
 				if (poyo == 1) engine->PlaySample("poyo02");
 
-				animPlayer->ChangeState("poyo", playerSprite, playerDecal);
+				animPlayer->ChangeState("poyo", *playerSprite, *playerDecal);
 				bInteracting = true;
 				bPoyo = true;
 				fAnimationTimer = 0.0f;
@@ -420,12 +420,12 @@ void cPlayer::Update(float fElapsedTime, OneLoneCoder_Platformer* engine, olc::S
 				fVelX = 0.0f;
 
 				if (CanInteract(engine))
-					animPlayer->ChangeState("idle", playerSprite, playerDecal);
+					animPlayer->ChangeState("idle", *playerSprite, *playerDecal);
 			}
 			else
 			{
 				if (CanInteract(engine))
-					animPlayer->ChangeState("run", playerSprite, playerDecal);
+					animPlayer->ChangeState("run", *playerSprite, *playerDecal);
 			}
 		}
 		else
@@ -441,9 +441,9 @@ void cPlayer::Update(float fElapsedTime, OneLoneCoder_Platformer* engine, olc::S
                     }
 
 					if (fVelY < 0)
-						animPlayer->ChangeState("jump", playerSprite, playerDecal);
+						animPlayer->ChangeState("jump", *playerSprite, *playerDecal);
 					else
-						animPlayer->ChangeState("fall", playerSprite, playerDecal);
+						animPlayer->ChangeState("fall", *playerSprite, *playerDecal);
 				}
 				else
 				{
@@ -528,7 +528,7 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, float& angle, float& offset
 			{
 				if (!engine->IsSamplePlaying("beginVacuum"))
 					engine->PlaySample("vacuum", false, true);
-				animPlayer->ChangeState("vacuum", playerSprite, playerDecal);
+				animPlayer->ChangeState("vacuum", *playerSprite, *playerDecal);
 			}
 		}
 
@@ -537,7 +537,7 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, float& angle, float& offset
 		{
 			if (fAnimationTimer >= cfGrabbingCameraAnimT * animPlayer->fTimeBetweenFrames)
 			{
-				animPlayer->ChangeState("holdCamera", playerSprite, playerDecal);
+				animPlayer->ChangeState("holdCamera", *playerSprite, *playerDecal);
 			}
 		}
 
@@ -553,7 +553,7 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, float& angle, float& offset
 				engine->PlaySample("swallow");
 			}
 
-			animPlayer->ChangeState("swallow", playerSprite, playerDecal);
+			animPlayer->ChangeState("swallow", *playerSprite, *playerDecal);
 		}
 
 		// Stop the action when it's finished
@@ -648,7 +648,7 @@ void cPlayer::OneCycleAnimations(float fElapsedTime, float& angle, float& offset
 		if (engine->GetWinTimer() >= animPlayer->mapStates["boss_killed"].size() * animPlayer->fTimeBetweenFrames)
 		{
 			fKirboGoesAwayTimer += fElapsedTime;
-			animPlayer->ChangeState("kirbo_goes_away", playerSprite, playerDecal);
+			animPlayer->ChangeState("kirbo_goes_away", *playerSprite, *playerDecal);
 
 			angle = fKirboGoesAwayTimer * cfGoAwayRotationAnimation;
 			offsetX = fKirboGoesAwayTimer * cfGoAwayTranslationAnimation;
@@ -1229,7 +1229,7 @@ void cPlayer::DrawKirbo(float posx, float posy, float angle, float faceDir, OneL
 {
 	if (bShowKirbo)
 	{
-		animPlayer->DrawSelf(posx, posy, angle, faceDir, engine, playerDecal);
+		animPlayer->DrawSelf(posx, posy, angle, faceDir, *engine, *playerDecal);
 	}
 }
 
@@ -1243,7 +1243,7 @@ void cPlayer::Damage(cDynamic* object, OneLoneCoder_Platformer* engine, olc::Spr
 	engine->HitShake();
 	engine->HitStop();
 	engine->PlaySample("kirboHit");
-	animPlayer->ChangeState("damaged", playerSprite, playerDecal);
+	animPlayer->ChangeState("damaged", *playerSprite, *playerDecal);
 	fInvulnerabilityTimer = cfInvulnerabilityFrame;
 	bDamaged = true;
 	bIsAttackable = false;
@@ -1281,7 +1281,7 @@ void cPlayer::Kill(olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
 	fHealth = 0.0f;
 	bDead = true;
-	animPlayer->ChangeState("dead", playerSprite, playerDecal);
+	animPlayer->ChangeState("dead", *playerSprite, *playerDecal);
 	nDmgBoost = 1;
 	nDefBoost = 1;
 }
@@ -1453,7 +1453,7 @@ void cPlayer::SetGrabbedByEnnemy(bool grabbed)
 
 void cPlayer::ChangeAnimation(std::string animation, olc::Sprite* playerSprite, olc::Decal* playerDecal)
 {
-	animPlayer->ChangeState(animation, playerSprite, playerDecal);
+	animPlayer->ChangeState(animation, *playerSprite, *playerDecal);
 }
 
 void cPlayer::SetVisible(bool visible)

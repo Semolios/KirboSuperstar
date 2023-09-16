@@ -13,9 +13,9 @@ public:
 	float fTimeBetweenFrames = 0.033f;
 	float fTimeCounter = 0.0f;
 
-	void ChangeState(std::string s, olc::Sprite* playerSprite, olc::Decal* playerDecal);
-	void Update(float fElapsedTime, olc::Sprite* playerSprite, olc::Decal* playerDecal);
-	void DrawSelf(float posx, float posy, float angle, float faceDir, olc::PixelGameEngine* gfx, olc::Decal* playerDecal);
+	void ChangeState(const std::string& s, olc::Sprite& playerSprite, olc::Decal& playerDecal);
+	void Update(const float& fElapsedTime, olc::Sprite& playerSprite, olc::Decal& playerDecal);
+	void DrawSelf(const float& posx, const float& posy, const float& angle, const float& faceDir, olc::PixelGameEngine& gfx, olc::Decal& playerDecal);
 	void LoadAnimations();
 };
 

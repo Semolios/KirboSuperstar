@@ -1,18 +1,18 @@
 #include "Platformer_Animator.h"
 
-void cAnimator::ChangeState(std::string s, olc::Sprite* playerSprite, olc::Decal* playerDecal)
+void cAnimator::ChangeState(const std::string& s, olc::Sprite& playerSprite, olc::Decal& playerDecal)
 {
 	if (s != sCurrentState)
 	{
 		sCurrentState = s;
 		fTimeCounter = 0;
 		nCurrentFrame = 0;
-		playerSprite->LoadFromFile(mapStates[sCurrentState][nCurrentFrame]);
-		playerDecal->Update();
+		playerSprite.LoadFromFile(mapStates[sCurrentState][nCurrentFrame]);
+		playerDecal.Update();
 	}
 }
 
-void cAnimator::Update(float fElapsedTime, olc::Sprite* playerSprite, olc::Decal* playerDecal)
+void cAnimator::Update(const float& fElapsedTime, olc::Sprite& playerSprite, olc::Decal& playerDecal)
 {
 	fTimeCounter += fElapsedTime;
 	if (fTimeCounter >= fTimeBetweenFrames)
@@ -22,15 +22,15 @@ void cAnimator::Update(float fElapsedTime, olc::Sprite* playerSprite, olc::Decal
 		if (nCurrentFrame >= mapStates[sCurrentState].size())
 			nCurrentFrame = 0;
 
-		playerSprite->LoadFromFile(mapStates[sCurrentState][nCurrentFrame]);
-		playerDecal->Update();
+		playerSprite.LoadFromFile(mapStates[sCurrentState][nCurrentFrame]);
+		playerDecal.Update();
 	}
 }
 
-void cAnimator::DrawSelf(float posx, float posy, float angle, float faceDir, olc::PixelGameEngine* gfx, olc::Decal* playerDecal)
+void cAnimator::DrawSelf(const float& posx, const float& posy, const float& angle, const float& faceDir, olc::PixelGameEngine& gfx, olc::Decal& playerDecal)
 {
 	olc::vf2d pos; pos.x = posx; pos.y = posy;
-    gfx->DrawRotatedDecal(pos, playerDecal, angle, { playerDecal->sprite->width / 2.0f, playerDecal->sprite->height / 2.0f }, { faceDir, 1.0f });
+    gfx.DrawRotatedDecal(pos, &playerDecal, angle, { playerDecal.sprite->width / 2.0f, playerDecal.sprite->height / 2.0f }, { faceDir, 1.0f });
 }
 
 void cAnimator::LoadAnimations()

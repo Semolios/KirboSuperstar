@@ -21,7 +21,7 @@ bool cWorldMap::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Controller
 {
 	gfx->DrawSprite(0, 0, sprBackGround);
 
-	animPlayer->Update(fElapsedTime, playerSprite, playerDecal);
+	animPlayer->Update(fElapsedTime, *playerSprite, *playerDecal);
 
 	// Handle input
 	if (gfx->GetKey(olc::RIGHT).bReleased || controller->GetButton(RIGHT).bPressed)
@@ -46,7 +46,7 @@ bool cWorldMap::Update(olc::PixelGameEngine* gfx, float fElapsedTime, Controller
 		gfx->SetPixelMode(olc::Pixel::NORMAL);
 	}
 
-	animPlayer->DrawSelf(path[nSelectedLevel].x, path[nSelectedLevel].y, 0.0f, 1.0f, gfx, playerDecal);
+	animPlayer->DrawSelf(path[nSelectedLevel].x, path[nSelectedLevel].y, 0.0f, 1.0f, *gfx, *playerDecal);
 
 	return false;
 }
