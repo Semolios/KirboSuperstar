@@ -214,7 +214,7 @@ bool OneLoneCoder_Platformer::GameState_Loading(float fElapsedTime)
         case LS_TITLE:
         {
             sprTitleScreen = olc::Sprite("assets/gfx/titleScreen.png");
-            titleScreen = new cTitleScreen(this, &sprTitleScreen);
+            titleScreen = new cTitleScreen(this, sprTitleScreen);
 
             UpdateProgressBar("Loading 20%");
 
