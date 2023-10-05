@@ -44,13 +44,7 @@ bool cControlsMenu::Update(OneLoneCoder_Platformer* engine, float fElapsedTime, 
 	{
 		bAppliedControls = true;
 
-		char username[UNLEN + 1];
-		DWORD username_len = UNLEN + 1;
-		GetUserNameA(username, &username_len);
-
-		std::string un = username;
-
-		std::wifstream file("C:/Users/" + un + "/AppData/Roaming/Kirbo Superstar/controls.txt");
+		std::wifstream file("assets/settings/controls.txt");
 
 		if (file)
 		{
@@ -241,13 +235,7 @@ void cControlsMenu::UpdateSavedControls(OneLoneCoder_Platformer* engine)
 
 	std::ofstream controls;
 
-	char username[UNLEN + 1];
-	DWORD username_len = UNLEN + 1;
-	GetUserNameA(username, &username_len);
-
-	std::string un = username;
-
-	controls.open("C:/Users/" + un + "/AppData/Roaming/Kirbo Superstar/controls.txt", std::ofstream::trunc);
+	controls.open("assets/settings/controls.txt", std::ofstream::trunc);
 	controls << ctrls;
 	controls.close();
 }

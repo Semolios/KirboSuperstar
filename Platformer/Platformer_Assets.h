@@ -18,7 +18,7 @@ public:
 	cAssets(cAssets const&) = delete;
 	void operator=(cAssets const&) = delete;
 
-	olc::Sprite* GetSprite(std::string name)
+	olc::Sprite* GetSprite(const std::string& name)
 	{
 		return m_mapSprites[name];
 	}

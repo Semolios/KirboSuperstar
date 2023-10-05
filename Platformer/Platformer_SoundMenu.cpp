@@ -16,13 +16,7 @@ cSoundMenu::cSoundMenu(olc::Sprite* soundMenuNoSound,
 	sprSoundMenuRightArrow = soundMenuRightArrow;
 	sprSoundMenuLeftArrow = soundMenuLeftArrow;
 
-	char username[UNLEN + 1];
-	DWORD username_len = UNLEN + 1;
-	GetUserNameA(username, &username_len);
-
-	std::string un = username;
-
-	std::wifstream file("C:/Users/" + un + "/AppData/Roaming/Kirbo Superstar/volume.txt");
+	std::wifstream file("assets/settings/volume.txt");
 
 	if (file)
 	{
@@ -89,15 +83,7 @@ void cSoundMenu::UpdateVolume()
 {
 	std::ofstream volumeFile;
 
-	char username[UNLEN + 1];
-	DWORD username_len = UNLEN + 1;
-	GetUserNameA(username, &username_len);
-
-	std::string un = username;
-
-	volumeFile.open("C:/Users/" + un + "/AppData/Roaming/Kirbo Superstar/volume.txt", std::ofstream::trunc);
-
+	volumeFile.open("assets/settings/volume.txt", std::ofstream::trunc);
 	volumeFile << std::to_string(nSoundVolume);
-
 	volumeFile.close();
 }

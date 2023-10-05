@@ -7,13 +7,7 @@ OneLoneCoder_Platformer* cLevel::engine = nullptr;
 cLevel::cLevel()
 {
 	bool wrongLevel = false;
-	char username[UNLEN + 1];
-	DWORD username_len = UNLEN + 1;
-	GetUserNameA(username, &username_len);
-
-	std::string un = username;
-
-	std::wifstream file("C:/Users/" + un + "/AppData/Roaming/Kirbo Superstar/save.txt");
+	std::wifstream file("assets/settings/save.txt");
 	if (file)
 	{
 		std::wstring line;
@@ -42,7 +36,7 @@ cLevel::cLevel()
     {
         std::ofstream save;
 
-        save.open("C:/Users/" + un + "/AppData/Roaming/Kirbo Superstar/save.txt", std::ofstream::trunc);
+        save.open("assets/settings/save.txt", std::ofstream::trunc);
         save << nUnlockedLevel;
         save.close();
     }
@@ -1035,13 +1029,7 @@ void cLevel::UnlockNewLvl()
 
 	std::ofstream save;
 
-	char username[UNLEN + 1];
-	DWORD username_len = UNLEN + 1;
-	GetUserNameA(username, &username_len);
-
-	std::string un = username;
-
-	save.open("C:/Users/" + un + "/AppData/Roaming/Kirbo Superstar/save.txt", std::ofstream::trunc);
+	save.open("assets/settings/save.txt", std::ofstream::trunc);
 	save << nUnlockedLevel;
 	save.close();
 }

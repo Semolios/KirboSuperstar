@@ -1156,16 +1156,16 @@ void OneLoneCoder_Platformer::AddHarmfulBloc(float ox, float oy, std::string spr
 std::vector<cDynamicMovingPlatform*> OneLoneCoder_Platformer::GetClosePlatforms(float px, float py)
 {
     std::vector<cDynamicMovingPlatform*> closePtfms;
-    for (auto& ptfm : vecPlatforms)
+	for (cDynamicMovingPlatform* item : vecPlatforms 
+         | std::views::filter([&](const auto& ptfm)
     {
-        // Check the 4 corners to avoid the item disappearing when player is far from top left corner
-		if (fabs(px - (ptfm->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (ptfm->GetPY()										    )) < ((((float)ScreenHeight()) / 64.0f)) ||
-			fabs(px - (ptfm->GetPX() + ptfm->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (ptfm->GetPY()										    )) < ((((float)ScreenHeight()) / 64.0f)) ||
-			fabs(px - (ptfm->GetPX()										  )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (ptfm->GetPY() + ptfm->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f)) ||
-            fabs(px - (ptfm->GetPX() + ptfm->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (ptfm->GetPY() + ptfm->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f)))
-        {
-            closePtfms.push_back(ptfm);
-        }
+        return (fabs(px - (ptfm->GetPX()                                          )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (ptfm->GetPY()                                           )) < ((((float)ScreenHeight()) / 64.0f)) ||
+                fabs(px - (ptfm->GetPX() + ptfm->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (ptfm->GetPY()                                           )) < ((((float)ScreenHeight()) / 64.0f)) ||
+                fabs(px - (ptfm->GetPX()                                          )) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (ptfm->GetPY() + ptfm->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f)) ||
+                fabs(px - (ptfm->GetPX() + ptfm->GetCurrentSprite()->width / 64.0f)) < ((((float)ScreenWidth()) / 64.0f)) && fabs(py - (ptfm->GetPY() + ptfm->GetCurrentSprite()->height / 64.0f)) < ((((float)ScreenHeight()) / 64.0f)));
+    }))
+    {
+        closePtfms.push_back(item);
     }
     return closePtfms;
 }
@@ -1598,13 +1598,7 @@ void OneLoneCoder_Platformer::UpdateProgressBar(std::string loadPercent)
 
 void OneLoneCoder_Platformer::ApplyControls()
 {
-    char username[UNLEN + 1];
-    DWORD username_len = UNLEN + 1;
-    GetUserNameA(username, &username_len);
-
-    std::string un = username;
-
-    std::wifstream file("C:/Users/" + un + "/AppData/Roaming/Kirbo Superstar/controls.txt");
+    std::wifstream file("assets/settings/controls.txt");
 
     if (file)
     {

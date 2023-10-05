@@ -6,13 +6,7 @@ cScreenModeMenu::cScreenModeMenu(olc::Sprite* screenModeMenu, olc::Sprite* right
 	sprLeftArrow = leftArrow;
 	sprRightArrow = rightArrow;
 
-	char username[UNLEN + 1];
-	DWORD username_len = UNLEN + 1;
-	GetUserNameA(username, &username_len);
-
-	std::string un = username;
-
-	std::wifstream file("C:/Users/" + un + "/AppData/Roaming/Kirbo Superstar/screenMode.txt");
+	std::wifstream file("assets/settings/screenMode.txt");
 
 	if (file)
 	{
@@ -62,13 +56,7 @@ void cScreenModeMenu::UpdateScreenMode()
 {
 	std::ofstream mode;
 
-	char username[UNLEN + 1];
-	DWORD username_len = UNLEN + 1;
-	GetUserNameA(username, &username_len);
-
-	std::string un = username;
-
-	mode.open("C:/Users/" + un + "/AppData/Roaming/Kirbo Superstar/screenMode.txt", std::ofstream::trunc);
+	mode.open("assets/settings/screenMode.txt", std::ofstream::trunc);
 	
 	if (bWindowed)
 		mode << "windowed";
